@@ -40,7 +40,32 @@ async function stop() {
 }
 process.on('SIGINT', () => void stop());
 process.on('SIGTERM', () => void stop());
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+async function waitForWebReady(state, product, port) {
+    const deadline = performance.now() + 15_000;
+    const url = `http://127.0.0.1:${port}/api/health`;
+    while (true) {
+        if (ending || state.spawnError || state.exitObserved)
+            throw new Error(`${product} web process stopped before API readiness`);
+        const remaining = deadline - performance.now();
+        if (remaining <= 0)
+            throw new Error(`${product} API did not become ready within 15 seconds`);
+        try {
+            const response = await fetch(url, { redirect: 'error', signal: AbortSignal.timeout(Math.max(1, Math.min(500, Math.ceil(remaining)))) });
+            if (response.ok && (await response.json()).api === 'READY')
+                return;
+        }
+        catch {
+            // The web listener may not have bound yet. Retry only within the existing startup window.
+        }
+        const delay = Math.min(100, deadline - performance.now());
+        if (delay > 0)
+            await sleep(delay);
+    }
+}
 for (const product of selected) {
+    if (ending)
+        throw new Error('Local startup stopped');
     if (!/^[a-z][a-z0-9-]*$/.test(product))
         throw new Error('Invalid product');
     const plan = JSON.parse(await readFile(join(root, '.artifacts', product, 'plan.json'), 'utf8'));
@@ -49,20 +74,46 @@ for (const product of selected) {
     if (existsSync(join(config.dataDirectory, 'access.sqlite'))) config.principals = [];
     const configPath = join(data, `${product}.json`);
     await writeFile(configPath, JSON.stringify(config, null, 2) + '\n', { mode: 0o600 });
-    const launch = flags => {
-        const child = spawn(process.execPath, [join(root, 'apps/runtime/dist/main.js'), '--product', product, '--config', configPath, ...flags], { cwd: root, stdio: 'inherit', env: { ...process.env, NODE_ENV: 'development' } });
+    const launch = (flags, role, roleConfigPath = configPath) => {
+        const child = spawn(process.execPath, [join(root, 'apps/runtime/dist/main.js'), '--product', product, '--config', roleConfigPath, ...flags], { cwd: root, stdio: 'inherit', env: { ...process.env, NODE_ENV: 'development' } });
+        const state = { child, role, spawnError: null, exitObserved: false, exitCode: null };
         children.push(child);
+        child.once('error', error => {
+            state.spawnError = error;
+            if (!ending) {
+                void stop();
+                process.exitCode = 1;
+            }
+        });
         child.on('exit', code => {
+            state.exitObserved = true;
+            state.exitCode = code;
             if (code && !ending) {
                 console.error(`${product} exited (${code}). Stopping this local solution.`);
                 void stop();
                 process.exitCode = 1;
             }
         });
+        return state;
     };
-    launch(['--port', String(portFor(product))]);
-    if (plan.requiresWorker)
-        launch(['--worker']);
+    try {
+        const web = launch(['--port', String(portFor(product))], 'web-backend');
+        await waitForWebReady(web, product, portFor(product));
+        if (plan.requiresWorker) {
+            if (ending || web.spawnError || web.exitObserved)
+                throw new Error(`${product} web process stopped before worker startup`);
+            const workerConfig = { ...config, principals: [] };
+            const workerConfigPath = join(data, `${product}.worker.json`);
+            await writeFile(workerConfigPath, JSON.stringify(workerConfig, null, 2) + '\n', { mode: 0o600 });
+            if (ending || web.spawnError || web.exitObserved)
+                throw new Error(`${product} web process stopped before worker startup`);
+            launch(['--worker'], 'worker', workerConfigPath);
+        }
+    }
+    catch (error) {
+        await stop();
+        throw error;
+    }
     console.log(`${plan.product.title}: http://127.0.0.1:${portFor(product)}`);
 }
 console.log(`\nLOCAL ACCOUNTS (generated once; keep private)\nadmin: ${credentials.admin}\nviewer: ${credentials.viewer}\nCredentials: ${credentialsPath}\nCtrl+C stops the local processes; records remain on disk.\n`);

@@ -1,7 +1,7 @@
 {
   "schema": "brain.task-contract.v1",
   "taskId": "KERNEL-CI-002",
-  "title": "Retain actual generated-product Studio startup evidence",
+  "title": "Preserve Studio startup evidence and serialize fresh web/worker initialization",
   "authorization": {
     "kind": "authorized",
     "reference": "Continued user full core build authorization and actual failed main CI36920073548; finite Sol diagnostic work order, sole Luna implementation."
@@ -215,8 +215,8 @@
     "visual/studio.js"
   ],
   "excludedActions": [
-    "Only tools/studio-manager.mjs and tests/studio-integration.test.mjs eligible for source edits at this stage. Whole allowedPaths inventory fingerprints source, not permission to edit other owners.",
-    "No startup retry, timer change, demo stdout capture, raw stderr in public errors/TAP, security-policy/identity changes, SQLite/demo repairs or new test campaign without captured concrete cause and named scope amendment.",
+    "Only tools/studio-manager.mjs, tests/studio-integration.test.mjs and tools/demo.mjs eligible for source edits. Whole allowedPaths inventory fingerprints source, not permission to edit other owners.",
+    "No spawn retry, expanded startup timer, demo stdout capture, raw stderr in public errors/TAP, security-policy/identity changes or SQLite/runtime/module/native-helper changes. tools/demo.mjs may sequence web API-ready before worker and derive worker principals:[] from identical reviewed config.",
     "No credentials, deployment or speculative process cleanup."
   ],
   "prerequisites": [
@@ -227,7 +227,7 @@
   "criteria": [
     {
       "id": "KERNEL-CI",
-      "description": "Retain bounded private stderr, first spawn error, actual exit and close facts, safe fixed public diagnostics and original failure before fixture cleanup; preserve startup behavior and existing real record/receipt/restart assertions.",
+      "description": "Retain bounded private stderr, first spawn error, actual exit and close facts, safe fixed public diagnostics and original failure before fixture cleanup; preserve startup behavior and existing real record/receipt/restart assertions. Captured DATABASE_BUSY permits demo-only web-ready-before-worker initialization with unchanged15s envelope, shutdown/web-exit late-spawn guards and worker empty principal seeds; separate roles and real receipt/persistence/restart remain.",
       "evidenceScope": "Exact source review and existing real generated-product acceptance journey."
     },
     {

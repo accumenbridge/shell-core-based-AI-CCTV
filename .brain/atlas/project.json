@@ -2,8 +2,8 @@
   "schema": "brain.atlas.v1",
   "projectId": "quadbridge-core-frameworks",
   "title": "Quadbridge Product Studio",
-  "planRevision": 17,
-  "updatedAt": "2026-10-01T20:31:58.809Z",
+  "planRevision": 18,
+  "updatedAt": "2026-10-01T20:46:18.598Z",
   "intentBasis": "User authorized the local full architecture program and on 2026-10-01 requested a reusable architecture-first Brain with visual planning, core prioritization and continuous review. Existing source architecture and bounded execution contracts remain authoritative. User 2026-10-01 explicitly created a complete-core actual realtime goal; checkpoint28 selects the continuous local core journey and grounded Brain readiness maintenance. User2026-10-01 ok proceed adopts the next bounded reliability/CI increment after source-grounded verdict review. Preserve local-core completion and unresolved historical startup cause.",
   "vision": {
     "destination": "Build and operate reviewed products through a product-neutral Studio, with exact composition, immutable artifacts, domain ownership and understandable user journeys.",
@@ -377,7 +377,7 @@
       "id": "kernel-startup-task",
       "path": ".brain/tasks/KERNEL-CI-002.md",
       "role": "Actual post-merge generated-product startup failure; bounded owning evidence followup",
-      "sha256": "6e41a1595cd86d4dbc9133983b110978ac46d545bbb3e6eb485288da5d5687ef"
+      "sha256": "c6aa6690ad26051bbd6a3959efa3b9dc9d7416587bb43e9dce5129bfb565584c"
     },
     {
       "id": "kernel-startup-owner",
@@ -390,6 +390,12 @@
       "path": "tests/studio-integration.test.mjs",
       "role": "Actual post-merge generated-product startup failure; bounded owning evidence followup",
       "sha256": "ef8516d93e16b33fe14e9d1a6bf54c811c6a589ee75ceef3b46ad03db9c0cd70"
+    },
+    {
+      "id": "kernel-startup-demo",
+      "path": "tools/demo.mjs",
+      "role": "Captured DATABASE_BUSY plus verified concurrent initialization permits demo-only ordering repair",
+      "sha256": "aad601f0181c56a8958fd0ce0c8d4c243950fc01e1237c08a2135c191e8faa7f"
     }
   ],
   "nodes": [
@@ -1444,7 +1450,8 @@
         "kernel-ci-registry-journey",
         "kernel-startup-task",
         "kernel-startup-owner",
-        "kernel-startup-journey"
+        "kernel-startup-journey",
+        "kernel-startup-demo"
       ],
       "id": "M-KERNEL-CI",
       "kind": "milestone",

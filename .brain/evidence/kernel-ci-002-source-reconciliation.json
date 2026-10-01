@@ -1,23 +1,16 @@
 {
   "taskId": "KERNEL-CI-002",
-  "recordedAt": "2026-10-01T20:31:58.810Z",
+  "recordedAt": "2026-10-01T20:46:18.600Z",
   "changes": [
     {
-      "id": "kernel-startup-owner",
-      "path": "tools/studio-manager.mjs",
-      "before": "635505f7826ec05b90e6d6ec13b98c73277acd925532dc7d2b82ff203d23f92c",
-      "after": "efcf90f8f3391ee6a848b325528793e0e8771e5e185f9e3d1bbc2e4005f34545",
-      "reason": "Sole Luna bounded startup-evidence implementation reviewed against actual core failure; no underlying cause repair inferred."
-    },
-    {
-      "id": "kernel-startup-journey",
-      "path": "tests/studio-integration.test.mjs",
-      "before": "92c32bb381681510c5bb785e0fc3f9ad5769e3a28190770d3d34f3f4eab23897",
-      "after": "ef8516d93e16b33fe14e9d1a6bf54c811c6a589ee75ceef3b46ad03db9c0cd70",
-      "reason": "Sole Luna bounded startup-evidence implementation reviewed against actual core failure; no underlying cause repair inferred."
+      "id": "kernel-startup-demo",
+      "path": "tools/demo.mjs",
+      "before": "fd370eb6e9119d04bcb70ea5170df1fac33024b9a0fa49cdebd6b533316e56e1",
+      "after": "aad601f0181c56a8958fd0ce0c8d4c243950fc01e1237c08a2135c191e8faa7f",
+      "reason": "Captured DATABASE_BUSY plus source-verified concurrent initialization; separate Sol-reviewed demo-only startup ordering repair."
     }
   ],
   "limits": [
-    "Implementation presence only; actual failed historical startup cause remains UNKNOWN."
+    "Source reconciliation records current evidence-grounded startup ordering repair, not test qualification or historical failing database attribution."
   ]
 }
