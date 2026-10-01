@@ -1,0 +1,58 @@
+{
+  "schema": "quadbridge.kernel-ci-result.v1",
+  "taskId": "KERNEL-CI-001",
+  "candidateDigest": "0da31299fc131d6c049c77781a8bd3160819af7211a151cdab65c8ee89bd7a8b",
+  "contractDigest": "21c8675c65f28f4b1cb96125c3d5fd5c04a1a0fcf45a0e6b36d94f0038495f1b",
+  "independentReviewId": "943f7092-72ef-4040-b40d-8ed2778219d6",
+  "acceptanceCheckpoint": {"revision": 46, "eventId": "d1c23f81-dbfc-4535-bd8d-6267beb2b1b3"},
+  "implementation": {
+    "writer": "/root/repo_brain_validation",
+    "selectedRole": "Luna/xhigh Brawn",
+    "modelIdentity": "reported session selection, not authenticated by repository files",
+    "registryRepair": "The controlled ordinary PowerShell probe reproduced rejection of a dash-leading positional token before the script body. Registry runPublisher now encodes 24 random bytes as 48 lowercase hex characters, retaining 192 bits of entropy and existing proof validators.",
+    "ci": "Pinned Node24.19.0, serial test-file scheduling, automatic Ubuntu portable baseline and separately manual Windows native qualification with unchanged ordinary host-policy preflight.",
+    "diagnostics": "Bounded private publisher diagnostics and shared registration-fixture retention preserve uncertainty without changing authority, strict result proof, timers, no-overwrite or helper identity."
+  },
+  "actualChecks": {
+    "build": {"exitCode": 0, "recordId": "b6d67892-c8df-4d57-9572-73f6022d7b6f"},
+    "native": {"exitCode": 0, "tests": 19, "passed": 19, "failed": 0, "skipped": 0, "recordId": "0aca7f8b-8727-4cd7-adc6-5df3ddf7646e"},
+    "ciHelperSyntax": {"exitCode": 0, "recordId": "e58dc7a3-933d-47fe-b2a2-e5382e8c2c77"},
+    "coreFocused": {"exitCode": 0, "tests": 3, "passed": 3, "failed": 0, "skipped": 0, "artifactOwnerRecord": "08e1c992-ad5f-43cc-b50d-681831d55936"},
+    "completeWindows": {
+      "command": "npm.cmd test",
+      "exitCode": 0,
+      "signal": null,
+      "tests": 308,
+      "passed": 307,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 1,
+      "todo": 0,
+      "candidateUnchanged": true,
+      "originalProcessClosed": true,
+      "recordId": "08e1c992-ad5f-43cc-b50d-681831d55936",
+      "coverageStatus": "BLOCKED solely for the named file-symlink fixture denied by Windows EPERM; complete command PASSED"
+    },
+    "hostedPortable": {
+      "url": "https://github.com/accumenbridge/shell-frameworks/actions/runs/36917374421",
+      "exitCode": 0,
+      "tests": 305,
+      "passed": 271,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 34,
+      "todo": 0,
+      "testedMergeTreeEqualsSubmittedHeadTree": true,
+      "recordId": "0664638d-855f-43c9-9146-a1b3383ae8d9",
+      "coverageStatus": "34 individually named platform skips remain unqualified"
+    }
+  },
+  "limitations": [
+    "Selected local developer profile and portable CI only; no customer production qualification.",
+    "Hosted Windows native workflow is configured but NOT_RUN; source image-policy assessment is not an actual hosted preflight result.",
+    "No fresh browser-policy, live model/provider, hosted identity, external deployment or fleet qualification in this increment.",
+    "Two earlier original full suites closed exit1 at artifact registration. Their lost nonce values and precise causes remain UNKNOWN; the reproduced positional defect is not a historical attribution.",
+    "Earlier interrupted native owner's close remains unobserved and retained fixture is not speculatively controlled or cleaned.",
+    "Sol/high independent exact review and canonical acceptance are referenced by the workflow checkpoint, not inferred from these test counts."
+  ]
+}
