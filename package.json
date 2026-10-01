@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "build": "node tools/build.mjs",
-    "test": "npm run build && node --test tests/*.test.mjs",
+    "test": "npm run build && node --test --test-concurrency=1 --test-reporter=tap tests/*.test.mjs",
     "test:compiled": "node --test tests/composition.test.mjs tests/data-worker.test.mjs tests/http-cross-product.test.mjs tests/hardening.test.mjs tests/shell-regressions.test.mjs",
     "demo": "node tools/demo.mjs",
     "start": "node apps/runtime/dist/main.js",

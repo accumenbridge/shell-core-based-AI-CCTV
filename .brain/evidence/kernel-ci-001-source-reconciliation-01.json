@@ -1,0 +1,57 @@
+{
+  "taskId": "KERNEL-CI-001",
+  "recordedAt": "2026-10-01T18:18:20.725Z",
+  "changes": [
+    {
+      "id": "readme",
+      "path": "README.md",
+      "before": "23c5b6449aadac650acfad8d11f99e3871cf780b663fd66cf8129aa11b65a960",
+      "after": "e65fa9263bb50cfe863b3c8984998e259a42895a7c7ea8f349421ec4341888c2",
+      "reason": "Authorized reliability/CI implementation and current documentation reviewed at frozen source; old atlas snapshot and execution candidates retained."
+    },
+    {
+      "id": "status",
+      "path": "docs/STATUS.md",
+      "before": "fe3ea0826a48e41cdbaf370fdca5ce541de0a702b62958cd61cb919ab679df82",
+      "after": "2736780521c1015a2b232f26f9ea2c5633bb455853360a0b81e738b3cccde133",
+      "reason": "Authorized reliability/CI implementation and current documentation reviewed at frozen source; old atlas snapshot and execution candidates retained."
+    },
+    {
+      "id": "kernel-ci-package",
+      "path": "package.json",
+      "before": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554",
+      "after": "9a0c4cf053c5903defae69d56a2146c4fd758e21725e39effb7062e9dd12bc03",
+      "reason": "Authorized reliability/CI implementation and current documentation reviewed at frozen source; old atlas snapshot and execution candidates retained."
+    },
+    {
+      "id": "kernel-ci-node",
+      "path": ".nvmrc",
+      "before": "177d20030d4dcc37eae9ef92865ec54dadce60e8f19e9a34a5d4f37502195a36",
+      "after": "7e8a2fa94951112b894a3dbe3d05efef5e9263741fa49125f0a70f40fedab4cc",
+      "reason": "Authorized reliability/CI implementation and current documentation reviewed at frozen source; old atlas snapshot and execution candidates retained."
+    },
+    {
+      "id": "kernel-ci-build-test",
+      "path": "tests/build-worker-process.test.mjs",
+      "before": "03e30051a9b7591c2bd7d2a30b4ece3e4be28686ab71a31daf4520fa5081195c",
+      "after": "13257b6564f6782b98de6b8572a1c7f19aa5cbd148e1b09425ee4b97ff7512c5",
+      "reason": "Authorized reliability/CI implementation and current documentation reviewed at frozen source; old atlas snapshot and execution candidates retained."
+    },
+    {
+      "id": "kernel-ci-protocol-test",
+      "path": "tests/runtime-protocol.test.mjs",
+      "before": "55e558166bf3fc51b911c80473b925ffd073b969c1b76316f023fa5f05cba336",
+      "after": "06a97bdd81427e3f8279240085aa7317294735bd49a343e3ed7f90d1cc9cce66",
+      "reason": "Authorized reliability/CI implementation and current documentation reviewed at frozen source; old atlas snapshot and execution candidates retained."
+    }
+  ],
+  "newCandidatePaths": [
+    ".github/workflows/kernel-ci.yml",
+    ".github/workflows/kernel-native.yml",
+    "tools/ci-build-host.mjs",
+    "docs/CI.md"
+  ],
+  "limits": [
+    "This source reconciliation records implementation presence, not test/hosted/browser qualification."
+  ]
+}

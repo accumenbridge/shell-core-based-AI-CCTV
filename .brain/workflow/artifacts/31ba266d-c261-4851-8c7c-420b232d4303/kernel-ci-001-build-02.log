@@ -1,0 +1,11 @@
+npm notice run quadbridge-product-platform@0.2.0 build
+npm notice run node tools/build.mjs
+Local workspace links prepared. No third-party packages were downloaded.
+Assembled combined: 3 modules, worker=true
+Assembled knowledge: 2 modules, worker=true
+Assembled neutral: 0 modules, worker=false
+Assembled service-desk: 1 modules, worker=false
+Built visual Studio from 3 actual modules and 4 products. Offline mode makes no API calls.
+EXIT_CODE=0
+STARTED_UTC=2026-10-01T18:28:11.2801427Z
+ENDED_UTC=2026-10-01T18:28:14.2081499Z

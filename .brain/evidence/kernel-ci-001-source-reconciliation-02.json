@@ -1,0 +1,22 @@
+{
+  "taskId": "KERNEL-CI-001",
+  "recordedAt": "2026-10-01T18:23:11.811Z",
+  "changes": [
+    {
+      "id": "kernel-ci-native-workflow",
+      "path": ".github/workflows/kernel-native.yml",
+      "before": "570fd47fe74b886c8ffa3e910809583ade24f2bc9aa9550fb8d4ee60e3b336e1",
+      "after": "fecef547a3b7bf50e5a8b58de3091bcde9bf200588c15b45d45f0f1bb4bd073f",
+      "reason": "Authorized reliability/CI implementation and current documentation reviewed at frozen source; old atlas snapshot and execution candidates retained."
+    }
+  ],
+  "newCandidatePaths": [
+    ".github/workflows/kernel-ci.yml",
+    ".github/workflows/kernel-native.yml",
+    "tools/ci-build-host.mjs",
+    "docs/CI.md"
+  ],
+  "limits": [
+    "This source reconciliation records implementation presence, not test/hosted/browser qualification."
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "executableSha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+  "originalPrivateReportSha256": "c8181047b96b9eb16e77d802d7d0de92911079a91ecd93dd6ff5b8d3902d49cd",
+  "scriptSha256": "f399aa35a04d78b3c7b8232aac13a8330bbc8562bfe3c2040c627a7112c3358a",
+  "hostVersion": "7.6.5",
+  "effectivePolicy": "RemoteSigned",
+  "schema": "quadbridge.argument-binding-probe.v1",
+  "observedBy": [
+    "/root/repo_brain_validation",
+    "/root",
+    "/root/repo_brain_architect"
+  ],
+  "limitations": [
+    "Controlled parameter-binding reproduction only; no registry move or domain mutation occurred.",
+    "Named -RunnerNonce forms passed; only the positional registry generator is eligible for repair.",
+    "The lost historical nonce values are unknown; this probe does not prove their exact cause.",
+    "Raw report and host path remain private in ignored .local; this public summary omits paths and raw stderr."
+  ],
+  "policyScopes": [
+    {
+      "scope": "MachinePolicy",
+      "policy": "Undefined"
+    },
+    {
+      "scope": "UserPolicy",
+      "policy": "Undefined"
+    },
+    {
+      "scope": "Process",
+      "policy": "Undefined"
+    },
+    {
+      "scope": "CurrentUser",
+      "policy": "Undefined"
+    },
+    {
+      "scope": "LocalMachine",
+      "policy": "RemoteSigned"
+    }
+  ],
+  "invocations": [
+    {
+      "signal": null,
+      "stderrCategory": "NONE",
+      "shape": "positional-registry-shape",
+      "bodyMarkerObserved": true,
+      "startedAt": "2026-10-01T19:41:18.414Z",
+      "id": "positional-safe",
+      "exitCode": 0,
+      "tokenClass": "ordinary",
+      "elapsedMs": 341
+    },
+    {
+      "signal": null,
+      "stderrCategory": "PARAMETER_NOT_FOUND",
+      "shape": "positional-registry-shape",
+      "bodyMarkerObserved": false,
+      "startedAt": "2026-10-01T19:41:18.757Z",
+      "id": "positional-leading-dash",
+      "exitCode": 1,
+      "tokenClass": "leading-dash",
+      "elapsedMs": 490
+    },
+    {
+      "signal": null,
+      "stderrCategory": "NONE",
+      "shape": "named-RunnerNonce-separate-value",
+      "bodyMarkerObserved": true,
+      "startedAt": "2026-10-01T19:41:19.246Z",
+      "id": "named-safe",
+      "exitCode": 0,
+      "tokenClass": "ordinary",
+      "elapsedMs": 334
+    },
+    {
+      "signal": null,
+      "stderrCategory": "NONE",
+      "shape": "named-RunnerNonce-separate-value",
+      "bodyMarkerObserved": true,
+      "startedAt": "2026-10-01T19:41:19.58Z",
+      "id": "named-leading-dash",
+      "exitCode": 0,
+      "tokenClass": "leading-dash",
+      "elapsedMs": 334
+    }
+  ],
+  "profile": "selected ordinary local PS7 -File"
+}

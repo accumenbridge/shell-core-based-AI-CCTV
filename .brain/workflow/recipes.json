@@ -104,6 +104,50 @@
         "CORE-RECOVERY"
       ],
       "evidenceScope": "Actual browser/native/domain evidence with precise candidate and immutable deployment identity, no prebuilt shortcuts; blocked import remains separate."
+    },
+    {
+      "id": "kernel-native",
+      "argv": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/build-worker-process.test.mjs",
+        "tests/runtime-protocol.test.mjs"
+      ],
+      "cwd": ".",
+      "description": "Freshly compiled native build ownership and runtime protocol integration checks, one test file at a time.",
+      "criterionIds": [
+        "KERNEL-NATIVE"
+      ],
+      "evidenceScope": "Actual selected Windows profile; no browser/provider/hosted production qualification."
+    },
+    {
+      "id": "kernel-ci-config",
+      "argv": [
+        "node",
+        "--check",
+        "tools/ci-build-host.mjs"
+      ],
+      "cwd": ".",
+      "description": "Parse the selected fixed CI host preparation helper; exact independent review also assesses workflow semantics.",
+      "criterionIds": [
+        "KERNEL-CI"
+      ],
+      "evidenceScope": "Helper syntax and separately reviewed workflow configuration; hosted execution qualification remains separate."
+    },
+    {
+      "id": "kernel-portable-ci",
+      "argv": [
+        "npm",
+        "test"
+      ],
+      "cwd": ".",
+      "description": "Actual hosted Ubuntu fresh build and full suite; GitHub commit/tree and platform skips recorded separately.",
+      "criterionIds": [
+        "KERNEL-CI",
+        "BRAIN-REGRESSION"
+      ],
+      "evidenceScope": "Portable hosted execution only; does not qualify Windows native/browser/provider/customer production."
     }
   ]
 }

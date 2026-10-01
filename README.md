@@ -10,7 +10,7 @@ It is a local developer release, not a production deployment system.
 Double-click **OPEN_PLATFORM.html** for the self-contained offline explorer. Its examples are sample-only.
 It can validate and export definitions, but it cannot write source or start processes.
 
-For the **full local Product Studio console**—including paired Products, Builds, Artifacts, and Runtime views—extract to a new directory and run on Node 22.16+:
+For the **full local Product Studio console**—including paired Products, Builds, Artifacts, and Runtime views—extract to a new directory and use the repository's Node 24.19.0 baseline from `.nvmrc`:
 
 ```text
 npm ci
@@ -130,6 +130,14 @@ npm run test:studio-browser
 Read **evidence/last_run.json**, **evidence/studio-journey.json** and **evidence/VALIDATION.md** for actual
 execution and exclusions. Browser tests are not marked passed when navigation is blocked. No existing
 Veyviz code, tenant, camera, model, migration or production environment is modified by this project.
+
+The pinned portable CI runs `npm ci` and `npm test` on Ubuntu. `npm test` performs a fresh build and
+runs every test file one at a time; each test retains its own in-file concurrency. A separate manual
+Windows workflow runs the same suite only after the selected PowerShell 7 executable passes the normal
+`-File` build-host preflight. An unsupported policy is reported as `BLOCKED_HOST_PROFILE`; CI never
+changes execution policy or treats that host as qualified. The portable workflow reports Windows native
+coverage as `NOT_QUALIFIED`, and workflow configuration alone is not evidence of a hosted pass. See
+[docs/CI.md](docs/CI.md) for the bounded summary and workflow details.
 
 Current guide: [docs/STUDIO_INTEGRATION.md](docs/STUDIO_INTEGRATION.md).
 Original 0.1-to-0.2 compatibility cautions remain in [docs/UPGRADE_FROM_0_1.md](docs/UPGRADE_FROM_0_1.md).

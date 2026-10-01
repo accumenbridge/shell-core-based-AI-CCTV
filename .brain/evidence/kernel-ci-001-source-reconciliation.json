@@ -1,0 +1,29 @@
+{
+  "taskId": "KERNEL-CI-001",
+  "recordedAt": "2026-10-01T19:49:38.664Z",
+  "changes": [
+    {
+      "id": "kernel-ci-registry-owner",
+      "path": "apps/control-plane/src/artifact-store.ts",
+      "before": "89ec480c529a6b5b83fbaed0daf455226d80ae0b5d9b8a47afcf73e813c7b4e5",
+      "after": "d4610c786b9221a3ca1ea569adcd6aa5bb64870efdd1cc280d13e1a68f45b4da",
+      "reason": "Authorized reliability/CI implementation and current documentation reviewed at frozen source; old atlas snapshot and execution candidates retained."
+    },
+    {
+      "id": "kernel-ci-registry-journey",
+      "path": "tests/control-plane-artifacts.test.mjs",
+      "before": "b4b5d78fdc0f56e82b6f236dfaac36fc21e6f3b5fe371faa6dda39eafdfbedb3",
+      "after": "e166e60b0960304d609f600ca10139e26b0b5052b946e0b98a9e6ba3a706c8d1",
+      "reason": "Authorized reliability/CI implementation and current documentation reviewed at frozen source; old atlas snapshot and execution candidates retained."
+    }
+  ],
+  "newCandidatePaths": [
+    ".github/workflows/kernel-ci.yml",
+    ".github/workflows/kernel-native.yml",
+    "tools/ci-build-host.mjs",
+    "docs/CI.md"
+  ],
+  "limits": [
+    "This source reconciliation records implementation presence, not test/hosted/browser qualification."
+  ]
+}

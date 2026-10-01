@@ -56,10 +56,33 @@ async function waitForState(store,id,states,timeoutMs=20000){
     while(Date.now()<end){const value=store.build(id);if(states.includes(value.state))return value;await new Promise(resolve=>setTimeout(resolve,50));}
     throw new Error(`Build ${id} did not reach ${states.join(' or ')}; last state ${store.build(id)?.state}`);
 }
-async function waitForMarker(path,timeoutMs=10000){
-    const end=Date.now()+timeoutMs;
+async function waitForMarker(path,timeoutMs=10000,onTimeout){
+    const started=Date.now();
+    const end=started+timeoutMs;
     while(Date.now()<end){try{const value=JSON.parse(await readFile(path,'utf8'));if(Number.isSafeInteger(value.pid)&&value.beat>0)return value;}catch{}await new Promise(resolve=>setTimeout(resolve,25));}
-    throw new Error('Owned descendant did not start its marker heartbeat');
+    let detail;
+    if(onTimeout){try{detail=await onTimeout(Date.now()-started);}catch{detail={diagnostics:'unavailable'};}}
+    const suffix=detail?`; bounded pre-cleanup owner state: ${JSON.stringify(detail)}`:'';
+    throw new Error(`Owned descendant did not start its marker heartbeat within ${timeoutMs} ms${suffix}`);
+}
+async function markerFailureDiagnostics(context,id,markerPath,waitedMs){
+    const build=context.store.build(id);
+    const attempt=context.store.db.prepare(`SELECT attempt_no AS attempt,state,phase,started_at AS startedAt,updated_at AS updatedAt,
+      finished_at AS finishedAt,cleanup_state AS cleanupState,error_code AS errorCode FROM build_attempts
+      WHERE build_id=? ORDER BY attempt_no DESC LIMIT 1`).get(id)??null;
+    let marker={state:'missing'};
+    try{
+      const value=JSON.parse(await readFile(markerPath,'utf8'));
+      marker=Number.isSafeInteger(value.pid)&&Number.isSafeInteger(value.beat)&&value.beat>0
+        ?{state:'valid',pid:value.pid,beat:value.beat}:{state:'invalid'};
+    }catch(error){if(error?.code!=='ENOENT')marker={state:'unreadable'};}
+    return{
+      waitedMs,
+      build:build?{id:build.id,state:build.state,attempt:build.attempt,phase:build.phase,failureCode:build.failureCode,cleanupState:build.cleanupState,updated:build.updated}:null,
+      attempt,
+      marker,
+      redactedOutputTail:context.store.buildLog(id,2048)
+    };
 }
 function processAlive(pid){try{process.kill(pid,0);return true;}catch(error){if(error.code==='ESRCH')return false;throw error;}}
 async function assertStopped(pid){
@@ -90,7 +113,7 @@ test('Windows job cancellation and timeout observe the compiler descendant exit 
     const context=await fixture(t,{buildScript:temp=>markerBuildScript(join(temp,'descendant.json'))});
     const marker=join(context.temp,'descendant.json');
     let admitted=await context.admit(`cancel-${randomUUID()}`);
-    let child=await waitForMarker(marker);
+    let child=await waitForMarker(marker,10000,waitedMs=>markerFailureDiagnostics(context,admitted.id,marker,waitedMs));
     await new Promise(resolve=>setTimeout(resolve,150));
     const live=await waitForMarker(marker);
     assert.equal(live.pid,child.pid);
@@ -104,7 +127,7 @@ test('Windows job cancellation and timeout observe the compiler descendant exit 
 
     await rm(marker,{force:true});
     admitted=await context.admit(`timeout-${randomUUID()}`);
-    const timedChild=await waitForMarker(marker);
+    const timedChild=await waitForMarker(marker,10000,waitedMs=>markerFailureDiagnostics(context,admitted.id,marker,waitedMs));
     final=await waitForState(context.store,admitted.id,['FAILED']);
     assert.equal(final.failureCode,'BUILD_TIMEOUT');
     assert.equal(final.cleanupState,'CLEAN');

@@ -1,0 +1,22 @@
+{
+  "taskId": "KERNEL-CI-001",
+  "recordedAt": "2026-10-01T19:00:28.323Z",
+  "changes": [
+    {
+      "id": "kernel-ci-task",
+      "path": ".brain/tasks/KERNEL-CI-001.md",
+      "before": "d2a6086d6aecf38de953fa67f0fc5d4d52a3a31d1d80ace9fa7cfe45bfb27b4b",
+      "after": "125dfc2f420f7eb07a6a5c58f9b93b05118cca40ae1f6020c9d13172144f5a19",
+      "reason": "Authorized reliability/CI implementation and current documentation reviewed at frozen source; old atlas snapshot and execution candidates retained."
+    }
+  ],
+  "newCandidatePaths": [
+    ".github/workflows/kernel-ci.yml",
+    ".github/workflows/kernel-native.yml",
+    "tools/ci-build-host.mjs",
+    "docs/CI.md"
+  ],
+  "limits": [
+    "This source reconciliation records implementation presence, not test/hosted/browser qualification."
+  ]
+}

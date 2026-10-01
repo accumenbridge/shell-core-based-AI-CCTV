@@ -1,0 +1,91 @@
+TAP version 13
+# Subtest: canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+ok 1 - canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+  ---
+  duration_ms: 7.2597
+  type: 'test'
+  ...
+# Subtest: fresh manager preparation writes only bounded enrollment inputs and rechecks authorization after canonical import
+ok 2 - fresh manager preparation writes only bounded enrollment inputs and rechecks authorization after canonical import
+  ---
+  duration_ms: 16.6956
+  type: 'test'
+  ...
+# Subtest: owned execution cleanup removes only exact copied-workspace junctions and quarantines changed targets
+ok 3 - owned execution cleanup removes only exact copied-workspace junctions and quarantines changed targets
+  ---
+  duration_ms: 29.9366
+  type: 'test'
+  ...
+# Subtest: one-use runtime gate is published without a post-publication lookup that can race its consumer
+ok 4 - one-use runtime gate is published without a post-publication lookup that can race its consumer
+  ---
+  duration_ms: 613.6241
+  type: 'test'
+  ...
+# Subtest: original runtime owner can reconcile a late close and retry a rolled-back settlement audit
+ok 5 - original runtime owner can reconcile a late close and retry a rolled-back settlement audit
+  ---
+  duration_ms: 44.5942
+  type: 'test'
+  ...
+# Subtest: public close bounds an unresolved monitor and retries incomplete or rolled-back exact-owner settlement
+ok 6 - public close bounds an unresolved monitor and retries incomplete or rolled-back exact-owner settlement
+  ---
+  duration_ms: 3.7298
+  type: 'test'
+  ...
+# Subtest: terminal capture drains a coalesced startup tail when the event file has no new bytes
+ok 7 - terminal capture drains a coalesced startup tail when the event file has no new bytes
+  ---
+  duration_ms: 9.0085
+  type: 'test'
+  ...
+# Subtest: terminal capture rejects disappearance of an established event channel without erasing native exit proof
+ok 8 - terminal capture rejects disappearance of an established event channel without erasing native exit proof
+  ---
+  duration_ms: 9.1305
+  type: 'test'
+  ...
+# Subtest: late semantic event errors remain separate from a matching native empty and helper-close proof
+ok 9 - late semantic event errors remain separate from a matching native empty and helper-close proof
+  ---
+  duration_ms: 7.4535
+  type: 'test'
+  ...
+# Subtest: runtime start preserves profile and admission rejection without creating unowned execution
+ok 10 - runtime start preserves profile and admission rejection without creating unowned execution
+  ---
+  duration_ms: 554.0811
+  type: 'test'
+  ...
+# Subtest: verified snapshot copy preflights every path and digest before creating its destination
+ok 11 - verified snapshot copy preflights every path and digest before creating its destination
+  ---
+  duration_ms: 6.0906
+  type: 'test'
+  ...
+# Subtest: runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+ok 12 - runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+  ---
+  duration_ms: 169.9018
+  type: 'test'
+  ...
+# Subtest: a failed canonical LocalAccess seed leaves repair-required evidence and never publishes enrollment completion
+ok 13 - a failed canonical LocalAccess seed leaves repair-required evidence and never publishes enrollment completion
+  ---
+  duration_ms: 19.8668
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1579.0479
+EXIT_CODE=0
+STARTED_UTC=2026-10-01T18:44:57.1679292Z
+ENDED_UTC=2026-10-01T18:44:58.8043378Z

@@ -32,7 +32,7 @@ if (build.status === 0 && !build.error && !build.signal) {
             .map(entry => `tests/${entry.name}`)
             .sort();
         if (discoveredFiles.length > 0)
-            tests = run(['--test', '--test-reporter=tap', ...discoveredFiles]);
+            tests = run(['--test', '--test-concurrency=1', '--test-reporter=tap', ...discoveredFiles]);
     } catch (error) {
         discoveryError = error;
     }

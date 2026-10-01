@@ -1,0 +1,14 @@
+{
+  "taskId": "KERNEL-CI-001",
+  "recordedAt": "2026-10-01T19:18:36.059Z",
+  "changes": [],
+  "newCandidatePaths": [
+    ".github/workflows/kernel-ci.yml",
+    ".github/workflows/kernel-native.yml",
+    "tools/ci-build-host.mjs",
+    "docs/CI.md"
+  ],
+  "limits": [
+    "This source reconciliation records implementation presence, not test/hosted/browser qualification."
+  ]
+}

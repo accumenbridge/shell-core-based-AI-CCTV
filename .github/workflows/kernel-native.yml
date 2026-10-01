@@ -1,0 +1,53 @@
+name: Manual Windows native qualification
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-native:
+    name: Windows native profile and full suite
+    runs-on: windows-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install locked dependencies
+        shell: cmd
+        run: npm ci
+      - name: Check selected PowerShell host using ordinary policy
+        shell: cmd
+        run: node tools/ci-build-host.mjs prepare
+      - name: Build and run the full suite
+        if: success()
+        shell: cmd
+        run: |
+          call npm test > "%RUNNER_TEMP%\kernel-test.log" 2>&1
+          set "TEST_EXIT_CODE=%ERRORLEVEL%"
+          node tools/ci-build-host.mjs summarize "%RUNNER_TEMP%\kernel-test.log" windows-native %TEST_EXIT_CODE%
+          set "SUMMARY_EXIT_CODE=%ERRORLEVEL%"
+          if not "%TEST_EXIT_CODE%"=="0" exit /b %TEST_EXIT_CODE%
+          exit /b %SUMMARY_EXIT_CODE%
+      - name: Upload selected nonprivate summary
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: windows-native-summary
+          path: |
+            .local/ci-host-preflight.json
+            .local/ci-test-summary.json
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Upload selected test TAP
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: windows-native-tap
+          path: ${{ runner.temp }}/kernel-test.tap
+          if-no-files-found: ignore
+          retention-days: 14

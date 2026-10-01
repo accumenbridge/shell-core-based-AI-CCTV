@@ -136,6 +136,47 @@ export class ArtifactStoreUnavailable extends Error {
 class PhysicalPublicationUnknown extends Error {}
 class KnownNoPublication extends Error {}
 
+type PublisherFailureCategory = 'CLOSE_TIMEOUT'|'TIMED_OUT'|'OUTPUT_OVERFLOW'|'SIGNAL_EXIT'|'MISSING_RECORD'|'MULTIPLE_RECORDS'|'NONCE_MISMATCH'|'MALFORMED_RECORD'|'EXIT_MISMATCH'|'UNEXPECTED_OUTPUT';
+interface RegistryPublisherFailureDiagnostics {
+  category:PublisherFailureCategory; elapsedMs:number; closeCode:number|null; closeSignal:NodeJS.Signals|null;
+  closeObserved:boolean; stdoutBytes:number; stdoutBytesCapped:boolean; stdoutSha256:string;
+  stderrBytes:number; stderrBytesCapped:boolean; stderrSummary:string;
+}
+const publisherDiagnosticsKey='__qbRegistryPublisherDiagnostics';
+function attachPublisherDiagnostics(error:PhysicalPublicationUnknown,diagnostics:RegistryPublisherFailureDiagnostics) {
+  Object.defineProperty(error,publisherDiagnosticsKey,{value:Object.freeze(diagnostics),enumerable:false});
+  return error;
+}
+
+function publisherFailureCategory(stdout:string,nonce:string,code:number|null,signal:NodeJS.Signals|null,overflow:boolean):PublisherFailureCategory {
+  if(overflow)return 'OUTPUT_OVERFLOW';
+  if(signal)return 'SIGNAL_EXIT';
+  const lines=stdout.split(/\r?\n/).filter(Boolean);
+  if(lines.length===0)return 'MISSING_RECORD';
+  if(lines.length!==1)return 'MULTIPLE_RECORDS';
+  const match=/^QB_REGISTRY_MOVE:([-_A-Za-z0-9]{16,64}):(MOVED|EXISTS|FAILED)$/.exec(lines[0]!);
+  if(!match)return lines[0]!.startsWith('QB_REGISTRY_MOVE:')?'MALFORMED_RECORD':'UNEXPECTED_OUTPUT';
+  if(match[1]!==nonce)return 'NONCE_MISMATCH';
+  const expectedCode=match[2]==='MOVED'?0:match[2]==='EXISTS'?3:1;
+  return code===expectedCode?'UNEXPECTED_OUTPUT':'EXIT_MISMATCH';
+}
+function redactedPublisherStderr(stderr:string,nonce:string,operationId:string,paths:readonly string[]):string {
+  let value=stderr.replaceAll(nonce,'[nonce]').replaceAll(operationId,'[operation]');
+  const variants=new Set<string>();
+  for(const path of paths)if(path){variants.add(path);variants.add(path.replaceAll('\\','/'));variants.add(path.replaceAll('/','\\'));}
+  for(const path of [...variants].sort((a,b)=>b.length-a.length))value=value.replace(new RegExp(path.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'),'[path]');
+  value=value.replace(/(["'])(?:[A-Za-z]:[\\/]|\\\\)[^"']+\1/g,'[path]')
+    .replace(/(?:[A-Za-z]:[\\/]|\\\\)[^\s"'<>|]+/g,'[path]')
+    .replace(/(?<![A-Za-z0-9])\/(?:[^\s"'<>|]+\/?)+/g,'[path]')
+    .replace(/[\0-\x08\x0B\x0C\x0E-\x1F\x7F]/g,' ').replace(/\s+/g,' ').trim();
+  let summary='';
+  for(const character of Array.from(value).reverse()) {
+    if(Buffer.byteLength(summary+character)>2048)break;
+    summary=character+summary;
+  }
+  return summary;
+}
+
 export function parseRegistryPublisherTranscript(stdout:string,nonce:string,code:number|null,signal:NodeJS.Signals|null,overflow=false):'MOVED'|'EXISTS'|'FAILED'|'UNKNOWN' {
   if(overflow||!/^[-_A-Za-z0-9]{16,64}$/.test(nonce))return 'UNKNOWN';
   const lines=stdout.split(/\r?\n/).filter(Boolean);
@@ -373,34 +414,50 @@ export class LocalArtifactStore {
     physicalDirectory(dirname(destination),false);
     checkPathPhysical(source,this.stagingRoot);
     if(process.platform==='win32'&&resolve(source).slice(0,2).toLowerCase()!==resolve(destination).slice(0,2).toLowerCase())throw new KnownNoPublication('Registry staging and object paths are not on the same volume');
-    const nonce=randomBytes(24).toString('base64url');
+    const nonce=randomBytes(24).toString('hex');
     authorize();
     return await new Promise((resolveResult,rejectResult)=>{
+      const startedAt=performance.now();
       const child=spawn(executable,['-NoLogo','-NoProfile','-NonInteractive','-File',script,registryRoot,operationId,artifactDigest,nonce],
         {cwd:this.rootEnvCwd(),env:this.minimalEnvironment(),shell:false,windowsHide:true,stdio:['ignore','pipe','pipe']});
-      let stdout='',stdoutBytes=0,stdoutOverflow=false,stderr='',settled=false,spawnError:Error|undefined,timedOut=false;
+      let stdout='',stdoutBytes=0,stdoutBytesCapped=false,stdoutOverflow=false,stderr='',stderrBytes=0,stderrBytesCapped=false;
+      let settled=false,spawnError:Error|undefined,timedOut=false,closeObserved=false,closeCode:number|null=null,closeSignal:NodeJS.Signals|null=null;
+      const stdoutHash=createHash('sha256');
+      const boundedAdd=(current:number,amount:number)=>current>Number.MAX_SAFE_INTEGER-amount?Number.MAX_SAFE_INTEGER:current+amount;
+      const diagnostic=(category:PublisherFailureCategory):RegistryPublisherFailureDiagnostics=>({
+        category,elapsedMs:Math.max(0,Math.round(performance.now()-startedAt)),closeCode,closeSignal,closeObserved,
+        stdoutBytes,stdoutBytesCapped,stdoutSha256:stdoutHash.copy().digest('hex'),stderrBytes,stderrBytesCapped,
+        stderrSummary:redactedPublisherStderr(stderr,nonce,operationId,[dirname(this.root),this.root,executable,script,registryRoot,source,destination])
+      });
+      const unknown=(message:string,category:PublisherFailureCategory)=>attachPublisherDiagnostics(new PhysicalPublicationUnknown(message),diagnostic(category));
       const closed=new Promise<void>(resolveClosed=>child.once('close',()=>resolveClosed()));
       this.activeHelpers.add(closed);
       void closed.finally(()=>this.activeHelpers.delete(closed));
       const timer=setTimeout(()=>{timedOut=true;child.kill();},10000);
       let hardTimer:NodeJS.Timeout;
       const finish=(error?:Error,value?:'MOVED'|'EXISTS')=>{if(settled)return;settled=true;clearTimeout(timer);clearTimeout(hardTimer);error?rejectResult(error):resolveResult(value!);};
-      hardTimer=setTimeout(()=>{if(!settled)finish(new PhysicalPublicationUnknown('The fixed publisher did not close after termination was requested'));},15000);
+      hardTimer=setTimeout(()=>{if(!settled)finish(unknown('The fixed publisher did not close after termination was requested','CLOSE_TIMEOUT'));},15000);
       child.stdout?.on('data',chunk=>{
-        stdoutBytes=Math.min(4097,stdoutBytes+chunk.length);
+        const next=boundedAdd(stdoutBytes,chunk.length);stdoutBytesCapped||=next===Number.MAX_SAFE_INTEGER&&stdoutBytes!==next;stdoutBytes=next;
+        stdoutHash.update(chunk);
         if(stdoutBytes>4096)stdoutOverflow=true;
         if(!stdoutOverflow)stdout+=chunk.toString('utf8');
       });
-      child.stderr?.on('data',chunk=>{stderr=(stderr+chunk.toString('utf8')).slice(-4096);});
+      child.stderr?.on('data',chunk=>{
+        const next=boundedAdd(stderrBytes,chunk.length);stderrBytesCapped||=next===Number.MAX_SAFE_INTEGER&&stderrBytes!==next;stderrBytes=next;
+        stderr=(stderr+chunk.toString('utf8')).slice(-4096);
+      });
       child.once('error',error=>{spawnError=error;});
       child.once('close',(code,signal)=>{
+        closeObserved=true;closeCode=code;closeSignal=signal;
         if(spawnError&&!child.pid){finish(new KnownNoPublication('The fixed local registry publisher could not start'));return;}
-        if(timedOut){finish(new PhysicalPublicationUnknown('The fixed local registry publisher exceeded its bounded wait'));return;}
+        if(timedOut){finish(unknown('The fixed local registry publisher exceeded its bounded wait','TIMED_OUT'));return;}
         const proof=parseRegistryPublisherTranscript(stdout,nonce,code,signal,stdoutOverflow);
         if(proof==='MOVED'){finish(undefined,'MOVED');return;}
         if(proof==='EXISTS'){finish(undefined,'EXISTS');return;}
         if(proof==='FAILED'){finish(new KnownNoPublication('The fixed registry publisher reported a no-publication failure'));return;}
-        finish(new PhysicalPublicationUnknown(stdoutOverflow?'The fixed registry publisher exceeded its bounded proof output':'The fixed registry publisher did not provide one valid physical result proof'));
+        const category=publisherFailureCategory(stdout,nonce,code,signal,stdoutOverflow);
+        finish(unknown(stdoutOverflow?'The fixed registry publisher exceeded its bounded proof output':'The fixed registry publisher did not provide one valid physical result proof',category));
       });
     });
   }
