@@ -3,7 +3,7 @@
   "projectId": "quadbridge-core-frameworks",
   "title": "Quadbridge Product Studio",
   "planRevision": 15,
-  "updatedAt": "2026-10-01T18:23:11.810Z",
+  "updatedAt": "2026-10-01T18:37:28.275Z",
   "intentBasis": "User authorized the local full architecture program and on 2026-10-01 requested a reusable architecture-first Brain with visual planning, core prioritization and continuous review. Existing source architecture and bounded execution contracts remain authoritative. User 2026-10-01 explicitly created a complete-core actual realtime goal; checkpoint28 selects the continuous local core journey and grounded Brain readiness maintenance. User2026-10-01 ok proceed adopts the next bounded reliability/CI increment after source-grounded verdict review. Preserve local-core completion and unresolved historical startup cause.",
   "vision": {
     "destination": "Build and operate reviewed products through a product-neutral Studio, with exact composition, immutable artifacts, domain ownership and understandable user journeys.",
@@ -299,7 +299,7 @@
       "id": "kernel-ci-task",
       "path": ".brain/tasks/KERNEL-CI-001.md",
       "role": "current authorized finite task",
-      "sha256": "c39c3d49988cd0fc7d4d7a9223cff9c56a67a3bd7393c27c3feec3ed6b158dc6"
+      "sha256": "9ac55e9450c6552b46125611a838b79963e0b252cf7721153ca49d0e3aa59ddd"
     },
     {
       "id": "kernel-ci-plan",
@@ -354,6 +354,12 @@
       "path": "docs/CI.md",
       "role": "Current bounded CI implementation; actual hosted execution remains separately reported",
       "sha256": "59bd64ce2628f0728784806017fb9c63cb9482ff5879269b98103e7c55125a3d"
+    },
+    {
+      "id": "kernel-ci-admission-test",
+      "path": "tests/runtime-manager-preparation.test.mjs",
+      "role": "Actual hosted failure diagnosed; bounded platform/admission refusal test repair",
+      "sha256": "7a0434f5d1aba7f7434a8a16112e6eda53c0db97b6da380ad2f815942d0ab40c"
     }
   ],
   "nodes": [
@@ -1402,7 +1408,8 @@
         "kernel-ci-workflow",
         "kernel-ci-native-workflow",
         "kernel-ci-host-helper",
-        "kernel-ci-guide"
+        "kernel-ci-guide",
+        "kernel-ci-admission-test"
       ],
       "id": "M-KERNEL-CI",
       "kind": "milestone",

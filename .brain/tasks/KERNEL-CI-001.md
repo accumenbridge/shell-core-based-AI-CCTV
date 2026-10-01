@@ -44,3 +44,19 @@ does not establish hosted success. Do not copy credentials or databases into log
 
 Later production-profile selection, adapter breadth and additional screens are
 deferred until the reliability baseline is qualified. Preserve all older results.
+
+## Actual hosted failure and bounded test repair
+
+Hosted Ubuntu run36906870497 at head86e1b09 (merge tree identical to that head)
+completed305 tests:270pass,1fail,34platformskips,exit1. The sole failure in
+tests/runtime-manager-preparation.test.mjs expected its occupied-slot double to be
+reached on Linux, but the correct Windows-only host guard rejected before artifact
+verification or admission. Sol independently diagnosed this exact ordering.
+
+Add tests/runtime-manager-preparation.test.mjs to sole Luna ownership. Rename the
+existing case for profile/admission rejection. POSIX asserts typed RUNTIME_UNAVAILABLE
+and zero artifact verification, admission or settlement plus no captured owner.
+Windows retains the occupied-slot error and every existing no-data/no-execution/
+no-settlement assertion. Preserve the application guard; no bypass, new adapter or
+platform skip. Fresh build and current native/preparation checks precede full suite
+and another actual Ubuntu CI run. Prior failed and interrupted evidence stays intact.

@@ -7,7 +7,7 @@ import { existsSync, lstatSync, mkdtempSync, mkdirSync, readdirSync, rmSync, sym
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { canonical } from '@quadbridge/contracts';
-import { adaptCanonicalLocalConfiguration, completedRuntimeEnrollment, copyVerifiedRuntimeSnapshot, enrollOrVerifyRuntimeAccess, linkCopiedRuntimeWorkspaces, ManagedRuntimeManager, prepareRuntimeEnrollment, runtimeDataDirectory, runtimePlanIdentity, runtimePrivateRoot } from '../apps/control-plane/dist/runtime-manager.js';
+import { adaptCanonicalLocalConfiguration, completedRuntimeEnrollment, copyVerifiedRuntimeSnapshot, enrollOrVerifyRuntimeAccess, linkCopiedRuntimeWorkspaces, ManagedRuntimeManager, prepareRuntimeEnrollment, RuntimePreparationError, runtimeDataDirectory, runtimePlanIdentity, runtimePrivateRoot } from '../apps/control-plane/dist/runtime-manager.js';
 
 const sha256=value=>createHash('sha256').update(value).digest('hex');
 const bytesEntry=(path,value)=>{const bytes=Buffer.from(canonical(value));return {path,bytes,digest:sha256(bytes),sizeBytes:bytes.length};};
@@ -306,25 +306,40 @@ test('late semantic event errors remain separate from a matching native empty an
   assert.equal(proof.helperClosed,true);
 });
 
-test('runtime start preserves an admission failure and does not settle or create an unowned execution',async()=>{
+test('runtime start preserves profile and admission rejection without creating unowned execution',async()=>{
   const plan={product:{id:'sample-product',version:'1.2.3'},modules:[{id:'knowledge'}],bindings:[],requiresWorker:false};
   const profile={id:'quadbridge.local-developer.v1',profile:'loopback-developer-only',defaultTenants:[],providerSeeds:[],connections:[]};
   const planEntry=bytesEntry('.artifacts/sample-product/plan.json',plan),profileEntry=bytesEntry('profiles/local-developer.json',profile);
-  const artifactDigest='c'.repeat(64);let settleCalls=0;
+  const artifactDigest='c'.repeat(64);let settleCalls=0,beginCalls=0,verifyCalls=0;
   let preparedInstance;
   const store={
     managedRuntimeCommandForRequest:()=>undefined,
     artifactReleases:()=>[{productId:'sample-product',version:'1.2.3',artifactDigest,originatingActorId:'actor-source'}],
-    beginManagedRuntimeStart(input){preparedInstance=input.instanceId;throw new Error('occupied physical slot fixture');},
+    beginManagedRuntimeStart(input){beginCalls++;preparedInstance=input.instanceId;throw new Error('occupied physical slot fixture');},
     settleManagedRuntimePreparation(){settleCalls++;throw new Error('must not settle an admission this process did not obtain');}
   };
-  const artifacts={verifyArtifact:async()=>({artifact:{digest:artifactDigest,productId:'sample-product',version:'1.2.3',originatingActorId:'actor-source'},
-    snapshot:{entries:[planEntry,profileEntry],snapshotDigest:artifactDigest,fileCount:2,sizeBytes:planEntry.sizeBytes+profileEntry.sizeBytes}})};
+  const artifacts={verifyArtifact:async()=>{verifyCalls++;return {artifact:{digest:artifactDigest,productId:'sample-product',version:'1.2.3',originatingActorId:'actor-source'},
+    snapshot:{entries:[planEntry,profileEntry],snapshotDigest:artifactDigest,fileCount:2,sizeBytes:planEntry.sizeBytes+profileEntry.sizeBytes}};}};
   const manager=ManagedRuntimeManager.create(project,store,artifacts);
-  await assert.rejects(manager.start({productId:'sample-product',version:'1.2.3',requestKey:'admission-failure-key'},'actor-runtime',()=>true),/occupied physical slot fixture/);
-  assert.equal(settleCalls,0,'a rejected transaction did not admit this operation as physical owner');
-  assert.equal(existsSync(runtimeDataDirectory(project,preparedInstance,artifactDigest)),false,'no enrollment files are written before durable admission');
-  assert.equal(existsSync(join(project,'.local','platform-runtime-executions',preparedInstance)),false,'no execution directory is created before durable admission');
+  if(process.platform==='win32'){
+    await assert.rejects(manager.start({productId:'sample-product',version:'1.2.3',requestKey:'admission-failure-key'},'actor-runtime',()=>true),/occupied physical slot fixture/);
+    assert.equal(verifyCalls,1,'the supported Windows host verifies the promoted artifact before the occupied-slot rejection');
+    assert.equal(beginCalls,1);
+    assert.equal(settleCalls,0,'a rejected transaction did not admit this operation as physical owner');
+    assert.equal(existsSync(runtimeDataDirectory(project,preparedInstance,artifactDigest)),false,'no enrollment files are written before durable admission');
+    assert.equal(existsSync(join(project,'.local','platform-runtime-executions',preparedInstance)),false,'no execution directory is created before durable admission');
+  }else{
+    await assert.rejects(manager.start({productId:'sample-product',version:'1.2.3',requestKey:'admission-failure-key'},'actor-runtime',()=>true),error=>{
+      assert.ok(error instanceof RuntimePreparationError);
+      assert.equal(error.code,'RUNTIME_UNAVAILABLE');
+      assert.match(error.message,/selected Windows process-owner profile/);
+      return true;
+    });
+    assert.equal(verifyCalls,0,'unsupported hosts fail before promoted-artifact verification');
+    assert.equal(beginCalls,0,'unsupported hosts never request durable admission');
+    assert.equal(settleCalls,0);
+    assert.equal(preparedInstance,undefined,'no unowned runtime identity was prepared');
+  }
 });
 
 test('verified snapshot copy preflights every path and digest before creating its destination',t=>{

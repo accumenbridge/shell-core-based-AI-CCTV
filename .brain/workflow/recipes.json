@@ -134,6 +134,20 @@
         "KERNEL-CI"
       ],
       "evidenceScope": "Helper syntax and separately reviewed workflow configuration; hosted execution qualification remains separate."
+    },
+    {
+      "id": "kernel-portable-ci",
+      "argv": [
+        "npm",
+        "test"
+      ],
+      "cwd": ".",
+      "description": "Actual hosted Ubuntu fresh build and full suite; GitHub commit/tree and platform skips recorded separately.",
+      "criterionIds": [
+        "KERNEL-CI",
+        "BRAIN-REGRESSION"
+      ],
+      "evidenceScope": "Portable hosted execution only; does not qualify Windows native/browser/provider/customer production."
     }
   ]
 }

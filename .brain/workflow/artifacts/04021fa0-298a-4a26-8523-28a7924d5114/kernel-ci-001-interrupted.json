@@ -1,0 +1,40 @@
+{
+  "status": "attempted-interrupted-unqualified",
+  "command": "node --test --test-concurrency=1 --test-reporter=tap tests/build-worker-process.test.mjs tests/runtime-protocol.test.mjs",
+  "toolSessionId": 71059,
+  "observedToolExitCode": 1,
+  "interruption": "Ctrl-C sent to this exact exec session after root directed native checks to hold for workflow correction.",
+  "build": {
+    "path": ".local/kernel-ci-001-build.log",
+    "observedExitCode": 0,
+    "sha256": "BB447B1012430C029ECA58A265AF2F8E3AABA014E453A259C0DA15F5F226775B"
+  },
+  "rawTestLog": {
+    "path": ".local/kernel-ci-001-native.log",
+    "bytes": 16,
+    "sha256": "B4610200300FD28738C70A3EE38D133FB65D916DABBC55044A856780EE2676F1",
+    "contents": "TAP version 13",
+    "containsTestResult": false
+  },
+  "ownedFixture": {
+    "present": true,
+    "privateTempRoot": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-build-runner-WabIAl",
+    "sourceCopyPresent": true,
+    "descendantMarkerPresent": false,
+    "descendantMarkerValid": false,
+    "processesWithExactFixtureRootInCommandLine": 0,
+    "retainedWithoutDeletion": true,
+    "ownerCloseRecordObserved": false,
+    "databaseObservation": {
+      "openedReadOnly": true,
+      "closed": true,
+      "priorAttempt": "CANCELLED/CLEAN",
+      "laterAttempt": "RUNNING/PENDING",
+      "laterPhase": "Checking reviewed source and private toolchain",
+      "nativeMarkerAbsent": true,
+      "matchingLiveProcessCommandLines": 0,
+      "originalWorkerCloseRecord": "not observed"
+    }
+  },
+  "disposition": "The exec session ended and no process command line referenced this exact temp root. The fixture was retained. Read-only database facts show a prior clean cancellation and a later pre-native RUNNING/PENDING attempt; its original owner close was not recorded, so full fixture cleanup is unproven. No PID was terminated."
+}
