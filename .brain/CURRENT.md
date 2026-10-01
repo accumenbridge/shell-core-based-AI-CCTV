@@ -1,22 +1,22 @@
 # Current workflow checkpoint
 
-Revision: 46  
-Event: d1c23f81-dbfc-4535-bd8d-6267beb2b1b3  
-Recorded: 2026-10-01T20:11:47.205Z  
-Reported actor: /root reconciled actual final evidence with separate Sol/high independent acceptance
+Revision: 55  
+Event: f80b8533-b2e5-415e-a6ec-4301c12f0e64  
+Recorded: 2026-10-01T21:00:21.467Z  
+Reported actor: /root reconciled original complete Windows close and repaired hosted Linux exit with separate Sol exact acceptance
 
 This generated view summarizes immutable project-local records. Reported run and review fields are not authenticated proof of execution, reviewer identity, model identity, or external acceptance.
 
 ## Mapped platform work
 
-Task: KERNEL-CI-001
+Task: KERNEL-CI-002
 Status: ACCEPTED
-Candidate: 0da31299fc131d6c049c77781a8bd3160819af7211a151cdab65c8ee89bd7a8b
-Next action: Publish verified reliability/CI increment to authorized shell-frameworks repository. Next core increment is selecting one concrete hosted operating profile; current local/portable acceptance does not qualify production.
+Candidate: 2e935dca619d736a36b9c33862dc9321b66fda230881dae12406ea3061d10cc3
+Next action: Publish independently accepted startup ordering repair to authorized repository and verify automatic main CI. Next core program step selects one concrete production operating profile; this acceptance remains local and portable only.
 Blockers: none reported
-Run records: b6d67892-c8df-4d57-9572-73f6022d7b6f, 0aca7f8b-8727-4cd7-adc6-5df3ddf7646e, e58dc7a3-933d-47fe-b2a2-e5382e8c2c77, 0664638d-855f-43c9-9146-a1b3383ae8d9, 08e1c992-ad5f-43cc-b50d-681831d55936
-Review records: 943f7092-72ef-4040-b40d-8ed2778219d6
-Gates: historical-local-full=FAILED, controlled-positional-binding=PASSED, historical-interrupted-owner=UNKNOWN, current-full-command=PASSED, hosted-portable=PASSED, hosted-windows-native=NOT_RUN, browser-provider-production=NOT_RUN
+Run records: c95701f7-64e7-4bca-8b16-c7eed5362a91, 15dfa926-d326-44b3-9451-163d0e623012, f1e92c5c-8032-4af3-bf47-e05034060ce9
+Review records: f0fb5ef8-94a1-46b4-a933-14751fedc72e
+Gates: captured-startup-failure=FAILED, current-hosted-portable=PASSED, current-windows-full=PASSED, hosted-native-browser-provider-production=NOT_RUN, historical-uncertain-owner=UNKNOWN
 
 ## Maintenance work
 

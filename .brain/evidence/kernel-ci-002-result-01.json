@@ -1,0 +1,73 @@
+{
+  "schema": "quadbridge.kernel-ci-result.v1",
+  "taskId": "KERNEL-CI-002",
+  "candidateDigest": "2e935dca619d736a36b9c33862dc9321b66fda230881dae12406ea3061d10cc3",
+  "contractDigest": "1d1fe0fdd0dc8e805086a2019c78c861d1bb8eb3ddfdd28c2a0c9bce168ec3c9",
+  "implementer": "/root/repo_brain_validation (selected Luna/xhigh Brawn)",
+  "reviewer": "/root/repo_brain_architect (selected Sol/high Brain)",
+  "modelIdentity": "reported session role selection, not authenticated by repository files",
+  "capturedFailure": {
+    "recordId": "ffb56507-ff61-4a44-8740-fa140c025f46",
+    "url": "https://github.com/accumenbridge/shell-frameworks/actions/runs/36922358858",
+    "category": "DATABASE_BUSY",
+    "startupElapsedMs": 311,
+    "exitCode": 1,
+    "closeCode": 1,
+    "rawStderrPrivate": true,
+    "exactDatabaseAndTable": "UNKNOWN"
+  },
+  "repair": "Demo starts web first and waits for fixed loopback API readiness within its startup window, then launches the required separate worker with the same reviewed configuration and principals:[]; failed startup calls existing owned-child cleanup. SQLite transactions, timeouts, module owners, roles, data identity and security policy remain unchanged. Safe startup classifications are emitted while raw stderr and demo stdout credentials remain private.",
+  "actualChecks": {
+    "freshBuild": {
+      "exitCode": 0,
+      "recordId": "c95701f7-64e7-4bca-8b16-c7eed5362a91"
+    },
+    "completeWindows": {
+      "exitCode": 0,
+      "signal": null,
+      "tests": 308,
+      "passed": 307,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 1,
+      "todo": 0,
+      "originalProcessClosed": true,
+      "candidateUnchanged": true,
+      "recordId": "f1e92c5c-8032-4af3-bf47-e05034060ce9",
+      "coverageGap": "Named file-symlink fixture denied creation by Windows EPERM remains unqualified."
+    },
+    "hostedLinux": {
+      "url": "https://github.com/accumenbridge/shell-frameworks/actions/runs/36924062460",
+      "exitCode": 0,
+      "tests": 305,
+      "passed": 271,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 34,
+      "todo": 0,
+      "testedMergeTreeEqualsSubmittedHead": true,
+      "recordId": "15dfa926-d326-44b3-9451-163d0e623012",
+      "coverageGap": "34 individually named Windows/profile skips remain unqualified."
+    },
+    "existingFocusedStudioJourney": {
+      "tests": 1,
+      "passed": 1,
+      "exitCode": 0,
+      "includes": "Generated module, composed product, build, launch, persistent record, real worker receipt and restart with retained mode."
+    }
+  },
+  "limitations": [
+    "Historical pre-diagnostics startup causes and exact failing database/table remain UNKNOWN; current captured DATABASE_BUSY plus verified startup overlap grounds the ordering repair.",
+    "Skipped coverage is BLOCKED even when the complete command exits0. No filtering or forced platform pass.",
+    "Hosted Windows native, fresh browser-policy, live provider, hosted identity, customer production and external deployment are not qualified by this increment.",
+    "Earlier interrupted original owner close remains unobserved; no speculative PID control or retained fixture cleanup.",
+    "Independent final review and acceptance are recorded separately in the canonical checkpoint, not inferred from test counts."
+  ],
+  "independentReviewId": "f0fb5ef8-94a1-46b4-a933-14751fedc72e",
+  "acceptanceCheckpoint": {
+    "schema": "brain.current-pointer.v1",
+    "revision": 55,
+    "eventId": "f80b8533-b2e5-415e-a6ec-4301c12f0e64",
+    "eventSha256": "a441c45c3a0665e96ee96dabf75ae0e844723585f200720b743b08bb0760f8a9"
+  }
+}

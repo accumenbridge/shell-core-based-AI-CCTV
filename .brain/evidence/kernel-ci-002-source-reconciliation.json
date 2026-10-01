@@ -1,0 +1,16 @@
+{
+  "taskId": "KERNEL-CI-002",
+  "recordedAt": "2026-10-01T20:46:18.600Z",
+  "changes": [
+    {
+      "id": "kernel-startup-demo",
+      "path": "tools/demo.mjs",
+      "before": "fd370eb6e9119d04bcb70ea5170df1fac33024b9a0fa49cdebd6b533316e56e1",
+      "after": "aad601f0181c56a8958fd0ce0c8d4c243950fc01e1237c08a2135c191e8faa7f",
+      "reason": "Captured DATABASE_BUSY plus source-verified concurrent initialization; separate Sol-reviewed demo-only startup ordering repair."
+    }
+  ],
+  "limits": [
+    "Source reconciliation records current evidence-grounded startup ordering repair, not test qualification or historical failing database attribution."
+  ]
+}

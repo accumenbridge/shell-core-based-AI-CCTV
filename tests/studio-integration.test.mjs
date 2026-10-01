@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {randomUUID} from 'node:crypto';
 import {join} from 'node:path';
 import {spawnSync} from 'node:child_process';
 import vm from 'node:vm';
@@ -55,7 +56,32 @@ test('Acceptance: generate module → dynamic Studio → compose new name → bu
     const html=await readFile(join(root,'OPEN_PLATFORM.html'),'utf8');const moduleView=htmlContext(html,'modules');assert.match(moduleView.html,/Checklist/);
     const home=htmlContext(html,'overview');assert.match(home.html,/Facility studio acceptance/);
     const exported=home.ctx.QBPreviewModel.compose('second-new','Another',['checklist','handoff']);assert.ok(exported.modules.some(m=>m.id==='checklist'));
-    let launched=await call(studio,cookie,'/products/facility-new/launch','POST',{confirm:true});assert.equal(launched.status,200,JSON.stringify(launched.body));assert.equal(launched.body.status,'RUNNING');
+    const preserveLaunchFailure=async response=>{
+        if(response.status===200)return;
+        const state=studio.manager.running.get('facility-new'),facts=state?.launchDiagnostics;
+        if(!facts){t.diagnostic(JSON.stringify({evidenceRef:null,category:'STARTUP_EVIDENCE_UNAVAILABLE',httpStatus:response.status}));return;}
+        const evidenceRef=randomUUID(),directory=join(ROOT,'.local','studio-startup-evidence');let privateEvidenceSaved=false;
+        try {
+            await mkdir(directory,{recursive:true,mode:0o700});
+            const privateRecord={schema:1,evidenceRef,productId:'facility-new',attempt:facts};
+            await writeFile(join(directory,`${evidenceRef}.json`),`${JSON.stringify(privateRecord)}\n`,{flag:'wx',mode:0o600});
+            privateEvidenceSaved=true;
+        } catch { /* report capture failure without replacing the original acceptance result */ }
+        const code=facts.firstSpawnError?.code;
+        const safeCode=typeof code==='string'&&/^[A-Z0-9_]{1,64}$/.test(code)?code:typeof code==='number'?String(code):null;
+        const safeSignal=value=>typeof value==='string'&&/^SIG[A-Z0-9]+$/.test(value)?value:null;
+        const safeStderrCategory=['PORT_IN_USE','DATABASE_BUSY','MODULE_NOT_FOUND','SQLITE_ERROR','UNCLASSIFIED_STDERR','NO_STDERR'].includes(facts.stderrCategory)?facts.stderrCategory:'UNCLASSIFIED_STDERR';
+        t.diagnostic(JSON.stringify({evidenceRef,category:'APPLICATION_STARTUP_FAILED',httpStatus:response.status,
+            phase:['STAGING_SNAPSHOT','VALIDATE_LOCAL_PLAN','RESERVE_LOOPBACK_PORT','SPAWN_APPLICATION','WAIT_API_READINESS','API_READY'].includes(facts.phase)?facts.phase:'OTHER',
+            elapsedMs:Number.isInteger(facts.elapsedMs)?facts.elapsedMs:null,readiness:facts.readiness==='API_READY'?'API_READY':'NOT_READY',
+            firstSpawnErrorObserved:Boolean(facts.firstSpawnError),firstSpawnErrorCode:safeCode,
+            stderrCategory:safeStderrCategory,
+            exitObserved:facts.exitObserved===true,exitCode:Number.isInteger(facts.exitCode)?facts.exitCode:null,exitSignal:safeSignal(facts.exitSignal),
+            closeObserved:facts.closeObserved===true,closeCode:Number.isInteger(facts.closeCode)?facts.closeCode:null,closeSignal:safeSignal(facts.closeSignal),
+            stderrBytes:Number.isSafeInteger(facts.stderrBytes)?facts.stderrBytes:null,stderrCapturedBytes:Number.isSafeInteger(facts.stderrCapturedBytes)?facts.stderrCapturedBytes:null,
+            stderrTruncated:facts.stderrTruncated===true,stderrSha256:/^[a-f0-9]{64}$/.test(facts.stderrSha256)?facts.stderrSha256:null,privateEvidenceSaved}));
+    };
+    let launched=await call(studio,cookie,'/products/facility-new/launch','POST',{confirm:true});await preserveLaunchFailure(launched);assert.equal(launched.status,200,JSON.stringify(launched.body));assert.equal(launched.body.status,'RUNNING');
     let state=studio.manager.running.get('facility-new');const credentials=JSON.parse(await readFile(join(state.data,'developer-credentials.json'),'utf8'));
     const login=async(url)=>{const r=await fetch(url+'/api/session',{method:'POST',headers:{Origin:url,'Content-Type':'application/json'},body:JSON.stringify({username:'admin',password:credentials.admin})});assert.equal(r.status,200);return r.headers.get('set-cookie').split(';')[0];};
     let appUrl=launched.body.url,session=await login(appUrl);
@@ -68,7 +94,7 @@ test('Acceptance: generate module → dynamic Studio → compose new name → bu
     assert.equal(handoffs.items[0].outcome,'DESTINATION_COMMITTED');assert.equal(handoffs.items[0].acceptance.receipt.destination.productId,'facility-new');assert.equal((await api('/api/requests')).items.length,1);
     await api('/api/modules/mode','POST',{moduleId:'service-desk',mode:'read-only'},'pause');assert.equal((await api('/api/handoffs/options')).connection.state,'BLOCKED');
     await call(studio,cookie,'/products/facility-new/stop','POST',{confirm:true});
-    launched=await call(studio,cookie,'/products/facility-new/launch','POST',{confirm:true});assert.equal(launched.status,200);appUrl=launched.body.url;session=await login(appUrl);
+    launched=await call(studio,cookie,'/products/facility-new/launch','POST',{confirm:true});await preserveLaunchFailure(launched);assert.equal(launched.status,200);appUrl=launched.body.url;session=await login(appUrl);
     assert.equal((await api('/api/checklist')).items.length,1);assert.equal((await api('/api/requests')).items.length,1);
     assert.equal((await api('/api/handoffs/options')).connection.state,'BLOCKED','Restart must not restore removed authority/mode');
     assert.equal((await api('/api/handoffs')).items[0].outcome,'DESTINATION_COMMITTED','Existing receipt remains true while new actions are blocked');

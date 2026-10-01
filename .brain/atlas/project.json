@@ -2,8 +2,8 @@
   "schema": "brain.atlas.v1",
   "projectId": "quadbridge-core-frameworks",
   "title": "Quadbridge Product Studio",
-  "planRevision": 16,
-  "updatedAt": "2026-10-01T19:49:38.663Z",
+  "planRevision": 18,
+  "updatedAt": "2026-10-01T20:46:18.598Z",
   "intentBasis": "User authorized the local full architecture program and on 2026-10-01 requested a reusable architecture-first Brain with visual planning, core prioritization and continuous review. Existing source architecture and bounded execution contracts remain authoritative. User 2026-10-01 explicitly created a complete-core actual realtime goal; checkpoint28 selects the continuous local core journey and grounded Brain readiness maintenance. User2026-10-01 ok proceed adopts the next bounded reliability/CI increment after source-grounded verdict review. Preserve local-core completion and unresolved historical startup cause.",
   "vision": {
     "destination": "Build and operate reviewed products through a product-neutral Studio, with exact composition, immutable artifacts, domain ownership and understandable user journeys.",
@@ -372,6 +372,30 @@
       "path": "tests/control-plane-artifacts.test.mjs",
       "sha256": "e166e60b0960304d609f600ca10139e26b0b5052b946e0b98a9e6ba3a706c8d1",
       "role": "Existing real Desk journey with explicit preservation of original publication uncertainty"
+    },
+    {
+      "id": "kernel-startup-task",
+      "path": ".brain/tasks/KERNEL-CI-002.md",
+      "role": "Actual post-merge generated-product startup failure; bounded owning evidence followup",
+      "sha256": "c6aa6690ad26051bbd6a3959efa3b9dc9d7416587bb43e9dce5129bfb565584c"
+    },
+    {
+      "id": "kernel-startup-owner",
+      "path": "tools/studio-manager.mjs",
+      "role": "Actual post-merge generated-product startup failure; bounded owning evidence followup",
+      "sha256": "efcf90f8f3391ee6a848b325528793e0e8771e5e185f9e3d1bbc2e4005f34545"
+    },
+    {
+      "id": "kernel-startup-journey",
+      "path": "tests/studio-integration.test.mjs",
+      "role": "Actual post-merge generated-product startup failure; bounded owning evidence followup",
+      "sha256": "ef8516d93e16b33fe14e9d1a6bf54c811c6a589ee75ceef3b46ad03db9c0cd70"
+    },
+    {
+      "id": "kernel-startup-demo",
+      "path": "tools/demo.mjs",
+      "role": "Captured DATABASE_BUSY plus verified concurrent initialization permits demo-only ordering repair",
+      "sha256": "aad601f0181c56a8958fd0ce0c8d4c243950fc01e1237c08a2135c191e8faa7f"
     }
   ],
   "nodes": [
@@ -1423,12 +1447,16 @@
         "kernel-ci-guide",
         "kernel-ci-admission-test",
         "kernel-ci-registry-owner",
-        "kernel-ci-registry-journey"
+        "kernel-ci-registry-journey",
+        "kernel-startup-task",
+        "kernel-startup-owner",
+        "kernel-startup-journey",
+        "kernel-startup-demo"
       ],
       "id": "M-KERNEL-CI",
       "kind": "milestone",
       "title": "Qualify repeatable kernel checks and configure CI",
-      "summary": "Current bounded stability increment; full-suite success required, hosted execution status separate from configuration.",
+      "summary": "Core reliability followup preserves owning evidence for actual main CI generated-product startup failure; historical001 acceptance remains scoped.",
       "links": [
         "J-KERNEL-CI",
         "C-KERNEL-CI",
@@ -1437,7 +1465,8 @@
       "acceptance": [
         "Actual descendant heartbeat, cancellation, timeout, native protocol and positive cleanup assertions pass with retained limits and owning-state diagnostics.",
         "Reviewed pinned read-only portable/native CI, run-local host identity, ordinary policy preflight, bounded orchestration and selected nonprivate evidence output.",
-        "Fresh build and complete ordinary npm test exit0 with named skips, final before/after source identity and independent review."
+        "Fresh build and complete ordinary npm test exit0 with named skips, final before/after source identity and independent review.",
+        "Preserve bounded private startup evidence before cleanup, safe error categories and original exit/close facts without startup retries or historical causal claims."
       ]
     },
     {
