@@ -1,0 +1,185 @@
+{
+  "schema": "brain.actual-task-evidence.v1",
+  "task": "PLATFORM-002",
+  "checkpoint": "PLATFORM-002-ACCEPTED",
+  "status": "ACCEPTED_FOR_LOCAL_BUILD_EXPORT_SCOPE",
+  "date": "2026-10-01",
+  "candidate": {
+    "pre_task_git_tree": "491456e3a6ea53ab2e8ff9384b53ca6197e45fad",
+    "accepted_code_git_tree": "d1d645ed13768b182d37dd1757d78913bccc6cd7",
+    "git_tree_scope": "Local index source/profile diff anchor; not a commit or canonical Brain snapshot.",
+    "commit": null,
+    "source_fingerprint": "46950c47decc2cd50a8999e336aa7130f1d1693642e0506547a835c9da57b0af",
+    "reviewed_build_input_fingerprint": "889313656d19a3924e7a2e4ccf78d5eb60aeaaa91d95ae834bea44a56d4ebf8f",
+    "fingerprint_scopes": "verify-core maintained source includes tests/docs; worker/catalogue reviewed input closure is independently matched, intentionally narrower.",
+    "verified_at_utc": "2026-09-30T19:29:35.618Z",
+    "working_tree_is_uncommitted": true
+  },
+  "environment": {
+    "os": "Windows",
+    "node": "v24.19.0",
+    "npm": "12.1.0",
+    "typescript": "5.8.3",
+    "python": "3.14.6",
+    "playwright": "1.60.0",
+    "browser": "Installed Google Chrome headless",
+    "node_22_qualification": "NOT_RUN",
+    "build_host": {
+      "kind": "powershell7-file-host",
+      "version": "7.6.5",
+      "policy": "RemoteSigned",
+      "sha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+      "selection": "Explicit private local profile, normal -File invocation; no policy edits/flags, global config, installation or silent fallback."
+    }
+  },
+  "roles": {
+    "planning_review": {
+      "agent": "repo_brain_architect",
+      "dispatch_model": "gpt-6.1-sol",
+      "reasoning_effort": "high"
+    },
+    "additional_review": {
+      "agent": "resume_probe",
+      "dispatch_model": "gpt-6.1-sol",
+      "reasoning_effort": "high"
+    },
+    "implementation": {
+      "agent": "repo_brain_validation",
+      "dispatch_model": "gpt-6-luna",
+      "reasoning_effort": "xhigh"
+    },
+    "shared_state": "root coordinator",
+    "named_profile_runtime_selection": "UNVALIDATED",
+    "automatic_dispatch": false,
+    "budget": null
+  },
+  "checks": [
+    {
+      "command": "npm.cmd run build",
+      "exit_code": 0,
+      "log": ".brain/evidence/platform-002-build.log"
+    },
+    {
+      "command": "npm.cmd test",
+      "exit_code": 0,
+      "tests": 188,
+      "passed": 188,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "log": ".brain/evidence/platform-002-npm-test.log"
+    },
+    {
+      "command": "npm.cmd run verify",
+      "exit_code": 0,
+      "tests": 188,
+      "passed": 188,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "discovered_files": 18,
+      "log": ".brain/evidence/platform-002-verify.log",
+      "report": ".brain/evidence/platform-002-verifier-report.json",
+      "raw_build": ".brain/evidence/platform-002-verifier-build.log",
+      "raw_tests": ".brain/evidence/platform-002-verifier-tests.tap.txt"
+    },
+    {
+      "command": "node --test --test-reporter=tap tests/build-worker-process.test.mjs tests/control-plane-build-lifecycle.test.mjs tests/control-plane-http.test.mjs tests/factory-lifecycle.test.mjs tests/reliability-baseline.test.mjs tests/studio-integration.test.mjs",
+      "status": "PASSED_INTERIM",
+      "tests": 62,
+      "passed": 62,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "log": ".brain/evidence/platform-002-targeted-interim.tap.txt",
+      "limitation": "Intermediate candidate; subsequent frozen completion identity/all-version/legacy UI changes are covered by fresh full188 suite. Recipe reported by executing agent; TAP artifact does not embed argv."
+    },
+    {
+      "command": "python .local/platform-002-validation/browser-journey.py",
+      "exit_code": 0,
+      "status": "PARTIAL_WITH_BLOCKED_CSP_GATE",
+      "ordinary_assertions": 15,
+      "server_exit": 0,
+      "scope": "Permitted DOM/forms: draft preservation; two immutable versions; explicit legacy non-executable row; exact-version confirmation/admission; logout/re-pair; actual build continues; verified export inspection; cancellation; unattached operations; durable two-version database.",
+      "report": ".brain/evidence/platform-002-browser-console.json",
+      "archived_script": ".brain/evidence/platform-002-browser-console.py",
+      "archived_helper": ".brain/evidence/platform-002-browser-server.mjs",
+      "log": ".brain/evidence/platform-002-browser-console.log",
+      "stdout": ".brain/evidence/platform-002-browser-console.stdout"
+    }
+  ],
+  "execution_scope": {
+    "schema": "Additive2; legacy7table values preserved, future generations rejected",
+    "build": "Canonical server composition, immutable saved versions, original actor+request-key idempotency, frozen source/product/plan/toolchain/recipe, live fenced claims with at most2 abandoned attempts",
+    "processes": "Actual native descendants: cancellation, timeout, shutdown/restart and live lease-loss; exact EMPTY proof required before cleanup",
+    "uncertainty": "Missing termination proof and actual file-lock cleanup failure retain pending cancellation/UNKNOWN and quarantine; never claim CLEAN",
+    "integrity": "Real TypeScript compile/factory export, complete trusted snapshot inventory, success/reopen, source/host/compiler drift, during-copy mutation, prepublication catalogue and later package/catalogue/launcher/unexpected-file tamper rejection",
+    "authority": "Post-await original-session validation; declarations do not grant business access; no executable browser path/command/URL input",
+    "owned_processes_remaining": "NONE_OBSERVED_BY_EXECUTING_AGENT"
+  },
+  "review": {
+    "status": "APPROVED_FOR_LOCAL_SCOPE",
+    "reviewer": "Sol/high independent agent",
+    "fingerprint_independently_matched": true,
+    "coordinator_fingerprint_matched": true,
+    "reviewed_input_fingerprint_coordinator_matched": true,
+    "new_untracked_source_files_reviewed_directly": true,
+    "blocking_findings": [],
+    "history": ".brain/evidence/platform-002-review-notes.md"
+  },
+  "failure_history": [
+    {
+      "scope": "Initial compiler and expanded regression attempts",
+      "status": "FAILED_THEN_REPAIRED",
+      "raw_directory": ".local/platform-002-validation",
+      "note": "Retained TypeScript/C# diagnostics, Windows nested-path/empty-args/inventory errors, stale fixture assertions, during-copy watcher bug and108s recursive cleanup retry fanout. Intermediate25/22,37/36,41/40,42/40,43/42 runs do not qualify final acceptance."
+    },
+    {
+      "scope": "Windows PowerShell5.1 normal -File",
+      "status": "BLOCKED_POLICY",
+      "report": ".brain/evidence/platform-002-ps51-blocked.json",
+      "log": ".brain/evidence/platform-002-ps51-blocked.log",
+      "note": "Restricted policy denied script before Node; original attempt remains pending/UNKNOWN. Distinct explicitly selected configured PS7 profile qualified separately."
+    },
+    {
+      "scope": "Initial ordinary Chrome flow",
+      "status": "FAILED_THEN_REPAIRED",
+      "report": ".brain/evidence/platform-002-browser-initial-failure.json",
+      "note": "Late render lost draft fields; subsequent duplicate feedback/all-version UI issues were repaired; raw histories retained."
+    },
+    {
+      "scope": "Controlled delayed catalogue/logout/stale overview browser instrumentation",
+      "status": "BLOCKED_CSP",
+      "report": ".brain/evidence/platform-002-browser-csp-blocked.json",
+      "note": "Unsafe-eval predicate was denied. Remains blocked; no final passing claim for this gate."
+    },
+    {
+      "scope": "Retry after browser CSP denial",
+      "status": "INVALID_RETRY_EXCLUDED",
+      "report": ".brain/evidence/platform-002-browser-invalid-retry.json",
+      "stdout": ".brain/evidence/platform-002-browser-invalid-retry.stdout",
+      "note": "Agent substituted page.evaluate after denial, contrary to AGENTS. Coordinator stopped further retries, preserved records and excluded all apparent assertions from this retry. Final ordinary script removed all evaluation/delay instrumentation; app CSP unchanged."
+    }
+  ],
+  "boundaries": {
+    "artifact_registry": "NOT_ATTACHED",
+    "deployment_driver": "NOT_ATTACHED",
+    "model_provider": "NOT_ATTACHED",
+    "controlled_delay_browser_gate": "BLOCKED_CSP",
+    "legacy_studio_browser": "BLOCKED_MISSING_BUNDLED_CHROMIUM",
+    "react_renderer": "NOT_QUALIFIED",
+    "hosted_identity_storage": "NOT_IMPLEMENTED",
+    "production": "NOT_QUALIFIED",
+    "external_actions_performed": false,
+    "full_program": "IN_PROGRESS"
+  },
+  "next": {
+    "task": "PLATFORM-003",
+    "status": "CONTRACT_REVIEW",
+    "authorization": "Existing full local architecture program; no new permission for in-scope local implementation.",
+    "objective": "Exact immutable local artifact registration/retrieval and product release promotion; no runtime or external deployment."
+  }
+}

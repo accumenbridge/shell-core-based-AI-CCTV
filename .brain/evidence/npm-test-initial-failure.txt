@@ -1,0 +1,13 @@
+Historical first `npm.cmd test` run after adding the portable source-copy helper.
+
+Command: `npm.cmd test`
+Exit: 1
+Observed Node summary: 153 tests, 152 pass, 1 fail, 0 cancelled, 0 skipped, 0 TODO.
+Failure: `tests/factory-lifecycle.test.mjs` real separate worker process cleanup raced
+fixture deletion and reported `ENOTEMPTY` for the temporary `modules` directory.
+
+The run exposed that Node 24 executes the fixture's earlier `t.after` hook before
+the later worker-process hook. Cleanup ownership was moved into the fixture so the
+worker stops before the SQLite/runtime directory is removed. The subsequent full
+suite passed 153/153. The raw first-run log was overwritten by the successful rerun;
+this file records the observed failure and counts rather than claiming a raw log.

@@ -1,0 +1,95 @@
+TAP version 13
+# Subtest: complete definition round-trip preserves description, exact versions, custom binding identity and wiring
+ok 1 - complete definition round-trip preserves description, exact versions, custom binding identity and wiring
+  ---
+  duration_ms: 1.9176
+  type: 'test'
+  ...
+# Subtest: unsupported definition stays unchanged and returns diagnostics without a preview plan
+ok 2 - unsupported definition stays unchanged and returns diagnostics without a preview plan
+  ---
+  duration_ms: 0.3495
+  type: 'test'
+  ...
+# Subtest: editor helpers are present in the offline browser bundle and remain pure data operations
+ok 3 - editor helpers are present in the offline browser bundle and remain pure data operations
+  ---
+  duration_ms: 4.841
+  type: 'test'
+  ...
+# Subtest: inspection keeps supported HTTP bindings valid without claiming local launchability
+ok 4 - inspection keeps supported HTTP bindings valid without claiming local launchability
+  ---
+  duration_ms: 0.3755
+  type: 'test'
+  ...
+# Subtest: Visual: all eight input combinations use the canonical resolver
+ok 5 - Visual: all eight input combinations use the canonical resolver
+  ---
+  duration_ms: 2.1577
+  type: 'test'
+  ...
+# Subtest: Visual: reviewed Handoff wiring selects current local providers
+ok 6 - Visual: reviewed Handoff wiring selects current local providers
+  ---
+  duration_ms: 0.5985
+  type: 'test'
+  ...
+# Subtest: Visual: neutral product has no domain, bindings or solution
+ok 7 - Visual: neutral product has no domain, bindings or solution
+  ---
+  duration_ms: 0.1327
+  type: 'test'
+  ...
+# Subtest: Visual: invalid and unknown selections fail visibly
+ok 8 - Visual: invalid and unknown selections fail visibly
+  ---
+  duration_ms: 0.2579
+  type: 'test'
+  ...
+# Subtest: Visual: standalone preview sends no network calls and includes no external scripts
+ok 9 - Visual: standalone preview sends no network calls and includes no external scripts
+  ---
+  duration_ms: 3.5179
+  type: 'test'
+  ...
+# Subtest: Visual: offline composer exposes complete import, edit, canonical preview and download controls
+ok 10 - Visual: offline composer exposes complete import, edit, canonical preview and download controls
+  ---
+  duration_ms: 1.3504
+  type: 'test'
+  ...
+# Subtest: Visual: a newer definition import invalidates preview immediately and wins out-of-order file reads
+ok 11 - Visual: a newer definition import invalidates preview immediately and wins out-of-order file reads
+  ---
+  duration_ms: 2.1996
+  type: 'test'
+  ...
+# Subtest: Visual: documentation, responsive rules and source build retained
+ok 12 - Visual: documentation, responsive rules and source build retained
+  ---
+  duration_ms: 1.5564
+  type: 'test'
+  ...
+# Subtest: Visual: runtime counters remain explicitly scoped
+ok 13 - Visual: runtime counters remain explicitly scoped
+  ---
+  duration_ms: 0.8684
+  type: 'test'
+  ...
+# Subtest: Visual: all eight views render through controlled document ports
+ok 14 - Visual: all eight views render through controlled document ports
+  ---
+  duration_ms: 5.9166
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 124.7269
+EXIT_CODE=0

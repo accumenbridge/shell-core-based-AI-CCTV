@@ -1,0 +1,92 @@
+{
+  "schema": "quadbridge.attributed-core-final-review.v1",
+  "taskId": "CORE-DELIVERY-001",
+  "reportedReviewer": "/root/repo_brain_architect",
+  "reportedRole": "Sol/high independent architect/reviewer",
+  "outcome": "ACCEPTED_SCOPED_LOCAL_CORE",
+  "attributionLimit": "Independent source hashing and reading of recorded execution evidence. The reviewer did not execute the build, suite, browser or native journey; this record does not authenticate model identity or review Git publication/privacy.",
+  "binding": {
+    "candidateDigest": "b44af13a43163ecd15c7c5f0f50e05f92dd31b9957d0955c55ee834b32798436",
+    "contractDigest": "e0dccd6167a0cb5089fa4eee7892831becc744167780ae043065b1d142ae7065",
+    "contractDigestMethod": "SHA256 of exact contract file bytes, matching the maintained Brain implementation",
+    "fileCount": 196,
+    "independentlyRecomputedPhysicalCandidateDigest": "b44af13a43163ecd15c7c5f0f50e05f92dd31b9957d0955c55ee834b32798436",
+    "physicalSourceMismatches": [],
+    "beforeLiveAfterInventoriesEqual": true,
+    "contexts": [
+      ".local/core-delivery-001-live-context.json",
+      ".local/core-delivery-001-final-suite-before.json",
+      ".local/core-delivery-001-final-suite-after.json"
+    ],
+    "priorJourneyReview": ".brain/evidence/core-delivery-001-journey-review-01.json",
+    "priorJourneyHashedArtifactsChecked": 12,
+    "priorJourneyEvidenceDrift": [],
+    "sanitizedJourneyReport": ".brain/evidence/core-delivery-001-browser-02.json",
+    "sanitizedJourneyReportSha256": "5556d743efaaddaa277b7183b37b546d6f49ac57e34ba8bdbbaf4073ceafd14c"
+  },
+  "reviewedLocalCoreScope": [
+    "Actual fresh source-only console and ordinary New composition/edit/preview/confirmed immutable save/exact load/build/register/inspect/promote/start of core-ops-1002@1.0.0",
+    "Actual scoped persisted Desk records, indexed READY Knowledge document and successful worker, exact cited local extractive answer and honest no-evidence answer, Handoff committed destination receipt and separate successful worker",
+    "Observed tenant isolation and read-only viewer permissions; same-instance restart preserves owner records, immutable runtime identity and credential-file hash",
+    "Positive stopped backup and verification, refusal to overwrite existing data root, verified and contained test-owned absent-root simulation, ordinary restore and explicit third-attempt restart with retained data and citations",
+    "Final third-attempt STOPPED/native EMPTY/helperClosed/executionClean, both slots empty and original-owner closure with coordinator-observed actual outer exit zero"
+  ],
+  "finalRequiredSuiteObservation": {
+    "status": "FAILED",
+    "command": "npm.cmd test",
+    "toolSessionId": 71578,
+    "outerExitCode": 1,
+    "observedToolExitCode": 1,
+    "startedUtc": "2026-10-01T12:24:02.2773426Z",
+    "endedUtc": "2026-10-01T12:35:07.0950037Z",
+    "counts": {
+      "tests": 308,
+      "passed": 306,
+      "failed": 1,
+      "cancelled": 0,
+      "skipped": 1,
+      "todo": 0,
+      "durationMs": 663510.2916
+    },
+    "rawLog": ".local/core-delivery-001-final-suite.log",
+    "rawLogSha256": "fa4c2a39c02b1b78b1bb7f9b12a1d778f5b8a08e0f5f5c08e5bb468d87677d0b",
+    "executionRecord": ".local/core-delivery-001-final-suite-execution.json",
+    "executionRecordSha256": "bbb766397d6e36e2c76c1996672b146fbf2ac70b953c3140a0550a2650e6e9d1",
+    "onlyFailure": {
+      "test": "Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup",
+      "file": "tests/build-worker-process.test.mjs",
+      "failedPrerequisiteLine": 93,
+      "throwingHelperLine": 62,
+      "message": "Owned descendant did not start its marker heartbeat",
+      "elapsedMs": 18830.9836,
+      "cause": "UNKNOWN",
+      "cancellationTimeoutCleanAssertionsReached": false,
+      "regressionQualification": "UNQUALIFIED_IN_THIS_RUN"
+    },
+    "onlySkip": "BLOCKED_ENV: host denied creation of the owned file-symlink fixture (EPERM)",
+    "ordinaryCoreCasesObservedPassing": [
+      "Exact saved-definition real build and registration",
+      "Real CP2 snapshot registration, reopen, attachment retrieval and promotion",
+      "Promoted Desk native runtime, retained restart and exact exit proof",
+      "Committed WAL backup and absent-root same-instance restore",
+      "Promoted Combined indexed document and required worker-exit settlement",
+      "Live old runtime served bytes preserved while a distinct private snapshot builds"
+    ]
+  },
+  "acceptanceBasis": {
+    "requiredPassedRecipes": ["brain-build", "core-live-journey"],
+    "requiredObservationRecipes": ["brain-full-suite"],
+    "semantics": "The existing exact contract requires an actual full-suite observation, rather than a passing full-suite recipe. tools/brain-core.mjs assessEvidence accepts an observed FAILED invocation with actual integer exit and artifacts for this observation recipe. Required passing recipes and independent exact review remain separate. This disposition preserves the suite failure and does not supersede or resolve it.",
+    "substantiveMissingCoreJourneyProof": [],
+    "schedulingRepair": "Deferred under the user's core priority. CPU-derived test-file concurrency and marker waiting across private preparation are a plausible contention hypothesis, not a demonstrated cause of this failed attempt. No maintained scheduling change or retry was performed by this reviewer."
+  },
+  "limitations": [
+    "The complete regression suite is FAILED; no all-tests-green claim or cancellation/timeout qualification follows from local core acceptance.",
+    "Earlier unexplained native startup and publisher failures remain retained. Current passing publication and deployed journey do not retrospectively diagnose them.",
+    "Local Windows developer profile only. No hosted identity/database, external deployment, model inference, production or controller-crash/stress qualification.",
+    "Historical browser file-upload permission denial remains blocked; ordinary New composition is a distinct qualified flow.",
+    "Restored viewer's immediate Knowledge document-list readiness was not qualified. Restored admin data and citations and viewer read-only behavior were observed.",
+    "Final-stop screenshot timed out; actual final-stop DOM and native closure metadata support the disposition.",
+    "No private credentials, pairing codes or owner tokens are copied here. No maintained source, shared checkpoint or Git state was edited."
+  ]
+}

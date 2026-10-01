@@ -1,0 +1,8 @@
+{
+  "observedAt": "2026-10-01T06:13:24.172Z",
+  "brainCandidate": "798ad1dc674657f87c4da66fdd55f919ad518929d67609240eef9eaa5846f1d5",
+  "allLiveAndFrozenCandidateFilesMatch": true,
+  "frozenMaintainedFingerprint": "3c6a0f636d8534476186c3607315a322cc8c39470a1d5b3956116d12449a951f",
+  "frozenMaintainedSourceUnchanged": true,
+  "limitation": "The live whole-platform tree is being developed by another chat; this verifies only the scoped Brain files and the complete frozen regression source."
+}

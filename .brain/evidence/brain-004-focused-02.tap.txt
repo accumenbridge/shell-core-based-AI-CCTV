@@ -1,0 +1,274 @@
+TAP version 13
+# Subtest: explicit-root init and render keep two temporary project atlases independent
+ok 1 - explicit-root init and render keep two temporary project atlases independent
+  ---
+  duration_ms: 1329.0777
+  type: 'test'
+  ...
+# Subtest: structural validation reports broken links, cycles, and malformed dependencies without throwing
+ok 2 - structural validation reports broken links, cycles, and malformed dependencies without throwing
+  ---
+  duration_ms: 1.0393
+  type: 'test'
+  ...
+# Subtest: source inspection distinguishes matched pins, drift, and missing pinned files
+ok 3 - source inspection distinguishes matched pins, drift, and missing pinned files
+  ---
+  duration_ms: 11.8096
+  type: 'test'
+  ...
+# Subtest: offline rendering escapes hostile text and gives each observation one canonical anchor
+ok 4 - offline rendering escapes hostile text and gives each observation one canonical anchor
+  ---
+  duration_ms: 1.4675
+  type: 'test'
+  ...
+# Subtest: render refuses to replace an arbitrary existing user file
+ok 5 - render refuses to replace an arbitrary existing user file
+  ---
+  duration_ms: 324.8702
+  type: 'test'
+  ...
+# Subtest: source paths escaping the selected project root are structurally invalid
+ok 6 - source paths escaping the selected project root are structurally invalid
+  ---
+  duration_ms: 3.3771
+  type: 'test'
+  ...
+# Subtest: source inspection marks junction traversal unsafe
+ok 7 - source inspection marks junction traversal unsafe
+  ---
+  duration_ms: 7.4472
+  type: 'test'
+  ...
+# Subtest: source and observation identifiers cannot collide across reference namespaces
+ok 8 - source and observation identifiers cannot collide across reference namespaces
+  ---
+  duration_ms: 0.2268
+  type: 'test'
+  ...
+# Subtest: inspection binds the full profile and checked source set; renderer derives status from checks
+ok 9 - inspection binds the full profile and checked source set; renderer derives status from checks
+  ---
+  duration_ms: 5.2919
+  type: 'test'
+  ...
+# Subtest: planning focus and bounded gaps stay distinct from structure and current-work selection
+ok 10 - planning focus and bounded gaps stay distinct from structure and current-work selection
+  ---
+  duration_ms: 4.8662
+  type: 'test'
+  ...
+# Subtest: renderer requires generated output identity and gives actionable legacy migration error
+ok 11 - renderer requires generated output identity and gives actionable legacy migration error
+  ---
+  duration_ms: 638.6979
+  type: 'test'
+  ...
+# Subtest: managed feature edits only its candidate, observes real checks and requires a current review
+not ok 12 - managed feature edits only its candidate, observes real checks and requires a current review
+  ---
+  duration_ms: 573.7697
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\brain-control.test.mjs:38:1'
+  failureType: 'hookFailed'
+  error: "ENOENT: no such file or directory, open 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-control-yTzhNt\\store\\writer.lock'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:697:25)
+    async readFile (node:internal/fs/promises:1348:14)
+    async Object.close (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/brain-control.mjs:361:9)
+    async TestHook.run (node:internal/test_runner/test:1389:7)
+    async Test.runHook (node:internal/test_runner/test:1269:9)
+    async after (node:internal/test_runner/test:1322:9)
+    async Test.run (node:internal/test_runner/test:1408:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: whole proposal validation prevents partial out-of-scope changes
+not ok 13 - whole proposal validation prevents partial out-of-scope changes
+  ---
+  duration_ms: 71.3118
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\brain-control.test.mjs:55:1'
+  failureType: 'hookFailed'
+  error: "ENOENT: no such file or directory, open 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-control-lJceXl\\store\\writer.lock'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:697:25)
+    async readFile (node:internal/fs/promises:1348:14)
+    async Object.close (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/brain-control.mjs:361:9)
+    async TestHook.run (node:internal/test_runner/test:1389:7)
+    async Test.runHook (node:internal/test_runner/test:1269:9)
+    async after (node:internal/test_runner/test:1322:9)
+    async Test.run (node:internal/test_runner/test:1408:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: source drift, stale decisions and cross-project replay are rejected
+not ok 14 - source drift, stale decisions and cross-project replay are rejected
+  ---
+  duration_ms: 62.062
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\brain-control.test.mjs:64:1'
+  failureType: 'hookFailed'
+  error: "ENOENT: no such file or directory, open 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-control-UzSXaM\\store\\writer.lock'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:697:25)
+    async readFile (node:internal/fs/promises:1348:14)
+    async Object.close (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/brain-control.mjs:361:9)
+    async TestHook.run (node:internal/test_runner/test:1389:7)
+    async Test.runHook (node:internal/test_runner/test:1269:9)
+    async after (node:internal/test_runner/test:1322:9)
+    async Test.run (node:internal/test_runner/test:1408:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: pause and direction changes wait for acknowledgement and discard late output
+not ok 15 - pause and direction changes wait for acknowledgement and discard late output
+  ---
+  duration_ms: 84.447
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\brain-control.test.mjs:76:1'
+  failureType: 'hookFailed'
+  error: "ENOENT: no such file or directory, open 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-control-XkBDlp\\store\\writer.lock'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:697:25)
+    async readFile (node:internal/fs/promises:1348:14)
+    async Object.close (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/brain-control.mjs:361:9)
+    async TestHook.run (node:internal/test_runner/test:1389:7)
+    async Test.runHook (node:internal/test_runner/test:1269:9)
+    async after (node:internal/test_runner/test:1322:9)
+    async Test.run (node:internal/test_runner/test:1408:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: failed actual check is retained and cannot be accepted
+not ok 16 - failed actual check is retained and cannot be accepted
+  ---
+  duration_ms: 671.4703
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\brain-control.test.mjs:89:1'
+  failureType: 'hookFailed'
+  error: "ENOENT: no such file or directory, open 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-control-yHGuHd\\store\\writer.lock'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:697:25)
+    async readFile (node:internal/fs/promises:1348:14)
+    async Object.close (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/brain-control.mjs:361:9)
+    async TestHook.run (node:internal/test_runner/test:1389:7)
+    async Test.runHook (node:internal/test_runner/test:1269:9)
+    async after (node:internal/test_runner/test:1322:9)
+    async Test.run (node:internal/test_runner/test:1408:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: lost agent connection preserves UNKNOWN and never silently redispatches
+not ok 17 - lost agent connection preserves UNKNOWN and never silently redispatches
+  ---
+  duration_ms: 64.262
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\brain-control.test.mjs:97:1'
+  failureType: 'hookFailed'
+  error: "ENOENT: no such file or directory, open 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-control-8iP3Vc\\store\\writer.lock'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:697:25)
+    async readFile (node:internal/fs/promises:1348:14)
+    async Object.close (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/brain-control.mjs:361:9)
+    async TestHook.run (node:internal/test_runner/test:1389:7)
+    async Test.runHook (node:internal/test_runner/test:1269:9)
+    async after (node:internal/test_runner/test:1322:9)
+    async Test.run (node:internal/test_runner/test:1408:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: live console refreshes project state and rejects unauthorized, stale and foreign-origin decisions
+ok 18 - live console refreshes project state and rejects unauthorized, stale and foreign-origin decisions
+  ---
+  duration_ms: 173.3694
+  type: 'test'
+  ...
+# Subtest: bootstrap checkpoint, sourceTaskRef mapping, focused context, and project adoption preserve imported scope
+ok 19 - bootstrap checkpoint, sourceTaskRef mapping, focused context, and project adoption preserve imported scope
+  ---
+  duration_ms: 748.0576
+  type: 'test'
+  ...
+# Subtest: required records, copied evidence, independent review, and observation-only blocked suite gate control acceptance
+ok 20 - required records, copied evidence, independent review, and observation-only blocked suite gate control acceptance
+  ---
+  duration_ms: 2153.1544
+  type: 'test'
+  ...
+# Subtest: stale candidate evidence and stale scoped source cannot qualify after a source edit
+ok 21 - stale candidate evidence and stale scoped source cannot qualify after a source edit
+  ---
+  duration_ms: 912.873
+  type: 'test'
+  ...
+# Subtest: recipe definition changes invalidate otherwise passing record qualification
+ok 22 - recipe definition changes invalidate otherwise passing record qualification
+  ---
+  duration_ms: 750.689
+  type: 'test'
+  ...
+# Subtest: expected revision and the non-expiring participating-writer lock reject conflicting publication
+ok 23 - expected revision and the non-expiring participating-writer lock reject conflicting publication
+  ---
+  duration_ms: 448.3979
+  type: 'test'
+  ...
+# Subtest: stale generated view is detected and repaired from the current pointer
+ok 24 - stale generated view is detected and repaired from the current pointer
+  ---
+  duration_ms: 525.917
+  type: 'test'
+  ...
+# Subtest: orphan event material is reported but does not block a later same-revision publication
+ok 25 - orphan event material is reported but does not block a later same-revision publication
+  ---
+  duration_ms: 689.0401
+  type: 'test'
+  ...
+# Subtest: self-review, wrong-task evidence references, and imported acceptance are rejected
+ok 26 - self-review, wrong-task evidence references, and imported acceptance are rejected
+  ---
+  duration_ms: 1262.2356
+  type: 'test'
+  ...
+# Subtest: path traversal and junction source paths fail closed
+ok 27 - path traversal and junction source paths fail closed
+  ---
+  duration_ms: 426.0801
+  type: 'test'
+  ...
+# Subtest: a historical accepted task remains readable after source, contract, and recipe evolution
+ok 28 - a historical accepted task remains readable after source, contract, and recipe evolution
+  ---
+  duration_ms: 1324.9193
+  type: 'test'
+  ...
+# Subtest: READY future files remain a plan; bound missing files cannot qualify
+ok 29 - READY future files remain a plan; bound missing files cannot qualify
+  ---
+  duration_ms: 936.923
+  type: 'test'
+  ...
+# Subtest: planned files do not bypass parent type or path confinement
+ok 30 - planned files do not bypass parent type or path confinement
+  ---
+  duration_ms: 466.6085
+  type: 'test'
+  ...
+# Subtest: unselected failures veto positives until same-scope evidenced resolution
+ok 31 - unselected failures veto positives until same-scope evidenced resolution
+  ---
+  duration_ms: 2152.7842
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 25
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12986.3148

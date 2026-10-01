@@ -1,0 +1,11 @@
+{
+  "schema": "brain.atlas-reconciliation.v1",
+  "observedAt": "2026-10-01T07:25:10.434Z",
+  "projectId": "quadbridge-core-frameworks",
+  "fromRevision": 2,
+  "toRevision": 3,
+  "source": ".brain/CURRENT.md",
+  "previousSha256": "074d3cadbdcd7d619019fec6670c5bfcbdca58fe275b71ce591928755eb2d986",
+  "currentSha256": "4752bbaec34ca9a6a027a8de01acb36826d9592e6f98d6f5f91b9cd989e447c1",
+  "decision": "Refresh the observed checkpoint to revision 12, where the separate platform coordinator returned recovery work to IMPLEMENTING after a reported browser-core failure. Preserve its native-core result, failed prior suite, pending acceptance and planned UI repair. No intent, priority, or delivery acceptance changed."
+}

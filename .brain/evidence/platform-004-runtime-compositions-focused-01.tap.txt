@@ -1,0 +1,39 @@
+TAP version 13
+# Subtest: native-owned canonical seed commit before COMPLETE is retained and refuses reseeding
+ok 1 - native-owned canonical seed commit before COMPLETE is retained and refuses reseeding
+  ---
+  duration_ms: 16873.7381
+  type: 'test'
+  ...
+# Subtest: a live promoted Service Desk runtime keeps its exact served bytes while the private checkout builds a new snapshot
+not ok 2 - a live promoted Service Desk runtime keeps its exact served bytes while the private checkout builds a new snapshot
+  ---
+  duration_ms: 27689.4701
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\control-plane-artifacts.test.mjs:1027:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - '67d4e5b9-f14b-40e8-8567-096bdf80dd43'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '67d4e5b9-f14b-40e8-8567-096bdf80dd43'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-artifacts.test.mjs:1093:57)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 44678.5464

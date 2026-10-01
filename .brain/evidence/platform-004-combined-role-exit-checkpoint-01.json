@@ -1,0 +1,21 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "ACCEPTED_ACTUAL_REQUIRED_WORKER_EXIT_SCOPE",
+  "capture": "platform-004-artifact-test-main-shutdown-02.mjs.txt",
+  "capture_sha256": "7c3759a28765bd5c29082330f60ed751395a6f8c958353c4ec8e73ab0b778a06",
+  "checks": {
+    "tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "exit_code": 0,
+    "evidence": "platform-004-runtime-combined-role-exit-04.tap.txt"
+  },
+  "scope": "Actual private build/register/promote Combined, separate required-worker readiness, document PENDING to READY/job SUCCEEDED/search hit, positive first stop, same-instance attempt2 restart with distinct command actor. A controlled test-owned Knowledge database DROP _jobs fault causes a natural required-worker exit. Exact persisted attempt.id equals restart operationId; STOPPED/EMPTY/helperClosed/executionClean, empty slot, successful RESTART command and its actor preserved. Parsed worker ROLE_EXITED, previous web URL health fetch rejection, retained document and search-index counts one each. No fake native facts or exported-byte patch.",
+  "review": "Writer confirmed exact Combined04 source hash. Independent Sol/high and root matched capture/core pins and read raw complete TAP. Accepts bounded executed Combined scope only.",
+  "history": "role-exit01 0/1 exit1 omitted public attempt commandState oracle; role-exit02 0/1 exit1 JSON property-order regex oracle; role-exit03 1/1 exit0 predecessor lacked final web/data assertions. All separate logs preserved, no counts aggregated.",
+  "limits": "Controlled fixture owner-data fault is not canonical migration compatibility. Preserved RESTART command actor is asserted; required-role-exit audit actor is not independently asserted here. No separate OS descendant enumeration, helper interruption, UNKNOWN recovery, browser or full-candidate acceptance. Prior Desk restart503 remains unexplained; CP4 IMPLEMENTING."
+}

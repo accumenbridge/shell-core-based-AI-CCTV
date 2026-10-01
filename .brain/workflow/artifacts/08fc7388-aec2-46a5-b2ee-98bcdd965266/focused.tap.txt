@@ -1,0 +1,434 @@
+TAP version 13
+# Subtest: bootstrap checkpoint, sourceTaskRef mapping, focused context, and project adoption preserve imported scope
+not ok 1 - bootstrap checkpoint, sourceTaskRef mapping, focused context, and project adoption preserve imported scope
+  ---
+  duration_ms: 308.2298
+  type: 'test'
+  location: 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F\\source\\tests\\brain-workflow.test.mjs:161:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Next action: Continue scoped implementation\./. Input:
+    
+    '{\n' +
+      '  "status": "AVAILABLE",\n' +
+      '  "project": {\n' +
+      '    "name": "Fixture",\n' +
+      '    "canonical": {\n' +
+      '      "brief": ".brain/BRIEF.md",\n' +
+      '      "outcome": ".brain/OUTCOME.md",\n' +
+      '      "acceptance": ".brain/ACCEPTANCE.md",\n' +
+      '      "strategy": ".brain/STRATEGY.md",\n' +
+      '      "decisions": ".brain/DECISIONS.md",\n' +
+      '      "progress": ".brain/CURRENT.md",\n' +
+      '      "current_work": ".brain/tasks/current-platform.md"\n' +
+      '    },\n' +
+      '    "commandsFile": ".brain/workflow/recipes.json"\n' +
+      '  },\n' +
+      '  "selectedTaskId": "TOOLS-001",\n' +
+      '  "mappedCurrentTaskId": "LEGACY-001",\n' +
+      '  "mappingChanged": false,\n' +
+      '  "sourceTask": {\n' +
+      '    "path": ".brain/tasks/tools.md",\n' +
+      '    "excerpt": "# Tooling maintenance task\\n",\n' +
+      '    "totalBytes": 27,\n' +
+      '    "truncated": false\n' +
+      '  },\n' +
+      '  "contract": {\n' +
+      '    "schema": "brain.task-contract.v1",\n' +
+      '    "taskId": "TOOLS-001",\n' +
+      '    "title": "Fixture tooling task",\n' +
+      '    "authorization": {\n' +
+      '      "kind": "authorized",\n' +
+      '      "reference": "Explicit fixture authorization."\n' +
+      '    },\n' +
+      '    "sourceTaskRef": ".brain/tasks/tools.md",\n' +
+      '    "owners": {\n' +
+      '      "coordinator": "root",\n' +
+      '      "implementer": "worker",\n' +
+      '      "reviewer": "reviewer"\n' +
+      '    },\n' +
+      '    "allowedPaths": [\n' +
+      '      "src/code.txt"\n' +
+      '    ],\n' +
+      '    "excludedActions": [\n' +
+      '      "external action"\n' +
+      '    ],\n' +
+      '    "prerequisites": [],\n' +
+      '    "criteria": [\n' +
+      '      {\n' +
+      '        "id": "scope",\n' +
+      '        "description": "Exercise required tool behavior.",\n' +
+      '        "evidenceScope": "Isolated CLI behavior."\n' +
+      '      }\n' +
+      '    ],\n' +
+      '    "requiredRecipeIds": [\n' +
+      '      "required-check"\n' +
+      '    ],\n' +
+      '    "requiredObservationRecipeIds": [\n' +
+      '      "suite-observation"\n' +
+      '    ],\n' +
+      '    "reviewRequirement": {\n' +
+      '      "required": true,\n' +
+      '      "independence": "independent_reported"\n' +
+      '    }\n' +
+      '  },\n' +
+      '  "contractDigest": "61be6120eed041c264e089eac8f5fa5d78dd6803254b19bce8203a55ab56533d",\n' +
+      '  "candidate": {\n' +
+      '    "files": [\n' +
+      '      {\n' +
+      '        "path": "src/code.txt",\n' +
+      '        "sha256": "3c57a742ee0f1a3229fc684d015cacf0017d18ece5d87cd4188643e565d24386"\n' +
+      '      }\n' +
+      '    ],\n' +
+      '    "digest": "c2bb5fbc362d50109a4e0d096e7a7a84215ba85406410e7ade53c88eef5fb2a4"\n' +
+      '  },\n' +
+      '  "checkpoint": {\n' +
+      '    "pointer": {\n' +
+      '      "schema": "brain.current-pointer.v1",\n' +
+      '      "revision": 1,\n' +
+      '      "eventId": "526ecdb5-3df4-4779-aa18-49e80692e322",\n' +
+      '      "eventSha256": "a7a6d464e4955d7370ce3057d0769a31ed7abb141e159e90406e62439e0c0e67"\n' +
+      '    },\n' +
+      '    "taskState": {\n' +
+      '      "taskId": "TOOLS-001",\n' +
+      '      "status": "IMPLEMENTING",\n' +
+      '      "candidate": null,\n' +
+      '      "runIds": [],\n' +
+      '      "reviewIds": [],\n' +
+      '      "blockers": [],\n' +
+      '      "nextAction": "Implement and qualify the local workflow tools.",\n' +
+      '      "gates": []\n' +
+      '    },\n' +
+      '    "currentTasks": {\n' +
+      '      "platformTask": {\n' +
+      '        "taskId": "LEGACY-001",\n' +
+      '        "status": "REPORTED_IN_PROGRESS",\n' +
+      '        "candidate": null,\n' +
+      '        "runIds": [],\n' +
+      '        "reviewIds": [],\n' +
+      '        "blockers": [],\n' +
+      '        "nextAction": "Preserve the mapped platform task and continue its separately authorized work.",\n' +
+      '        "gates": [\n' +
+      '          {\n' +
+      '            "id": "browser",\n' +
+      '            "status": "BLOCKED",\n' +
+      '            "evidenceRefs": [\n' +
+      '              ".brain/evidence/browser.json"\n' +
+      '            ],\n' +
+      '            "limitations": [\n' +
+      '              "Fixture report; no browser assertion."\n' +
+      '            ]\n' +
+      '          }\n' +
+      '        ],\n' +
+      '        "importProvenance": {\n' +
+      '          "sourceRef": ".brain/tasks/current-platform.md",\n' +
+      '          "sourceSha256": "49d532083e00cb96748d09e8162e913fc209c386fbc47626f457eec81f7ac408",\n' +
+      '          "originalStatus": "IMPLEMENTING",\n' +
+      '          "observedAt": null,\n' +
+      '          "limitations": [\n' +
+      '            "Imported status only; it does not establish current platform acceptance."\n' +
+      '          ]\n' +
+      '        }\n' +
+      '      },\n' +
+      '      "maintenanceTask": {\n' +
+      '        "taskId": "TOOLS-001",\n' +
+      '        "status": "IMPLEMENTING",\n' +
+      '        "candidate": null,\n' +
+      '        "runIds": [],\n' +
+      '        "reviewIds": [],\n' +
+      '        "blockers": [],\n' +
+      '        "nextAction": "Implement and qualify the local workflow tools.",\n' +
+      '        "gates": []\n' +
+      '      }\n' +
+      '    }\n' +
+      '  },\n' +
+      '  "records": [],\n' +
+      '  "evidenceAssessment": {\n' +
+      '    "status": "NOT_QUALIFIED",\n' +
+      '    "reasons": [\n' +
+      '      "required_recipe_not_qualified:required-check",\n' +
+      '      "required_observation_missing:suite-observation",\n' +
+      '      "required_review_not_qualified",\n' +
+      '      "checkpoint_candidate_stale"\n' +
+      '    ]\n' +
+      '  },\n' +
+      '  "limitations": [\n' +
+      '    "Stored execution, provenance, actor, reviewer, and acceptance fields are reported claims; the CLI does not authenticate them or execute recipe argv."\n' +
+      '  ]\n' +
+      '}\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    {
+      "status": "AVAILABLE",
+      "project": {
+        "name": "Fixture",
+        "canonical": {
+          "brief": ".brain/BRIEF.md",
+          "outcome": ".brain/OUTCOME.md",
+          "acceptance": ".brain/ACCEPTANCE.md",
+          "strategy": ".brain/STRATEGY.md",
+          "decisions": ".brain/DECISIONS.md",
+          "progress": ".brain/CURRENT.md",
+          "current_work": ".brain/tasks/current-platform.md"
+        },
+        "commandsFile": ".brain/workflow/recipes.json"
+      },
+      "selectedTaskId": "TOOLS-001",
+      "mappedCurrentTaskId": "LEGACY-001",
+      "mappingChanged": false,
+      "sourceTask": {
+        "path": ".brain/tasks/tools.md",
+        "excerpt": "# Tooling maintenance task\n",
+        "totalBytes": 27,
+        "truncated": false
+      },
+      "contract": {
+        "schema": "brain.task-contract.v1",
+        "taskId": "TOOLS-001",
+        "title": "Fixture tooling task",
+        "authorization": {
+          "kind": "authorized",
+          "reference": "Explicit fixture authorization."
+        },
+        "sourceTaskRef": ".brain/tasks/tools.md",
+        "owners": {
+          "coordinator": "root",
+          "implementer": "worker",
+          "reviewer": "reviewer"
+        },
+        "allowedPaths": [
+          "src/code.txt"
+        ],
+        "excludedActions": [
+          "external action"
+        ],
+        "prerequisites": [],
+        "criteria": [
+          {
+            "id": "scope",
+            "description": "Exercise required tool behavior.",
+            "evidenceScope": "Isolated CLI behavior."
+          }
+        ],
+        "requiredRecipeIds": [
+          "required-check"
+        ],
+        "requiredObservationRecipeIds": [
+          "suite-observation"
+        ],
+        "reviewRequirement": {
+          "required": true,
+          "independence": "independent_reported"
+        }
+      },
+      "contractDigest": "61be6120eed041c264e089eac8f5fa5d78dd6803254b19bce8203a55ab56533d",
+      "candidate": {
+        "files": [
+          {
+            "path": "src/code.txt",
+            "sha256": "3c57a742ee0f1a3229fc684d015cacf0017d18ece5d87cd4188643e565d24386"
+          }
+        ],
+        "digest": "c2bb5fbc362d50109a4e0d096e7a7a84215ba85406410e7ade53c88eef5fb2a4"
+      },
+      "checkpoint": {
+        "pointer": {
+          "schema": "brain.current-pointer.v1",
+          "revision": 1,
+          "eventId": "526ecdb5-3df4-4779-aa18-49e80692e322",
+          "eventSha256": "a7a6d464e4955d7370ce3057d0769a31ed7abb141e159e90406e62439e0c0e67"
+        },
+        "taskState": {
+          "taskId": "TOOLS-001",
+          "status": "IMPLEMENTING",
+          "candidate": null,
+          "runIds": [],
+          "reviewIds": [],
+          "blockers": [],
+          "nextAction": "Implement and qualify the local workflow tools.",
+          "gates": []
+        },
+        "currentTasks": {
+          "platformTask": {
+            "taskId": "LEGACY-001",
+            "status": "REPORTED_IN_PROGRESS",
+            "candidate": null,
+            "runIds": [],
+            "reviewIds": [],
+            "blockers": [],
+            "nextAction": "Preserve the mapped platform task and continue its separately authorized work.",
+            "gates": [
+              {
+                "id": "browser",
+                "status": "BLOCKED",
+                "evidenceRefs": [
+                  ".brain/evidence/browser.json"
+                ],
+                "limitations": [
+                  "Fixture report; no browser assertion."
+                ]
+              }
+            ],
+            "importProvenance": {
+              "sourceRef": ".brain/tasks/current-platform.md",
+              "sourceSha256": "49d532083e00cb96748d09e8162e913fc209c386fbc47626f457eec81f7ac408",
+              "originalStatus": "IMPLEMENTING",
+              "observedAt": null,
+              "limitations": [
+                "Imported status only; it does not establish current platform acceptance."
+              ]
+            }
+          },
+          "maintenanceTask": {
+            "taskId": "TOOLS-001",
+            "status": "IMPLEMENTING",
+            "candidate": null,
+            "runIds": [],
+            "reviewIds": [],
+            "blockers": [],
+            "nextAction": "Implement and qualify the local workflow tools.",
+            "gates": []
+          }
+        }
+      },
+      "records": [],
+      "evidenceAssessment": {
+        "status": "NOT_QUALIFIED",
+        "reasons": [
+          "required_recipe_not_qualified:required-check",
+          "required_observation_missing:suite-observation",
+          "required_review_not_qualified",
+          "checkpoint_candidate_stale"
+        ]
+      },
+      "limitations": [
+        "Stored execution, provenance, actor, reviewer, and acceptance fields are reported claims; the CLI does not authenticate them or execute recipe argv."
+      ]
+    }
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/Lenovo/AppData/Local/Temp/qb-brain-validation-3Evz8F/source/tests/brain-workflow.test.mjs:178:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: required records, copied evidence, independent review, and observation-only blocked suite gate control acceptance
+not ok 2 - required records, copied evidence, independent review, and observation-only blocked suite gate control acceptance
+  ---
+  duration_ms: 1163.899
+  type: 'test'
+  location: 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F\\source\\tests\\brain-workflow.test.mjs:188:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    {
+      "ok": false,
+      "error": {
+        "code": "STALE_REVISION",
+        "message": "Expected revision 3, current revision is 2."
+      }
+    }
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/Lenovo/AppData/Local/Temp/qb-brain-validation-3Evz8F/source/tests/brain-workflow.test.mjs:231:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: stale candidate evidence and stale scoped source cannot qualify after a source edit
+ok 3 - stale candidate evidence and stale scoped source cannot qualify after a source edit
+  ---
+  duration_ms: 825.5451
+  type: 'test'
+  ...
+# Subtest: recipe definition changes invalidate otherwise passing record qualification
+ok 4 - recipe definition changes invalidate otherwise passing record qualification
+  ---
+  duration_ms: 735.7222
+  type: 'test'
+  ...
+# Subtest: expected revision and the non-expiring participating-writer lock reject conflicting publication
+ok 5 - expected revision and the non-expiring participating-writer lock reject conflicting publication
+  ---
+  duration_ms: 493.7103
+  type: 'test'
+  ...
+# Subtest: stale generated view is detected and repaired from the current pointer
+not ok 6 - stale generated view is detected and repaired from the current pointer
+  ---
+  duration_ms: 401.7389
+  type: 'test'
+  location: 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F\\source\\tests\\brain-workflow.test.mjs:301:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    CLI did not return JSON. exit=1
+    
+    Unexpected end of JSON input
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'fail'
+  stack: |-
+    output (file:///C:/Users/Lenovo/AppData/Local/Temp/qb-brain-validation-3Evz8F/source/tests/brain-workflow.test.mjs:34:28)
+    TestContext.<anonymous> (file:///C:/Users/Lenovo/AppData/Local/Temp/qb-brain-validation-3Evz8F/source/tests/brain-workflow.test.mjs:307:19)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: orphan event material is reported but does not block a later same-revision publication
+ok 7 - orphan event material is reported but does not block a later same-revision publication
+  ---
+  duration_ms: 660.4091
+  type: 'test'
+  ...
+# Subtest: self-review, wrong-task evidence references, and imported acceptance are rejected
+not ok 8 - self-review, wrong-task evidence references, and imported acceptance are rejected
+  ---
+  duration_ms: 1234.3376
+  type: 'test'
+  location: 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F\\source\\tests\\brain-workflow.test.mjs:344:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/Lenovo/AppData/Local/Temp/qb-brain-validation-3Evz8F/source/tests/brain-workflow.test.mjs:386:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: path traversal and junction source paths fail closed
+ok 9 - path traversal and junction source paths fail closed
+  ---
+  duration_ms: 508.6376
+  type: 'test'
+  ...
+# Subtest: a historical accepted task remains readable after source, contract, and recipe evolution
+ok 10 - a historical accepted task remains readable after source, contract, and recipe evolution
+  ---
+  duration_ms: 1418.8267
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 6
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7845.0389
+EXIT_CODE=1

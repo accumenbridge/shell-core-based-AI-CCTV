@@ -1,0 +1,9 @@
+{
+  "startedAt": "2026-10-01T07:57:23.6666176Z",
+  "root": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-atlas-audit-WoVvOm\\source",
+  "candidateDigest": "d209f683474e4267607848b0c6442f12786989bbe88b32c779d2a41e18243cfd",
+  "command": "node --test --test-name-pattern=\"Windows job cancellation and timeout\" tests/build-worker-process.test.mjs",
+  "purpose": "Diagnose the full-suite failure on the unchanged, already freshly built candidate. Does not supersede the full-suite result.",
+  "exitCode": 0,
+  "finishedAt": "2026-10-01T07:57:51.0899310Z"
+}

@@ -1,0 +1,104 @@
+{
+  "schema": "quadbridge.atlas-reconciliation.v1",
+  "archivedRevision": 5,
+  "newRevision": 6,
+  "checkpointRevision": 28,
+  "observedAt": "2026-10-01T10:28:41.350Z",
+  "disposition": [
+    {
+      "id": "architecture",
+      "path": "PLATFORM_ARCHITECTURE.md",
+      "before": "91c3a71e9f68d426a9fe3396ad5bcc49a846d4c101bb4369867e3f8115fa4180",
+      "after": "0f14979eecf2ce1846d7ab00bcec820325046fb7ad2613c90604857f7ffe5118",
+      "reason": "Current source architecture preserves ownership; prior local milestones now contextualized."
+    },
+    {
+      "id": "readme",
+      "path": "README.md",
+      "before": "900ad12067a90378fc82b47441ca3473c671e6816d923dbc3bc34aa9c2c38eb9",
+      "after": "bedaaf51f5f53824d28953bb08f5320b0de1e35809741e3678b018a8629c7ee3",
+      "reason": "Current construction/runtime entry and implemented local features; upcoming primary-launcher correction will require fresh reconciliation."
+    },
+    {
+      "id": "status",
+      "path": "docs/STATUS.md",
+      "before": "cd5ed9853ea4c11d94a9a859b560b83d6cff6dd0d8ec976f6ec3a43e94c6e8fa",
+      "after": "fe3ea0826a48e41cdbaf370fdca5ce541de0a702b62958cd61cb919ab679df82",
+      "reason": "Current local construction/Knowledge implementation and honest qualification limits, not production acceptance."
+    },
+    {
+      "id": "roadmap",
+      "path": ".brain/PLATFORM_ROADMAP.md",
+      "before": "a4c231d11868e8b48519fea188a2a42b7c27abd8c344d685a9dc467e27f0ad34",
+      "after": "5b39cbf92fc655da51943bc80fcba4782017340e20c8b34359f58db26d620659",
+      "reason": "Program has advanced through accepted bounded local milestones; current explicit core goal replaces earlier next-action focus."
+    },
+    {
+      "id": "checkpoint",
+      "path": ".brain/CURRENT.md",
+      "before": "11e7f4b099aa1ba9f03aca74885ea267871460537bf149a9fa50f01d7e70b2a2",
+      "after": "8211a34bfedefaf7defc55992d8e9c5399d3ea4a875faf7600ecb8b2079619a5",
+      "reason": "Committed checkpoint28 selects CORE-DELIVERY-001 and BRAIN005, retaining checkpoint27 PLATFORM007 blocked evidence."
+    },
+    {
+      "id": "outcome",
+      "path": ".brain/OUTCOME.md",
+      "before": "baf4d95b7ec7dada4bb108d478182d6d177f4b8c717fea968b88165951c85822",
+      "after": "7c20fddeae83424ad35b6fe3b1b0e51a57f4b0f3ea45c8141d40e7ef9e714cca",
+      "reason": "Explicit full program and core prioritization remain authoritative; no hosted scope inferred."
+    },
+    {
+      "id": "acceptance",
+      "path": ".brain/ACCEPTANCE.md",
+      "before": "3523bd5f99a8a82be7146e56ef483f1a0ade1ae65ad04d91293a8b343069b6cd",
+      "after": "eef4b64a10f2e70e5458a1421cfc702f4033d223fa4fb4605d649eeea0446e2a",
+      "reason": "Actual bounded milestone evidence and open blocked qualification retained."
+    },
+    {
+      "id": "studio-ui",
+      "path": "apps/studio-web/src/main.ts",
+      "before": "0b8f12a155fe0992e85819b82fc4e3fb3169822939845b17648e5a8238c943c3",
+      "after": "ff841faed5d12daa17ede376c1bc1514dd144d1f4c3ea8a991487f9199eabbd4",
+      "reason": "Complete source-derived ProductDefinition editor exists; browser continuous new composition still to run."
+    },
+    {
+      "id": "contracts",
+      "path": "packages/contracts/src/index.ts",
+      "before": "1c457a05415c388967cbe6e1490376ed0538448c7612ddf9561e53ff0a7d1fcf",
+      "after": "65344865bf676546c6ee0ab01b1fa4fc2071fb730664b2cd8cca31f26a666792",
+      "reason": "Current public contracts inspected with ownership and identity intact."
+    },
+    {
+      "id": "control-contracts",
+      "path": "packages/control-plane/src/index.ts",
+      "before": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5",
+      "after": "107bdca35e29b8ac2359e65159c01645167e01acbacb6aba17ed043705dad78f",
+      "reason": "Current local build/artifact/runtime/recovery declarations describe implemented neutral control ownership."
+    },
+    {
+      "id": "cp6-task",
+      "path": ".brain/tasks/PLATFORM-006.md",
+      "before": "1bdd161531322c03c3bfbe6b947219b525e6289e6057e07fb92d12481c9ad827",
+      "after": "980f71f1cd6e14959a0a0d7a94b5b8219993f17a804a42eb7f14fe4774469d6e",
+      "reason": "Historical accepted Knowledge task; exact result01 local extractive scope added separately."
+    },
+    {
+      "id": "cp7-task",
+      "path": ".brain/tasks/PLATFORM-007.md",
+      "before": "41ffaafe44066b632cce4fe0da4550a294ddef2453b27806ca81518eabf24ca9",
+      "after": "2b0f3cd4fdb3725a59d4b6ae14980805642b31d5d5aa5b6bcc52a2637eb0c583",
+      "reason": "Retained historical construction task blocked by required file-import browser qualification; exact result02 added separately."
+    },
+    {
+      "id": "implementation",
+      "path": "IMPLEMENTATION_STATUS_0.3.md",
+      "before": "0ee835c626c5f3e18199431387358dc8c4d02213edfe2e12e75cb3a6724c6be4",
+      "after": "bed43db35e029b2bb512c31a96918c3e71d3786637e360b714689f9a0f1656fd",
+      "reason": "Existing 0.3 local scope with future hosted/provider production explicitly incomplete."
+    }
+  ],
+  "focusBefore": "M-06",
+  "focusAfter": "M-CORE",
+  "preserved": "All existing observations and plan5 archive; CP7 denied browser import remains blocked.",
+  "unrun": "Continuous core goal, new source changes and actual tests not yet executed."
+}

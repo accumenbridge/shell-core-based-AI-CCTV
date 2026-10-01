@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+ok 1 - managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+  ---
+  duration_ms: 22.8798
+  type: 'test'
+  ...
+# Subtest: managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+ok 2 - managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+  ---
+  duration_ms: 3.9262
+  type: 'test'
+  ...
+# Subtest: schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+ok 3 - schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+  ---
+  duration_ms: 2.3778
+  type: 'test'
+  ...
+# Subtest: undispatched cleanup uncertainty cannot use JOB_EXIT and shutdown during STARTING fails the pending start
+ok 4 - undispatched cleanup uncertainty cannot use JOB_EXIT and shutdown during STARTING fails the pending start
+  ---
+  duration_ms: 3.9973
+  type: 'test'
+  ...
+# Subtest: schema 4 additive dispatch migration treats legacy mutable uncertainty labels conservatively
+ok 5 - schema 4 additive dispatch migration treats legacy mutable uncertainty labels conservatively
+  ---
+  duration_ms: 21.6064
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 124.8255

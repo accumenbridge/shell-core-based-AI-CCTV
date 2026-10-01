@@ -1,0 +1,64 @@
+{
+  "schema": "quadbridge.core-delivery-result.v1",
+  "taskId": "CORE-DELIVERY-001",
+  "status": "ACCEPTED_SCOPED_LOCAL_CORE",
+  "candidateDigest": "b44af13a43163ecd15c7c5f0f50e05f92dd31b9957d0955c55ee834b32798436",
+  "candidateFileCount": 196,
+  "contractDigest": "e0dccd6167a0cb5089fa4eee7892831becc744167780ae043065b1d142ae7065",
+  "completionScope": "Working ordinary product-neutral local core, verified through a newly composed immutable deployed application and actual business/runtime/recovery use",
+  "implementedCore": [
+    "Source-derived complete product composition, exact preview, explicit immutable save and exact load",
+    "Fixed real compile/export, verified artifact registration/inventory/promotion and supervised immutable application start",
+    "Scoped persistent Service Desk, real worker-indexed Knowledge, exact cited local extractive answers and original-identity Handoff receipts",
+    "Tenant isolation, ordinary read-only permissions, same-instance restart and retained credentials/data",
+    "Private stopped-instance backup, verification, absent-root restore, explicit restart and original native-owner closure",
+    "Grounded canonical task/readiness/checkpoint and independent planner/implementation/reviewer execution workflow"
+  ],
+  "actualJourney": {
+    "report": ".brain/evidence/core-delivery-001-browser-02.json",
+    "product": "core-ops-1002@1.0.0",
+    "buildId": "7527b752-96f8-4458-b6c9-76eedc4ce7b7",
+    "artifactDigest": "f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7",
+    "instanceId": "runtime-2cd07972-b233-4112-a510-39708d908d83",
+    "attempts": [1, 2, 3],
+    "allOwnerRecordsAndCredentialHashRetained": true,
+    "backupDigest": "a992e29459142d128e6210e87e88074c0a940fa7c3111d3683936b15f8cb31d8",
+    "finalPositiveStopAndBothSlotsEmpty": true,
+    "originalFixtureOuterExitCode": 0,
+    "beforeAfter196HashesUnchanged": true
+  },
+  "regression": {
+    "status": "FAILED",
+    "command": "npm.cmd test",
+    "freshBuildIncluded": true,
+    "actualOuterExitCode": 1,
+    "tests": 308,
+    "passed": 306,
+    "failed": 1,
+    "blockedSkip": 1,
+    "cancelled": 0,
+    "todo": 0,
+    "onlyFailure": "First descendant heartbeat wait in native cancellation/timeout fixture, tests/build-worker-process.test.mjs:93; actual cause UNKNOWN. Cancellation/timeout assertions were not reached.",
+    "onlySkip": "Owned file-symlink fixture creation denied by host EPERM",
+    "normalCoreRuntimeAndRecoveryChecks": "PASSED",
+    "acceptanceBasis": "Existing contract requires build and continuous journey passes plus an actual full-suite observation. This FAILED suite is retained as observation; no all-tests-green or complete cancellation/timeout regression claim.",
+    "rawSuiteSha256": "fa4c2a39c02b1b78b1bb7f9b12a1d778f5b8a08e0f5f5c08e5bb468d87677d0b"
+  },
+  "immutableRecords": {
+    "build": "913854d3-cfea-40f3-9c38-ea9100ce2ce5",
+    "continuousJourney": "3d9da5cb-32e5-4ba5-a215-7be7b16c6786",
+    "requiredFullSuiteObservation": "94041b43-455c-4254-a782-14997078dd7c",
+    "finalIndependentReview": "4c0fc840-0a4a-42f5-badf-8f7a0fef4e4d"
+  },
+  "independentReview": ".brain/evidence/core-delivery-001-final-review-01.json",
+  "brainReadinessMaintenance": ".brain/evidence/brain-005-result-01.json",
+  "startup": "START_FULL_STUDIO.cmd, or npm run build followed by npm run studio:full",
+  "preservedLimits": [
+    "Native test startup cause remains unresolved. Scheduling hypothesis is deferred, not established or repaired by this delivery.",
+    "Earlier failed publication/heartbeat runs, browser transport failure and denied file-import permission remain retained.",
+    "Local Windows developer profile; hosted identity/database, external deployment, model inference and production qualification remain outside this milestone.",
+    "Brain manual agent-session execution is grounded; no managed automatic dispatch profile is configured for this task.",
+    "Final-stop screenshot capture timed out; actual DOM/native closure passed. Restored viewer document-list readiness was not qualified by its immediate loading observation.",
+    "The broader architecture roadmap remains open beyond this verified local core milestone."
+  ]
+}

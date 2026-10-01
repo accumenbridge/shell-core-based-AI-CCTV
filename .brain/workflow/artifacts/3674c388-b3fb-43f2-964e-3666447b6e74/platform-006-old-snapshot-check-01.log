@@ -1,0 +1,2 @@
+{"status":"PASSED","product":"combined@0.2.0","snapshotDigest":"68944a5fd29630ade00bbfd73fb04272b4a472a26c36a3fb49792c614086562c","capturedModules":[{"id":"knowledge","version":"0.2.0"},{"id":"handoff","version":"0.2.0"}]}
+EXIT_CODE=0

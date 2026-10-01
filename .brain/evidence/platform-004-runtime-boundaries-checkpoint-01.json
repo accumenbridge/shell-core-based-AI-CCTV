@@ -1,0 +1,15 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "ACCEPTED_ACTUAL_BOUNDARY_EVIDENCE_WITH_UNRESOLVED_PRIOR_RESTART_FAILURE",
+  "test_capture": "platform-004-artifact-test-desk-boundaries-02.mjs.txt",
+  "test_sha256": "02a6de7eb6b0a65a1b2fe9e3eccfdcd201272d1c5f461cc49d06ccb8ee521e52",
+  "lock_fixture_sha256": "49d26a8b24575c21e5f5efd40aeb0895ccd1de1100228da1f36d2c43609283b7",
+  "checks": {"tests": 1, "passed": 1, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "exit_code": 0, "evidence": "platform-004-runtime-desk-boundaries-02.tap.txt", "provenance": "Raw EXIT_CODE marker, worker report, root and independent Sol read exact archive."},
+  "native_gate_scope": "Real reader emits actual owned ENROLL/LAUNCH requests and is paused before manager consumes them. Captured runner instanceId/operationId equal persisted instance and attempt.id. Actual logout200 precedes release; original request401, no RUNNING/API-ready, positive EMPTY/helperClosed/executionClean and empty slot. ENROLL stage bits false and access/modules absent. LAUNCH enrollment true, launch false, COMPLETE retained and modules absent. No fake native/protocol facts.",
+  "sqlite_scope": "Actual separate Node BEGIN IMMEDIATE holder in existing artifact-registry-owner fixture, eight-second hold. Fixture-only control-plane busy_timeout ten seconds (default differs), paired TTL five seconds. Mutation entry before expiry, BEGIN return after expiry, same-session401 and unchanged command/audit counts/current attempt2/STOPPED/empty slot. Child close0 observed before teardown. This qualifies the after-BEGIN guard under the explicit fixture wait settings, not a new production/profile timeout. Denied PowerShell staging-file-lock fixture is unrelated and not rerouted.",
+  "other_scope": "Earlier real Desk paired lifecycle/data/credential/revocation/old-receipt, active crossprocess SQLite guard and recursive credential/path exclusion also executed in this passing full scenario. Captured source is evidence only, maintained source remains authority.",
+  "review": "Independent Sol/high exact captured source first/last hash and core pins unchanged; accepts bounded native gate/SQLite scope. Root matched capture and lock fixture hash/read raw logs. No reviewer execution or writes.",
+  "prior_failure": {"state": "UNEXPLAINED_INTERMITTENT_RESTART_503", "evidence": "platform-004-runtime-desk-gates-failure-01.tap.txt", "tests": 1, "passed": 0, "failed": 1, "exit_code": 1, "note": "Earlier gate02 and corrected boundary01/02 passed; success does not diagnose or erase the original later-restart503. Fixed public code/bounded attempt diagnostics requested on future failures. No speculative application patch."},
+  "remaining": "RUNNING publication logout/original persisted cross-session actors, RuntimeProtocol variants, compiler-file absence/checkout rebuild independence, required-role failure/main shutdown, helper-ambiguity/UNKNOWN reopen, canonical seed/constructor closure, ordinary browser, fresh full npm test/verifier and frozen exact-candidate review. CP4 remains IMPLEMENTING."
+}

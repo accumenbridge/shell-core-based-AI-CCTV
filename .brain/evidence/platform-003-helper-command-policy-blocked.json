@@ -1,0 +1,18 @@
+{
+  "schema": "quadbridge.validation-blocker.v1",
+  "task": "PLATFORM-003",
+  "status": "BLOCKED_COMMAND_POLICY",
+  "action": "Standalone bounded native file-lock test-helper verification",
+  "command": "$hostExe=(Get-Command pwsh).Source; $fixture=(Resolve-Path -LiteralPath 'tests/fixtures/hold-staging-file.ps1').Path; $tempFile=[IO.Path]::GetTempFileName(); try { 'GO' | & $hostExe -NoLogo -NoProfile -NonInteractive -File $fixture $tempFile; $code=$LASTEXITCODE; Write-Output \"HELPER_EXIT_CODE=$code\"; if($code -ne 0){exit $code} } finally { Remove-Item -LiteralPath $tempFile -Force -ErrorAction SilentlyContinue }",
+  "reason": "Tool returned rejected: blocked by policy. More specific reason/component unavailable.",
+  "approvalFlags": "None; no sandbox_permissions or policy override.",
+  "retry": "No alternative invocation attempted after rejection; candidate05 started before coordinator pause was interrupted.",
+  "interruptedRun": {
+    "status": "INTERRUPTED",
+    "exitCode": 1,
+    "output": "TAP version 13 only; no child results or summary; no count claim."
+  },
+  "processObservation": "Writer's subsequent query found no matching Node/PowerShell artifact-test/fixture owner, only the query process itself.",
+  "limits": "Earlier candidate04 actual cleanup-UNKNOWN pass uses prior test helper. New helper deadline behavior remains unqualified. No host permission or policy change.",
+  "next": "Read-only independent review of precise excluded validation gate; run accessible checks only without executing denied helper."
+}

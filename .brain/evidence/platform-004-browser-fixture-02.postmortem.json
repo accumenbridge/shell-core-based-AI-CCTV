@@ -1,0 +1,14 @@
+{
+  "schema": "quadbridge.browser-fixture-postmortem.v1",
+  "fixtureId": "4e13e2c9-b544-44a1-a9c3-0cc4eeca103c",
+  "script": ".local/platform-004-validation/browser-server-release-shape-02.mjs",
+  "scriptSha256": "66A5CDA84DDBBE93E329FD3A4AF26C2A7D1C16DDB2A57A1B41A1B31029D958C4",
+  "command": "node .local/platform-004-validation/browser-server-release-shape-02.mjs",
+  "outerExitCode": 1,
+  "rawProcessOutput": "Browser fixture setup failed; private fixture state was retained for review.",
+  "failure": {"stage":"build-and-promote-combined","code":"BROWSER_FIXTURE_FAILED","cleanupFailures":[]},
+  "build": {"state":"SUCCEEDED","phase":"Verified local snapshot","buildId":"de4bc750-6f2d-48bc-8bf7-d69c34428bec","productId":"combined","version":"0.2.0","inputDigest":"e53b5c98643a7d5e808fa6e9c16011d189e6852126dd267e532a2b125497241b","snapshotSourceFingerprint":"2e3f6c838b55ee6fdfe8157eed9323566c616185962b407b7413123d12d2baeb"},
+  "hostProfile": {"kind":"powershell7-file-host","version":"7.6.5","sha256":"362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139","policy":"RemoteSigned"},
+  "registry": {"operationId":"79a70578-6b84-4952-baab-d91752c86bd9","operationKind":"REGISTER","operationState":"ABORTED","physicalState":"NO_PUBLICATION","buildId":"de4bc750-6f2d-48bc-8bf7-d69c34428bec","artifactDigest":"eabb5da4131bbbf2799d9e2baf797aa474dbf3e12ef99bfc624ce6afe3a0a3f7","productId":"combined","version":"0.2.0","inputDigest":"e53b5c98643a7d5e808fa6e9c16011d189e6852126dd267e532a2b125497241b","errorCode":"REGISTRATION_ABORTED","errorMessage":"Registration stopped before publication","artifactRows":0,"releaseRows":0,"buildLinkRows":0,"objectsDirectoryEmpty":true,"stagingDirectoryEmpty":true},
+  "ownership": {"matchingServerProcessCountAfterExit":0,"outerSessionObservedExitCode":1,"priorSuccessfulFixtureModified":false}
+}

@@ -1,0 +1,184 @@
+import { createHash, randomUUID } from 'node:crypto';
+import { existsSync } from 'node:fs';
+import { copyFile, mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import { DatabaseSync } from 'node:sqlite';
+import { tmpdir } from 'node:os';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { ControlPlaneStore } from '../../packages/control-plane/dist/index.js';
+import { LocalArtifactStore } from '../../apps/control-plane/dist/artifact-store.js';
+import { LocalBuildWorker } from '../../apps/control-plane/dist/build-worker.js';
+import { copyPrivateToolchain, copyReviewedBuildInputs } from '../../apps/control-plane/dist/build-inputs.js';
+import { importSourceSnapshot, loadSourceSnapshot } from '../../apps/control-plane/dist/source-import.js';
+import { startControlPlane } from '../../apps/control-plane/dist/main.js';
+import { resolve as resolveProduct } from '../../packages/composition/dist/index.js';
+import { ARTIFACT_REGISTRY_LIMITS } from '../../packages/control-plane/dist/index.js';
+import { readBoundedSnapshot } from '../../packages/composition/dist/snapshot-access.js';
+
+const scriptDirectory=dirname(fileURLToPath(import.meta.url));
+const sourceRoot=resolve(scriptDirectory,'..','..');
+const readyPath=join(scriptDirectory,'browser-server.ready.json');
+const closedPath=join(scriptDirectory,'browser-server.closed.json');
+const stoppedPath=join(scriptDirectory,'browser-server.stop');
+const failedPath=join(scriptDirectory,'browser-server.failed.json');
+const fixtureId=randomUUID();
+const sha256=bytes=>createHash('sha256').update(bytes).digest('hex');
+const removeStale=async path=>{if(existsSync(path))throw new Error('A prior browser fixture control file exists; inspect it before starting another fixture');};
+
+for(const path of [readyPath,closedPath,stoppedPath,failedPath])await removeStale(path);
+if(process.platform!=='win32')throw new Error('The browser runtime fixture requires the selected Windows local profile');
+
+let privateRoot;
+let store;
+let artifacts;
+let worker;
+let server;
+let controlTimer;
+let closeFlight;
+let stage='prepare-checkout';
+
+async function waitForBuild(store,buildId) {
+  const deadline=Date.now()+180_000;
+  while(Date.now()<deadline) {
+    const row=store.build(buildId);
+    if(row?.state==='SUCCEEDED')return row;
+    if(row?.state==='FAILED'||row?.state==='CANCELLED'||row?.state==='UNKNOWN')throw new Error(`Combined browser fixture build ended ${row.state}`);
+    await new Promise(resolve=>setTimeout(resolve,100));
+  }
+  throw new Error('Combined browser fixture build exceeded its bounded deadline');
+}
+
+async function writePrivate(path,value) {
+  await writeFile(path,`${JSON.stringify(value,null,2)}\n`,{flag:'wx',mode:0o600});
+}
+
+function closedDatabaseSummary(databasePath) {
+  const db=new DatabaseSync(databasePath,{readOnly:true});
+  try {
+    const slot=db.prepare('SELECT state,instance_id AS instanceId,operation_id AS operationId FROM runtime_physical_slot WHERE singleton=1').get();
+    const runtimes=db.prepare(`SELECT i.id,i.product_id AS productId,i.version,i.artifact_digest AS artifactDigest,i.state AS instanceState,
+      i.current_attempt AS currentAttempt,a.id AS operationId,a.state AS attemptState,a.physical_state AS physicalState,
+      a.empty_observed AS emptyObserved,a.helper_closed AS helperClosed,a.execution_clean AS executionClean,
+      c.kind AS commandKind,c.state AS commandState FROM runtime_instances i
+      JOIN runtime_attempts a ON a.instance_id=i.id AND a.attempt_no=i.current_attempt
+      JOIN runtime_commands c ON c.id=a.command_id ORDER BY i.created DESC LIMIT 16`).all();
+    return {slot:{state:slot.state,occupied:slot.operationId!==null,instanceId:slot.instanceId},runtimes};
+  } finally { db.close(); }
+}
+
+async function stopOwnedServer() {
+  if(closeFlight)return closeFlight;
+  if(!server)return;
+  const current=server;
+  const flight=(async()=>{
+    stage='close-main';
+    await current.close();
+    const summary=closedDatabaseSummary(join(privateRoot,'.local','control-plane.sqlite'));
+    await writePrivate(closedPath,{schema:'quadbridge.browser-fixture-closed.v1',fixtureId,closed:true,summary});
+    server=undefined;
+    clearInterval(controlTimer);
+    process.stdin.pause();
+    process.stdout.write('BROWSER_SERVER_CLOSED\n');
+  })();
+  closeFlight=flight;
+  try { await flight; }
+  catch(error) {
+    closeFlight=undefined;
+    await writePrivate(failedPath,{schema:'quadbridge.browser-fixture-error.v1',fixtureId,stage,
+      code:typeof error?.code==='string'&&/^[A-Z][A-Z0-9_]{1,63}$/.test(error.code)?error.code:'OWNED_CLOSE_UNVERIFIED'}).catch(()=>{});
+    process.stdout.write('BROWSER_SERVER_CLOSE_REQUIRES_RETRY\n');
+  }
+}
+
+try {
+  stage='copy-reviewed-inputs';
+  privateRoot=await mkdtemp(join(tmpdir(),'q4br-'));
+  await copyReviewedBuildInputs(sourceRoot,privateRoot);
+  await copyPrivateToolchain(sourceRoot,privateRoot);
+  await mkdir(join(privateRoot,'.local'),{recursive:true});
+  await copyFile(join(sourceRoot,'.local','platform-build-host.json'),join(privateRoot,'.local','platform-build-host.json'));
+  await copyFile(join(sourceRoot,'tools','registry-publish.ps1'),join(privateRoot,'tools','registry-publish.ps1'));
+  await copyFile(join(sourceRoot,'tools','runtime-supervisor.mjs'),join(privateRoot,'tools','runtime-supervisor.mjs'));
+  await mkdir(join(privateRoot,'apps','studio-web','dist'),{recursive:true});
+  const sourceMain=join(sourceRoot,'apps','studio-web','dist','main.js');
+  const copiedMain=join(privateRoot,'apps','studio-web','dist','main.js');
+  await copyFile(sourceMain,copiedMain);
+  const studioMainDigest=sha256(await readFile(copiedMain));
+
+  stage='build-and-promote-combined';
+  const snapshot=loadSourceSnapshot(privateRoot);
+  store=new ControlPlaneStore(join(privateRoot,'.local','control-plane.sqlite'));
+  importSourceSnapshot(store,snapshot);
+  artifacts=await LocalArtifactStore.create(privateRoot,store);
+  worker=await LocalBuildWorker.create({root:privateRoot,store,snapshot,pollMs:50,leaseMs:30_000,timeoutMs:90_000});
+  await worker.start();
+  const latest=store.products().find(row=>row.id==='combined');
+  if(!latest)throw new Error('The reviewed source catalogue has no Combined product');
+  const product=store.product(latest.id,latest.version);
+  const plan=resolveProduct(product,snapshot.modules);
+  const requestKey=`browser-combined-build-${fixtureId}`;
+  const admitted=await worker.admit(plan.product,plan,requestKey,'system:browser-fixture-builder');
+  const build=await waitForBuild(store,admitted.id);
+  const buildIdentity=store.artifactBuildIdentity(build.id);
+  if(!buildIdentity?.snapshotId||build.snapshotDigest!==buildIdentity.snapshotDigest)throw new Error('The actual Combined build has no exact immutable snapshot identity');
+  const snapshotPath=join(privateRoot,'.local','platform-builds','snapshots',buildIdentity.snapshotId);
+  const sourceSnapshot=readBoundedSnapshot(snapshotPath,buildIdentity,ARTIFACT_REGISTRY_LIMITS);
+  const registration=await artifacts.register(build.id,'system:browser-fixture-registry',()=>undefined);
+  if(registration.digest!==build.snapshotDigest)throw new Error('The browser fixture registry digest differs from the successful Combined build');
+  const promotion=await artifacts.promote(product.id,product.version,registration.digest,'system:browser-fixture-promoter',()=>undefined);
+  if(promotion.artifactDigest!==registration.digest)throw new Error('The browser fixture local release did not preserve the registered digest');
+  const verified=(await artifacts.verifyArtifact(registration.digest)).snapshot;
+  if(verified.snapshotDigest!==sourceSnapshot.snapshotDigest||verified.fileCount!==sourceSnapshot.fileCount||verified.sizeBytes!==sourceSnapshot.sizeBytes)
+    throw new Error('The promoted Combined inventory differs from the exact source build');
+
+  await worker.close();worker=undefined;
+  await artifacts.close();artifacts=undefined;
+  store.close();store=undefined;
+
+  stage='start-control-plane';
+  const originalLog=console.log,originalWarn=console.warn;
+  console.log=()=>{};
+  console.warn=()=>{};
+  try { server=await startControlPlane({root:privateRoot,port:0}); }
+  finally { console.log=originalLog;console.warn=originalWarn; }
+  if(!server?.pairingCode||!server.url)throw new Error('The paired browser server did not return its local session bootstrap');
+  const host=JSON.parse(await readFile(join(privateRoot,'.local','platform-build-host.json'),'utf8'));
+  const ready={schema:'quadbridge.browser-fixture-ready.v1',fixtureId,url:server.url,pairingCode:server.pairingCode,
+    product:{productId:product.id,version:product.version,artifactDigest:registration.digest,buildId:build.id,
+      snapshotId:buildIdentity.snapshotId,snapshotDigest:verified.snapshotDigest,releaseDigest:verified.releaseDigest,
+      sizeBytes:verified.sizeBytes,fileCount:verified.fileCount,
+      entries:verified.entries.map(entry=>({path:entry.path,digest:entry.digest,sizeBytes:entry.sizeBytes}))},
+    sourceFingerprint:snapshot.sourceFingerprint,studioMainSha256:studioMainDigest,
+    selectedHost:{kind:host.kind,version:host.version,sha256:host.sha256,policy:host.policy},
+    owner:{root:privateRoot,databasePath:join(privateRoot,'.local','control-plane.sqlite'),stopFile:stoppedPath,closedFile:closedPath}};
+  await writePrivate(readyPath,ready);
+  stage='serving';
+  controlTimer=setInterval(async()=>{
+    if(!existsSync(stoppedPath))return;
+    let requested='';
+    try { requested=(await readFile(stoppedPath,'utf8')).trim(); } catch { return; }
+    if(requested!==fixtureId)return;
+    await import('node:fs/promises').then(fs=>fs.unlink(stoppedPath)).catch(()=>{});
+    await stopOwnedServer();
+  },250);
+  process.stdin.resume();
+  process.stdin.on('data',chunk=>{
+    if(chunk.toString('utf8').split(/\r?\n/).includes(`STOP:${fixtureId}`))void stopOwnedServer();
+  });
+  process.stdout.write('BROWSER_SERVER_READY\n');
+} catch(error) {
+  const originalLog=console.log,originalWarn=console.warn;
+  console.log=originalLog;console.warn=originalWarn;
+  clearInterval(controlTimer);
+  const failures=[];
+  try { await worker?.close(); } catch { failures.push('worker-close-unverified'); }
+  try { await artifacts?.close(); } catch { failures.push('registry-close-unverified'); }
+  try { store?.close(); } catch { failures.push('store-close-unverified'); }
+  if(server) {
+    try { await server.close();server=undefined; } catch { failures.push('server-close-unverified'); }
+  }
+  await writePrivate(failedPath,{schema:'quadbridge.browser-fixture-error.v1',fixtureId,stage,
+    code:typeof error?.code==='string'&&/^[A-Z][A-Z0-9_]{1,63}$/.test(error.code)?error.code:'BROWSER_FIXTURE_FAILED',cleanupFailures:failures}).catch(()=>{});
+  process.stderr.write('Browser fixture setup failed; private fixture state was retained for review.\n');
+  process.exitCode=1;
+}

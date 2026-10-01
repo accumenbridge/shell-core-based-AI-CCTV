@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: a live promoted Service Desk runtime keeps its exact served bytes while the private checkout builds a new snapshot
+ok 1 - a live promoted Service Desk runtime keeps its exact served bytes while the private checkout builds a new snapshot
+  ---
+  duration_ms: 53083.6835
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 53248.3419

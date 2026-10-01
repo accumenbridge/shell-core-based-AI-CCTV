@@ -1,0 +1,58 @@
+{
+  "schema": "brain.task-contract.v1",
+  "taskId": "PLATFORM-005A-CORE",
+  "title": "Usable local stopped-instance backup and restore",
+  "authorization": {
+    "kind": "authorized",
+    "reference": "User's full local architecture build request and repeated proceed/do all authorization, refined on 2026-10-01 to prioritize core works. Continues the existing PLATFORM-005A scope; no external effect authorization."
+  },
+  "sourceTaskRef": ".brain/tasks/PLATFORM-005A-CORE.md",
+  "owners": {
+    "coordinator": "/root",
+    "implementer": "/root/repo_brain_validation",
+    "reviewer": "/root/repo_brain_architect"
+  },
+  "allowedPaths": [
+    "packages/control-plane/src/index.ts",
+    "apps/control-plane/src/build-inputs.ts",
+    "apps/control-plane/src/runtime-manager.ts",
+    "apps/control-plane/src/runtime-recovery.ts",
+    "apps/control-plane/src/operator-server.ts",
+    "apps/control-plane/src/main.ts",
+    "apps/studio-web/src/main.ts",
+    "tools/runtime-recovery.mjs",
+    "tools/runtime-recovery-publish.ps1",
+    "tests/managed-runtime-recovery-store.test.mjs",
+    "tests/managed-runtime-store.test.mjs",
+    "tests/control-plane-http.test.mjs",
+    "tests/control-plane-artifacts.test.mjs",
+    "tests/control-plane.test.mjs",
+    "tests/control-plane-main.test.mjs",
+    "tests/studio-runtime-ui.test.mjs",
+    "README.md",
+    "PLATFORM_ARCHITECTURE.md",
+    "IMPLEMENTATION_STATUS_0.3.md",
+    "docs/STATUS.md",
+    "docs/STUDIO_INTEGRATION.md"
+  ],
+  "excludedActions": [
+    "External repositories, credentials, entitlements, providers, spending, deployment or global configuration",
+    "Editing exported snapshots as framework source",
+    "Weakening local security, reseeding removed identities/grants or replacing owner data",
+    "Exhaustive fault/stress campaigns or inferred browser/provider/production success"
+  ],
+  "prerequisites": [
+    "PLATFORM-004 accepted bounded local runtime evidence at .brain/evidence/platform-004-result.json",
+    "Preserve original PLATFORM-005A contract and imported workflow history"
+  ],
+  "criteria": [
+    {
+      "id": "BRAIN-REGRESSION",
+      "description": "Fresh build and required full suite, independent exact review, actual Desk data/revocation/WAL backup/verify/absent-root restore/explicit restart, and usable safe paired API/Studio controls under the original PLATFORM-005A contract.",
+      "evidenceScope": "Only the observed local core journey and reviewed current candidate. Core failures must be repaired; blocked/skipped browser/provider/native profile gates remain separate. Generic recipe ID reuse does not qualify product behavior."
+    }
+  ],
+  "requiredRecipeIds": ["brain-build"],
+  "requiredObservationRecipeIds": ["brain-full-suite"],
+  "reviewRequirement": {"required": true, "independence": "independent_reported"}
+}

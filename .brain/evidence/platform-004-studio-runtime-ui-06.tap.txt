@@ -1,0 +1,41 @@
+TAP version 13
+# Subtest: runtime UI reports UNKNOWN stop facts and reuses the same request key after an ambiguous start error
+ok 1 - runtime UI reports UNKNOWN stop facts and reuses the same request key after an ambiguous start error
+  ---
+  duration_ms: 9.3138
+  type: 'test'
+  ...
+# Subtest: runtime action success messages require proof in the exact current-attempt DTO
+ok 2 - runtime action success messages require proof in the exact current-attempt DTO
+  ---
+  duration_ms: 3.6137
+  type: 'test'
+  ...
+# Subtest: runtime overview and detail responses cannot restore stale routes, attempts, or application addresses
+ok 3 - runtime overview and detail responses cannot restore stale routes, attempts, or application addresses
+  ---
+  duration_ms: 2.0635
+  type: 'test'
+  ...
+# Subtest: a stale runtime overview failure cannot replace a newer successful refresh
+ok 4 - a stale runtime overview failure cannot replace a newer successful refresh
+  ---
+  duration_ms: 1.8543
+  type: 'test'
+  ...
+# Subtest: runtime confirmations survive same-attempt polling and are scoped away from a successor attempt
+ok 5 - runtime confirmations survive same-attempt polling and are scoped away from a successor attempt
+  ---
+  duration_ms: 1.99
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 84.879
+EXIT_CODE=0

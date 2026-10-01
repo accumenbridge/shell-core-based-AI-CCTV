@@ -1,0 +1,12 @@
+node_modules/
+.local/
+.artifacts/
+**/dist/
+__pycache__/
+test-results/
+*.log
+.env
+/analysis/
+/evidence/
+/generated/
+*.tsbuildinfo

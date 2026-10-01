@@ -1,0 +1,116 @@
+{
+  "schema": "brain.evidence-record.v1",
+  "kind": "run",
+  "id": "1bbd62dd-6982-4791-8111-5dabf5133992",
+  "taskId": "BRAIN-004",
+  "recipeId": "brain-full-suite",
+  "contractDigest": "4aa4223e13a277e22835b8f564ffe46affdd3c3e8ed99b821df32217b71f47e6",
+  "recipeDigest": "fedff282ea3ba6882b328eed16f8a368f4dbccfa83c323596c9b64d3611b235b",
+  "candidate": {
+    "files": [
+      {
+        "path": "docs/brain/CONTROL.md",
+        "sha256": "cd84b18b3fe11346a30c0a82199f363292f48efd31d40ed7070469f148e23709"
+      },
+      {
+        "path": "tests/brain-control.test.mjs",
+        "sha256": "c9b6eb5eba9e8cddf4698f1a31dce04dec243f680b432ae007d71165b3b80db0"
+      },
+      {
+        "path": "tests/brain-live.test.mjs",
+        "sha256": "299ec7925178a37ecae37f977aa830c3dd19afcf6e92d1702aeb692e4def382e"
+      },
+      {
+        "path": "tests/brain-workflow.test.mjs",
+        "sha256": "d478d508e6693ac0ff89047ea9b09e5d1f6e3cfd37d9d7bd0e2d91d52fef4db4"
+      },
+      {
+        "path": "tools/brain-app-server.mjs",
+        "sha256": "7bf18811b487a10a96505b0845f2a3966bf7cca866a5201583be971c2f6f46d7"
+      },
+      {
+        "path": "tools/brain-control.mjs",
+        "sha256": "4882a2dd66fc66e0cc3b8b23b2a57e1710fceec35a554401b974ffd9843acc21"
+      },
+      {
+        "path": "tools/brain-core.mjs",
+        "sha256": "d2fd69c0a88cc18aff1e3f9e645cea4275d1f1d3fbb0222df025044344bd82df"
+      },
+      {
+        "path": "tools/brain-live-ui.mjs",
+        "sha256": "8c05753cebc6ffd2e27119f76fb918a8208da12208e1ec9139dbd168849ce071"
+      },
+      {
+        "path": "tools/brain-live.mjs",
+        "sha256": "3401aa6bd5a853fb45a5310b1c6642e68dfc21664438c0eaa0fbee5c5cb883d0"
+      }
+    ],
+    "digest": "ed44fcbaba980b3c302640dfe258c46946eba6d8475eaaa51012e6090584d67b"
+  },
+  "recordedAt": "2026-10-01T10:04:51.076Z",
+  "command": {
+    "argv": [
+      "npm.cmd",
+      "test"
+    ],
+    "cwd": "."
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "os": "win32",
+    "QB_TEST_CP3_NATIVE_LOCK": "blocked-policy"
+  },
+  "status": "FAILED",
+  "exitCode": 1,
+  "counts": {
+    "tests": 302,
+    "passed": 299,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 2,
+    "todo": 0
+  },
+  "artifacts": [
+    {
+      "sourceRef": ".local/platform-007-npm-test-final-02.log",
+      "path": ".brain/workflow/artifacts/1bbd62dd-6982-4791-8111-5dabf5133992/platform-007-npm-test-final-02.log",
+      "sha256": "39ac7e4fce7381873a08a0410d442fc5359417989727fe5d6766152ccc6cb1c7",
+      "bytes": 30496
+    },
+    {
+      "sourceRef": ".local/brain-004-final-pre-suite-context-02.json",
+      "path": ".brain/workflow/artifacts/1bbd62dd-6982-4791-8111-5dabf5133992/brain-004-final-pre-suite-context-02.json",
+      "sha256": "2ccce1e63f1f45b2d20e35d83e0126c67a6d74c5316193612ddf3720befdc3c2",
+      "bytes": 196181
+    },
+    {
+      "sourceRef": ".local/platform-007-focused-wal-restore-01.tap.txt",
+      "path": ".brain/workflow/artifacts/1bbd62dd-6982-4791-8111-5dabf5133992/platform-007-focused-wal-restore-01.tap.txt",
+      "sha256": "3643821591fff01d71595ed30710f97b71a63b1f0baf4a6bb5e08269f53de2cb",
+      "bytes": 413
+    },
+    {
+      "sourceRef": ".local/platform-007-cleanup-retry-delta-01.json",
+      "path": ".brain/workflow/artifacts/1bbd62dd-6982-4791-8111-5dabf5133992/platform-007-cleanup-retry-delta-01.json",
+      "sha256": "9e541a748421bbdc1cdc49fbf6dab44865e36d6324b8ec1e3b5a524089dd48d4",
+      "bytes": 401
+    },
+    {
+      "sourceRef": ".brain/evidence/platform-007-browser-01.json",
+      "path": ".brain/workflow/artifacts/1bbd62dd-6982-4791-8111-5dabf5133992/platform-007-browser-01.json",
+      "sha256": "00ad5a10072896b9391a04c8ac0b645945498ddb4b929b41b0eb7a7b03c9ead7",
+      "bytes": 2608
+    }
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "/root actual required npm test02 session68314, fresh build before tests. Exact CP7 repaired16 and unchanged Brain9 captured and matched before/after; implementation focused fixture completed before invocation. Repetition justified by actual ENOTEMPTY failure and exactly one test-line repair."
+  },
+  "limitations": [
+    "Previous failed suite302/299pass/1ENOTEMPTY/2skip is immutable; later checks do not erase it.",
+    "Actual run/counts/status reported from raw final log; native lifecycle failures and environmental/policy skips remain explicit, not concealed as green.",
+    "Ordinary CP7 paired/offline completion remains blocked by extension file upload permission; no policy/permission change or workaround.",
+    "No whole-repository unchanged, hosted, provider or production acceptance. Brain maintenance qualification is separate and its required full suite is observation-only."
+  ],
+  "integritySha256": "e9bc439e59ec73edd756396eaa63e4594d5c062c56d2bff14a467fd0dc806994"
+}

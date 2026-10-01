@@ -1,0 +1,41 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { createRuntime } from './index.js';
+const args = process.argv.slice(2);
+const value = (key: string, fallback?: string) => { const i = args.indexOf(key); return i >= 0 ? args[i + 1] : fallback; };
+const product = value('--product', 'neutral')!, configPath = value('--config');
+if (!configPath) {
+    console.error('A local runtime config is required. Run npm run demo to create fresh local credentials and configs.');
+    process.exit(2);
+}
+const config = JSON.parse(readFileSync(resolve(configPath), 'utf8'));
+const runtime = await createRuntime(product, config);
+let shutdown: () => Promise<void>;
+if (args.includes('--worker')) {
+    if (!runtime.plan.requiresWorker) {
+        await runtime.close();
+        console.log('No worker capability selected.');
+        process.exit(0);
+    }
+    const worker = await runtime.worker();
+    const running = worker.run();
+    shutdown = async () => { worker.stop(); await running; await runtime.close(); };
+    console.log(JSON.stringify({ role: 'worker', product, instance: config.instanceId, state: 'READY' }));
+}
+else {
+    const port = Number(value('--port', '4300'));
+    if (!Number.isSafeInteger(port) || port < 0 || port > 65535)
+        throw new Error('Invalid port');
+    const http = await runtime.http(port);
+    shutdown = async () => { await http.close(); await runtime.close(); };
+    console.log(JSON.stringify({ role: 'web-backend', product, instance: config.instanceId, url: http.url, state: 'READY' }));
+}
+let closing = false;
+const stop = () => {
+    if (closing)
+        return;
+    closing = true;
+    void shutdown().then(() => process.exit(0)).catch(e => { console.error(e.message); process.exit(1); });
+};
+process.on('SIGINT', stop);
+process.on('SIGTERM', stop);

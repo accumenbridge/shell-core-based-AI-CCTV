@@ -1,0 +1,23 @@
+{
+  "schema": "quadbridge.atlas-reconciliation.v1",
+  "archivedRevision": 12,
+  "newRevision": 13,
+  "changes": [
+    {
+      "id": "core-task",
+      "path": ".brain/tasks/CORE-DELIVERY-001.md",
+      "before": "1c0c4525875befea703bd698394bd59acce281dd79cede53228a4c67e107f3b4",
+      "after": "b42adce11290ef60acd212d94a555350ce1a028468072514ee1968595f40e634",
+      "reason": "Actual suite308/305/2failure/1skip retained. Root adopts source-grounded existing15000fixture default correction and distinct undiagnosed publisher failure; one additional named source owner only."
+    }
+  ],
+  "newGoverningRef": {
+    "id": "core-heartbeat-plan",
+    "path": ".brain/evidence/core-delivery-001-heartbeat-plan-01.md",
+    "role": "Concrete competing fixture budgets; one-line existing-default correction without retrospective exact-attempt cause claim",
+    "sha256": "1ef92b877b1f61eaee14bccf14edd43ec7c5dddae959b5e1f2325e5e0eb7445a"
+  },
+  "limitations": [
+    "No source execution pass; no retrospective failureCode inference, publisher repair or security weakening."
+  ]
+}

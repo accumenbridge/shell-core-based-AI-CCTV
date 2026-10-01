@@ -1,0 +1,16 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "APPROVED_UI_SOURCE",
+  "hashes": {
+    "apps/studio-web/src/main.ts": "1e6df60be1b9b6a09707d18dc2acd64e6c8a87a12fa5d2e2bc4bcb608ebd89a2",
+    "tests/studio-runtime-ui.test.mjs": "5137e30b722135ed1e4944dd16d0d38277527b84e6432dca63a221417f694c12"
+  },
+  "checks": {
+    "fresh_build": {"exit_code": 0, "evidence": "platform-004-build-runtime-ui-facts-29.log", "provenance": "raw EXIT_CODE marker and writer report"},
+    "focused": {"exit_code": 0, "tests": 5, "passed": 5, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "evidence": "platform-004-studio-runtime-ui-06.tap.txt"}
+  },
+  "review": "Independent Sol/high first/last pins unchanged. Positive readiness/exit messages select nested attempts matching currentAttempt and returned operationId; absent/null replay operation or stale operation never qualifies positive proof. Digest-bound START pending and confirmation keys match. UNKNOWN honesty, original ambiguous key, navigation/load/detail attempt fences and same-identity confirmation preservation coherent. No remaining application source blocker. Root matched/read/archived source hashes and logs.",
+  "test_scope": "Compiled-main Nodevm fakeDOM/fetch components, not real browser/native. Positive RUNNING/STOPPED and stale operation tests use real DTO shape. Same-attempt confirmation oracle waits response application. Old overview assertion still checks already-present text before old response necessarily completes; a completion barrier is requested on next fixture edit. Do not claim that assertion alone qualifies the completed old-response negative.",
+  "remaining": "Actual promoted runtime/native/session/SQLite/domain workflows, ordinary browser, fresh full npm test/verifier and final exact-candidate review. First Desk attempt failed before runtime launch on direct registration-return fixture shape; failure preserved separately and writer repairing."
+}

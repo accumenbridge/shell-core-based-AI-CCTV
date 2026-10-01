@@ -1,0 +1,19 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "APPROVED_INDEPENDENT_RUNTIME_AND_NATIVE_CONSTRUCTOR_SCOPE",
+  "build": {"evidence":"platform-004-build-independent-native-32.log","exit_code":0},
+  "captures": {
+    "artifact_test":{"file":"platform-004-artifact-test-independent-01.mjs.txt","sha256":"7598475bf6f8b589184107f33722a17ec75b097cce5af0e878c15c63af57a067"},
+    "protocol_test":{"file":"platform-004-runtime-protocol-test-constructor-01.mjs.txt","sha256":"55e558166bf3fc51b911c80473b925ffd073b969c1b76316f023fa5f05cba336"},
+    "constructor_fixture_sha256":"e89382bb5bf6199387f29c491bf1c1d1248022b29fbe99bcef7e73a37316bdc3",
+    "runtime_manager_sha256":"9f75e766a5f50d85dd4f4a6d8eef7400bd57faa0ef180af20d458daab7876993"
+  },
+  "checks":[
+    {"evidence":"platform-004-runtime-compiler-independence-01.tap.txt","tests":1,"passed":1,"failed":0,"cancelled":0,"skipped":0,"todo":0,"exit_code":0,"duration_ms":19284.8296},
+    {"evidence":"platform-004-runtime-constructor-fault-01.tap.txt","tests":1,"passed":1,"failed":0,"cancelled":0,"skipped":0,"todo":0,"exit_code":0,"duration_ms":1755.5461}
+  ],
+  "scope": "Actual private Desk build/register/promote, closed compiler worker, full immutable inventory/hash/size/exact-byte comparison; all private source, compiler and build-snapshot inputs moved away with only operational host/helper/supervisor and registry retained. Actual login/create/read and positive exact native STOP/slot-empty/execution-clean succeed. Canonical binding-trigger constructor fault separately runs through owned RuntimeProtocol, assignment before constructor execution, private CONSTRUCTOR_FAILED, natural0 matching nonce EMPTY/actual helper close0/nullsignal, read-only binding/principal/grant rollback and trigger preserved.",
+  "review": "Independent Sol/high first/last capture hashes stable; root read captures/build/raw TAP and matched pins. No new source blocker within scope. Worker reports both proof-qualified fixture trees removed and no uncertain fixture left.",
+  "limits": "Coordinator libraries were already loaded; this is file/compiler independence, not their absence from memory. Temporary checkout source edit restored before launch; live runtime checkout rebuild NOT_RUN. Canonical native failure composition is not literal supervisor enrollment fault injection. No controller crash/browser/full/candidate acceptance. Subsequent typed RESTART repair-state source correction is separately dispatched and cannot inherit this old manager pin as exact candidate approval. Earlier restart503 unexplained."
+}

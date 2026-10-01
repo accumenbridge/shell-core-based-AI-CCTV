@@ -1,0 +1,137 @@
+TAP version 13
+# Subtest: managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+ok 1 - managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+  ---
+  duration_ms: 23.8363
+  type: 'test'
+  ...
+# Subtest: managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+ok 2 - managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+  ---
+  duration_ms: 4.1254
+  type: 'test'
+  ...
+# Subtest: schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+ok 3 - schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+  ---
+  duration_ms: 2.6318
+  type: 'test'
+  ...
+# Subtest: undispatched cleanup uncertainty cannot use JOB_EXIT and shutdown during STARTING fails the pending start
+ok 4 - undispatched cleanup uncertainty cannot use JOB_EXIT and shutdown during STARTING fails the pending start
+  ---
+  duration_ms: 4.2207
+  type: 'test'
+  ...
+# Subtest: schema 4 additive dispatch migration treats legacy mutable uncertainty labels conservatively
+ok 5 - schema 4 additive dispatch migration treats legacy mutable uncertainty labels conservatively
+  ---
+  duration_ms: 21.9291
+  type: 'test'
+  ...
+# Subtest: canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+ok 6 - canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+  ---
+  duration_ms: 6.9419
+  type: 'test'
+  ...
+# Subtest: fresh manager preparation writes only bounded enrollment inputs and rechecks authorization after canonical import
+ok 7 - fresh manager preparation writes only bounded enrollment inputs and rechecks authorization after canonical import
+  ---
+  duration_ms: 16.9819
+  type: 'test'
+  ...
+# Subtest: owned execution cleanup removes only exact copied-workspace junctions and quarantines changed targets
+ok 8 - owned execution cleanup removes only exact copied-workspace junctions and quarantines changed targets
+  ---
+  duration_ms: 32.681
+  type: 'test'
+  ...
+# Subtest: one-use runtime gate is published without a post-publication lookup that can race its consumer
+ok 9 - one-use runtime gate is published without a post-publication lookup that can race its consumer
+  ---
+  duration_ms: 669.0002
+  type: 'test'
+  ...
+# Subtest: original runtime owner can reconcile a late close and retry a rolled-back settlement audit
+ok 10 - original runtime owner can reconcile a late close and retry a rolled-back settlement audit
+  ---
+  duration_ms: 44.1962
+  type: 'test'
+  ...
+# Subtest: public close bounds an unresolved monitor and retries incomplete or rolled-back exact-owner settlement
+ok 11 - public close bounds an unresolved monitor and retries incomplete or rolled-back exact-owner settlement
+  ---
+  duration_ms: 3.1244
+  type: 'test'
+  ...
+# Subtest: terminal capture drains a coalesced startup tail when the event file has no new bytes
+not ok 12 - terminal capture drains a coalesced startup tail when the event file has no new bytes
+  ---
+  duration_ms: 7.2721
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\runtime-manager-preparation.test.mjs:249:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /not part of the fixed protocol/. Input:
+    
+    'RuntimePreparationError: A required managed runtime role did not become ready'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'A required managed runtime role did not become ready'
+  stack: |-
+    ManagedRuntimeManager.validateRuntimeEvent (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:1365:19)
+    ManagedRuntimeManager.driveStartup (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:1458:26)
+    async waitForActual (node:assert:646:5)
+    async strict.rejects (node:assert:769:25)
+    async TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/runtime-manager-preparation.test.mjs:261:3)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/runtime-manager-preparation.test.mjs:261:3)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: late semantic event errors remain separate from a matching native empty and helper-close proof
+ok 13 - late semantic event errors remain separate from a matching native empty and helper-close proof
+  ---
+  duration_ms: 6.2909
+  type: 'test'
+  ...
+# Subtest: runtime start preserves an admission failure and does not settle or create an unowned execution
+ok 14 - runtime start preserves an admission failure and does not settle or create an unowned execution
+  ---
+  duration_ms: 473.5229
+  type: 'test'
+  ...
+# Subtest: verified snapshot copy preflights every path and digest before creating its destination
+ok 15 - verified snapshot copy preflights every path and digest before creating its destination
+  ---
+  duration_ms: 4.6834
+  type: 'test'
+  ...
+# Subtest: runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+ok 16 - runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+  ---
+  duration_ms: 157.3402
+  type: 'test'
+  ...
+# Subtest: a failed canonical LocalAccess seed leaves repair-required evidence and never publishes enrollment completion
+ok 17 - a failed canonical LocalAccess seed leaves repair-required evidence and never publishes enrollment completion
+  ---
+  duration_ms: 17.312
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 16
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1525.8154

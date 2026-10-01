@@ -1,0 +1,91 @@
+COMMAND=node --test --test-reporter=tap tests/control-plane.test.mjs tests/control-plane-artifacts.test.mjs
+QB_TEST_CP3_NATIVE_LOCK=blocked-policy
+TAP version 13
+# Subtest: real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+ok 1 - real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+  ---
+  duration_ms: 40114.6469
+  type: 'test'
+  ...
+# Subtest: BLOCKED_ENV: bounded snapshot verification rejects a file symlink when the host permits fixture creation
+ok 2 - BLOCKED_ENV: bounded snapshot verification rejects a file symlink when the host permits fixture creation # SKIP BLOCKED_ENV: host denied creation of the owned file-symlink fixture (EPERM)
+  ---
+  duration_ms: 10845.4425
+  type: 'test'
+  ...
+# Subtest: native staging-file lock retains uncertain cleanup after an observed registry move
+ok 3 - native staging-file lock retains uncertain cleanup after an observed registry move # SKIP BLOCKED_POLICY: the native staging-file-lock fixture command is blocked in this process context
+  ---
+  duration_ms: 0.2673
+  type: 'test'
+  ...
+# Subtest: separate Node owners serialize physical publication, retain interrupted ownership, and recheck session after a real SQLite lock
+ok 4 - separate Node owners serialize physical publication, retain interrupted ownership, and recheck session after a real SQLite lock
+  ---
+  duration_ms: 45792.1954
+  type: 'test'
+  ...
+# Subtest: fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+ok 5 - fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+  ---
+  duration_ms: 3397.6372
+  type: 'test'
+  ...
+# Subtest: registry publisher proof parsing rejects ambiguous, mismatched, and oversized output
+ok 6 - registry publisher proof parsing rejects ambiguous, mismatched, and oversized output
+  ---
+  duration_ms: 0.3274
+  type: 'test'
+  ...
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 7 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 4.319
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 8 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 21.5011
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 9 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 30.8151
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 10 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 4.005
+  type: 'test'
+  ...
+# Subtest: schema 3 artifact publication facts are added without changing older operation values
+ok 11 - schema 3 artifact publication facts are added without changing older operation values
+  ---
+  duration_ms: 16.9124
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 12 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 1.5965
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 13 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 1.4632
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 2
+# todo 0
+# duration_ms 100260.5657
+TARGETED_EXIT_CODE=0

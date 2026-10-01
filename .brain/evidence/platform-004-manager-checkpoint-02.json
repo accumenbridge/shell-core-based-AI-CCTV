@@ -1,0 +1,34 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "SOURCE_REVIEW_REQUIRES_REPAIR",
+  "qualification": "FRESH_BUILD_AND_FOCUSED_SOURCE_COMPONENTS_NATIVE_NOT_RUN",
+  "hashes": {
+    "apps/control-plane/src/runtime-manager.ts": "860992a1ec24d55004251374d498238cc5349c0804fe26fab23970434c411a12",
+    "packages/control-plane/src/index.ts": "f129e74d45b92d517f44de2a5f068b432a29337303c2309627ec82226bfb06c8",
+    "tools/runtime-supervisor.mjs": "e8bee18aed4399433f6a85cf653c78401f2b5cb8576aee8d8a9da61df33e9d52",
+    "tools/build-job.ps1": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9",
+    "tests/runtime-manager-preparation.test.mjs": "371f4fc3312e2fd11ff0fc631090b61dce5c34629cd8b2d979d7fa370f0307aa",
+    "tests/managed-runtime-store.test.mjs": "885a3cdf97997e3b849e65c733f425e5c2713c59ce0813d4942587d5d03bdeec"
+  },
+  "checks": {
+    "fresh_build": {"exit_code": 0, "evidence": "platform-004-build-manager-source-18.log"},
+    "focused": {"exit_code": 0, "tests": 15, "passed": 15, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "evidence": "platform-004-manager-focused-02.tap.txt"},
+    "prior_build_failure": {"exit_code": 2, "reason": "Missing non-null narrowing of events[index]", "evidence": "platform-004-build-manager-source-16.log"},
+    "prior_focused_failure": {"exit_code": 1, "passed": 13, "failed": 2, "reason": "Fixture missing historical attempt method and gate fixture path bound", "evidence": "platform-004-manager-focused-failure-01.tap.txt"},
+    "native_runtime_http_browser_full_verifier": "NOT_RUN"
+  },
+  "scope": "Real SQLite store/component enrollment and a real independent Node gate consumer; late native proof/audit retry use runner/store doubles. Not actual promoted artifact, native helper/supervisor, manager domain journey, HTTP or browser qualification. Semantic event test still rejects identity before its intended role branch until repaired.",
+  "independent_reviews": {
+    "architect_sol_high": "All six hashes matched first/last and actual build/TAP inspected. Approval withheld for unbounded unresolved monitor join and permanently cached close rejection. Other enumerated lifecycle repairs coherent for reviewed scope.",
+    "probe_sol_high": "Pending parsed startup tail is dropped on no-new-bytes early return; semantic test has wrong binding identity and actual child teardown ordering needs repair. Source approval withheld."
+  },
+  "repairs_required": [
+    "Bound close's unresolved monitor wait and surface UNKNOWN/quarantine while retaining dependencies for live callbacks.",
+    "Permit public failed-close retry while keeping admission closed and original owner/reason/terminal result intact.",
+    "Drain pending parsed events even with no new file bytes and validate coalesced failure tails.",
+    "Supply matching event binding identity so semantic regression exercises selected-role grammar.",
+    "Close and positively observe the real gate consumer before deleting its fixture root on all teardown paths."
+  ],
+  "root_reconciliation": "Root independently matched six hashes, read and archived fresh build/TAP plus preserved failures. Luna repairing required manager/test changes; no native launch authorized from this checkpoint."
+}

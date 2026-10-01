@@ -1,0 +1,33 @@
+TAP version 13
+# Subtest: a promoted Combined release indexes a real document and settles a required worker exit with exact tree proof
+not ok 1 - a promoted Combined release indexes a real document and settles a required worker exit with exact tree proof
+  ---
+  duration_ms: 23828.7092
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\control-plane-artifacts.test.mjs:957:1'
+  failureType: 'testCodeFailure'
+  error: 'the structured public event records the required worker role that exited'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    {"at":1790823788594,"role":"web-backend","type":"ROLE_READY"}
+    {"at":1790823788597,"type":"API_READY"}
+    {"at":1790823788750,"role":"worker","type":"ROLE_READY"}
+    {"at":1790823792138,"code":"ROLE_EXITED","role":"worker","type":"ROLE_EXITED"}
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-artifacts.test.mjs:1035:10)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 23932.231
+EXIT_CODE=1

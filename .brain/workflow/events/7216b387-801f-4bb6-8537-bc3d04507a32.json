@@ -1,0 +1,253 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "7216b387-801f-4bb6-8537-bc3d04507a32",
+  "revision": 23,
+  "previousEventId": "f62f00b9-e625-46cf-b693-fc7839a0b90d",
+  "reportedActor": "/root platform coordinator",
+  "recordedAt": "2026-10-01T09:25:29.951Z",
+  "platformTask": {
+    "taskId": "PLATFORM-007",
+    "status": "REVIEW",
+    "candidate": {
+      "files": [
+        {
+          "path": "apps/control-plane/src/operator-server.ts",
+          "sha256": "ac16b51e899fea7cd4119f681c3f2727fc0470e0745eb17111235923f68614cd"
+        },
+        {
+          "path": "apps/studio-web/src/main.ts",
+          "sha256": "ff841faed5d12daa17ede376c1bc1514dd144d1f4c3ea8a991487f9199eabbd4"
+        },
+        {
+          "path": "apps/studio-web/static/studio.css",
+          "sha256": "b7eead083dd183df490b5312b166c016f5bd629608e9381767cff494590ce933"
+        },
+        {
+          "path": "docs/STATUS.md",
+          "sha256": "fe3ea0826a48e41cdbaf370fdca5ce541de0a702b62958cd61cb919ab679df82"
+        },
+        {
+          "path": "docs/STUDIO_INTEGRATION.md",
+          "sha256": "f2000f0a18726f1fe7c9fc7698ebb56de3c256e4ccea7af6a355fe30af127799"
+        },
+        {
+          "path": "packages/composition/src/studio.ts",
+          "sha256": "e0d317bdbc16ee0f202e598f91220fcc749a3387401a2ea65856afbf9bf8697b"
+        },
+        {
+          "path": "packages/control-plane/src/index.ts",
+          "sha256": "107bdca35e29b8ac2359e65159c01645167e01acbacb6aba17ed043705dad78f"
+        },
+        {
+          "path": "README.md",
+          "sha256": "bedaaf51f5f53824d28953bb08f5320b0de1e35809741e3678b018a8629c7ee3"
+        },
+        {
+          "path": "tests/control-plane-artifacts.test.mjs",
+          "sha256": "4c7f2f5447a4c99d600e35967c894e8bb977318fda7605f76797c6ed7560cbfb"
+        },
+        {
+          "path": "tests/control-plane-http.test.mjs",
+          "sha256": "f5faefb1e0b3ba494576fa6172f294387549e41dc97408690b6f7c789650cf10"
+        },
+        {
+          "path": "tests/studio-integration.test.mjs",
+          "sha256": "92c32bb381681510c5bb785e0fc3f9ad5769e3a28190770d3d34f3f4eab23897"
+        },
+        {
+          "path": "tests/studio-product-editor.test.mjs",
+          "sha256": "817c60b8c650167e590941472fe5f2544fb117cf46f9dfb91e29fa40e5e28fbf"
+        },
+        {
+          "path": "tests/visual-edition.test.mjs",
+          "sha256": "1e57b43232eddaf6e714c2bc3723370044d7fbb4920d59a142a6b5ffb9ff5419"
+        },
+        {
+          "path": "tools/studio-catalogue.mjs",
+          "sha256": "f3f7d4e611978b8b4e096fc96be9d6404c0ed31b25e04bcadd319badc94086cf"
+        },
+        {
+          "path": "visual/studio.css",
+          "sha256": "05e6d50ba1d8a1db6d61e66ab38f4613eddfc6d2040b7c3f1065d5e5e4ffe4e7"
+        },
+        {
+          "path": "visual/studio.js",
+          "sha256": "8ce9a902154e3bada85aa548d74c19e5e3857ded89c3f6ab4564a5a977be66d2"
+        }
+      ],
+      "digest": "feae2158e39dca364b28001d70d9ca78ca1486f3970e1aa5c49113c58e8e0026"
+    },
+    "runIds": [
+      "b2decba7-b5d3-42a4-bc62-ac583ca45b69"
+    ],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Exact16 feae... frozen after narrow repairs; root final build04 exit0. Actual attributed focused14UI+2HTTP+1realbuild passed. Sol exact source review underway; ordinary paired full JSON import/edit/preview/immutable save/new-version/real build and separate static offline import/export next. Close fixtures before one dual-candidate required full suite.",
+    "gates": [
+      {
+        "id": "CP6-local-prerequisite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/evidence/platform-006-result-01.json"
+        ],
+        "limitations": [
+          "Bounded local extractive core; two full-suite blocked skips and no hosted/provider/production inference."
+        ]
+      },
+      {
+        "id": "CP7-execution",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/tasks/PLATFORM-007.md",
+          ".brain/evidence/platform-007-implementation-map-03.md"
+        ],
+        "limitations": [
+          "Scratch proposal only; no maintained implementation, build, tests or browser qualification yet."
+        ]
+      },
+      {
+        "id": "CP7-build-04",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/b2decba7-b5d3-42a4-bc62-ac583ca45b69.json"
+        ],
+        "limitations": [
+          "Root actual fresh build before/after exact16; compilation only."
+        ]
+      },
+      {
+        "id": "CP7-focused-01-history",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".local/platform-007-focused-http-01.tap.txt",
+          ".local/platform-007-focused-http-02.tap.txt"
+        ],
+        "limitations": [
+          "Earlier HTTP fixtures failed; unique IDs and valid preview status narrowly repaired. No failed build01 claim: raw build01 exit0."
+        ]
+      },
+      {
+        "id": "CP7-focused-final",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".local/platform-007-focused-ui-02.tap.txt",
+          ".local/platform-007-focused-http-03.tap.txt",
+          ".local/platform-007-focused-artifact-01.tap.txt"
+        ],
+        "limitations": [
+          "Attributed sole Luna execution actual14/14+2/2+1/1 after build03. Final root full suite binds current source before check; browser remains separate."
+        ]
+      }
+    ]
+  },
+  "maintenanceTask": {
+    "taskId": "BRAIN-004",
+    "status": "REVIEW",
+    "candidate": {
+      "files": [
+        {
+          "path": "docs/brain/CONTROL.md",
+          "sha256": "cd84b18b3fe11346a30c0a82199f363292f48efd31d40ed7070469f148e23709"
+        },
+        {
+          "path": "tests/brain-control.test.mjs",
+          "sha256": "c9b6eb5eba9e8cddf4698f1a31dce04dec243f680b432ae007d71165b3b80db0"
+        },
+        {
+          "path": "tests/brain-live.test.mjs",
+          "sha256": "299ec7925178a37ecae37f977aa830c3dd19afcf6e92d1702aeb692e4def382e"
+        },
+        {
+          "path": "tests/brain-workflow.test.mjs",
+          "sha256": "d478d508e6693ac0ff89047ea9b09e5d1f6e3cfd37d9d7bd0e2d91d52fef4db4"
+        },
+        {
+          "path": "tools/brain-app-server.mjs",
+          "sha256": "7bf18811b487a10a96505b0845f2a3966bf7cca866a5201583be971c2f6f46d7"
+        },
+        {
+          "path": "tools/brain-control.mjs",
+          "sha256": "4882a2dd66fc66e0cc3b8b23b2a57e1710fceec35a554401b974ffd9843acc21"
+        },
+        {
+          "path": "tools/brain-core.mjs",
+          "sha256": "d2fd69c0a88cc18aff1e3f9e645cea4275d1f1d3fbb0222df025044344bd82df"
+        },
+        {
+          "path": "tools/brain-live-ui.mjs",
+          "sha256": "8c05753cebc6ffd2e27119f76fb918a8208da12208e1ec9139dbd168849ce071"
+        },
+        {
+          "path": "tools/brain-live.mjs",
+          "sha256": "3401aa6bd5a853fb45a5310b1c6642e68dfc21664438c0eaa0fbee5c5cb883d0"
+        }
+      ],
+      "digest": "ed44fcbaba980b3c302640dfe258c46946eba6d8475eaaa51012e6090584d67b"
+    },
+    "runIds": [
+      "f411f9e1-25cd-4f84-a296-febd742555f9",
+      "2e6e0640-3afa-4311-bf56-4c41305bd474",
+      "cdf7ad2e-7d12-49e3-b4b5-a0242737eb50",
+      "28f13e9d-08cb-4d04-9bc6-29be6ad5bd27"
+    ],
+    "reviewIds": [
+      "72ce7d9d-cada-4cd8-a46a-7c26911094f8"
+    ],
+    "blockers": [],
+    "nextAction": "BRAIN004 exact9 ed44... source/live/browser complete with immutable build/focused/control/adoption/source review records. Root required shared npm test will capture before/after exact9 along with CP7 exact16; provider/probe/browser servers closed. Root alone accepts/publishes final maintenance after actual suite observation.",
+    "gates": [
+      {
+        "id": "BRAIN-004-authorized",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/tasks/BRAIN-004.md"
+        ],
+        "limitations": [
+          "Root verified explicit human ok do and Yes—coordinate the two chats in review-astra-analyse the brain module and how it is used; other chat owns finite9 Brain-only source paths."
+        ]
+      },
+      {
+        "id": "BRAIN-001-history",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/workflow/events/57b477c0-c75d-45ac-aaef-928359d72d1a.json"
+        ],
+        "limitations": [
+          "Historical BRAIN-001 acceptance preserved in immutable events; no current BRAIN-004 execution qualification."
+        ]
+      },
+      {
+        "id": "BRAIN-004-execution",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/contracts/BRAIN-004.json"
+        ],
+        "limitations": [
+          "New declared files intentionally absent at READY/null. No proof of live controller or isolated execution."
+        ]
+      },
+      {
+        "id": "BRAIN-004-focused-core-06",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".local/brain-004-before-06.json",
+          ".local/brain-004-after-06.json"
+        ],
+        "limitations": [
+          "Reported other authorized chat actual exec10685 exit0/build0/13and10pass; immutable records pending. Root independently matched nine-file after candidate."
+        ]
+      },
+      {
+        "id": "BRAIN-004-source-review",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/72ce7d9d-cada-4cd8-a46a-7c26911094f8.json"
+        ],
+        "limitations": [
+          "Attributed independent other-chat source/delta reviewer. Actual provider model request not authenticated identity; local trust only."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "8e726822df2fed376fc0ae035cd70b6b987097bd34f9fbddcc51bb95de20d7f0"
+}

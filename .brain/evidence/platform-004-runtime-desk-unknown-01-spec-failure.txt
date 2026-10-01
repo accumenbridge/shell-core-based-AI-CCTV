@@ -1,0 +1,28 @@
+✖ a promoted Service Desk release runs as an owned local runtime, preserves a request through stop and restart, and leaves exact exit proof (30310.1307ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30411.2464
+
+✖ failing tests:
+
+test at tests\control-plane-artifacts.test.mjs:642:1
+✖ a promoted Service Desk release runs as an owned local runtime, preserves a request through stop and restart, and leaves exact exit proof (30310.1307ms)
+  AssertionError [ERR_ASSERTION]: expected runtime.start.requested audit for the exact command or attempt
+      at actorForAudit (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-artifacts.test.mjs:953:12)
+      at TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-artifacts.test.mjs:960:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+EXIT_CODE=1

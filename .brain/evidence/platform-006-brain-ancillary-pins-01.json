@@ -1,0 +1,15 @@
+{
+  "scope": "Ancillary human-authorized BRAIN004 two-file fix frozen before root suite, excluded from exact31 platform candidate",
+  "files": [
+    {
+      "sha256": "48d90f67a3eb5159b2d6b61d84bcbb933aa39e5c96e29d01c377abb166588b61",
+      "path": "tools/brain-core.mjs"
+    },
+    {
+      "sha256": "b87523eab957007c8f29dcd00443ba6c6ca704b83174a6469e2a95a55df917cb",
+      "path": "tests/brain-workflow.test.mjs"
+    }
+  ],
+  "taskId": "PLATFORM-006",
+  "platformCandidate": "d755c06582f2dc00a217e6dcef86ae037f908e7bf8ff355369a9748ea5c02e17"
+}

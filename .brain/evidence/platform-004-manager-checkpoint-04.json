@@ -1,0 +1,32 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "APPROVED_SOURCE_FOR_NATIVE_QUALIFICATION",
+  "qualification": "SOURCE_AND_COMPONENT_EVIDENCE_ONLY_NATIVE_NOT_RUN",
+  "hashes": {
+    "apps/control-plane/src/runtime-manager.ts": "9f75e766a5f50d85dd4f4a6d8eef7400bd57faa0ef180af20d458daab7876993",
+    "tests/runtime-manager-preparation.test.mjs": "5c0b56c328335319d5274efc895c47345351c166e2a255231bbe863f8b9a38c7",
+    "packages/control-plane/src/index.ts": "f129e74d45b92d517f44de2a5f068b432a29337303c2309627ec82226bfb06c8",
+    "tools/runtime-supervisor.mjs": "e8bee18aed4399433f6a85cf653c78401f2b5cb8576aee8d8a9da61df33e9d52",
+    "tools/build-job.ps1": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9",
+    "tests/managed-runtime-store.test.mjs": "885a3cdf97997e3b849e65c733f425e5c2713c59ce0813d4942587d5d03bdeec"
+  },
+  "checks": {
+    "fresh_build": {"worker_reported_exit_code": 0, "evidence": "platform-004-build-manager-source-21.log", "note": "Raw complete build output has no exit marker; exit provenance is writer tool report."},
+    "focused": {"worker_reported_exit_code": 0, "tests": 18, "passed": 18, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "evidence": "platform-004-manager-focused-06.tap.txt"},
+    "prior_build_failure": {"reason": "Moving operator route value.id TypeScript inference", "evidence": "platform-004-build-manager-source-20.log", "note": "Operator-only cast repaired before fresh build; no exit marker in raw failure log."},
+    "native_runtime_http_browser_full_verifier": "NOT_RUN"
+  },
+  "independent_reviews": {
+    "architect_sol_high": "APPROVED_SOURCE_FOR_NATIVE_QUALIFICATION; all six hashes stable first/last, new observed-empty-channel removal regression and previous lifecycle repairs verified, raw build/focused evidence read.",
+    "probe_sol_high": "APPROVED_FOR_NATIVE_QUALIFICATION_SOURCE in manager/enrollment/protocol/public-state scope; all six hashes stable first/last, no remaining concrete source blocker."
+  },
+  "scope": "Source readiness only. Component evidence includes synthetic plans, runner/store doubles, real SQLite component checks and an independent Node gate consumer. It does not establish actual native helper/supervisor/owned enrollment or promoted runtime domain workflow. Moving main/API/UI files are excluded.",
+  "next_actual_gates": [
+    "Fresh selected-normal-PS7 helper default CP2 and RuntimeProtocol Add-Type/assignment/resume/control/descendant EMPTY plus matching helper closure.",
+    "Actual built/registered/promoted Service Desk start/login/write/read/stop/restart persistence, Combined separate worker indexing and compiler independence.",
+    "Canonical constructor/seed/crash boundaries, original HTTP session/SQLite expiry, deleted principals/revoked grants, cross-process ownership, UNKNOWN crash retention and exact private secret scan.",
+    "Review moving main/operator/Studio source, fresh relevant integration/full npm test/verifier/ordinary browser and final exact-candidate independent review."
+  ],
+  "root_reconciliation": "Root matched all hashes and read/archived logs; both independent source approvals received. Luna dispatched actual native qualification within the already authorized local contract. No native invocation or result reported yet; blocked CP3 fixture gates remain unchanged."
+}

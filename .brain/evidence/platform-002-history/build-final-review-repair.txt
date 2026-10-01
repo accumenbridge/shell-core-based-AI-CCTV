@@ -1,0 +1,7 @@
+npm notice run quadbridge-product-platform@0.2.0 build
+npm notice run node tools/build.mjs
+Local workspace links prepared. No third-party packages were downloaded.
+packages/control-plane/src/index.ts(390,30): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+packages/control-plane/src/index.ts(391,27): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.

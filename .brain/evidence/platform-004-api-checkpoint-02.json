@@ -1,0 +1,19 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "APPROVED_API_MAIN_SOURCE_CHECKPOINT",
+  "hashes": {
+    "apps/control-plane/src/main.ts": "35b992d053ee1a9995fcfae03d4daf5c92dd1db904ff98328c4c81313d4bc7b4",
+    "apps/control-plane/src/operator-server.ts": "88c0e896f4370cd9d530f990f7e233295d2c2c6ef4d928acbc3ed8e8e2507110",
+    "apps/control-plane/src/source-import.ts": "61371a89092d07920e5c17627871eeb3fe35334dd39f51e84289957b2af4a7bc",
+    "tests/control-plane-http.test.mjs": "fd691191309ed258d01fc6ae05b9587a6acbe39c3d95836e52ae42ca30f23c67",
+    "tests/control-plane-main.test.mjs": "b278b7117e7535d6380943756366c20a87f527a7965f7c4e9e8d87786e631861"
+  },
+  "checks": {
+    "fresh_build": {"exit_code": 0, "provenance": "raw EXIT_CODE=0 marker and writer report", "evidence": "platform-004-build-shutdown-fix-26.log"},
+    "targeted": {"exit_code": 0, "tests": 31, "passed": 31, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "evidence": "platform-004-api-main-studio-targeted-01.tap.txt"}
+  },
+  "review": "Independent Sol/high matched all five first/last hashes and approves repaired source: immediate runtime-close rejection outcome handler before HTTP drain, signal retry after failure, strict lowercase action suffix with uppercase STOP404/no-call regression. Root matched hashes and read archived raw logs.",
+  "scope": "HTTP runtime-manager doubles, outcome helper and EventEmitter signal retry. Existing Studio tests use offline/legacy tools; this does not qualify new paired managed-runtime UI, actual startControlPlane drain with retained native callbacks, promoted native/domain workflows, browser or full program.",
+  "remaining": "Studio fact/generation/ambiguous-key repairs and independent review; actual native protocol and promoted manager/HTTP lifecycle, session/SQLite gates, full tests/verifier/browser and final candidate review."
+}

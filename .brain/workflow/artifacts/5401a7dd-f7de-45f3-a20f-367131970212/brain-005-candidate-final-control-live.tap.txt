@@ -1,0 +1,108 @@
+TAP version 13
+# Subtest: managed feature edits only its candidate, observes real checks and requires a current review
+ok 1 - managed feature edits only its candidate, observes real checks and requires a current review
+  ---
+  duration_ms: 511.3096
+  type: 'test'
+  ...
+# Subtest: whole proposal validation prevents partial out-of-scope changes
+ok 2 - whole proposal validation prevents partial out-of-scope changes
+  ---
+  duration_ms: 91.0015
+  type: 'test'
+  ...
+# Subtest: source drift, stale decisions and cross-project replay are rejected
+ok 3 - source drift, stale decisions and cross-project replay are rejected
+  ---
+  duration_ms: 78.6677
+  type: 'test'
+  ...
+# Subtest: managed readiness is shared, preserves observation, refuses drift before effects and recovers only after explicit reconciliation
+ok 4 - managed readiness is shared, preserves observation, refuses drift before effects and recovers only after explicit reconciliation
+  ---
+  duration_ms: 186.9713
+  type: 'test'
+  ...
+# Subtest: an accepted focus linked to another task cannot prepare managed work
+ok 5 - an accepted focus linked to another task cannot prepare managed work
+  ---
+  duration_ms: 40.0761
+  type: 'test'
+  ...
+# Subtest: pause and direction changes wait for acknowledgement and discard late output
+ok 6 - pause and direction changes wait for acknowledgement and discard late output
+  ---
+  duration_ms: 97.0544
+  type: 'test'
+  ...
+# Subtest: failed actual check is retained and cannot be accepted
+ok 7 - failed actual check is retained and cannot be accepted
+  ---
+  duration_ms: 422.6102
+  type: 'test'
+  ...
+# Subtest: lost agent connection preserves UNKNOWN and never silently redispatches
+ok 8 - lost agent connection preserves UNKNOWN and never silently redispatches
+  ---
+  duration_ms: 119.5613
+  type: 'test'
+  ...
+# Subtest: changed architecture source invalidates review even outside editable inputs
+not ok 9 - changed architecture source invalidates review even outside editable inputs
+  ---
+  duration_ms: 399.0259
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\brain-control.test.mjs:185:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      Comparison {
+    +   code: 'STALE_BASELINE'
+    -   code: 'NOT_READY'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'NOT_READY'
+  actual:
+  error: 'Displayed project binding changed; refresh before acting.'
+  stack: |-
+    fail (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/brain-control.mjs:13:59)
+    checkRequest (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/brain-control.mjs:193:60)
+    async file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/brain-control.mjs:349:7
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/brain-control.test.mjs:196:3)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: App Server ambiguous turn acknowledgement and protocol loss remain uncertain
+ok 10 - App Server ambiguous turn acknowledgement and protocol loss remain uncertain
+  ---
+  duration_ms: 1.0428
+  type: 'test'
+  ...
+# Subtest: proposal adapter interrupts unknown item types instead of authorizing future tools
+ok 11 - proposal adapter interrupts unknown item types instead of authorizing future tools
+  ---
+  duration_ms: 0.1951
+  type: 'test'
+  ...
+# Subtest: live console refreshes project state and rejects unauthorized, stale and foreign-origin decisions
+ok 12 - live console refreshes project state and rejects unauthorized, stale and foreign-origin decisions
+  ---
+  duration_ms: 179.278
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 11
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2053.5649

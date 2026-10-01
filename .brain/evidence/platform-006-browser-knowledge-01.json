@@ -1,0 +1,63 @@
+{
+  "taskId": "PLATFORM-006",
+  "candidate": "d755c06582f2dc00a217e6dcef86ae037f908e7bf8ff355369a9748ea5c02e17",
+  "status": "PASSED_ORDINARY_KNOWLEDGE_UI",
+  "fixtureId": "5d7886c3-283b-4402-a6c4-00223ee06e91",
+  "product": {
+    "productId": "combined",
+    "version": "0.2.1",
+    "artifactDigest": "18cbee0441a41eba9952cbc5872536a67348ffc4e47c2532ba3a240043194412",
+    "buildId": "f27b37ec-b30b-42b4-8085-21222c151441",
+    "snapshotId": "4906fd74-2a27-4f5f-bbb8-a85272312f4a",
+    "snapshotDigest": "18cbee0441a41eba9952cbc5872536a67348ffc4e47c2532ba3a240043194412",
+    "releaseDigest": "f0bf74296531ac55164364e6328f479489c1e76de64fb9bc2afc5b0dddbd8606",
+    "sizeBytes": 733726,
+    "fileCount": 151
+  },
+  "sourceFingerprint": "654e353ae5ac652d7422e89e48d6b736694e1e98eb0453af4520ba382fe0a868",
+  "studioMainSha256": "78a4bf10fd2f21d0e09b0041078512e59a386141f8ef7a5d6430ef831b45bf6c",
+  "selectedHost": {
+    "kind": "powershell7-file-host",
+    "version": "7.6.5",
+    "sha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+    "policy": "RemoteSigned"
+  },
+  "instanceId": "runtime-16cd1b43-8743-4c7e-b6ce-98eb3a744524",
+  "documentId": "2da4d4d5-9153-4fe5-8ea1-d87111b57cc1",
+  "tenantId": "customer-a",
+  "question": "What is the retention policy for project backups?",
+  "answer": "Keep project backups for 30 days.",
+  "citation": {
+    "title": "Backup handbook",
+    "version": 1,
+    "start": 20,
+    "end": 53,
+    "exactSourceSlice": true
+  },
+  "checks": [
+    "confirmed exact promoted Combined0.2.1 start",
+    "actual backend and separate worker readiness",
+    "ordinary private business login",
+    "document saved and READY/worker SUCCEEDED",
+    "natural question yielded exact cited source excerpt",
+    "question edit cleared prior answer",
+    "unmatched question yielded explicit indexed-only no evidence",
+    "Cancel visible and pending-enabled/idle-disabled",
+    "business logout",
+    "confirmed exact runtime stop with positive empty tree and execution cleanup",
+    "operator disconnect/tab closure"
+  ],
+  "limitations": [
+    "One ordinary operator/business admin and one synthetic tenant document. Awaited provider cancellation/logout proven separately in focused owned HTTP test; no injected browser delay or browser cancel-click qualification.",
+    "Knowledge standalone HTTP binding fixture was refused as unsupported local-managed profile and preserved.",
+    "No model inference, external provider, hosted or production qualification.",
+    "Fixed outer closed record and original PID absence observed; no independently saved outer process exit code is invented. No browser/native overlap with final suite."
+  ],
+  "closureRef": ".brain/evidence/platform-006-browser-closed-01.json",
+  "outerProcess": {
+    "pid": 3916,
+    "observedPresent": false,
+    "observedBy": "Root exec_command Get-Process -Id3916 after fixed closed record",
+    "independentExitCode": null
+  }
+}

@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+ok 1 - Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+  ---
+  duration_ms: 16806.8315
+  type: 'test'
+  ...
+# Subtest: worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+ok 2 - worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+  ---
+  duration_ms: 11534.1863
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 37876.5397

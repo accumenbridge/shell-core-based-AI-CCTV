@@ -1,0 +1,138 @@
+{
+  "schema": "brain.evidence-record.v1",
+  "kind": "run",
+  "id": "638c4356-1719-417d-9fd7-9509de6e3f04",
+  "taskId": "PLATFORM-007",
+  "recipeId": "brain-full-suite",
+  "contractDigest": "e3f6aac8c9087d292f930d70e6d55ecbb7114eb80e4b644e7c4e27149b1ab3ec",
+  "recipeDigest": "fedff282ea3ba6882b328eed16f8a368f4dbccfa83c323596c9b64d3611b235b",
+  "candidate": {
+    "files": [
+      {
+        "path": "apps/control-plane/src/operator-server.ts",
+        "sha256": "ac16b51e899fea7cd4119f681c3f2727fc0470e0745eb17111235923f68614cd"
+      },
+      {
+        "path": "apps/studio-web/src/main.ts",
+        "sha256": "ff841faed5d12daa17ede376c1bc1514dd144d1f4c3ea8a991487f9199eabbd4"
+      },
+      {
+        "path": "apps/studio-web/static/studio.css",
+        "sha256": "b7eead083dd183df490b5312b166c016f5bd629608e9381767cff494590ce933"
+      },
+      {
+        "path": "docs/STATUS.md",
+        "sha256": "fe3ea0826a48e41cdbaf370fdca5ce541de0a702b62958cd61cb919ab679df82"
+      },
+      {
+        "path": "docs/STUDIO_INTEGRATION.md",
+        "sha256": "f2000f0a18726f1fe7c9fc7698ebb56de3c256e4ccea7af6a355fe30af127799"
+      },
+      {
+        "path": "packages/composition/src/studio.ts",
+        "sha256": "e0d317bdbc16ee0f202e598f91220fcc749a3387401a2ea65856afbf9bf8697b"
+      },
+      {
+        "path": "packages/control-plane/src/index.ts",
+        "sha256": "107bdca35e29b8ac2359e65159c01645167e01acbacb6aba17ed043705dad78f"
+      },
+      {
+        "path": "README.md",
+        "sha256": "bedaaf51f5f53824d28953bb08f5320b0de1e35809741e3678b018a8629c7ee3"
+      },
+      {
+        "path": "tests/control-plane-artifacts.test.mjs",
+        "sha256": "4c7f2f5447a4c99d600e35967c894e8bb977318fda7605f76797c6ed7560cbfb"
+      },
+      {
+        "path": "tests/control-plane-http.test.mjs",
+        "sha256": "f5faefb1e0b3ba494576fa6172f294387549e41dc97408690b6f7c789650cf10"
+      },
+      {
+        "path": "tests/studio-integration.test.mjs",
+        "sha256": "92c32bb381681510c5bb785e0fc3f9ad5769e3a28190770d3d34f3f4eab23897"
+      },
+      {
+        "path": "tests/studio-product-editor.test.mjs",
+        "sha256": "817c60b8c650167e590941472fe5f2544fb117cf46f9dfb91e29fa40e5e28fbf"
+      },
+      {
+        "path": "tests/visual-edition.test.mjs",
+        "sha256": "1e57b43232eddaf6e714c2bc3723370044d7fbb4920d59a142a6b5ffb9ff5419"
+      },
+      {
+        "path": "tools/studio-catalogue.mjs",
+        "sha256": "f3f7d4e611978b8b4e096fc96be9d6404c0ed31b25e04bcadd319badc94086cf"
+      },
+      {
+        "path": "visual/studio.css",
+        "sha256": "05e6d50ba1d8a1db6d61e66ab38f4613eddfc6d2040b7c3f1065d5e5e4ffe4e7"
+      },
+      {
+        "path": "visual/studio.js",
+        "sha256": "8ce9a902154e3bada85aa548d74c19e5e3857ded89c3f6ab4564a5a977be66d2"
+      }
+    ],
+    "digest": "feae2158e39dca364b28001d70d9ca78ca1486f3970e1aa5c49113c58e8e0026"
+  },
+  "recordedAt": "2026-10-01T09:50:12.620Z",
+  "command": {
+    "argv": [
+      "npm.cmd",
+      "test"
+    ],
+    "cwd": "."
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "os": "win32",
+    "QB_TEST_CP3_NATIVE_LOCK": "blocked-policy"
+  },
+  "status": "FAILED",
+  "exitCode": 1,
+  "counts": {
+    "tests": 302,
+    "passed": 299,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 2,
+    "todo": 0
+  },
+  "artifacts": [
+    {
+      "sourceRef": ".local/platform-007-npm-test-final-01.log",
+      "path": ".brain/workflow/artifacts/638c4356-1719-417d-9fd7-9509de6e3f04/platform-007-npm-test-final-01.log",
+      "sha256": "00b5e2296ddec07ea86d37875eb6334da519f8fe8027f5e921ce721f8ce1dcdf",
+      "bytes": 30509
+    },
+    {
+      "sourceRef": ".local/platform-007-final-pre-suite-context-01.json",
+      "path": ".brain/workflow/artifacts/638c4356-1719-417d-9fd7-9509de6e3f04/platform-007-final-pre-suite-context-01.json",
+      "sha256": "d3edf4358fbe6ddadbfb71ca3964772f5e5c5522b21e416b33c85e9f8603c9dd",
+      "bytes": 175595
+    },
+    {
+      "sourceRef": ".brain/evidence/platform-007-browser-01.json",
+      "path": ".brain/workflow/artifacts/638c4356-1719-417d-9fd7-9509de6e3f04/platform-007-browser-01.json",
+      "sha256": "00ad5a10072896b9391a04c8ac0b645945498ddb4b929b41b0eb7a7b03c9ead7",
+      "bytes": 2608
+    },
+    {
+      "sourceRef": ".local/platform-007-validation/browser-01.closed.json",
+      "path": ".brain/workflow/artifacts/638c4356-1719-417d-9fd7-9509de6e3f04/browser-01.closed.json",
+      "sha256": "e28bf19d92b64c2fa2698ec6ecf2e0d46dd836191af653d255cca6040ee0923c",
+      "bytes": 467
+    }
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "/root actual shared npm test session30446: fresh build then repository full suite, private fixture positively closed/session58956 exit0 before invocation. Both exact scoped candidates captured and matched before/after invocation."
+  },
+  "limitations": [
+    "Reported actual process exit/counts from one shared run; separate records bind each task to its own pre-check candidate.",
+    "Windows file symlink EPERM and previously blocked native staging-lock fixture remain separately blocked skips, never passes.",
+    "CP7 source/focused review passed; ordinary paired/offline browser completion blocked by extension file upload permission after preceding transport failures. No permission workaround.",
+    "No whole-repository unchanged, hosted, production deployment or model-provider qualification claim. Brain live provider/browser observations remain separately attributed to the authorized other chat."
+  ],
+  "integritySha256": "9892e33eed7117182caf5c8ef49238427f3f92036e1bb1f67af71d004f6b8f15"
+}

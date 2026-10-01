@@ -1,0 +1,4 @@
+npm notice run quadbridge-product-platform@0.2.0 build
+npm notice run node tools/build.mjs
+Local workspace links prepared. No third-party packages were downloaded.
+apps/studio-web/src/main.ts(85,49): error TS2322: Type 'void' is not assignable to type 'string'.

@@ -1,0 +1,215 @@
+{
+  "schema": "quadbridge.browser-runtime-provenance.v1",
+  "fixtureId": "8016eb92-850e-4edd-a343-e2a93a809904",
+  "runnerObserved": {
+    "sessionId": 33867,
+    "exitCode": 0,
+    "output": "BROWSER_SERVER_CLOSED"
+  },
+  "serverCloseMarker": "BROWSER_SERVER_CLOSED",
+  "sourceFingerprint": "2e3f6c838b55ee6fdfe8157eed9323566c616185962b407b7413123d12d2baeb",
+  "studioMainSha256": "f1a6a43816bb1d784b776e21b9daccf28343317fcd3ac48a2b9a9220a65c2b7d",
+  "artifact": {
+    "productId": "combined",
+    "version": "0.2.0",
+    "artifactDigest": "68944a5fd29630ade00bbfd73fb04272b4a472a26c36a3fb49792c614086562c",
+    "snapshotDigest": "68944a5fd29630ade00bbfd73fb04272b4a472a26c36a3fb49792c614086562c",
+    "releaseDigest": "9952150c879b0789122ae2e43c8ab70d4b5811fae89bc02b8c0011a1e9fe045c",
+    "fileCount": 141,
+    "sizeBytes": 640351
+  },
+  "runtime": {
+    "instanceId": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+    "artifactDigest": "68944a5fd29630ade00bbfd73fb04272b4a472a26c36a3fb49792c614086562c",
+    "finalState": "STOPPED",
+    "currentAttempt": 2,
+    "finalAttemptOperationId": "9b57f4d2-18e3-4441-8280-d1a55e9d190c",
+    "slot": {
+      "state": "EMPTY",
+      "occupied": false,
+      "instanceId": null
+    },
+    "commands": [
+      {
+        "id": "de4f0f08-1c91-4b67-be1a-32d6131e94c3",
+        "kind": "START",
+        "actorId": "operator:026e1982-87f2-4234-a56d-717b17dbd093",
+        "state": "SUCCEEDED"
+      },
+      {
+        "id": "211d5aae-20c8-4c18-a7e9-56ef2c0b1fdf",
+        "kind": "STOP",
+        "actorId": "operator:6f40afdc-4fc5-47fe-bec5-31533354d576",
+        "state": "SUCCEEDED"
+      },
+      {
+        "id": "8630e7d3-f74d-4ce6-a061-ce561587ba93",
+        "kind": "RESTART",
+        "actorId": "operator:6f40afdc-4fc5-47fe-bec5-31533354d576",
+        "state": "SUCCEEDED"
+      },
+      {
+        "id": "5fb8080e-d4c1-4eb0-b380-2b5ec11d63cb",
+        "kind": "STOP",
+        "actorId": "operator:6f40afdc-4fc5-47fe-bec5-31533354d576",
+        "state": "SUCCEEDED"
+      }
+    ],
+    "attempts": [
+      {
+        "id": "909d2f34-5251-4d4c-ae1a-614129bd32b7",
+        "attempt": 1,
+        "commandId": "de4f0f08-1c91-4b67-be1a-32d6131e94c3",
+        "state": "STOPPED",
+        "physicalState": "EMPTY",
+        "apiReady": 1,
+        "workerAttached": 1,
+        "emptyObserved": 1,
+        "helperClosed": 1,
+        "executionClean": 1,
+        "workerRequired": 1
+      },
+      {
+        "id": "9b57f4d2-18e3-4441-8280-d1a55e9d190c",
+        "attempt": 2,
+        "commandId": "8630e7d3-f74d-4ce6-a061-ce561587ba93",
+        "state": "STOPPED",
+        "physicalState": "EMPTY",
+        "apiReady": 1,
+        "workerAttached": 1,
+        "emptyObserved": 1,
+        "helperClosed": 1,
+        "executionClean": 1,
+        "workerRequired": 1
+      }
+    ],
+    "audits": [
+      {
+        "action": "runtime.start.requested",
+        "actorId": "operator:026e1982-87f2-4234-a56d-717b17dbd093",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "commandId": "de4f0f08-1c91-4b67-be1a-32d6131e94c3",
+        "attempt": 1
+      },
+      {
+        "action": "runtime.preparation.completed",
+        "actorId": "operator:026e1982-87f2-4234-a56d-717b17dbd093",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "attempt": 1
+      },
+      {
+        "action": "runtime.enrollment.authorized",
+        "actorId": "operator:026e1982-87f2-4234-a56d-717b17dbd093",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "attempt": 1
+      },
+      {
+        "action": "runtime.launch.authorized",
+        "actorId": "operator:026e1982-87f2-4234-a56d-717b17dbd093",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "attempt": 1
+      },
+      {
+        "action": "runtime.readiness.observed",
+        "actorId": "operator:026e1982-87f2-4234-a56d-717b17dbd093",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "attempt": 1
+      },
+      {
+        "action": "runtime.started",
+        "actorId": "operator:026e1982-87f2-4234-a56d-717b17dbd093",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "attempt": 1
+      },
+      {
+        "action": "runtime.stop.requested",
+        "actorId": "operator:6f40afdc-4fc5-47fe-bec5-31533354d576",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "commandId": "211d5aae-20c8-4c18-a7e9-56ef2c0b1fdf",
+        "attempt": 1
+      },
+      {
+        "action": "runtime.stopped",
+        "actorId": "operator:6f40afdc-4fc5-47fe-bec5-31533354d576",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "attempt": 1,
+        "emptyObserved": true,
+        "helperClosed": true,
+        "executionClean": true
+      },
+      {
+        "action": "runtime.restart.requested",
+        "actorId": "operator:6f40afdc-4fc5-47fe-bec5-31533354d576",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "commandId": "8630e7d3-f74d-4ce6-a061-ce561587ba93",
+        "attempt": 2
+      },
+      {
+        "action": "runtime.enrollment.authorized",
+        "actorId": "operator:6f40afdc-4fc5-47fe-bec5-31533354d576",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "attempt": 2
+      },
+      {
+        "action": "runtime.launch.authorized",
+        "actorId": "operator:6f40afdc-4fc5-47fe-bec5-31533354d576",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "attempt": 2
+      },
+      {
+        "action": "runtime.readiness.observed",
+        "actorId": "operator:6f40afdc-4fc5-47fe-bec5-31533354d576",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "attempt": 2
+      },
+      {
+        "action": "runtime.started",
+        "actorId": "operator:6f40afdc-4fc5-47fe-bec5-31533354d576",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "attempt": 2
+      },
+      {
+        "action": "runtime.stop.requested",
+        "actorId": "operator:6f40afdc-4fc5-47fe-bec5-31533354d576",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "commandId": "5fb8080e-d4c1-4eb0-b380-2b5ec11d63cb",
+        "attempt": 2
+      },
+      {
+        "action": "runtime.stopped",
+        "actorId": "operator:6f40afdc-4fc5-47fe-bec5-31533354d576",
+        "subject": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "attempt": 2,
+        "emptyObserved": true,
+        "helperClosed": true,
+        "executionClean": true
+      }
+    ],
+    "access": {
+      "bindings": 1,
+      "principals": 3,
+      "grants": 36,
+      "sessions": 0
+    }
+  },
+  "domainRetention": {
+    "moduleDatabaseFilesExist": true,
+    "counts": {
+      "handoff": {
+        "handoffs": 0,
+        "handoff_delivery": 0,
+        "_jobs": 0
+      },
+      "knowledge": {
+        "documents": 0,
+        "document_search_config": 1,
+        "document_search_data": 2
+      },
+      "service-desk": {
+        "requests": 0
+      }
+    },
+    "browserJourneyCreatedBusinessDomainRows": false,
+    "statement": "module owner databases and enrollment remain; this browser control journey did not create request/document records"
+  }
+}

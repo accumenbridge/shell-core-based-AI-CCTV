@@ -1,0 +1,244 @@
+TAP version 13
+# Subtest: Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+ok 1 - Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+  ---
+  duration_ms: 17575.5896
+  type: 'test'
+  ...
+# Subtest: worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+ok 2 - worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+  ---
+  duration_ms: 11473.2467
+  type: 'test'
+  ...
+# Subtest: missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+ok 3 - missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+  ---
+  duration_ms: 5029.8548
+  type: 'test'
+  ...
+# Unable to clean private build work EBUSY: resource busy or locked, unlink 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-build-runner-gfqo1I\\source\\.local\\platform-builds\\work\\11d2b3e1-05a7-4654-9790-6900433a84f3\\attempt-1-0bbe370d-466c-44be-a06f-3e1f6cece16a\\cleanup-held-file.bin'
+# Subtest: Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+not ok 4 - Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+  ---
+  duration_ms: 108238.2805
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\build-worker-process.test.mjs:154:1'
+  failureType: 'testCodeFailure'
+  error: 'Build 11d2b3e1-05a7-4654-9790-6900433a84f3 did not record UNKNOWN cleanup'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    waitForCleanupUnknown (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/build-worker-process.test.mjs:85:11)
+    async TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/build-worker-process.test.mjs:178:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: source and pinned compiler drift are rejected before a build is admitted
+ok 5 - source and pinned compiler drift are rejected before a build is admitted
+  ---
+  duration_ms: 2317.195
+  type: 'test'
+  ...
+# Subtest: real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+ok 6 - real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+  ---
+  duration_ms: 11254.2923
+  type: 'test'
+  ...
+# Subtest: real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+ok 7 - real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+  ---
+  duration_ms: 7568.7975
+  type: 'test'
+  ...
+# Subtest: paired console starts with no private build-host profile and reports build requests unavailable
+ok 8 - paired console starts with no private build-host profile and reports build requests unavailable
+  ---
+  duration_ms: 849.5055
+  type: 'test'
+  ...
+# Subtest: two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+ok 9 - two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+  ---
+  duration_ms: 30.6898
+  type: 'test'
+  ...
+# Subtest: cleanup failure records UNKNOWN and cannot publish a clean cancellation
+ok 10 - cleanup failure records UNKNOWN and cannot publish a clean cancellation
+  ---
+  duration_ms: 13.2151
+  type: 'test'
+  ...
+# Subtest: terminal publication rechecks lease time after waiting for another SQLite writer
+ok 11 - terminal publication rechecks lease time after waiting for another SQLite writer
+  ---
+  duration_ms: 1909.0069
+  type: 'test'
+  ...
+# Subtest: public health and static entry are narrow while state and audit require pairing and exact Host
+ok 12 - public health and static entry are narrow while state and audit require pairing and exact Host
+  ---
+  duration_ms: 182.3584
+  type: 'test'
+  ...
+# Subtest: pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+ok 13 - pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+  ---
+  duration_ms: 40.3291
+  type: 'test'
+  ...
+# Subtest: pairing attempts are bounded and expire their rate window
+ok 14 - pairing attempts are bounded and expire their rate window
+  ---
+  duration_ms: 32.8203
+  type: 'test'
+  ...
+# Subtest: authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+ok 15 - authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+  ---
+  duration_ms: 39.4905
+  type: 'test'
+  ...
+# Subtest: AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+ok 16 - AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+  ---
+  duration_ms: 36.705
+  type: 'test'
+  ...
+# Subtest: build requests fail closed without an executor and deployment requests enforce immutable references
+ok 17 - build requests fail closed without an executor and deployment requests enforce immutable references
+  ---
+  duration_ms: 46.4905
+  type: 'test'
+  ...
+# Subtest: overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+ok 18 - overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+  ---
+  duration_ms: 55.6608
+  type: 'test'
+  ...
+# Subtest: a body is rejected if its exact authenticated session expires while the stream is pending
+ok 19 - a body is rejected if its exact authenticated session expires while the stream is pending
+  ---
+  duration_ms: 32.475
+  type: 'test'
+  ...
+# Subtest: a body is rejected if that session logs out before streaming completes
+ok 20 - a body is rejected if that session logs out before streaming completes
+  ---
+  duration_ms: 34.7748
+  type: 'test'
+  ...
+# Subtest: canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+ok 21 - canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+  ---
+  duration_ms: 117.7172
+  type: 'test'
+  ...
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 22 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 3.9539
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 23 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 138.3531
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 24 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 32.2059
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 25 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 4.2816
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 26 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 1.556
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 27 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 1.3276
+  type: 'test'
+  ...
+# Subtest: source paths normalize both separators and exclude operational components exactly
+ok 28 - source paths normalize both separators and exclude operational components exactly
+  ---
+  duration_ms: 0.5826
+  type: 'test'
+  ...
+# Subtest: maintained fingerprint ignores operational records and changes with source
+ok 29 - maintained fingerprint ignores operational records and changes with source
+  ---
+  duration_ms: 64.8952
+  type: 'test'
+  ...
+# Subtest: portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+ok 30 - portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+  ---
+  duration_ms: 40.6172
+  type: 'test'
+  ...
+# Subtest: TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+ok 31 - TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+  ---
+  duration_ms: 1.1985
+  type: 'test'
+  ...
+# Subtest: TAP verification follows actual Node nested, TODO, and skipped report counts
+ok 32 - TAP verification follows actual Node nested, TODO, and skipped report counts
+  ---
+  duration_ms: 842.8409
+  type: 'test'
+  ...
+# Subtest: TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+ok 33 - TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+  ---
+  duration_ms: 0.3739
+  type: 'test'
+  ...
+# Subtest: TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+ok 34 - TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+  ---
+  duration_ms: 0.1877
+  type: 'test'
+  ...
+# Subtest: build failure reports tests as NOT_RUN and claims only current passing evidence
+ok 35 - build failure reports tests as NOT_RUN and claims only current passing evidence
+  ---
+  duration_ms: 0.9763
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+ok 36 - START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+  ---
+  duration_ms: 253.2008
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+ok 37 - START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+  ---
+  duration_ms: 3925.7539
+  type: 'test'
+  ...
+# {"fixture":"portable source copy","cwd":"foreign directory","health":{"path":"/healthz","status":200,"body":{"status":"ok"}},"page":{"path":"/","status":200}}
+1..37
+# tests 37
+# suites 0
+# pass 36
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 163582.5722
+EXIT_CODE=1

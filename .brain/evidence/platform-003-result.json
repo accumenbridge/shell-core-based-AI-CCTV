@@ -1,0 +1,70 @@
+{
+  "schema": "brain.actual-task-evidence.v1",
+  "task": "PLATFORM-003",
+  "date": "2026-10-01",
+  "status": "ACCEPTED_FOR_ACCESSIBLE_LOCAL_SCOPE",
+  "qualification": "PARTIAL_WITH_BLOCKED_FIXTURE_GATES",
+  "candidate": {
+    "source_fingerprint": "f24b79b931ccc61d9e86124df26e1f6f1064859530deb422f9e0bc466911eca4",
+    "maintained_files": 175,
+    "coordinator_matched_before_and_after_browser": true,
+    "pre_task_git_tree": "d1d645ed13768b182d37dd1757d78913bccc6cd7",
+    "source_profile_git_tree": "358e13d27c5d307cde21e0fc10ed606320cf827c",
+    "git_tree_scope": "Local index source/profile diff anchor; not a commit or canonical Brain snapshot.",
+    "commit": null,
+    "working_tree_is_uncommitted": true,
+    "reviewed_browser_build_input_fingerprint": "c87996adbd5c281662f9b328bb0e7ceab684c1780485f9c5f46d67675f18ca6f",
+    "fingerprint_scopes": "Maintained source includes tests/docs. Browser fixture build input closure is narrower and deliberately distinct.",
+    "verified_at_utc": "2026-09-30T22:17:28.714Z"
+  },
+  "roles": {
+    "architect_review": "repo_brain_architect, gpt-6.1-sol/high",
+    "additional_review": "resume_probe, gpt-6.1-sol/high",
+    "implementation": "repo_brain_validation, gpt-6-luna/xhigh",
+    "shared_brain_writer": "root",
+    "named_custom_profile_selection": "UNVALIDATED",
+    "budget": null
+  },
+  "environment": {
+    "os": "Windows",
+    "node": "v24.19.0",
+    "typescript": "5.8.3",
+    "browser": "Installed Google Chrome headless",
+    "native_host": {"kind":"powershell7-file-host","version":"7.6.5","policy":"RemoteSigned","sha256":"362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139"},
+    "check_child_environment": {"QB_TEST_CP3_NATIVE_LOCK":"blocked-policy"},
+    "sentinel_scope": "Process-local checks only. Named default-enabled native lock test skips before helper setup. No global/config/security/verifier changes."
+  },
+  "checks": [
+    {"command":"npm.cmd run build","exit_code":0,"log":".brain/evidence/platform-003-build.log"},
+    {"command":"node --test --test-reporter=tap tests/control-plane-artifacts.test.mjs","exit_code":0,"tests":13,"passed":11,"skipped":2,"failed":0,"cancelled":0,"todo":0,"log":".brain/evidence/platform-003-accessible-targeted-final.tap.txt"},
+    {"command":"npm.cmd test","exit_code":0,"tests":195,"passed":193,"skipped":2,"failed":0,"cancelled":0,"todo":0,"log":".brain/evidence/platform-003-npm-test.log"},
+    {"command":"npm.cmd run verify","exit_code":0,"tests":195,"passed":193,"skipped":2,"failed":0,"cancelled":0,"todo":0,"discovered_files":19,"report":".brain/evidence/platform-003-verifier-report.json","log":".brain/evidence/platform-003-verify.log","raw_build":".brain/evidence/platform-003-verifier-build.log","raw_tests":".brain/evidence/platform-003-verifier-tests.tap.txt"},
+    {"command":"python .local/platform-003-validation/browser-journey.py","exit_code":0,"status":"PASS_ORDINARY_BROWSER_JOURNEY","assertions":11,"server_exit":0,"server_closed_observed":true,"report":".brain/evidence/platform-003-browser-console.json","stdout":".brain/evidence/platform-003-browser-console.stdout","log":".brain/evidence/platform-003-browser-console.log","archived_script":".brain/evidence/platform-003-browser-console.py","archived_helper":".brain/evidence/platform-003-browser-server.mjs","scope":"Ordinary DOM/forms: pairing, two canonical immutable versions, actual build/export, registration, exact UI download bytes, separate same-origin HTTP headers/body probe, promotion, logout/re-pair persistence and reopened SQLite/audit. No evaluation, interception or controlled-delay qualification."}
+  ],
+  "review": {"static_status":"APPROVED_FOR_ACCESSIBLE_LOCAL_SCOPE","final_execution_status":"APPROVED_FOR_ACCESSIBLE_LOCAL_SCOPE","independent_fingerprint_match":true,"coordinator_fingerprint_match":true,"blocking_findings":[],"history":".brain/evidence/platform-003-review-notes.md"},
+  "implemented_scope": [
+    "Owner-local additive schema3; exact immutable artifact and product-version release identity, separate original/build/register/promote actor attribution and atomic audit.",
+    "Fixed pinned normal-File Windows nonreplace publication; bounded full inventory, conservative capacity and durable nonexpiring physical reservation.",
+    "Original-identity move/verification/cleanup facts; uncertainty retains object/staging/slot. Explicit verified adoption never releases another unknown physical owner.",
+    "Compiler-independent verified artifact inspection, opaque file selectors and exact attachment bytes.",
+    "Paired fixed API routes and source-derived console; original sessions rechecked after preparation and synchronous SQLite BEGIN."
+  ],
+  "blocked_and_unqualified": [
+    {"gate":"new native file-lock helper deadline","status":"BLOCKED_COMMAND_POLICY/NOT_RUN","evidence":".brain/evidence/platform-003-helper-command-policy-blocked.json","note":"Automatic review generically rejected standalone command. No specific reason component provided; no override or alternative helper invocation in final checks. Interrupted candidate05 has TAP header only and no result claim."},
+    {"gate":"file-symlink physical fixture","status":"BLOCKED_ENV","note":"Observed EPERM; separately named TAP skip, no host privilege change."},
+    {"gate":"controlled delayed browser instrumentation","status":"BLOCKED_CSP","evidence":".brain/evidence/platform-002-browser-csp-blocked.json","note":"Historical invalid evaluate retry preserved/excluded. Ordinary browser success does not qualify this gate."},
+    {"gate":"prior PS5.1 native host","status":"BLOCKED_POLICY","note":"Restricted normal-File invocation remains blocked; distinct explicitly pinned configured PS7 profile qualified separately."},
+    {"gate":"Node22/legacy bundled Chromium/React/provider/hosted/production","status":"NOT_QUALIFIED"},
+    {"gate":"full 512MiB physical saturation/growing-file race/native oversized stdout/power-loss durability/hostile local filesystem protection","status":"NOT_QUALIFIED","note":"Bounded unit/smaller integration evidence must not be promoted to these physical guarantees."}
+  ],
+  "history": {
+    "review_and_failures":".brain/evidence/platform-003-review-notes.md",
+    "raw_runs":".local/platform-003-validation",
+    "historical_candidate04":"Actual native cleanup-UNKNOWN support uses prior helper; not new deadline qualification.",
+    "retained_source_comparison":".brain/evidence/platform-003-retained-fixture-source-comparison.json",
+    "browser":"Initial and attempts02-06 failed harness/setup/oracle checks are preserved and excluded. Attempt07 passed; maintained source unchanged.",
+    "process_cleanup":"Final browser server exit0 and close positively observed. Earlier retained uncertain fixtures not deleted. No blanket claim that every harness failure cleanup path is qualified."
+  },
+  "boundaries": {"runtime_driver":"NOT_IMPLEMENTED","external_actions_performed":false,"full_program":"IN_PROGRESS"},
+  "next": {"task":"PLATFORM-004","status":"CONTRACT_REVIEW","authorization":"Existing full local architecture request; no new confirmation for local work."}
+}

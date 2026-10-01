@@ -1,0 +1,59 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "packages/ai-core"
+    },
+    {
+      "path": "packages/backend-host"
+    },
+    {
+      "path": "packages/composition"
+    },
+    {
+      "path": "packages/connections"
+    },
+    {
+      "path": "packages/contracts"
+    },
+    {
+      "path": "packages/control-plane"
+    },
+    {
+      "path": "packages/local-access"
+    },
+    {
+      "path": "packages/module-sdk"
+    },
+    {
+      "path": "packages/sqlite"
+    },
+    {
+      "path": "packages/studio-model"
+    },
+    {
+      "path": "packages/web-shell"
+    },
+    {
+      "path": "packages/worker-host"
+    },
+    {
+      "path": "modules/handoff"
+    },
+    {
+      "path": "modules/knowledge"
+    },
+    {
+      "path": "modules/service-desk"
+    },
+    {
+      "path": "apps/control-plane"
+    },
+    {
+      "path": "apps/runtime"
+    },
+    {
+      "path": "apps/studio-web"
+    }
+  ]
+}

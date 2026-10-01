@@ -1,0 +1,143 @@
+{
+  "schema": "brain.actual-task-evidence.v1",
+  "task": "PLATFORM-001",
+  "checkpoint": "PLATFORM-001-ACCEPTED",
+  "status": "ACCEPTED_FOR_LOCAL_CONTROL_PLANE_SCOPE",
+  "date": "2026-09-30",
+  "candidate": {
+    "pre_task_git_tree": "a116531ec377f28db3876aa833cf876ca5c55948",
+    "accepted_code_git_tree": "491456e3a6ea53ab2e8ff9384b53ca6197e45fad",
+    "git_tree_scope": "Local index snapshot for source/profile diffs; not a commit or canonical Brain-state snapshot.",
+    "commit": null,
+    "source_fingerprint": "3fd1bf1055382e94943c2527d6d106ea13977050043a012ee2543cef3ea51f6a",
+    "verified_at_utc": "2026-09-30T15:46:52.799Z",
+    "working_tree_is_uncommitted": true
+  },
+  "environment": {
+    "os": "Windows",
+    "node": "v24.19.0",
+    "npm": "12.1.0",
+    "typescript": "5.8.3",
+    "python": "3.14.6",
+    "playwright": "1.60.0",
+    "browser": "Installed Google Chrome, headless",
+    "node_22_qualification": "NOT_RUN"
+  },
+  "roles": {
+    "planning_review": {
+      "agent": "repo_brain_architect",
+      "dispatch_model": "gpt-6.1-sol",
+      "reasoning_effort": "high"
+    },
+    "implementation": {
+      "agent": "repo_brain_validation",
+      "dispatch_model": "gpt-6-luna",
+      "reasoning_effort": "xhigh"
+    },
+    "shared_state": "root coordinator",
+    "named_profile_runtime_selection": "UNVALIDATED",
+    "automatic_dispatch": false,
+    "budget": null
+  },
+  "checks": [
+    {
+      "command": "npm.cmd run build",
+      "exit_code": 0,
+      "log": ".brain/evidence/platform-001-build.log"
+    },
+    {
+      "command": "node.exe --test --test-reporter=tap tests/ai-core.test.mjs tests/control-plane.test.mjs tests/control-plane-http.test.mjs tests/reliability-baseline.test.mjs",
+      "exit_code": 0,
+      "tests": 29,
+      "passed": 29,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "log": ".brain/evidence/platform-001-targeted.tap.txt"
+    },
+    {
+      "command": "npm.cmd test",
+      "exit_code": 0,
+      "tests": 168,
+      "passed": 168,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "log": ".brain/evidence/platform-001-npm-test.log"
+    },
+    {
+      "command": "npm.cmd run verify",
+      "exit_code": 0,
+      "tests": 168,
+      "passed": 168,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "discovered_files": 15,
+      "log": ".brain/evidence/platform-001-verify.log",
+      "report": ".brain/evidence/platform-001-verifier-report.json"
+    },
+    {
+      "command": "python .local/platform-001-validation/browser_console.py",
+      "status": "PASSED",
+      "scope": "Real full-console login, invalid-code feedback, pairing, nonempty Products view (four rows observed), four unattached operation labels, logout and session HTTP401.",
+      "report": ".brain/evidence/platform-001-browser-console.json",
+      "archived_script": ".brain/evidence/platform-001-browser-console.py"
+    }
+  ],
+  "review": {
+    "status": "APPROVED",
+    "reviewer": "Sol/high independent agent",
+    "fingerprint_independently_matched": true,
+    "coordinator_fingerprint_matched": true,
+    "new_untracked_source_files_reviewed_directly": true,
+    "blocking_findings": [],
+    "history": ".brain/evidence/platform-001-review-notes.md"
+  },
+  "failure_history": [
+    {
+      "scope": "Initial focused suite",
+      "result": "25 passed, 4 failed",
+      "raw_output_retained": false,
+      "summary": ".brain/evidence/platform-001-initial-failure-summary.txt",
+      "repairs": "RegExp assertion misuse, Windows temporary-directory cleanup contention, malformed legacy test fixture."
+    },
+    {
+      "scope": "First Chrome attempt",
+      "result": "Network-idle wait timed out before UI assertions",
+      "raw_output_retained": false,
+      "retry": "Same ordinary local address, domcontentloaded and explicit UI waits passed.",
+      "policy_block_observed": false
+    }
+  ],
+  "real_launcher": {
+    "fixture": "portable source copy, foreign cwd, temporary database, owned processes",
+    "health": {
+      "path": "/healthz",
+      "status": 200
+    },
+    "entry": {
+      "path": "/",
+      "status": 200
+    }
+  },
+  "boundaries": {
+    "build_executor": "NOT_ATTACHED",
+    "artifact_registry": "NOT_ATTACHED",
+    "deployment_driver": "NOT_ATTACHED",
+    "model_provider": "NOT_ATTACHED",
+    "legacy_studio_browser_qualification": "SEPARATE_GATE",
+    "renderer_qualification": "SEPARATE_GATE",
+    "production": "NOT_QUALIFIED",
+    "external_actions_performed": false
+  },
+  "next": {
+    "task": "PLATFORM-002",
+    "status": "READY_FOR_ARCHITECTURE_REFINEMENT",
+    "authorization": "Existing full local architecture program request; no new permission needed for in-scope implementation.",
+    "objective": "Canonical product workflow and durable fixed local build execution."
+  }
+}

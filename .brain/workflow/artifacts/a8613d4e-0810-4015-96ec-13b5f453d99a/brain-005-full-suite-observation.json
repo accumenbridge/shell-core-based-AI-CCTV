@@ -1,0 +1,54 @@
+{
+  "schema": "brain.full-suite-observation.v1",
+  "actualCommand": "npm.cmd test",
+  "execution": {
+    "Command": "npm.cmd test",
+    "StartedAt": "2026-10-01T11:30:16.9569457Z",
+    "FinishedAt": "2026-10-01T11:42:00.1178755Z",
+    "ExitCode": 1,
+    "AfterBrainCaptureExit": 0,
+    "AfterCoreCaptureExit": 0
+  },
+  "counts": {
+    "tests": 308,
+    "passed": 305,
+    "failed": 2,
+    "cancelled": 0,
+    "skipped": 1,
+    "todo": 0
+  },
+  "durationMs": 701854.8403,
+  "candidates": {
+    "brain": "421397fde93da06f05bb71a317f9c2ea351bc32ceea637088bba3a174268d525",
+    "core": "90fd7ce4e8a423fc38ef7ac9743ed5a591d7e6f2f55c4f2b82c8c0d81f8a25dc"
+  },
+  "contracts": {
+    "brain": "dfb64576342f002cc03f88810169062c2e705f3d4880758de90ddfd2998c5b40",
+    "core": "f640d78750132b9860adb6ef6190ba000fadc92972fdaf6b5b97c9074c38d751"
+  },
+  "sourceAndContractUnchanged": true,
+  "failures": [
+    {
+      "test": "Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup",
+      "file": "tests/build-worker-process.test.mjs:89",
+      "error": "Owned descendant did not start its marker heartbeat",
+      "scope": "The test failed in waitForMarker before cancellation assertions; no exact cause inferred."
+    },
+    {
+      "test": "complete saved definition is the exact immutable plan admitted to a real local build",
+      "file": "tests/control-plane-artifacts.test.mjs:246",
+      "error": "The fixed registry publisher did not provide one valid physical result proof",
+      "scope": "Observed publisher close failure; no cause or remediation inferred."
+    }
+  ],
+  "blockedSkips": [
+    "﹣ BLOCKED_ENV: bounded snapshot verification rejects a file symlink when the host permits fixture creation (21908.6411ms) # BLOCKED_ENV: host denied creation of the owned file-symlink fixture (EPERM)"
+  ],
+  "currentNativeStagingLock": "✔ native staging-file lock retains uncertain cleanup after an observed registry move (31661.2805ms)",
+  "limitations": [
+    "The actual required suite exited1; this is not a successful full-repository qualification.",
+    "Current run has one EPERM blocked skip. Earlier separately blocked native staging-lock observation remains historical; this run passed that check without policy changes.",
+    "Only scoped candidate and contract equality is asserted, not whole-repository immutability or all descendant process absence.",
+    "No source changes, policy changes, skip flags or timeout changes were made by this suite observer."
+  ]
+}

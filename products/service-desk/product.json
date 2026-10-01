@@ -1,0 +1,15 @@
+{
+  "id": "service-desk",
+  "version": "0.2.0",
+  "platformAbi": "quadbridge.module.v1",
+  "title": "Service Desk",
+  "description": "A small non-AI business product.",
+  "layout": "sidebar",
+  "modules": [
+    {
+      "id": "service-desk",
+      "version": "0.2.0"
+    }
+  ],
+  "bindings": []
+}

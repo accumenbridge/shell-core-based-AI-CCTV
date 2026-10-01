@@ -1,0 +1,36 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { resolve, ScopedBindings, assessRemoval } from '@quadbridge/composition';
+import { deriveRuntimeWorkspaceClosure } from '@quadbridge/composition/workspace-closure';
+import { canonical, object, id, integer } from '@quadbridge/contracts';
+const catalog = ['knowledge', 'service-desk', 'handoff'].map(n => JSON.parse(readFileSync(new URL(`../modules/${n}/module.json`, import.meta.url))));
+const product = n => JSON.parse(readFileSync(new URL(`../products/${n}/product.json`, import.meta.url)));
+for (const [name, count, worker] of [['neutral', 0, false], ['service-desk', 1, false], ['knowledge', 2, true], ['combined', 3, true]])
+    test(`resolve ${name} with only its selected capabilities`, () => { const p = resolve(product(name), catalog); assert.equal(p.modules.length, count); assert.equal(p.requiresWorker, worker); });
+test('resolution order is deterministic', () => assert.equal(canonical(resolve(product('combined'), catalog)), canonical(resolve({ ...product('combined'), modules: product('combined').modules.reverse() }, catalog.reverse()))));
+test('unknown module fails closed', () => assert.throws(() => resolve({ ...product('neutral'), modules: [{ id: 'not-installed', version: '0.2.0' }] }, catalog), /Unsupported module/));
+test('unsupported ABI fails', () => assert.throws(() => resolve({ ...product('neutral'), platformAbi: 'v99' }, catalog), /ABI/));
+test('exact version mismatch fails', () => assert.throws(() => resolve({ ...product('service-desk'), modules: [{ id: 'service-desk', version: '1.0.0' }] }, catalog), /Unsupported/));
+test('required dependency must be selected', () => assert.throws(() => resolve({ ...product('knowledge'), modules: [{ id: 'handoff', version: '0.2.1' }] }, catalog), /Missing dependency/));
+test('dependency cycle rejected', () => { const c = structuredClone(catalog); c.find(x => x.id === 'knowledge').dependencies = [{ id: 'handoff', version: '0.2.1' }]; assert.throws(() => resolve(product('knowledge'), c), /cycle/); });
+test('optional absent dependency is valid', () => { const c = structuredClone(catalog); c.find(x => x.id === 'service-desk').dependencies = [{ id: 'absent', version: '0.2.0', optional: true }]; assert.equal(resolve(product('service-desk'), c).modules.length, 1); });
+test('duplicate public route rejected', () => { const c = structuredClone(catalog); const k = c.find(x => x.id === 'knowledge'); k.routes.push({ method: 'GET', path: '/api/requests', permission: 'knowledge.read', kind: 'read' }); assert.throws(() => resolve(product('combined'), c), /Duplicate route/); });
+test('route permission must be owned', () => { const c = structuredClone(catalog); c.find(x => x.id === 'service-desk').routes[0].permission = 'knowledge.read'; assert.throws(() => resolve(product('service-desk'), c), /Undeclared/); });
+test('required public port cannot be left unbound', () => assert.throws(() => resolve({ ...product('knowledge'), bindings: [] }, catalog), /Unbound/));
+test('ambiguous consumer bindings rejected', () => { const p = product('knowledge'); p.bindings.push({ ...p.bindings[0] }); assert.throws(() => resolve(p, catalog), /Duplicate consumer/); });
+test('same instance ID cannot imply different implementations', () => { const p = product('combined'); p.bindings[1].instanceId = p.bindings[0].instanceId; assert.throws(() => resolve(p, catalog), /Inconsistent instance/); });
+test('bindings do not supply a missing local provider', () => { const p = product('knowledge'); p.bindings[1].mode = 'local'; assert.throws(() => resolve(p, catalog), /Missing local/); });
+test('application and module instance scopes are different', () => { let n = 0; const pool = new ScopedBindings({ impl: () => ({ instance: ++n }) }); const b = { contract: 'x', instanceId: 'one', implementation: 'impl', scope: 'application', consumer: 'a', mode: 'local' }; assert.equal(pool.get(b), pool.get({ ...b, consumer: 'b' })); const m = { ...b, scope: 'module' }; assert.notEqual(pool.get(m), pool.get({ ...m, consumer: 'b' })); assert.equal(pool.get(m), pool.get(m)); });
+test('request instances are isolated and require a context', () => { const pool = new ScopedBindings({ impl: () => ({}) }); const b = { contract: 'x', instanceId: 'one', implementation: 'impl', scope: 'request', consumer: 'a', mode: 'local' }, a = {}, c = {}; assert.equal(pool.get(b, a), pool.get(b, a)); assert.notEqual(pool.get(b, a), pool.get(b, c)); assert.throws(() => pool.get(b), /Request scope/); });
+test('removal blocked by retained records or dependents', () => { const p = resolve(product('combined'), catalog); assert.equal(assessRemoval(p, 'knowledge', 0, 0).allowed, false); assert.equal(assessRemoval(p, 'handoff', 1, 0).allowed, false); assert.equal(assessRemoval(p, 'handoff', 0, 1).allowed, false); assert.equal(assessRemoval(p, 'handoff', 0, 0).allowed, true); });
+test('canonical JSON is stable, rejecting undefined and nonfinite numbers', () => { assert.equal(canonical({ b: 2, a: 1 }), ' {"a":1,"b":2}'.trim()); assert.throws(() => canonical({ x: undefined })); assert.throws(() => canonical(NaN)); });
+test('input contracts reject unknown fields and invalid identifiers', () => { assert.throws(() => object({ tenant: 'forged' }, [])); assert.throws(() => id('../x')); assert.throws(() => integer(0.5)); });
+test('modules cannot shadow host-owned authentication routes', () => { const c = structuredClone(catalog); c.find(m => m.id === 'service-desk').routes[0].path = '/api/session'; assert.throws(() => resolve(product('service-desk'), c), /host-owned/); });
+test('selected composition determines the exact local package dependency closure', () => {
+ const plan=resolve(product('combined'),catalog);
+ const closure=deriveRuntimeWorkspaceClosure(plan,path=>JSON.parse(readFileSync(new URL(`../${path}`,import.meta.url),'utf8')));
+ assert.equal(closure.dependencies['@quadbridge/ai-core'],'0.3.0');
+ assert.equal(closure.dependencies['@quadbridge/knowledge'],'0.2.1');
+ assert.equal(closure.dependencies['@quadbridge/handoff'],'0.2.1');
+});

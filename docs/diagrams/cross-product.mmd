@@ -1,0 +1,19 @@
+sequenceDiagram
+  participant U as User / Knowledge UI
+  participant K as Knowledge owner
+  participant H as Handoff owner
+  participant W as Worker
+  participant A as Fixed binding + tenant map
+  participant D as Service Desk owner
+  U->>K: Save authorized text
+  K->>K: Commit document + indexing job
+  U->>H: Request linked Service Desk action
+  H->>K: Read permitted source through public contract
+  H->>H: Commit relationship + delivery job
+  W->>H: Claim one attempt
+  W->>A: Same original command identity
+  A->>D: Mapped tenant + destination service identity
+  D->>D: Reauthorize + commit record and receipt
+  D-->>W: Original committed receipt
+  W->>H: Fenced commit of relationship outcome
+  Note over W,D: Lost response retries the same identity; no cross-store transaction

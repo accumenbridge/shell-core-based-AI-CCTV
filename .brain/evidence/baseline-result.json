@@ -1,0 +1,50 @@
+{
+  "schema": "brain.actual-task-evidence.v1",
+  "task": "BASELINE-001",
+  "checkpoint": "BASELINE-001-ACCEPTED",
+  "status": "ACCEPTED_FOR_LOCAL_RELIABILITY_SCOPE",
+  "date": "2026-09-30",
+  "candidate": {
+    "adoption_git_index_tree": "1f8e0726d07f3a43e18affe231d59f64070aad6d",
+    "commit": null,
+    "source_fingerprint": "d1ee7e379d8e569b7a49d3c8d6ffc5190b91411a1d5dcad607854b521aa2ef74",
+    "verified_at_utc": "2026-09-30T14:42:56.506Z",
+    "working_tree_is_uncommitted": true
+  },
+  "environment": {
+    "os": "Windows",
+    "node": "v24.19.0",
+    "npm": "12.1.0",
+    "typescript": "5.8.3",
+    "nvmrc_target": "22.16.0",
+    "node_22_qualification": "NOT_RUN"
+  },
+  "checks": [
+    {"command": "npm ci --ignore-scripts --no-audit --no-fund", "exit_code": 0, "log": ".brain/evidence/dependency-install.log"},
+    {"command": "npm.cmd run build", "exit_code": 0, "log": ".brain/evidence/build-output.txt"},
+    {"command": "node.exe --test --test-reporter=tap tests/factory-lifecycle.test.mjs tests/studio-integration.test.mjs tests/reliability-baseline.test.mjs", "exit_code": 0, "tests": 34, "passed": 34, "failed": 0, "log": ".brain/evidence/targeted-regressions.tap.txt"},
+    {"command": "npm.cmd test", "exit_code": 0, "tests": 153, "passed": 153, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "log": ".brain/evidence/npm-test-output.txt"},
+    {"command": "npm.cmd run verify", "exit_code": 0, "tests": 153, "passed": 153, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "log": ".brain/evidence/verify-command-output.txt", "report": "evidence/last_run.json"}
+  ],
+  "real_launcher_probe": {
+    "environment": "isolated portable source copy, foreign cwd, temporary DB, pinned tools",
+    "overview_path": "/platform-api/overview",
+    "overview_http_status": 200,
+    "platform_version": "0.3.0",
+    "page_path": "/",
+    "page_http_status": 200,
+    "cleanup": "fixture-owned processes close before bounded directory/junction removal; cleanup errors propagate",
+    "evidence": ".brain/evidence/targeted-regressions.tap.txt"
+  },
+  "review": {
+    "planner_reviewer_route": "gpt-6.1-sol/high",
+    "implementer_route": "gpt-6-luna/xhigh",
+    "result": "ACCEPTED",
+    "independent_source_fingerprint_matches": true,
+    "production_abi_security_dependency_changes": false
+  },
+  "history": {"first_full_run": "153 tests, 152 pass, 1 Windows ENOTEMPTY cleanup failure; repaired", "record": ".brain/evidence/npm-test-initial-failure.txt", "raw_first_log_retained": false},
+  "browser": {"status": "BLOCKED", "reason": "required Playwright Chromium executable absent", "assertions_executed": 0, "current_navigation_policy_result": null},
+  "workflow": {"fresh_startup_discovery": "PASSED", "fresh_context_resume_check": "PASSED; read-only Sol/high found completed state, correct routes and next action; historical adoption wording clarified", "named_custom_profile_selection": "UNAVAILABLE_IN_THIS_RUNTIME", "working_route": "explicit model and reasoning_effort dispatch", "automatic_service": false},
+  "scope": "Repository-local workflow adoption and baseline reliability; broader platform roadmap and production readiness remain future work."
+}

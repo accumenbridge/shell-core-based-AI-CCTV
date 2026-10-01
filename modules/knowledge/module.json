@@ -1,0 +1,169 @@
+{
+  "id": "knowledge",
+  "version": "0.2.1",
+  "abi": "quadbridge.module.v1",
+  "dependencies": [],
+  "provides": [
+    "knowledge.document.read.v1",
+    "knowledge.document.retrieve.v1"
+  ],
+  "requires": [],
+  "permissions": [
+    "knowledge.read",
+    "knowledge.write"
+  ],
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/api/documents",
+      "permission": "knowledge.read",
+      "kind": "read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/documents/search",
+      "permission": "knowledge.read",
+      "kind": "read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/documents/answer",
+      "permission": "knowledge.read",
+      "kind": "read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/documents",
+      "permission": "knowledge.write",
+      "kind": "write"
+    },
+    {
+      "method": "POST",
+      "path": "/api/documents/cancel-index",
+      "permission": "knowledge.write",
+      "kind": "write"
+    }
+  ],
+  "workspaces": [
+    {
+      "id": "knowledge.library",
+      "label": "Knowledge library",
+      "path": "/library",
+      "permission": "knowledge.read",
+      "export": "workspace"
+    }
+  ],
+  "schema": {
+    "current": 1,
+    "readMin": 1,
+    "readMax": 1
+  },
+  "background": true,
+  "studio": {
+    "label": "Knowledge",
+    "summary": "Document library with local extractive answers grounded in indexed sources.",
+    "category": "knowledge",
+    "layers": [
+      "ui",
+      "backend",
+      "worker",
+      "ai",
+      "data"
+    ],
+    "ui": {
+      "routes": [
+        {
+          "path": "/library",
+          "workspace": "knowledge.library",
+          "label": "Knowledge library",
+          "nav": "Knowledge"
+        }
+      ],
+      "extensionPoints": [
+        "knowledge.document.actions"
+      ]
+    },
+    "backend": {
+      "services": [
+        {
+          "id": "document-reader",
+          "contract": "knowledge.document.read.v1",
+          "visibility": "product"
+        },
+        {
+          "id": "document-retriever",
+          "contract": "knowledge.document.retrieve.v1",
+          "visibility": "product"
+        }
+      ],
+      "jobs": [
+        {
+          "kind": "knowledge.index",
+          "permission": "knowledge.write"
+        }
+      ]
+    },
+    "ai": {
+      "pipelines": [
+        {
+          "id": "knowledge-rag",
+          "label": "Knowledge retrieval pipeline",
+          "input": "query",
+          "output": "grounded-context"
+        },
+        {
+          "id": "knowledge-extractive-answer",
+          "label": "Local extractive answer",
+          "input": "question",
+          "output": "cited-source-excerpts"
+        }
+      ],
+      "models": [
+        {
+          "capability": "text.embedding",
+          "modality": "embedding",
+          "placement": "either",
+          "accelerator": "either"
+        },
+        {
+          "capability": "text.generate",
+          "modality": "text",
+          "placement": "either",
+          "accelerator": "either"
+        }
+      ]
+    },
+    "data": {
+      "stores": [
+        {
+          "id": "knowledge-records",
+          "kind": "relational",
+          "ownership": "module"
+        },
+        {
+          "id": "knowledge-vectors",
+          "kind": "vector",
+          "ownership": "module"
+        }
+      ],
+      "schemas": [
+        {
+          "id": "knowledge",
+          "version": 1
+        }
+      ]
+    },
+    "deployment": {
+      "processes": [
+        {
+          "id": "knowledge-api",
+          "kind": "http"
+        },
+        {
+          "id": "knowledge-worker",
+          "kind": "worker"
+        }
+      ]
+    }
+  }
+}

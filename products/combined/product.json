@@ -1,0 +1,41 @@
+{
+  "id": "combined",
+  "version": "0.2.1",
+  "platformAbi": "quadbridge.module.v1",
+  "title": "Operations + Knowledge",
+  "description": "Two domain families composed into one application.",
+  "layout": "sidebar",
+  "modules": [
+    {
+      "id": "service-desk",
+      "version": "0.2.0"
+    },
+    {
+      "id": "knowledge",
+      "version": "0.2.1"
+    },
+    {
+      "id": "handoff",
+      "version": "0.2.1"
+    }
+  ],
+  "bindings": [
+    {
+      "contract": "knowledge.document.read.v1",
+      "instanceId": "local-documents",
+      "implementation": "knowledge",
+      "scope": "application",
+      "consumer": "handoff",
+      "mode": "local"
+    },
+    {
+      "contract": "desk.requests.create.v2",
+      "instanceId": "local-desk",
+      "implementation": "service-desk",
+      "scope": "application",
+      "consumer": "handoff",
+      "mode": "local"
+    }
+  ],
+  "wiring": "knowledge-to-desk"
+}

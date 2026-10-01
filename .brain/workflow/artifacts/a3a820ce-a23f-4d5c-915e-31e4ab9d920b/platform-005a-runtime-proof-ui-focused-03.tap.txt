@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: runtime overview consumes the public promoted-release array and offers the exact release
+ok 1 - runtime overview consumes the public promoted-release array and offers the exact release
+  ---
+  duration_ms: 7.6299
+  type: 'test'
+  ...
+# Subtest: runtime UI reports UNKNOWN stop facts and reuses the same request key after an ambiguous start error
+ok 2 - runtime UI reports UNKNOWN stop facts and reuses the same request key after an ambiguous start error
+  ---
+  duration_ms: 3.7268
+  type: 'test'
+  ...
+# Subtest: runtime action success messages require proof in the exact current-attempt DTO
+ok 3 - runtime action success messages require proof in the exact current-attempt DTO
+  ---
+  duration_ms: 3.436
+  type: 'test'
+  ...
+# Subtest: runtime overview and detail responses cannot restore stale routes, attempts, or application addresses
+ok 4 - runtime overview and detail responses cannot restore stale routes, attempts, or application addresses
+  ---
+  duration_ms: 2.9871
+  type: 'test'
+  ...
+# Subtest: a stale runtime overview failure cannot replace a newer successful refresh
+ok 5 - a stale runtime overview failure cannot replace a newer successful refresh
+  ---
+  duration_ms: 1.6453
+  type: 'test'
+  ...
+# Subtest: runtime confirmations survive same-attempt polling and are scoped away from a successor attempt
+ok 6 - runtime confirmations survive same-attempt polling and are scoped away from a successor attempt
+  ---
+  duration_ms: 1.6075
+  type: 'test'
+  ...
+# Subtest: recovery controls require positive stop proof, verify opaque backups, and confirm backup and absent-root restore
+ok 7 - recovery controls require positive stop proof, verify opaque backups, and confirm backup and absent-root restore
+  ---
+  duration_ms: 15.7324
+  type: 'test'
+  ...
+# Subtest: recovery controls stay hidden when a stopped runtime lacks current positive cleanup facts
+not ok 8 - recovery controls stay hidden when a stopped runtime lacks current positive cleanup facts
+  ---
+  duration_ms: 3002.5306
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\studio-runtime-ui.test.mjs:295:1'
+  failureType: 'testCodeFailure'
+  error: 'Timed out waiting for positive detail loaded behind contradictory summary'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'fail'
+  stack: |-
+    Object.until (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/studio-runtime-ui.test.mjs:14:10)
+    async TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/studio-runtime-ui.test.mjs:302:3)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 7
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3111.1075
+EXIT_CODE=1

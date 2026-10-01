@@ -1,0 +1,10 @@
+{
+  "id": "neutral",
+  "version": "0.2.0",
+  "platformAbi": "quadbridge.module.v1",
+  "title": "Neutral shell",
+  "description": "A runnable application with no business-domain modules.",
+  "layout": "sidebar",
+  "modules": [],
+  "bindings": []
+}

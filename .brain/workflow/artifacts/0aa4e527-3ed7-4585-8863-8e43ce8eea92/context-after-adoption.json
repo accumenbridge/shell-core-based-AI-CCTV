@@ -1,0 +1,327 @@
+{
+  "status": "AVAILABLE",
+  "project": {
+    "name": "Quadbridge Product Studio 0.3",
+    "canonical": {
+      "brief": ".brain/BRIEF.md",
+      "outcome": ".brain/OUTCOME.md",
+      "acceptance": ".brain/ACCEPTANCE.md",
+      "strategy": ".brain/STRATEGY.md",
+      "decisions": ".brain/DECISIONS.md",
+      "progress": ".brain/CURRENT.md",
+      "current_work": ".brain/tasks/PLATFORM-005A.md"
+    },
+    "commandsFile": ".brain/workflow/recipes.json"
+  },
+  "selectedTaskId": "BRAIN-001",
+  "mappedCurrentTaskId": "PLATFORM-005A",
+  "mappingChanged": false,
+  "sourceTask": {
+    "path": ".brain/tasks/BRAIN-001.md",
+    "excerpt": "# BRAIN-001 — repository Brain tooling\n\nStatus: IMPLEMENTING. Authorized by the user in this chat on 2026-10-01: \"ok proceed and implement it\", following the proposed file-backed Brain design.\n\n## Deliverable\n\nProvide a dependency-free local CLI for validation, focused context, immutable run/review records, and checked checkpoint updates. Structured task contracts and immutable checkpoint events back one current pointer and a generated readable current summary. Keep command definitions separate from execution results. Existing human/tool approvals remain authoritative; stored records do not authenticate approval or independently prove reported execution.\n\n## Ownership and scope\n\nThe root coordinator owns Brain adoption, shared configuration and documentation. A selected Brawn/Luna agent owns the new development tools, tests and npm entry point. Brain/Sol agents plan and independently review. Preserve concurrent platform work and all legacy evidence. Existing platform task records are imported only as reported state, with provenance and their existing qualification limits. Do not continue or alter application/runtime implementation as part of this task.\n\nUse a new generated `.brain/CURRENT.md` rather than overwriting the evolving legacy `.brain/PROGRESS.md`. The project map will identify the new canonical view after verified adoption. Preserve the existing platform task mapping at handoff; BRAIN-001 has its own evidence and completion record.\n\nThe structured contract's `allowedPaths` defines the exact candidate source-file manifest for freshness and review. It is not a sandbox or the complete coordinator write scope. Root additionally owns this task, structured contracts, immutable workflow events/runs/artifacts, the current pointer and generated view. Those evolving operational records are intentionally outside the candidate manifest. Imported/proposal contracts cannot gain fresh ACCEPTED status. Full-suite invocation is a required observation; unrelated blocked profile gates remain separately unqualified rather than being converted into an all-suite pass.\n\n## Acceptance\n\n1. `validate`, `context`, `record` and `checkpoint` work through the local CLI with actionable errors and documented input formats. No automatic command execution or agent dispatch.\n2. Structured contracts identify scope, source files, acceptance checks and required review. Candidate-bound run/review records cannot be silently replaced; record files and copied evidence are integrity checked.\n3. Checkpoint publication uses an expected revision and a participating-writer lock. Stale updates and concurrent publication are rejected. Complete immutable material precedes the current pointer; the readable summary is derived and repairable. No expiry-based lock reclamation or security-boundary claim.\n4. Acceptance requires the contract's recorded qualifying evidence for the relevant candidate. Failed, skipped, blocked, deferred, unknown or stale evidence never becomes a pass. Claimed independent review remains explicitly attributed reported evidence.\n5. Existing Brain records and live platform source are preserved. Current context can be read without loading all historical logs. Project-local records remain excluded from runtime snapshots.\n6. Build before focused meaningful regressions, run `npm test`, and obtain independent exact-scope review. Record real commands, source identity, outcomes and any blocked or unrelated failures. No browser/provider qualification is inferred.\n\n## Exclusions\n\nNo daemon, SQLite migration, dashboard, automatic scheduling, external service, credential change, deployment, global configuration, blanket filesystem/security enforcement or invented budget. Keep the implementation proportional to core delivery.\n\n## Initial checkpoint\n\nRepository instructions and the mapped platform task were refreshed before implementation. Platform work is changing in another session; Brain adoption must reread it before publishing. Planning and integration exploration are read-only. No build/test result is claimed yet.\n\n## Initial source review\n\nThe fi",
+    "totalBytes": 6988,
+    "truncated": true
+  },
+  "contract": {
+    "schema": "brain.task-contract.v1",
+    "taskId": "BRAIN-001",
+    "title": "Repository Brain tooling and safe adoption",
+    "authorization": {
+      "kind": "authorized",
+      "reference": "User in this chat, 2026-10-01: ok proceed and implement it, following the proposed file-backed Brain design."
+    },
+    "sourceTaskRef": ".brain/tasks/BRAIN-001.md",
+    "owners": {
+      "coordinator": "/root",
+      "implementer": "/root/brain_implementation; sequential test handoff /root/brain_tests",
+      "reviewer": "/root/brain_state_review"
+    },
+    "allowedPaths": [
+      "tools/brain-core.mjs",
+      "tools/brain.mjs",
+      "tests/brain-workflow.test.mjs",
+      "package.json",
+      ".brain/WORKFLOW.md",
+      ".brain/START_HERE.md",
+      ".brain/ROUTING.md",
+      ".brain/workflow/recipes.json"
+    ],
+    "excludedActions": [
+      "Application/runtime behavior changes",
+      "Automatic check execution or agent dispatch",
+      "External systems, credentials, deployment or global configuration",
+      "Replacing legacy platform evidence or claiming new platform acceptance"
+    ],
+    "prerequisites": [],
+    "criteria": [
+      {
+        "id": "BRAIN-CLI",
+        "description": "Usable validate, context, record and checkpoint commands with explicit root and actionable errors.",
+        "evidenceScope": "Actual isolated CLI and core integration tests."
+      },
+      {
+        "id": "BRAIN-RECORDS",
+        "description": "Immutable task/contract/candidate-bound records and copied evidence with integrity validation.",
+        "evidenceScope": "Local file-backed records; attributed reports do not authenticate execution or approval."
+      },
+      {
+        "id": "BRAIN-CHECKPOINT",
+        "description": "Exclusive participating-writer lock, stale revision rejection, immutable event before pointer and repairable generated view.",
+        "evidenceScope": "Cooperating local CLI writers; no hostile-filesystem or power-loss guarantee."
+      },
+      {
+        "id": "BRAIN-ACCEPTANCE",
+        "description": "Acceptance requires qualifying current-candidate evidence and required attributed independent review.",
+        "evidenceScope": "Record consistency; unknown, blocked, stale or failed required evidence does not pass."
+      },
+      {
+        "id": "BRAIN-ADOPTION",
+        "description": "Preserve legacy records and platform task mapping; generated current view clearly separates imported platform and maintenance work.",
+        "evidenceScope": "Actual project validation and read-only context after adoption; no fresh platform qualification."
+      },
+      {
+        "id": "BRAIN-REGRESSION",
+        "description": "Build first, execute focused checks and npm test, and record every blocked, skipped or unrelated failing suite gate separately.",
+        "evidenceScope": "Fresh command logs and counts. Existing platform/native/provider exclusions do not become new tooling pass claims."
+      }
+    ],
+    "requiredRecipeIds": [
+      "brain-build",
+      "brain-focused",
+      "brain-adoption"
+    ],
+    "requiredObservationRecipeIds": [
+      "brain-full-suite"
+    ],
+    "reviewRequirement": {
+      "required": true,
+      "independence": "independent_reported"
+    }
+  },
+  "contractDigest": "1598b899bfda5901c8d127505f9130258e7acca7956c7991453361626e55ae7c",
+  "candidate": {
+    "files": [
+      {
+        "path": ".brain/ROUTING.md",
+        "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308"
+      },
+      {
+        "path": ".brain/START_HERE.md",
+        "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2"
+      },
+      {
+        "path": ".brain/WORKFLOW.md",
+        "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43"
+      },
+      {
+        "path": ".brain/workflow/recipes.json",
+        "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75"
+      },
+      {
+        "path": "package.json",
+        "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554"
+      },
+      {
+        "path": "tests/brain-workflow.test.mjs",
+        "sha256": "a8bd29c13f3a1fdf8aa2f37ca04662d35cccd647a6a1709111215846252654cd"
+      },
+      {
+        "path": "tools/brain-core.mjs",
+        "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b"
+      },
+      {
+        "path": "tools/brain.mjs",
+        "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e"
+      }
+    ],
+    "digest": "798ad1dc674657f87c4da66fdd55f919ad518929d67609240eef9eaa5846f1d5"
+  },
+  "checkpoint": {
+    "pointer": {
+      "schema": "brain.current-pointer.v1",
+      "revision": 2,
+      "eventId": "f8924045-dc01-4b9c-acd8-c7babd3c2a43",
+      "eventSha256": "e4f8b9831fb53b24ac086ef6f21e9b14cb3ffec5d418e0f3ea90b57c018aa1eb"
+    },
+    "taskState": {
+      "taskId": "BRAIN-001",
+      "status": "IMPLEMENTING",
+      "candidate": {
+        "files": [
+          {
+            "path": ".brain/ROUTING.md",
+            "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308"
+          },
+          {
+            "path": ".brain/START_HERE.md",
+            "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2"
+          },
+          {
+            "path": ".brain/WORKFLOW.md",
+            "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43"
+          },
+          {
+            "path": ".brain/workflow/recipes.json",
+            "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75"
+          },
+          {
+            "path": "package.json",
+            "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554"
+          },
+          {
+            "path": "tests/brain-workflow.test.mjs",
+            "sha256": "a8bd29c13f3a1fdf8aa2f37ca04662d35cccd647a6a1709111215846252654cd"
+          },
+          {
+            "path": "tools/brain-core.mjs",
+            "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b"
+          },
+          {
+            "path": "tools/brain.mjs",
+            "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e"
+          }
+        ],
+        "digest": "798ad1dc674657f87c4da66fdd55f919ad518929d67609240eef9eaa5846f1d5"
+      },
+      "runIds": [],
+      "reviewIds": [],
+      "blockers": [],
+      "nextAction": "Build and qualify the frozen Brain candidate, preserve full-suite limitations, and obtain independent review.",
+      "gates": []
+    },
+    "currentTasks": {
+      "platformTask": {
+        "taskId": "PLATFORM-005A",
+        "status": "REPORTED_IN_PROGRESS",
+        "candidate": null,
+        "runIds": [
+          "a47aa840-ad6b-45ab-ae75-98c2080624a3"
+        ],
+        "reviewIds": [],
+        "blockers": [],
+        "nextAction": "Existing platform coordinator continues private stopped-instance backup/verify/restore and explicit restart under PLATFORM-005A; reconcile later platform reports into a new checkpoint.",
+        "gates": [
+          {
+            "id": "PLATFORM-004-local-core",
+            "status": "REPORTED",
+            "evidenceRefs": [
+              ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-4-platform-004-result.json"
+            ],
+            "limitations": [
+              "Prior platform coordinator acceptance only; no new platform qualification from Brain adoption."
+            ]
+          },
+          {
+            "id": "PLATFORM-005A-execution",
+            "status": "UNKNOWN",
+            "evidenceRefs": [
+              ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md"
+            ],
+            "limitations": [
+              "Active parallel implementation; observed reports do not establish native recovery or full acceptance."
+            ]
+          },
+          {
+            "id": "native-lock-policy",
+            "status": "BLOCKED",
+            "evidenceRefs": [
+              ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md"
+            ],
+            "limitations": [
+              "Previously denied native lock fixture remains unrun. No policy workaround."
+            ]
+          },
+          {
+            "id": "file-symlink-environment",
+            "status": "BLOCKED",
+            "evidenceRefs": [
+              ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md"
+            ],
+            "limitations": [
+              "Prior Windows EPERM limitation remains separate."
+            ]
+          },
+          {
+            "id": "controller-crash",
+            "status": "DEFERRED",
+            "evidenceRefs": [
+              ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md"
+            ],
+            "limitations": [
+              "Deferred by platform user core-delivery priority."
+            ]
+          }
+        ],
+        "importProvenance": {
+          "sourceRef": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md",
+          "sourceSha256": "31d7ff7edf4c4f34d49ac47b78d9f9b86c142803580c872edea95173dff8329e",
+          "originalStatus": "IMPLEMENTING",
+          "observedAt": "2026-10-01T06:00:30.528Z",
+          "limitations": [
+            "Point-in-time import from concurrent platform work; no fresh platform source or result verification."
+          ]
+        }
+      },
+      "maintenanceTask": {
+        "taskId": "BRAIN-001",
+        "status": "IMPLEMENTING",
+        "candidate": {
+          "files": [
+            {
+              "path": ".brain/ROUTING.md",
+              "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308"
+            },
+            {
+              "path": ".brain/START_HERE.md",
+              "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2"
+            },
+            {
+              "path": ".brain/WORKFLOW.md",
+              "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43"
+            },
+            {
+              "path": ".brain/workflow/recipes.json",
+              "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75"
+            },
+            {
+              "path": "package.json",
+              "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554"
+            },
+            {
+              "path": "tests/brain-workflow.test.mjs",
+              "sha256": "a8bd29c13f3a1fdf8aa2f37ca04662d35cccd647a6a1709111215846252654cd"
+            },
+            {
+              "path": "tools/brain-core.mjs",
+              "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b"
+            },
+            {
+              "path": "tools/brain.mjs",
+              "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e"
+            }
+          ],
+          "digest": "798ad1dc674657f87c4da66fdd55f919ad518929d67609240eef9eaa5846f1d5"
+        },
+        "runIds": [],
+        "reviewIds": [],
+        "blockers": [],
+        "nextAction": "Build and qualify the frozen Brain candidate, preserve full-suite limitations, and obtain independent review.",
+        "gates": []
+      }
+    }
+  },
+  "records": [],
+  "evidenceAssessment": {
+    "status": "NOT_QUALIFIED",
+    "reasons": [
+      "required_recipe_not_qualified:brain-build",
+      "required_recipe_not_qualified:brain-focused",
+      "required_recipe_not_qualified:brain-adoption",
+      "required_observation_missing:brain-full-suite",
+      "required_review_not_qualified"
+    ]
+  },
+  "limitations": [
+    "Stored execution, provenance, actor, reviewer, and acceptance fields are reported claims; the CLI does not authenticate them or execute recipe argv."
+  ]
+}

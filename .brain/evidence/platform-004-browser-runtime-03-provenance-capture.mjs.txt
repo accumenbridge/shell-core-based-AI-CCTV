@@ -1,0 +1,62 @@
+import { DatabaseSync } from 'node:sqlite';
+import { readFile, writeFile, stat } from 'node:fs/promises';
+import { join } from 'node:path';
+import assert from 'node:assert/strict';
+
+const evidenceRoot='.local/platform-004-validation';
+const ready=JSON.parse(await readFile(join(evidenceRoot,'browser-server-release-shape-03.ready.json'),'utf8'));
+const closed=JSON.parse(await readFile(join(evidenceRoot,'browser-server-release-shape-03.closed.json'),'utf8'));
+const instance=closed.summary.runtimes.find(row=>row.id&&row.productId==='combined');
+assert.ok(closed.closed&&closed.summary.slot.state==='EMPTY'&&!closed.summary.slot.occupied);
+assert.ok(instance&&instance.instanceState==='STOPPED'&&instance.physicalState==='EMPTY');
+const data=join(ready.owner.root,'.local','platform-runtime-data',instance.id,instance.artifactDigest);
+const db=new DatabaseSync(ready.owner.databasePath,{readOnly:true});
+let runtimeProof;
+try {
+ const commands=db.prepare('SELECT id,kind,actor_id AS actorId,state FROM runtime_commands WHERE instance_id=? ORDER BY created').all(instance.id);
+ const attempts=db.prepare('SELECT id,attempt_no AS attempt,command_id AS commandId,state,physical_state AS physicalState,api_ready AS apiReady,worker_attached AS workerAttached,empty_observed AS emptyObserved,helper_closed AS helperClosed,execution_clean AS executionClean,worker_required AS workerRequired FROM runtime_attempts WHERE instance_id=? ORDER BY attempt_no').all(instance.id);
+ const rows=db.prepare("SELECT action,actor_id AS actorId,subject,payload FROM audit WHERE subject=? AND action LIKE 'runtime.%' ORDER BY at").all(instance.id).map(row=>{
+   const payload=JSON.parse(row.payload);
+   return {action:row.action,actorId:row.actorId,subject:row.subject,...(typeof payload.commandId==='string'?{commandId:payload.commandId}:{}),...(Number.isInteger(payload.attempt)?{attempt:payload.attempt}:{}),...(typeof payload.emptyObserved==='boolean'?{emptyObserved:payload.emptyObserved}:{}),...(typeof payload.helperClosed==='boolean'?{helperClosed:payload.helperClosed}:{}),...(typeof payload.executionClean==='boolean'?{executionClean:payload.executionClean}:{})};
+ });
+ assert.deepEqual(commands.map(row=>[row.kind,row.state]),[['START','SUCCEEDED'],['STOP','SUCCEEDED'],['RESTART','SUCCEEDED'],['STOP','SUCCEEDED']]);
+ const [start,firstStop,restart,finalStop]=commands;
+ assert.notEqual(start.actorId,firstStop.actorId,'disconnect/re-pair used a different operator for the first stop');
+ assert.equal(firstStop.actorId,restart.actorId);
+ assert.equal(restart.actorId,finalStop.actorId);
+ const requested=(action,id)=>rows.find(row=>row.action===action&&row.commandId===id);
+ assert.equal(requested('runtime.start.requested',start.id)?.actorId,start.actorId);
+ assert.equal(requested('runtime.stop.requested',firstStop.id)?.actorId,firstStop.actorId);
+ assert.equal(requested('runtime.restart.requested',restart.id)?.actorId,restart.actorId);
+ assert.equal(requested('runtime.stop.requested',finalStop.id)?.actorId,finalStop.actorId);
+ for(let index=0;index<attempts.length;index++) {
+   const attempt=attempts[index];
+   assert.ok(attempt.state==='STOPPED'&&attempt.physicalState==='EMPTY'&&attempt.apiReady===1&&attempt.workerAttached===1&&attempt.emptyObserved===1&&attempt.helperClosed===1&&attempt.executionClean===1&&attempt.workerRequired===1);
+   assert.equal(attempt.attempt,index+1);
+   const stopped=rows.find(row=>row.action==='runtime.stopped'&&row.attempt===attempt.attempt);
+   assert.ok(stopped&&stopped.emptyObserved===true&&stopped.helperClosed===true&&stopped.executionClean===true);
+ }
+ const accessDb=new DatabaseSync(join(data,'access.sqlite'),{readOnly:true});
+ let access;
+ try { access={bindings:accessDb.prepare('SELECT count(*) AS count FROM instance_binding').get().count,
+   principals:accessDb.prepare('SELECT count(*) AS count FROM principals').get().count,
+   grants:accessDb.prepare('SELECT count(*) AS count FROM grants').get().count,
+   sessions:accessDb.prepare('SELECT count(*) AS count FROM sessions').get().count}; }
+ finally { accessDb.close(); }
+ runtimeProof={commands,attempts,audits:rows,access};
+} finally { db.close(); }
+const moduleCounts={};
+for(const [module,file,tables] of [
+ ['handoff','modules/handoff.sqlite',['handoffs','handoff_delivery','_jobs']],
+ ['knowledge','modules/knowledge.sqlite',['documents','document_search_config','document_search_data']],
+ ['service-desk','modules/service-desk.sqlite',['requests']]
+]) {
+ const full=join(data,file); await stat(full);
+ const child=new DatabaseSync(full,{readOnly:true});
+ try { moduleCounts[module]={}; for(const table of tables)moduleCounts[module][table]=child.prepare(`SELECT count(*) AS count FROM "${table.replaceAll('"','""')}"`).get().count; }
+ finally { child.close(); }
+}
+const summary={schema:'quadbridge.browser-runtime-provenance.v1',fixtureId:ready.fixtureId,serverExitCode:0,serverCloseMarker:'BROWSER_SERVER_CLOSED',sourceFingerprint:ready.sourceFingerprint,studioMainSha256:ready.studioMainSha256,artifact:{productId:ready.product.productId,version:ready.product.version,artifactDigest:ready.product.artifactDigest,snapshotDigest:ready.product.snapshotDigest,releaseDigest:ready.product.releaseDigest,fileCount:ready.product.fileCount,sizeBytes:ready.product.sizeBytes},runtime:{instanceId:instance.id,artifactDigest:instance.artifactDigest,finalState:instance.instanceState,currentAttempt:instance.currentAttempt,finalAttemptOperationId:instance.operationId,slot:closed.summary.slot,...runtimeProof},domainRetention:{moduleDatabaseFilesExist:true,counts:moduleCounts,browserJourneyCreatedBusinessDomainRows:false,statement:'module owner databases and enrollment remain; this browser control journey did not create request/document records'}};
+const out=join(evidenceRoot,'browser-server-release-shape-03.provenance.json');
+await writeFile(out,`${JSON.stringify(summary,null,2)}\n`,{flag:'wx',mode:0o600});
+process.stdout.write(`PROVENANCE_CREATED=${out}\n`);

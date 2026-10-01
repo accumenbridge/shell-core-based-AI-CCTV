@@ -1,0 +1,48 @@
+TAP version 13
+# Subtest: the canonical local-access seed transaction rolls back earlier principals and grants after a later invalid seed
+not ok 1 - the canonical local-access seed transaction rolls back earlier principals and grants after a later invalid seed
+  ---
+  duration_ms: 102.0988
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\control-plane-artifacts.test.mjs:24:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the canonical constructor binding remains independent of the failed seed transaction
+    + actual - expected
+    
+    + [Object: null prototype] {
+    - {
+        instance: 'runtime-cb9844a1-d3ad-415c-ad9a-613f77b16fe4',
+        product: 'service-desk'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    product: 'service-desk'
+    instance: 'runtime-cb9844a1-d3ad-415c-ad9a-613f77b16fe4'
+  actual:
+    product: 'service-desk'
+    instance: 'runtime-cb9844a1-d3ad-415c-ad9a-613f77b16fe4'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-artifacts.test.mjs:37:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: an owned process close releases SQLite after the canonical local-access constructor faults
+ok 2 - an owned process close releases SQLite after the canonical local-access constructor faults
+  ---
+  duration_ms: 117.6925
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 327.1294
+EXIT_CODE=1

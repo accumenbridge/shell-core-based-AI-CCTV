@@ -1,0 +1,14 @@
+{
+  "name": "@quadbridge/studio-control-plane",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@quadbridge/contracts": "0.2.0",
+    "@quadbridge/composition": "0.2.0",
+    "@quadbridge/studio-model": "0.3.0",
+    "@quadbridge/control-plane": "0.3.0",
+    "@quadbridge/ai-core": "0.3.0"
+  },
+  "scripts": {"build": "tsc -b"}
+}

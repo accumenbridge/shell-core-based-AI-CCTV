@@ -1,0 +1,57 @@
+{
+  "capturedAt": "2026-10-01T11:08:33.1899500Z",
+  "files": [
+    {
+      "path": "tools/brain-control.mjs",
+      "sha256": "bda70affa741477f2e46f6042aa8c508aa4e5f6bdc0775c43fe63a3d9b46a9b4"
+    },
+    {
+      "path": "tools/brain-live-ui.mjs",
+      "sha256": "557090ab6b1a9a0a6d48822c5393f01efd5555ee077db5131df6e74272273b51"
+    },
+    {
+      "path": "tests/brain-control.test.mjs",
+      "sha256": "427c7254288a99bb7dfead1502c43864199cfc142e965b703f9a4a08c333ba4d"
+    },
+    {
+      "path": "tests/brain-live.test.mjs",
+      "sha256": "1b09ee2a3245cc081556739e1588a60330ed8813f2dfe4c46de1e1686f12c218"
+    },
+    {
+      "path": "docs/brain/README.md",
+      "sha256": "e96c0327708388f4d9e43a745bade1885a93075bfa878d85c55def26fd8d5f31"
+    },
+    {
+      "path": "tools/brain-core.mjs",
+      "sha256": "76cb2593d8482b744fdd716f2afe03817e77cb43622c3d91a46e6d29104febc3"
+    },
+    {
+      "path": "tools/brain.mjs",
+      "sha256": "b092e88771a467230dd65c2dcdee548e5ff296320dcff4173f7d00ff2d8d0016"
+    },
+    {
+      "path": "tools/brain-readiness.mjs",
+      "sha256": "1b64287430cf87ae11d0ae9b280ee635705605c94568ef35481c589a6326471f"
+    },
+    {
+      "path": "tools/brain-atlas.mjs",
+      "sha256": "a36e611b4f9cc2e57e92140508aaebc2474b081f3a25b855eae02c88633e9dfd"
+    },
+    {
+      "path": "tools/brain-live.mjs",
+      "sha256": "da7dd0aed0f143a9f52b16df270f920a62aedd401f2a9a256182eac3b9f6e1f9"
+    },
+    {
+      "path": "tests/brain-workflow.test.mjs",
+      "sha256": "3f80033e866c0182af08e68ddba7716f47ab31d84fc703c75cd5aabddb194fdf"
+    },
+    {
+      "path": "tests/brain-atlas.test.mjs",
+      "sha256": "d2b42ca842123b054869618b2ccadbdefe69079fa20380217c8ddda30ab4c42d"
+    },
+    {
+      "path": "README.md",
+      "sha256": "23c5b6449aadac650acfad8d11f99e3871cf780b663fd66cf8129aa11b65a960"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+- complementary:
+  - text: Quadbridge Product Studio
+  - generic: Paired local operator
+  - navigation:
+    - button "Overview"
+    - button "Products"
+    - button "Modules"
+    - button "Ui"
+    - button "Backend"
+    - button "Ai"
+    - button "Data"
+    - button "Builds"
+    - button "Artifacts"
+    - button "Runtime Instances"
+    - button "Environments"
+    - button "Deployments"
+    - button "Audit"
+    - button "Operations"
+- main:
+  - generic: paired local control plane
+  - heading "Runtime Instances" [level=1]
+  - generic: Stored source records and validated local plans.
+  - generic: v0.3.0
+  - button "Disconnect"
+  - alert: "Restore operation SUCCEEDED: no issue reported."
+  - heading "Managed local runtime" [level=2]
+  - generic: local-only
+  - paragraph: Launch rechecks the pinned local process-owner profile; stored runtimes are never recovered by PID.
+  - paragraph: "Physical slot: EMPTY · 0 reserved bytes. UNKNOWN retains the slot and data until its original process owner proves an empty process tree."
+  - paragraph: A fixed local process starts only an exact promoted release. No hosted deployment or provider is attached.
+  - heading "Promoted releases" [level=2]
+  - paragraph: Choose the exact product version; start and restart require confirmation.
+  - article:
+    - heading "service-desk@0.2.0" [level=3]
+    - generic: Promoted local immutable release
+    - generic: promoted
+    - paragraph: 8723581398c7aefdbc540d3d6ae99b633bec2261ebf21e2d426a5ad34fda6eba
+    - checkbox "Start this exact promoted local release on this machine."
+    - text: Start this exact promoted local release on this machine.
+    - button "Start local runtime"
+  - heading "Runtime instances" [level=2]
+  - article:
+    - heading "service-desk@0.2.0" [level=3]
+    - generic: runtime-09d58c9e-79a9-4fd5-a143-83057e24bb87 · attempt 1
+    - generic: STOPPED
+    - paragraph: Artifact 8723581398c7aefdbc540d3d6ae99b633bec2261ebf21e2d426a5ad34fda6eba
+    - paragraph: No separate worker required · positively-stopped
+    - button "Refresh events and address"
+    - checkbox "Restart this same stopped instance and release."
+    - text: Restart this same stopped instance and release.
+    - button "Restart exact runtime"
+    - generic: "{\"at\":1790840164813,\"role\":\"web-backend\",\"type\":\"ROLE_READY\"} {\"at\":1790840164813,\"type\":\"API_READY\"}"
+    - heading "Private local recovery" [level=4]
+    - paragraph: Recovery is available only after the current attempt has positive stop and cleanup proof. Backups contain private runtime data and are not downloadable.
+    - button "Load backups"
+    - checkbox "Create a private backup of this exact stopped runtime."
+    - text: Create a private backup of this exact stopped runtime.
+    - button "Create backup"
+    - article:
+      - strong: Backup from attempt 1
+      - generic: 485626087b60566ab231ff2a9a66c3c09ce67bf6d2f2fa9baafa19048eb48b13
+      - generic: verified
+      - paragraph: 8 files · 115958 bytes · 10/1/2026, 1:07:48 PM
+      - button "Verify again"
+      - checkbox "Restore these verified bytes into the absent runtime data location."
+      - text: Restore these verified bytes into the absent runtime data location.
+      - button "Restore this backup"
+    - heading "Recent recovery operations" [level=4]
+    - table:
+      - rowgroup:
+        - row "Kind State Physical state Destination Staging Issue":
+          - columnheader "Kind"
+          - columnheader "State"
+          - columnheader "Physical state"
+          - columnheader "Destination"
+          - columnheader "Staging"
+          - columnheader "Issue"
+      - rowgroup:
+        - row "RESTORE SUCCEEDED CLEAN verified clean —":
+          - cell "RESTORE"
+          - cell "SUCCEEDED"
+          - cell "CLEAN"
+          - cell "verified"
+          - cell "clean"
+          - cell "—"
+        - row "BACKUP SUCCEEDED CLEAN verified clean —":
+          - cell "BACKUP"
+          - cell "SUCCEEDED"
+          - cell "CLEAN"
+          - cell "verified"
+          - cell "clean"
+          - cell "—"

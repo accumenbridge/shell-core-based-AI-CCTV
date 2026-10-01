@@ -1,0 +1,19 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "SOURCE_REVIEW_REQUIRES_REPAIR",
+  "qualification": "HTTP_COMPONENT_WITH_RUNTIME_MANAGER_DOUBLE",
+  "hashes": {
+    "apps/control-plane/src/main.ts": "909684323648753a27f854f052e9e83ca3642e3ba658d194bdd6ab9f6e38c7b3",
+    "apps/control-plane/src/operator-server.ts": "22e8c2c967cc58ef26300ead02c021d1dc81e17ace65d035fb75c49aea52ffe4",
+    "apps/control-plane/src/source-import.ts": "61371a89092d07920e5c17627871eeb3fe35334dd39f51e84289957b2af4a7bc",
+    "tests/control-plane-http.test.mjs": "b55c07749163dbedf16e7bbe4fbe8d054a17ee3b9526a9b68a49b22bf05b5451"
+  },
+  "checks": {
+    "fresh_build": {"worker_reported_exit_code": 0, "evidence": "platform-004-build-api-wiring-22.log", "note": "Root read complete raw build output; raw log has no exit marker."},
+    "http": {"worker_reported_exit_code": 0, "tests": 14, "passed": 14, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "evidence": "platform-004-http-wiring-01.tap.txt"}
+  },
+  "scope": "Root matched four exact pins and read actual output. New runtime routes use a manager double; this is real HTTP transport/component evidence, not actual managed native lifecycle, session-gate orchestration, main shutdown, browser or whole-platform acceptance.",
+  "reviews": "Both Sol/high reviewers matched exact first/last pins. Architect confirms runtimeClose rejection is not handled until after HTTP drain, and CLI closing flag permanently suppresses retry after failed close. Probe confirms case-insensitive STOP route dispatches RESTART because captured action comparison is case-sensitive. Otherwise independent runtime attachment, fixed envelopes/session fences/public DTO and error scope are coherent. No reviewer execution.",
+  "next": "Resolve actual review findings, qualify real native protocol and promoted domain workflows, finish coherent Studio review, then fresh full-suite/verifier/browser and exact-candidate acceptance. Prior CP3 policy-blocked fixtures stay blocked."
+}

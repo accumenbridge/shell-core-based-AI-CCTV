@@ -1,0 +1,12 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "APPROVED_ACTUAL_LIVE_REBUILD_CORE_SCOPE",
+  "test": {"capture":"platform-004-artifact-test-live-rebuild-02.mjs.txt","sha256":"1cfe43d2d946911c41957fafc9122ad2f05cfb72851783b13f290efce94bf91a"},
+  "build": {"evidence":"platform-004-build-live-rebuild-02.log","exit_code":0,"exit_provenance":"Worker observed; raw log successful assembly has no explicit exit marker."},
+  "check": {"evidence":"platform-004-live-rebuild-focused-02.tap.txt","tests":1,"passed":1,"failed":0,"cancelled":0,"skipped":0,"todo":0,"exit_code":0,"duration_ms":53248.3419,"exit_provenance":"Worker observed; complete raw TAP has no explicit exit marker."},
+  "scope": "Actual real promoted Desk0.2.0/native START/private login/create. Only test-owned source product version changes to0.2.1; canonical source fingerprint changes, source import/plan resolve and real distinct successful immutable export execute while original runtime remains RUNNING. Original helper/current attempt/operation/artifact/URL unchanged, actual composition asset before/after matches exact old registered entry, original request remains readable, original registry full inventory+bytes unchanged. Exact current-attempt STOPPED/EMPTY/helperClosed/executionClean and empty slot follow.",
+  "review": "Root read/hash-matched capture/build/TAP; independent gpt-6.1-sol/high matched first/last test and four unchanged core pins and approved bounded actual live-rebuild core scope.",
+  "preserved_failure": "platform-004-runtime-compositions-focused-01.tap.txt:2tests/1pass(postseed)/1fail(live wrong top-level detail.operationId oracle)/zeroothers; worker exit1. Actual operation resides on attempts[].id; fixture oracle corrected without application change.",
+  "limits": "No domain implementation edit or complete running-copy byte scan claimed. User directed core priority: actual controller-crash and duplicate verifier are deferred NOT_RUN. Final source freeze/required npm test/core review still open; historical restart503 and browser fixture02 registration failure unresolved."
+}

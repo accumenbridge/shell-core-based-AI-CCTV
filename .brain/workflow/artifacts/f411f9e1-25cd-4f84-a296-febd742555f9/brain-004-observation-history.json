@@ -1,0 +1,55 @@
+{
+  "schema": "brain.local-observation-history.v1",
+  "taskId": "BRAIN-004",
+  "candidate": "ed44fcbaba980b3c302640dfe258c46946eba6d8475eaaa51012e6090584d67b",
+  "actualFinalVerification": {
+    "execSession": 10685,
+    "exitCode": 0,
+    "build": "PASSED",
+    "workflowTests": 13,
+    "controlAndHttpTests": 10,
+    "beforeAfterMatch": true
+  },
+  "earlierFailure": {
+    "artifact": ".brain/evidence/brain-004-focused-02.tap.txt",
+    "tests": 31,
+    "passed": 25,
+    "failed": 6,
+    "reason": "One fixture cleanup-order problem: temporary directory removed before controller.close. Fixed cleanup closes owned controllers first.",
+    "candidateBinding": "No complete before-check nine-file capture was made for that early run; retained raw history only, not retrospectively assigned to the final candidate."
+  },
+  "provider": {
+    "artifact": ".brain/evidence/brain-004-live-probe.json",
+    "sourceCandidate": "d775ce09f1ea6ac052142a2575c0bf8c1924b7ead2cd68225d961637f78f52c5",
+    "requestedModel": "gpt-6-luna",
+    "requestedEffort": "xhigh",
+    "version": "codex-cli 0.159.2",
+    "handshake": "PASSED",
+    "managedProposal": "REVIEW",
+    "actualChecks": [
+      "build PASSED",
+      "behavior PASSED"
+    ],
+    "humanAcceptance": "NOT_SUBMITTED",
+    "limits": "Requested model is not independently authenticated identity. Provider/controller eight-file sources unchanged by final CSS-only delta."
+  },
+  "browser": {
+    "artifact": ".brain/evidence/brain-004-browser-report.json",
+    "browser": "Installed Google Chrome, normal Playwright headless launch, no policy overrides",
+    "status": "PASSED_FOR_OBSERVED_BROWSER_SCOPE",
+    "initialToolUnavailable": "CUA kernel assets could not be initialized; bundled Playwright Chromium executable missing. Both are unavailable, not policy blocks.",
+    "layoutFinding": ".brain/evidence/brain-004-browser-layout-finding.json",
+    "repair": "Observed 53px horizontal overflow from long CP7 title; inherited overflow-wrap fixed actual390px recheck."
+  },
+  "cleanup": {
+    "firstProbe": "Provider closed cleanly. Ctrl+C terminated exec56933 exit1; confirmed no owned node process or listeners on54128/54131, then explicitly reconciled only owned store writer locks for restart.",
+    "finalProbe": "exec41041 completed exit0 with both loopback servers closed cleanly; no provider dispatched in browser-only rerun."
+  },
+  "limits": [
+    "Current Quadbridge task remains observation-only; no managed execution profile was invented for existing platform work.",
+    "Only sessions explicitly created by controller are managed.",
+    "Managed acceptance does not integrate original source or publish a shared checkpoint.",
+    "Local developer trust profile; no hostile-code OS sandbox or process-descendant termination guarantee.",
+    "Full final suite pending shared coordinator."
+  ]
+}

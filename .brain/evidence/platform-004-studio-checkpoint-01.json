@@ -1,0 +1,17 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "SOURCE_REVIEW_REQUIRES_REPAIR",
+  "hashes": {
+    "apps/studio-web/src/main.ts": "a5c0b7d0b05fec3de24855b50cc1891320ee69ac354a60d0dd855afb700ba4bd",
+    "tests/studio-runtime-ui.test.mjs": "c04e8f145508df2b5b66dd23d01cce1165f8dd0e35ef873af5a1dc0ba226efdb"
+  },
+  "checks": {
+    "fresh_build": {"exit_code": 0, "evidence": "platform-004-build-studio-runtime-ui-28.log", "provenance": "raw EXIT_CODE marker and writer report"},
+    "focused": {"exit_code": 0, "tests": 4, "passed": 4, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "evidence": "platform-004-studio-runtime-ui-05.tap.txt"}
+  },
+  "scope": "Actual compiled Studio main executed by Nodevm with fake DOM/fetch ports. Tests cover UNKNOWN stop facts, ambiguous START retry key, stale overview/detail/attempt/address, stale load failure after newer success and exact confirmation identity across polling. This is component evidence, not real DOM/browser/native/promoted-domain qualification.",
+  "history": "Earlier pinned Studio source review found unconditional readiness/stop proof claims, missing load/detail/attempt generation fences and lost retry keys. UI01/02 export-syntax failures, UI03/04 queue-fixture timeout and two diagnostic failures are preserved. Root identified initial empty-queue index consumption; writer repaired harness and stale product rejection guard before passing focused run.",
+  "root": "Matched both hashes, read and archived raw build/TAP. Independent Sol/high matched first/last pins and found actual DTO fact-shape mismatch, START busy/confirmation key mismatch and premature refresh assertions; Luna received repairs. Actual native qualification is not held by this UI review.",
+  "review_findings": "Proof facts belong to instance.attempts[] matching currentAttempt and exact operation where supplied, not fabricated instance-level booleans used by the VM fixture. Current positive UI fact checks cannot succeed on real manager DTO. Render START busy key lacks artifact digest present in handler key. Same-attempt confirmation refresh oracle checks already-present text before response/render necessarily completes. Existing UNKNOWN messaging/generation/detail/key retention repairs otherwise appear present."
+}

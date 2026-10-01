@@ -1,0 +1,56 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "APPROVED_UNKNOWN_REOPEN_AND_UI_FIXTURE_SCOPE",
+  "captures": {
+    "artifact_test": {
+      "file": "platform-004-artifact-test-unknown-04.mjs.txt",
+      "sha256": "db11078aaa3e84c096f66be7450dd8ec14264e51e03536ef5b244a3165e9eec6"
+    },
+    "observer": {
+      "file": "platform-004-runtime-reopen-observer-01.mjs.txt",
+      "sha256": "01ead24382052f1b26fcfb799e91c90053d46f3620b46a739f90911839b900ab"
+    },
+    "ui_test": {
+      "file": "platform-004-studio-ui-test-overview-01.mjs.txt",
+      "sha256": "ecd587cc676047605a922e5bd585dc73a2419207b0eeb84368c70a88ac03ca53"
+    }
+  },
+  "checks": [
+    {
+      "evidence": "platform-004-runtime-desk-unknown-04.tap.txt",
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "exit_code": 0,
+      "duration_ms": 42612.6261
+    },
+    {
+      "evidence": "platform-004-studio-runtime-overview-01.tap.txt",
+      "tests": 2,
+      "passed": 2,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "exit_code": 0,
+      "duration_ms": 63.1498
+    }
+  ],
+  "scope": "Still-live real manager interrupts only its current exact owned helper object after successful third RESTART. Helper closes without nonce EMPTY. Original monitor settles UNKNOWN; exact operation reservation, owner databases and execution retained, successful command unchanged. Fresh separate Node real manager denies new START/STOP/RESTART without changing slot identity, command/audit counts or exposing URL. Expected teardown independently verifies exact retained UNKNOWN and settled callbacks, closes owned operator/worker/registry/store handles and retains entire root. No tree-empty proof inferred. UI compiled-main VM/fake-DOM/fetch test waits for stale transport and promise continuations before negative render/artifact/URL assertions.",
+  "review": "Independent Sol/high and root read exact captures/raw TAP; first/last reviewer hashes matched. No source blocker in this increment.",
+  "history": "UNKNOWN01/02 spec failures on wrong restart audit oracle retained. UNKNOWN03 passed before DB-handle teardown tightening, archived separately, superseded for current fixture by04. Earlier intermittent restart503 remains unexplained.",
+  "limits": "Not controller-crash, browser, supervisor fault, whole-candidate or production qualification. Exact retained root and invocation reported by worker; root read raw TAP and captures. CP4 remains IMPLEMENTING.",
+  "provenance": {
+    "invocation": "node --test --test-reporter=tap --test-name-pattern \"a promoted Service Desk release runs as an owned local runtime\" tests/control-plane-artifacts.test.mjs",
+    "child_environment": "QB_TEST_CP3_NATIVE_LOCK=blocked-policy",
+    "build_evidence": "platform-004-build-runtime-protocol-31.log",
+    "build_exit_code": 0,
+    "build_reason": "Fresh build31 precedes test-only fixture edits; maintained runtime application sources unchanged.",
+    "retained_fixture": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\q3-2DyF3w",
+    "worker_report": "Helper closed without EMPTY; original callbacks settled, dependency handles closed; no tree-empty or execution-clean claim."
+  }
+}

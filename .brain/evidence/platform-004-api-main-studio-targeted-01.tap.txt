@@ -1,0 +1,198 @@
+TAP version 13
+# Subtest: paired console starts with no private build-host profile and reports build requests unavailable
+ok 1 - paired console starts with no private build-host profile and reports build requests unavailable
+  ---
+  duration_ms: 942.581
+  type: 'test'
+  ...
+# Subtest: public health and static entry are narrow while state and audit require pairing and exact Host
+ok 2 - public health and static entry are narrow while state and audit require pairing and exact Host
+  ---
+  duration_ms: 80.2945
+  type: 'test'
+  ...
+# Subtest: pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+ok 3 - pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+  ---
+  duration_ms: 42.4502
+  type: 'test'
+  ...
+# Subtest: managed runtime API exposes fixed authenticated routes and exact confirmed request envelopes
+ok 4 - managed runtime API exposes fixed authenticated routes and exact confirmed request envelopes
+  ---
+  duration_ms: 41.4451
+  type: 'test'
+  ...
+# Subtest: managed runtime HTTP errors use fixed non-path messages
+ok 5 - managed runtime HTTP errors use fixed non-path messages
+  ---
+  duration_ms: 34.5331
+  type: 'test'
+  ...
+# Subtest: pairing attempts are bounded and expire their rate window
+ok 6 - pairing attempts are bounded and expire their rate window
+  ---
+  duration_ms: 35.2637
+  type: 'test'
+  ...
+# Subtest: authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+ok 7 - authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+  ---
+  duration_ms: 42.1759
+  type: 'test'
+  ...
+# Subtest: AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+ok 8 - AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+  ---
+  duration_ms: 39.1026
+  type: 'test'
+  ...
+# Subtest: build requests fail closed without an executor and deployment requests enforce immutable references
+ok 9 - build requests fail closed without an executor and deployment requests enforce immutable references
+  ---
+  duration_ms: 47.0454
+  type: 'test'
+  ...
+# Subtest: overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+ok 10 - overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+  ---
+  duration_ms: 64.5208
+  type: 'test'
+  ...
+# Subtest: a body is rejected if its exact authenticated session expires while the stream is pending
+ok 11 - a body is rejected if its exact authenticated session expires while the stream is pending
+  ---
+  duration_ms: 36.3553
+  type: 'test'
+  ...
+# Subtest: a body is rejected if that session logs out before streaming completes
+ok 12 - a body is rejected if that session logs out before streaming completes
+  ---
+  duration_ms: 42.398
+  type: 'test'
+  ...
+# Subtest: canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+ok 13 - canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+  ---
+  duration_ms: 116.413
+  type: 'test'
+  ...
+# Subtest: logout during awaited worker admission rejects the original request before queue mutation
+ok 14 - logout during awaited worker admission rejects the original request before queue mutation
+  ---
+  duration_ms: 34.3529
+  type: 'test'
+  ...
+# Subtest: logout during awaited result inspection returns 401 and accepted work remains independent of the session
+ok 15 - logout during awaited result inspection returns 401 and accepted work remains independent of the session
+  ---
+  duration_ms: 37.2041
+  type: 'test'
+  ...
+# Subtest: runtime close rejection is observed before a delayed HTTP drain settles
+ok 16 - runtime close rejection is observed before a delayed HTTP drain settles
+  ---
+  duration_ms: 2.5892
+  type: 'test'
+  ...
+# Subtest: a failed signal shutdown can retry the same close owner on a later signal
+ok 17 - a failed signal shutdown can retry the same close owner on a later signal
+  ---
+  duration_ms: 0.8988
+  type: 'test'
+  ...
+# Subtest: Studio: newly named products receive the reviewed local provider identity
+ok 18 - Studio: newly named products receive the reviewed local provider identity
+  ---
+  duration_ms: 1.31
+  type: 'test'
+  ...
+# Subtest: Studio: neutral product does not receive unrelated service identities
+ok 19 - Studio: neutral product does not receive unrelated service identities
+  ---
+  duration_ms: 0.5788
+  type: 'test'
+  ...
+# Subtest: Studio: local seed cannot request an undeclared permission
+ok 20 - Studio: local seed cannot request an undeclared permission
+  ---
+  duration_ms: 0.4404
+  type: 'test'
+  ...
+# Subtest: Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+ok 21 - Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+  ---
+  duration_ms: 0.2701
+  type: 'test'
+  ...
+# Subtest: Studio: unsupported remote fixture origin is refused
+ok 22 - Studio: unsupported remote fixture origin is refused
+  ---
+  duration_ms: 0.2097
+  type: 'test'
+  ...
+# Subtest: Studio: dependency explanation is source-derived and uses actual versions
+ok 23 - Studio: dependency explanation is source-derived and uses actual versions
+  ---
+  duration_ms: 0.1669
+  type: 'test'
+  ...
+# Subtest: Studio: no guessed provider for an unsupported new required contract
+ok 24 - Studio: no guessed provider for an unsupported new required contract
+  ---
+  duration_ms: 0.2059
+  type: 'test'
+  ...
+# Subtest: Studio: unused or invalid binding selection fails rather than retargeting
+ok 25 - Studio: unused or invalid binding selection fails rather than retargeting
+  ---
+  duration_ms: 0.1685
+  type: 'test'
+  ...
+# Subtest: Studio: import rejects runtime authority, path escape and unknown source wiring
+ok 26 - Studio: import rejects runtime authority, path escape and unknown source wiring
+  ---
+  duration_ms: 0.4051
+  type: 'test'
+  ...
+# Subtest: Studio: browser and CLI use the same compiled resolver
+ok 27 - Studio: browser and CLI use the same compiled resolver
+  ---
+  duration_ms: 4.8169
+  type: 'test'
+  ...
+# Subtest: Runtime: Handoff document picker uses the permitted Knowledge owner query
+ok 28 - Runtime: Handoff document picker uses the permitted Knowledge owner query
+  ---
+  duration_ms: 92.2376
+  type: 'test'
+  ...
+# Subtest: Runtime: missing destination authority is visible before new handoff submission
+ok 29 - Runtime: missing destination authority is visible before new handoff submission
+  ---
+  duration_ms: 83.3177
+  type: 'test'
+  ...
+# Subtest: Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+ok 30 - Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+  ---
+  duration_ms: 3196.2181
+  type: 'test'
+  ...
+# Subtest: Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+ok 31 - Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+  ---
+  duration_ms: 6462.435
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14020.6101
+
+EXIT_CODE=0

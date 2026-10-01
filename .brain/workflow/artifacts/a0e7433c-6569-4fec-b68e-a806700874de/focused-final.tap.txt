@@ -1,0 +1,71 @@
+TAP version 13
+# Subtest: bootstrap checkpoint, sourceTaskRef mapping, focused context, and project adoption preserve imported scope
+ok 1 - bootstrap checkpoint, sourceTaskRef mapping, focused context, and project adoption preserve imported scope
+  ---
+  duration_ms: 443.9954
+  type: 'test'
+  ...
+# Subtest: required records, copied evidence, independent review, and observation-only blocked suite gate control acceptance
+ok 2 - required records, copied evidence, independent review, and observation-only blocked suite gate control acceptance
+  ---
+  duration_ms: 1703.1773
+  type: 'test'
+  ...
+# Subtest: stale candidate evidence and stale scoped source cannot qualify after a source edit
+ok 3 - stale candidate evidence and stale scoped source cannot qualify after a source edit
+  ---
+  duration_ms: 882.3722
+  type: 'test'
+  ...
+# Subtest: recipe definition changes invalidate otherwise passing record qualification
+ok 4 - recipe definition changes invalidate otherwise passing record qualification
+  ---
+  duration_ms: 795.1462
+  type: 'test'
+  ...
+# Subtest: expected revision and the non-expiring participating-writer lock reject conflicting publication
+ok 5 - expected revision and the non-expiring participating-writer lock reject conflicting publication
+  ---
+  duration_ms: 493.2405
+  type: 'test'
+  ...
+# Subtest: stale generated view is detected and repaired from the current pointer
+ok 6 - stale generated view is detected and repaired from the current pointer
+  ---
+  duration_ms: 635.6316
+  type: 'test'
+  ...
+# Subtest: orphan event material is reported but does not block a later same-revision publication
+ok 7 - orphan event material is reported but does not block a later same-revision publication
+  ---
+  duration_ms: 664.3164
+  type: 'test'
+  ...
+# Subtest: self-review, wrong-task evidence references, and imported acceptance are rejected
+ok 8 - self-review, wrong-task evidence references, and imported acceptance are rejected
+  ---
+  duration_ms: 1400.8791
+  type: 'test'
+  ...
+# Subtest: path traversal and junction source paths fail closed
+ok 9 - path traversal and junction source paths fail closed
+  ---
+  duration_ms: 502.0572
+  type: 'test'
+  ...
+# Subtest: a historical accepted task remains readable after source, contract, and recipe evolution
+ok 10 - a historical accepted task remains readable after source, contract, and recipe evolution
+  ---
+  duration_ms: 1476.5067
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9093.078
+EXIT_CODE=0

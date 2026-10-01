@@ -1,0 +1,16 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "APPROVED_RELEASE_ARRAY_REPAIR_FOR_FRESH_BROWSER",
+  "studio_source_sha256": "fadcdced67a82b4b627f5973081ec1876d430a107d2cefbfc95abd3dd94d338a",
+  "studio_built_sha256": "f1a6a43816bb1d784b776e21b9daccf28343317fcd3ac48a2b9a9220a65c2b7d",
+  "ui_test_sha256": "d931565f81ef64035833bb93cd120c6fbbd614a92bc1e9dfc0ac915a3f217688",
+  "artifact_test_sha256": "93e9bda35dd90f42c529fe2e37b72f0cecd61704397a8eaf6dd8c83786c669e3",
+  "build": {"evidence": "platform-004-build-releases-35.log", "exit_code": 0},
+  "focused": {"evidence": "platform-004-releases-shape-focused-03.tap.txt", "tests": 2, "passed": 2, "failed": 0, "skipped": 0, "cancelled": 0, "todo": 0, "exit_code": 0},
+  "studio_ui": {"evidence": "platform-004-studio-runtime-ui-35.tap.txt", "tests": 6, "passed": 6, "failed": 0, "skipped": 0, "cancelled": 0, "todo": 0, "exit_code": 0},
+  "review": "Independent gpt-6.1-sol/high matched first/last captures and built hashes. Reversing only two Studio response-shape lines reproduces earlier approved source; async fences and canonical API unchanged. Root read logs and captures.",
+  "scope": "Real promoted-artifact HTTP GET verifies canonical release array and exact identity. Compiled-main VM/fake DOM test renders its start card. Browser qualification remains open.",
+  "preserved_failures": "First real browser failed before START from wrapper mismatch; closed record has no runtimes, outer Node exit unavailable. Focused01 test oracle incorrectly expected an omitted GET method; focused02 preceded build35. New isolated browser fixture02 failed during build-and-promotion before readiness; writer reports build SUCCEEDED, registration ABORTED/NO_PUBLICATION and process exit1. Underlying cause is not established yet.",
+  "limits": "No runtime/browser or whole CP4 acceptance. Historical intermittent restart503 remains unexplained. Source captures are run-scoped, not future frozen-candidate authority."
+}

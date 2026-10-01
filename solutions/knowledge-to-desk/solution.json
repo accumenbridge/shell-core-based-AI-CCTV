@@ -1,0 +1,66 @@
+{
+  "id": "knowledge-to-desk",
+  "version": "0.2.0",
+  "source": "knowledge",
+  "destination": "service-desk",
+  "contract": "desk.requests.create.v2",
+  "mode": "http",
+  "tenantMap": {
+    "org-a": "customer-a",
+    "org-b": "customer-b"
+  },
+  "credential": "runtime-generated service credential; not embedded in this definition",
+  "semantics": "Destination owns requests. Source owns the handoff record and retry identity. No distributed transaction.",
+  "studio": {
+    "consumer": "handoff",
+    "label": "Knowledge to Service Desk",
+    "ports": [
+      {
+        "contract": "knowledge.document.read.v1",
+        "choices": [
+          {
+            "id": "local",
+            "label": "Knowledge in this application",
+            "binding": {
+              "instanceId": "local-documents",
+              "implementation": "knowledge",
+              "scope": "application",
+              "mode": "local"
+            }
+          }
+        ]
+      },
+      {
+        "contract": "desk.requests.create.v2",
+        "choices": [
+          {
+            "id": "local",
+            "label": "Service Desk in this application",
+            "binding": {
+              "instanceId": "local-desk",
+              "implementation": "service-desk",
+              "scope": "application",
+              "mode": "local"
+            },
+            "prerequisites": [
+              "Uses the reviewed local-developer service identity; no production grants are changed."
+            ]
+          },
+          {
+            "id": "connected",
+            "label": "A separately running Service Desk",
+            "binding": {
+              "instanceId": "connected-desk",
+              "implementation": "configured-desk-http",
+              "scope": "application",
+              "mode": "http"
+            },
+            "prerequisites": [
+              "Requires an explicitly configured destination, tenant mapping and authorized service identity. The Studio does not provision another product automatically."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

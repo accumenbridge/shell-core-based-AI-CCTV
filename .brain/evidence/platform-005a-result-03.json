@@ -1,0 +1,29 @@
+{
+  "schema": "quadbridge.local-core-result.v1",
+  "taskId": "PLATFORM-005A-CORE",
+  "status": "ACCEPTED_LOCAL_CORE",
+  "candidate": "7423f199e70374095f449e85275f0ce59676aa150c7ed814acee4eb41289ea61",
+  "contractDigest": "62b56271c4802a4570e6dff06315a1da5915cc2de37081a5b03527ab27a70914",
+  "buildRunId": "a3a820ce-a23f-4d5c-915e-31e4ab9d920b",
+  "suiteRunId": "673dc0c9-6d45-45cd-85e8-dcddf0e73dfb",
+  "reviewId": "b47246f9-08fc-431b-8627-6336e8c4e063",
+  "counts": {
+    "tests": 266,
+    "passed": 264,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 2,
+    "todo": 0
+  },
+  "actualSuiteExit": 0,
+  "browserRef": ".brain/evidence/platform-005a-browser-recovery-02.json",
+  "nativeRef": ".brain/evidence/platform-005a-native-journey-01.json",
+  "limitations": [
+    "Full suite exit0 has two blocked skips: file-symlink creation EPERM and previously denied native lock fixture. These are not passes.",
+    "Earlier full-suite01 fixture omission and full-suite02 native fixture failures remain preserved; later success does not diagnose the native failures.",
+    "Exact22 CP5 source candidate only; unrelated Atlas edits are preserved and no unchanged whole-repository claim is made.",
+    "Browser evidence covers one ordinary paired operator; outer fixture close is recorded, not an independently saved process exit code. Worker separately observed original PID33612 no longer running.",
+    "No provider, hosted, production or external deployment qualification."
+  ],
+  "decision": "Root accepts bounded local recovery under original PLATFORM-005A scope after actual fresh build, full suite, independent source review and native/ordinary browser recovery journeys. This is not hosted or production acceptance."
+}

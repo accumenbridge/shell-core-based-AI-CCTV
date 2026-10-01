@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-10-01T07:47:56.6343287Z",
+  "root": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-atlas-audit-WoVvOm\\source",
+  "candidateDigest": "d209f683474e4267607848b0c6442f12786989bbe88b32c779d2a41e18243cfd",
+  "maintainedFingerprint": "8f6d752bb46a7f057e16b428b7d800d17e2ec4138e6322d77becc2ee93e7af72",
+  "logDirectory": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\checks-54ff59fc4e0041858c87a10516583a13",
+  "nativeLockPolicy": "Existing blocked-policy fixture remains blocked; no override attempted.",
+  "buildExit": 0,
+  "focusedExit": 0,
+  "fullExit": 1,
+  "finishedAt": "2026-10-01T07:56:20.4342926Z"
+}

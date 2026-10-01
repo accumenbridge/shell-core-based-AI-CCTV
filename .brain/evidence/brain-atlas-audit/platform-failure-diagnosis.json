@@ -1,0 +1,15 @@
+{
+  "schema": "brain.atlas-audit-diagnostic.v1",
+  "test": "Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup",
+  "ownerBoundary": "Existing platform test and implementation belong to the separate platform work; not edited by the Brain atlas audit.",
+  "reviewer": "/root/atlas_audit",
+  "observedFacts": [
+    "First descendant heartbeat wait is bounded at 10 seconds and begins before worker source/toolchain preparation.",
+    "Worker timeout is 6 seconds from spawning PowerShell; it includes native helper compilation, job setup and Node startup.",
+    "The prior recorded failure occurred before cancellation was requested. Current run stack must be retained alongside this diagnosis.",
+    "Reviewer confirmed relevant live source matches the frozen candidate byte-for-byte."
+  ],
+  "hypothesis": "Full-suite resource contention can exhaust one of the pre-heartbeat startup windows. This is plausible, not an established cause.",
+  "requiredInvariant": "Observe a living descendant before cancellation. CLEAN requires nonce-bound empty-job proof, helper close, stopped descendant and then owned workspace removal. Uncertain termination remains UNKNOWN with quarantine.",
+  "interpretation": "An isolated passing replay supports timing sensitivity but never erases the full-suite failure or proves its exact cause."
+}

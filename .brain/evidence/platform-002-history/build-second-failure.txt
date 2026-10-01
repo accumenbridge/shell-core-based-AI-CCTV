@@ -1,0 +1,4 @@
+Command: npm run build
+Result: exit 1
+Compiler diagnostic:
+apps/studio-web/src/main.ts(85,49): loginView returns void because it writes app.innerHTML; render attempted to assign that return value to app.innerHTML.

@@ -1,0 +1,121 @@
+{
+  "startedAt": "2026-09-30T17:56:43.717Z",
+  "fixture": "isolated reviewed source copy",
+  "host": "pinned PowerShell 7.6.5",
+  "steps": [
+    {
+      "step": "copy-reviewed-source",
+      "status": "ok"
+    },
+    {
+      "step": "copy-pinned-toolchain",
+      "status": "ok"
+    },
+    {
+      "step": "write-private-local-host-profile",
+      "status": "ok"
+    },
+    {
+      "step": "compose-and-save",
+      "status": "ok",
+      "productId": "platform-two-proof",
+      "version": "1.0.0",
+      "moduleIds": [
+        "service-desk"
+      ]
+    },
+    {
+      "step": "request-build",
+      "status": "QUEUED"
+    },
+    {
+      "step": "build-and-export",
+      "status": "SUCCEEDED",
+      "cleanupState": "CLEAN"
+    },
+    {
+      "step": "database-reopen",
+      "status": "SUCCEEDED"
+    },
+    {
+      "step": "durable-result-inspection",
+      "status": "VERIFIED_LOCAL_EXPORT"
+    }
+  ],
+  "sourceFingerprint": "51f09a2b9f08c10d46ffb40588872991d4b9ce4fd2ef2cdd443a075f8b53bd17",
+  "buildId": "70291340-270c-4c1a-b09b-bf26a03c1890",
+  "finalBuild": {
+    "id": "70291340-270c-4c1a-b09b-bf26a03c1890",
+    "productId": "platform-two-proof",
+    "version": "1.0.0",
+    "state": "SUCCEEDED",
+    "artifactDigest": "99a9bf36ff2daa3ee182aa81ed32bba62fd732fe2dc0c9edf5fac42ea5132a10",
+    "created": 1790791006406,
+    "updated": 1790791013698,
+    "actorId": "operator:29ee2daf-330e-46c7-9b9e-e879b237092b",
+    "inputDigest": "d6a64af2bee1624a60c07e7389c52f1b02d4bb81fb21231e4d0482d4404d807f",
+    "attempt": 1,
+    "phase": "Verified local snapshot",
+    "failureCode": null,
+    "failureMessage": null,
+    "snapshotDigest": "214523c81c63a8344ffe8f8f1c0022611529e04ea29aafeb391b0b50fa3c8ec8",
+    "releaseDigest": "99a9bf36ff2daa3ee182aa81ed32bba62fd732fe2dc0c9edf5fac42ea5132a10",
+    "cleanupState": "CLEAN",
+    "snapshotId": "b04248b3-c295-4e3e-9863-70e75c894ec5",
+    "attemptDetail": {
+      "attempt": 1,
+      "state": "SUCCEEDED",
+      "phase": "Verified local snapshot",
+      "startedAt": 1790791006491,
+      "updatedAt": 1790791013698,
+      "finishedAt": 1790791013698,
+      "cleanupState": "CLEAN",
+      "errorCode": null,
+      "errorMessage": null
+    }
+  },
+  "buildLog": "QB_READY:bGJGQ45W82mOdPSdWZEZfHLYDamoQOJa\r\nQB_EXIT:bGJGQ45W82mOdPSdWZEZfHLYDamoQOJa:0:EMPTY\r\nLocal workspace links prepared. No third-party packages were downloaded.\nAssembled combined: 3 modules, worker=true\nAssembled knowledge: 2 modules, worker=true\nAssembled neutral: 0 modules, worker=false\nAssembled platform-two-proof: 1 modules, worker=false\nAssembled service-desk: 1 modules, worker=false\nBuilt visual Studio from 3 actual modules and 5 products. Offline mode makes no API calls.\nQB_READY:AisP0kG61GyxcyOl9Yq9WY40mbA9suri\r\nQB_EXIT:AisP0kG61GyxcyOl9Yq9WY40mbA9suri:0:EMPTY\r\nAssembled platform-two-proof at [project]\\.local\\platform-builds\\snapshots\\b04248b3-c295-4e3e-9863-70e75c894ec5; no existing data or credentials copied.\n\nQB_READY:bGJGQ45W82mOdPSdWZEZfHLYDamoQOJa\r\nQB_EXIT:bGJGQ45W82mOdPSdWZEZfHLYDamoQOJa:0:EMPTY\r\nLocal workspace links prepared. No third-party packages were downloaded.\nAssembled combined: 3 modules, worker=true\nAssembled knowledge: 2 modules, worker=true\nAssembled neutral: 0 modules, worker=false\nAssembled platform-two-proof: 1 modules, worker=false\nAssembled service-desk: 1 modules, worker=false\nBuilt visual Studio from 3 actual modules and 5 products. Offline mode makes no API calls.\nQB_READY:AisP0kG61GyxcyOl9Yq9WY40mbA9suri\r\nQB_EXIT:AisP0kG61GyxcyOl9Yq9WY40mbA9suri:0:EMPTY\r\nAssembled platform-two-proof at [project]\\.local\\platform-builds\\snapshots\\b04248b3-c295-4e3e-9863-70e75c894ec5; no existing data or credentials copied.\n",
+  "inspection": {
+    "id": "b04248b3-c295-4e3e-9863-70e75c894ec5",
+    "digest": "214523c81c63a8344ffe8f8f1c0022611529e04ea29aafeb391b0b50fa3c8ec8",
+    "releaseDigest": "99a9bf36ff2daa3ee182aa81ed32bba62fd732fe2dc0c9edf5fac42ea5132a10",
+    "status": "VERIFIED_LOCAL_EXPORT"
+  },
+  "reopenedBuild": {
+    "id": "70291340-270c-4c1a-b09b-bf26a03c1890",
+    "productId": "platform-two-proof",
+    "version": "1.0.0",
+    "state": "SUCCEEDED",
+    "artifactDigest": "99a9bf36ff2daa3ee182aa81ed32bba62fd732fe2dc0c9edf5fac42ea5132a10",
+    "created": 1790791006406,
+    "updated": 1790791013698,
+    "actorId": "operator:29ee2daf-330e-46c7-9b9e-e879b237092b",
+    "inputDigest": "d6a64af2bee1624a60c07e7389c52f1b02d4bb81fb21231e4d0482d4404d807f",
+    "attempt": 1,
+    "phase": "Verified local snapshot",
+    "failureCode": null,
+    "failureMessage": null,
+    "snapshotDigest": "214523c81c63a8344ffe8f8f1c0022611529e04ea29aafeb391b0b50fa3c8ec8",
+    "releaseDigest": "99a9bf36ff2daa3ee182aa81ed32bba62fd732fe2dc0c9edf5fac42ea5132a10",
+    "cleanupState": "CLEAN",
+    "snapshotId": "b04248b3-c295-4e3e-9863-70e75c894ec5",
+    "attemptDetail": {
+      "attempt": 1,
+      "state": "SUCCEEDED",
+      "phase": "Verified local snapshot",
+      "startedAt": 1790791006491,
+      "updatedAt": 1790791013698,
+      "finishedAt": 1790791013698,
+      "cleanupState": "CLEAN",
+      "errorCode": null,
+      "errorMessage": null
+    }
+  },
+  "reopenedInspection": {
+    "id": "b04248b3-c295-4e3e-9863-70e75c894ec5",
+    "digest": "214523c81c63a8344ffe8f8f1c0022611529e04ea29aafeb391b0b50fa3c8ec8",
+    "releaseDigest": "99a9bf36ff2daa3ee182aa81ed32bba62fd732fe2dc0c9edf5fac42ea5132a10",
+    "status": "VERIFIED_LOCAL_EXPORT"
+  },
+  "endedAt": "2026-09-30T17:56:54.753Z"
+}

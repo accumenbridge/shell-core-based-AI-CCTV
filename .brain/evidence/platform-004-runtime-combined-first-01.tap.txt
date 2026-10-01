@@ -1,0 +1,17 @@
+TAP version 13
+# Subtest: a promoted Combined release starts its distinct worker role and indexes a real document before owned shutdown
+ok 1 - a promoted Combined release starts its distinct worker role and indexes a real document before owned shutdown
+  ---
+  duration_ms: 17322.0217
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17418.5869
+EXIT_CODE=0

@@ -1,0 +1,25 @@
+{
+  "schema": "quadbridge.atlas-reconciliation.v1",
+  "archivedRevision": 13,
+  "newRevision": 14,
+  "changes": [
+    "Added exact actual scoped core result and independent final review as new reported observation. No existing governing source pins or acceptance criteria changed."
+  ],
+  "newSourceRefs": [
+    {
+      "id": "core-result",
+      "path": ".brain/evidence/core-delivery-001-result-01.json",
+      "role": "Actual completed local core journey; required FAILED regression observation and explicit qualification limits",
+      "sha256": "8fd999697ff449a7e304e3f0efd82fdcd816f0ee7668d14e566ab6b50a51b81d"
+    },
+    {
+      "id": "core-final-review",
+      "path": ".brain/evidence/core-delivery-001-final-review-01.json",
+      "role": "Independent exact196 source and actual core evidence review; local scope only",
+      "sha256": "3a530a98cb42870f9457392865633cda5ff4621cbb96ef0bb36daa1874888376"
+    }
+  ],
+  "limitations": [
+    "Current fullsuite FAILED preserved; atlas records delivery evidence and does not execute/accept production."
+  ]
+}

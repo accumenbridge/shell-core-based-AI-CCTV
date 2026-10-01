@@ -1,0 +1,112 @@
+{
+  "schema": "brain.evidence-record.v1",
+  "kind": "review",
+  "id": "03df5bd6-fa09-4da4-b26d-3b6652ce005c",
+  "taskId": "PLATFORM-007",
+  "contractDigest": "e3f6aac8c9087d292f930d70e6d55ecbb7114eb80e4b644e7c4e27149b1ab3ec",
+  "candidate": {
+    "files": [
+      {
+        "path": "apps/control-plane/src/operator-server.ts",
+        "sha256": "ac16b51e899fea7cd4119f681c3f2727fc0470e0745eb17111235923f68614cd"
+      },
+      {
+        "path": "apps/studio-web/src/main.ts",
+        "sha256": "ff841faed5d12daa17ede376c1bc1514dd144d1f4c3ea8a991487f9199eabbd4"
+      },
+      {
+        "path": "apps/studio-web/static/studio.css",
+        "sha256": "b7eead083dd183df490b5312b166c016f5bd629608e9381767cff494590ce933"
+      },
+      {
+        "path": "docs/STATUS.md",
+        "sha256": "fe3ea0826a48e41cdbaf370fdca5ce541de0a702b62958cd61cb919ab679df82"
+      },
+      {
+        "path": "docs/STUDIO_INTEGRATION.md",
+        "sha256": "f2000f0a18726f1fe7c9fc7698ebb56de3c256e4ccea7af6a355fe30af127799"
+      },
+      {
+        "path": "packages/composition/src/studio.ts",
+        "sha256": "e0d317bdbc16ee0f202e598f91220fcc749a3387401a2ea65856afbf9bf8697b"
+      },
+      {
+        "path": "packages/control-plane/src/index.ts",
+        "sha256": "107bdca35e29b8ac2359e65159c01645167e01acbacb6aba17ed043705dad78f"
+      },
+      {
+        "path": "README.md",
+        "sha256": "bedaaf51f5f53824d28953bb08f5320b0de1e35809741e3678b018a8629c7ee3"
+      },
+      {
+        "path": "tests/control-plane-artifacts.test.mjs",
+        "sha256": "4c7f2f5447a4c99d600e35967c894e8bb977318fda7605f76797c6ed7560cbfb"
+      },
+      {
+        "path": "tests/control-plane-http.test.mjs",
+        "sha256": "f5faefb1e0b3ba494576fa6172f294387549e41dc97408690b6f7c789650cf10"
+      },
+      {
+        "path": "tests/studio-integration.test.mjs",
+        "sha256": "92c32bb381681510c5bb785e0fc3f9ad5769e3a28190770d3d34f3f4eab23897"
+      },
+      {
+        "path": "tests/studio-product-editor.test.mjs",
+        "sha256": "817c60b8c650167e590941472fe5f2544fb117cf46f9dfb91e29fa40e5e28fbf"
+      },
+      {
+        "path": "tests/visual-edition.test.mjs",
+        "sha256": "1e57b43232eddaf6e714c2bc3723370044d7fbb4920d59a142a6b5ffb9ff5419"
+      },
+      {
+        "path": "tools/studio-catalogue.mjs",
+        "sha256": "f3f7d4e611978b8b4e096fc96be9d6404c0ed31b25e04bcadd319badc94086cf"
+      },
+      {
+        "path": "visual/studio.css",
+        "sha256": "05e6d50ba1d8a1db6d61e66ab38f4613eddfc6d2040b7c3f1065d5e5e4ffe4e7"
+      },
+      {
+        "path": "visual/studio.js",
+        "sha256": "8ce9a902154e3bada85aa548d74c19e5e3857ded89c3f6ab4564a5a977be66d2"
+      }
+    ],
+    "digest": "feae2158e39dca364b28001d70d9ca78ca1486f3970e1aa5c49113c58e8e0026"
+  },
+  "recordedAt": "2026-10-01T09:43:30.154Z",
+  "reviewer": "/root/repo_brain_architect",
+  "implementer": "/root/repo_brain_validation",
+  "independence": "independent_reported",
+  "outcome": "ACCEPTED",
+  "scope": "Exact16 source and attributed focused checks only; ordinary browser, shared full suite and production qualification separate.",
+  "artifacts": [
+    {
+      "sourceRef": ".brain/evidence/platform-007-independent-review-01.md",
+      "path": ".brain/workflow/artifacts/03df5bd6-fa09-4da4-b26d-3b6652ce005c/platform-007-independent-review-01.md",
+      "sha256": "c00c6afb16f11a4698d9a3cf3aba96ba1bc5aa1c74ce0f14eff5961e8cf925c9",
+      "bytes": 3264
+    },
+    {
+      "sourceRef": ".local/platform-007-final-pre-build-context-04.json",
+      "path": ".brain/workflow/artifacts/03df5bd6-fa09-4da4-b26d-3b6652ce005c/platform-007-final-pre-build-context-04.json",
+      "sha256": "d18b3eebcaf945b45c94f8d8166111e0e8b1bba07684c4cee87713da016b1afb",
+      "bytes": 158326
+    },
+    {
+      "sourceRef": ".brain/evidence/platform-007-browser-01.json",
+      "path": ".brain/workflow/artifacts/03df5bd6-fa09-4da4-b26d-3b6652ce005c/platform-007-browser-01.json",
+      "sha256": "00ad5a10072896b9391a04c8ac0b645945498ddb4b929b41b0eb7a7b03c9ead7",
+      "bytes": 2608
+    }
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "Actual separate Sol agent APPROVED_SOURCE_AND_FOCUSED_SCOPE report, independently matched16 hashes before/after, operational report c00c6afb16f11a4698d9a3cf3aba96ba1bc5aa1c74ce0f14eff5961e8cf925c9. Root read report; source qualification does not substitute browser evidence."
+  },
+  "limitations": [
+    "14 helper/VM tests are not actual paired network browser execution; HTTP build admission uses a worker double while actual artifact build test separately uses real LocalBuildWorker.",
+    "Ordinary paired save/build/export and offline import/export completion remain BLOCKED by extension file upload permission after transport failures. Attempted custom save was not committed, proved by closed fixture observation.",
+    "Shared required full suite was still running when this review record was prepared. No hosted/provider/production acceptance."
+  ],
+  "integritySha256": "f3dba452c4b6d0d22a2f7d40e30020024c39262e78b815755a69c8c57c9c521d"
+}

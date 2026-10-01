@@ -1,0 +1,30 @@
+{
+  "schema": "quadbridge.platform-checkpoint.v1",
+  "task": "PLATFORM-005A",
+  "status": "SOURCE_REVIEW_REQUIRES_REPAIR",
+  "scope": "Core store, manager, fixed SQLite driver, fixed publisher and native-host export; native use held.",
+  "reviewer": "/root/repo_brain_architect (gpt-6.1-sol/high)",
+  "implementer": "/root/repo_brain_validation (gpt-6-luna/xhigh)",
+  "source": {
+    "packages/control-plane/src/index.ts": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5",
+    "apps/control-plane/src/runtime-recovery.ts": "35434ca89c84080798d24c667a847488aa86a76ecd9dca61d697da27b65d821f",
+    "apps/control-plane/src/runtime-manager.ts": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b",
+    "tools/runtime-recovery.mjs": "afb364156703c160e1c0a098168f28fa5999b83609cf32a05b80c3d99af96451",
+    "tools/runtime-recovery-publish.ps1": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5",
+    "tests/managed-runtime-recovery-store.test.mjs": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+  },
+  "checks": {
+    "build": {"command": "npm run build", "exitCode": 0, "artifact": ".brain/evidence/platform-005a-build-checkpoint-01.log", "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b"},
+    "focused": {"command": "node --test --test-reporter=tap tests/managed-runtime-recovery-store.test.mjs", "exitCode": 0, "tests": 3, "passed": 3, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "artifact": ".brain/evidence/platform-005a-recovery-store-checkpoint-01.tap.txt", "sha256": "2f8a15a81277bb48fab4471c5ae515771df673364d54f42a91b334cee32c131b"},
+    "driverSyntax": {"command": "node --check tools/runtime-recovery.mjs", "exitCode": 0, "provenance": "Worker report; raw output not separately archived."}
+  },
+  "provenance": "Root read complete archived raw build/TAP outputs with EXIT_CODE=0 and matched six source hashes. Sol independently read both logs and matched all six hashes before/after review. Earlier manager12f196 capture preceded replacing two placeholder pins; worker fresh-built pinned35434 before these saved checks.",
+  "requiredRepairs": [
+    "Recheck closing after awaited preparation and at admission, dispatch, RESUME and publication gates.",
+    "Recapture canonical native host identity and staged helper/driver bytes immediately before spawning.",
+    "Persist genuine matching driver EMPTY/helper closure separately from timeout/transport failure; permit proved failed cleanup without reporting success.",
+    "Public backup/restore responses use bounded DTOs and strip internal owner tokens, owner IDs and request keys."
+  ],
+  "decisions": ["Publisher's unique nonce MOVED + matching code0/nullsignal + exact original fixed synchronous PowerShell close is publication completion, not Job Object emptiness. Driver EMPTY remains separate."],
+  "limitations": ["Three store component tests only", "No native SQLite backup/WAL/restore invocation", "No paired API/Studio/browser recovery qualification", "No full CP5A npm test or frozen whole-candidate acceptance", "Later repairs require a fresh checkpoint; no expanded stress/fault campaign"]
+}

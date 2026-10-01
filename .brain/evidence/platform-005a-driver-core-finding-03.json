@@ -1,0 +1,13 @@
+{
+  "schema": "quadbridge.platform-source-finding.v1",
+  "task": "PLATFORM-005A-CORE",
+  "recordedAt": "2026-10-01T06:42:10.4251714Z",
+  "observer": "/root",
+  "status": "REQUIRES_CORE_REPAIR_BEFORE_NATIVE",
+  "source": ".brain/evidence/platform-005a-source-review-02.json",
+  "driverSha256": "afb364156703c160e1c0a098168f28fa5999b83609cf32a05b80c3d99af96451",
+  "finding": "BACKUP database loop destructures relativePath/owner/kind while passing unbound schema to inspectDatabase. Ordinary first database backup will throw ReferenceError.",
+  "reviewerAcknowledgement": "/root/repo_brain_architect independently confirmed its prior static approval missed this ordinary-path binding defect.",
+  "actualNative": "NOT_RUN",
+  "nextAction": "Luna reopens only driver fourth-field binding and manager byte pin; fresh build/check and narrow independent renewal before native."
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "quadbridge.local-core-result.v1",
+  "taskId": "PLATFORM-006",
+  "status": "ACCEPTED_LOCAL_CORE",
+  "candidate": "d755c06582f2dc00a217e6dcef86ae037f908e7bf8ff355369a9748ea5c02e17",
+  "contractDigest": "86c15ccebff51f1ddc0b6193ecf4d05ea7cb2c6d6f969f350139b2500ee93f15",
+  "buildRunId": "3674c388-b3fb-43f2-964e-3666447b6e74",
+  "suiteRunId": "5cf238e4-e8e8-43bc-9025-969655539bdd",
+  "reviewId": "78942974-e5f8-48b3-9119-8c20d3df334e",
+  "counts": {
+    "tests": 284,
+    "passed": 282,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 2,
+    "todo": 0
+  },
+  "actualSuiteExit": 0,
+  "browserRef": ".brain/evidence/platform-006-browser-knowledge-01.json",
+  "oldSnapshotRef": ".brain/evidence/platform-006-old-snapshot-check-01.json",
+  "limitations": [
+    "Actual284 tests282passed0failed0cancelled2blocked skips0TODO, duration413206.7426ms. File symlink creation EPERM and previously denied native staging-lock fixture are blocked, not passes.",
+    "Bounded local deterministic extractive Knowledge workflow. No external provider inference, hosted or production qualification.",
+    "Actual ordinary Chrome used exported Combined0.2.1. Standalone Knowledge0.2.1 correctly refused by selected local managed profile because its reviewed binding is HTTP; preserved history, no security change.",
+    "Browser cancellation was not clicked; actual cancellation/original-session await behavior is covered separately by focused HTTP and full suite.",
+    "Exact31 platform source plus explicitly pinned ancillary two-file Brain changes, not an unchanged whole-repository claim."
+  ],
+  "decision": "Root accepts usable local deterministic extractive Knowledge delivery at bounded scope. Actual answer cites exact authorized indexed source; model inference remains unattached. This does not qualify hosted/provider/production profiles."
+}

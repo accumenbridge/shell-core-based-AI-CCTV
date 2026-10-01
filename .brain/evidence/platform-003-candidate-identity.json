@@ -1,0 +1,21 @@
+{
+  "schema": "quadbridge.candidate-identity.v1",
+  "task": "PLATFORM-003",
+  "status": "ACCEPTED_FOR_ACCESSIBLE_LOCAL_SCOPE",
+  "maintainedSourceFingerprint": "f24b79b931ccc61d9e86124df26e1f6f1064859530deb422f9e0bc466911eca4",
+  "maintainedFiles": 175,
+  "coordinatorMatched": true,
+  "baseSourceProfileGitTree": "d1d645ed13768b182d37dd1757d78913bccc6cd7",
+  "nativePublisherSha256": "21193a3fb4ac19b966bc797f980eddc800cf7673485060ab02a09caa9adf3bb9",
+  "artifactStoreSha256": "0d7ae71a1304f1ed9b3c545124f5e3f49e08f790918b9340bed4ae06ab3b53f9",
+  "testHelperSha256": "57c790ba7e99acecb6cbfefb5e2598785eec3eba85ef880524c7bf786875e4d6",
+  "testHelperGate": "BLOCKED_COMMAND_POLICY; not invoked; bounded deadline NOT_RUN",
+  "requestedFinalScope": "PARTIAL_WITH_BLOCKED_FIXTURE_GATES",
+  "checkEnvironment": {
+    "QB_TEST_CP3_NATIVE_LOCK": "blocked-policy",
+    "scope": "check child process only; no global or production config"
+  },
+  "finalAcceptance": "PARTIAL_WITH_BLOCKED_FIXTURE_GATES",
+  "resultRef": ".brain/evidence/platform-003-result.json",
+  "sourceProfileGitTree": "358e13d27c5d307cde21e0fc10ed606320cf827c"
+}

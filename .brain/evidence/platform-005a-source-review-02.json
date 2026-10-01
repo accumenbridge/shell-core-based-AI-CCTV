@@ -1,0 +1,80 @@
+{
+  "schema": "quadbridge.platform-source-review.v1",
+  "task": "PLATFORM-005A-CORE",
+  "recordedAt": "2026-10-01T06:38:23.0950662Z",
+  "reviewer": "/root/repo_brain_architect",
+  "implementer": "/root/repo_brain_validation",
+  "independence": "independent_reported",
+  "outcome": "APPROVED_SOURCE_FOR_FIRST_NATIVE_QUALIFICATION",
+  "pins": [
+    {
+      "path": "packages/control-plane/src/index.ts",
+      "sha256": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5"
+    },
+    {
+      "path": "apps/control-plane/src/runtime-recovery.ts",
+      "sha256": "308a9bae0f4e8269b757f2255e78911916accaa4c1d518354e000f57c7383b56"
+    },
+    {
+      "path": "apps/control-plane/src/runtime-manager.ts",
+      "sha256": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b"
+    },
+    {
+      "path": "apps/control-plane/src/operator-server.ts",
+      "sha256": "0d02e1b136d135807461a1fbbcad423b8aaf7e3c691b6d27503eaf625f3b8989"
+    },
+    {
+      "path": "apps/control-plane/src/main.ts",
+      "sha256": "4eea7a1c88c1a97c42b7b6737a2d6e0615d2394bc7e3eae9d1ea0bba0ef9ea7a"
+    },
+    {
+      "path": "tools/runtime-recovery.mjs",
+      "sha256": "afb364156703c160e1c0a098168f28fa5999b83609cf32a05b80c3d99af96451"
+    },
+    {
+      "path": "tools/runtime-recovery-publish.ps1",
+      "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+    },
+    {
+      "path": "tools/build-job.ps1",
+      "sha256": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9"
+    },
+    {
+      "path": "tests/managed-runtime-recovery-store.test.mjs",
+      "sha256": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+    },
+    {
+      "path": "tests/control-plane-http.test.mjs",
+      "sha256": "c3a59b4d3ad0e5f91b18c92c0a1af93e4be634b848f3568f28b8ae65e98e58cb"
+    }
+  ],
+  "artifacts": [
+    {
+      "source": ".local/platform-005a-build-manager-review-03.log",
+      "path": ".brain/evidence/platform-005a-build-manager-review-03.log",
+      "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b"
+    },
+    {
+      "source": ".local/platform-005a-recovery-store-review-03.tap.txt",
+      "path": ".brain/evidence/platform-005a-recovery-store-review-03.tap.txt",
+      "sha256": "7595d311cebe4852ae1848c6e697ce2a0445744784f33fa929c33c6cb9661348"
+    },
+    {
+      "source": ".local/platform-005a-recovery-http-review-01.tap.txt",
+      "path": ".brain/evidence/platform-005a-recovery-http-review-01.tap.txt",
+      "sha256": "3b9aad2c5a9836ab64746afb81921384c6bff7585f95560599e83119bd5c18dc"
+    }
+  ],
+  "findings": [
+    "All10pins independently matched before and after the read-only source review.",
+    "Earlier shutdown/session gates, current host/staged executable pins, separate operation errors/physical EMPTY+close facts and safe response projections hold.",
+    "RESUME:<nonce>/STOP:<nonce> controls and complete backup/restore UUID route patterns are corrected.",
+    "Driver envelope/clock and publisher physical parent-chain checks hold.",
+    "Fresh build EXIT0/store3of3/HTTP15of15 confirmed from saved raw logs."
+  ],
+  "limitations": [
+    "Source/component approval for first native use only.",
+    "HTTP recovery test uses a manager double; actual native backup/WAL/restore/restart remains NOT_RUN.",
+    "Moving Studio/docs, full suite, browser and program acceptance are excluded."
+  ]
+}

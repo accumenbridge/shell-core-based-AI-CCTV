@@ -1,0 +1,55 @@
+{
+  "schema": "quadbridge.attributed-source-review.v1",
+  "taskId": "CORE-DELIVERY-001",
+  "reportedReviewer": "/root/repo_brain_architect",
+  "reportedRole": "Sol/high architect and independent source reviewer",
+  "attributionLimit": "Reported role and findings are not authenticated model identity or external acceptance.",
+  "outcome": "APPROVED_FOR_SOURCE_AND_FOCUSED_UI_SCOPE",
+  "reviewedPaths": [
+    {"path": "apps/studio-web/src/main.ts", "sha256": "66b19078409bdb9ded87d47fdade294ef7659a7e3bd0965473ee97c1656617a0"},
+    {"path": "tests/studio-product-editor.test.mjs", "sha256": "77218a3a646d9eb4ab5822d10d795da71b3b04c1161b58ed8cb7e25c819cc0d3"}
+  ],
+  "pinsMatchedBeforeAndAfter": true,
+  "candidateBinding": {
+    "contextPath": ".local/core-delivery-001-live-context.json",
+    "contextSha256": "7d0b844b7215623fbc4efaaa9e071d3ef796dc99b9a9cebea3c1a476986c4b07",
+    "candidateDigest": "90fd7ce4e8a423fc38ef7ac9743ed5a591d7e6f2f55c4f2b82c8c0d81f8a25dc",
+    "fileCount": 196,
+    "allExplicitFileHashesIndependentlyMatched": true,
+    "aggregateDigestIndependentlyRecomputed": true,
+    "scopeLimit": "The full explicit manifest binds this review; detailed new source review is limited to the two repair paths. Separate Brain source and its acceptance are not included or inferred."
+  },
+  "sourceFindings": [
+    "Redundant click-generated hashchange now returns without invalidating the pending catalogue generation. Genuine Products hash navigation invokes the shared completion loader, guarded by original session, navigation generation and selected route.",
+    "Save confirmation is an unchecked in-page checkbox displaying the exact previewed product identity. Unchecked Save sends no mutation; checked confirmation is consumed before dispatch. The complete preview product is captured and the existing confirm:true server payload is preserved.",
+    "The current valid preview/editor-generation and connected Products-route guards remain. Completion preserves original session, editor request and navigation guards; API response checks remain unchanged.",
+    "Product confirmation is not retained by the runtime checkbox restoration loop. Edit/new preview render removes or resets it; navigation rebuild resets it; logout/401 clear the editor/session. No native product-save dialog fallback or server authorization weakening was introduced."
+  ],
+  "executedEvidenceRead": {
+    "build": {
+      "path": ".local/core-delivery-001-ui-build-02.log",
+      "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+      "rawExitCode": 0
+    },
+    "focused": {
+      "path": ".local/core-delivery-001-ui-focused-02.tap.txt",
+      "sha256": "6c5c0501521415c67f2d1809b2a18e073bc32900c1b4abf36dbc1d3b87c3c4b7",
+      "rawExitCode": 0,
+      "counts": {"tests": 6, "passed": 6, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0}
+    },
+    "meaningfulScope": "Two added cases execute the maintained compiled Studio script and registered handlers with controlled DOM/fetch. Deferred catalogue resolution covers first click, genuine hash navigation and departure before completion. Save covers explicit identity, unchecked refusal, navigation reset, edit/new-preview reset, exact complete confirmed payload, consumption and absence of native confirm. Four existing pure-composition/browser-bundle cases remain.",
+    "notExercisedByTheseCases": "Real browser, actual paired HTTP/session loss, database save, compile/export/native runtime or complete business journey. Session-loss clearing is source-reviewed here, not a new executed UI logout claim."
+  },
+  "history": [
+    "Initial focused01 4/6 is preserved separately; reported repairs were harness hash normalization and escaped-HTML predicate corrections. Its failures are not relabelled as passes.",
+    "Earlier actual browser native-confirmation transport timeout had no saved custom product and original-owner closure; it remains incomplete evidence.",
+    "Existing browser file-upload permission denial remains BLOCKED and is not repaired or bypassed by in-page confirmation."
+  ],
+  "blockersInReviewedRepair": [],
+  "pendingGates": [
+    "Fresh ordinary continuous core journey on this frozen candidate",
+    "Matching coordinated required full suite",
+    "Actual original-owner native/runtime/domain/recovery closure evidence"
+  ],
+  "reviewerExecution": "Read source and existing raw logs; performed read-only file and aggregate hashing only. No build, test, browser or native process launch was performed by this reviewer. No maintained source or shared checkpoint was edited."
+}

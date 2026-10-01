@@ -1,0 +1,13 @@
+{
+  "schema": "quadbridge.browser-fixture-closed.v1",
+  "fixtureId": "a939c59f-1a29-4e5d-bb38-84b14fe4522c",
+  "closed": true,
+  "summary": {
+    "slot": {
+      "state": "EMPTY",
+      "occupied": false,
+      "instanceId": null
+    },
+    "runtimes": []
+  }
+}

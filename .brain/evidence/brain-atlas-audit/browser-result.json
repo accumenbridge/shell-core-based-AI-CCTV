@@ -1,0 +1,127 @@
+{
+  "schema": "brain.atlas-browser-check.v1",
+  "startedAt": "2026-10-01T07:52:12.911215+00:00",
+  "htmlPath": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.brain\\atlas\\history\\PROJECT_ATLAS-0004.html",
+  "htmlSha256": "20c5a9fcdff9acc3d8076543525d3c88211f9fc4057294902265614e496d7629",
+  "status": "PASSED_WITH_ENVIRONMENT_INJECTION",
+  "checks": [
+    {
+      "name": "generated artifact has zero scripts; browser injection identified separately",
+      "result": "PASSED",
+      "injectedScriptCount": 1
+    },
+    {
+      "name": "unique anchors and all internal links",
+      "result": "PASSED",
+      "ids": 88,
+      "uniqueIds": 88,
+      "links": 359,
+      "missing": []
+    },
+    {
+      "name": "1440px layout and focus-node navigation",
+      "result": "PASSED",
+      "scroll": 1440,
+      "viewport": 1440
+    },
+    {
+      "name": "390px layout and focus-node navigation",
+      "result": "PASSED",
+      "scroll": 390,
+      "viewport": 390
+    },
+    {
+      "name": "320px layout and focus-node navigation",
+      "result": "PASSED",
+      "scroll": 320,
+      "viewport": 320
+    },
+    {
+      "name": "keyboard first-link navigation",
+      "result": "PASSED",
+      "target": "#planning-gaps"
+    },
+    {
+      "name": "no page script errors or unidentified external resource requests",
+      "result": "PASSED"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-1440.png",
+      "sha256": "bc0e71e49dcad9d257f736d92714f02b5631b7b5f48ac14b83b43d7a9360119b",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-1440-planning-focus.png",
+      "sha256": "b833315ba58a7591babff4c95736f733ff118ee3c07919ba55e5026b6f04079a",
+      "width": 1440,
+      "height": 1000,
+      "section": "planning-focus"
+    },
+    {
+      "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-1440-map.png",
+      "sha256": "e966be83b56ef0a99659ed45eefdf2a661e6f86e8b15081217e77396da1f7661",
+      "width": 1440,
+      "height": 1000,
+      "section": "map"
+    },
+    {
+      "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-390.png",
+      "sha256": "17943a1390446b3b996f08387a0ae26caff935a24013dcdd4c042a1ca8223113",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-390-planning-focus.png",
+      "sha256": "894cbc7852e8fa10400dcc32a7bf038098170f87e384ff6f499f4357f329cdbd",
+      "width": 390,
+      "height": 844,
+      "section": "planning-focus"
+    },
+    {
+      "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-390-map.png",
+      "sha256": "0bfd9fc479ae339e6af6b9772209cc2c81b849bafec7a6d60cec09bc04142d78",
+      "width": 390,
+      "height": 844,
+      "section": "map"
+    },
+    {
+      "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-320.png",
+      "sha256": "15cafc7256d7e28edcbcb574cf3ed2f89f170f48c826f66e9480e227966e068b",
+      "width": 320,
+      "height": 844
+    }
+  ],
+  "limitations": [
+    "Only the read-only atlas page is covered; no platform runtime, provider, full UX design or production qualification.",
+    "The Codex browser connector failed before initialization (missing kernel assets); ordinary repository Playwright/Chrome is used without a policy bypass.",
+    "Installed Kaspersky injects its own external script into the browser response. It is absent from the exact generated artifact; no antivirus, CSP or browser policy was changed."
+  ],
+  "stage": "anchor-integrity",
+  "navigation": {
+    "status": 200,
+    "title": "Quadbridge Product Studio \u2014 project atlas",
+    "url": "http://127.0.0.1:60075/atlas",
+    "scriptCount": 1
+  },
+  "browserScripts": [
+    {
+      "type": "text/javascript",
+      "id": "",
+      "src": "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=6klVGpNC80KdwlIDFWOaSfmmKXGEmtACOcpVknZeSZJkWVTQnXr1kOJ4OE1GWat-",
+      "text": ""
+    }
+  ],
+  "responseSha256": "705c80a999cd37c979088d1c599c1f5947e588132c0c34a4f4a3e052c0d27529",
+  "environmentRequests": [
+    "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=6klVGpNC80KdwlIDFWOaSfmmKXGEmtACOcpVknZeSZJkWVTQnXr1kOJ4OE1GWat-",
+    "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=uBWtb16PvO8STvJRsmNNY9KggyUqFYYEHm7ByZ6DOPJWL2lzoOjvSJNkDBA8MQb3",
+    "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=3oB3GPQhOI8yJGAmbCJ8JuTB-jDlypUghEdFg_WojpnN2tKEoNYPsYo-H8oN1w8V",
+    "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=Qc_Mb6TL0QXGQM6xX941Q8GP723kAzruaNaj-erHHTduk9PHqgwFYV7klqpkSjDm",
+    "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=DaLdW55NH2we56Cx5e-0_9VmHp4kIxZYDyqOCjsr6YCCXlKUphpnVWaggIUkytlv"
+  ],
+  "browserVersion": "154.0.8037.59",
+  "finishedAt": "2026-10-01T07:52:18.261332+00:00"
+}

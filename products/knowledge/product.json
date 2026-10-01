@@ -1,0 +1,37 @@
+{
+  "id": "knowledge",
+  "version": "0.2.1",
+  "platformAbi": "quadbridge.module.v1",
+  "title": "Knowledge Library",
+  "description": "Documents, background indexing and connected-product action.",
+  "layout": "top",
+  "modules": [
+    {
+      "id": "knowledge",
+      "version": "0.2.1"
+    },
+    {
+      "id": "handoff",
+      "version": "0.2.1"
+    }
+  ],
+  "bindings": [
+    {
+      "contract": "knowledge.document.read.v1",
+      "instanceId": "local-documents",
+      "implementation": "knowledge",
+      "scope": "application",
+      "consumer": "handoff",
+      "mode": "local"
+    },
+    {
+      "contract": "desk.requests.create.v2",
+      "instanceId": "connected-desk",
+      "implementation": "configured-desk-http",
+      "scope": "application",
+      "consumer": "handoff",
+      "mode": "http"
+    }
+  ],
+  "wiring": "knowledge-to-desk"
+}

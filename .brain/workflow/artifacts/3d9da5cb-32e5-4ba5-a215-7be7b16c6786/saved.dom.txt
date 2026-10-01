@@ -1,0 +1,103 @@
+- complementary:
+  - text: Quadbridge Product Studio
+  - generic: Paired local operator
+  - navigation:
+    - button "Overview"
+    - button "Products"
+    - button "Modules"
+    - button "Ui"
+    - button "Backend"
+    - button "Ai"
+    - button "Data"
+    - button "Builds"
+    - button "Artifacts"
+    - button "Runtime Instances"
+    - button "Environments"
+    - button "Deployments"
+    - button "Audit"
+    - button "Operations"
+- main:
+  - generic: paired local control plane
+  - heading "Products" [level=1]
+  - generic: Stored source records and validated local plans.
+  - generic: v0.3.0
+  - button "Disconnect"
+  - alert: Saved core-ops-1002@1.0.0. Build it from the Builds page when ready.
+  - generic "New composition starter"
+  - option "Sidebar" [selected]
+  - option "Top bar"
+  - heading "Product definition editor" [level=2]
+  - generic: Complete JSON is authoritative
+  - paragraph: Import, edit or load one exact immutable version. The editor preserves every declaration; unsupported values stay visible with diagnostics and cannot be saved or built.
+  - text: Load saved version
+  - combobox "Load saved version":
+    - option "Choose an exact saved version" [selected]
+    - option "combined@0.2.1"
+    - option "core-ops-1002@1.0.0"
+    - option "knowledge@0.2.1"
+    - option "neutral@0.2.0"
+    - option "service-desk@0.2.0"
+  - button "Load exact version"
+  - text: Import product.json
+  - button "Import product.json"
+  - text: Product ID
+  - textbox "Product ID": core-ops-1002
+  - text: Title
+  - textbox "Title": Quadbridge Core Operations
+  - text: Description
+  - textbox "Description": "Core delivery: persisted requests, grounded Knowledge and owner-confirmed handoffs."
+  - text: Version
+  - textbox "Version": 1.0.0
+  - text: Layout
+  - combobox "Layout":
+    - option "Sidebar" [selected]
+    - option "Top"
+  - text: Complete ProductDefinition JSON
+  - textbox "Complete ProductDefinition JSON":
+    - /placeholder: Use New composition below or import a complete product.json
+    - text: "{ \"id\": \"core-ops-1002\", \"title\": \"Quadbridge Core Operations\", \"description\": \"Core delivery: persisted requests, grounded Knowledge and owner-confirmed handoffs.\", \"version\": \"1.0.0\", \"platformAbi\": \"quadbridge.module.v1\", \"layout\": \"sidebar\", \"modules\": [ { \"id\": \"handoff\", \"version\": \"0.2.1\" }, { \"id\": \"knowledge\", \"version\": \"0.2.1\" }, { \"id\": \"service-desk\", \"version\": \"0.2.0\" } ], \"bindings\": [ { \"instanceId\": \"core-desk-link\", \"implementation\": \"service-desk\", \"scope\": \"application\", \"mode\": \"local\", \"consumer\": \"handoff\", \"contract\": \"desk.requests.create.v2\" }, { \"instanceId\": \"core-document-link\", \"implementation\": \"knowledge\", \"scope\": \"application\", \"mode\": \"local\", \"consumer\": \"handoff\", \"contract\": \"knowledge.document.read.v1\" } ], \"wiring\": \"knowledge-to-desk\" }"
+  - text: Exact module references
+  - textbox "Exact module references": "[ { \"id\": \"handoff\", \"version\": \"0.2.1\" }, { \"id\": \"knowledge\", \"version\": \"0.2.1\" }, { \"id\": \"service-desk\", \"version\": \"0.2.0\" } ]"
+  - text: Exact public bindings
+  - textbox "Exact public bindings": "[ { \"instanceId\": \"core-desk-link\", \"implementation\": \"service-desk\", \"scope\": \"application\", \"mode\": \"local\", \"consumer\": \"handoff\", \"contract\": \"desk.requests.create.v2\" }, { \"instanceId\": \"core-document-link\", \"implementation\": \"knowledge\", \"scope\": \"application\", \"mode\": \"local\", \"consumer\": \"handoff\", \"contract\": \"knowledge.document.read.v1\" } ]"
+  - button "Preview exact definition"
+  - heading "Saved immutable versions" [level=2]
+  - table:
+    - rowgroup:
+      - row "Product Title Version Modules Admission":
+        - columnheader "Product"
+        - columnheader "Title"
+        - columnheader "Version"
+        - columnheader "Modules"
+        - columnheader "Admission"
+    - rowgroup:
+      - row "combined Operations + Knowledge 0.2.1 3 valid":
+        - cell "combined"
+        - cell "Operations + Knowledge"
+        - cell "0.2.1"
+        - cell "3"
+        - cell "valid"
+      - row "core-ops-1002 Quadbridge Core Operations 1.0.0 3 valid":
+        - cell "core-ops-1002"
+        - cell "Quadbridge Core Operations"
+        - cell "1.0.0"
+        - cell "3"
+        - cell "valid"
+      - row "knowledge Knowledge Library 0.2.1 2 valid":
+        - cell "knowledge"
+        - cell "Knowledge Library"
+        - cell "0.2.1"
+        - cell "2"
+        - cell "valid"
+      - row "neutral Neutral shell 0.2.0 0 valid":
+        - cell "neutral"
+        - cell "Neutral shell"
+        - cell "0.2.0"
+        - cell "0"
+        - cell "valid"
+      - row "service-desk Service Desk 0.2.0 1 valid":
+        - cell "service-desk"
+        - cell "Service Desk"
+        - cell "0.2.0"
+        - cell "1"
+        - cell "valid"

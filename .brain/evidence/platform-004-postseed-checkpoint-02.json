@@ -1,0 +1,15 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "APPROVED_ACTUAL_POSTSEED_COMPOSITION_SCOPE",
+  "review": "Independent gpt-6.1-sol/high matched captured test/fixture and four core pins first/last, read raw build/TAP and actual preparation/native/canonical assertions. Cleanup proof and bounded diagnostic scope accepted. Root independently read captures/logs and matched hashes.",
+  "test": {"capture":"platform-004-artifact-test-postseed-02.mjs.txt","sha256":"0a5dfeafcd9c548c55dee571357c2468d87206fa2fc5f30496fb84dcd6da25ea"},
+  "fixture": {"capture":"platform-004-postseed-fixture-02.mjs.txt","sha256":"f68bf6f2553788f09099005e242f478c1d767a0a00975632770efb0b915b4d05"},
+  "build": {"evidence":"platform-004-build-postseed-02.log","exit_code":0,"exit_provenance":"Worker observed process result; raw build log has success output but no explicit exit marker."},
+  "check": {"evidence":"platform-004-postseed-focused-02.tap.txt","tests":1,"passed":1,"failed":0,"cancelled":0,"skipped":0,"todo":0,"exit_code":0,"duration_ms":17619.5103,"exit_provenance":"Worker observed process result; complete raw TAP has no explicit exit marker."},
+  "core": "Root matched unchanged manager68580233/storef129e74d/supervisore8bee18a/helper24364492.",
+  "scope": "Real build/register/promote; exact verified private snapshot copy with checked in-copy workspace links. prepareRuntimeEnrollment writes private intent/config/seeds/credentials. Fixed owned child imports only copied immutable canonical LocalAccess, exclusively reserves access DB, seeds, closes canonical access/reservation, writes SEED_CLOSED and naturally exits73 before COMPLETE. Exact nonce EMPTY73 plus original helper close73/nullsignal. Readonly binding/product/instance, seed principal count, nonzero grants, zero sessions establish committed seed. Same-identity completedRuntimeEnrollment and prepareRuntimeEnrollment freshAllowed true/false reject missing COMPLETE and preserve exact main DB bytes/binding/principal/grant/session rows and four private files. No reseed or marker publication.",
+  "teardown": "Worker reports safe native closure before owned fixture deletion, no uncertain root. Root read native common-owner teardown; uncertainty retains rather than claiming safe deletion.",
+  "preserved_failure": "Postseed01 complete raw TAP0/1 failed expected73 versus fixed child83, worker exit1. Fixture mistakenly used registry root without copied workspace dependency links; corrected test setup, no application source defect or registry mutation inferred. Failure raw/build archived separately; first-run exact source bytes are not established by later captures.",
+  "limits": "Composition through maintained preparation and actual immutable canonical owner/native helper, not literal supervisor fault injection or controller crash. Main-file byte equality does not separately assert arbitrary SQLite sidecar equality. No full CP4 acceptance."
+}

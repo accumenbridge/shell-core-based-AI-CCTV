@@ -1,0 +1,37 @@
+{
+  "schema": "quadbridge.brain-005-result.v1",
+  "taskId": "BRAIN-005",
+  "status": "ACCEPTED_SCOPED_READINESS",
+  "candidate": "421397fde93da06f05bb71a317f9c2ea351bc32ceea637088bba3a174268d525",
+  "files": 13,
+  "observed": {
+    "freshBuildExit": 0,
+    "focusedTests": 38,
+    "focusedPassed": 38,
+    "independentReview": "443a06a1-7ea3-4321-8149-3b5395212a87",
+    "normalPreflightBeforeReconciliation": "NOT_READY actualexit1 governing README drift",
+    "normalPreflightAfterSemanticReconciliation": "READY actualexit0",
+    "actualImplementingAdmission": "Checkpoint30 actualexit0",
+    "fullSuite": {
+      "exitCode": 1,
+      "tests": 308,
+      "passed": 305,
+      "failed": 2,
+      "skipped": 1,
+      "recordId": "efc26f73-f313-47dc-b691-3c7972878b3f"
+    }
+  },
+  "runIds": [
+    "86f1d014-e2a4-46de-9838-33ea08f57456",
+    "c0d95130-bd10-4b36-be68-6005120ec4fd",
+    "0fd926f1-51a3-434c-833f-89ddb88c77fd",
+    "5401a7dd-f7de-45f3-a20f-367131970212",
+    "efc26f73-f313-47dc-b691-3c7972878b3f"
+  ],
+  "limitations": [
+    "Scoped Brain readiness accepted independently; platform/core not accepted by this result.",
+    "Whole-repository suite failed in native heartbeat and registry publication; required actual observation fulfilled without relabelling failures.",
+    "Desktop/mobile/canonical DOM observed; complete atlas visual remains BLOCKED/UNCONFIRMED.",
+    "Missing managed profile keeps controller observation-only; no automatic dispatch, source integration or global settings change."
+  ]
+}

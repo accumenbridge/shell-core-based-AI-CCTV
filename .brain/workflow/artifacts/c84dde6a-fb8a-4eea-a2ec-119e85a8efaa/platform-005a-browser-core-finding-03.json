@@ -1,0 +1,29 @@
+{
+  "schema": "brain.source-finding.v1",
+  "task": "PLATFORM-005A-CORE",
+  "status": "REQUIRES_CORE_UI_REPAIR",
+  "candidate": "0e1661168ae21880af8c4fb2b6498c147e81e66e08ce231a4170b8acff9a3fef",
+  "observedAt": "2026-10-01T07:23:51.5019179Z",
+  "observer": "/root actual ordinary Chrome browser",
+  "fixtureId": "b14e6f7b-73c5-469c-8c92-f72519cc2462",
+  "instanceId": "runtime-f6e7a06e-5d38-41da-9f4f-8badb2145819",
+  "artifactDigest": "59a0db17c165c4d9caff81b289d26350540cfe4e4c13a2da40c1e633f0b7b1ab",
+  "observed": [
+    "Paired Studio, confirmed exact promoted release START succeeded RUNNING",
+    "Confirmed STOP succeeded with positive empty-tree/cleanup alert",
+    "Inspect runtime returned detail, but no Private local recovery or Load backups controls appeared",
+    "Disconnected, closed tab and fixed fixture stop completed; closed record proves current STOPPED EMPTY/helperClosed/executionClean"
+  ],
+  "cause": "ManagedRuntimeManager.list returns summary without attempts; runtimeHasStoppedProof checks summary attempts and ignores exact-matching selectedRuntime detail. Mock UI fixtures use detailed overview values.",
+  "evidenceRefs": [
+    ".brain/evidence/platform-005a-browser-controls-missing-01.txt",
+    ".brain/evidence/platform-005a-browser-controls-missing-01.jpg",
+    ".local/platform-005a-validation/browser-recovery.closed.json"
+  ],
+  "limitations": [
+    "Browser recovery core failed; backup/verify/restore/restart not reached.",
+    "No user data removed. BareUUID fixture removal control mismatch caught before invocation; standalone helper prepared but never executed.",
+    "Source frozen during running fullsuite41326; repair not yet applied.",
+    "No provider/hosted/production qualification."
+  ]
+}

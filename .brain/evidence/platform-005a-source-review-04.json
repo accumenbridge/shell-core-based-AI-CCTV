@@ -1,0 +1,48 @@
+{
+  "schema": "quadbridge.platform-source-review.v1",
+  "task": "PLATFORM-005A-CORE",
+  "recordedAt": "2026-10-01T06:51:30.4243619Z",
+  "reviewer": "/root/repo_brain_architect",
+  "implementer": "/root/repo_brain_validation",
+  "independence": "independent_reported",
+  "outcome": "APPROVED_SOURCE_FOR_FIRST_NATIVE_QUALIFICATION",
+  "pins": [
+    {
+      "path": "tools/runtime-recovery.mjs",
+      "sha256": "8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35"
+    },
+    {
+      "path": "apps/control-plane/src/runtime-recovery.ts",
+      "sha256": "e253f26a081fd3eb68afd6698d354727107d4681a910f641ef00299ca145d7e4"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".brain/evidence/platform-005a-recovery-sqlite-normalize-build-01.log",
+      "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b"
+    },
+    {
+      "path": ".brain/evidence/platform-005a-recovery-sqlite-normalize-focused-01.tap.txt",
+      "sha256": "35411f6aee513ab7c973b6657d80cbb4b49bde45782d63913616aff42d71831e"
+    },
+    {
+      "path": ".brain/evidence/sqlite-backup-delete-normalization-15e9070ddf9f49349024822ceaf5718e.log",
+      "sha256": "94f4e5d13d1069c9fe06cdc6805afa32ea23fec784ec092c73fed7babe75bac7"
+    }
+  ],
+  "earlierEvidence": [
+    ".brain/evidence/platform-005a-source-review-02.json",
+    ".brain/evidence/platform-005a-driver-core-finding-03.json"
+  ],
+  "findings": [
+    "Sol and root matched repaired driver/manager bytes; fourth schema binding is retained.",
+    "Fresh owned destination is normalized to DELETE only after SQLite backup/source close, closed in finally, with no manual sidecar deletion; original sources remain read-only.",
+    "Actual bounded SQLite probe preserved committed WAL row/integrity/header1of1/no sidecars across five stages and closed four connections. Initial non-normalized WAL behavior remains reported history, not successful standalone qualification.",
+    "Fresh build EXIT0 and store/API/UI focused26of26/zeroothers/EXIT0 confirmed from complete saved logs."
+  ],
+  "limitations": [
+    "Actual native recovery NOT_RUN at this source checkpoint; qualification is now eligible.",
+    "Probe covers pinned Node24 SQLite behavior only; focused HTTP/UI checks use doubles/VM.",
+    "Moving UI/docs, final full suite, browser and platform acceptance remain separate."
+  ]
+}

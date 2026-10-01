@@ -1,0 +1,120 @@
+{
+  "id": "handoff",
+  "version": "0.2.1",
+  "abi": "quadbridge.module.v1",
+  "dependencies": [
+    {
+      "id": "knowledge",
+      "version": "0.2.1"
+    }
+  ],
+  "provides": [],
+  "requires": [
+    "knowledge.document.read.v1",
+    "desk.requests.create.v2"
+  ],
+  "permissions": [
+    "handoff.read",
+    "handoff.create",
+    "handoff.reconcile"
+  ],
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/api/handoffs",
+      "permission": "handoff.read",
+      "kind": "read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/handoffs",
+      "permission": "handoff.create",
+      "kind": "write"
+    },
+    {
+      "method": "POST",
+      "path": "/api/handoffs/reconcile",
+      "permission": "handoff.reconcile",
+      "kind": "write"
+    },
+    {
+      "method": "GET",
+      "path": "/api/handoffs/options",
+      "permission": "handoff.read",
+      "kind": "read"
+    }
+  ],
+  "workspaces": [
+    {
+      "id": "handoff.requests",
+      "label": "Cross-product handoffs",
+      "path": "/handoffs",
+      "permission": "handoff.read",
+      "export": "workspace"
+    }
+  ],
+  "schema": {
+    "current": 2,
+    "readMin": 2,
+    "readMax": 2
+  },
+  "background": true,
+  "studio": {
+    "label": "Handoff",
+    "summary": "Cross-product workflow and receipt reconciliation.",
+    "category": "integration",
+    "layers": [
+      "ui",
+      "backend",
+      "worker",
+      "integration",
+      "data"
+    ],
+    "ui": {
+      "routes": [
+        {
+          "path": "/handoffs",
+          "workspace": "handoff.requests",
+          "label": "Cross-product handoffs",
+          "nav": "Integrations"
+        }
+      ]
+    },
+    "backend": {
+      "events": [
+        {
+          "id": "handoff.committed",
+          "direction": "publish",
+          "schema": "handoff.receipt.v1"
+        }
+      ]
+    },
+    "data": {
+      "stores": [
+        {
+          "id": "handoff-records",
+          "kind": "relational",
+          "ownership": "module"
+        }
+      ],
+      "schemas": [
+        {
+          "id": "handoff",
+          "version": 2
+        }
+      ]
+    },
+    "deployment": {
+      "processes": [
+        {
+          "id": "handoff-api",
+          "kind": "http"
+        },
+        {
+          "id": "handoff-worker",
+          "kind": "worker"
+        }
+      ]
+    }
+  }
+}

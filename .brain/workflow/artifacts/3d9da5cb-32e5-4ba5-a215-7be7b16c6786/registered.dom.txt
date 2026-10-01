@@ -1,0 +1,74 @@
+- complementary:
+  - text: Quadbridge Product Studio
+  - generic: Paired local operator
+  - navigation:
+    - button "Overview"
+    - button "Products"
+    - button "Modules"
+    - button "Ui"
+    - button "Backend"
+    - button "Ai"
+    - button "Data"
+    - button "Builds"
+    - button "Artifacts"
+    - button "Runtime Instances"
+    - button "Environments"
+    - button "Deployments"
+    - button "Audit"
+    - button "Operations"
+- main:
+  - generic: paired local control plane
+  - heading "Artifacts" [level=1]
+  - generic: Stored source records and validated local plans.
+  - generic: v0.3.0
+  - button "Disconnect"
+  - alert: The verified snapshot is registered locally.
+  - heading "Local artifact registry" [level=2]
+  - generic: publication ready
+  - paragraph: Fixed local no-overwrite publisher is pinned and passed its selected private host preflight.
+  - paragraph: Physical publication is separate from reading and promoting registered artifacts. Promoted releases can be started through Managed local runtime. Deployment and provider actions remain unattached.
+  - generic: 1 / 256 object directories
+  - generic: 746055 / 536870912 registry bytes
+  - generic: 0 / 134217728 staging bytes
+  - generic: 0 reserved bytes
+  - heading "Successful builds ready for registration" [level=2]
+  - paragraph: Registration verifies and copies the exact immutable snapshot digest.
+  - generic: No unregistered successful builds are available.
+  - heading "Registered immutable artifacts" [level=2]
+  - article:
+    - heading "core-ops-1002@1.0.0" [level=3]
+    - generic: Build 7527b752-96f8-4458-b6c9-76eedc4ce7b7
+    - generic: registered
+    - paragraph: Snapshot f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7
+    - paragraph: 151 files · 746055 bytes · registered 10/1/2026, 5:40:37 PM
+    - button "Verify and inspect"
+    - checkbox "Promote exactly core-ops-1002@1.0.0 as a local immutable release."
+    - text: Promote exactly core-ops-1002@1.0.0 as a local immutable release.
+    - button "Promote local release"
+  - heading "Recent registry operations" [level=2]
+  - paragraph: Showing up to 200 of 1 records.
+  - table:
+    - rowgroup:
+      - row "Started Kind State Physical proof Destination Staging Local owner observation Product Last issue":
+        - columnheader "Started"
+        - columnheader "Kind"
+        - columnheader "State"
+        - columnheader "Physical proof"
+        - columnheader "Destination"
+        - columnheader "Staging"
+        - columnheader "Local owner observation"
+        - columnheader "Product"
+        - columnheader "Last issue"
+    - rowgroup:
+      - row "10/1/2026, 5:40:32 PM REGISTER REGISTERED MOVE_OBSERVED verified clean — core-ops-1002@1.0.0 —":
+        - cell "10/1/2026, 5:40:32 PM"
+        - cell "REGISTER"
+        - cell "REGISTERED"
+        - cell "MOVE_OBSERVED"
+        - cell "verified"
+        - cell "clean"
+        - cell "—"
+        - cell "core-ops-1002@1.0.0"
+        - cell "—"
+  - heading "Promoted local releases" [level=2]
+  - generic: Nothing recorded yet.

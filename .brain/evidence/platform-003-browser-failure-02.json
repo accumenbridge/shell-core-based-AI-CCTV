@@ -1,0 +1,34 @@
+{
+  "status": "FAIL",
+  "assertions": [
+    "initial pairing view",
+    "invalid local pairing displays an error",
+    "valid pairing opens the operator console",
+    "canonical preview saved two immutable product versions",
+    "successful browser-requested build exposes verified local export",
+    "exact successful snapshot digest registered from the console"
+  ],
+  "blockedGates": [
+    {
+      "gate": "controlled delayed CSP/session-race instrumentation",
+      "status": "BLOCKED_CSP",
+      "detail": "This ordinary browser journey does not use evaluation, injected scripts, or request interception. The separate controlled-delay gate remains blocked by page CSP."
+    }
+  ],
+  "fixture": {
+    "sourceFingerprint": "c87996adbd5c281662f9b328bb0e7ceab684c1780485f9c5f46d67675f18ca6f",
+    "maintainedFingerprint": "f24b79b931ccc61d9e86124df26e1f6f1064859530deb422f9e0bc466911eca4",
+    "nodeVersion": "v24.19.0",
+    "hostIdentity": {
+      "kind": "powershell7-file-host",
+      "version": "7.6.5",
+      "sha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+      "policy": "RemoteSigned"
+    }
+  },
+  "error": "The browser did not observe a successful opaque entry response",
+  "trace": "Traceback (most recent call last):\n  File \"D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\platform-003-validation\\browser-journey.py\", line 158, in <module>\n    if not entry_response or entry_response['status']!=200: fail('The browser did not observe a successful opaque entry response')\n                                                            ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\platform-003-validation\\browser-journey.py\", line 35, in fail\n    raise RuntimeError(message)\nRuntimeError: The browser did not observe a successful opaque entry response\n",
+  "cleanupError": "[WinError 32] The process cannot access the file because it is being used by another process: 'C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Temp\\\\q3c-ld9a54gt\\\\checkout\\\\.local\\\\control-plane.sqlite'",
+  "serverExit": 0,
+  "serverClosedObserved": true
+}

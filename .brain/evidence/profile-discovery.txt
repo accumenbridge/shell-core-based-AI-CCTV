@@ -1,0 +1,8 @@
+The available runtime has no custom agent-type selector. Its `spawn_agent` tool accepts a task name, model, and reasoning effort, but cannot select `brain` or `brawn`.
+
+| Exact type | Recognition | Model / effort | Agent answer |
+|---|---|---|---|
+| `brain` | Unavailable; not validated | Unavailable | No delegation possible |
+| `brawn` | Unavailable; not validated | Unavailable | No delegation possible |
+
+No agents were substituted or launched, so there were none to wait for. I did not read repository files, run application code, edit files, or change configuration.

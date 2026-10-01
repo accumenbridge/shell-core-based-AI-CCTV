@@ -1,0 +1,32 @@
+TAP version 13
+# Subtest: a promoted Service Desk release runs as an owned local runtime, preserves a request through stop and restart, and leaves exact exit proof
+not ok 1 - a promoted Service Desk release runs as an owned local runtime, preserves a request through stop and restart, and leaves exact exit proof
+  ---
+  duration_ms: 13473.6518
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\control-plane-artifacts.test.mjs:515:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, lstat 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\q3-V72R10\\checkout\\tools\\runtime-supervisor.mjs'"
+  code: 'ENOENT'
+  stack: |-
+    lstatSync (node:fs:1771:25)
+    physicalRegularFile (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:687:40)
+    fileDigest (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:722:18)
+    capturedToolchain (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:773:30)
+    ManagedRuntimeManager.startAttempt (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:1008:22)
+    ManagedRuntimeManager.startNew (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:988:21)
+    ManagedRuntimeManager.start (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:951:32)
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-artifacts.test.mjs:525:38)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13584.8245
+EXIT_CODE=1

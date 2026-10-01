@@ -1,0 +1,133 @@
+{
+  "schema": "brain.atlas-result.v1",
+  "observedAt": "2026-10-01T07:26:45.498Z",
+  "projectId": "quadbridge-core-frameworks",
+  "scope": "Reusable read-only planning atlas foundation; autonomous coordination and complete end-state UX design remain target capabilities.",
+  "implementation": {
+    "tool": "tools/brain-atlas.mjs",
+    "sha256": "7ac23871ad6923a432a6ec2a382123f5cf1dfebfa53ed6870e3ac35f53ce835d",
+    "independentSourceReview": "brain_state_review reported no material source blockers at the exact tool hash; attributed review, not authenticated proof."
+  },
+  "testedSnapshot": {
+    "root": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-atlas-validation-NXWF6o\\source",
+    "maintainedFingerprint": "08b5dec34cd8d7a45464a8a6b699f817634c59e29a344547a88cfda19fdc5cd4",
+    "candidateDigest": "746255e937e99527a0bc59f5337d2476595d499d569b20ec72cd853b8e583d82",
+    "unchangedAfterChecks": true,
+    "comparisons": [
+      {
+        "path": "tools/brain-atlas.mjs",
+        "testedSha256": "7ac23871ad6923a432a6ec2a382123f5cf1dfebfa53ed6870e3ac35f53ce835d",
+        "currentSha256": "7ac23871ad6923a432a6ec2a382123f5cf1dfebfa53ed6870e3ac35f53ce835d",
+        "match": true
+      },
+      {
+        "path": "tests/brain-atlas.test.mjs",
+        "testedSha256": "f7261094be07004c97362f1880c7c54d309cd2eb0782f8786aacd7ce6dcfa8c9",
+        "currentSha256": "f7261094be07004c97362f1880c7c54d309cd2eb0782f8786aacd7ce6dcfa8c9",
+        "match": true
+      },
+      {
+        "path": "docs/brain/ARCHITECTURE.md",
+        "testedSha256": "a77aeb63c18dc9cd05ef098b5d7475a971f31e4fac0659d9abdd8526c02d243d",
+        "currentSha256": "a77aeb63c18dc9cd05ef098b5d7475a971f31e4fac0659d9abdd8526c02d243d",
+        "match": true
+      },
+      {
+        "path": "docs/brain/README.md",
+        "testedSha256": "d41511177ac46e66bc3c6ff67819321e07d98a618530b43d68addb326482d236",
+        "currentSha256": "d41511177ac46e66bc3c6ff67819321e07d98a618530b43d68addb326482d236",
+        "match": true
+      },
+      {
+        "path": ".brain/atlas/project.json",
+        "testedSha256": "3ffb2592eb0e5e93b8648391ed0568bf6ee5ac0aecd1d9e029e3feb154bafdf5",
+        "currentSha256": "9375e05796c755c2f869c4fcb83c0302fcf814856220b5e38edf43aa82fcdd52",
+        "match": false
+      },
+      {
+        "path": ".brain/tasks/BRAIN-002.md",
+        "testedSha256": "7b9e34c43411cbdd088c0d67ce70430d300dfa03b137f1d3508c3ff81f727b0a",
+        "currentSha256": "7b9e34c43411cbdd088c0d67ce70430d300dfa03b137f1d3508c3ff81f727b0a",
+        "match": true
+      }
+    ]
+  },
+  "checks": {
+    "build": {
+      "command": "npm run build",
+      "exitCode": 0
+    },
+    "focused": {
+      "command": "node --test tests/brain-atlas.test.mjs",
+      "exitCode": 0,
+      "counts": {
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "repository": {
+      "command": "npm test",
+      "exitCode": 1,
+      "counts": {
+        "tests": 266,
+        "pass": 262,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 2,
+        "todo": 0
+      },
+      "failures": [
+        "✖ Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup",
+        "✖ paired console starts with no private build-host profile and reports build requests unavailable"
+      ],
+      "skippedChecks": [
+        "﹣ BLOCKED_ENV: bounded snapshot verification rejects a file symlink when the host permits fixture creation (21640.0317ms) # BLOCKED_ENV: host denied creation of the owned file-symlink fixture (EPERM)",
+        "﹣ native staging-file lock retains uncertain cleanup after an observed registry move (0.9611ms) # BLOCKED_POLICY: the native staging-file-lock fixture command is blocked in this process context"
+      ]
+    },
+    "logs": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-002\\checks-47bc1df1b76a43ca901e348ec38077b0"
+  },
+  "plan": {
+    "revision": 3,
+    "updatedAt": "2026-10-01T07:25:10.434Z",
+    "validation": "VALID",
+    "warnings": [],
+    "sourceCount": 25,
+    "reconciliations": [
+      ".brain/evidence/brain-atlas-reconciliation-01.json",
+      ".brain/evidence/brain-atlas-reconciliation-02.json"
+    ],
+    "priorRevisions": [
+      ".brain/atlas/history/project-0001.json",
+      ".brain/atlas/history/project-0002.json"
+    ]
+  },
+  "generatedView": {
+    "path": ".brain/atlas/PROJECT_ATLAS.html",
+    "sha256": "df54e16457fe47fedba56e502f1afe9dcbbfd3c96d6129851840365998ae0854",
+    "bytes": 95101,
+    "structure": {
+      "ids": 83,
+      "internalLinks": 298,
+      "duplicateIds": [],
+      "missingAnchors": [],
+      "scripts": false,
+      "remoteResources": false
+    },
+    "browser": {
+      "status": "NOT_RUN",
+      "reason": "CUA failed before creating the browser: failed to write kernel assets; system could not find the path specified (os error 3). No navigation-policy result or visual pass is inferred."
+    }
+  },
+  "limitations": [
+    "Full repository failures remain failures; focused atlas success is not release readiness or a bug-free guarantee.",
+    "Existing native-staging-lock policy block is retained through the established blocked-policy fixture setting; actual file-symlink environment denial remains a separate skipped check.",
+    "No platform browser/provider/production qualification was performed by this atlas task.",
+    "Plan revisions2 and3 are separately validated data reconciliations after the frozen source capture; their predecessors remain archived.",
+    "Existing canonical workflow/current-task records were not changed by this task; atlas adoption is opt-in, not enforced agent control."
+  ]
+}

@@ -1,0 +1,33 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, cp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+const root = fileURLToPath(new URL('../', import.meta.url));
+test('R10: strict independent adapter runs worker with SQLite physically absent', async (t) => {
+    const dir = await mkdtemp(join(tmpdir(), 'qb-adapter-'));
+    t.after(() => rm(dir, { recursive: true, force: true }));
+    await mkdir(join(dir, 'node_modules/@quadbridge'), { recursive: true });
+    for (const name of ['contracts', 'worker-host'])
+        await cp(join(root, 'packages', name), join(dir, 'node_modules/@quadbridge', name), { recursive: true, filter: p => !p.includes('node_modules') });
+    await writeFile(join(dir, 'package.json'), '{"type":"module"}');
+    const build = spawnSync(process.execPath, [join(root, 'node_modules/typescript/bin/tsc'), 'tests/fixtures/memory-execution-store.ts', '--strict', '--module', 'NodeNext', '--target', 'ES2022', '--skipLibCheck', '--outDir', join(dir, 'compiled')], { cwd: root, encoding: 'utf8' });
+    assert.equal(build.status, 0, build.stdout + build.stderr);
+    const code = `import assert from 'node:assert/strict';
+import {MemoryExecutionStore} from './compiled/memory-execution-store.js';
+import {WorkerHost} from '@quadbridge/worker-host';
+let now=1000;const q=new MemoryExecutionStore(()=>now);q.add('one');
+const w=new WorkerHost([{moduleId:'example',queue:q,enabled:()=>true,authorize(){},handlers:[{kind:'sample',async prepare(){return{commit(){q.domain.set('record',{saved:true});return{id:'record'};}};}}]}]);
+await w.tick();assert.equal(q.jobs.get('one').state,'SUCCEEDED');assert.equal(q.domain.get('record').saved,true);
+q.add('rollback');const j=q.claim('w',1000,()=>true);assert.throws(()=>q.finish(j,{commit(){q.domain.set('must-rollback',1);throw Error('rollback');}}));assert.equal(q.domain.has('must-rollback'),false);
+now=2001;const replacement=q.claim('new',1000,()=>true);assert.throws(()=>q.finish(j,{commit(){throw Error('not reached');}}),e=>e.code==='STALE_ATTEMPT');q.finish(replacement,{commit:()=>null});
+const asyncQueue={claim:async(...a)=>q.claim(...a),renew:async(...a)=>q.renew(...a),assertCurrent:async(...a)=>q.assertCurrent(...a),finish:async(...a)=>q.finish(...a),fail:async(...a)=>q.fail(...a)};
+q.add('async');const asyncWorker=new WorkerHost([{moduleId:'example',queue:asyncQueue,enabled:()=>true,authorize(){},handlers:[{kind:'sample',async prepare(){return{commit:()=>({ok:true})};}}]}]);await asyncWorker.tick();assert.equal(q.jobs.get('async').state,'SUCCEEDED');
+await assert.rejects(import('@quadbridge/sqlite'),e=>e.code==='ERR_MODULE_NOT_FOUND');console.log('Independent adapter, rollback and stale-attempt checks passed; SQLite absent.');`;
+    await writeFile(join(dir, 'proof.mjs'), code);
+    const run = spawnSync(process.execPath, ['proof.mjs'], { cwd: dir, encoding: 'utf8' });
+    assert.equal(run.status, 0, run.stdout + run.stderr);
+    assert.match(run.stdout, /SQLite absent/);
+});

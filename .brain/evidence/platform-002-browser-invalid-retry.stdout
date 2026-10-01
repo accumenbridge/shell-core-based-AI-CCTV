@@ -1,0 +1,17 @@
+{
+  "status": "FAIL",
+  "assertions": [
+    "initial login view",
+    "invalid pairing code shows bounded error",
+    "valid local pairing",
+    "compose draft survives delayed catalogue rendering",
+    "two immutable product versions saved through canonical preview",
+    "exact version 2 build confirmation and durable admission",
+    "pairing remains disabled until delayed logout response applies its cookie",
+    "logout after admission"
+  ],
+  "notes": [],
+  "error": "a stale overview response does not alter the re-paired session",
+  "trace": "Traceback (most recent call last):\n  File \"D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\platform-002-validation\\browser-journey.py\", line 169, in <module>\n    assert page.get_by_role('alert').count()==0, 'a stale overview response does not alter the re-paired session'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: a stale overview response does not alter the re-paired session\n",
+  "serverExit": 1
+}

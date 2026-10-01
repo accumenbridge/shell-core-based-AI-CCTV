@@ -1,0 +1,12 @@
+stateDiagram-v2
+  [*] --> QUEUED: Owner transaction accepts job
+  QUEUED --> RUNNING: Atomic lease claim
+  QUEUED --> CANCELLED: Cancel before start
+  RUNNING --> SUCCEEDED: Current lease + allowed owner commit
+  RUNNING --> QUEUED: Retryable failure under original job ID
+  RUNNING --> FAILED: Terminal refusal or exhausted policy
+  RUNNING --> CANCEL_REQUESTED: Cancel requested
+  CANCEL_REQUESTED --> CANCELLED: Attempt settles or lease expires
+  note right of SUCCEEDED
+    Technical result; not automatic business completion
+  end note

@@ -1,0 +1,193 @@
+{
+  "startedAt": "2026-10-01T09:02:17.390Z",
+  "root": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-control-a9DNzx\\project",
+  "store": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-control-a9DNzx\\store",
+  "model": "gpt-6-luna",
+  "effort": "xhigh",
+  "handshake": {
+    "userAgent": "Codex Desktop/0.159.2 (Windows 10.0.26200; x86_64) dumb (brain_local_control; 0.1.0)",
+    "codexHome": "D:\\CodexData",
+    "platformFamily": "windows",
+    "platformOs": "windows"
+  },
+  "result": {
+    "id": "e9cd98e5-008f-47f4-a458-51c02e872a52",
+    "taskId": "DEMO-001",
+    "title": "Add interactive stop count",
+    "status": "REVIEW",
+    "binding": {
+      "projectId": "brain-live-provider-probe",
+      "rootIdentity": "7d74afb72b3a737ca9fd8ef6628d4e35a2b5218ace7727c7ca0de5f5f84bd6b6",
+      "planRevision": 1,
+      "planDigest": "6ee6f88e881e9829a252fce1cd8c562035f7960a5b82c6f5b829373aec524625",
+      "sourceInspectionDigest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "checkpointRevision": null,
+      "checkpointDigest": null,
+      "taskId": "DEMO-001",
+      "contractDigest": "dda3639e852d05db3ffcdc390c8ad1282c8c0f63ac61d9c9e32a4b755b97051d",
+      "candidateDigest": "662d0cfbf41313b2a1edfacae4cfcc96fbdcd8dd29150925ae46674bdae92955"
+    },
+    "bindingDigest": "c4fd4f3d49895f5516da1cab6c6ae95bf9dec1309cdbbbf0853a437682f2404f",
+    "profile": {
+      "schema": "brain.control-profile.v1",
+      "taskId": "DEMO-001",
+      "inputPaths": [
+        "index.html",
+        "build.mjs",
+        "check.test.mjs"
+      ],
+      "checks": [
+        {
+          "id": "build",
+          "kind": "build",
+          "script": "build.mjs"
+        },
+        {
+          "id": "behavior",
+          "kind": "test",
+          "script": "check.test.mjs"
+        }
+      ],
+      "previewPath": "index.html",
+      "planNodeIds": [
+        "SCREEN-1"
+      ]
+    },
+    "profileDigest": "a0b4ee0421507f28e268706b922963a18043936981e1657035337076cc341c6c",
+    "input": {
+      "files": [
+        {
+          "path": "build.mjs",
+          "sha256": "5c39aa01e858c3b65189e2142f0e2d7e7408ff1f37fb5361b9bdf19f7bdaf0d1"
+        },
+        {
+          "path": "check.test.mjs",
+          "sha256": "23e088b9ac2ede94c751e4ff57b44b35a32c123d66e3f0e85d7a757bf103a49f"
+        },
+        {
+          "path": "index.html",
+          "sha256": "00e07f26c222a014a8ab3a10c12d4b4268e53e0dcc979b782c6aaddb06c04402"
+        }
+      ],
+      "digest": "e1d83ceaded27474570c5cb528512d3f12789d901dc399931e2a670b0f886737"
+    },
+    "allowedPaths": [
+      "index.html"
+    ],
+    "criteria": [
+      {
+        "id": "behavior",
+        "description": "Add a stop increments visible count.",
+        "evidenceScope": "Actual browser plus fixed checks."
+      }
+    ],
+    "nodes": [
+      {
+        "id": "SCREEN-1",
+        "kind": "screen",
+        "title": "Trip stop counter",
+        "summary": "Visible count and keyboard-accessible Add a stop button.",
+        "owner": "Fixture owner",
+        "intentStatus": "accepted",
+        "priority": "core",
+        "priorityReason": "Complete the visitor action.",
+        "dependsOn": [],
+        "links": [],
+        "sourceRefs": [],
+        "acceptance": [
+          "Initial count is zero; each activation increases it by one."
+        ]
+      }
+    ],
+    "direction": null,
+    "activity": [
+      {
+        "at": "2026-10-01T09:02:20.303Z",
+        "type": "item/started",
+        "text": "userMessage"
+      },
+      {
+        "at": "2026-10-01T09:02:20.303Z",
+        "type": "item/completed",
+        "text": "userMessage"
+      },
+      {
+        "at": "2026-10-01T09:02:28.246Z",
+        "type": "item/started",
+        "text": "Agent message received."
+      },
+      {
+        "at": "2026-10-01T09:02:32.010Z",
+        "type": "item/completed",
+        "text": "Agent message received."
+      }
+    ],
+    "checks": [
+      {
+        "id": "build",
+        "status": "PASSED",
+        "exitCode": 0,
+        "signal": null,
+        "counts": null,
+        "evidenceDigest": "7b8ad1b7ba5ed437804a76c595f44f63c6a2cb3ec83975b1dc15b39ca6985b58",
+        "output": "Built static document: inline scripts parse.\n\n",
+        "limitation": "Observed local process; not a hostile-code sandbox."
+      },
+      {
+        "id": "behavior",
+        "status": "PASSED",
+        "exitCode": 0,
+        "signal": null,
+        "counts": {
+          "tests": 1,
+          "pass": 1,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "evidenceDigest": "c3798ed23a2dac8ae0c1d56d996a3cbfc8ee89f9f4651a6a6486f85e86e57dcc",
+        "output": "TAP version 13\n# Subtest: two activations count two stops\nok 1 - two activations count two stops\n  ---\n  duration_ms: 6.1635\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 64.5637\n\n",
+        "limitation": "Observed local process; not a hostile-code sandbox."
+      }
+    ],
+    "candidate": {
+      "files": [
+        {
+          "path": "build.mjs",
+          "sha256": "5c39aa01e858c3b65189e2142f0e2d7e7408ff1f37fb5361b9bdf19f7bdaf0d1"
+        },
+        {
+          "path": "check.test.mjs",
+          "sha256": "23e088b9ac2ede94c751e4ff57b44b35a32c123d66e3f0e85d7a757bf103a49f"
+        },
+        {
+          "path": "index.html",
+          "sha256": "4ff881af53d92b9fd4ff3a80d7b74ab240f8ab54cb26b40f93bf62abf7b67788"
+        }
+      ],
+      "digest": "db4baf5fca230ed9c01ea9f86b24db0969154c5a91056a1bca40c488dbc3d3d6"
+    },
+    "summary": "Added a keyboard-accessible “Add a stop” button that increments the visible count from zero and announces updates to assistive technology.",
+    "error": null,
+    "preparedAt": "2026-10-01T09:02:17.694Z",
+    "sourceCandidate": {
+      "files": [
+        {
+          "path": "build.mjs",
+          "sha256": "5c39aa01e858c3b65189e2142f0e2d7e7408ff1f37fb5361b9bdf19f7bdaf0d1"
+        },
+        {
+          "path": "check.test.mjs",
+          "sha256": "23e088b9ac2ede94c751e4ff57b44b35a32c123d66e3f0e85d7a757bf103a49f"
+        },
+        {
+          "path": "index.html",
+          "sha256": "4ff881af53d92b9fd4ff3a80d7b74ab240f8ab54cb26b40f93bf62abf7b67788"
+        }
+      ],
+      "digest": "db4baf5fca230ed9c01ea9f86b24db0969154c5a91056a1bca40c488dbc3d3d6"
+    }
+  },
+  "finishedAt": "2026-10-01T09:02:32.374Z"
+}

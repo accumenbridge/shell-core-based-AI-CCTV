@@ -1,0 +1,52 @@
+- complementary:
+  - generic: Q
+  - generic: Quadbridge
+  - generic: PRODUCT WORKSPACE
+  - generic: Quadbridge Core Operations
+  - paragraph: "Core delivery: persisted requests, grounded Knowledge and owner-confirmed handoffs."
+  - navigation "Workspaces":
+    - link "Knowledge library":
+      - /url: "#/library"
+    - link "Service requests":
+      - /url: "#/requests"
+    - link "Request overview":
+      - /url: "#/request-overview"
+    - link "Cross-product handoffs":
+      - /url: "#/handoffs"
+  - generic: LOCAL DEVELOPER PROFILE
+  - paragraph: 3 selected modules
+  - paragraph: runtime-2cd07972-b233-4112-a510-39708d908d83
+- main:
+  - text: Tenant
+  - combobox "Tenant":
+    - option "customer-a" [selected]
+    - option "customer-b"
+  - generic: viewer
+  - button "Sign out"
+  - heading "Knowledge library" [level=2]
+  - paragraph: Save reference text, follow indexing progress and search your tenant’s library.
+  - generic: Loaded documents
+  - strong: "1"
+  - generic: Current response · current tenant
+  - generic: Ready in this list
+  - strong: "1"
+  - generic: Available to full-text search
+  - generic: Other states
+  - strong: "0"
+  - generic: See each document’s worker state
+  - heading "Add text" [level=3]
+  - paragraph: Read access only.
+  - textbox "Search documents":
+    - /placeholder: Search indexed text
+  - button "Search"
+  - heading "Documents" [level=3]
+  - article:
+    - generic: READY · worker SUCCEEDED
+    - heading "Core operations note" [level=3]
+    - paragraph: 5afd8cbe-637c-47ad-9a70-3bd523793a0a
+  - heading "Ask from indexed documents" [level=3]
+  - paragraph: Local extractive answer · indexed documents only · no model inference
+  - textbox "Question":
+    - /placeholder: Ask a question about indexed documents
+  - button "Answer from sources"
+  - button "Cancel" [disabled]

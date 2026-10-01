@@ -1,0 +1,6 @@
+Command: npm run build
+Result: exit 1
+Compiler diagnostics:
+apps/control-plane/src/build-worker.ts(236,67): readonly build-command tuple was not assignable to string[]
+apps/control-plane/src/build-worker.ts(304,21): outcome.error was not narrowed across the closed/spawn-error union
+apps/control-plane/src/source-import.ts(3,42): CompositionPlan is defined/exported by @quadbridge/contracts, not exported from @quadbridge/composition

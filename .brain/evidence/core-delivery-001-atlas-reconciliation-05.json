@@ -1,0 +1,39 @@
+{
+  "schema": "quadbridge.atlas-reconciliation.v1",
+  "archivedRevision": 9,
+  "newRevision": 10,
+  "changes": [
+    {
+      "id": "readme",
+      "path": "README.md",
+      "before": "b3b15a364066fcb029917012b2c311ff594c5235e29843de881048601f731f99",
+      "after": "23c5b6449aadac650acfad8d11f99e3871cf780b663fd66cf8129aa11b65a960",
+      "reason": "Actual reviewed default4480 and npm ci/setup/build/studio:full correction by sole Brain writer, not runtime acceptance."
+    },
+    {
+      "id": "brain5-task",
+      "path": ".brain/tasks/BRAIN-005.md",
+      "before": "e76dc3d1f574f54e00e424f6ae926fa8a538d0f3837c43e60723881975c7c1be",
+      "after": "d1a85d354832e7890c7ff0e9fe6998953da0ae8f3653adc613c3e5dced1bf80b",
+      "reason": "Root coordinated normal+managed exact13 scope and corrected immutable activationevent/liveauthority semantics."
+    },
+    {
+      "id": "core-task",
+      "path": ".brain/tasks/CORE-DELIVERY-001.md",
+      "before": "57e2f8a5265caa595f8e822c1b93c9f106aeb276f56c6e670120b0c549efae50",
+      "after": "1c0c4525875befea703bd698394bd59acce281dd79cede53228a4c67e107f3b4",
+      "reason": "Actual browser01 failures/ownedclosure retained; adopt independently source-grounded exact2path core UI repair before fresh journey."
+    }
+  ],
+  "newGoverningRef": {
+    "id": "core-ui-repair-plan",
+    "path": ".brain/evidence/core-delivery-001-ui-repair-plan-01.md",
+    "role": "Actual first-Products and explicit in-page immutable save repair, source-grounded Sol proposal",
+    "sha256": "192dfd11ca6c297cb2f21d9916fcf887f4be4ba8846c007839b51adff2ce1cc2"
+  },
+  "provenance": "Root actual source/plan review after preserved negative preflight and actual browser01; no execution pass inferred.",
+  "sourceWarningBefore": "README/core-task/Brain-task drift explicitly reconciled; no auto-repin.",
+  "limitations": [
+    "UI repair not yet implemented. Actual negative browser/native-dialog and file-upload blocks retained separately."
+  ]
+}

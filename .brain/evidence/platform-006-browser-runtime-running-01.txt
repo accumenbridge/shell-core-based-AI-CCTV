@@ -1,0 +1,54 @@
+- complementary:
+  - text: Quadbridge Product Studio
+  - generic: Paired local operator
+  - navigation:
+    - button "Overview"
+    - button "Products"
+    - button "Modules"
+    - button "Ui"
+    - button "Backend"
+    - button "Ai"
+    - button "Data"
+    - button "Builds"
+    - button "Artifacts"
+    - button "Runtime Instances"
+    - button "Environments"
+    - button "Deployments"
+    - button "Audit"
+    - button "Operations"
+- main:
+  - generic: paired local control plane
+  - heading "Runtime Instances" [level=1]
+  - generic: Stored source records and validated local plans.
+  - generic: v0.3.0
+  - button "Disconnect"
+  - heading "Managed local runtime" [level=2]
+  - generic: local-only
+  - paragraph: Launch rechecks the pinned local process-owner profile; stored runtimes are never recovered by PID.
+  - paragraph: "Physical slot: RUNNING · runtime-16cd1b43-8743-4c7e-b6ce-98eb3a744524 · 2417210 reserved bytes. UNKNOWN retains the slot and data until its original process owner proves an empty process tree."
+  - paragraph: A fixed local process starts only an exact promoted release. No hosted deployment or provider is attached.
+  - heading "Promoted releases" [level=2]
+  - paragraph: Choose the exact product version; start and restart require confirmation.
+  - article:
+    - heading "combined@0.2.1" [level=3]
+    - generic: Promoted local immutable release
+    - generic: promoted
+    - paragraph: 18cbee0441a41eba9952cbc5872536a67348ffc4e47c2532ba3a240043194412
+    - checkbox "Start this exact promoted local release on this machine."
+    - text: Start this exact promoted local release on this machine.
+    - button "Start local runtime"
+  - heading "Runtime instances" [level=2]
+  - article:
+    - heading "combined@0.2.1" [level=3]
+    - generic: runtime-16cd1b43-8743-4c7e-b6ce-98eb3a744524 · attempt 1
+    - generic: RUNNING
+    - paragraph: Artifact 18cbee0441a41eba9952cbc5872536a67348ffc4e47c2532ba3a240043194412
+    - paragraph: Separate worker required · owned-in-this-process
+    - paragraph:
+      - link "Open local application":
+        - /url: http://127.0.0.1:55867
+    - button "Refresh events and address"
+    - checkbox "Stop this exact local runtime and retain its data."
+    - text: Stop this exact local runtime and retain its data.
+    - button "Stop runtime"
+    - generic: "{\"at\":1790843326178,\"role\":\"web-backend\",\"type\":\"ROLE_READY\"} {\"at\":1790843326224,\"type\":\"API_READY\"} {\"at\":1790843326453,\"role\":\"worker\",\"type\":\"ROLE_READY\"}"

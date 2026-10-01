@@ -1,0 +1,186 @@
+TAP version 13
+# Subtest: AI pipeline validates and compiles into deterministic stages
+ok 1 - AI pipeline validates and compiles into deterministic stages
+  ---
+  duration_ms: 1.6155
+  type: 'test'
+  ...
+# Subtest: AI pipeline rejects cycles
+ok 2 - AI pipeline rejects cycles
+  ---
+  duration_ms: 0.3511
+  type: 'test'
+  ...
+# Subtest: model routing respects capability and placement
+ok 3 - model routing respects capability and placement
+  ---
+  duration_ms: 0.1792
+  type: 'test'
+  ...
+# Subtest: AI runtime validation rejects unknown kinds, coercible fields, unsafe policy values, and non-JSON config
+ok 4 - AI runtime validation rejects unknown kinds, coercible fields, unsafe policy values, and non-JSON config
+  ---
+  duration_ms: 0.9948
+  type: 'test'
+  ...
+# Subtest: public health and static entry are narrow while state and audit require pairing and exact Host
+ok 5 - public health and static entry are narrow while state and audit require pairing and exact Host
+  ---
+  duration_ms: 58.9282
+  type: 'test'
+  ...
+# Subtest: pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+ok 6 - pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+  ---
+  duration_ms: 26.2072
+  type: 'test'
+  ...
+# Subtest: pairing attempts are bounded and expire their rate window
+ok 7 - pairing attempts are bounded and expire their rate window
+  ---
+  duration_ms: 18.2537
+  type: 'test'
+  ...
+# Subtest: authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+ok 8 - authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+  ---
+  duration_ms: 25.2179
+  type: 'test'
+  ...
+# Subtest: AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+ok 9 - AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+  ---
+  duration_ms: 22.0099
+  type: 'test'
+  ...
+# Subtest: build and deployment endpoints admit records only and enforce immutable references
+ok 10 - build and deployment endpoints admit records only and enforce immutable references
+  ---
+  duration_ms: 28.1916
+  type: 'test'
+  ...
+# Subtest: overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+ok 11 - overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+  ---
+  duration_ms: 23.9497
+  type: 'test'
+  ...
+# Subtest: a body is rejected if its exact authenticated session expires while the stream is pending
+ok 12 - a body is rejected if its exact authenticated session expires while the stream is pending
+  ---
+  duration_ms: 16.4807
+  type: 'test'
+  ...
+# Subtest: a body is rejected if that session logs out before streaming completes
+ok 13 - a body is rejected if that session logs out before streaming completes
+  ---
+  duration_ms: 16.9108
+  type: 'test'
+  ...
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 14 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 3.4759
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 15 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 21.6434
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 16 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 29.5093
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 17 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 4.0641
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 18 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 0.7291
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 19 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 0.6476
+  type: 'test'
+  ...
+# Subtest: source paths normalize both separators and exclude operational components exactly
+ok 20 - source paths normalize both separators and exclude operational components exactly
+  ---
+  duration_ms: 0.7959
+  type: 'test'
+  ...
+# Subtest: maintained fingerprint ignores operational records and changes with source
+ok 21 - maintained fingerprint ignores operational records and changes with source
+  ---
+  duration_ms: 45.3365
+  type: 'test'
+  ...
+# Subtest: portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+ok 22 - portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+  ---
+  duration_ms: 36.5273
+  type: 'test'
+  ...
+# Subtest: TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+ok 23 - TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+  ---
+  duration_ms: 1.1886
+  type: 'test'
+  ...
+# Subtest: TAP verification follows actual Node nested, TODO, and skipped report counts
+ok 24 - TAP verification follows actual Node nested, TODO, and skipped report counts
+  ---
+  duration_ms: 434.0164
+  type: 'test'
+  ...
+# Subtest: TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+ok 25 - TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+  ---
+  duration_ms: 0.3871
+  type: 'test'
+  ...
+# Subtest: TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+ok 26 - TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+  ---
+  duration_ms: 0.207
+  type: 'test'
+  ...
+# Subtest: build failure reports tests as NOT_RUN and claims only current passing evidence
+ok 27 - build failure reports tests as NOT_RUN and claims only current passing evidence
+  ---
+  duration_ms: 0.9935
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+ok 28 - START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+  ---
+  duration_ms: 149.1262
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+ok 29 - START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+  ---
+  duration_ms: 3173.7731
+  type: 'test'
+  ...
+# {"fixture":"portable source copy","cwd":"foreign directory","health":{"path":"/healthz","status":200,"body":{"status":"ok"}},"page":{"path":"/","status":200}}
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8871.9545
+exit_code=0

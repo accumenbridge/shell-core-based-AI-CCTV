@@ -1,0 +1,11 @@
+{
+  "status": "FAIL",
+  "assertions": [
+    "initial login view",
+    "invalid pairing code shows bounded error",
+    "valid local pairing"
+  ],
+  "notes": [],
+  "error": "Locator expected to be visible\nActual value: - complementary:\n  - text: Quadbridge Product Studio Paired local operator\n  - navigation:\n    - button \"Overview\"\n    - button \"Products\"\n    - button \"Modules\"\n    - button \"Ui\"\n    - button \"Backend\"\n    - button \"Ai\"\n    - button \"Data\"\n    - button \"Builds\"\n    - button \"Environments\"\n    - button \"Deployments\"\n    - button \"Audit\"\n    - button \"Operations\"\n- main:\n  - text: paired local control plane\n  - heading \"Products\" [level=1]\n  - text: Stored source records and validated local plans. v0.3.0\n  - button \"Disconnect\"\n  - heading \"Compose a product\" [level=3]\n  - paragraph: Choose reviewed modules. Studio resolves declared dependencies and reviewed bindings before saving a version.\n  - text: Product ID\n  - textbox \"Product ID\":\n    - /placeholder: my-product\n  - text: Title\n  - textbox \"Title\":\n    - /placeholder: My product\n    - text: Browser Journey Proof\n  - text: Version\n  - textbox \"Version\": 1.0.0\n  - text: Navigation\n  - combobox \"Navigation\":\n    - option \"Sidebar\" [selected]\n    - option \"Top bar\"\n  - group \"Reviewed modules\":\n    - text: Reviewed modules\n    - checkbox \"handoff 0.2.0 \u00b7 ui, backend, worker, integration",
+  "serverExit": 1
+}

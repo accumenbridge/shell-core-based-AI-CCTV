@@ -1,0 +1,39 @@
+npm notice run quadbridge-product-platform@0.2.0 verify
+npm notice run node tools/verify.mjs
+{
+  "status": "PASSED_FOR_LOCAL_FRAMEWORK_SCOPE",
+  "at": "2026-09-30T14:42:56.506Z",
+  "node": "v24.19.0",
+  "typescript": "5.8.3",
+  "sourceFingerprint": "d1ee7e379d8e569b7a49d3c8d6ffc5190b91411a1d5dcad607854b521aa2ef74",
+  "checks": {
+    "typeScriptProjectBuild": "PASSED",
+    "tests": {
+      "status": "PASSED",
+      "counts": {
+        "tests": 153,
+        "passed": 153,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    }
+  },
+  "execution": {
+    "build": {
+      "exitCode": 0,
+      "signal": null
+    },
+    "tests": {
+      "exitCode": 0,
+      "signal": null
+    }
+  },
+  "currentRunEvidence": {
+    "claims": [
+      "The maintained TypeScript project build completed in this run.",
+      "The current TAP run reported 153 passing tests across 14 discovered test files."
+    ]
+  }
+}

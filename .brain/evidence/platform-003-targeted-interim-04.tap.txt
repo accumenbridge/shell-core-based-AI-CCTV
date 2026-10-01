@@ -1,0 +1,23 @@
+TAP version 13
+# Subtest: real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+ok 1 - real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+  ---
+  duration_ms: 13813.0065
+  type: 'test'
+  ...
+# Subtest: fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+ok 2 - fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+  ---
+  duration_ms: 2846.0559
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16765.3375
+EXIT=0

@@ -1,0 +1,13 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "PASSED_NATIVE_DEFAULT_HELPER_REGRESSIONS",
+  "recipe": ["node", "--test", "--test-name-pattern=Windows job cancellation and timeout|worker shutdown observes an active job", "--test-reporter=tap", "tests/build-worker-process.test.mjs"],
+  "hashes": {
+    "tools/build-job.ps1": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9",
+    "tests/build-worker-process.test.mjs": "62c0c9be3eb650ecf8d964fdf75e8c9bfd729fb6610f24d362d3d36f1b36bc46"
+  },
+  "checks": {"worker_reported_exit_code": 0, "tests": 2, "passed": 2, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "evidence": "platform-004-native-build-job-01.tap.txt", "note": "Raw TAP has no exit marker; exit/recipe provenance is writer tool report. Root read actual TAP, source test and exact helper/test hashes."},
+  "scope": "Real selected Windows private PS7 normal-File default job helper. Observed active child heartbeat, cancellation and timeout descendant exit before CLEAN/attempt removal; worker active-job close requeues, restarted worker owns attempt two, final cancel positively stops/removes it. No policy fallback or override reported.",
+  "limits": "Does not qualify new RuntimeProtocol READY/RESUME/STOP variants, real supervisor/enrollment, registered/promoted runtime domain workflows, HTTP session gates, browser, CP3 blocked deadline fixture or production. CP3 denied native lock fixture remains blocked and is not invoked through this recipe."
+}

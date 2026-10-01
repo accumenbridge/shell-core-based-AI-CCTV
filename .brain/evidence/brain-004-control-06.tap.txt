@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: managed feature edits only its candidate, observes real checks and requires a current review
+ok 1 - managed feature edits only its candidate, observes real checks and requires a current review
+  ---
+  duration_ms: 454.4002
+  type: 'test'
+  ...
+# Subtest: whole proposal validation prevents partial out-of-scope changes
+ok 2 - whole proposal validation prevents partial out-of-scope changes
+  ---
+  duration_ms: 67.1148
+  type: 'test'
+  ...
+# Subtest: source drift, stale decisions and cross-project replay are rejected
+ok 3 - source drift, stale decisions and cross-project replay are rejected
+  ---
+  duration_ms: 58.2864
+  type: 'test'
+  ...
+# Subtest: pause and direction changes wait for acknowledgement and discard late output
+ok 4 - pause and direction changes wait for acknowledgement and discard late output
+  ---
+  duration_ms: 74.4643
+  type: 'test'
+  ...
+# Subtest: failed actual check is retained and cannot be accepted
+ok 5 - failed actual check is retained and cannot be accepted
+  ---
+  duration_ms: 312.1227
+  type: 'test'
+  ...
+# Subtest: lost agent connection preserves UNKNOWN and never silently redispatches
+ok 6 - lost agent connection preserves UNKNOWN and never silently redispatches
+  ---
+  duration_ms: 68.767
+  type: 'test'
+  ...
+# Subtest: changed architecture source invalidates review even outside editable inputs
+ok 7 - changed architecture source invalidates review even outside editable inputs
+  ---
+  duration_ms: 344.5889
+  type: 'test'
+  ...
+# Subtest: App Server ambiguous turn acknowledgement and protocol loss remain uncertain
+ok 8 - App Server ambiguous turn acknowledgement and protocol loss remain uncertain
+  ---
+  duration_ms: 0.6446
+  type: 'test'
+  ...
+# Subtest: proposal adapter interrupts unknown item types instead of authorizing future tools
+ok 9 - proposal adapter interrupts unknown item types instead of authorizing future tools
+  ---
+  duration_ms: 0.2014
+  type: 'test'
+  ...
+# Subtest: live console refreshes project state and rejects unauthorized, stale and foreign-origin decisions
+ok 10 - live console refreshes project state and rejects unauthorized, stale and foreign-origin decisions
+  ---
+  duration_ms: 173.4734
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1448.3691

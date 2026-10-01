@@ -1,0 +1,1140 @@
+TAP version 13
+# Subtest: R10: strict independent adapter runs worker with SQLite physically absent
+ok 1 - R10: strict independent adapter runs worker with SQLite physically absent
+  ---
+  duration_ms: 992.0873
+  type: 'test'
+  ...
+# Subtest: AI pipeline validates and compiles into deterministic stages
+ok 2 - AI pipeline validates and compiles into deterministic stages
+  ---
+  duration_ms: 1.56
+  type: 'test'
+  ...
+# Subtest: AI pipeline rejects cycles
+ok 3 - AI pipeline rejects cycles
+  ---
+  duration_ms: 0.387
+  type: 'test'
+  ...
+# Subtest: model routing respects capability and placement
+ok 4 - model routing respects capability and placement
+  ---
+  duration_ms: 0.1217
+  type: 'test'
+  ...
+# Subtest: AI runtime validation rejects unknown kinds, coercible fields, unsafe policy values, and non-JSON config
+ok 5 - AI runtime validation rejects unknown kinds, coercible fields, unsafe policy values, and non-JSON config
+  ---
+  duration_ms: 0.9835
+  type: 'test'
+  ...
+# Subtest: Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+ok 6 - Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+  ---
+  duration_ms: 21862.505
+  type: 'test'
+  ...
+# Subtest: worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+ok 7 - worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+  ---
+  duration_ms: 12109.5576
+  type: 'test'
+  ...
+# Subtest: a worker that loses its live lease observes its descendant and preserves the successor attempt workspace
+ok 8 - a worker that loses its live lease observes its descendant and preserves the successor attempt workspace
+  ---
+  duration_ms: 6475.8981
+  type: 'test'
+  ...
+# Subtest: missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+ok 9 - missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+  ---
+  duration_ms: 5066.2085
+  type: 'test'
+  ...
+# Unable to clean private build work EBUSY: resource busy or locked, unlink 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-build-runner-FwB92V\\source\\.local\\platform-builds\\work\\2a14554b-13b0-440a-8c9b-2ac9a74457e4\\attempt-1-5ef81c2d-c0be-4b7e-99e9-6746b60074d5\\cleanup-held-file.bin'
+# Subtest: Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+ok 10 - Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+  ---
+  duration_ms: 7250.0598
+  type: 'test'
+  ...
+# Subtest: source and pinned compiler drift are rejected before a build is admitted
+ok 11 - source and pinned compiler drift are rejected before a build is admitted
+  ---
+  duration_ms: 2554.7186
+  type: 'test'
+  ...
+# Subtest: source and toolchain drift after admission fail the queued request before export
+ok 12 - source and toolchain drift after admission fail the queued request before export
+  ---
+  duration_ms: 6144.1067
+  type: 'test'
+  ...
+# Subtest: fixed factory output tampering fails before a local snapshot is published
+ok 13 - fixed factory output tampering fails before a local snapshot is published
+  ---
+  duration_ms: 11011.3024
+  type: 'test'
+  ...
+# Subtest: real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+ok 14 - real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+  ---
+  duration_ms: 12197.407
+  type: 'test'
+  ...
+# Subtest: real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+ok 15 - real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+  ---
+  duration_ms: 7773.9403
+  type: 'test'
+  ...
+# Subtest: resolve neutral with only its selected capabilities
+ok 16 - resolve neutral with only its selected capabilities
+  ---
+  duration_ms: 1.0435
+  type: 'test'
+  ...
+# Subtest: resolve service-desk with only its selected capabilities
+ok 17 - resolve service-desk with only its selected capabilities
+  ---
+  duration_ms: 0.4273
+  type: 'test'
+  ...
+# Subtest: resolve knowledge with only its selected capabilities
+ok 18 - resolve knowledge with only its selected capabilities
+  ---
+  duration_ms: 6.5467
+  type: 'test'
+  ...
+# Subtest: resolve combined with only its selected capabilities
+ok 19 - resolve combined with only its selected capabilities
+  ---
+  duration_ms: 0.3735
+  type: 'test'
+  ...
+# Subtest: resolution order is deterministic
+ok 20 - resolution order is deterministic
+  ---
+  duration_ms: 1.3525
+  type: 'test'
+  ...
+# Subtest: unknown module fails closed
+ok 21 - unknown module fails closed
+  ---
+  duration_ms: 0.4489
+  type: 'test'
+  ...
+# Subtest: unsupported ABI fails
+ok 22 - unsupported ABI fails
+  ---
+  duration_ms: 0.2204
+  type: 'test'
+  ...
+# Subtest: exact version mismatch fails
+ok 23 - exact version mismatch fails
+  ---
+  duration_ms: 0.2082
+  type: 'test'
+  ...
+# Subtest: required dependency must be selected
+ok 24 - required dependency must be selected
+  ---
+  duration_ms: 0.2375
+  type: 'test'
+  ...
+# Subtest: dependency cycle rejected
+ok 25 - dependency cycle rejected
+  ---
+  duration_ms: 0.4413
+  type: 'test'
+  ...
+# Subtest: optional absent dependency is valid
+ok 26 - optional absent dependency is valid
+  ---
+  duration_ms: 0.3209
+  type: 'test'
+  ...
+# Subtest: duplicate public route rejected
+ok 27 - duplicate public route rejected
+  ---
+  duration_ms: 0.2903
+  type: 'test'
+  ...
+# Subtest: route permission must be owned
+ok 28 - route permission must be owned
+  ---
+  duration_ms: 0.2927
+  type: 'test'
+  ...
+# Subtest: required public port cannot be left unbound
+ok 29 - required public port cannot be left unbound
+  ---
+  duration_ms: 0.2271
+  type: 'test'
+  ...
+# Subtest: ambiguous consumer bindings rejected
+ok 30 - ambiguous consumer bindings rejected
+  ---
+  duration_ms: 0.2316
+  type: 'test'
+  ...
+# Subtest: same instance ID cannot imply different implementations
+ok 31 - same instance ID cannot imply different implementations
+  ---
+  duration_ms: 0.2423
+  type: 'test'
+  ...
+# Subtest: bindings do not supply a missing local provider
+ok 32 - bindings do not supply a missing local provider
+  ---
+  duration_ms: 0.1797
+  type: 'test'
+  ...
+# Subtest: application and module instance scopes are different
+ok 33 - application and module instance scopes are different
+  ---
+  duration_ms: 0.1457
+  type: 'test'
+  ...
+# Subtest: request instances are isolated and require a context
+ok 34 - request instances are isolated and require a context
+  ---
+  duration_ms: 0.1082
+  type: 'test'
+  ...
+# Subtest: removal blocked by retained records or dependents
+ok 35 - removal blocked by retained records or dependents
+  ---
+  duration_ms: 0.2869
+  type: 'test'
+  ...
+# Subtest: canonical JSON is stable, rejecting undefined and nonfinite numbers
+ok 36 - canonical JSON is stable, rejecting undefined and nonfinite numbers
+  ---
+  duration_ms: 0.0909
+  type: 'test'
+  ...
+# Subtest: input contracts reject unknown fields and invalid identifiers
+ok 37 - input contracts reject unknown fields and invalid identifiers
+  ---
+  duration_ms: 0.1459
+  type: 'test'
+  ...
+# Subtest: modules cannot shadow host-owned authentication routes
+ok 38 - modules cannot shadow host-owned authentication routes
+  ---
+  duration_ms: 0.279
+  type: 'test'
+  ...
+# Subtest: paired console starts with no private build-host profile and reports build requests unavailable
+ok 39 - paired console starts with no private build-host profile and reports build requests unavailable
+  ---
+  duration_ms: 1252.0139
+  type: 'test'
+  ...
+# Subtest: two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+ok 40 - two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+  ---
+  duration_ms: 38.7736
+  type: 'test'
+  ...
+# Subtest: cleanup failure records UNKNOWN and cannot publish a clean cancellation
+ok 41 - cleanup failure records UNKNOWN and cannot publish a clean cancellation
+  ---
+  duration_ms: 12.3058
+  type: 'test'
+  ...
+# Subtest: build request keys are idempotent for the same actor/input and conflict on changed input
+ok 42 - build request keys are idempotent for the same actor/input and conflict on changed input
+  ---
+  duration_ms: 11.6769
+  type: 'test'
+  ...
+# Subtest: terminal publication binds the claim to its persisted frozen product, version and input digests
+ok 43 - terminal publication binds the claim to its persisted frozen product, version and input digests
+  ---
+  duration_ms: 13.2467
+  type: 'test'
+  ...
+# Subtest: terminal publication rechecks lease time after waiting for another SQLite writer
+ok 44 - terminal publication rechecks lease time after waiting for another SQLite writer
+  ---
+  duration_ms: 2060.6137
+  type: 'test'
+  ...
+# Subtest: public health and static entry are narrow while state and audit require pairing and exact Host
+ok 45 - public health and static entry are narrow while state and audit require pairing and exact Host
+  ---
+  duration_ms: 217.403
+  type: 'test'
+  ...
+# Subtest: pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+ok 46 - pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+  ---
+  duration_ms: 48.136
+  type: 'test'
+  ...
+# Subtest: pairing attempts are bounded and expire their rate window
+ok 47 - pairing attempts are bounded and expire their rate window
+  ---
+  duration_ms: 36.9854
+  type: 'test'
+  ...
+# Subtest: authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+ok 48 - authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+  ---
+  duration_ms: 42.1572
+  type: 'test'
+  ...
+# Subtest: AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+ok 49 - AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+  ---
+  duration_ms: 38.3193
+  type: 'test'
+  ...
+# Subtest: build requests fail closed without an executor and deployment requests enforce immutable references
+ok 50 - build requests fail closed without an executor and deployment requests enforce immutable references
+  ---
+  duration_ms: 48.4019
+  type: 'test'
+  ...
+# Subtest: overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+ok 51 - overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+  ---
+  duration_ms: 61.707
+  type: 'test'
+  ...
+# Subtest: a body is rejected if its exact authenticated session expires while the stream is pending
+ok 52 - a body is rejected if its exact authenticated session expires while the stream is pending
+  ---
+  duration_ms: 34.5067
+  type: 'test'
+  ...
+# Subtest: a body is rejected if that session logs out before streaming completes
+ok 53 - a body is rejected if that session logs out before streaming completes
+  ---
+  duration_ms: 35.8067
+  type: 'test'
+  ...
+# Subtest: canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+ok 54 - canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+  ---
+  duration_ms: 129.5066
+  type: 'test'
+  ...
+# Subtest: logout during awaited worker admission rejects the original request before queue mutation
+ok 55 - logout during awaited worker admission rejects the original request before queue mutation
+  ---
+  duration_ms: 39.8983
+  type: 'test'
+  ...
+# Subtest: logout during awaited result inspection returns 401 and accepted work remains independent of the session
+ok 56 - logout during awaited result inspection returns 401 and accepted work remains independent of the session
+  ---
+  duration_ms: 41.1398
+  type: 'test'
+  ...
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 57 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 4.0615
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 58 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 177.0044
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 59 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 40.0297
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 60 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 5.7066
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 61 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 1.5686
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 62 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 1.3767
+  type: 'test'
+  ...
+# Subtest: domain creation and exact retry return one persisted record
+ok 63 - domain creation and exact retry return one persisted record
+  ---
+  duration_ms: 332.8027
+  type: 'test'
+  ...
+# Subtest: same command with different input conflicts
+ok 64 - same command with different input conflicts
+  ---
+  duration_ms: 68.8817
+  type: 'test'
+  ...
+# Subtest: receipts survive runtime restart
+ok 65 - receipts survive runtime restart
+  ---
+  duration_ms: 71.8084
+  type: 'test'
+  ...
+# Subtest: tenants cannot read or close each other records
+ok 66 - tenants cannot read or close each other records
+  ---
+  duration_ms: 79.4236
+  type: 'test'
+  ...
+# Subtest: read-only principal cannot mutate
+ok 67 - read-only principal cannot mutate
+  ---
+  duration_ms: 67.3159
+  type: 'test'
+  ...
+# Subtest: optimistic concurrency rejects stale transitions
+ok 68 - optimistic concurrency rejects stale transitions
+  ---
+  duration_ms: 66.9974
+  type: 'test'
+  ...
+# Subtest: module read-only preserves historical queries and denies commands
+ok 69 - module read-only preserves historical queries and denies commands
+  ---
+  duration_ms: 68.2197
+  type: 'test'
+  ...
+# Subtest: revocation prevents reading the cached command receipt
+ok 70 - revocation prevents reading the cached command receipt
+  ---
+  duration_ms: 65.2792
+  type: 'test'
+  ...
+# Subtest: business write and enqueue roll back together
+ok 71 - business write and enqueue roll back together
+  ---
+  duration_ms: 1.0277
+  type: 'test'
+  ...
+# Subtest: async owner transaction is rejected
+ok 72 - async owner transaction is rejected
+  ---
+  duration_ms: 0.3512
+  type: 'test'
+  ...
+# Subtest: migration edits and schema downgrades fail
+ok 73 - migration edits and schema downgrades fail
+  ---
+  duration_ms: 0.464
+  type: 'test'
+  ...
+# Subtest: two claimers cannot own the same unexpired attempt
+ok 74 - two claimers cannot own the same unexpired attempt
+  ---
+  duration_ms: 0.9582
+  type: 'test'
+  ...
+# Subtest: expired attempt cannot commit after another worker claims
+ok 75 - expired attempt cannot commit after another worker claims
+  ---
+  duration_ms: 1.0597
+  type: 'test'
+  ...
+# Subtest: running cancellation is a request until the worker settles
+ok 76 - running cancellation is a request until the worker settles
+  ---
+  duration_ms: 0.9487
+  type: 'test'
+  ...
+# Subtest: queued cancellation never starts
+ok 77 - queued cancellation never starts
+  ---
+  duration_ms: 0.5863
+  type: 'test'
+  ...
+# Subtest: knowledge indexing is real, durable and scoped
+ok 78 - knowledge indexing is real, durable and scoped
+  ---
+  duration_ms: 116.022
+  type: 'test'
+  ...
+# Subtest: job submitter revocation blocks execution
+ok 79 - job submitter revocation blocks execution
+  ---
+  duration_ms: 87.7359
+  type: 'test'
+  ...
+# Subtest: module disable pauses queued work without deleting records
+ok 80 - module disable pauses queued work without deleting records
+  ---
+  duration_ms: 86.152
+  type: 'test'
+  ...
+# Subtest: exported neutral product starts with all domain directories physically absent
+ok 81 - exported neutral product starts with all domain directories physically absent
+  ---
+  duration_ms: 2247.9115
+  type: 'test'
+  ...
+# Subtest: exported Service Desk has no knowledge or handoff package and persists a real record
+ok 82 - exported Service Desk has no knowledge or handoff package and persists a real record
+  ---
+  duration_ms: 756.2965
+  type: 'test'
+  ...
+# Subtest: factory refuses collisions and path traversal
+ok 83 - factory refuses collisions and path traversal
+  ---
+  duration_ms: 658.1709
+  type: 'test'
+  ...
+# Subtest: generated full-stack module builds and runs without editing maintained shell source
+ok 84 - generated full-stack module builds and runs without editing maintained shell source
+  ---
+  duration_ms: 4588.3614
+  type: 'test'
+  ...
+# Subtest: real separate worker process completes a preexisting durable job
+ok 85 - real separate worker process completes a preexisting durable job
+  ---
+  duration_ms: 590.6017
+  type: 'test'
+  ...
+# Subtest: source-only provider omission is not mistaken for runtime completion
+ok 86 - source-only provider omission is not mistaken for runtime completion
+  ---
+  duration_ms: 54.9178
+  type: 'test'
+  ...
+# Subtest: React bridge cleanup is idempotent (port contract, not a React runtime test)
+ok 87 - React bridge cleanup is idempotent (port contract, not a React runtime test)
+  ---
+  duration_ms: 0.2835
+  type: 'test'
+  ...
+# Subtest: React bridge does not create a root after scope cancellation
+ok 88 - React bridge does not create a root after scope cancellation
+  ---
+  duration_ms: 0.1035
+  type: 'test'
+  ...
+# Subtest: generic framework packages import no reference-domain packages
+ok 89 - generic framework packages import no reference-domain packages
+  ---
+  duration_ms: 4.5278
+  type: 'test'
+  ...
+# Subtest: provider failure closes the started modules in reverse dependency order
+ok 90 - provider failure closes the started modules in reverse dependency order
+  ---
+  duration_ms: 0.4287
+  type: 'test'
+  ...
+# Subtest: R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces
+ok 91 - R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces
+  ---
+  duration_ms: 367.5829
+  type: 'test'
+  ...
+# Subtest: R05: closure includes static imports, literal lazy chunks and declared asset references
+ok 92 - R05: closure includes static imports, literal lazy chunks and declared asset references
+  ---
+  duration_ms: 24.4071
+  type: 'test'
+  ...
+# Subtest: R05: missing dependency fails the build rather than making a broken release
+ok 93 - R05: missing dependency fails the build rather than making a broken release
+  ---
+  duration_ms: 8.4833
+  type: 'test'
+  ...
+# Subtest: R05: server-only package import fails before being publicly packaged
+ok 94 - R05: server-only package import fails before being publicly packaged
+  ---
+  duration_ms: 9.9095
+  type: 'test'
+  ...
+# Subtest: R05: nonliteral runtime import is not converted into an arbitrary URL
+ok 95 - R05: nonliteral runtime import is not converted into an arbitrary URL
+  ---
+  duration_ms: 9.6615
+  type: 'test'
+  ...
+# Subtest: R05: a relative import cannot escape the selected module
+ok 96 - R05: a relative import cannot escape the selected module
+  ---
+  duration_ms: 8.7523
+  type: 'test'
+  ...
+# Subtest: R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM
+ok 97 - R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM
+  ---
+  duration_ms: 8.4096
+  type: 'test'
+  ...
+# Subtest: R07: 100 paused jobs cannot hide an enabled tenant
+ok 98 - R07: 100 paused jobs cannot hide an enabled tenant
+  ---
+  duration_ms: 12.7111
+  type: 'test'
+  ...
+# Subtest: R07: bounded per-tenant paging advances beyond 100 ineligible jobs
+ok 99 - R07: bounded per-tenant paging advances beyond 100 ineligible jobs
+  ---
+  duration_ms: 16.6105
+  type: 'test'
+  ...
+# Subtest: R07: persisted tenant cursor progresses beyond sixteen paused partitions
+ok 100 - R07: persisted tenant cursor progresses beyond sixteen paused partitions
+  ---
+  duration_ms: 4.6336
+  type: 'test'
+  ...
+# Subtest: R07: one busy tenant cannot monopolize a shared queue
+ok 101 - R07: one busy tenant cannot monopolize a shared queue
+  ---
+  duration_ms: 1.3628
+  type: 'test'
+  ...
+# Subtest: R07: registrations receive round-robin service
+ok 102 - R07: registrations receive round-robin service
+  ---
+  duration_ms: 2.9081
+  type: 'test'
+  ...
+# Subtest: R07: reentrant ticks do not consume simultaneous work accidentally
+ok 103 - R07: reentrant ticks do not consume simultaneous work accidentally
+  ---
+  duration_ms: 1.2153
+  type: 'test'
+  ...
+# Subtest: R09: eager local bindings produce provider-before-consumer construction
+ok 104 - R09: eager local bindings produce provider-before-consumer construction
+  ---
+  duration_ms: 6.4792
+  type: 'test'
+  ...
+# Subtest: R09: binding-only construction cycles are rejected
+ok 105 - R09: binding-only construction cycles are rejected
+  ---
+  duration_ms: 0.371
+  type: 'test'
+  ...
+# Subtest: R09: remote binding does not import or order an absent provider
+ok 106 - R09: remote binding does not import or order an absent provider
+  ---
+  duration_ms: 0.1402
+  type: 'test'
+  ...
+# Subtest: R03: wrong destination configuration is rejected before any target write
+ok 107 - R03: wrong destination configuration is rejected before any target write
+  ---
+  duration_ms: 181.7744
+  type: 'test'
+  ...
+# Subtest: R03: target rechecks expected identity on POST after a valid preflight
+ok 108 - R03: target rechecks expected identity on POST after a valid preflight
+  ---
+  duration_ms: 79.548
+  type: 'test'
+  ...
+# Subtest: R04: HTTP 202 accepted job is not a committed resource
+ok 109 - R04: HTTP 202 accepted job is not a committed resource
+  ---
+  duration_ms: 74.4334
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, commandId: 'other' })
+ok 110 - R04: invalid receipt correlation is refused r => ({ ...r, commandId: 'other' })
+  ---
+  duration_ms: 0.3367
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, destination: { ...r.destination, tenantId: 'other' } })
+ok 111 - R04: invalid receipt correlation is refused r => ({ ...r, destination: { ...r.destination, tenantId: 'other' } })
+  ---
+  duration_ms: 0.0721
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, destination: { ...r.destination, instanceId: 'other' } })
+ok 112 - R04: invalid receipt correlation is refused r => ({ ...r, destination: { ...r.destination, instanceId: 'other' } })
+  ---
+  duration_ms: 0.0637
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, contract: 'another.v1' })
+ok 113 - R04: invalid receipt correlation is refused r => ({ ...r, contract: 'another.v1' })
+  ---
+  duration_ms: 0.0507
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, outcome: 'QUEUED' })
+ok 114 - R04: invalid receipt correlation is refused r => ({ ...r, outcome: 'QUEUED' })
+  ---
+  duration_ms: 0.043
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, resource: { ...r.resource, type: 'job' } })
+ok 115 - R04: invalid receipt correlation is refused r => ({ ...r, resource: { ...r.resource, type: 'job' } })
+  ---
+  duration_ms: 0.043
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, resource: { ...r.resource, version: 0 } })
+ok 116 - R04: invalid receipt correlation is refused r => ({ ...r, resource: { ...r.resource, version: 0 } })
+  ---
+  duration_ms: 0.0801
+  type: 'test'
+  ...
+# Subtest: R03/R04: lookup uses the original service receipt without creating another record
+ok 117 - R03/R04: lookup uses the original service receipt without creating another record
+  ---
+  duration_ms: 170.9031
+  type: 'test'
+  ...
+# Subtest: R02: receipt survives revoke after actual destination commit
+ok 118 - R02: receipt survives revoke after actual destination commit
+  ---
+  duration_ms: 171.3648
+  type: 'test'
+  ...
+# Subtest: R02: receipt survives cancel after actual destination commit
+ok 119 - R02: receipt survives cancel after actual destination commit
+  ---
+  duration_ms: 157.0831
+  type: 'test'
+  ...
+# Subtest: R02: receipt survives lease-loss after actual destination commit
+ok 120 - R02: receipt survives lease-loss after actual destination commit
+  ---
+  duration_ms: 158.0402
+  type: 'test'
+  ...
+# Subtest: R02: unknown acceptance survives expiration, restart, and explicit lookup reconciliation
+ok 121 - R02: unknown acceptance survives expiration, restart, and explicit lookup reconciliation
+  ---
+  duration_ms: 179.6186
+  type: 'test'
+  ...
+# Subtest: R02: lost response plus cancellation remains unknown rather than not executed
+ok 122 - R02: lost response plus cancellation remains unknown rather than not executed
+  ---
+  duration_ms: 158.6567
+  type: 'test'
+  ...
+# Subtest: R02: incompatible 202 result remains uncertainty, not false success
+ok 123 - R02: incompatible 202 result remains uncertainty, not false success
+  ---
+  duration_ms: 156.6694
+  type: 'test'
+  ...
+# Subtest: R02: a legacy v1 intent is never silently resent using the v2 protocol
+ok 124 - R02: a legacy v1 intent is never silently resent using the v2 protocol
+  ---
+  duration_ms: 90.5141
+  type: 'test'
+  ...
+# Subtest: R10: neutral worker package has no concrete persistence dependency
+ok 125 - R10: neutral worker package has no concrete persistence dependency
+  ---
+  duration_ms: 0.4537
+  type: 'test'
+  ...
+# Subtest: R03: different destination service principal is refused before dispatch
+ok 126 - R03: different destination service principal is refused before dispatch
+  ---
+  duration_ms: 67.2159
+  type: 'test'
+  ...
+# Subtest: R02/R03: credential-principal rebinding cannot resend an existing uncertain intent
+ok 127 - R02/R03: credential-principal rebinding cannot resend an existing uncertain intent
+  ---
+  duration_ms: 162.3861
+  type: 'test'
+  ...
+# Subtest: R02: actual v1 Handoff database upgrades without replaying legacy pending work
+ok 128 - R02: actual v1 Handoff database upgrades without replaying legacy pending work
+  ---
+  duration_ms: 1.7061
+  type: 'test'
+  ...
+# Subtest: neutral shell serves with zero business routes and no worker dependency
+ok 129 - neutral shell serves with zero business routes and no worker dependency
+  ---
+  duration_ms: 281.1718
+  type: 'test'
+  ...
+# Subtest: HTTP command / receipt / query use actual persistent module
+ok 130 - HTTP command / receipt / query use actual persistent module
+  ---
+  duration_ms: 126.9294
+  type: 'test'
+  ...
+# Subtest: HTTP input cannot supply a forged tenant
+ok 131 - HTTP input cannot supply a forged tenant
+  ---
+  duration_ms: 92.1928
+  type: 'test'
+  ...
+# Subtest: tenant selector is not a grant
+ok 132 - tenant selector is not a grant
+  ---
+  duration_ms: 95.8299
+  type: 'test'
+  ...
+# Subtest: cookie mutation requires exact origin
+ok 133 - cookie mutation requires exact origin
+  ---
+  duration_ms: 94.1978
+  type: 'test'
+  ...
+# Subtest: session logout immediately rejects old cookie
+ok 134 - session logout immediately rejects old cookie
+  ---
+  duration_ms: 93.6443
+  type: 'test'
+  ...
+# Subtest: service identity cannot use human login or unrelated reads
+ok 135 - service identity cannot use human login or unrelated reads
+  ---
+  duration_ms: 65.0653
+  type: 'test'
+  ...
+# Subtest: HTTP module read-only affects the same public owner
+ok 136 - HTTP module read-only affects the same public owner
+  ---
+  duration_ms: 107.3917
+  type: 'test'
+  ...
+# Subtest: two independently running products use explicit different tenant IDs
+ok 137 - two independently running products use explicit different tenant IDs
+  ---
+  duration_ms: 166.4715
+  type: 'test'
+  ...
+# Subtest: composed product uses public local binding without HTTP
+ok 138 - composed product uses public local binding without HTTP
+  ---
+  duration_ms: 86.7714
+  type: 'test'
+  ...
+# Subtest: destination permission revoked after submission is not reported as assignment
+ok 139 - destination permission revoked after submission is not reported as assignment
+  ---
+  duration_ms: 162.648
+  type: 'test'
+  ...
+# Subtest: unmapped source tenant is never guessed
+ok 140 - unmapped source tenant is never guessed
+  ---
+  duration_ms: 0.4791
+  type: 'test'
+  ...
+# Subtest: remote timeout retry preserves exact destination command identity
+ok 141 - remote timeout retry preserves exact destination command identity
+  ---
+  duration_ms: 102.9744
+  type: 'test'
+  ...
+# Subtest: unapproved remote plain HTTP destination is refused
+ok 142 - unapproved remote plain HTTP destination is refused
+  ---
+  duration_ms: 0.2298
+  type: 'test'
+  ...
+# Subtest: module dependency policy applies on cross-owner read
+ok 143 - module dependency policy applies on cross-owner read
+  ---
+  duration_ms: 86.6983
+  type: 'test'
+  ...
+# Subtest: module SDK creates a full vertical-slice manifest
+ok 144 - module SDK creates a full vertical-slice manifest
+  ---
+  duration_ms: 1.2586
+  type: 'test'
+  ...
+# Subtest: source paths normalize both separators and exclude operational components exactly
+ok 145 - source paths normalize both separators and exclude operational components exactly
+  ---
+  duration_ms: 0.7113
+  type: 'test'
+  ...
+# Subtest: maintained fingerprint ignores operational records and changes with source
+ok 146 - maintained fingerprint ignores operational records and changes with source
+  ---
+  duration_ms: 368.7548
+  type: 'test'
+  ...
+# Subtest: portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+ok 147 - portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+  ---
+  duration_ms: 36.9851
+  type: 'test'
+  ...
+# Subtest: reviewed source copy detects a maintained input changed while the asynchronous copy is active
+ok 148 - reviewed source copy detects a maintained input changed while the asynchronous copy is active
+  ---
+  duration_ms: 123.0238
+  type: 'test'
+  ...
+# Subtest: TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+ok 149 - TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+  ---
+  duration_ms: 1.236
+  type: 'test'
+  ...
+# Subtest: TAP verification follows actual Node nested, TODO, and skipped report counts
+ok 150 - TAP verification follows actual Node nested, TODO, and skipped report counts
+  ---
+  duration_ms: 1681.3407
+  type: 'test'
+  ...
+# Subtest: TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+ok 151 - TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+  ---
+  duration_ms: 0.3308
+  type: 'test'
+  ...
+# Subtest: TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+ok 152 - TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+  ---
+  duration_ms: 0.1707
+  type: 'test'
+  ...
+# Subtest: build failure reports tests as NOT_RUN and claims only current passing evidence
+ok 153 - build failure reports tests as NOT_RUN and claims only current passing evidence
+  ---
+  duration_ms: 0.8711
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+ok 154 - START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+  ---
+  duration_ms: 223.5407
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+ok 155 - START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+  ---
+  duration_ms: 4620.2286
+  type: 'test'
+  ...
+# {"fixture":"portable source copy","cwd":"foreign directory","health":{"path":"/healthz","status":200,"body":{"status":"ok"}},"page":{"path":"/","status":200}}
+# Subtest: R01: pending tenant change cannot mount or write under obsolete context
+ok 156 - R01: pending tenant change cannot mount or write under obsolete context
+  ---
+  duration_ms: 72.079
+  type: 'test'
+  ...
+# Subtest: R01: denied replacement retains no old workspace and no old request authority
+ok 157 - R01: denied replacement retains no old workspace and no old request authority
+  ---
+  duration_ms: 1.3039
+  type: 'test'
+  ...
+# Subtest: R01: unchanged periodic bootstrap preserves accepted client scope
+ok 158 - R01: unchanged periodic bootstrap preserves accepted client scope
+  ---
+  duration_ms: 1.0277
+  type: 'test'
+  ...
+# Subtest: R01: late read denial from aborted scope cannot clear the new scope
+ok 159 - R01: late read denial from aborted scope cannot clear the new scope
+  ---
+  duration_ms: 2.8205
+  type: 'test'
+  ...
+# Subtest: R01: late lazy import cannot mount into a replacement scope
+ok 160 - R01: late lazy import cannot mount into a replacement scope
+  ---
+  duration_ms: 1.5378
+  type: 'test'
+  ...
+# Subtest: R08: successful unchanged bootstrap remounts after failed refresh
+ok 161 - R08: successful unchanged bootstrap remounts after failed refresh
+  ---
+  duration_ms: 0.9057
+  type: 'test'
+  ...
+# Subtest: R06: two named workspace exports mount exactly their declarations
+ok 162 - R06: two named workspace exports mount exactly their declarations
+  ---
+  duration_ms: 0.5982
+  type: 'test'
+  ...
+# Subtest: R06: invalid named export undefined never substitutes default
+ok 163 - R06: invalid named export undefined never substitutes default
+  ---
+  duration_ms: 0.6075
+  type: 'test'
+  ...
+# Subtest: R06: invalid named export {} never substitutes default
+ok 164 - R06: invalid named export {} never substitutes default
+  ---
+  duration_ms: 0.5745
+  type: 'test'
+  ...
+# Subtest: R06: invalid named export {"mount":1} never substitutes default
+ok 165 - R06: invalid named export {"mount":1} never substitutes default
+  ---
+  duration_ms: 0.46
+  type: 'test'
+  ...
+# Subtest: R01: stale workspace notifications cannot overwrite current UI
+ok 166 - R01: stale workspace notifications cannot overwrite current UI
+  ---
+  duration_ms: 0.7242
+  type: 'test'
+  ...
+# Subtest: Studio: newly named products receive the reviewed local provider identity
+ok 167 - Studio: newly named products receive the reviewed local provider identity
+  ---
+  duration_ms: 1.2899
+  type: 'test'
+  ...
+# Subtest: Studio: neutral product does not receive unrelated service identities
+ok 168 - Studio: neutral product does not receive unrelated service identities
+  ---
+  duration_ms: 0.5357
+  type: 'test'
+  ...
+# Subtest: Studio: local seed cannot request an undeclared permission
+ok 169 - Studio: local seed cannot request an undeclared permission
+  ---
+  duration_ms: 0.4309
+  type: 'test'
+  ...
+# Subtest: Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+ok 170 - Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+  ---
+  duration_ms: 0.2847
+  type: 'test'
+  ...
+# Subtest: Studio: unsupported remote fixture origin is refused
+ok 171 - Studio: unsupported remote fixture origin is refused
+  ---
+  duration_ms: 0.2007
+  type: 'test'
+  ...
+# Subtest: Studio: dependency explanation is source-derived and uses actual versions
+ok 172 - Studio: dependency explanation is source-derived and uses actual versions
+  ---
+  duration_ms: 0.6374
+  type: 'test'
+  ...
+# Subtest: Studio: no guessed provider for an unsupported new required contract
+ok 173 - Studio: no guessed provider for an unsupported new required contract
+  ---
+  duration_ms: 0.2082
+  type: 'test'
+  ...
+# Subtest: Studio: unused or invalid binding selection fails rather than retargeting
+ok 174 - Studio: unused or invalid binding selection fails rather than retargeting
+  ---
+  duration_ms: 0.1644
+  type: 'test'
+  ...
+# Subtest: Studio: import rejects runtime authority, path escape and unknown source wiring
+ok 175 - Studio: import rejects runtime authority, path escape and unknown source wiring
+  ---
+  duration_ms: 0.3737
+  type: 'test'
+  ...
+# Subtest: Studio: browser and CLI use the same compiled resolver
+ok 176 - Studio: browser and CLI use the same compiled resolver
+  ---
+  duration_ms: 5.1829
+  type: 'test'
+  ...
+# Subtest: Runtime: Handoff document picker uses the permitted Knowledge owner query
+ok 177 - Runtime: Handoff document picker uses the permitted Knowledge owner query
+  ---
+  duration_ms: 93.6029
+  type: 'test'
+  ...
+# Subtest: Runtime: missing destination authority is visible before new handoff submission
+ok 178 - Runtime: missing destination authority is visible before new handoff submission
+  ---
+  duration_ms: 87.2637
+  type: 'test'
+  ...
+# Subtest: Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+ok 179 - Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+  ---
+  duration_ms: 3475.963
+  type: 'test'
+  ...
+# Subtest: Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+ok 180 - Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+  ---
+  duration_ms: 7822.6985
+  type: 'test'
+  ...
+# Subtest: Visual: all eight input combinations use the canonical resolver
+ok 181 - Visual: all eight input combinations use the canonical resolver
+  ---
+  duration_ms: 2.109
+  type: 'test'
+  ...
+# Subtest: Visual: reviewed Handoff wiring selects current local providers
+ok 182 - Visual: reviewed Handoff wiring selects current local providers
+  ---
+  duration_ms: 0.5715
+  type: 'test'
+  ...
+# Subtest: Visual: neutral product has no domain, bindings or solution
+ok 183 - Visual: neutral product has no domain, bindings or solution
+  ---
+  duration_ms: 0.1119
+  type: 'test'
+  ...
+# Subtest: Visual: invalid and unknown selections fail visibly
+ok 184 - Visual: invalid and unknown selections fail visibly
+  ---
+  duration_ms: 0.2403
+  type: 'test'
+  ...
+# Subtest: Visual: standalone preview sends no network calls and includes no external scripts
+ok 185 - Visual: standalone preview sends no network calls and includes no external scripts
+  ---
+  duration_ms: 3.0449
+  type: 'test'
+  ...
+# Subtest: Visual: documentation, responsive rules and source build retained
+ok 186 - Visual: documentation, responsive rules and source build retained
+  ---
+  duration_ms: 1.6937
+  type: 'test'
+  ...
+# Subtest: Visual: runtime counters remain explicitly scoped
+ok 187 - Visual: runtime counters remain explicitly scoped
+  ---
+  duration_ms: 0.8707
+  type: 'test'
+  ...
+# Subtest: Visual: all eight views render through controlled document ports
+ok 188 - Visual: all eight views render through controlled document ports
+  ---
+  duration_ms: 5.5316
+  type: 'test'
+  ...
+1..188
+# tests 188
+# suites 0
+# pass 188
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 92633.714

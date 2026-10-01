@@ -1,0 +1,143 @@
+TAP version 13
+# Subtest: explicit-root init and render keep two temporary project atlases independent
+ok 1 - explicit-root init and render keep two temporary project atlases independent
+  ---
+  duration_ms: 639.8447
+  type: 'test'
+  ...
+# Subtest: structural validation reports broken links, cycles, and malformed dependencies without throwing
+ok 2 - structural validation reports broken links, cycles, and malformed dependencies without throwing
+  ---
+  duration_ms: 0.99
+  type: 'test'
+  ...
+# Subtest: source inspection distinguishes matched pins, drift, and missing pinned files
+ok 3 - source inspection distinguishes matched pins, drift, and missing pinned files
+  ---
+  duration_ms: 10.0815
+  type: 'test'
+  ...
+# Subtest: offline rendering escapes hostile text and gives each observation one canonical anchor
+ok 4 - offline rendering escapes hostile text and gives each observation one canonical anchor
+  ---
+  duration_ms: 1.5346
+  type: 'test'
+  ...
+# Subtest: render refuses to replace an arbitrary existing user file
+ok 5 - render refuses to replace an arbitrary existing user file
+  ---
+  duration_ms: 162.4689
+  type: 'test'
+  ...
+# Subtest: source paths escaping the selected project root are structurally invalid
+ok 6 - source paths escaping the selected project root are structurally invalid
+  ---
+  duration_ms: 4.4189
+  type: 'test'
+  ...
+# Subtest: source inspection marks junction traversal unsafe
+ok 7 - source inspection marks junction traversal unsafe
+  ---
+  duration_ms: 6.8795
+  type: 'test'
+  ...
+# Subtest: source and observation identifiers cannot collide across reference namespaces
+ok 8 - source and observation identifiers cannot collide across reference namespaces
+  ---
+  duration_ms: 0.2416
+  type: 'test'
+  ...
+# Subtest: inspection binds the full profile and checked source set; renderer derives status from checks
+ok 9 - inspection binds the full profile and checked source set; renderer derives status from checks
+  ---
+  duration_ms: 7.1533
+  type: 'test'
+  ...
+# Subtest: planning focus and bounded gaps stay distinct from structure and current-work selection
+ok 10 - planning focus and bounded gaps stay distinct from structure and current-work selection
+  ---
+  duration_ms: 5.2223
+  type: 'test'
+  ...
+# Subtest: renderer requires generated output identity and gives actionable legacy migration error
+ok 11 - renderer requires generated output identity and gives actionable legacy migration error
+  ---
+  duration_ms: 501.0662
+  type: 'test'
+  ...
+# Subtest: default atlas CLI render projects canonical execution beside a different planning focus
+not ok 12 - default atlas CLI render projects canonical execution beside a different planning focus
+  ---
+  duration_ms: 142.4176
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\brain-atlas.test.mjs:376:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /M-06.*Historical milestone.*MISMATCHED/. Input:
+    
+    '<!-- brain-atlas-generated:v1 projectId=projection-fixture profileSha256=e4dacd84c2ba0e9ac175e7ba15a957b3ee3d322fa330c34a083a34136913dc27 -->\n' +
+      '<!doctype html>\n' +
+      '<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">\n` +
+      '<title>Projection fixture — project atlas</title>\n' +
+      '<style>\n' +
+      ':root{color-scheme:light;--ink:#182334;--muted:#516274;--line:#d3dce6;--paper:#f3f6f9;--card:#fff;--blue:#145a86;--amber:#8b4a00;--red:#a32626}*{box-sizing:border-box}body{margin:0;max-width:100%;overflow-x:hidden;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:#075c91;text-underline-offset:.15em;overflow-wrap:anywhere}a:focus-visible{outline:3px solid #ef9f25;outline-offset:3px}.wrap{max-width:1440px;width:100%;min-width:0;margin:auto;padding:clamp(1rem,3vw,2.5rem)}header.hero{background:#142d43;color:white;padding:2rem;border-radius:1rem}header.hero a{color:#bde4ff}.eyebrow,.node-meta,.meta,.node-id{color:var(--muted);font-size:.9rem}header.hero .eyebrow,header.hero .node-meta{color:#cee0ee}.hero h1{line-height:1.1;margin:.3rem 0 1rem}.banner,.panel,.node-card,.retro{max-width:100%;min-width:0;overflow-wrap:anywhere;background:var(--card);border:1px solid var(--line);border-radius:.8rem;padding:1.2rem;margin:1rem 0}.banner{border-left:6px solid var(--amber)}.unplanned{border-left-color:var(--blue)}.warning-text,.gap{color:var(--red)}.gap{background:#fff0ef;padding:.7rem;border-radius:.4rem}.section-nav{display:flex;gap:.5rem 1rem;flex-wrap:wrap;padding:1rem 0}.panel h2{margin-top:0}.flow{display:grid;width:100%;min-width:0;max-width:100%;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1.4fr) auto minmax(0,1.2fr) auto minmax(0,1.2fr);align-items:stretch;gap:.5rem;overflow-x:auto;padding:.4rem 0 1rem}.flow-stage{min-width:190px;background:#f7fafc;border:1px solid var(--line);border-radius:.75rem;padding:.9rem}.flow-stage h3{margin:.1rem 0}.flow-stage>p{font-size:.9rem;color:var(--muted)}.flow-stage ul{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}.flow-stage li a{display:block;background:white;border:1px solid var(--line);border-radius:.5rem;padding:.6rem;text-decoration:none}.flow-stage li a span{display:block;font-size:.82rem;color:var(--muted)}.flow-arrow{align-self:center;font-size:1.7rem;font-weight:700;color:var(--blue)}.flow-evidence,.empty-stage{font-size:.85rem;color:var(--muted);padding:.5rem}.milestone-map{counter-reset:milestone;list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:.7rem}.milestone-map li{counter-increment:milestone;position:relative;border:1px solid var(--line);border-radius:.65rem;padding:.8rem .8rem .8rem 2.8rem;background:#f7fafc}.milestone-map li::before{content:counter(milestone);position:absolute;left:.8rem;top:.75rem;width:1.5rem;height:1.5rem;border-radius:50%;display:grid;place-items:center;background:#145a86;color:white;font-weight:700}.milestone-map a{display:inline-block}.milestone-map span{display:block;color:var(--muted);font-size:.85rem}.milestone-map p{margin:.35rem 0 0;font-size:.9rem}.node-grid,.retro-grid{display:grid;min-width:0;grid-template-columns:repeat(auto-fit,minmax(min(100%,350px),1fr));gap:.7rem}.node-card{margin:.35rem 0;scroll-margin-top:1rem}.node-card h3{margin:.25rem 0}.node-meta{display:flex;gap:.4rem .8rem;flex-wrap:wrap}.priority-core{border-top:4px solid #126b48}.priority-supporting{border-top:4px solid #52718a}.priority-later{border-top:4px solid #957443}.priority-reason,.acceptance{background:#f3f7fa;padding:.65rem;border-radius:.4rem}.acceptance ul{margin:.4rem 0}.relations{font-size:.92rem}.node-observations{border-top:1px solid var(--line);margin-top:1rem;padding-top:.5rem}.node-observations h4{margin:.25rem 0}.observation{padding:.7rem;margin:.55rem 0;border-left:4px solid #748698;background:#f6f8fa;border-radius:.35rem}.state-blocked,.state-not_run,.state-unknown{border-left-color:var(--red);background:#fff1f0}.state-reported{border-left-color:#8b5d00}.state-implemented{border-left-color:#24628d}.state-verified{border-left-color:#176345}.observation-head{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}.observation p{margin:.35rem 0}.limitation{color:#7b2d15}.source-table-wrap{max-width:100%;overflow-x:auto}table{border-collapse:collapse;width:100%;background:white}th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--line);padding:.7rem}th{width:12rem}.source-state{display:inline-block;padding:.12rem .45rem;border-radius:1rem;background:#e4edf4;font-weight:700;font-size:.8rem}.source-drift,.source-missing,.source-unsafe{color:var(--red);background:#ffebe9}.source-unpinned,.source-not_inspected{color:var(--amber);background:#fff0d8}.empty-state{padding:1rem;background:#f7fafc;border:1px dashed #9aabba;border-radius:.6rem}.muted{color:var(--muted)}code{overflow-wrap:anywhere;font-size:.88em}footer{border-top:1px solid var(--line);padding:1rem;color:var(--muted)}@media(max-width:900px){.flow{grid-template-columns:1fr;overflow:visible}.flow-arrow{transform:rotate(90deg);justify-self:center}.flow-stage{min-width:0}.hero{padding:1.25rem!important}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}\n' +
+      '</style></head><body><main class="wrap">\n' +
+      '<header class="hero"><p class="eyebrow">Read-only offline planning snapshot · Plan revision 1</p><h1>Projection fixture</h1><p>Project ID: <code>projection-fixture</code> · Profile updated: 2026-10-01T00:00:00.000Z</p><p>Profile SHA-256: <code>e4dacd84c2ba0e9ac175e7ba15a957b3ee3d322fa330c34a083a34136913dc27</code></p><p>Source inspection time: 2026-10-01T11:03:17.084Z</p><p>Temporary test fixture.</p><nav class="section-nav" aria-label="Atlas sections"><a href="#planning-gaps">Planning gaps</a><a href="#planning-focus">Planning focus</a><a href="#vision">Vision</a><a href="#map">Linked project map</a><a href="#milestones">Milestone order</a><a href="#nodes">Node details</a><a href="#observations">Observations</a><a href="#sources">Source provenance</a><a href="#retrospectives">Retrospectives</a></nav></header>\n' +
+      '\n' +
+      '<section class="banner" role="note"><strong>Structural profile status: VALID · Source inspection: VALID · Planning gaps: 3.</strong> Inspected source digests match their pins. This map does not execute acceptance, authenticate reports or establish product completion.</section>\n' +
+      '<section id="canonical-current-work" class="panel"><h2>Canonical current work</h2><p><strong>CURRENT-001</strong> · Current task from contract · NOT_INITIALIZED</p><p>Atlas planning focus: <strong>M-06</strong> · M-06 title · <strong>MISMATCHED</strong></p><p>The task comes from the project’s canonical execution contract and checkpoint. The focus comes from this plan; their alignment is inspected separately.</p></section><section id="planning-gaps" class="panel planning-gaps"><h2>Planning gaps (3)</h2><p>These are visible planning gaps, not a structural validation failure or an automatic readiness gate.</p><ul class="gap-list"><li class="gap">Intended users have not been identified.</li><li class="gap">No success signals are defined.</li><li class="gap"><a href="#node-M-06">M-06 title (M-06): milestone has no linked story.</a></li></ul></section><section id="planning-focus" class="panel focus-panel"><h2>Planning focus</h2><p><strong>M-06 title</strong> · M-06</p><p>M-06 summary</p><p><strong>Declared priority reason:</strong> Required for the fixture outcome.</p><p><strong>Canonical execution checkpoint still selects current work.</strong> This profile focus does not dispatch work or imply acceptance.</p><h3>Focus observations and gaps</h3><p class="empty-state">No observations are recorded for this focus.</p><ul class="gap-list"><li class="gap"><a href="#node-M-06">M-06 title (M-06): milestone has no linked story.</a></li></ul><h3>Focus source inspection</h3><ul><li><a href="#source-historical-plan">docs/old-plan.md</a> · <strong>MATCHED</strong></li></ul></section>\n' +
+      '<section id="vision" class="panel"><h2>Destination and policy</h2><p><strong>Destination:</strong> Fixture destination.</p><div class="node-grid"><div><h3>Users</h3><p class="empty-state">No users recorded.</p></div><div><h3>Non-goals</h3><p class="empty-state">No non-goals recorded.</p></div></div><h3>Success signals</h3><p class="empty-state">No success signals recorded.</p><h3>Working policy</h3><p><strong>Core first:</strong> Core user outcome. · <strong>WIP limit:</strong> 1</p><p><strong>Review cadence:</strong> Not stated yet.</p><p><strong>Non-negotiables:</strong> Not stated yet.</p><p><strong>Defer rule:</strong> Defer unrelated work.</p></section>\n' +
+      '<section id="map" class="panel"><h2>Linked project flow</h2><p>Follow declared outcome, journey, experience and owner boundaries, stories, milestones and separate observations. Cards link to their full details below; relationships are listed on each card.</p><div class="flow" aria-label="Outcome to evidence flow"><section class="flow-stage"><h3>Outcome</h3><p>User or project destination</p><ul><li class="empty-stage">No item is mapped yet.</li></ul></section><div class="flow-arrow" aria-hidden="true">→</div><section class="flow-stage"><h3>Journey</h3><p>Steps toward the outcome</p><ul><li class="empty-stage">No item is mapped yet.</li></ul></section><div class="flow-arrow" aria-hidden="true">→</div><section class="flow-stage"><h3>Screen, contract, component</h3><p>Experience and owner boundaries</p><ul><li class="empty-stage">No item is mapped yet.</li></ul></section><div class="flow-arrow" aria-hidden="true">→</div><section class="flow-stage"><h3>Story and backlog</h3><p>Bounded work and deferred items</p><ul><li class="empty-stage">No item is mapped yet.</li></ul></section><div class="flow-arrow" aria-hidden="true">→</div><section class="flow-stage'... 3526 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!-- brain-atlas-generated:v1 projectId=projection-fixture profileSha256=e4dacd84c2ba0e9ac175e7ba15a957b3ee3d322fa330c34a083a34136913dc27 -->
+    <!doctype html>
+    <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+    <title>Projection fixture — project atlas</title>
+    <style>
+    :root{color-scheme:light;--ink:#182334;--muted:#516274;--line:#d3dce6;--paper:#f3f6f9;--card:#fff;--blue:#145a86;--amber:#8b4a00;--red:#a32626}*{box-sizing:border-box}body{margin:0;max-width:100%;overflow-x:hidden;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:#075c91;text-underline-offset:.15em;overflow-wrap:anywhere}a:focus-visible{outline:3px solid #ef9f25;outline-offset:3px}.wrap{max-width:1440px;width:100%;min-width:0;margin:auto;padding:clamp(1rem,3vw,2.5rem)}header.hero{background:#142d43;color:white;padding:2rem;border-radius:1rem}header.hero a{color:#bde4ff}.eyebrow,.node-meta,.meta,.node-id{color:var(--muted);font-size:.9rem}header.hero .eyebrow,header.hero .node-meta{color:#cee0ee}.hero h1{line-height:1.1;margin:.3rem 0 1rem}.banner,.panel,.node-card,.retro{max-width:100%;min-width:0;overflow-wrap:anywhere;background:var(--card);border:1px solid var(--line);border-radius:.8rem;padding:1.2rem;margin:1rem 0}.banner{border-left:6px solid var(--amber)}.unplanned{border-left-color:var(--blue)}.warning-text,.gap{color:var(--red)}.gap{background:#fff0ef;padding:.7rem;border-radius:.4rem}.section-nav{display:flex;gap:.5rem 1rem;flex-wrap:wrap;padding:1rem 0}.panel h2{margin-top:0}.flow{display:grid;width:100%;min-width:0;max-width:100%;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1.4fr) auto minmax(0,1.2fr) auto minmax(0,1.2fr);align-items:stretch;gap:.5rem;overflow-x:auto;padding:.4rem 0 1rem}.flow-stage{min-width:190px;background:#f7fafc;border:1px solid var(--line);border-radius:.75rem;padding:.9rem}.flow-stage h3{margin:.1rem 0}.flow-stage>p{font-size:.9rem;color:var(--muted)}.flow-stage ul{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}.flow-stage li a{display:block;background:white;border:1px solid var(--line);border-radius:.5rem;padding:.6rem;text-decoration:none}.flow-stage li a span{display:block;font-size:.82rem;color:var(--muted)}.flow-arrow{align-self:center;font-size:1.7rem;font-weight:700;color:var(--blue)}.flow-evidence,.empty-stage{font-size:.85rem;color:var(--muted);padding:.5rem}.milestone-map{counter-reset:milestone;list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:.7rem}.milestone-map li{counter-increment:milestone;position:relative;border:1px solid var(--line);border-radius:.65rem;padding:.8rem .8rem .8rem 2.8rem;background:#f7fafc}.milestone-map li::before{content:counter(milestone);position:absolute;left:.8rem;top:.75rem;width:1.5rem;height:1.5rem;border-radius:50%;display:grid;place-items:center;background:#145a86;color:white;font-weight:700}.milestone-map a{display:inline-block}.milestone-map span{display:block;color:var(--muted);font-size:.85rem}.milestone-map p{margin:.35rem 0 0;font-size:.9rem}.node-grid,.retro-grid{display:grid;min-width:0;grid-template-columns:repeat(auto-fit,minmax(min(100%,350px),1fr));gap:.7rem}.node-card{margin:.35rem 0;scroll-margin-top:1rem}.node-card h3{margin:.25rem 0}.node-meta{display:flex;gap:.4rem .8rem;flex-wrap:wrap}.priority-core{border-top:4px solid #126b48}.priority-supporting{border-top:4px solid #52718a}.priority-later{border-top:4px solid #957443}.priority-reason,.acceptance{background:#f3f7fa;padding:.65rem;border-radius:.4rem}.acceptance ul{margin:.4rem 0}.relations{font-size:.92rem}.node-observations{border-top:1px solid var(--line);margin-top:1rem;padding-top:.5rem}.node-observations h4{margin:.25rem 0}.observation{padding:.7rem;margin:.55rem 0;border-left:4px solid #748698;background:#f6f8fa;border-radius:.35rem}.state-blocked,.state-not_run,.state-unknown{border-left-color:var(--red);background:#fff1f0}.state-reported{border-left-color:#8b5d00}.state-implemented{border-left-color:#24628d}.state-verified{border-left-color:#176345}.observation-head{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}.observation p{margin:.35rem 0}.limitation{color:#7b2d15}.source-table-wrap{max-width:100%;overflow-x:auto}table{border-collapse:collapse;width:100%;background:white}th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--line);padding:.7rem}th{width:12rem}.source-state{display:inline-block;padding:.12rem .45rem;border-radius:1rem;background:#e4edf4;font-weight:700;font-size:.8rem}.source-drift,.source-missing,.source-unsafe{color:var(--red);background:#ffebe9}.source-unpinned,.source-not_inspected{color:var(--amber);background:#fff0d8}.empty-state{padding:1rem;background:#f7fafc;border:1px dashed #9aabba;border-radius:.6rem}.muted{color:var(--muted)}code{overflow-wrap:anywhere;font-size:.88em}footer{border-top:1px solid var(--line);padding:1rem;color:var(--muted)}@media(max-width:900px){.flow{grid-template-columns:1fr;overflow:visible}.flow-arrow{transform:rotate(90deg);justify-self:center}.flow-stage{min-width:0}.hero{padding:1.25rem!important}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+    </style></head><body><main class="wrap">
+    <header class="hero"><p class="eyebrow">Read-only offline planning snapshot · Plan revision 1</p><h1>Projection fixture</h1><p>Project ID: <code>projection-fixture</code> · Profile updated: 2026-10-01T00:00:00.000Z</p><p>Profile SHA-256: <code>e4dacd84c2ba0e9ac175e7ba15a957b3ee3d322fa330c34a083a34136913dc27</code></p><p>Source inspection time: 2026-10-01T11:03:17.084Z</p><p>Temporary test fixture.</p><nav class="section-nav" aria-label="Atlas sections"><a href="#planning-gaps">Planning gaps</a><a href="#planning-focus">Planning focus</a><a href="#vision">Vision</a><a href="#map">Linked project map</a><a href="#milestones">Milestone order</a><a href="#nodes">Node details</a><a href="#observations">Observations</a><a href="#sources">Source provenance</a><a href="#retrospectives">Retrospectives</a></nav></header>
+    
+    <section class="banner" role="note"><strong>Structural profile status: VALID · Source inspection: VALID · Planning gaps: 3.</strong> Inspected source digests match their pins. This map does not execute acceptance, authenticate reports or establish product completion.</section>
+    <section id="canonical-current-work" class="panel"><h2>Canonical current work</h2><p><strong>CURRENT-001</strong> · Current task from contract · NOT_INITIALIZED</p><p>Atlas planning focus: <strong>M-06</strong> · M-06 title · <strong>MISMATCHED</strong></p><p>The task comes from the project’s canonical execution contract and checkpoint. The focus comes from this plan; their alignment is inspected separately.</p></section><section id="planning-gaps" class="panel planning-gaps"><h2>Planning gaps (3)</h2><p>These are visible planning gaps, not a structural validation failure or an automatic readiness gate.</p><ul class="gap-list"><li class="gap">Intended users have not been identified.</li><li class="gap">No success signals are defined.</li><li class="gap"><a href="#node-M-06">M-06 title (M-06): milestone has no linked story.</a></li></ul></section><section id="planning-focus" class="panel focus-panel"><h2>Planning focus</h2><p><strong>M-06 title</strong> · M-06</p><p>M-06 summary</p><p><strong>Declared priority reason:</strong> Required for the fixture outcome.</p><p><strong>Canonical execution checkpoint still selects current work.</strong> This profile focus does not dispatch work or imply acceptance.</p><h3>Focus observations and gaps</h3><p class="empty-state">No observations are recorded for this focus.</p><ul class="gap-list"><li class="gap"><a href="#node-M-06">M-06 title (M-06): milestone has no linked story.</a></li></ul><h3>Focus source inspection</h3><ul><li><a href="#source-historical-plan">docs/old-plan.md</a> · <strong>MATCHED</strong></li></ul></section>
+    <section id="vision" class="panel"><h2>Destination and policy</h2><p><strong>Destination:</strong> Fixture destination.</p><div class="node-grid"><div><h3>Users</h3><p class="empty-state">No users recorded.</p></div><div><h3>Non-goals</h3><p class="empty-state">No non-goals recorded.</p></div></div><h3>Success signals</h3><p class="empty-state">No success signals recorded.</p><h3>Working policy</h3><p><strong>Core first:</strong> Core user outcome. · <strong>WIP limit:</strong> 1</p><p><strong>Review cadence:</strong> Not stated yet.</p><p><strong>Non-negotiables:</strong> Not stated yet.</p><p><strong>Defer rule:</strong> Defer unrelated work.</p></section>
+    <section id="map" class="panel"><h2>Linked project flow</h2><p>Follow declared outcome, journey, experience and owner boundaries, stories, milestones and separate observations. Cards link to their full details below; relationships are listed on each card.</p><div class="flow" aria-label="Outcome to evidence flow"><section class="flow-stage"><h3>Outcome</h3><p>User or project destination</p><ul><li class="empty-stage">No item is mapped yet.</li></ul></section><div class="flow-arrow" aria-hidden="true">→</div><section class="flow-stage"><h3>Journey</h3><p>Steps toward the outcome</p><ul><li class="empty-stage">No item is mapped yet.</li></ul></section><div class="flow-arrow" aria-hidden="true">→</div><section class="flow-stage"><h3>Screen, contract, component</h3><p>Experience and owner boundaries</p><ul><li class="empty-stage">No item is mapped yet.</li></ul></section><div class="flow-arrow" aria-hidden="true">→</div><section class="flow-stage"><h3>Story and backlog</h3><p>Bounded work and deferred items</p><ul><li class="empty-stage">No item is mapped yet.</li></ul></section><div class="flow-arrow" aria-hidden="true">→</div><section class="flow-stage"><h3>Milestone and evidence</h3><p>Ordered delivery with separate observations</p><ul><li><a href="#node-M-06"><strong>M-06 title</strong><span>M-06 · accepted · core</span></a></li></ul><div class="flow-evidence">No observations recorded</div></section></div></section>
+    <section id="milestones" class="panel"><h2>Milestone dependency order</h2><p>Order is calculated from declared <code>dependsOn</code> edges only. It is a planning aid, not a schedule, progress measure or completion claim.</p><ol class="milestone-map"><li><a href="#node-M-06"><strong>M-06 title</strong><span>M-06</span></a><p>No declared dependencies</p></li></ol></section>
+    <section id="nodes" class="panel"><h2>Plan nodes</h2><p>Priority tags and reasons describe declared plan intent; this page does not select current work. Use the existing workflow checkpoint for current task selection. Intent status and observed delivery evidence are separate. “Accepted” describes the plan intent only.</p><div class="node-grid"><article class="node-card priority-core" id="node-M-06">
+        <div class="node-meta"><span>milestone</span><span>Intent: accepted</span><span>Priority: core</span></div>
+        <h3>M-06 title</h3><p class="node-id">M-06 · Owner: fixture owner</p>
+        <p>M-06 summary</p>
+        <p class="priority-reason"><strong>Priority reason:</strong> Required for the fixture outcome.</p>
+        
+        <div class="acceptance"><strong>Acceptance statements</strong><ul><li>The historical milestone was once a planning focus.</li></ul></div>
+        
+        
+        <p class="relations"><strong>Source provenance:</strong> <a href="#source-historical-plan">historical-plan</a></p>
+        <p class="muted">No delivery observation is recorded; unassessed does not mean complete.</p>
+      </article></div></section>
+    <section id="observations" class="panel"><h2>Delivery observations and gaps</h2><p>Blocked, not-run and unknown observations remain visible. A “verified” label is an attributed record with execution provenance, not authenticated proof.</p><p class="empty-state">No delivery observations are recorded. Missing evidence remains unassessed.</p></section>
+    <section id="sources" class="panel"><h2>Source provenance and drift</h2><p>Each path is read inside the selected project root. Expected and current SHA-256 values are shown when available. Missing or unpinned digests and changed files are warnings to reconcile; they do not set delivery status.</p><div class="source-table-wrap"><table><thead><tr><th scope="col">Reference</th><th scope="col">Repository source</th><th scope="col">Inspection</th></tr></thead><tbody><tr id="source-historical-plan"><th scope="row"><a href="#source-historical-plan">historical-plan</a></th><td><code>docs/old-plan.md</code><br>Historical plan</td><td><span class="source-state source-matched">MATCHED</span><br>Pinned SHA-256: <code>c64d55dc83a6c04a1f67940644b3f2cd0b7a0a888be76bda7738781a7bbe4e9f</code><br>Current SHA-256: <code>c64d55dc83a6c04a1f67940644b3f2cd0b7a0a888be76bda7738781a7bbe4e9f</code></td></tr></tbody></table></div></section>
+    <section id="retrospectives" class="panel"><h2>Retrospectives</h2><p>Hypotheses and proposed measures are kept distinct from observed problems. Empty targets and unknown measurements remain unknown.</p><p class="empty-state">No retrospectives are recorded.</p></section>
+    <footer>Generated as a static local snapshot. Re-render after source or profile changes. No scripts, remote assets, execution, or live filesystem access are embedded in this page.</footer>
+    </main></body></html>
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/brain-atlas.test.mjs:423:10)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 11
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1559.5044

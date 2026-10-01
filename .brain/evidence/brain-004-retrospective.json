@@ -1,0 +1,10 @@
+{
+  "schema": "brain.local-retrospective.v1",
+  "taskId": "BRAIN-004",
+  "observations": [
+    {"finding": "One shared final suite prevents competing native/build workflows and avoids duplicate long runs, but final Brain acceptance waits for the separate CP7 browser journey.", "action": "For future concurrent tasks, agree a stable verification batch cutoff before implementation. Keep each task's completion and pending shared gate visible.", "priority": "backlog", "disposition": "Recorded learning; no scheduler or platform scope added."},
+    {"finding": "Actual browser verification found mobile title overflow after deterministic checks passed.", "action": "Keep a small real-browser check of representative project content and a narrow viewport in the definition of done.", "priority": "core", "disposition": "Applied in this task and independently reviewed."},
+    {"finding": "Six apparent controller test failures came from one temporary-directory cleanup ordering problem.", "action": "Close controller-owned resources before deleting fixture storage and preserve the original failing log.", "priority": "core", "disposition": "Repaired and verified without expanding the production controller scope."}
+  ],
+  "limitations": ["Qualitative observations only; no invented defect rate, sigma score or productivity estimate."]
+}

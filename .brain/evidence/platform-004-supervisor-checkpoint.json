@@ -1,0 +1,19 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "REVIEW_PENDING",
+  "scope": "coherent supervisor/helper/store source before manager lifecycle",
+  "qualification": "COMPONENT_ONLY_NATIVE_NOT_RUN",
+  "hashes": {
+    "tools/runtime-supervisor.mjs": "f188138c59ffe4ca93282e35bb13060fa8fba4703f2c26466d79e4723997299e",
+    "tools/build-job.ps1": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9",
+    "packages/control-plane/src/index.ts": "d995593ae2988782955ba3a34b867d35417c031ca3d8a7aec0d07da7c2af1165",
+    "tests/managed-runtime-store.test.mjs": "885a3cdf97997e3b849e65c733f425e5c2713c59ce0813d4942587d5d03bdeec"
+  },
+  "checks": {
+    "fresh_build": {"reported_exit_code": 0, "evidence": "platform-004-build-checkpoint-11.log"},
+    "supervisor_syntax": {"reported_exit_code": 0, "argv": ["node", "--check", "tools/runtime-supervisor.mjs"], "scope": "syntax only"},
+    "managed_store": {"reported_exit_code": 0, "tests": 5, "passed": 5, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "evidence": "platform-004-store-checkpoint-04.tap.txt"}
+  },
+  "root_reconciliation": "Read build/TAP output and independently matched all four source hashes; archived exact logs. Two independent Sol reviews dispatched. Manager lifecycle, native default/runtime helper behavior, actual enrollment/runtime/HTTP/browser/full-suite/verifier qualification remain open. No final maintained fingerprint claimed."
+}

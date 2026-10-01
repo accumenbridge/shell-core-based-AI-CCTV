@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: explicit-root init and render keep two temporary project atlases independent
+ok 1 - explicit-root init and render keep two temporary project atlases independent
+  ---
+  duration_ms: 531.213
+  type: 'test'
+  ...
+# Subtest: structural validation reports broken links, cycles, and malformed dependencies without throwing
+ok 2 - structural validation reports broken links, cycles, and malformed dependencies without throwing
+  ---
+  duration_ms: 0.9796
+  type: 'test'
+  ...
+# Subtest: source inspection distinguishes matched pins, drift, and missing pinned files
+ok 3 - source inspection distinguishes matched pins, drift, and missing pinned files
+  ---
+  duration_ms: 12.3607
+  type: 'test'
+  ...
+# Subtest: offline rendering escapes hostile text and gives each observation one canonical anchor
+ok 4 - offline rendering escapes hostile text and gives each observation one canonical anchor
+  ---
+  duration_ms: 1.5262
+  type: 'test'
+  ...
+# Subtest: render refuses to replace an arbitrary existing user file
+ok 5 - render refuses to replace an arbitrary existing user file
+  ---
+  duration_ms: 240.6394
+  type: 'test'
+  ...
+# Subtest: source paths escaping the selected project root are structurally invalid
+ok 6 - source paths escaping the selected project root are structurally invalid
+  ---
+  duration_ms: 9.9148
+  type: 'test'
+  ...
+# Subtest: source inspection marks junction traversal unsafe
+ok 7 - source inspection marks junction traversal unsafe
+  ---
+  duration_ms: 11.4392
+  type: 'test'
+  ...
+# Subtest: source and observation identifiers cannot collide across reference namespaces
+ok 8 - source and observation identifiers cannot collide across reference namespaces
+  ---
+  duration_ms: 0.9653
+  type: 'test'
+  ...
+# Subtest: inspection binds the full profile and checked source set; renderer derives status from checks
+ok 9 - inspection binds the full profile and checked source set; renderer derives status from checks
+  ---
+  duration_ms: 8.9692
+  type: 'test'
+  ...
+# Subtest: planning focus and bounded gaps stay distinct from structure and current-work selection
+ok 10 - planning focus and bounded gaps stay distinct from structure and current-work selection
+  ---
+  duration_ms: 6.3707
+  type: 'test'
+  ...
+# Subtest: renderer requires generated output identity and gives actionable legacy migration error
+ok 11 - renderer requires generated output identity and gives actionable legacy migration error
+  ---
+  duration_ms: 407.6358
+  type: 'test'
+  ...
+# Subtest: default atlas CLI render projects canonical execution beside a different planning focus
+ok 12 - default atlas CLI render projects canonical execution beside a different planning focus
+  ---
+  duration_ms: 106.6129
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1403.6288

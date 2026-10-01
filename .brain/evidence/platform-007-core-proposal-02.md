@@ -1,0 +1,13 @@
+# PLATFORM-007A core proposal
+
+Sol/high read-only proposal refined for core delivery, 2026-10-01. Not adopted or implemented. Current work remains PLATFORM-005A. No CP7 source/test/browser/publication execution is claimed.
+
+Use complete ProductDefinition JSON as the authoritative editable document, with convenient identity/description/version/layout/module/binding controls. composeDraft remains a New composition starter; importing through it would replace descriptions and binding choices. Preserve exact module versions, every binding field and wiring. Canonical serialization may normalize order through the existing resolver, preserving semantic content rather than original whitespace.
+
+Derive graph edges/choices from module manifests and reviewed solutions. Unsupported versions/bindings remain visible with diagnostics and cannot preview/save/build; do not substitute defaults. Distinguish a validated HTTP binding from a locally launchable composition.
+
+Boundaries: composition/studio shared pure full-definition parse/validate/serialize/preview helpers; studio-catalogue exposes compiled helpers in its existing browser bundle; fixed operator GET /platform-api/products/<id>/<version> and read-only POST /platform-api/products/preview {product}; paired studio-web full-definition import/edit/preview/export/saved-version selection/derived graph; equivalent visual/studio offline file-input/edit/preview/download regenerated with build-visual. OPEN_PLATFORM receives no network, build or filesystem authority.
+
+Every edit/import/catalogue change clears preview/confirmation. Preview responses bind captured draft generation, session generation and request sequence. Save captures the exact validated document and explicitly confirms id@version. Equal existing content is idempotent; differing same-version content conflicts. New version is explicit. Save remains a control-plane record rather than maintained-source rewrite. Reuse existing build/register/promote/runtime controls and preserve old immutable snapshots.
+
+Minimum useful checks: semantic round-trip with custom description/exact versions/nondefault binding IDs; unsupported lifetime/wiring diagnostics without rewrite; actual paired preview/save/new-version/conflict and exact saved-definition build; stale or session-invalidated preview cannot save old content; offline import/download preserves definition with no network. Fresh build/required npm test/exact independent review, with ordinary browser editing scope separate. No generic page compiler, multi-version catalogue, signing, extension installation, destructive uninstall or expanded fault campaign.

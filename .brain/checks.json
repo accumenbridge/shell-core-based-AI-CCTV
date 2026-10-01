@@ -1,0 +1,435 @@
+{
+  "schema": "brain.check-catalog.v1",
+  "status": "bound",
+  "checks": [
+    {
+      "id": "baseline-dependency-install",
+      "criterion_refs": [
+        "BASE-5"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "ci",
+        "--ignore-scripts"
+      ],
+      "cwd": ".",
+      "environment_ref": "Windows project root; package.json requires Node >=22.16.0; record exact Node/npm versions at run time.",
+      "expected_assertions": [
+        "Locked dependency installation completes with lifecycle scripts disabled."
+      ],
+      "timeout_seconds": 1800,
+      "side_effects": "Creates ignored node_modules/ and may use the configured npm cache.",
+      "evidence_level": "real_integration",
+      "state": "PASSED",
+      "evidence_ref": ".brain/evidence/baseline-result.json"
+    },
+    {
+      "id": "baseline-targeted-regressions",
+      "criterion_refs": [
+        "BASE-1",
+        "BASE-2",
+        "BASE-3",
+        "BASE-4"
+      ],
+      "kind": "automated",
+      "argv": [
+        "node.exe",
+        "--test",
+        "--test-reporter=tap",
+        "tests/factory-lifecycle.test.mjs",
+        "tests/studio-integration.test.mjs",
+        "tests/reliability-baseline.test.mjs"
+      ],
+      "cwd": ".",
+      "environment_ref": "Windows project root; package.json requires Node >=22.16.0; record exact Node/npm versions at run time.",
+      "expected_assertions": [
+        "Existing generated-module and paired-Studio lifecycle workflows retain all assertions.",
+        "reliability-baseline tests exercise launcher control flow, portable-copy and source fingerprint behavior, and verifier failure/reporting cases."
+      ],
+      "timeout_seconds": 900,
+      "side_effects": "Tests may spawn local processes, use bounded loopback ports, and create temporary fixtures; each test must clean up its owned resources.",
+      "evidence_level": "real_integration",
+      "state": "PASSED",
+      "evidence_ref": ".brain/evidence/baseline-result.json"
+    },
+    {
+      "id": "baseline-build",
+      "criterion_refs": [
+        "BASE-1",
+        "BASE-2",
+        "BASE-3",
+        "BASE-4"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "build"
+      ],
+      "cwd": ".",
+      "environment_ref": "Windows project root; package.json requires Node >=22.16.0; record exact Node/npm versions at run time.",
+      "expected_assertions": [
+        "Build completes from current maintained source with no stale-dist success claim."
+      ],
+      "timeout_seconds": 900,
+      "side_effects": "Writes ignored build output under dist/ and .artifacts/.",
+      "evidence_level": "real_integration",
+      "state": "PASSED",
+      "evidence_ref": ".brain/evidence/baseline-result.json"
+    },
+    {
+      "id": "baseline-full-suite",
+      "criterion_refs": [
+        "BASE-1",
+        "BASE-2",
+        "BASE-3",
+        "BASE-4",
+        "BASE-5"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "test"
+      ],
+      "cwd": ".",
+      "environment_ref": "Windows project root; package.json requires Node >=22.16.0; record exact Node/npm versions at run time.",
+      "expected_assertions": [
+        "Source build runs first",
+        "All discovered TAP tests pass",
+        "Counts, skipped/TODO cases, and failures are reported without normalization into a false pass."
+      ],
+      "timeout_seconds": 1800,
+      "side_effects": "Build output and test temporary files; tests may start local child processes and loopback servers.",
+      "evidence_level": "real_integration",
+      "state": "PASSED",
+      "evidence_ref": ".brain/evidence/baseline-result.json"
+    },
+    {
+      "id": "baseline-verifier",
+      "criterion_refs": [
+        "BASE-1",
+        "BASE-3",
+        "BASE-4"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "verify"
+      ],
+      "cwd": ".",
+      "environment_ref": "Windows project root; package.json requires Node >=22.16.0; record exact Node/npm versions at run time.",
+      "expected_assertions": [
+        "Explicit TAP output; at least one discovered test file and a known test count greater than zero",
+        "Fail closed on unknown, zero, malformed, ambiguous, nonzero test exit, failures/cancellations, spawn-error, signal, and inconsistent-count cases",
+        "Build failure leaves tests NOT_RUN, not zero passed",
+        "Conditional current proof claims based on actual evidence."
+      ],
+      "timeout_seconds": 1800,
+      "side_effects": "Runs build and repository checks; may write ignored generated outputs and temporary local state.",
+      "evidence_level": "real_integration",
+      "state": "PASSED",
+      "evidence_ref": ".brain/evidence/baseline-result.json"
+    },
+    {
+      "id": "separate-studio-browser-gate",
+      "criterion_refs": [
+        "Browser acceptance (separate gate)"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "test:studio-browser"
+      ],
+      "cwd": ".",
+      "environment_ref": "Windows with the project's supported Playwright Chromium executable installed.",
+      "expected_assertions": [
+        "Real browser assertions only after the required Chromium executable is available."
+      ],
+      "timeout_seconds": 900,
+      "side_effects": "Starts a browser and local test server; may write test results.",
+      "evidence_level": "real_integration",
+      "state": "BLOCKED_PREREQUISITE_MISSING",
+      "blocker": "Legacy runner expects absent bundled Chromium. Installed Chrome separately qualified15 ordinary PLATFORM-002 assertions; controlled delayed-response instrumentation remains BLOCKED_CSP, invalid retry excluded."
+    },
+    {
+      "id": "platform-001-build",
+      "criterion_refs": [
+        "PLATFORM-001"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "build"
+      ],
+      "cwd": ".",
+      "state": "PASSED",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-001-result.json"
+    },
+    {
+      "id": "platform-001-targeted",
+      "criterion_refs": [
+        "PLATFORM-001"
+      ],
+      "kind": "automated",
+      "argv": [
+        "node.exe",
+        "--test",
+        "--test-reporter=tap",
+        "tests/ai-core.test.mjs",
+        "tests/control-plane.test.mjs",
+        "tests/control-plane-http.test.mjs",
+        "tests/reliability-baseline.test.mjs"
+      ],
+      "cwd": ".",
+      "state": "PASSED",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-001-result.json"
+    },
+    {
+      "id": "platform-001-full-suite",
+      "criterion_refs": [
+        "PLATFORM-001"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "test"
+      ],
+      "cwd": ".",
+      "state": "PASSED",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-001-result.json"
+    },
+    {
+      "id": "platform-001-verifier",
+      "criterion_refs": [
+        "PLATFORM-001"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "verify"
+      ],
+      "cwd": ".",
+      "state": "PASSED",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-001-result.json"
+    },
+    {
+      "id": "platform-001-console-browser",
+      "criterion_refs": [
+        "PLATFORM-001"
+      ],
+      "kind": "automated",
+      "argv": [
+        "python",
+        ".local/platform-001-validation/browser_console.py"
+      ],
+      "cwd": ".",
+      "state": "PASSED",
+      "evidence_level": "real_integration",
+      "environment_ref": "Installed Google Chrome headless, Python 3.14.6/Playwright 1.60.0; temporary database and loopback ephemeral port. Archived executed script is evidence, not a maintained browser runner.",
+      "evidence_ref": ".brain/evidence/platform-001-browser-console.json"
+    },
+    {
+      "id": "platform-002-build",
+      "criterion_refs": [
+        "PLATFORM-002"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "build"
+      ],
+      "cwd": ".",
+      "state": "PASSED",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-002-result.json"
+    },
+    {
+      "id": "platform-002-full-suite",
+      "criterion_refs": [
+        "PLATFORM-002"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "test"
+      ],
+      "cwd": ".",
+      "state": "PASSED",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-002-result.json"
+    },
+    {
+      "id": "platform-002-verifier",
+      "criterion_refs": [
+        "PLATFORM-002"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "verify"
+      ],
+      "cwd": ".",
+      "state": "PASSED",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-002-result.json"
+    },
+    {
+      "id": "platform-002-console-browser",
+      "criterion_refs": [
+        "PLATFORM-002"
+      ],
+      "kind": "automated",
+      "argv": [
+        "python",
+        ".local/platform-002-validation/browser-journey.py"
+      ],
+      "cwd": ".",
+      "state": "PARTIAL_WITH_BLOCKED_CSP_GATE",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-002-browser-console.json",
+      "note": "15 ordinary assertions and serverExit0; controlled-delay CSP gate remains blocked, invalid retry excluded. Archived executed helper/script are evidence, not a maintained runner."
+    },
+    {
+      "id": "platform-003-build",
+      "criterion_refs": [
+        "PLATFORM-003"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "build"
+      ],
+      "cwd": ".",
+      "state": "PASSED",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-003-result.json",
+      "environment_ref": "Windows Node24.19.0; check-child-only QB_TEST_CP3_NATIVE_LOCK=blocked-policy; native deadline NOT_RUN and file-link EPERM separately skipped."
+    },
+    {
+      "id": "platform-003-full-suite",
+      "criterion_refs": [
+        "PLATFORM-003"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "test"
+      ],
+      "cwd": ".",
+      "state": "PASSED_WITH_TWO_BLOCKED_GATES",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-003-result.json",
+      "environment_ref": "Windows Node24.19.0; check-child-only QB_TEST_CP3_NATIVE_LOCK=blocked-policy; native deadline NOT_RUN and file-link EPERM separately skipped."
+    },
+    {
+      "id": "platform-003-verifier",
+      "criterion_refs": [
+        "PLATFORM-003"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "verify"
+      ],
+      "cwd": ".",
+      "state": "PASSED_WITH_TWO_BLOCKED_GATES",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-003-result.json",
+      "environment_ref": "Windows Node24.19.0; check-child-only QB_TEST_CP3_NATIVE_LOCK=blocked-policy; native deadline NOT_RUN and file-link EPERM separately skipped."
+    },
+    {
+      "id": "platform-003-targeted",
+      "criterion_refs": [
+        "PLATFORM-003"
+      ],
+      "kind": "automated",
+      "argv": [
+        "node.exe",
+        "--test",
+        "--test-reporter=tap",
+        "tests/control-plane-artifacts.test.mjs"
+      ],
+      "cwd": ".",
+      "state": "PASSED_WITH_TWO_BLOCKED_GATES",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-003-result.json"
+    },
+    {
+      "id": "platform-003-console-browser",
+      "criterion_refs": [
+        "PLATFORM-003"
+      ],
+      "kind": "automated",
+      "argv": [
+        "python",
+        ".local/platform-003-validation/browser-journey.py"
+      ],
+      "cwd": ".",
+      "state": "PASS_ORDINARY_BROWSER_JOURNEY",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-003-browser-console.json",
+      "note": "11 ordinary assertions/server0 observed; controlled CSP remains blocked; archived runner is execution evidence."
+    },
+    {
+      "id": "platform-004-build",
+      "criterion_refs": [
+        "PLATFORM-004"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "build"
+      ],
+      "cwd": ".",
+      "state": "PASSED",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-004-result.json"
+    },
+    {
+      "id": "platform-004-full-suite",
+      "criterion_refs": [
+        "PLATFORM-004"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "test"
+      ],
+      "cwd": ".",
+      "state": "PASSED",
+      "evidence_level": "real_integration",
+      "evidence_ref": ".brain/evidence/platform-004-result.json"
+    },
+    {
+      "id": "platform-004-verifier",
+      "criterion_refs": [
+        "PLATFORM-004"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "verify"
+      ],
+      "cwd": ".",
+      "state": "DEFERRED_USER_PRIORITY",
+      "evidence_level": "real_integration",
+      "note": "User instructed prioritize core works on 2026-10-01. Required npm test remains; duplicate verifier build/full-suite deferred absent a concrete verification need. NOT_RUN, not pass."
+    }
+  ],
+  "note": "Candidate-bound historical checks. PLATFORM-003 accessible local acceptance f24b79b9...: build0/full193pass2skip/verifier19files/ordinaryChrome11/independentreview; native deadline/file-link/CSP remain blocked. Runtime contract next; full program open. Workflow files do not enforce dispatch/approval."
+}

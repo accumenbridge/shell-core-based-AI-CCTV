@@ -1,0 +1,21 @@
+{
+  "schema": "quadbridge.platform-checkpoint.v1",
+  "task": "PLATFORM-005A",
+  "status": "STAGE_ONE_REQUIRES_NARROW_REPAIR",
+  "scope": "Independent store/source review only; app-local manager/driver implementation continues.",
+  "reviewer": "/root/repo_brain_architect (gpt-6.1-sol/high)",
+  "implementer": "/root/repo_brain_validation (gpt-6-luna/xhigh)",
+  "source": {
+    "packages/control-plane/src/index.ts": "ea5d3a684d9610b9933420aac86d969d42c901fcbe5073d535615588dcc4cde3",
+    "tests/managed-runtime-recovery-store.test.mjs": "ac13628862f3db5c5f1f058dd35a24e2197afab032a773636885ba606875ed2a"
+  },
+  "provenance": "Sol reported matching before/after review hashes; root independently read current source and matched both exact hashes. Worker reports fresh build exit0 and focused14of14, but raw build/run output and successful-run source binding are pending handoff. The native-host export was added after those reported checks; no current-source pass is inferred.",
+  "positiveFindings": ["Mutual runtime/recovery slot fences", "Original authorization after synchronous BEGIN"],
+  "repairs": [
+    "Allow positively stopped successful original-owner exits without inventing a STOP command; check successful STOP only when present.",
+    "RESTORE durable admission compares the backup's complete immutable identity with the captured runtime intent.",
+    "Positive exclusively owned predispatch staging cleanup can release only the exact undispatched recovery reservation; retain zero native facts. Unproved cleanup retains uncertainty and material.",
+    "The schema4 fixture must remove recovery tables before reopening, rather than merely relabeling schema5."
+  ],
+  "limitations": ["No native backup/restore invocation", "No paired API/Studio/browser recovery proof", "No full CP5A suite or whole-candidate acceptance", "No expanded fault/stress campaign under the user's core delivery priority"]
+}

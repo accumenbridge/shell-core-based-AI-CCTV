@@ -1,0 +1,47 @@
+TAP version 13
+# Subtest: complete definition round-trip preserves description, exact versions, custom binding identity and wiring
+ok 1 - complete definition round-trip preserves description, exact versions, custom binding identity and wiring
+  ---
+  duration_ms: 1.7826
+  type: 'test'
+  ...
+# Subtest: unsupported definition stays unchanged and returns diagnostics without a preview plan
+ok 2 - unsupported definition stays unchanged and returns diagnostics without a preview plan
+  ---
+  duration_ms: 0.329
+  type: 'test'
+  ...
+# Subtest: editor helpers are present in the offline browser bundle and remain pure data operations
+ok 3 - editor helpers are present in the offline browser bundle and remain pure data operations
+  ---
+  duration_ms: 4.9033
+  type: 'test'
+  ...
+# Subtest: inspection keeps supported HTTP bindings valid without claiming local launchability
+ok 4 - inspection keeps supported HTTP bindings valid without claiming local launchability
+  ---
+  duration_ms: 0.3376
+  type: 'test'
+  ...
+# Subtest: Products click and genuine hash navigation both render the catalogue while stale navigation stays selected
+ok 5 - Products click and genuine hash navigation both render the catalogue while stale navigation stays selected
+  ---
+  duration_ms: 6.8352
+  type: 'test'
+  ...
+# Subtest: product save uses an unchecked exact-version confirmation and sends only the current preview
+ok 6 - product save uses an unchecked exact-version confirmation and sends only the current preview
+  ---
+  duration_ms: 4.0041
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 126.9148
+EXIT_CODE=0

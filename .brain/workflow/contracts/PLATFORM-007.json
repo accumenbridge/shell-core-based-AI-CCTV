@@ -1,0 +1,59 @@
+{
+  "schema": "brain.task-contract.v1",
+  "taskId": "PLATFORM-007",
+  "title": "Complete canonical construction definition import/edit/preview/save/export/build",
+  "authorization": {
+    "kind": "authorized",
+    "reference": "Existing full local architecture build/do all authorization with explicit Sol/high planner and Luna/xhigh implementer and core-work priority; CP6 local Knowledge accepted."
+  },
+  "sourceTaskRef": ".brain/tasks/PLATFORM-007.md",
+  "owners": {
+    "coordinator": "/root",
+    "implementer": "/root/repo_brain_validation",
+    "reviewer": "/root/repo_brain_architect"
+  },
+  "allowedPaths": [
+    "packages/composition/src/studio.ts",
+    "tools/studio-catalogue.mjs",
+    "apps/control-plane/src/operator-server.ts",
+    "packages/control-plane/src/index.ts",
+    "apps/studio-web/src/main.ts",
+    "apps/studio-web/static/studio.css",
+    "visual/studio.js",
+    "visual/studio.css",
+    "tests/studio-integration.test.mjs",
+    "tests/control-plane-http.test.mjs",
+    "tests/studio-product-editor.test.mjs",
+    "tests/visual-edition.test.mjs",
+    "tests/control-plane-artifacts.test.mjs",
+    "README.md",
+    "docs/STUDIO_INTEGRATION.md",
+    "docs/STATUS.md"
+  ],
+  "excludedActions": [
+    "External repositories, credentials, entitlements, provider spending, deployment or global configuration",
+    "Offline filesystem/build/network privileges, arbitrary commands or executable runtime URLs",
+    "General multi-version catalogue, signing, installation, destructive uninstall or fault/stress campaign"
+  ],
+  "prerequisites": [
+    "PLATFORM-006 accepted local core at .brain/evidence/platform-006-result-01.json",
+    "Read PLATFORM-007 task and implementation-map-03; Brain-only edits at coordinated non-overlapping boundary"
+  ],
+  "criteria": [
+    {
+      "id": "BRAIN-REGRESSION",
+      "description": "Full semantic round trip with exact versions/description/nondefault bindings; unsupported declarations retained and rejected; paired exact preview/confirmed immutable save/new-version conflict and exact build; stale preview/session fences; offline no-network import/export; fresh build/required full-suite observation/exact independent source review and ordinary paired/offline browser.",
+      "evidenceScope": "Source-derived supported local construction only. Save owns control-plane records; offline is data-only; HTTP validity does not establish local launchability. Browser/provider/production evidence separate."
+    }
+  ],
+  "requiredRecipeIds": [
+    "brain-build"
+  ],
+  "requiredObservationRecipeIds": [
+    "brain-full-suite"
+  ],
+  "reviewRequirement": {
+    "required": true,
+    "independence": "independent_reported"
+  }
+}

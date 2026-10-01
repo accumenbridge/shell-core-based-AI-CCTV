@@ -1,0 +1,51 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "ACCEPTED_ACTUAL_FOCUSED_SCOPE_WITH_UNRESOLVED_PRIOR_RESTART_FAILURE",
+  "test_capture": "platform-004-artifact-test-final-boundaries-02.mjs.txt",
+  "test_sha256": "ec8f93da6e508a90716ce51fc08bf33bafa772f8c50fd1c76eeb46d4a864a39a",
+  "constructor_fixture_sha256": "e89382bb5bf6199387f29c491bf1c1d1248022b29fbe99bcef7e73a37316bdc3",
+  "checks": {
+    "tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "exit_code": 0,
+    "evidence": "platform-004-runtime-desk-final-boundaries-02.tap.txt",
+    "provenance": "Raw EXIT_CODE marker and complete TAP read by root; root matched source and fixture hashes."
+  },
+  "added_scope": "Canonical maintained LocalAccess.seed rolls back principals/grants after a later invalid seed, with independently committed constructor binding retained. Real owned Node process hits a deliberate SQLite binding trigger fault inside canonical constructor; parent observes code0/signalnull close before read-only reopening verifies rollback. These are canonical component/owned-process checks, not managed-supervisor enrollment-fault qualification. Real promoted Desk driveStartup completes actual native role/API readiness, then a wrapper pauses before RUNNING mutation; actual original-session logout precedes release, exact instance/operation is retained, response401, no advertised RUNNING/API-ready, positive EMPTY/helperClosed/executionClean and empty slot.",
+  "included_scope": "Previously reviewed real ENROLL/LAUNCH logout, external SQLite lock expiry, active crossprocess slot denial, Desk persistence/revocations and recursive public secret/path oracle also executed in this passing scenario. Separate runs are not aggregated into distinct tests.",
+  "failures": [
+    {
+      "evidence": "platform-004-runtime-desk-final-boundaries-01.tap.txt",
+      "state": "FAILED_INCOMPLETE_TAP",
+      "note": "Missing fixture await and discarded waitBounded close return caused two test failures. Desk readiness/logout scenario passed, but no complete run summary or raw exit marker exists; no complete-run count inferred.",
+      "later_completion": {
+        "note": "Earlier partial bytes retained separately. Writer observed exact runner/parent closure and PIDs absent; unawaited fixture q3-a3tVj0 retained. This is same failed run completing, not a new check or successful cleanup.",
+        "failed": 2,
+        "todo": 0,
+        "state": "FAILED_COMPLETE_AFTER_EXACT_OWNED_RUNNER_TERMINATION",
+        "skipped": 0,
+        "evidence": "platform-004-runtime-desk-final-boundaries-01-final-after-termination.tap.txt",
+        "cancelled": 0,
+        "tests": 3,
+        "exit_code": 1,
+        "passed": 1
+      }
+    },
+    {
+      "evidence": "platform-004-runtime-canonical-access-01.tap.txt",
+      "tests": 2,
+      "passed": 1,
+      "failed": 1,
+      "exit_code": 1,
+      "note": "SQLite null-prototype row failed equality to plain expected object despite same field values. Oracle corrected by copying own fields. No application-source repair."
+    }
+  ],
+  "prior_failure": "UNEXPLAINED_INTERMITTENT_RESTART_503 remains preserved in earlier gates01 evidence; passing reruns do not diagnose it.",
+  "remaining": "Native RuntimeProtocol variants, required-role failure, helper ambiguity/UNKNOWN reopen, compiler absence/frozen-copy independence, persisted cross-session actor/main lifecycle gates, browser, fresh full npm test/verifier and frozen exact-candidate review. CP4 remains IMPLEMENTING.",
+  "review": "Independent Sol/high read exact captured tests/fixture, matched first/last hashes and unchanged core, accepted bounded scope without new source blockers. Root matched core pins and raw complete TAP. Standalone constructor close does not qualify native supervisor fault injection."
+}

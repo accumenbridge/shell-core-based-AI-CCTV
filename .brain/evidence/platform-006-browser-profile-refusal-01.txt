@@ -1,0 +1,42 @@
+- complementary:
+  - text: Quadbridge Product Studio
+  - generic: Paired local operator
+  - navigation:
+    - button "Overview"
+    - button "Products"
+    - button "Modules"
+    - button "Ui"
+    - button "Backend"
+    - button "Ai"
+    - button "Data"
+    - button "Builds"
+    - button "Artifacts"
+    - button "Runtime Instances"
+    - button "Environments"
+    - button "Deployments"
+    - button "Audit"
+    - button "Operations"
+- main:
+  - generic: paired local control plane
+  - heading "Runtime Instances" [level=1]
+  - generic: Stored source records and validated local plans.
+  - generic: v0.3.0
+  - button "Disconnect"
+  - alert: The verified runtime source or process protocol changed.
+  - heading "Managed local runtime" [level=2]
+  - generic: local-only
+  - paragraph: Launch rechecks the pinned local process-owner profile; stored runtimes are never recovered by PID.
+  - paragraph: "Physical slot: EMPTY · 0 reserved bytes. UNKNOWN retains the slot and data until its original process owner proves an empty process tree."
+  - paragraph: A fixed local process starts only an exact promoted release. No hosted deployment or provider is attached.
+  - heading "Promoted releases" [level=2]
+  - paragraph: Choose the exact product version; start and restart require confirmation.
+  - article:
+    - heading "knowledge@0.2.1" [level=3]
+    - generic: Promoted local immutable release
+    - generic: promoted
+    - paragraph: c6a1f4b6afed13ae7f82ef7624ad5fd6d87bbaea08a853a58f55b3ae819c23a4
+    - checkbox "Start this exact promoted local release on this machine."
+    - text: Start this exact promoted local release on this machine.
+    - button "Start local runtime"
+  - heading "Runtime instances" [level=2]
+  - generic: No managed local runtime instances have been started.

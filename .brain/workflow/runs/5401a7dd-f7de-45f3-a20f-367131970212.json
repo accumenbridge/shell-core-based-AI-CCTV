@@ -1,0 +1,203 @@
+{
+  "schema": "brain.evidence-record.v1",
+  "kind": "run",
+  "id": "5401a7dd-f7de-45f3-a20f-367131970212",
+  "taskId": "BRAIN-005",
+  "recipeId": "brain-adoption",
+  "contractDigest": "dfb64576342f002cc03f88810169062c2e705f3d4880758de90ddfd2998c5b40",
+  "recipeDigest": "5a86426e92781f8149832edefc8a2d72d92cb65c087d7178ae4fcba3a843b7e4",
+  "candidate": {
+    "files": [
+      {
+        "path": "docs/brain/README.md",
+        "sha256": "e96c0327708388f4d9e43a745bade1885a93075bfa878d85c55def26fd8d5f31"
+      },
+      {
+        "path": "README.md",
+        "sha256": "23c5b6449aadac650acfad8d11f99e3871cf780b663fd66cf8129aa11b65a960"
+      },
+      {
+        "path": "tests/brain-atlas.test.mjs",
+        "sha256": "d2b42ca842123b054869618b2ccadbdefe69079fa20380217c8ddda30ab4c42d"
+      },
+      {
+        "path": "tests/brain-control.test.mjs",
+        "sha256": "427c7254288a99bb7dfead1502c43864199cfc142e965b703f9a4a08c333ba4d"
+      },
+      {
+        "path": "tests/brain-live.test.mjs",
+        "sha256": "1b09ee2a3245cc081556739e1588a60330ed8813f2dfe4c46de1e1686f12c218"
+      },
+      {
+        "path": "tests/brain-workflow.test.mjs",
+        "sha256": "3f80033e866c0182af08e68ddba7716f47ab31d84fc703c75cd5aabddb194fdf"
+      },
+      {
+        "path": "tools/brain-atlas.mjs",
+        "sha256": "a36e611b4f9cc2e57e92140508aaebc2474b081f3a25b855eae02c88633e9dfd"
+      },
+      {
+        "path": "tools/brain-control.mjs",
+        "sha256": "bda70affa741477f2e46f6042aa8c508aa4e5f6bdc0775c43fe63a3d9b46a9b4"
+      },
+      {
+        "path": "tools/brain-core.mjs",
+        "sha256": "76cb2593d8482b744fdd716f2afe03817e77cb43622c3d91a46e6d29104febc3"
+      },
+      {
+        "path": "tools/brain-live-ui.mjs",
+        "sha256": "557090ab6b1a9a0a6d48822c5393f01efd5555ee077db5131df6e74272273b51"
+      },
+      {
+        "path": "tools/brain-live.mjs",
+        "sha256": "da7dd0aed0f143a9f52b16df270f920a62aedd401f2a9a256182eac3b9f6e1f9"
+      },
+      {
+        "path": "tools/brain-readiness.mjs",
+        "sha256": "1b64287430cf87ae11d0ae9b280ee635705605c94568ef35481c589a6326471f"
+      },
+      {
+        "path": "tools/brain.mjs",
+        "sha256": "b092e88771a467230dd65c2dcdee548e5ff296320dcff4173f7d00ff2d8d0016"
+      }
+    ],
+    "digest": "421397fde93da06f05bb71a317f9c2ea351bc32ceea637088bba3a174268d525"
+  },
+  "recordedAt": "2026-10-01T11:18:20.542Z",
+  "command": {
+    "argv": [
+      "node",
+      "tools/brain.mjs",
+      "validate"
+    ],
+    "cwd": "."
+  },
+  "environment": {
+    "platform": "win32",
+    "node": "v24.19.0",
+    "observer": "/root coordinated named agents and direct observations"
+  },
+  "status": "PASSED",
+  "exitCode": 0,
+  "artifacts": [
+    {
+      "sourceRef": ".local/brain-005-candidate-verified.json",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-candidate-verified.json",
+      "sha256": "ae37c1d0d42faba766544300d5da272a95d0e00cfccc4e6f586a3d4f5825c33b",
+      "bytes": 1891
+    },
+    {
+      "sourceRef": ".local/brain-005-candidate-after-tests.json",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-candidate-after-tests.json",
+      "sha256": "1bdbfcfe14f375a222ecc45a6da0be70d90fa457cd4116d6027848e08420bd7d",
+      "bytes": 1891
+    },
+    {
+      "sourceRef": ".local/brain-005-observation-history.json",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-observation-history.json",
+      "sha256": "f9a82c3c9105d8acf18f88326731dbb665b2511f9d3830234798d34fd5a839af",
+      "bytes": 3966
+    },
+    {
+      "sourceRef": ".local/brain-005-adoption-validation.json",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-adoption-validation.json",
+      "sha256": "9b906cad631a363acf1a680da7bb8c1a36f78847919ff2e17da7f90b320ead14",
+      "bytes": 3790
+    },
+    {
+      "sourceRef": ".local/brain-005-preflight-before-reconcile.json",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-preflight-before-reconcile.json",
+      "sha256": "e8acebd7e9ada50acef7676877b608c86c4a9fd92cb9bf43d36455027e3c3f49",
+      "bytes": 4624
+    },
+    {
+      "sourceRef": ".local/brain-005-preflight-refusal-observation.json",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-preflight-refusal-observation.json",
+      "sha256": "8f333455f34406fe6a74ebfb571f9f0b0c393014449a79f37eeec7f6e321f12a",
+      "bytes": 2671
+    },
+    {
+      "sourceRef": ".local/brain-005-preflight-after-reconcile.json",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-preflight-after-reconcile.json",
+      "sha256": "bd2c82e353baaf88f6043526b755c35f58851a7e58e28608cbb4c97f8d7c9bb7",
+      "bytes": 3874
+    },
+    {
+      "sourceRef": ".local/brain-005-observation-browser.json",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-observation-browser.json",
+      "sha256": "136bda9d14b39bd9a02f0fb77c29ef24ea88c4875234e75706cccc551ab4fd95",
+      "bytes": 1359
+    },
+    {
+      "sourceRef": ".local/brain-005-visual-check.json",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-visual-check.json",
+      "sha256": "62e7df8756f808aa51217005ee3b5afe516b558e04b4be776eb0733f14382fe7",
+      "bytes": 1327
+    },
+    {
+      "sourceRef": ".local/brain-005-observation-desktop.png",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-observation-desktop.png",
+      "sha256": "327b4e122b91c7a96e7e70397c7ece6409d9bbebf7e2b346f29eb4ba349665a2",
+      "bytes": 111041
+    },
+    {
+      "sourceRef": ".local/brain-005-observation-mobile.png",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-observation-mobile.png",
+      "sha256": "aeaf19f6929462518d502a29c35e787ee6a910a715369f7623f0cc65d4905eff",
+      "bytes": 54685
+    },
+    {
+      "sourceRef": ".local/brain-005-observation-atlas.png",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-observation-atlas.png",
+      "sha256": "11231fa961ae55f8b456a475ac2fed2717e0cea7b31f9aec38a6b1b0c2371d17",
+      "bytes": 40724
+    },
+    {
+      "sourceRef": ".local/brain-005-workflow-initial-failure.txt",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-workflow-initial-failure.txt",
+      "sha256": "6dbc51f239a7641986e3521aa5720583f6578dcc81d19406d75db4cfbe97df10",
+      "bytes": 756
+    },
+    {
+      "sourceRef": ".local/brain-005-final-control-live.tap.txt",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-final-control-live.tap.txt",
+      "sha256": "96f2878547ea18ce01d8fbffe3f983fe8855d057dfb014da1d7530bdcbab6d99",
+      "bytes": 4149
+    },
+    {
+      "sourceRef": ".local/brain-005-final-atlas.tap.txt",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-final-atlas.tap.txt",
+      "sha256": "999b7d18828a679ac94db6842f2d107941cc9d8ea269b3c8deb572095a9183cc",
+      "bytes": 27539
+    },
+    {
+      "sourceRef": ".local/brain-005-candidate-final-control-live.tap.txt",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-candidate-final-control-live.tap.txt",
+      "sha256": "9596ffa1adf4fc43154cfc7860a2c10c9a540294a9f24945d03f0bd4897d0b9b",
+      "bytes": 4135
+    },
+    {
+      "sourceRef": ".local/brain-005-candidate-pre-expectation-corrections.json",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-candidate-pre-expectation-corrections.json",
+      "sha256": "5abd329d1e83b604a1b3d9482fcf1e303bcc7749ce9e14f9e8759d54e1afcfc7",
+      "bytes": 1891
+    },
+    {
+      "sourceRef": ".local/brain-005-candidate-pre-ordering-correction.json",
+      "path": ".brain/workflow/artifacts/5401a7dd-f7de-45f3-a20f-367131970212/brain-005-candidate-pre-ordering-correction.json",
+      "sha256": "9e829a401c0cc4334accdeb5d76b334f40832e6ca932cd05dba31352c6ce8f8d",
+      "bytes": 1891
+    }
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "Root actually ran node tools/brain.mjs validate --json exit0 in exec65a5c9. Readiness negative and reconciled positive preflight observations are separately attributed; browser partial qualification is retained."
+  },
+  "limitations": [
+    "Source review and local checks do not guarantee bug-free architecture or authenticate reported evidence.",
+    "Existing independent Codex work must follow the adopted entry workflow; Brain does not prevent arbitrary direct file edits.",
+    "Current platform has no managed execution profile; controller mode remains observation-only.",
+    "Full atlas visual qualification is not claimed from DOM checks; browser-policy observations remain distinct from passes."
+  ],
+  "integritySha256": "a758fa220cc70072723c7565544d904721d9d45423dc30611ca9f31401238a91"
+}

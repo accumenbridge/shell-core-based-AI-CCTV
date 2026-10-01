@@ -1,0 +1,57 @@
+{
+  "schema": "quadbridge.local-construction-result.v1",
+  "taskId": "PLATFORM-007",
+  "status": "IMPLEMENTED_CORE_WITH_BLOCKED_QUALIFICATION",
+  "candidate": "840e8716776771b30a1b8227c5a04c1795e7b41492695bea7db310e6d7230b96",
+  "contractDigest": "e3f6aac8c9087d292f930d70e6d55ecbb7114eb80e4b644e7c4e27149b1ab3ec",
+  "buildRunId": "84fc55ea-2703-430e-bb04-b7d785e8cc18",
+  "reviewId": "6090b2e7-269c-4af7-b65c-eaa927bc8e0a",
+  "suiteRunId": "a3cd9265-50cb-4527-94a1-45069d0b3a41",
+  "actualSuiteSession": 68314,
+  "actualSuiteExit": 1,
+  "counts": {
+    "tests": 302,
+    "passed": 299,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 2,
+    "todo": 0
+  },
+  "implemented": [
+    "Complete canonical ProductDefinition JSON import/edit/preview/save/export with exact module/binding identity and source-derived graph.",
+    "Exact authenticated saved-version reads and read-only previews; explicit confirmed immutable saves preserve equal idempotency/new version/conflict behavior.",
+    "Shared paired/offline pure composition helpers; offline remains data-only.",
+    "Existing fixed saved-definition build/register/promote/runtime controls retained."
+  ],
+  "actualPassedScopes": [
+    "Fresh build, independent exact source and one-line test repair reviews.",
+    "Full-suite complete-definition roundtrip, invalid input, pure offline controls and stale import tests.",
+    "Full-suite exact authenticated HTTP preview/save/new-version/conflict/build admission behavior.",
+    "Actual saved-definition native build/register/verify.",
+    "Actual frozen runtime, rebuild isolation, stop/restart, repaired WAL backup/absent-root restore/revoked-grant retention, Combined indexing/worker proof."
+  ],
+  "history": {
+    "firstCandidate": "feae2158e39dca364b28001d70d9ca78ca1486f3970e1aa5c49113c58e8e0026",
+    "firstSuiteRunId": "638c4356-1719-417d-9fd7-9509de6e3f04",
+    "firstActualExit": 1,
+    "firstCounts": {
+      "tests": 302,
+      "passed": 299,
+      "failed": 1,
+      "cancelled": 0,
+      "skipped": 2,
+      "todo": 0
+    },
+    "firstFailure": "ENOTEMPTY during checked test-owned data-root removal before restore. Bounded test-only fs.rm retry added; focused and later full WAL journey passed. Original failure retained."
+  },
+  "browserRef": ".brain/evidence/platform-007-browser-01.json",
+  "nextProposalRef": ".brain/evidence/platform-next-core-proposal-01.md",
+  "limitations": [
+    "Required ordinary paired/offline browser completion is blocked by Chrome extension file upload permission; earlier attempted save did not commit.",
+    "Latest full suite exit1: existing Windows cancellation/timeout fixture failed waiting for its owned descendant startup heartbeat. This invocation did not reach cancellation assertions. Two policy/environment skips remain blocked.",
+    "Latest native failure: tests/build-worker-process.test.mjs89, waitForMarker at62: Owned descendant did not start its marker heartbeat. No causal diagnosis, timeout weakening or additional edge campaign.",
+    "Whole-platform, ordinary browser completion, hosted identity/database, model inference and production/deployment acceptance remain open.",
+    "Exact16 platform and exact9 Brain manifests were matched before/after; no unchanged-whole-repository claim."
+  ],
+  "decision": "Root records implemented usable local construction core and actual checks, while leaving task BLOCKED because required browser qualification is incomplete. This is not acceptance of the complete contract or a clean full suite."
+}

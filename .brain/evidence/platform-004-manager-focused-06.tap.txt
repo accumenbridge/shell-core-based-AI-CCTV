@@ -1,0 +1,118 @@
+TAP version 13
+# Subtest: managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+ok 1 - managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+  ---
+  duration_ms: 23.829
+  type: 'test'
+  ...
+# Subtest: managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+ok 2 - managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+  ---
+  duration_ms: 4.2405
+  type: 'test'
+  ...
+# Subtest: schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+ok 3 - schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+  ---
+  duration_ms: 2.6187
+  type: 'test'
+  ...
+# Subtest: undispatched cleanup uncertainty cannot use JOB_EXIT and shutdown during STARTING fails the pending start
+ok 4 - undispatched cleanup uncertainty cannot use JOB_EXIT and shutdown during STARTING fails the pending start
+  ---
+  duration_ms: 4.154
+  type: 'test'
+  ...
+# Subtest: schema 4 additive dispatch migration treats legacy mutable uncertainty labels conservatively
+ok 5 - schema 4 additive dispatch migration treats legacy mutable uncertainty labels conservatively
+  ---
+  duration_ms: 22.805
+  type: 'test'
+  ...
+# Subtest: canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+ok 6 - canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+  ---
+  duration_ms: 6.9402
+  type: 'test'
+  ...
+# Subtest: fresh manager preparation writes only bounded enrollment inputs and rechecks authorization after canonical import
+ok 7 - fresh manager preparation writes only bounded enrollment inputs and rechecks authorization after canonical import
+  ---
+  duration_ms: 15.882
+  type: 'test'
+  ...
+# Subtest: owned execution cleanup removes only exact copied-workspace junctions and quarantines changed targets
+ok 8 - owned execution cleanup removes only exact copied-workspace junctions and quarantines changed targets
+  ---
+  duration_ms: 32.1649
+  type: 'test'
+  ...
+# Subtest: one-use runtime gate is published without a post-publication lookup that can race its consumer
+ok 9 - one-use runtime gate is published without a post-publication lookup that can race its consumer
+  ---
+  duration_ms: 586.6257
+  type: 'test'
+  ...
+# Subtest: original runtime owner can reconcile a late close and retry a rolled-back settlement audit
+ok 10 - original runtime owner can reconcile a late close and retry a rolled-back settlement audit
+  ---
+  duration_ms: 28.6597
+  type: 'test'
+  ...
+# Subtest: public close bounds an unresolved monitor and retries incomplete or rolled-back exact-owner settlement
+ok 11 - public close bounds an unresolved monitor and retries incomplete or rolled-back exact-owner settlement
+  ---
+  duration_ms: 3.2423
+  type: 'test'
+  ...
+# Subtest: terminal capture drains a coalesced startup tail when the event file has no new bytes
+ok 12 - terminal capture drains a coalesced startup tail when the event file has no new bytes
+  ---
+  duration_ms: 7.3217
+  type: 'test'
+  ...
+# Subtest: terminal capture rejects disappearance of an established event channel without erasing native exit proof
+ok 13 - terminal capture rejects disappearance of an established event channel without erasing native exit proof
+  ---
+  duration_ms: 6.2682
+  type: 'test'
+  ...
+# Subtest: late semantic event errors remain separate from a matching native empty and helper-close proof
+ok 14 - late semantic event errors remain separate from a matching native empty and helper-close proof
+  ---
+  duration_ms: 6.4458
+  type: 'test'
+  ...
+# Subtest: runtime start preserves an admission failure and does not settle or create an unowned execution
+ok 15 - runtime start preserves an admission failure and does not settle or create an unowned execution
+  ---
+  duration_ms: 453.5495
+  type: 'test'
+  ...
+# Subtest: verified snapshot copy preflights every path and digest before creating its destination
+ok 16 - verified snapshot copy preflights every path and digest before creating its destination
+  ---
+  duration_ms: 4.8406
+  type: 'test'
+  ...
+# Subtest: runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+ok 17 - runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+  ---
+  duration_ms: 159.7744
+  type: 'test'
+  ...
+# Subtest: a failed canonical LocalAccess seed leaves repair-required evidence and never publishes enrollment completion
+ok 18 - a failed canonical LocalAccess seed leaves repair-required evidence and never publishes enrollment completion
+  ---
+  duration_ms: 18.2929
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1418.8535

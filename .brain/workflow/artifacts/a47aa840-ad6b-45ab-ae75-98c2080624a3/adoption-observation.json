@@ -1,0 +1,31 @@
+{
+  "observedAt": "2026-10-01T06:00:30.528Z",
+  "snapshots": [
+    {
+      "sourceRef": ".brain/project.json",
+      "archiveRef": ".local/brain-001/adoption-0-project.json",
+      "sha256": "74c29db18a55d9ad94f9c390801b5ba9071f8137404ce92d130670a983be765f"
+    },
+    {
+      "sourceRef": ".brain/PROGRESS.md",
+      "archiveRef": ".local/brain-001/adoption-1-PROGRESS.md",
+      "sha256": "31d7ff7edf4c4f34d49ac47b78d9f9b86c142803580c872edea95173dff8329e"
+    },
+    {
+      "sourceRef": ".brain/checks.json",
+      "archiveRef": ".local/brain-001/adoption-2-checks.json",
+      "sha256": "5d7909f482a384e15d8a722ff3636225d961bdcfc68ce5ca3077ccb41470ef98"
+    },
+    {
+      "sourceRef": ".brain/tasks/PLATFORM-005A.md",
+      "archiveRef": ".local/brain-001/adoption-3-PLATFORM-005A.md",
+      "sha256": "90fc8c4a6b0d5ce11b596e6bba52305883a38027010d2f0882f7f6a70dce4fd7"
+    },
+    {
+      "sourceRef": ".brain/evidence/platform-004-result.json",
+      "archiveRef": ".local/brain-001/adoption-4-platform-004-result.json",
+      "sha256": "1cbbb30533f5323096e11208a084073a49d3a2efd4bc37f6750f7a2f8ff99b74"
+    }
+  ],
+  "limitation": "Reported point-in-time context; separate platform work may advance. No platform execution or acceptance by BRAIN-001."
+}

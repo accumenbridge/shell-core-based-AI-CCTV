@@ -1,0 +1,3032 @@
+{
+  "status": "AVAILABLE",
+  "project": {
+    "name": "Quadbridge Product Studio 0.3",
+    "canonical": {
+      "brief": ".brain/BRIEF.md",
+      "outcome": ".brain/OUTCOME.md",
+      "acceptance": ".brain/ACCEPTANCE.md",
+      "strategy": ".brain/STRATEGY.md",
+      "decisions": ".brain/DECISIONS.md",
+      "progress": ".brain/CURRENT.md",
+      "current_work": ".brain/tasks/PLATFORM-007.md"
+    },
+    "commandsFile": ".brain/workflow/recipes.json"
+  },
+  "selectedTaskId": "BRAIN-004",
+  "mappedCurrentTaskId": "PLATFORM-007",
+  "mappingChanged": false,
+  "sourceTask": {
+    "path": ".brain/tasks/BRAIN-004.md",
+    "excerpt": "# BRAIN-004 — live project oversight and bounded managed execution\n\nThe user authorized this increment with “ok do” after the 2026-10-01 audit, and explicitly authorized coordination with the platform implementation chat. That coordinator retains sole ownership of shared workflow checkpoints and PLATFORM-006. This task owns Brain tooling only.\n\nRepair contradictory-evidence qualification and the unbound planned-file lifecycle. Preserve immutable history and distinguish required passing checks from observation-only checks. Prepare a reusable local live dashboard that reads the canonical execution checkpoint alongside the atlas, shows freshness, current evidence, design gaps and expected outcomes, and never converts structural validity into product acceptance.\n\nAdd a bounded controller and Codex App Server stdio adapter. Managed orders bind project/root, approved plan, contract and candidate. Decisions reject stale bindings. Keep controller records outside the managed candidate workspace. Record actual managed execution events, candidate changes and fixed verification results separately from agent claims. Pause requires terminal acknowledgement; partial changes remain visible. Restart does not silently redispatch uncertain work. A managed patch proposal must not alter project authority or another project. Live operation governs only sessions created through this controller.\n\nKeep the existing offline atlas and OPEN_PLATFORM.html without execution privileges. Do not install OpenHands, change credentials/global Codex settings, deploy, merge or modify platform application code. No general shell endpoint or arbitrary browser-supplied filesystem paths. A local development controller is not a hostile-user security boundary; do not claim OS isolation or prevented reads without observed enforcement.\n\nScope: tools/brain-core.mjs; tools/brain-control.mjs; tools/brain-app-server.mjs; tools/brain-live.mjs; tools/brain-live-ui.mjs; tests/brain-workflow.test.mjs; tests/brain-control.test.mjs; tests/brain-live.test.mjs; docs/brain/CONTROL.md. Task/contract and task-specific evidence are coordinator-owned operational records. Shared recipes and package.json remain unchanged.\n\nThe preferred brawn implementation dispatch was attempted but rejected by the session agent limit. Root is the bounded implementation owner; /root/brain_oversight_plan supplies separate read-only planning and review. Existing platform writers must not be reverted.\n\nVerification: build before focused tests, required npm test at a coordinated build boundary, actual browser review of the live dashboard, actual local App Server handshake and a bounded feature proposal when the environment permits. Exercise stale decisions, conflicting evidence, missing planned files, cross-project identity rejection, late output after interruption and restart uncertainty. Record blocked or unrun provider/browser checks separately. Retain failed runs and the exact candidate identities.\n",
+    "totalBytes": 2978,
+    "truncated": false
+  },
+  "contract": {
+    "schema": "brain.task-contract.v1",
+    "taskId": "BRAIN-004",
+    "title": "Repair Brain qualification and add live managed project oversight",
+    "authorization": {
+      "kind": "authorized",
+      "reference": "User in review-astra-analyse the brain module and how it is used, 2026-10-01: ok do, after the audit and bounded prototype recommendation; explicit two-chat coordination reply."
+    },
+    "sourceTaskRef": ".brain/tasks/BRAIN-004.md",
+    "owners": {
+      "coordinator": "/root Brain implementation; shared checkpoint published by platform coordinator",
+      "implementer": "/root Brain implementation",
+      "reviewer": "/root/brain_oversight_plan"
+    },
+    "allowedPaths": [
+      "tools/brain-core.mjs",
+      "tools/brain-control.mjs",
+      "tools/brain-app-server.mjs",
+      "tools/brain-live.mjs",
+      "tools/brain-live-ui.mjs",
+      "tests/brain-workflow.test.mjs",
+      "tests/brain-control.test.mjs",
+      "tests/brain-live.test.mjs",
+      "docs/brain/CONTROL.md"
+    ],
+    "excludedActions": [
+      "Platform source, shared recipes or package.json edits",
+      "Changing global configuration, credentials, deployment or external repositories",
+      "Taking over unmanaged desktop conversations",
+      "Claiming model reports are independently observed evidence",
+      "Granting offline pages build or filesystem authority"
+    ],
+    "prerequisites": [
+      "Platform coordinator transitions maintenance from BRAIN-001 before changes to its accepted source"
+    ],
+    "criteria": [
+      {
+        "id": "BRAIN-CLI",
+        "description": "Qualification rejects unresolved contradictory evidence and planning supports absent future files without weakening bound candidate checks.",
+        "evidenceScope": "Focused CLI regressions."
+      },
+      {
+        "id": "BRAIN-RECORDS",
+        "description": "Managed records bind project, root, approved baseline, work order and candidate; actual execution is distinguished from reported claims.",
+        "evidenceScope": "Controller regressions and actual bounded run."
+      },
+      {
+        "id": "BRAIN-CHECKPOINT",
+        "description": "Stale decisions, interrupted output and restart uncertainty do not silently authorize work or acceptance.",
+        "evidenceScope": "Real controller lifecycle with deterministic adapter fixtures; live transport recorded separately."
+      },
+      {
+        "id": "BRAIN-ACCEPTANCE",
+        "description": "A bounded candidate requires observed checks and explicit current human disposition; worker cannot rewrite controller acceptance through its patch.",
+        "evidenceScope": "Managed candidate and decision tests."
+      },
+      {
+        "id": "BRAIN-ADOPTION",
+        "description": "The live view distinguishes canonical current execution, historical atlas observations, source drift, planning gaps and managed-session limits.",
+        "evidenceScope": "HTTP integration and actual browser review."
+      },
+      {
+        "id": "BRAIN-REGRESSION",
+        "description": "Fresh build, focused Brain checks and required full suite recorded with blocked/browser/provider limits preserved.",
+        "evidenceScope": "Candidate-specific local execution logs."
+      }
+    ],
+    "requiredRecipeIds": [
+      "brain-build",
+      "brain-focused",
+      "brain-control-focused"
+    ],
+    "requiredObservationRecipeIds": [
+      "brain-adoption",
+      "brain-full-suite"
+    ],
+    "reviewRequirement": {
+      "required": true,
+      "independence": "independent_reported"
+    }
+  },
+  "contractDigest": "4aa4223e13a277e22835b8f564ffe46affdd3c3e8ed99b821df32217b71f47e6",
+  "candidate": {
+    "files": [
+      {
+        "path": "docs/brain/CONTROL.md",
+        "sha256": "cd84b18b3fe11346a30c0a82199f363292f48efd31d40ed7070469f148e23709"
+      },
+      {
+        "path": "tests/brain-control.test.mjs",
+        "sha256": "c9b6eb5eba9e8cddf4698f1a31dce04dec243f680b432ae007d71165b3b80db0"
+      },
+      {
+        "path": "tests/brain-live.test.mjs",
+        "sha256": "299ec7925178a37ecae37f977aa830c3dd19afcf6e92d1702aeb692e4def382e"
+      },
+      {
+        "path": "tests/brain-workflow.test.mjs",
+        "sha256": "d478d508e6693ac0ff89047ea9b09e5d1f6e3cfd37d9d7bd0e2d91d52fef4db4"
+      },
+      {
+        "path": "tools/brain-app-server.mjs",
+        "sha256": "7bf18811b487a10a96505b0845f2a3966bf7cca866a5201583be971c2f6f46d7"
+      },
+      {
+        "path": "tools/brain-control.mjs",
+        "sha256": "4882a2dd66fc66e0cc3b8b23b2a57e1710fceec35a554401b974ffd9843acc21"
+      },
+      {
+        "path": "tools/brain-core.mjs",
+        "sha256": "d2fd69c0a88cc18aff1e3f9e645cea4275d1f1d3fbb0222df025044344bd82df"
+      },
+      {
+        "path": "tools/brain-live-ui.mjs",
+        "sha256": "b297b60105fc2b94e6f9cfbc654ae66ecd99d9bde75521b705f3c8f532492305"
+      },
+      {
+        "path": "tools/brain-live.mjs",
+        "sha256": "3401aa6bd5a853fb45a5310b1c6642e68dfc21664438c0eaa0fbee5c5cb883d0"
+      }
+    ],
+    "digest": "d775ce09f1ea6ac052142a2575c0bf8c1924b7ead2cd68225d961637f78f52c5"
+  },
+  "missingPlannedPaths": [],
+  "checkpoint": {
+    "pointer": {
+      "schema": "brain.current-pointer.v1",
+      "revision": 21,
+      "eventId": "ff7a53fa-275c-4564-8930-bce2fc0d0a6c",
+      "eventSha256": "64ed58cb56d7ec6158e6dd8b8f52574b1cfd50bebfa1ada8b803e7f97b84d5ac"
+    },
+    "taskState": {
+      "taskId": "BRAIN-004",
+      "status": "IMPLEMENTING",
+      "candidate": null,
+      "runIds": [],
+      "reviewIds": [],
+      "blockers": [],
+      "nextAction": "Other human-authorized Brain chat has applied coherent two-file CLI qualification/planned-file fixes and is verifying them at coordinated boundary. Remaining new controller files stay proposed until root platform full suite finishes. Root retains checkpoint ownership; nine-file candidate unbound until materialized.",
+      "gates": [
+        {
+          "id": "BRAIN-004-authorized",
+          "status": "REPORTED",
+          "evidenceRefs": [
+            ".brain/tasks/BRAIN-004.md"
+          ],
+          "limitations": [
+            "Root verified explicit human ok do and Yes—coordinate the two chats in review-astra-analyse the brain module and how it is used; other chat owns finite9 Brain-only source paths."
+          ]
+        },
+        {
+          "id": "BRAIN-001-history",
+          "status": "REPORTED",
+          "evidenceRefs": [
+            ".brain/workflow/events/57b477c0-c75d-45ac-aaef-928359d72d1a.json"
+          ],
+          "limitations": [
+            "Historical BRAIN-001 acceptance preserved in immutable events; no current BRAIN-004 execution qualification."
+          ]
+        },
+        {
+          "id": "BRAIN-004-execution",
+          "status": "NOT_RUN",
+          "evidenceRefs": [
+            ".brain/workflow/contracts/BRAIN-004.json"
+          ],
+          "limitations": [
+            "New declared files intentionally absent at READY/null. No proof of live controller or isolated execution."
+          ]
+        }
+      ]
+    },
+    "currentTasks": {
+      "platformTask": {
+        "taskId": "PLATFORM-007",
+        "status": "READY",
+        "candidate": null,
+        "runIds": [],
+        "reviewIds": [],
+        "blockers": [],
+        "nextAction": "Luna finite16 CP7 scratch proposal; independent Sol plan/review. Apply only after authorized Brain chat freezes nine-file source and completes its non-overlapping build/focused boundary. Root records actual evidence, then paired/offline browser and one frozen final required suite.",
+        "gates": [
+          {
+            "id": "CP6-local-prerequisite",
+            "status": "PASSED",
+            "evidenceRefs": [
+              ".brain/evidence/platform-006-result-01.json"
+            ],
+            "limitations": [
+              "Bounded local extractive core; two full-suite blocked skips and no hosted/provider/production inference."
+            ]
+          },
+          {
+            "id": "CP7-execution",
+            "status": "NOT_RUN",
+            "evidenceRefs": [
+              ".brain/tasks/PLATFORM-007.md",
+              ".brain/evidence/platform-007-implementation-map-03.md"
+            ],
+            "limitations": [
+              "Scratch proposal only; no maintained implementation, build, tests or browser qualification yet."
+            ]
+          }
+        ]
+      },
+      "maintenanceTask": {
+        "taskId": "BRAIN-004",
+        "status": "IMPLEMENTING",
+        "candidate": null,
+        "runIds": [],
+        "reviewIds": [],
+        "blockers": [],
+        "nextAction": "Other human-authorized Brain chat has applied coherent two-file CLI qualification/planned-file fixes and is verifying them at coordinated boundary. Remaining new controller files stay proposed until root platform full suite finishes. Root retains checkpoint ownership; nine-file candidate unbound until materialized.",
+        "gates": [
+          {
+            "id": "BRAIN-004-authorized",
+            "status": "REPORTED",
+            "evidenceRefs": [
+              ".brain/tasks/BRAIN-004.md"
+            ],
+            "limitations": [
+              "Root verified explicit human ok do and Yes—coordinate the two chats in review-astra-analyse the brain module and how it is used; other chat owns finite9 Brain-only source paths."
+            ]
+          },
+          {
+            "id": "BRAIN-001-history",
+            "status": "REPORTED",
+            "evidenceRefs": [
+              ".brain/workflow/events/57b477c0-c75d-45ac-aaef-928359d72d1a.json"
+            ],
+            "limitations": [
+              "Historical BRAIN-001 acceptance preserved in immutable events; no current BRAIN-004 execution qualification."
+            ]
+          },
+          {
+            "id": "BRAIN-004-execution",
+            "status": "NOT_RUN",
+            "evidenceRefs": [
+              ".brain/workflow/contracts/BRAIN-004.json"
+            ],
+            "limitations": [
+              "New declared files intentionally absent at READY/null. No proof of live controller or isolated execution."
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "records": [
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "0654d999-c751-46d3-a93c-0dce1c35e890",
+      "taskId": "BRAIN-001",
+      "recipeId": "brain-build",
+      "contractDigest": "1598b899bfda5901c8d127505f9130258e7acca7956c7991453361626e55ae7c",
+      "recipeDigest": "67124401b4ebb22c4673119b81f64f45d43aea195dd54cc2f2ba122c04442323",
+      "candidate": {
+        "files": [
+          {
+            "path": ".brain/ROUTING.md",
+            "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308"
+          },
+          {
+            "path": ".brain/START_HERE.md",
+            "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2"
+          },
+          {
+            "path": ".brain/WORKFLOW.md",
+            "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43"
+          },
+          {
+            "path": ".brain/workflow/recipes.json",
+            "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75"
+          },
+          {
+            "path": "package.json",
+            "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554"
+          },
+          {
+            "path": "tests/brain-workflow.test.mjs",
+            "sha256": "a8bd29c13f3a1fdf8aa2f37ca04662d35cccd647a6a1709111215846252654cd"
+          },
+          {
+            "path": "tools/brain-core.mjs",
+            "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b"
+          },
+          {
+            "path": "tools/brain.mjs",
+            "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e"
+          }
+        ],
+        "digest": "798ad1dc674657f87c4da66fdd55f919ad518929d67609240eef9eaa5846f1d5"
+      },
+      "recordedAt": "2026-10-01T06:02:03.386Z",
+      "command": {
+        "argv": [
+          "npm.cmd",
+          "run",
+          "build"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "os": "win32",
+        "executionRoot": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F\\source",
+        "sourceFingerprint": "3c6a0f636d8534476186c3607315a322cc8c39470a1d5b3956116d12449a951f",
+        "sourceIsolation": "Frozen portable copy; concurrent platform source changes are excluded.",
+        "hostProfile": "Existing selected private build-host profile copied unchanged; no credentials or policy changes."
+      },
+      "status": "PASSED",
+      "exitCode": 0,
+      "artifacts": [
+        {
+          "sourceRef": ".local/brain-001/build-final.log",
+          "path": ".brain/workflow/artifacts/0654d999-c751-46d3-a93c-0dce1c35e890/build-final.log",
+          "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+          "bytes": 454
+        },
+        {
+          "sourceRef": ".local/brain-001/candidate-final.json",
+          "path": ".brain/workflow/artifacts/0654d999-c751-46d3-a93c-0dce1c35e890/candidate-final.json",
+          "sha256": "dc55771d08d62ddaca6e449cc7ded692563eca2cf3d52fd54e25688c40602fd8",
+          "bytes": 1171
+        },
+        {
+          "sourceRef": ".local/brain-001/frozen-workspace-final.json",
+          "path": ".brain/workflow/artifacts/0654d999-c751-46d3-a93c-0dce1c35e890/frozen-workspace-final.json",
+          "sha256": "e6da84fdda55f7482acb8a00e89cf814ac60346a288822ac1355f5a24f2e053e",
+          "bytes": 1183
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root executed the named command through exec_command; saved complete output and observed actual process completion."
+      },
+      "limitations": [
+        "Build only; no runtime qualification."
+      ],
+      "integritySha256": "5c0268d678698fe6b1bd468912cddc85eb331dc5616f52a47fa34b92cd927252"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "review",
+      "id": "07f14a58-ea61-4c2a-b037-83476dac9bef",
+      "taskId": "BRAIN-001",
+      "contractDigest": "1598b899bfda5901c8d127505f9130258e7acca7956c7991453361626e55ae7c",
+      "candidate": {
+        "files": [
+          {
+            "path": ".brain/ROUTING.md",
+            "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308"
+          },
+          {
+            "path": ".brain/START_HERE.md",
+            "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2"
+          },
+          {
+            "path": ".brain/WORKFLOW.md",
+            "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43"
+          },
+          {
+            "path": ".brain/workflow/recipes.json",
+            "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75"
+          },
+          {
+            "path": "package.json",
+            "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554"
+          },
+          {
+            "path": "tests/brain-workflow.test.mjs",
+            "sha256": "a8bd29c13f3a1fdf8aa2f37ca04662d35cccd647a6a1709111215846252654cd"
+          },
+          {
+            "path": "tools/brain-core.mjs",
+            "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b"
+          },
+          {
+            "path": "tools/brain.mjs",
+            "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e"
+          }
+        ],
+        "digest": "798ad1dc674657f87c4da66fdd55f919ad518929d67609240eef9eaa5846f1d5"
+      },
+      "recordedAt": "2026-10-01T06:16:05.280Z",
+      "reviewer": "/root/brain_state_review",
+      "implementer": "/root/brain_implementation; sequential test handoff /root/brain_tests",
+      "independence": "independent_reported",
+      "outcome": "ACCEPTED",
+      "scope": "Exact BRAIN-001 development tooling candidate and adoption; passing build/focused/adoption plus actual failed full-suite observation. No platform acceptance.",
+      "artifacts": [
+        {
+          "sourceRef": ".local/brain-001/review-evidence.json",
+          "path": ".brain/workflow/artifacts/07f14a58-ea61-4c2a-b037-83476dac9bef/review-evidence.json",
+          "sha256": "d7a6fc649b7f9474ab54b6205b12a79b86be3a4ed3b9821d17d87cd0eb408cc9",
+          "bytes": 1794
+        },
+        {
+          "sourceRef": ".local/brain-001/candidate-final.json",
+          "path": ".brain/workflow/artifacts/07f14a58-ea61-4c2a-b037-83476dac9bef/candidate-final.json",
+          "sha256": "dc55771d08d62ddaca6e449cc7ded692563eca2cf3d52fd54e25688c40602fd8",
+          "bytes": 1171
+        },
+        {
+          "sourceRef": ".local/brain-001/verification-after.json",
+          "path": ".brain/workflow/artifacts/07f14a58-ea61-4c2a-b037-83476dac9bef/verification-after.json",
+          "sha256": "78308a4f02d941c80f8bc92ab8e2401ed95aac17d6dc567cef8e87b3df31116c",
+          "bytes": 495
+        },
+        {
+          "sourceRef": ".brain/workflow/contracts/BRAIN-001.json",
+          "path": ".brain/workflow/artifacts/07f14a58-ea61-4c2a-b037-83476dac9bef/BRAIN-001.json",
+          "sha256": "1598b899bfda5901c8d127505f9130258e7acca7956c7991453361626e55ae7c",
+          "bytes": 2829
+        },
+        {
+          "sourceRef": ".local/brain-001/final-candidate-files/.brain/ROUTING.md",
+          "path": ".brain/workflow/artifacts/07f14a58-ea61-4c2a-b037-83476dac9bef/ROUTING.md",
+          "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308",
+          "bytes": 4693
+        },
+        {
+          "sourceRef": ".local/brain-001/final-candidate-files/.brain/START_HERE.md",
+          "path": ".brain/workflow/artifacts/07f14a58-ea61-4c2a-b037-83476dac9bef/START_HERE.md",
+          "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2",
+          "bytes": 3136
+        },
+        {
+          "sourceRef": ".local/brain-001/final-candidate-files/.brain/WORKFLOW.md",
+          "path": ".brain/workflow/artifacts/07f14a58-ea61-4c2a-b037-83476dac9bef/WORKFLOW.md",
+          "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43",
+          "bytes": 8630
+        },
+        {
+          "sourceRef": ".local/brain-001/final-candidate-files/.brain/workflow/recipes.json",
+          "path": ".brain/workflow/artifacts/07f14a58-ea61-4c2a-b037-83476dac9bef/recipes.json",
+          "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75",
+          "bytes": 1792
+        },
+        {
+          "sourceRef": ".local/brain-001/final-candidate-files/package.json",
+          "path": ".brain/workflow/artifacts/07f14a58-ea61-4c2a-b037-83476dac9bef/package.json",
+          "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554",
+          "bytes": 1227
+        },
+        {
+          "sourceRef": ".local/brain-001/final-candidate-files/tests/brain-workflow.test.mjs",
+          "path": ".brain/workflow/artifacts/07f14a58-ea61-4c2a-b037-83476dac9bef/brain-workflow.test.mjs",
+          "sha256": "a8bd29c13f3a1fdf8aa2f37ca04662d35cccd647a6a1709111215846252654cd",
+          "bytes": 27991
+        },
+        {
+          "sourceRef": ".local/brain-001/final-candidate-files/tools/brain-core.mjs",
+          "path": ".brain/workflow/artifacts/07f14a58-ea61-4c2a-b037-83476dac9bef/brain-core.mjs",
+          "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b",
+          "bytes": 69229
+        },
+        {
+          "sourceRef": ".local/brain-001/final-candidate-files/tools/brain.mjs",
+          "path": ".brain/workflow/artifacts/07f14a58-ea61-4c2a-b037-83476dac9bef/brain.mjs",
+          "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e",
+          "bytes": 7828
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "Actual separate /root/brain_state_review final message to root via collaboration tools on 2026-10-01; root records its attributed decision."
+      },
+      "limitations": [
+        "Reviewer performed read-only source/evidence/integrity checks; did not execute builds/tests.",
+        "Full repository suite remains FAILED: 252 passed, one unresolved registry publication proof failure, two blocked skips. Failure cause is not established.",
+        "No new platform, browser, provider or production qualification. Agent identity and execution are attributed, not authenticated by this CLI."
+      ],
+      "integritySha256": "860aa8a3f30b29871eaa50e150ce802a27661288eb2fb3139aa7cc96e5f9cdf9"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "08fc7388-aec2-46a5-b2ee-98bcdd965266",
+      "taskId": "BRAIN-001",
+      "recipeId": "brain-focused",
+      "contractDigest": "1598b899bfda5901c8d127505f9130258e7acca7956c7991453361626e55ae7c",
+      "recipeDigest": "cc232e419c81a34a616d5885fe7c7602eb95988643943f5f68e51cfd648fd485",
+      "candidate": {
+        "files": [
+          {
+            "path": ".brain/ROUTING.md",
+            "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308"
+          },
+          {
+            "path": ".brain/START_HERE.md",
+            "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2"
+          },
+          {
+            "path": ".brain/WORKFLOW.md",
+            "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43"
+          },
+          {
+            "path": ".brain/workflow/recipes.json",
+            "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75"
+          },
+          {
+            "path": "package.json",
+            "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554"
+          },
+          {
+            "path": "tests/brain-workflow.test.mjs",
+            "sha256": "8b9631ab00293f85f4ecaabc4c539bc2e4cb8d509817ada9ced316168bb53569"
+          },
+          {
+            "path": "tools/brain-core.mjs",
+            "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b"
+          },
+          {
+            "path": "tools/brain.mjs",
+            "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e"
+          }
+        ],
+        "digest": "15957c3e789c6a54f0c289920ee6bb2d92b35a0fd13a08577a82a90104b151ed"
+      },
+      "recordedAt": "2026-10-01T06:02:03.299Z",
+      "command": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-reporter=tap",
+          "tests/brain-workflow.test.mjs"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "os": "win32",
+        "executionRoot": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F\\source",
+        "sourceFingerprint": "02c6cde1b90cd7961b888dd33f92cd8f704043bbca26a92e2f453a8e49ef232b",
+        "sourceIsolation": "Frozen portable copy; concurrent platform source changes are excluded.",
+        "hostProfile": "Existing selected private build-host profile copied unchanged; no credentials or policy changes."
+      },
+      "status": "FAILED",
+      "exitCode": 1,
+      "counts": {
+        "tests": 10,
+        "passed": 6,
+        "failed": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "artifacts": [
+        {
+          "sourceRef": ".local/brain-001/focused.tap.txt",
+          "path": ".brain/workflow/artifacts/08fc7388-aec2-46a5-b2ee-98bcdd965266/focused.tap.txt",
+          "sha256": "30d8b68926a0493594d2c63dbef7bc216bc4b3bedfe11f81fc8754c74839200b",
+          "bytes": 16694
+        },
+        {
+          "sourceRef": ".local/brain-001/candidate-before.json",
+          "path": ".brain/workflow/artifacts/08fc7388-aec2-46a5-b2ee-98bcdd965266/candidate-before.json",
+          "sha256": "f2b349e3684a67e1764c3ee393382e08ca6924ec888a639a6c706c92fa140212",
+          "bytes": 1171
+        },
+        {
+          "sourceRef": ".local/brain-001/frozen-workspace.json",
+          "path": ".brain/workflow/artifacts/08fc7388-aec2-46a5-b2ee-98bcdd965266/frozen-workspace.json",
+          "sha256": "abdfb16fc5091db61164058787446c37fb6ade721c93d88f1740843c0bb4d0c7",
+          "bytes": 932
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root executed the named command through exec_command; saved complete output and observed actual process completion."
+      },
+      "limitations": [
+        "Four test fixture defects; failed result retained. Corrected-candidate execution is a separate record."
+      ],
+      "integritySha256": "1851b5f7c7b9f80443a2248a157f6c072c823f7ad332467eaac8e993e4d0b498"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "0aa4e527-3ed7-4585-8863-8e43ce8eea92",
+      "taskId": "BRAIN-001",
+      "recipeId": "brain-adoption",
+      "contractDigest": "1598b899bfda5901c8d127505f9130258e7acca7956c7991453361626e55ae7c",
+      "recipeDigest": "5a86426e92781f8149832edefc8a2d72d92cb65c087d7178ae4fcba3a843b7e4",
+      "candidate": {
+        "files": [
+          {
+            "path": ".brain/ROUTING.md",
+            "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308"
+          },
+          {
+            "path": ".brain/START_HERE.md",
+            "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2"
+          },
+          {
+            "path": ".brain/WORKFLOW.md",
+            "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43"
+          },
+          {
+            "path": ".brain/workflow/recipes.json",
+            "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75"
+          },
+          {
+            "path": "package.json",
+            "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554"
+          },
+          {
+            "path": "tests/brain-workflow.test.mjs",
+            "sha256": "a8bd29c13f3a1fdf8aa2f37ca04662d35cccd647a6a1709111215846252654cd"
+          },
+          {
+            "path": "tools/brain-core.mjs",
+            "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b"
+          },
+          {
+            "path": "tools/brain.mjs",
+            "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e"
+          }
+        ],
+        "digest": "798ad1dc674657f87c4da66fdd55f919ad518929d67609240eef9eaa5846f1d5"
+      },
+      "recordedAt": "2026-10-01T06:02:03.541Z",
+      "command": {
+        "argv": [
+          "node",
+          "tools/brain.mjs",
+          "validate"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "os": "win32",
+        "executionRoot": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS",
+        "scope": "Actual project workflow adoption at revision 2"
+      },
+      "status": "PASSED",
+      "exitCode": 0,
+      "artifacts": [
+        {
+          "sourceRef": ".local/brain-001/adoption-validate.log",
+          "path": ".brain/workflow/artifacts/0aa4e527-3ed7-4585-8863-8e43ce8eea92/adoption-validate.log",
+          "sha256": "ff3624df488dd5f4c2ae1547b14eb2d7dd3cbcbf93c99023d70cbdc98384dfef",
+          "bytes": 66
+        },
+        {
+          "sourceRef": ".local/brain-001/context-after-adoption.json",
+          "path": ".brain/workflow/artifacts/0aa4e527-3ed7-4585-8863-8e43ce8eea92/context-after-adoption.json",
+          "sha256": "1d04082cd863d5c93b8f22b5709c87810a351bed68dde46136e7e1b25b10369d",
+          "bytes": 16687
+        },
+        {
+          "sourceRef": ".local/brain-001/adoption-observation.json",
+          "path": ".brain/workflow/artifacts/0aa4e527-3ed7-4585-8863-8e43ce8eea92/adoption-observation.json",
+          "sha256": "206970affbaeb1d7c99e07bcda7edab9049e08df99a78815b7f8617b20ddae1d",
+          "bytes": 1258
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root executed the named command through exec_command; saved complete output and observed actual process completion."
+      },
+      "limitations": [
+        "Project metadata integrity only. Imported platform state remains unqualified and may advance separately."
+      ],
+      "integritySha256": "fcf02578e4f9cfe561c3a4000c2c8b8a45a2c0e50dc0bb23f4d7a1aed135b969"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "12bf1f3c-22c8-4ff8-94c1-a5bb61d6b431",
+      "taskId": "PLATFORM-005A-CORE",
+      "recipeId": "brain-build",
+      "contractDigest": "62b56271c4802a4570e6dff06315a1da5915cc2de37081a5b03527ab27a70914",
+      "recipeDigest": "67124401b4ebb22c4673119b81f64f45d43aea195dd54cc2f2ba122c04442323",
+      "candidate": {
+        "files": [
+          {
+            "path": "apps/control-plane/src/build-inputs.ts",
+            "sha256": "8536915eda4de98fca5c2ed23a8a83c1752d8eaf681647d26ff20274b85e9c72"
+          },
+          {
+            "path": "apps/control-plane/src/main.ts",
+            "sha256": "4eea7a1c88c1a97c42b7b6737a2d6e0615d2394bc7e3eae9d1ea0bba0ef9ea7a"
+          },
+          {
+            "path": "apps/control-plane/src/operator-server.ts",
+            "sha256": "0d02e1b136d135807461a1fbbcad423b8aaf7e3c691b6d27503eaf625f3b8989"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-manager.ts",
+            "sha256": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-recovery.ts",
+            "sha256": "02f9fdb51c5cbfac1a12d92ae19e861fdc3ee03626a462979b8a31bea90e3f1d"
+          },
+          {
+            "path": "apps/studio-web/src/main.ts",
+            "sha256": "c1eea89928f157dc3178ff9e2d27e4f2deb744d8fad4beb018b7176166a8d902"
+          },
+          {
+            "path": "docs/STATUS.md",
+            "sha256": "cd5ed9853ea4c11d94a9a859b560b83d6cff6dd0d8ec976f6ec3a43e94c6e8fa"
+          },
+          {
+            "path": "docs/STUDIO_INTEGRATION.md",
+            "sha256": "d7c4a023101c7e5dcc96067eb25cbfb0fb37266290a3d65aca8b6ccaaf87abec"
+          },
+          {
+            "path": "IMPLEMENTATION_STATUS_0.3.md",
+            "sha256": "0ee835c626c5f3e18199431387358dc8c4d02213edfe2e12e75cb3a6724c6be4"
+          },
+          {
+            "path": "packages/control-plane/src/index.ts",
+            "sha256": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5"
+          },
+          {
+            "path": "PLATFORM_ARCHITECTURE.md",
+            "sha256": "91c3a71e9f68d426a9fe3396ad5bcc49a846d4c101bb4369867e3f8115fa4180"
+          },
+          {
+            "path": "README.md",
+            "sha256": "900ad12067a90378fc82b47441ca3473c671e6816d923dbc3bc34aa9c2c38eb9"
+          },
+          {
+            "path": "tests/control-plane-artifacts.test.mjs",
+            "sha256": "1cc88fa06ba21b2a76b93a25360c4d32e0705e875ec8064d0443d1d65a003278"
+          },
+          {
+            "path": "tests/control-plane-build-host.test.mjs",
+            "sha256": "c5941bdcc1e28ec70d61bd3c745dcacb304c4c8d84316afad3381650cfecfdf6"
+          },
+          {
+            "path": "tests/control-plane-http.test.mjs",
+            "sha256": "c3a59b4d3ad0e5f91b18c92c0a1af93e4be634b848f3568f28b8ae65e98e58cb"
+          },
+          {
+            "path": "tests/control-plane-main.test.mjs",
+            "sha256": "b278b7117e7535d6380943756366c20a87f527a7965f7c4e9e8d87786e631861"
+          },
+          {
+            "path": "tests/control-plane.test.mjs",
+            "sha256": "3304f9ff64a01a81d6effb71a723136e6cbc711b7ef31a7924f64f46864884f2"
+          },
+          {
+            "path": "tests/managed-runtime-recovery-store.test.mjs",
+            "sha256": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+          },
+          {
+            "path": "tests/managed-runtime-store.test.mjs",
+            "sha256": "2de1db607bf5aa8a93b81b15eaacc152383634466f80501a0884283598222de1"
+          },
+          {
+            "path": "tests/studio-runtime-ui.test.mjs",
+            "sha256": "3fe82fa020cc550be44dd2fc8c4494373eeb1ee4da0fb6e79b6875ca33d20ef7"
+          },
+          {
+            "path": "tools/runtime-recovery-publish.ps1",
+            "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+          },
+          {
+            "path": "tools/runtime-recovery.mjs",
+            "sha256": "8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35"
+          }
+        ],
+        "digest": "0e1661168ae21880af8c4fb2b6498c147e81e66e08ce231a4170b8acff9a3fef"
+      },
+      "recordedAt": "2026-10-01T07:18:06.411Z",
+      "command": {
+        "argv": [
+          "npm.cmd",
+          "run",
+          "build"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "os": "win32",
+        "node": "v24.19.0"
+      },
+      "status": "PASSED",
+      "exitCode": 0,
+      "artifacts": [
+        {
+          "sourceRef": ".local/platform-005a-final-build-02.log",
+          "path": ".brain/workflow/artifacts/12bf1f3c-22c8-4ff8-94c1-a5bb61d6b431/platform-005a-final-build-02.log",
+          "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+          "bytes": 454
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-final-candidate-02.json",
+          "path": ".brain/workflow/artifacts/12bf1f3c-22c8-4ff8-94c1-a5bb61d6b431/platform-005a-final-candidate-02.json",
+          "sha256": "f1c605001316d74becd52e72bb0b380df401a3bd83dd83ab3baf0384cfaa912b",
+          "bytes": 4493
+        },
+        {
+          "sourceRef": ".local/platform-005a-build-host-fixture-fix-focused-01.tap.txt",
+          "path": ".brain/workflow/artifacts/12bf1f3c-22c8-4ff8-94c1-a5bb61d6b431/platform-005a-build-host-fixture-fix-focused-01.tap.txt",
+          "sha256": "e94d869719e133e484d97567d3648984c74f58fd2f93d859f742b4d479e571db",
+          "bytes": 409
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root observed actual fresh build02 exec_command exit0 and exact22-filecandidate unchanged before/after; worker focused fixture repair separately attributed."
+      },
+      "limitations": [
+        "Build only, no browser/provider qualification.",
+        "Earlier full suite failed and remains immutable; revised required rerun pending.",
+        "Ancillary Atlas work excluded; no unchanged whole-repository claim."
+      ],
+      "integritySha256": "e0cb67c8836fd227b59cb05256380208a96471c75dbb1f4e9395826f2910467d"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "1e87e4bf-fa01-4e88-8f3c-b5855e6a7000",
+      "taskId": "PLATFORM-005A-CORE",
+      "recipeId": "brain-build",
+      "contractDigest": "09d0ac04d25c84ead4857b38e016c3ad248e7eae36094e3f83d17aba9599f12d",
+      "recipeDigest": "67124401b4ebb22c4673119b81f64f45d43aea195dd54cc2f2ba122c04442323",
+      "candidate": {
+        "files": [
+          {
+            "path": "apps/control-plane/src/build-inputs.ts",
+            "sha256": "8536915eda4de98fca5c2ed23a8a83c1752d8eaf681647d26ff20274b85e9c72"
+          },
+          {
+            "path": "apps/control-plane/src/main.ts",
+            "sha256": "4eea7a1c88c1a97c42b7b6737a2d6e0615d2394bc7e3eae9d1ea0bba0ef9ea7a"
+          },
+          {
+            "path": "apps/control-plane/src/operator-server.ts",
+            "sha256": "0d02e1b136d135807461a1fbbcad423b8aaf7e3c691b6d27503eaf625f3b8989"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-manager.ts",
+            "sha256": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-recovery.ts",
+            "sha256": "02f9fdb51c5cbfac1a12d92ae19e861fdc3ee03626a462979b8a31bea90e3f1d"
+          },
+          {
+            "path": "apps/studio-web/src/main.ts",
+            "sha256": "c1eea89928f157dc3178ff9e2d27e4f2deb744d8fad4beb018b7176166a8d902"
+          },
+          {
+            "path": "docs/STATUS.md",
+            "sha256": "cd5ed9853ea4c11d94a9a859b560b83d6cff6dd0d8ec976f6ec3a43e94c6e8fa"
+          },
+          {
+            "path": "docs/STUDIO_INTEGRATION.md",
+            "sha256": "d7c4a023101c7e5dcc96067eb25cbfb0fb37266290a3d65aca8b6ccaaf87abec"
+          },
+          {
+            "path": "IMPLEMENTATION_STATUS_0.3.md",
+            "sha256": "0ee835c626c5f3e18199431387358dc8c4d02213edfe2e12e75cb3a6724c6be4"
+          },
+          {
+            "path": "packages/control-plane/src/index.ts",
+            "sha256": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5"
+          },
+          {
+            "path": "PLATFORM_ARCHITECTURE.md",
+            "sha256": "91c3a71e9f68d426a9fe3396ad5bcc49a846d4c101bb4369867e3f8115fa4180"
+          },
+          {
+            "path": "README.md",
+            "sha256": "900ad12067a90378fc82b47441ca3473c671e6816d923dbc3bc34aa9c2c38eb9"
+          },
+          {
+            "path": "tests/control-plane-artifacts.test.mjs",
+            "sha256": "1cc88fa06ba21b2a76b93a25360c4d32e0705e875ec8064d0443d1d65a003278"
+          },
+          {
+            "path": "tests/control-plane-http.test.mjs",
+            "sha256": "c3a59b4d3ad0e5f91b18c92c0a1af93e4be634b848f3568f28b8ae65e98e58cb"
+          },
+          {
+            "path": "tests/control-plane-main.test.mjs",
+            "sha256": "b278b7117e7535d6380943756366c20a87f527a7965f7c4e9e8d87786e631861"
+          },
+          {
+            "path": "tests/control-plane.test.mjs",
+            "sha256": "3304f9ff64a01a81d6effb71a723136e6cbc711b7ef31a7924f64f46864884f2"
+          },
+          {
+            "path": "tests/managed-runtime-recovery-store.test.mjs",
+            "sha256": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+          },
+          {
+            "path": "tests/managed-runtime-store.test.mjs",
+            "sha256": "2de1db607bf5aa8a93b81b15eaacc152383634466f80501a0884283598222de1"
+          },
+          {
+            "path": "tests/studio-runtime-ui.test.mjs",
+            "sha256": "3fe82fa020cc550be44dd2fc8c4494373eeb1ee4da0fb6e79b6875ca33d20ef7"
+          },
+          {
+            "path": "tools/runtime-recovery-publish.ps1",
+            "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+          },
+          {
+            "path": "tools/runtime-recovery.mjs",
+            "sha256": "8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35"
+          }
+        ],
+        "digest": "f634e1d37e4aa7e74a7a87c513e73f069a8314a681b70f3730f911b76993d03d"
+      },
+      "recordedAt": "2026-10-01T07:09:09.822Z",
+      "command": {
+        "argv": [
+          "npm.cmd",
+          "run",
+          "build"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "os": "win32",
+        "scope": "Actual root npm.cmd run build. CP5 exact manifest captured before invocation remains unchanged after build; ancillary Atlas edit is separately reconciled."
+      },
+      "status": "PASSED",
+      "exitCode": 0,
+      "artifacts": [
+        {
+          "sourceRef": ".local/platform-005a-final-build-01.log",
+          "path": ".brain/workflow/artifacts/1e87e4bf-fa01-4e88-8f3c-b5855e6a7000/platform-005a-final-build-01.log",
+          "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+          "bytes": 454
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-final-candidate-01.json",
+          "path": ".brain/workflow/artifacts/1e87e4bf-fa01-4e88-8f3c-b5855e6a7000/platform-005a-final-candidate-01.json",
+          "sha256": "984ddc4b96e360ddb250d0c2d82b4093ffe0be145a49e21b2a54bcf1d37db63b",
+          "bytes": 31819
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-ancillary-change-01.json",
+          "path": ".brain/workflow/artifacts/1e87e4bf-fa01-4e88-8f3c-b5855e6a7000/platform-005a-ancillary-change-01.json",
+          "sha256": "3754f2424433bebb19d4b3928d3ca2e424ccf6a36cf1a345251fe10960f7a21e",
+          "bytes": 748
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root observed actual exec_command completion exit0, saved full npm output, and verified unchanged task candidate."
+      },
+      "limitations": [
+        "Build only; no runtime/browser/provider acceptance from compilation.",
+        "The broad197-file inventory changed solely in unrelated tools/brain-atlas.mjs; no unchanged broad-source claim. CP5 exact task manifest remains stable."
+      ],
+      "integritySha256": "377d0445f50a549f76c80a6be80eb6da5d19ccced590eaf90c7a0097f715c907"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "3674c388-b3fb-43f2-964e-3666447b6e74",
+      "taskId": "PLATFORM-006",
+      "recipeId": "brain-build",
+      "contractDigest": "86c15ccebff51f1ddc0b6193ecf4d05ea7cb2c6d6f969f350139b2500ee93f15",
+      "recipeDigest": "67124401b4ebb22c4673119b81f64f45d43aea195dd54cc2f2ba122c04442323",
+      "candidate": {
+        "files": [
+          {
+            "path": "apps/control-plane/src/source-import.ts",
+            "sha256": "dac9c38a03a6adb0993cdcf9e25ac121a07c247e063598960593874e20f02a25"
+          },
+          {
+            "path": "apps/runtime/package.json",
+            "sha256": "5f6b26f50da3e23e8623e8cdded3dc292c8fe095487160849ca2f2dd72aaa93c"
+          },
+          {
+            "path": "docs/STATUS.md",
+            "sha256": "d130b7efbd0fcf5bfe296a1aff5a72e3ca2d26991eb81279fed6d22015fb7593"
+          },
+          {
+            "path": "IMPLEMENTATION_STATUS_0.3.md",
+            "sha256": "bed43db35e029b2bb512c31a96918c3e71d3786637e360b714689f9a0f1656fd"
+          },
+          {
+            "path": "modules/handoff/module.json",
+            "sha256": "8611a8a506ac03d097ef832c7579ad8d63409f9cfc12b5c728a4be46ecebf4d3"
+          },
+          {
+            "path": "modules/handoff/package.json",
+            "sha256": "dbf855deb04eddafb0b03d6c4c821c34c08c24f329a6f112ca1c0bafb00917b1"
+          },
+          {
+            "path": "modules/knowledge/module.json",
+            "sha256": "3d0fe0f46a5a0428d254ac7415e1e3df1e9b9c1401f90b05210897f51a59ac1e"
+          },
+          {
+            "path": "modules/knowledge/package.json",
+            "sha256": "d7ff85466aa78d51af7b091fa8ee70e8494c85835980abe40fcb57b967bb0e3a"
+          },
+          {
+            "path": "modules/knowledge/src/index.ts",
+            "sha256": "52a64e0bc7754e0bcbd0cbc76eba6d5b7c7493d34825b281c7dc07985cfdb15a"
+          },
+          {
+            "path": "modules/knowledge/src/ui.ts",
+            "sha256": "bbd6d806b3334462fd324a7b0b456c1993b22a224f2d70dd41f3cce421623ba2"
+          },
+          {
+            "path": "modules/knowledge/tsconfig.json",
+            "sha256": "7c632ef78fe2fe1983a97ac7bd63207e097b50f8a19e8b97c963614d7fba33ea"
+          },
+          {
+            "path": "package-lock.json",
+            "sha256": "147e4bbcfdd0121f0994ea72badba3c0bb65f22ac70d06ea380691d2a5876e77"
+          },
+          {
+            "path": "packages/ai-core/src/index.ts",
+            "sha256": "72f502724b9f1759d8708e92e9cde98b1432650ebb5dccce7fcbf5d6311bfba1"
+          },
+          {
+            "path": "packages/backend-host/src/http.ts",
+            "sha256": "068f320aec5321fcd55e1002a251fd13f7d2ad4456f817bc13615d33268bb3f0"
+          },
+          {
+            "path": "packages/backend-host/src/index.ts",
+            "sha256": "114611c9a6580d20c5e81a958c365f40f79b55ca7232bc492c5a27e8a8d53875"
+          },
+          {
+            "path": "packages/composition/src/integrity.ts",
+            "sha256": "793fe843fe513aaeac1e673976a23a935336d9abccc07c018803e536931232b3"
+          },
+          {
+            "path": "packages/composition/src/workspace-closure.ts",
+            "sha256": "f8c736c93e5ed7c8324ad9a9f45a5ad0f5104921544eaf626f596f8bef4dd73d"
+          },
+          {
+            "path": "packages/contracts/src/index.ts",
+            "sha256": "65344865bf676546c6ee0ab01b1fa4fc2071fb730664b2cd8cca31f26a666792"
+          },
+          {
+            "path": "packages/web-shell/src/index.ts",
+            "sha256": "547d2eded7fb7d07316863e40b2759ede64140c410b9412bfbbba1f384bc7a89"
+          },
+          {
+            "path": "PLATFORM_ARCHITECTURE.md",
+            "sha256": "0f14979eecf2ce1846d7ab00bcec820325046fb7ad2613c90604857f7ffe5118"
+          },
+          {
+            "path": "products/combined/product.json",
+            "sha256": "fd589ed0f91e06b630884e3bef5fd0312ebdc34a80efc9e8fcb32ce680fde038"
+          },
+          {
+            "path": "products/knowledge/product.json",
+            "sha256": "7fb1af22757ff740c9aaf622bef55ab04a77652de7965646fe140c4c0352f12c"
+          },
+          {
+            "path": "README.md",
+            "sha256": "daa0884e017bb39a3e0861f16e416b6a01bccb2cdcf931d775652debfbefab6b"
+          },
+          {
+            "path": "tests/ai-core.test.mjs",
+            "sha256": "68b6fe1ef81f7c1ca5dbf2ed165dba827f181e07a7b80d844d293f13c7807f94"
+          },
+          {
+            "path": "tests/composition.test.mjs",
+            "sha256": "1f8eb891b0b8300467d30eeb7e4688451b8784ffda443df9edae277e0e56cecb"
+          },
+          {
+            "path": "tests/factory-lifecycle.test.mjs",
+            "sha256": "2413992f790accceaaf2d75d76f55adb2342ec0000bcecdb630f442845695b75"
+          },
+          {
+            "path": "tests/knowledge-answer-ui.test.mjs",
+            "sha256": "47e8f72f706f514a180821854618383fd4820c2bc78c44db5922bc7dc4f70876"
+          },
+          {
+            "path": "tests/knowledge-answer.test.mjs",
+            "sha256": "3828253f11d8842d29ef04e3b66a584d2e1e877ba6ca2222d5078b051b949c5e"
+          },
+          {
+            "path": "tests/workspace-closure.test.mjs",
+            "sha256": "41b1d6f6b798802890305209c60b1ccc05e155b2d3a5495caa7b1720364a9be7"
+          },
+          {
+            "path": "tools/build.mjs",
+            "sha256": "a89e9ed4997041dd1b0b46c10d7bdceb686be2bdff1109c54b06579044d64c84"
+          },
+          {
+            "path": "tools/factory.mjs",
+            "sha256": "fc1e8b8bb0953216bb61df7b31893d3be23319f733fd02cb5fee8af2f281f62c"
+          }
+        ],
+        "digest": "d755c06582f2dc00a217e6dcef86ae037f908e7bf8ff355369a9748ea5c02e17"
+      },
+      "recordedAt": "2026-10-01T08:20:02.626Z",
+      "command": {
+        "argv": [
+          "npm.cmd",
+          "run",
+          "build"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "os": "win32"
+      },
+      "status": "PASSED",
+      "exitCode": 0,
+      "artifacts": [
+        {
+          "sourceRef": ".local/platform-006-final-build-03.log",
+          "path": ".brain/workflow/artifacts/3674c388-b3fb-43f2-964e-3666447b6e74/platform-006-final-build-03.log",
+          "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+          "bytes": 454
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-006-final-candidate-01.json",
+          "path": ".brain/workflow/artifacts/3674c388-b3fb-43f2-964e-3666447b6e74/platform-006-final-candidate-01.json",
+          "sha256": "c68189205b9a273f2ea5c79ff8e13a25d83f358f8c8f566ac95498debc39a336",
+          "bytes": 5057
+        },
+        {
+          "sourceRef": ".local/platform-006-focused-01.tap.txt",
+          "path": ".brain/workflow/artifacts/3674c388-b3fb-43f2-964e-3666447b6e74/platform-006-focused-01.tap.txt",
+          "sha256": "d20732f64b7ad79945a1c462ac8dd15ef47eee1dc01930057267f78de1351ece",
+          "bytes": 14159
+        },
+        {
+          "sourceRef": ".local/platform-006-focused-02.tap.txt",
+          "path": ".brain/workflow/artifacts/3674c388-b3fb-43f2-964e-3666447b6e74/platform-006-focused-02.tap.txt",
+          "sha256": "3edb1e2c520f9c9ab15703cdf2600f420efb989489588df12eac3417aff0ca35",
+          "bytes": 9619
+        },
+        {
+          "sourceRef": ".local/platform-006-build-02.log",
+          "path": ".brain/workflow/artifacts/3674c388-b3fb-43f2-964e-3666447b6e74/platform-006-build-02.log",
+          "sha256": "97906f2a52ca509f8e1ac01192d76b70d9b082ffc9c88189cb0ea8fe240f9ad7",
+          "bytes": 441
+        },
+        {
+          "sourceRef": ".local/platform-006-old-snapshot-check-01.log",
+          "path": ".brain/workflow/artifacts/3674c388-b3fb-43f2-964e-3666447b6e74/platform-006-old-snapshot-check-01.log",
+          "sha256": "c1aa9ec9865be04e9b0649437ec00cca2ead1492b0aadf2ba5bc496e57a78800",
+          "bytes": 237
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-006-old-snapshot-check-01.json",
+          "path": ".brain/workflow/artifacts/3674c388-b3fb-43f2-964e-3666447b6e74/platform-006-old-snapshot-check-01.json",
+          "sha256": "098d32f5197951ffc86122841d02fd96b40d9d3fa0f747e038cbce09416d46fb",
+          "bytes": 1497
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root actual exec_command c42146 freshbuild03 exit0; exact31 captured before/matched after. Luna separately reported focused02 actual48of48 after build02; root read raw logs. Earlier focused01 four failures preserved."
+      },
+      "limitations": [
+        "Build recipe qualifies build only. Required final full suite, independent exact review and ordinary browser remain separate pending gates.",
+        "Focused02 is attributed Luna execution; root did not rerun it. Source inventory captured by root after focused02 is not a fabricated before-run capture.",
+        "Old captured Combined0.2.0 verification executed by root after build01; helper/integrity implementation unchanged by the three focused-test repairs. No old runtime launch or data adoption.",
+        "No external provider inference, hosted or production qualification."
+      ],
+      "integritySha256": "7286655ee0561ebf25e502902dd7b3a24619d1b9f15a3ffa4f0521075817b79c"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "3c0d0661-3a85-418c-a37c-18b7bef97967",
+      "taskId": "BRAIN-001",
+      "recipeId": "brain-build",
+      "contractDigest": "1598b899bfda5901c8d127505f9130258e7acca7956c7991453361626e55ae7c",
+      "recipeDigest": "67124401b4ebb22c4673119b81f64f45d43aea195dd54cc2f2ba122c04442323",
+      "candidate": {
+        "files": [
+          {
+            "path": ".brain/ROUTING.md",
+            "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308"
+          },
+          {
+            "path": ".brain/START_HERE.md",
+            "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2"
+          },
+          {
+            "path": ".brain/WORKFLOW.md",
+            "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43"
+          },
+          {
+            "path": ".brain/workflow/recipes.json",
+            "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75"
+          },
+          {
+            "path": "package.json",
+            "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554"
+          },
+          {
+            "path": "tests/brain-workflow.test.mjs",
+            "sha256": "8b9631ab00293f85f4ecaabc4c539bc2e4cb8d509817ada9ced316168bb53569"
+          },
+          {
+            "path": "tools/brain-core.mjs",
+            "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b"
+          },
+          {
+            "path": "tools/brain.mjs",
+            "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e"
+          }
+        ],
+        "digest": "15957c3e789c6a54f0c289920ee6bb2d92b35a0fd13a08577a82a90104b151ed"
+      },
+      "recordedAt": "2026-10-01T06:02:03.224Z",
+      "command": {
+        "argv": [
+          "npm.cmd",
+          "run",
+          "build"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "os": "win32",
+        "executionRoot": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F\\source",
+        "sourceFingerprint": "02c6cde1b90cd7961b888dd33f92cd8f704043bbca26a92e2f453a8e49ef232b",
+        "sourceIsolation": "Frozen portable copy; concurrent platform source changes are excluded.",
+        "hostProfile": "Existing selected private build-host profile copied unchanged; no credentials or policy changes."
+      },
+      "status": "PASSED",
+      "exitCode": 0,
+      "artifacts": [
+        {
+          "sourceRef": ".local/brain-001/build.log",
+          "path": ".brain/workflow/artifacts/3c0d0661-3a85-418c-a37c-18b7bef97967/build.log",
+          "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+          "bytes": 454
+        },
+        {
+          "sourceRef": ".local/brain-001/candidate-before.json",
+          "path": ".brain/workflow/artifacts/3c0d0661-3a85-418c-a37c-18b7bef97967/candidate-before.json",
+          "sha256": "f2b349e3684a67e1764c3ee393382e08ca6924ec888a639a6c706c92fa140212",
+          "bytes": 1171
+        },
+        {
+          "sourceRef": ".local/brain-001/frozen-workspace.json",
+          "path": ".brain/workflow/artifacts/3c0d0661-3a85-418c-a37c-18b7bef97967/frozen-workspace.json",
+          "sha256": "abdfb16fc5091db61164058787446c37fb6ade721c93d88f1740843c0bb4d0c7",
+          "bytes": 932
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root executed the named command through exec_command; saved complete output and observed actual process completion."
+      },
+      "limitations": [
+        "Superseded candidate; retained as actual historical build evidence."
+      ],
+      "integritySha256": "688179e6ca38e04ac4c68ddc58ffa245168bafdc8adccd4d464e135efc45ff49"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "5cf238e4-e8e8-43bc-9025-969655539bdd",
+      "taskId": "PLATFORM-006",
+      "recipeId": "brain-full-suite",
+      "contractDigest": "86c15ccebff51f1ddc0b6193ecf4d05ea7cb2c6d6f969f350139b2500ee93f15",
+      "recipeDigest": "fedff282ea3ba6882b328eed16f8a368f4dbccfa83c323596c9b64d3611b235b",
+      "candidate": {
+        "files": [
+          {
+            "path": "apps/control-plane/src/source-import.ts",
+            "sha256": "dac9c38a03a6adb0993cdcf9e25ac121a07c247e063598960593874e20f02a25"
+          },
+          {
+            "path": "apps/runtime/package.json",
+            "sha256": "5f6b26f50da3e23e8623e8cdded3dc292c8fe095487160849ca2f2dd72aaa93c"
+          },
+          {
+            "path": "docs/STATUS.md",
+            "sha256": "d130b7efbd0fcf5bfe296a1aff5a72e3ca2d26991eb81279fed6d22015fb7593"
+          },
+          {
+            "path": "IMPLEMENTATION_STATUS_0.3.md",
+            "sha256": "bed43db35e029b2bb512c31a96918c3e71d3786637e360b714689f9a0f1656fd"
+          },
+          {
+            "path": "modules/handoff/module.json",
+            "sha256": "8611a8a506ac03d097ef832c7579ad8d63409f9cfc12b5c728a4be46ecebf4d3"
+          },
+          {
+            "path": "modules/handoff/package.json",
+            "sha256": "dbf855deb04eddafb0b03d6c4c821c34c08c24f329a6f112ca1c0bafb00917b1"
+          },
+          {
+            "path": "modules/knowledge/module.json",
+            "sha256": "3d0fe0f46a5a0428d254ac7415e1e3df1e9b9c1401f90b05210897f51a59ac1e"
+          },
+          {
+            "path": "modules/knowledge/package.json",
+            "sha256": "d7ff85466aa78d51af7b091fa8ee70e8494c85835980abe40fcb57b967bb0e3a"
+          },
+          {
+            "path": "modules/knowledge/src/index.ts",
+            "sha256": "52a64e0bc7754e0bcbd0cbc76eba6d5b7c7493d34825b281c7dc07985cfdb15a"
+          },
+          {
+            "path": "modules/knowledge/src/ui.ts",
+            "sha256": "bbd6d806b3334462fd324a7b0b456c1993b22a224f2d70dd41f3cce421623ba2"
+          },
+          {
+            "path": "modules/knowledge/tsconfig.json",
+            "sha256": "7c632ef78fe2fe1983a97ac7bd63207e097b50f8a19e8b97c963614d7fba33ea"
+          },
+          {
+            "path": "package-lock.json",
+            "sha256": "147e4bbcfdd0121f0994ea72badba3c0bb65f22ac70d06ea380691d2a5876e77"
+          },
+          {
+            "path": "packages/ai-core/src/index.ts",
+            "sha256": "72f502724b9f1759d8708e92e9cde98b1432650ebb5dccce7fcbf5d6311bfba1"
+          },
+          {
+            "path": "packages/backend-host/src/http.ts",
+            "sha256": "068f320aec5321fcd55e1002a251fd13f7d2ad4456f817bc13615d33268bb3f0"
+          },
+          {
+            "path": "packages/backend-host/src/index.ts",
+            "sha256": "114611c9a6580d20c5e81a958c365f40f79b55ca7232bc492c5a27e8a8d53875"
+          },
+          {
+            "path": "packages/composition/src/integrity.ts",
+            "sha256": "793fe843fe513aaeac1e673976a23a935336d9abccc07c018803e536931232b3"
+          },
+          {
+            "path": "packages/composition/src/workspace-closure.ts",
+            "sha256": "f8c736c93e5ed7c8324ad9a9f45a5ad0f5104921544eaf626f596f8bef4dd73d"
+          },
+          {
+            "path": "packages/contracts/src/index.ts",
+            "sha256": "65344865bf676546c6ee0ab01b1fa4fc2071fb730664b2cd8cca31f26a666792"
+          },
+          {
+            "path": "packages/web-shell/src/index.ts",
+            "sha256": "547d2eded7fb7d07316863e40b2759ede64140c410b9412bfbbba1f384bc7a89"
+          },
+          {
+            "path": "PLATFORM_ARCHITECTURE.md",
+            "sha256": "0f14979eecf2ce1846d7ab00bcec820325046fb7ad2613c90604857f7ffe5118"
+          },
+          {
+            "path": "products/combined/product.json",
+            "sha256": "fd589ed0f91e06b630884e3bef5fd0312ebdc34a80efc9e8fcb32ce680fde038"
+          },
+          {
+            "path": "products/knowledge/product.json",
+            "sha256": "7fb1af22757ff740c9aaf622bef55ab04a77652de7965646fe140c4c0352f12c"
+          },
+          {
+            "path": "README.md",
+            "sha256": "daa0884e017bb39a3e0861f16e416b6a01bccb2cdcf931d775652debfbefab6b"
+          },
+          {
+            "path": "tests/ai-core.test.mjs",
+            "sha256": "68b6fe1ef81f7c1ca5dbf2ed165dba827f181e07a7b80d844d293f13c7807f94"
+          },
+          {
+            "path": "tests/composition.test.mjs",
+            "sha256": "1f8eb891b0b8300467d30eeb7e4688451b8784ffda443df9edae277e0e56cecb"
+          },
+          {
+            "path": "tests/factory-lifecycle.test.mjs",
+            "sha256": "2413992f790accceaaf2d75d76f55adb2342ec0000bcecdb630f442845695b75"
+          },
+          {
+            "path": "tests/knowledge-answer-ui.test.mjs",
+            "sha256": "47e8f72f706f514a180821854618383fd4820c2bc78c44db5922bc7dc4f70876"
+          },
+          {
+            "path": "tests/knowledge-answer.test.mjs",
+            "sha256": "3828253f11d8842d29ef04e3b66a584d2e1e877ba6ca2222d5078b051b949c5e"
+          },
+          {
+            "path": "tests/workspace-closure.test.mjs",
+            "sha256": "41b1d6f6b798802890305209c60b1ccc05e155b2d3a5495caa7b1720364a9be7"
+          },
+          {
+            "path": "tools/build.mjs",
+            "sha256": "a89e9ed4997041dd1b0b46c10d7bdceb686be2bdff1109c54b06579044d64c84"
+          },
+          {
+            "path": "tools/factory.mjs",
+            "sha256": "fc1e8b8bb0953216bb61df7b31893d3be23319f733fd02cb5fee8af2f281f62c"
+          }
+        ],
+        "digest": "d755c06582f2dc00a217e6dcef86ae037f908e7bf8ff355369a9748ea5c02e17"
+      },
+      "recordedAt": "2026-10-01T08:49:38.318Z",
+      "command": {
+        "argv": [
+          "npm.cmd",
+          "test"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "os": "win32",
+        "QB_TEST_CP3_NATIVE_LOCK": "blocked-policy"
+      },
+      "status": "BLOCKED",
+      "exitCode": 0,
+      "counts": {
+        "tests": 284,
+        "passed": 282,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 2,
+        "todo": 0
+      },
+      "artifacts": [
+        {
+          "sourceRef": ".local/platform-006-npm-test-final-01.log",
+          "path": ".brain/workflow/artifacts/5cf238e4-e8e8-43bc-9025-969655539bdd/platform-006-npm-test-final-01.log",
+          "sha256": "6c98f02b69bc2c96e34cdbe39f487b53da815f8f3102786235c1c80cc1006975",
+          "bytes": 27957
+        },
+        {
+          "sourceRef": ".local/platform-006-final-pre-suite-context-01.json",
+          "path": ".brain/workflow/artifacts/5cf238e4-e8e8-43bc-9025-969655539bdd/platform-006-final-pre-suite-context-01.json",
+          "sha256": "ed8d29d0825dc451d076056ad05a6c76f5159f9f5a8d2508261bd45bf6b1fa58",
+          "bytes": 146120
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-006-brain-ancillary-pins-01.json",
+          "path": ".brain/workflow/artifacts/5cf238e4-e8e8-43bc-9025-969655539bdd/platform-006-brain-ancillary-pins-01.json",
+          "sha256": "7d1d51b4050fe72e73b7af3e731626393429a6a28b9b65e3ca8e36c3ebfc8c85",
+          "bytes": 561
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-006-browser-knowledge-01.json",
+          "path": ".brain/workflow/artifacts/5cf238e4-e8e8-43bc-9025-969655539bdd/platform-006-browser-knowledge-01.json",
+          "sha256": "2caf6b80d1395e1f0158ffa0daacab9085bd8326c428d75efe5b49931b99117b",
+          "bytes": 2945
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-006-browser-closed-01.json",
+          "path": ".brain/workflow/artifacts/5cf238e4-e8e8-43bc-9025-969655539bdd/platform-006-browser-closed-01.json",
+          "sha256": "b1499fbae175a74bb8d375a179a2091398242ed6a9f802f188afeea95b24844b",
+          "bytes": 881
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-006-browser-review-01.json",
+          "path": ".brain/workflow/artifacts/5cf238e4-e8e8-43bc-9025-969655539bdd/platform-006-browser-review-01.json",
+          "sha256": "ceb7ee4bee724f1190e132310086a3bec564eea085c5acb81a878bfd8c969fc6",
+          "bytes": 1158
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-006-browser-profile-finding-01.json",
+          "path": ".brain/workflow/artifacts/5cf238e4-e8e8-43bc-9025-969655539bdd/platform-006-browser-profile-finding-01.json",
+          "sha256": "a05541d4aa6df632dc9853a5c67d7eeac55af5992938dea259ad71743f626e9c",
+          "bytes": 1314
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root actual exec session57032 completed exit0; fresh build followed by full npm test; exact31 candidate and explicitly frozen ancillary Brain2 source matched before and after. Browser fixtures closed before invocation."
+      },
+      "limitations": [
+        "Actual284 tests282passed0failed0cancelled2blocked skips0TODO, duration413206.7426ms. File symlink creation EPERM and previously denied native staging-lock fixture are blocked, not passes.",
+        "Bounded local deterministic extractive Knowledge workflow. No external provider inference, hosted or production qualification.",
+        "Actual ordinary Chrome used exported Combined0.2.1. Standalone Knowledge0.2.1 correctly refused by selected local managed profile because its reviewed binding is HTTP; preserved history, no security change.",
+        "Browser cancellation was not clicked; actual cancellation/original-session await behavior is covered separately by focused HTTP and full suite.",
+        "Exact31 platform source plus explicitly pinned ancillary two-file Brain changes, not an unchanged whole-repository claim."
+      ],
+      "integritySha256": "5aec83534ee2852d60d9ce52641bca9d528359ec52d5aca9745720842c05678f"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "673dc0c9-6d45-45cd-85e8-dcddf0e73dfb",
+      "taskId": "PLATFORM-005A-CORE",
+      "recipeId": "brain-full-suite",
+      "contractDigest": "62b56271c4802a4570e6dff06315a1da5915cc2de37081a5b03527ab27a70914",
+      "recipeDigest": "fedff282ea3ba6882b328eed16f8a368f4dbccfa83c323596c9b64d3611b235b",
+      "candidate": {
+        "files": [
+          {
+            "path": "apps/control-plane/src/build-inputs.ts",
+            "sha256": "8536915eda4de98fca5c2ed23a8a83c1752d8eaf681647d26ff20274b85e9c72"
+          },
+          {
+            "path": "apps/control-plane/src/main.ts",
+            "sha256": "4eea7a1c88c1a97c42b7b6737a2d6e0615d2394bc7e3eae9d1ea0bba0ef9ea7a"
+          },
+          {
+            "path": "apps/control-plane/src/operator-server.ts",
+            "sha256": "0d02e1b136d135807461a1fbbcad423b8aaf7e3c691b6d27503eaf625f3b8989"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-manager.ts",
+            "sha256": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-recovery.ts",
+            "sha256": "02f9fdb51c5cbfac1a12d92ae19e861fdc3ee03626a462979b8a31bea90e3f1d"
+          },
+          {
+            "path": "apps/studio-web/src/main.ts",
+            "sha256": "0b8f12a155fe0992e85819b82fc4e3fb3169822939845b17648e5a8238c943c3"
+          },
+          {
+            "path": "docs/STATUS.md",
+            "sha256": "cd5ed9853ea4c11d94a9a859b560b83d6cff6dd0d8ec976f6ec3a43e94c6e8fa"
+          },
+          {
+            "path": "docs/STUDIO_INTEGRATION.md",
+            "sha256": "d7c4a023101c7e5dcc96067eb25cbfb0fb37266290a3d65aca8b6ccaaf87abec"
+          },
+          {
+            "path": "IMPLEMENTATION_STATUS_0.3.md",
+            "sha256": "0ee835c626c5f3e18199431387358dc8c4d02213edfe2e12e75cb3a6724c6be4"
+          },
+          {
+            "path": "packages/control-plane/src/index.ts",
+            "sha256": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5"
+          },
+          {
+            "path": "PLATFORM_ARCHITECTURE.md",
+            "sha256": "91c3a71e9f68d426a9fe3396ad5bcc49a846d4c101bb4369867e3f8115fa4180"
+          },
+          {
+            "path": "README.md",
+            "sha256": "900ad12067a90378fc82b47441ca3473c671e6816d923dbc3bc34aa9c2c38eb9"
+          },
+          {
+            "path": "tests/control-plane-artifacts.test.mjs",
+            "sha256": "1cc88fa06ba21b2a76b93a25360c4d32e0705e875ec8064d0443d1d65a003278"
+          },
+          {
+            "path": "tests/control-plane-build-host.test.mjs",
+            "sha256": "c5941bdcc1e28ec70d61bd3c745dcacb304c4c8d84316afad3381650cfecfdf6"
+          },
+          {
+            "path": "tests/control-plane-http.test.mjs",
+            "sha256": "c3a59b4d3ad0e5f91b18c92c0a1af93e4be634b848f3568f28b8ae65e98e58cb"
+          },
+          {
+            "path": "tests/control-plane-main.test.mjs",
+            "sha256": "b278b7117e7535d6380943756366c20a87f527a7965f7c4e9e8d87786e631861"
+          },
+          {
+            "path": "tests/control-plane.test.mjs",
+            "sha256": "3304f9ff64a01a81d6effb71a723136e6cbc711b7ef31a7924f64f46864884f2"
+          },
+          {
+            "path": "tests/managed-runtime-recovery-store.test.mjs",
+            "sha256": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+          },
+          {
+            "path": "tests/managed-runtime-store.test.mjs",
+            "sha256": "2de1db607bf5aa8a93b81b15eaacc152383634466f80501a0884283598222de1"
+          },
+          {
+            "path": "tests/studio-runtime-ui.test.mjs",
+            "sha256": "901848c20743c9b65a49e52a5456e0e4e9cf21ae7b901bb3c9634cef3f2c3063"
+          },
+          {
+            "path": "tools/runtime-recovery-publish.ps1",
+            "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+          },
+          {
+            "path": "tools/runtime-recovery.mjs",
+            "sha256": "8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35"
+          }
+        ],
+        "digest": "7423f199e70374095f449e85275f0ce59676aa150c7ed814acee4eb41289ea61"
+      },
+      "recordedAt": "2026-10-01T07:54:17.952Z",
+      "command": {
+        "argv": [
+          "npm.cmd",
+          "test"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "os": "win32",
+        "policySkip": "Process-local QB_TEST_CP3_NATIVE_LOCK=blocked-policy preserves prior denied fixture; ordinary browser fixture closed before this run."
+      },
+      "status": "BLOCKED",
+      "exitCode": 0,
+      "counts": {
+        "tests": 266,
+        "passed": 264,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 2,
+        "todo": 0
+      },
+      "artifacts": [
+        {
+          "sourceRef": ".local/platform-005a-npm-test-final-03.log",
+          "path": ".brain/workflow/artifacts/673dc0c9-6d45-45cd-85e8-dcddf0e73dfb/platform-005a-npm-test-final-03.log",
+          "sha256": "f3df51dbd825b53da4c8966c8c657585c1af87f941afa28f1ff97d77f3b5b0ba",
+          "bytes": 26103
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-final-candidate-03.json",
+          "path": ".brain/workflow/artifacts/673dc0c9-6d45-45cd-85e8-dcddf0e73dfb/platform-005a-final-candidate-03.json",
+          "sha256": "b19c186ee2146c1928651d6e67bfc86447ee2bcbef99afa382f1cf165f1e12b4",
+          "bytes": 4529
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-browser-recovery-02.json",
+          "path": ".brain/workflow/artifacts/673dc0c9-6d45-45cd-85e8-dcddf0e73dfb/platform-005a-browser-recovery-02.json",
+          "sha256": "3eaa1c320e95d53260a2d24e471edff247f0df7806fdea588ba40f9ba3d3a737",
+          "bytes": 6942
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-browser-closed-02.json",
+          "path": ".brain/workflow/artifacts/673dc0c9-6d45-45cd-85e8-dcddf0e73dfb/platform-005a-browser-closed-02.json",
+          "sha256": "b7ce6cb9c5fef8849d296e84c0a95110d306fb65ad97cfaa07aa68e9c16dcc84",
+          "bytes": 1315
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-browser-credential-pin-02.json",
+          "path": ".brain/workflow/artifacts/673dc0c9-6d45-45cd-85e8-dcddf0e73dfb/platform-005a-browser-credential-pin-02.json",
+          "sha256": "bb345c2b786a5412fcabdb85c6adfba6281012039c7712c660252f8d3cf83d1f",
+          "bytes": 588
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-browser-restored-02.jpg",
+          "path": ".brain/workflow/artifacts/673dc0c9-6d45-45cd-85e8-dcddf0e73dfb/platform-005a-browser-restored-02.jpg",
+          "sha256": "72c7ae0cde187fc2b5f79a76558f72498614f7d773e055d0de0032377bb272cd",
+          "bytes": 47464
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root observed actual exec session39783 completion exit0 after fresh build, tests266/pass264/fail0/skip2; exact22 source hashes verified unchanged before recording. Ordinary Chrome recovery02 separately executed and archived."
+      },
+      "limitations": [
+        "Full suite exit0 has two blocked skips: file-symlink creation EPERM and previously denied native lock fixture. These are not passes.",
+        "Earlier full-suite01 fixture omission and full-suite02 native fixture failures remain preserved; later success does not diagnose the native failures.",
+        "Exact22 CP5 source candidate only; unrelated Atlas edits are preserved and no unchanged whole-repository claim is made.",
+        "Browser evidence covers one ordinary paired operator; outer fixture close is recorded, not an independently saved process exit code. Worker separately observed original PID33612 no longer running.",
+        "No provider, hosted, production or external deployment qualification."
+      ],
+      "integritySha256": "6235d6b7db10d2e8570e5dbe4dbbffe70ead8080e9e2e7cf7bd592c79e2f8d3f"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "review",
+      "id": "78942974-e5f8-48b3-9119-8c20d3df334e",
+      "taskId": "PLATFORM-006",
+      "contractDigest": "86c15ccebff51f1ddc0b6193ecf4d05ea7cb2c6d6f969f350139b2500ee93f15",
+      "candidate": {
+        "files": [
+          {
+            "path": "apps/control-plane/src/source-import.ts",
+            "sha256": "dac9c38a03a6adb0993cdcf9e25ac121a07c247e063598960593874e20f02a25"
+          },
+          {
+            "path": "apps/runtime/package.json",
+            "sha256": "5f6b26f50da3e23e8623e8cdded3dc292c8fe095487160849ca2f2dd72aaa93c"
+          },
+          {
+            "path": "docs/STATUS.md",
+            "sha256": "d130b7efbd0fcf5bfe296a1aff5a72e3ca2d26991eb81279fed6d22015fb7593"
+          },
+          {
+            "path": "IMPLEMENTATION_STATUS_0.3.md",
+            "sha256": "bed43db35e029b2bb512c31a96918c3e71d3786637e360b714689f9a0f1656fd"
+          },
+          {
+            "path": "modules/handoff/module.json",
+            "sha256": "8611a8a506ac03d097ef832c7579ad8d63409f9cfc12b5c728a4be46ecebf4d3"
+          },
+          {
+            "path": "modules/handoff/package.json",
+            "sha256": "dbf855deb04eddafb0b03d6c4c821c34c08c24f329a6f112ca1c0bafb00917b1"
+          },
+          {
+            "path": "modules/knowledge/module.json",
+            "sha256": "3d0fe0f46a5a0428d254ac7415e1e3df1e9b9c1401f90b05210897f51a59ac1e"
+          },
+          {
+            "path": "modules/knowledge/package.json",
+            "sha256": "d7ff85466aa78d51af7b091fa8ee70e8494c85835980abe40fcb57b967bb0e3a"
+          },
+          {
+            "path": "modules/knowledge/src/index.ts",
+            "sha256": "52a64e0bc7754e0bcbd0cbc76eba6d5b7c7493d34825b281c7dc07985cfdb15a"
+          },
+          {
+            "path": "modules/knowledge/src/ui.ts",
+            "sha256": "bbd6d806b3334462fd324a7b0b456c1993b22a224f2d70dd41f3cce421623ba2"
+          },
+          {
+            "path": "modules/knowledge/tsconfig.json",
+            "sha256": "7c632ef78fe2fe1983a97ac7bd63207e097b50f8a19e8b97c963614d7fba33ea"
+          },
+          {
+            "path": "package-lock.json",
+            "sha256": "147e4bbcfdd0121f0994ea72badba3c0bb65f22ac70d06ea380691d2a5876e77"
+          },
+          {
+            "path": "packages/ai-core/src/index.ts",
+            "sha256": "72f502724b9f1759d8708e92e9cde98b1432650ebb5dccce7fcbf5d6311bfba1"
+          },
+          {
+            "path": "packages/backend-host/src/http.ts",
+            "sha256": "068f320aec5321fcd55e1002a251fd13f7d2ad4456f817bc13615d33268bb3f0"
+          },
+          {
+            "path": "packages/backend-host/src/index.ts",
+            "sha256": "114611c9a6580d20c5e81a958c365f40f79b55ca7232bc492c5a27e8a8d53875"
+          },
+          {
+            "path": "packages/composition/src/integrity.ts",
+            "sha256": "793fe843fe513aaeac1e673976a23a935336d9abccc07c018803e536931232b3"
+          },
+          {
+            "path": "packages/composition/src/workspace-closure.ts",
+            "sha256": "f8c736c93e5ed7c8324ad9a9f45a5ad0f5104921544eaf626f596f8bef4dd73d"
+          },
+          {
+            "path": "packages/contracts/src/index.ts",
+            "sha256": "65344865bf676546c6ee0ab01b1fa4fc2071fb730664b2cd8cca31f26a666792"
+          },
+          {
+            "path": "packages/web-shell/src/index.ts",
+            "sha256": "547d2eded7fb7d07316863e40b2759ede64140c410b9412bfbbba1f384bc7a89"
+          },
+          {
+            "path": "PLATFORM_ARCHITECTURE.md",
+            "sha256": "0f14979eecf2ce1846d7ab00bcec820325046fb7ad2613c90604857f7ffe5118"
+          },
+          {
+            "path": "products/combined/product.json",
+            "sha256": "fd589ed0f91e06b630884e3bef5fd0312ebdc34a80efc9e8fcb32ce680fde038"
+          },
+          {
+            "path": "products/knowledge/product.json",
+            "sha256": "7fb1af22757ff740c9aaf622bef55ab04a77652de7965646fe140c4c0352f12c"
+          },
+          {
+            "path": "README.md",
+            "sha256": "daa0884e017bb39a3e0861f16e416b6a01bccb2cdcf931d775652debfbefab6b"
+          },
+          {
+            "path": "tests/ai-core.test.mjs",
+            "sha256": "68b6fe1ef81f7c1ca5dbf2ed165dba827f181e07a7b80d844d293f13c7807f94"
+          },
+          {
+            "path": "tests/composition.test.mjs",
+            "sha256": "1f8eb891b0b8300467d30eeb7e4688451b8784ffda443df9edae277e0e56cecb"
+          },
+          {
+            "path": "tests/factory-lifecycle.test.mjs",
+            "sha256": "2413992f790accceaaf2d75d76f55adb2342ec0000bcecdb630f442845695b75"
+          },
+          {
+            "path": "tests/knowledge-answer-ui.test.mjs",
+            "sha256": "47e8f72f706f514a180821854618383fd4820c2bc78c44db5922bc7dc4f70876"
+          },
+          {
+            "path": "tests/knowledge-answer.test.mjs",
+            "sha256": "3828253f11d8842d29ef04e3b66a584d2e1e877ba6ca2222d5078b051b949c5e"
+          },
+          {
+            "path": "tests/workspace-closure.test.mjs",
+            "sha256": "41b1d6f6b798802890305209c60b1ccc05e155b2d3a5495caa7b1720364a9be7"
+          },
+          {
+            "path": "tools/build.mjs",
+            "sha256": "a89e9ed4997041dd1b0b46c10d7bdceb686be2bdff1109c54b06579044d64c84"
+          },
+          {
+            "path": "tools/factory.mjs",
+            "sha256": "fc1e8b8bb0953216bb61df7b31893d3be23319f733fd02cb5fee8af2f281f62c"
+          }
+        ],
+        "digest": "d755c06582f2dc00a217e6dcef86ae037f908e7bf8ff355369a9748ea5c02e17"
+      },
+      "recordedAt": "2026-10-01T08:21:18.732Z",
+      "reviewer": "/root/repo_brain_architect",
+      "implementer": "/root/repo_brain_validation",
+      "independence": "independent_reported",
+      "outcome": "ACCEPTED",
+      "scope": "Exact31 source and attributed focused48of48 scope: Knowledge-owned tenant READY retrieval/excerpts/citations/post-await reread; actual bounded generic provider executor; original HTTP LocalAccess auth/cancel path; source-derived exact closure/new exports and actual captured old Combined0.2.0 verifier check. Browser, final full suite and full increment acceptance remain separate.",
+      "artifacts": [
+        {
+          "sourceRef": ".brain/evidence/platform-006-final-candidate-01.json",
+          "path": ".brain/workflow/artifacts/78942974-e5f8-48b3-9119-8c20d3df334e/platform-006-final-candidate-01.json",
+          "sha256": "c68189205b9a273f2ea5c79ff8e13a25d83f358f8c8f566ac95498debc39a336",
+          "bytes": 5057
+        },
+        {
+          "sourceRef": ".local/platform-006-final-build-03.log",
+          "path": ".brain/workflow/artifacts/78942974-e5f8-48b3-9119-8c20d3df334e/platform-006-final-build-03.log",
+          "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+          "bytes": 454
+        },
+        {
+          "sourceRef": ".local/platform-006-focused-02.tap.txt",
+          "path": ".brain/workflow/artifacts/78942974-e5f8-48b3-9119-8c20d3df334e/platform-006-focused-02.tap.txt",
+          "sha256": "3edb1e2c520f9c9ab15703cdf2600f420efb989489588df12eac3417aff0ca35",
+          "bytes": 9619
+        },
+        {
+          "sourceRef": ".local/platform-006-focused-01.tap.txt",
+          "path": ".brain/workflow/artifacts/78942974-e5f8-48b3-9119-8c20d3df334e/platform-006-focused-01.tap.txt",
+          "sha256": "d20732f64b7ad79945a1c462ac8dd15ef47eee1dc01930057267f78de1351ece",
+          "bytes": 14159
+        },
+        {
+          "sourceRef": ".local/platform-006-old-snapshot-check-01.log",
+          "path": ".brain/workflow/artifacts/78942974-e5f8-48b3-9119-8c20d3df334e/platform-006-old-snapshot-check-01.log",
+          "sha256": "c1aa9ec9865be04e9b0649437ec00cca2ead1492b0aadf2ba5bc496e57a78800",
+          "bytes": 237
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-006-old-snapshot-check-01.json",
+          "path": ".brain/workflow/artifacts/78942974-e5f8-48b3-9119-8c20d3df334e/platform-006-old-snapshot-check-01.json",
+          "sha256": "098d32f5197951ffc86122841d02fd96b40d9d3fa0f747e038cbce09416d46fb",
+          "bytes": 1497
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "Actual separate Sol/high agent /root/repo_brain_architect returned APPROVED_SOURCE_AND_FOCUSED_SCOPE for candidate d755c06582f2dc00a217e6dcef86ae037f908e7bf8ff355369a9748ea5c02e17, independently hash-matched before and after review; root received concrete earlier corrections and final approval."
+      },
+      "limitations": [
+        "Reviewer read source/raw logs and actual root/worker exit reports; these are attributed tool observations, not cryptographically authenticated reviewer identity or test execution.",
+        "First focused01 four failures preserved; final focused02 48/48. Raw focused/build02 files have no exit markers; worker tool-exit0 provenance reported separately. Root build03 and old-snapshot log contain actual exit0 markers.",
+        "New export focused tests qualify copied roots/dependencies, not an exported answer runtime launch. Ordinary UI/full suite pending separately.",
+        "No model inference/provider credential/hosted/production acceptance."
+      ],
+      "integritySha256": "a223af7287dc184628575651950868b4fddff4980dd5bddabb5314bdb7f919f9"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "review",
+      "id": "86484a4f-bbd1-45c7-a620-25cefa16dfd4",
+      "taskId": "PLATFORM-005A-CORE",
+      "contractDigest": "62b56271c4802a4570e6dff06315a1da5915cc2de37081a5b03527ab27a70914",
+      "candidate": {
+        "files": [
+          {
+            "path": "apps/control-plane/src/build-inputs.ts",
+            "sha256": "8536915eda4de98fca5c2ed23a8a83c1752d8eaf681647d26ff20274b85e9c72"
+          },
+          {
+            "path": "apps/control-plane/src/main.ts",
+            "sha256": "4eea7a1c88c1a97c42b7b6737a2d6e0615d2394bc7e3eae9d1ea0bba0ef9ea7a"
+          },
+          {
+            "path": "apps/control-plane/src/operator-server.ts",
+            "sha256": "0d02e1b136d135807461a1fbbcad423b8aaf7e3c691b6d27503eaf625f3b8989"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-manager.ts",
+            "sha256": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-recovery.ts",
+            "sha256": "02f9fdb51c5cbfac1a12d92ae19e861fdc3ee03626a462979b8a31bea90e3f1d"
+          },
+          {
+            "path": "apps/studio-web/src/main.ts",
+            "sha256": "c1eea89928f157dc3178ff9e2d27e4f2deb744d8fad4beb018b7176166a8d902"
+          },
+          {
+            "path": "docs/STATUS.md",
+            "sha256": "cd5ed9853ea4c11d94a9a859b560b83d6cff6dd0d8ec976f6ec3a43e94c6e8fa"
+          },
+          {
+            "path": "docs/STUDIO_INTEGRATION.md",
+            "sha256": "d7c4a023101c7e5dcc96067eb25cbfb0fb37266290a3d65aca8b6ccaaf87abec"
+          },
+          {
+            "path": "IMPLEMENTATION_STATUS_0.3.md",
+            "sha256": "0ee835c626c5f3e18199431387358dc8c4d02213edfe2e12e75cb3a6724c6be4"
+          },
+          {
+            "path": "packages/control-plane/src/index.ts",
+            "sha256": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5"
+          },
+          {
+            "path": "PLATFORM_ARCHITECTURE.md",
+            "sha256": "91c3a71e9f68d426a9fe3396ad5bcc49a846d4c101bb4369867e3f8115fa4180"
+          },
+          {
+            "path": "README.md",
+            "sha256": "900ad12067a90378fc82b47441ca3473c671e6816d923dbc3bc34aa9c2c38eb9"
+          },
+          {
+            "path": "tests/control-plane-artifacts.test.mjs",
+            "sha256": "1cc88fa06ba21b2a76b93a25360c4d32e0705e875ec8064d0443d1d65a003278"
+          },
+          {
+            "path": "tests/control-plane-build-host.test.mjs",
+            "sha256": "c5941bdcc1e28ec70d61bd3c745dcacb304c4c8d84316afad3381650cfecfdf6"
+          },
+          {
+            "path": "tests/control-plane-http.test.mjs",
+            "sha256": "c3a59b4d3ad0e5f91b18c92c0a1af93e4be634b848f3568f28b8ae65e98e58cb"
+          },
+          {
+            "path": "tests/control-plane-main.test.mjs",
+            "sha256": "b278b7117e7535d6380943756366c20a87f527a7965f7c4e9e8d87786e631861"
+          },
+          {
+            "path": "tests/control-plane.test.mjs",
+            "sha256": "3304f9ff64a01a81d6effb71a723136e6cbc711b7ef31a7924f64f46864884f2"
+          },
+          {
+            "path": "tests/managed-runtime-recovery-store.test.mjs",
+            "sha256": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+          },
+          {
+            "path": "tests/managed-runtime-store.test.mjs",
+            "sha256": "2de1db607bf5aa8a93b81b15eaacc152383634466f80501a0884283598222de1"
+          },
+          {
+            "path": "tests/studio-runtime-ui.test.mjs",
+            "sha256": "3fe82fa020cc550be44dd2fc8c4494373eeb1ee4da0fb6e79b6875ca33d20ef7"
+          },
+          {
+            "path": "tools/runtime-recovery-publish.ps1",
+            "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+          },
+          {
+            "path": "tools/runtime-recovery.mjs",
+            "sha256": "8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35"
+          }
+        ],
+        "digest": "0e1661168ae21880af8c4fb2b6498c147e81e66e08ce231a4170b8acff9a3fef"
+      },
+      "recordedAt": "2026-10-01T07:19:18.277Z",
+      "reviewer": "/root/repo_brain_architect",
+      "implementer": "/root/repo_brain_validation",
+      "independence": "independent_reported",
+      "outcome": "ACCEPTED",
+      "scope": "Exact22-path accessible local source review: recovery implementation plus minimal no-host fixture repair. Actual named native1of1 and revised focused fixture1of1 supported; browser/fullsuite observed separately before coordinator acceptance.",
+      "artifacts": [
+        {
+          "sourceRef": ".brain/evidence/platform-005a-final-candidate-02.json",
+          "path": ".brain/workflow/artifacts/86484a4f-bbd1-45c7-a620-25cefa16dfd4/platform-005a-final-candidate-02.json",
+          "sha256": "f1c605001316d74becd52e72bb0b380df401a3bd83dd83ab3baf0384cfaa912b",
+          "bytes": 4493
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-native-journey-01.json",
+          "path": ".brain/workflow/artifacts/86484a4f-bbd1-45c7-a620-25cefa16dfd4/platform-005a-native-journey-01.json",
+          "sha256": "9f9f2aec6ead247d72ea29a98aceb4badbc12ee15a2977b4556a4013cf807508",
+          "bytes": 2436
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-recovery-desk-journey-01.tap.txt",
+          "path": ".brain/workflow/artifacts/86484a4f-bbd1-45c7-a620-25cefa16dfd4/platform-005a-recovery-desk-journey-01.tap.txt",
+          "sha256": "62ec711878340c62b3f35bf09d2840b0c55d86161d2ead9d1dc7efec90056ca9",
+          "bytes": 412
+        },
+        {
+          "sourceRef": ".local/platform-005a-build-host-fixture-fix-focused-01.tap.txt",
+          "path": ".brain/workflow/artifacts/86484a4f-bbd1-45c7-a620-25cefa16dfd4/platform-005a-build-host-fixture-fix-focused-01.tap.txt",
+          "sha256": "e94d869719e133e484d97567d3648984c74f58fd2f93d859f742b4d479e571db",
+          "bytes": 409
+        }
+      ],
+      "provenance": {
+        "reference": "Actual independent Sol agent reviewed exact revised22file hashes and source on2026-10-01; root received source approval and explicit fullsuite/browser limitation.",
+        "kind": "reported"
+      },
+      "limitations": [
+        "Source review does not qualify browser/provider/hosted/production execution.",
+        "Prior failed suite retained, final revised suite and browser pending.",
+        "Ancillary Atlas drift outside22file task candidate is not part of review acceptance."
+      ],
+      "integritySha256": "ac3289fe5ac37b7c1d2bd9338e0e8b830003166ca658c494562f8dbd5b0adc5b"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "88086a4b-b04f-4312-a685-848b58f5dced",
+      "taskId": "BRAIN-001",
+      "recipeId": "brain-full-suite",
+      "contractDigest": "1598b899bfda5901c8d127505f9130258e7acca7956c7991453361626e55ae7c",
+      "recipeDigest": "fedff282ea3ba6882b328eed16f8a368f4dbccfa83c323596c9b64d3611b235b",
+      "candidate": {
+        "files": [
+          {
+            "path": ".brain/ROUTING.md",
+            "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308"
+          },
+          {
+            "path": ".brain/START_HERE.md",
+            "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2"
+          },
+          {
+            "path": ".brain/WORKFLOW.md",
+            "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43"
+          },
+          {
+            "path": ".brain/workflow/recipes.json",
+            "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75"
+          },
+          {
+            "path": "package.json",
+            "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554"
+          },
+          {
+            "path": "tests/brain-workflow.test.mjs",
+            "sha256": "a8bd29c13f3a1fdf8aa2f37ca04662d35cccd647a6a1709111215846252654cd"
+          },
+          {
+            "path": "tools/brain-core.mjs",
+            "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b"
+          },
+          {
+            "path": "tools/brain.mjs",
+            "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e"
+          }
+        ],
+        "digest": "798ad1dc674657f87c4da66fdd55f919ad518929d67609240eef9eaa5846f1d5"
+      },
+      "recordedAt": "2026-10-01T06:04:29.122Z",
+      "command": {
+        "argv": [
+          "npm.cmd",
+          "test"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "os": "win32",
+        "executionRoot": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F\\source",
+        "sourceFingerprint": "3c6a0f636d8534476186c3607315a322cc8c39470a1d5b3956116d12449a951f",
+        "sourceIsolation": "Frozen portable copy; concurrent platform source changes are excluded.",
+        "hostProfile": "Existing selected private build-host profile copied unchanged; no credentials or policy changes.",
+        "dependencies": "Pinned installed dependencies linked by copyPortableFixture; private toolchain fixtures refused links.",
+        "QB_TEST_CP3_NATIVE_LOCK": "blocked-policy (process-local; preserves previously denied test before setup)"
+      },
+      "status": "FAILED",
+      "exitCode": 1,
+      "counts": {
+        "tests": 255,
+        "passed": 233,
+        "failed": 21,
+        "cancelled": 0,
+        "skipped": 1,
+        "todo": 0
+      },
+      "artifacts": [
+        {
+          "sourceRef": ".local/brain-001/full-suite.tap.txt",
+          "path": ".brain/workflow/artifacts/88086a4b-b04f-4312-a685-848b58f5dced/full-suite.tap.txt",
+          "sha256": "65bf76c77bdafb515567b23cf18ba62fcf059e62faba978c613c5ab47bdd3a7b",
+          "bytes": 45694
+        },
+        {
+          "sourceRef": ".local/brain-001/candidate-final.json",
+          "path": ".brain/workflow/artifacts/88086a4b-b04f-4312-a685-848b58f5dced/candidate-final.json",
+          "sha256": "dc55771d08d62ddaca6e449cc7ded692563eca2cf3d52fd54e25688c40602fd8",
+          "bytes": 1171
+        },
+        {
+          "sourceRef": ".local/brain-001/frozen-workspace-final.json",
+          "path": ".brain/workflow/artifacts/88086a4b-b04f-4312-a685-848b58f5dced/frozen-workspace-final.json",
+          "sha256": "e6da84fdda55f7482acb8a00e89cf814ac60346a288822ac1355f5a24f2e053e",
+          "bytes": 1183
+        },
+        {
+          "sourceRef": ".local/brain-001/verification-initial-full.json",
+          "path": ".brain/workflow/artifacts/88086a4b-b04f-4312-a685-848b58f5dced/verification-initial-full.json",
+          "sha256": "3bfe0e7c8f12d0ec29e49288fda83134cc25ae7d356a4550ba91e31c734f6564",
+          "bytes": 495
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root executed the named command through exec_command; saved complete output and observed actual process completion."
+      },
+      "limitations": [
+        "21 platform fixtures failed setup because the portable-copy helper linked TypeScript; all displayed failures share that refusal. The failure is retained; normal-file dependency correction and rerun are separate.",
+        "Full-suite result includes named unqualified platform profile gates; blocked skips are not a pass claim.",
+        "No new browser/provider/production qualification.",
+        "Concurrent platform work after the frozen source capture is outside this run."
+      ],
+      "integritySha256": "15c112ecc06d1e7d795ee6621bc09ee962e55ed7edd8ffcfceffdd8168f8d3c2"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "a0e7433c-6569-4fec-b68e-a806700874de",
+      "taskId": "BRAIN-001",
+      "recipeId": "brain-focused",
+      "contractDigest": "1598b899bfda5901c8d127505f9130258e7acca7956c7991453361626e55ae7c",
+      "recipeDigest": "cc232e419c81a34a616d5885fe7c7602eb95988643943f5f68e51cfd648fd485",
+      "candidate": {
+        "files": [
+          {
+            "path": ".brain/ROUTING.md",
+            "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308"
+          },
+          {
+            "path": ".brain/START_HERE.md",
+            "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2"
+          },
+          {
+            "path": ".brain/WORKFLOW.md",
+            "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43"
+          },
+          {
+            "path": ".brain/workflow/recipes.json",
+            "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75"
+          },
+          {
+            "path": "package.json",
+            "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554"
+          },
+          {
+            "path": "tests/brain-workflow.test.mjs",
+            "sha256": "a8bd29c13f3a1fdf8aa2f37ca04662d35cccd647a6a1709111215846252654cd"
+          },
+          {
+            "path": "tools/brain-core.mjs",
+            "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b"
+          },
+          {
+            "path": "tools/brain.mjs",
+            "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e"
+          }
+        ],
+        "digest": "798ad1dc674657f87c4da66fdd55f919ad518929d67609240eef9eaa5846f1d5"
+      },
+      "recordedAt": "2026-10-01T06:02:03.465Z",
+      "command": {
+        "argv": [
+          "node",
+          "--test",
+          "--test-reporter=tap",
+          "tests/brain-workflow.test.mjs"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "os": "win32",
+        "executionRoot": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F\\source",
+        "sourceFingerprint": "3c6a0f636d8534476186c3607315a322cc8c39470a1d5b3956116d12449a951f",
+        "sourceIsolation": "Frozen portable copy; concurrent platform source changes are excluded.",
+        "hostProfile": "Existing selected private build-host profile copied unchanged; no credentials or policy changes."
+      },
+      "status": "PASSED",
+      "exitCode": 0,
+      "counts": {
+        "tests": 10,
+        "passed": 10,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "artifacts": [
+        {
+          "sourceRef": ".local/brain-001/focused-final.tap.txt",
+          "path": ".brain/workflow/artifacts/a0e7433c-6569-4fec-b68e-a806700874de/focused-final.tap.txt",
+          "sha256": "c273972627ed1903eccd7db3d4a04c8dc86a87f169a0e4d6bde5ba032c12bcaa",
+          "bytes": 2615
+        },
+        {
+          "sourceRef": ".local/brain-001/candidate-final.json",
+          "path": ".brain/workflow/artifacts/a0e7433c-6569-4fec-b68e-a806700874de/candidate-final.json",
+          "sha256": "dc55771d08d62ddaca6e449cc7ded692563eca2cf3d52fd54e25688c40602fd8",
+          "bytes": 1171
+        },
+        {
+          "sourceRef": ".local/brain-001/frozen-workspace-final.json",
+          "path": ".brain/workflow/artifacts/a0e7433c-6569-4fec-b68e-a806700874de/frozen-workspace-final.json",
+          "sha256": "e6da84fdda55f7482acb8a00e89cf814ac60346a288822ac1355f5a24f2e053e",
+          "bytes": 1183
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root executed the named command through exec_command; saved complete output and observed actual process completion."
+      },
+      "limitations": [
+        "Isolated real Brain CLI fixtures; no product/native/browser/provider qualification."
+      ],
+      "integritySha256": "bdf18ea4c4771a51965980d18761d3a7a71d6db945702028b46c396b06e98e8e"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "a3a820ce-a23f-4d5c-915e-31e4ab9d920b",
+      "taskId": "PLATFORM-005A-CORE",
+      "recipeId": "brain-build",
+      "contractDigest": "62b56271c4802a4570e6dff06315a1da5915cc2de37081a5b03527ab27a70914",
+      "recipeDigest": "67124401b4ebb22c4673119b81f64f45d43aea195dd54cc2f2ba122c04442323",
+      "candidate": {
+        "files": [
+          {
+            "path": "apps/control-plane/src/build-inputs.ts",
+            "sha256": "8536915eda4de98fca5c2ed23a8a83c1752d8eaf681647d26ff20274b85e9c72"
+          },
+          {
+            "path": "apps/control-plane/src/main.ts",
+            "sha256": "4eea7a1c88c1a97c42b7b6737a2d6e0615d2394bc7e3eae9d1ea0bba0ef9ea7a"
+          },
+          {
+            "path": "apps/control-plane/src/operator-server.ts",
+            "sha256": "0d02e1b136d135807461a1fbbcad423b8aaf7e3c691b6d27503eaf625f3b8989"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-manager.ts",
+            "sha256": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-recovery.ts",
+            "sha256": "02f9fdb51c5cbfac1a12d92ae19e861fdc3ee03626a462979b8a31bea90e3f1d"
+          },
+          {
+            "path": "apps/studio-web/src/main.ts",
+            "sha256": "0b8f12a155fe0992e85819b82fc4e3fb3169822939845b17648e5a8238c943c3"
+          },
+          {
+            "path": "docs/STATUS.md",
+            "sha256": "cd5ed9853ea4c11d94a9a859b560b83d6cff6dd0d8ec976f6ec3a43e94c6e8fa"
+          },
+          {
+            "path": "docs/STUDIO_INTEGRATION.md",
+            "sha256": "d7c4a023101c7e5dcc96067eb25cbfb0fb37266290a3d65aca8b6ccaaf87abec"
+          },
+          {
+            "path": "IMPLEMENTATION_STATUS_0.3.md",
+            "sha256": "0ee835c626c5f3e18199431387358dc8c4d02213edfe2e12e75cb3a6724c6be4"
+          },
+          {
+            "path": "packages/control-plane/src/index.ts",
+            "sha256": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5"
+          },
+          {
+            "path": "PLATFORM_ARCHITECTURE.md",
+            "sha256": "91c3a71e9f68d426a9fe3396ad5bcc49a846d4c101bb4369867e3f8115fa4180"
+          },
+          {
+            "path": "README.md",
+            "sha256": "900ad12067a90378fc82b47441ca3473c671e6816d923dbc3bc34aa9c2c38eb9"
+          },
+          {
+            "path": "tests/control-plane-artifacts.test.mjs",
+            "sha256": "1cc88fa06ba21b2a76b93a25360c4d32e0705e875ec8064d0443d1d65a003278"
+          },
+          {
+            "path": "tests/control-plane-build-host.test.mjs",
+            "sha256": "c5941bdcc1e28ec70d61bd3c745dcacb304c4c8d84316afad3381650cfecfdf6"
+          },
+          {
+            "path": "tests/control-plane-http.test.mjs",
+            "sha256": "c3a59b4d3ad0e5f91b18c92c0a1af93e4be634b848f3568f28b8ae65e98e58cb"
+          },
+          {
+            "path": "tests/control-plane-main.test.mjs",
+            "sha256": "b278b7117e7535d6380943756366c20a87f527a7965f7c4e9e8d87786e631861"
+          },
+          {
+            "path": "tests/control-plane.test.mjs",
+            "sha256": "3304f9ff64a01a81d6effb71a723136e6cbc711b7ef31a7924f64f46864884f2"
+          },
+          {
+            "path": "tests/managed-runtime-recovery-store.test.mjs",
+            "sha256": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+          },
+          {
+            "path": "tests/managed-runtime-store.test.mjs",
+            "sha256": "2de1db607bf5aa8a93b81b15eaacc152383634466f80501a0884283598222de1"
+          },
+          {
+            "path": "tests/studio-runtime-ui.test.mjs",
+            "sha256": "901848c20743c9b65a49e52a5456e0e4e9cf21ae7b901bb3c9634cef3f2c3063"
+          },
+          {
+            "path": "tools/runtime-recovery-publish.ps1",
+            "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+          },
+          {
+            "path": "tools/runtime-recovery.mjs",
+            "sha256": "8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35"
+          }
+        ],
+        "digest": "7423f199e70374095f449e85275f0ce59676aa150c7ed814acee4eb41289ea61"
+      },
+      "recordedAt": "2026-10-01T07:34:52.018Z",
+      "command": {
+        "argv": [
+          "npm.cmd",
+          "run",
+          "build"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "os": "win32",
+        "node": "v24.19.0"
+      },
+      "status": "PASSED",
+      "exitCode": 0,
+      "artifacts": [
+        {
+          "sourceRef": ".local/platform-005a-final-build-03.log",
+          "path": ".brain/workflow/artifacts/a3a820ce-a23f-4d5c-915e-31e4ab9d920b/platform-005a-final-build-03.log",
+          "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+          "bytes": 454
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-final-candidate-03.json",
+          "path": ".brain/workflow/artifacts/a3a820ce-a23f-4d5c-915e-31e4ab9d920b/platform-005a-final-candidate-03.json",
+          "sha256": "b19c186ee2146c1928651d6e67bfc86447ee2bcbef99afa382f1cf165f1e12b4",
+          "bytes": 4529
+        },
+        {
+          "sourceRef": ".local/platform-005a-runtime-proof-ui-focused-04.tap.txt",
+          "path": ".brain/workflow/artifacts/a3a820ce-a23f-4d5c-915e-31e4ab9d920b/platform-005a-runtime-proof-ui-focused-04.tap.txt",
+          "sha256": "6f6b5302b9890bf4c6af6889970958e166112fdcf9d8b32e89aca1292eae7829",
+          "bytes": 2215
+        },
+        {
+          "sourceRef": ".local/platform-005a-runtime-proof-ui-focused-03.tap.txt",
+          "path": ".brain/workflow/artifacts/a3a820ce-a23f-4d5c-915e-31e4ab9d920b/platform-005a-runtime-proof-ui-focused-03.tap.txt",
+          "sha256": "ac04e48a145705d40fe2b805e23575ec253c4a37f0ca1edcdd5d15ff18a32404",
+          "bytes": 2964
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root actual fresh build03 exit0 and exact22-filecandidate unchanged; worker focusedUI8of8 afterfreshbuild separatelyattributed, priorfixturebarrier failure retained."
+      },
+      "limitations": [
+        "Build only, no browser/provider qualification.",
+        "Earlier full suite failed and remains immutable; revised required rerun pending.",
+        "Ancillary Atlas work excluded; no unchanged whole-repository claim."
+      ],
+      "integritySha256": "baf8e2a688cf435fb188461b53211cf45f88d5390fe5f9d004b1d444c67bd552"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "a47aa840-ad6b-45ab-ae75-98c2080624a3",
+      "taskId": "PLATFORM-005A",
+      "recipeId": "brain-legacy-import",
+      "contractDigest": "c5b8287742af67d42dbe3a46657cc4a373adadaf3a29d5c0cdf38a8d22c23bb9",
+      "recipeDigest": "28982ad3309b366a5cfa20df321724dd6b7466f92fb1935887fdaba0aa564449",
+      "candidate": {
+        "files": [
+          {
+            "path": ".brain/tasks/PLATFORM-005A.md",
+            "sha256": "90fc8c4a6b0d5ce11b596e6bba52305883a38027010d2f0882f7f6a70dce4fd7"
+          }
+        ],
+        "digest": "c3286b4764edbc48f8584c873a23341fb35bfb5da9247db3f34f1a82dfd2ff21"
+      },
+      "recordedAt": "2026-10-01T06:00:30.740Z",
+      "command": {
+        "argv": [
+          "manual-context-import"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "platform": "win32",
+        "scope": "Point-in-time legacy document import; no platform command executed."
+      },
+      "status": "NOT_RUN",
+      "exitCode": null,
+      "artifacts": [
+        {
+          "sourceRef": ".local/brain-001/adoption-observation.json",
+          "path": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-observation.json",
+          "sha256": "206970affbaeb1d7c99e07bcda7edab9049e08df99a78815b7f8617b20ddae1d",
+          "bytes": 1258
+        },
+        {
+          "sourceRef": ".local/brain-001/adoption-0-project.json",
+          "path": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-0-project.json",
+          "sha256": "74c29db18a55d9ad94f9c390801b5ba9071f8137404ce92d130670a983be765f",
+          "bytes": 1163
+        },
+        {
+          "sourceRef": ".local/brain-001/adoption-1-PROGRESS.md",
+          "path": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md",
+          "sha256": "31d7ff7edf4c4f34d49ac47b78d9f9b86c142803580c872edea95173dff8329e",
+          "bytes": 29824
+        },
+        {
+          "sourceRef": ".local/brain-001/adoption-2-checks.json",
+          "path": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-2-checks.json",
+          "sha256": "5d7909f482a384e15d8a722ff3636225d961bdcfc68ce5ca3077ccb41470ef98",
+          "bytes": 14289
+        },
+        {
+          "sourceRef": ".local/brain-001/adoption-3-PLATFORM-005A.md",
+          "path": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-3-PLATFORM-005A.md",
+          "sha256": "90fc8c4a6b0d5ce11b596e6bba52305883a38027010d2f0882f7f6a70dce4fd7",
+          "bytes": 4902
+        },
+        {
+          "sourceRef": ".local/brain-001/adoption-4-platform-004-result.json",
+          "path": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-4-platform-004-result.json",
+          "sha256": "1cbbb30533f5323096e11208a084073a49d3a2efd4bc37f6750f7a2f8ff99b74",
+          "bytes": 4992
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root observed and copied existing platform documents during authorized BRAIN-001 adoption."
+      },
+      "limitations": [
+        "NOT_RUN imported context; cannot qualify platform source, identity or acceptance."
+      ],
+      "integritySha256": "9e9e70f1c20b768be1044b19cb2127a99c15037cbee5ab94cef51e9403e57fe0"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "ad15304e-8094-4c5e-b7a5-e0494b6dc35d",
+      "taskId": "BRAIN-001",
+      "recipeId": "brain-full-suite",
+      "contractDigest": "1598b899bfda5901c8d127505f9130258e7acca7956c7991453361626e55ae7c",
+      "recipeDigest": "fedff282ea3ba6882b328eed16f8a368f4dbccfa83c323596c9b64d3611b235b",
+      "candidate": {
+        "files": [
+          {
+            "path": ".brain/ROUTING.md",
+            "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308"
+          },
+          {
+            "path": ".brain/START_HERE.md",
+            "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2"
+          },
+          {
+            "path": ".brain/WORKFLOW.md",
+            "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43"
+          },
+          {
+            "path": ".brain/workflow/recipes.json",
+            "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75"
+          },
+          {
+            "path": "package.json",
+            "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554"
+          },
+          {
+            "path": "tests/brain-workflow.test.mjs",
+            "sha256": "a8bd29c13f3a1fdf8aa2f37ca04662d35cccd647a6a1709111215846252654cd"
+          },
+          {
+            "path": "tools/brain-core.mjs",
+            "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b"
+          },
+          {
+            "path": "tools/brain.mjs",
+            "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e"
+          }
+        ],
+        "digest": "798ad1dc674657f87c4da66fdd55f919ad518929d67609240eef9eaa5846f1d5"
+      },
+      "recordedAt": "2026-10-01T06:13:24.380Z",
+      "command": {
+        "argv": [
+          "npm.cmd",
+          "test"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "os": "win32",
+        "executionRoot": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F\\source",
+        "sourceFingerprint": "3c6a0f636d8534476186c3607315a322cc8c39470a1d5b3956116d12449a951f",
+        "sourceIsolation": "Frozen portable copy; concurrent platform source changes are excluded.",
+        "hostProfile": "Existing selected private build-host profile copied unchanged; no credentials or policy changes.",
+        "dependencies": "Same pinned dependencies copied as hash-matched normal files into the owned frozen workspace.",
+        "QB_TEST_CP3_NATIVE_LOCK": "blocked-policy (process-local; preserves previously denied test before setup)"
+      },
+      "status": "FAILED",
+      "exitCode": 1,
+      "counts": {
+        "tests": 255,
+        "passed": 252,
+        "failed": 1,
+        "cancelled": 0,
+        "skipped": 2,
+        "todo": 0
+      },
+      "artifacts": [
+        {
+          "sourceRef": ".local/brain-001/full-suite-final.tap.txt",
+          "path": ".brain/workflow/artifacts/ad15304e-8094-4c5e-b7a5-e0494b6dc35d/full-suite-final.tap.txt",
+          "sha256": "952c8412369c6ac754418585191bf8f5c8718ff59d70716a055b57a5d3abdcb1",
+          "bytes": 25678
+        },
+        {
+          "sourceRef": ".local/brain-001/candidate-final.json",
+          "path": ".brain/workflow/artifacts/ad15304e-8094-4c5e-b7a5-e0494b6dc35d/candidate-final.json",
+          "sha256": "dc55771d08d62ddaca6e449cc7ded692563eca2cf3d52fd54e25688c40602fd8",
+          "bytes": 1171
+        },
+        {
+          "sourceRef": ".local/brain-001/frozen-workspace-final.json",
+          "path": ".brain/workflow/artifacts/ad15304e-8094-4c5e-b7a5-e0494b6dc35d/frozen-workspace-final.json",
+          "sha256": "e6da84fdda55f7482acb8a00e89cf814ac60346a288822ac1355f5a24f2e053e",
+          "bytes": 1183
+        },
+        {
+          "sourceRef": ".local/brain-001/verification-after.json",
+          "path": ".brain/workflow/artifacts/ad15304e-8094-4c5e-b7a5-e0494b6dc35d/verification-after.json",
+          "sha256": "78308a4f02d941c80f8bc92ab8e2401ed95aac17d6dc567cef8e87b3df31116c",
+          "bytes": 495
+        },
+        {
+          "sourceRef": ".local/brain-001/frozen-toolchain-copy.json",
+          "path": ".brain/workflow/artifacts/ad15304e-8094-4c5e-b7a5-e0494b6dc35d/frozen-toolchain-copy.json",
+          "sha256": "2829f704648b7d13c72b83f7685f30bfd9d8d31d50078b52309b700ce38587a7",
+          "bytes": 948
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root executed the named command through exec_command; saved complete output and observed actual process completion."
+      },
+      "limitations": [
+        "One Combined runtime fixture failed during artifact publication: The fixed registry publisher did not provide one valid physical result proof. This remains unresolved; no platform publisher fix or broader suite pass is claimed.",
+        "Full-suite result includes named unqualified platform profile gates; blocked skips are not a pass claim.",
+        "No new browser/provider/production qualification.",
+        "Concurrent platform work after the frozen source capture is outside this run."
+      ],
+      "integritySha256": "7919935604f976a70ee1b229dc918d213dadff40c49b3d57a1343d38b2551ee2"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "review",
+      "id": "b47246f9-08fc-431b-8627-6336e8c4e063",
+      "taskId": "PLATFORM-005A-CORE",
+      "contractDigest": "62b56271c4802a4570e6dff06315a1da5915cc2de37081a5b03527ab27a70914",
+      "candidate": {
+        "files": [
+          {
+            "path": "apps/control-plane/src/build-inputs.ts",
+            "sha256": "8536915eda4de98fca5c2ed23a8a83c1752d8eaf681647d26ff20274b85e9c72"
+          },
+          {
+            "path": "apps/control-plane/src/main.ts",
+            "sha256": "4eea7a1c88c1a97c42b7b6737a2d6e0615d2394bc7e3eae9d1ea0bba0ef9ea7a"
+          },
+          {
+            "path": "apps/control-plane/src/operator-server.ts",
+            "sha256": "0d02e1b136d135807461a1fbbcad423b8aaf7e3c691b6d27503eaf625f3b8989"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-manager.ts",
+            "sha256": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-recovery.ts",
+            "sha256": "02f9fdb51c5cbfac1a12d92ae19e861fdc3ee03626a462979b8a31bea90e3f1d"
+          },
+          {
+            "path": "apps/studio-web/src/main.ts",
+            "sha256": "0b8f12a155fe0992e85819b82fc4e3fb3169822939845b17648e5a8238c943c3"
+          },
+          {
+            "path": "docs/STATUS.md",
+            "sha256": "cd5ed9853ea4c11d94a9a859b560b83d6cff6dd0d8ec976f6ec3a43e94c6e8fa"
+          },
+          {
+            "path": "docs/STUDIO_INTEGRATION.md",
+            "sha256": "d7c4a023101c7e5dcc96067eb25cbfb0fb37266290a3d65aca8b6ccaaf87abec"
+          },
+          {
+            "path": "IMPLEMENTATION_STATUS_0.3.md",
+            "sha256": "0ee835c626c5f3e18199431387358dc8c4d02213edfe2e12e75cb3a6724c6be4"
+          },
+          {
+            "path": "packages/control-plane/src/index.ts",
+            "sha256": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5"
+          },
+          {
+            "path": "PLATFORM_ARCHITECTURE.md",
+            "sha256": "91c3a71e9f68d426a9fe3396ad5bcc49a846d4c101bb4369867e3f8115fa4180"
+          },
+          {
+            "path": "README.md",
+            "sha256": "900ad12067a90378fc82b47441ca3473c671e6816d923dbc3bc34aa9c2c38eb9"
+          },
+          {
+            "path": "tests/control-plane-artifacts.test.mjs",
+            "sha256": "1cc88fa06ba21b2a76b93a25360c4d32e0705e875ec8064d0443d1d65a003278"
+          },
+          {
+            "path": "tests/control-plane-build-host.test.mjs",
+            "sha256": "c5941bdcc1e28ec70d61bd3c745dcacb304c4c8d84316afad3381650cfecfdf6"
+          },
+          {
+            "path": "tests/control-plane-http.test.mjs",
+            "sha256": "c3a59b4d3ad0e5f91b18c92c0a1af93e4be634b848f3568f28b8ae65e98e58cb"
+          },
+          {
+            "path": "tests/control-plane-main.test.mjs",
+            "sha256": "b278b7117e7535d6380943756366c20a87f527a7965f7c4e9e8d87786e631861"
+          },
+          {
+            "path": "tests/control-plane.test.mjs",
+            "sha256": "3304f9ff64a01a81d6effb71a723136e6cbc711b7ef31a7924f64f46864884f2"
+          },
+          {
+            "path": "tests/managed-runtime-recovery-store.test.mjs",
+            "sha256": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+          },
+          {
+            "path": "tests/managed-runtime-store.test.mjs",
+            "sha256": "2de1db607bf5aa8a93b81b15eaacc152383634466f80501a0884283598222de1"
+          },
+          {
+            "path": "tests/studio-runtime-ui.test.mjs",
+            "sha256": "901848c20743c9b65a49e52a5456e0e4e9cf21ae7b901bb3c9634cef3f2c3063"
+          },
+          {
+            "path": "tools/runtime-recovery-publish.ps1",
+            "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+          },
+          {
+            "path": "tools/runtime-recovery.mjs",
+            "sha256": "8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35"
+          }
+        ],
+        "digest": "7423f199e70374095f449e85275f0ce59676aa150c7ed814acee4eb41289ea61"
+      },
+      "recordedAt": "2026-10-01T07:36:43.270Z",
+      "reviewer": "/root/repo_brain_architect",
+      "implementer": "/root/repo_brain_validation",
+      "independence": "independent_reported",
+      "outcome": "ACCEPTED",
+      "scope": "Exact22-path source candidate7423f199...89ea61 independently matched before/after. Shared original summary/detail stop proof correctly binds currentid/attempt/artifact and positivecleanupflags. Real-shaped summary/detail action guards/stale refusal VMtests8of8 confirmed. Native/browser/fullsuite observed separately.",
+      "artifacts": [
+        {
+          "sourceRef": ".brain/evidence/platform-005a-final-candidate-03.json",
+          "path": ".brain/workflow/artifacts/b47246f9-08fc-431b-8627-6336e8c4e063/platform-005a-final-candidate-03.json",
+          "sha256": "b19c186ee2146c1928651d6e67bfc86447ee2bcbef99afa382f1cf165f1e12b4",
+          "bytes": 4529
+        },
+        {
+          "sourceRef": ".local/platform-005a-final-build-03.log",
+          "path": ".brain/workflow/artifacts/b47246f9-08fc-431b-8627-6336e8c4e063/platform-005a-final-build-03.log",
+          "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+          "bytes": 454
+        },
+        {
+          "sourceRef": ".local/platform-005a-runtime-proof-ui-focused-04.tap.txt",
+          "path": ".brain/workflow/artifacts/b47246f9-08fc-431b-8627-6336e8c4e063/platform-005a-runtime-proof-ui-focused-04.tap.txt",
+          "sha256": "6f6b5302b9890bf4c6af6889970958e166112fdcf9d8b32e89aca1292eae7829",
+          "bytes": 2215
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-browser-core-finding-03.json",
+          "path": ".brain/workflow/artifacts/b47246f9-08fc-431b-8627-6336e8c4e063/platform-005a-browser-core-finding-03.json",
+          "sha256": "5180a0884b8dd2cd597a152ed616dc7bf6ab2460e3a9a657a06f6c39beac99ff",
+          "bytes": 1770
+        }
+      ],
+      "provenance": {
+        "reference": "Actual independent gpt-6.1-sol/high agent repo_brain_architect source review confirmed exact22filecandidate and complete fresh focused04 TAP8of8 EXIT0 on2026-10-01. Root receivedexplicit sourceapproval and separatebrowser/fullsuite limitations.",
+        "kind": "reported"
+      },
+      "limitations": [
+        "Source/component review only; ordinarybrowser02/fullsuite03 pending.",
+        "Earlier failedbrowser and failedrequiredsuites remain history; no inferencefrom sourceapproval.",
+        "No provider/hosted/production acceptance."
+      ],
+      "integritySha256": "4ab44d9070d33c3a515875fea57c3724799d587c86852c57b4477b8fb66124a5"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "c84dde6a-fb8a-4eea-a2ec-119e85a8efaa",
+      "taskId": "PLATFORM-005A-CORE",
+      "recipeId": "brain-full-suite",
+      "contractDigest": "62b56271c4802a4570e6dff06315a1da5915cc2de37081a5b03527ab27a70914",
+      "recipeDigest": "fedff282ea3ba6882b328eed16f8a368f4dbccfa83c323596c9b64d3611b235b",
+      "candidate": {
+        "files": [
+          {
+            "path": "apps/control-plane/src/build-inputs.ts",
+            "sha256": "8536915eda4de98fca5c2ed23a8a83c1752d8eaf681647d26ff20274b85e9c72"
+          },
+          {
+            "path": "apps/control-plane/src/main.ts",
+            "sha256": "4eea7a1c88c1a97c42b7b6737a2d6e0615d2394bc7e3eae9d1ea0bba0ef9ea7a"
+          },
+          {
+            "path": "apps/control-plane/src/operator-server.ts",
+            "sha256": "0d02e1b136d135807461a1fbbcad423b8aaf7e3c691b6d27503eaf625f3b8989"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-manager.ts",
+            "sha256": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-recovery.ts",
+            "sha256": "02f9fdb51c5cbfac1a12d92ae19e861fdc3ee03626a462979b8a31bea90e3f1d"
+          },
+          {
+            "path": "apps/studio-web/src/main.ts",
+            "sha256": "c1eea89928f157dc3178ff9e2d27e4f2deb744d8fad4beb018b7176166a8d902"
+          },
+          {
+            "path": "docs/STATUS.md",
+            "sha256": "cd5ed9853ea4c11d94a9a859b560b83d6cff6dd0d8ec976f6ec3a43e94c6e8fa"
+          },
+          {
+            "path": "docs/STUDIO_INTEGRATION.md",
+            "sha256": "d7c4a023101c7e5dcc96067eb25cbfb0fb37266290a3d65aca8b6ccaaf87abec"
+          },
+          {
+            "path": "IMPLEMENTATION_STATUS_0.3.md",
+            "sha256": "0ee835c626c5f3e18199431387358dc8c4d02213edfe2e12e75cb3a6724c6be4"
+          },
+          {
+            "path": "packages/control-plane/src/index.ts",
+            "sha256": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5"
+          },
+          {
+            "path": "PLATFORM_ARCHITECTURE.md",
+            "sha256": "91c3a71e9f68d426a9fe3396ad5bcc49a846d4c101bb4369867e3f8115fa4180"
+          },
+          {
+            "path": "README.md",
+            "sha256": "900ad12067a90378fc82b47441ca3473c671e6816d923dbc3bc34aa9c2c38eb9"
+          },
+          {
+            "path": "tests/control-plane-artifacts.test.mjs",
+            "sha256": "1cc88fa06ba21b2a76b93a25360c4d32e0705e875ec8064d0443d1d65a003278"
+          },
+          {
+            "path": "tests/control-plane-build-host.test.mjs",
+            "sha256": "c5941bdcc1e28ec70d61bd3c745dcacb304c4c8d84316afad3381650cfecfdf6"
+          },
+          {
+            "path": "tests/control-plane-http.test.mjs",
+            "sha256": "c3a59b4d3ad0e5f91b18c92c0a1af93e4be634b848f3568f28b8ae65e98e58cb"
+          },
+          {
+            "path": "tests/control-plane-main.test.mjs",
+            "sha256": "b278b7117e7535d6380943756366c20a87f527a7965f7c4e9e8d87786e631861"
+          },
+          {
+            "path": "tests/control-plane.test.mjs",
+            "sha256": "3304f9ff64a01a81d6effb71a723136e6cbc711b7ef31a7924f64f46864884f2"
+          },
+          {
+            "path": "tests/managed-runtime-recovery-store.test.mjs",
+            "sha256": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+          },
+          {
+            "path": "tests/managed-runtime-store.test.mjs",
+            "sha256": "2de1db607bf5aa8a93b81b15eaacc152383634466f80501a0884283598222de1"
+          },
+          {
+            "path": "tests/studio-runtime-ui.test.mjs",
+            "sha256": "3fe82fa020cc550be44dd2fc8c4494373eeb1ee4da0fb6e79b6875ca33d20ef7"
+          },
+          {
+            "path": "tools/runtime-recovery-publish.ps1",
+            "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+          },
+          {
+            "path": "tools/runtime-recovery.mjs",
+            "sha256": "8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35"
+          }
+        ],
+        "digest": "0e1661168ae21880af8c4fb2b6498c147e81e66e08ce231a4170b8acff9a3fef"
+      },
+      "recordedAt": "2026-10-01T07:29:34.889Z",
+      "command": {
+        "argv": [
+          "npm.cmd",
+          "test"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "os": "win32",
+        "nativeBrowserOverlap": "Isolated copied browser runtime briefly STARTed/STOPped during early full suite; potential resource pressure is unproven.",
+        "policySkip": "Process-local QB_TEST_CP3_NATIVE_LOCK=blocked-policy",
+        "node": "v24.19.0"
+      },
+      "status": "FAILED",
+      "exitCode": 1,
+      "counts": {
+        "failed": 2,
+        "tests": 266,
+        "skipped": 2,
+        "todo": 0,
+        "passed": 262,
+        "cancelled": 0
+      },
+      "artifacts": [
+        {
+          "sourceRef": ".local/platform-005a-npm-test-final-02.log",
+          "path": ".brain/workflow/artifacts/c84dde6a-fb8a-4eea-a2ec-119e85a8efaa/platform-005a-npm-test-final-02.log",
+          "sha256": "bdb7aa77794a8b8636d2769db8456dfef0424457eaf22cf7d34f0d9d042b37f6",
+          "bytes": 27774
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-final-candidate-02.json",
+          "path": ".brain/workflow/artifacts/c84dde6a-fb8a-4eea-a2ec-119e85a8efaa/platform-005a-final-candidate-02.json",
+          "sha256": "f1c605001316d74becd52e72bb0b380df401a3bd83dd83ab3baf0384cfaa912b",
+          "bytes": 4493
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-browser-core-finding-03.json",
+          "path": ".brain/workflow/artifacts/c84dde6a-fb8a-4eea-a2ec-119e85a8efaa/platform-005a-browser-core-finding-03.json",
+          "sha256": "5180a0884b8dd2cd597a152ed616dc7bf6ab2460e3a9a657a06f6c39beac99ff",
+          "bytes": 1770
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root actual exec_command session41326 exit1, complete saved output; exact22-filecandidate unchanged before/after."
+      },
+      "limitations": [
+        "Missing-host fixture repair now passes. Unchanged compiler cancellation test failed before marker heartbeat; separate Node registry owner failed fixed physical proof. Bounded diagnosis pending; no inferred repair.",
+        "Actual native recovery journey passed again; real browser UI controls finding separately requires repair.",
+        "7 additional ancillary Atlas tests appeared during unrelated work; full actual count266 recorded, no unchanged whole repository claim.",
+        "File-symlink EPERM and native-lock policy skips remain blocked; no browser recovery/provider/production pass."
+      ],
+      "integritySha256": "fdda7b44e18203f4cee6bf10415c037878acd8ca47e9a4c314687b5c7dbbe4d7"
+    },
+    {
+      "schema": "brain.evidence-record.v1",
+      "kind": "run",
+      "id": "f80c4809-7ff3-467a-be69-ed54abccd98a",
+      "taskId": "PLATFORM-005A-CORE",
+      "recipeId": "brain-full-suite",
+      "contractDigest": "09d0ac04d25c84ead4857b38e016c3ad248e7eae36094e3f83d17aba9599f12d",
+      "recipeDigest": "fedff282ea3ba6882b328eed16f8a368f4dbccfa83c323596c9b64d3611b235b",
+      "candidate": {
+        "files": [
+          {
+            "path": "apps/control-plane/src/build-inputs.ts",
+            "sha256": "8536915eda4de98fca5c2ed23a8a83c1752d8eaf681647d26ff20274b85e9c72"
+          },
+          {
+            "path": "apps/control-plane/src/main.ts",
+            "sha256": "4eea7a1c88c1a97c42b7b6737a2d6e0615d2394bc7e3eae9d1ea0bba0ef9ea7a"
+          },
+          {
+            "path": "apps/control-plane/src/operator-server.ts",
+            "sha256": "0d02e1b136d135807461a1fbbcad423b8aaf7e3c691b6d27503eaf625f3b8989"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-manager.ts",
+            "sha256": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b"
+          },
+          {
+            "path": "apps/control-plane/src/runtime-recovery.ts",
+            "sha256": "02f9fdb51c5cbfac1a12d92ae19e861fdc3ee03626a462979b8a31bea90e3f1d"
+          },
+          {
+            "path": "apps/studio-web/src/main.ts",
+            "sha256": "c1eea89928f157dc3178ff9e2d27e4f2deb744d8fad4beb018b7176166a8d902"
+          },
+          {
+            "path": "docs/STATUS.md",
+            "sha256": "cd5ed9853ea4c11d94a9a859b560b83d6cff6dd0d8ec976f6ec3a43e94c6e8fa"
+          },
+          {
+            "path": "docs/STUDIO_INTEGRATION.md",
+            "sha256": "d7c4a023101c7e5dcc96067eb25cbfb0fb37266290a3d65aca8b6ccaaf87abec"
+          },
+          {
+            "path": "IMPLEMENTATION_STATUS_0.3.md",
+            "sha256": "0ee835c626c5f3e18199431387358dc8c4d02213edfe2e12e75cb3a6724c6be4"
+          },
+          {
+            "path": "packages/control-plane/src/index.ts",
+            "sha256": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5"
+          },
+          {
+            "path": "PLATFORM_ARCHITECTURE.md",
+            "sha256": "91c3a71e9f68d426a9fe3396ad5bcc49a846d4c101bb4369867e3f8115fa4180"
+          },
+          {
+            "path": "README.md",
+            "sha256": "900ad12067a90378fc82b47441ca3473c671e6816d923dbc3bc34aa9c2c38eb9"
+          },
+          {
+            "path": "tests/control-plane-artifacts.test.mjs",
+            "sha256": "1cc88fa06ba21b2a76b93a25360c4d32e0705e875ec8064d0443d1d65a003278"
+          },
+          {
+            "path": "tests/control-plane-http.test.mjs",
+            "sha256": "c3a59b4d3ad0e5f91b18c92c0a1af93e4be634b848f3568f28b8ae65e98e58cb"
+          },
+          {
+            "path": "tests/control-plane-main.test.mjs",
+            "sha256": "b278b7117e7535d6380943756366c20a87f527a7965f7c4e9e8d87786e631861"
+          },
+          {
+            "path": "tests/control-plane.test.mjs",
+            "sha256": "3304f9ff64a01a81d6effb71a723136e6cbc711b7ef31a7924f64f46864884f2"
+          },
+          {
+            "path": "tests/managed-runtime-recovery-store.test.mjs",
+            "sha256": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+          },
+          {
+            "path": "tests/managed-runtime-store.test.mjs",
+            "sha256": "2de1db607bf5aa8a93b81b15eaacc152383634466f80501a0884283598222de1"
+          },
+          {
+            "path": "tests/studio-runtime-ui.test.mjs",
+            "sha256": "3fe82fa020cc550be44dd2fc8c4494373eeb1ee4da0fb6e79b6875ca33d20ef7"
+          },
+          {
+            "path": "tools/runtime-recovery-publish.ps1",
+            "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+          },
+          {
+            "path": "tools/runtime-recovery.mjs",
+            "sha256": "8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35"
+          }
+        ],
+        "digest": "f634e1d37e4aa7e74a7a87c513e73f069a8314a681b70f3730f911b76993d03d"
+      },
+      "recordedAt": "2026-10-01T07:15:58.908Z",
+      "command": {
+        "argv": [
+          "npm.cmd",
+          "test"
+        ],
+        "cwd": "."
+      },
+      "environment": {
+        "node": "v24.19.0",
+        "os": "win32",
+        "policySkip": "Process-local QB_TEST_CP3_NATIVE_LOCK=blocked-policy, preserving prior denied native fixture before setup"
+      },
+      "status": "FAILED",
+      "exitCode": 1,
+      "counts": {
+        "passed": 256,
+        "todo": 0,
+        "skipped": 2,
+        "failed": 1,
+        "cancelled": 0,
+        "tests": 259
+      },
+      "artifacts": [
+        {
+          "sourceRef": ".local/platform-005a-npm-test-final-01.log",
+          "path": ".brain/workflow/artifacts/f80c4809-7ff3-467a-be69-ed54abccd98a/platform-005a-npm-test-final-01.log",
+          "sha256": "fb83a37e3b4d5e46edc968eb7e237574d1bede2103ff8883228bf17cace9b2c9",
+          "bytes": 26941
+        },
+        {
+          "sourceRef": ".brain/evidence/platform-005a-final-candidate-01.json",
+          "path": ".brain/workflow/artifacts/f80c4809-7ff3-467a-be69-ed54abccd98a/platform-005a-final-candidate-01.json",
+          "sha256": "984ddc4b96e360ddb250d0c2d82b4093ffe0be145a49e21b2a54bcf1d37db63b",
+          "bytes": 31819
+        }
+      ],
+      "provenance": {
+        "kind": "reported",
+        "reference": "/root actual exec_command session24814 completion exit1; npm.cmd test fresh-build invocation observed and full output saved."
+      },
+      "limitations": [
+        "Failed missing-build-host fixture omitted new recovery tool: ENOENT tools/runtime-recovery.mjs. Must repair before acceptance.",
+        "File symlink EPERM and prior native lock policy skips remain unqualified.",
+        "Unrelated tools/brain-atlas.mjs changed outside exact CP5 task manifest; no whole197-file unchanged execution claim.",
+        "No browser/provider/hosted/production qualification."
+      ],
+      "integritySha256": "5e35378db633273085256ea5e35e1b04e16f6cbcb34a009ad60b6c317cd2a7ba"
+    }
+  ],
+  "evidenceAssessment": {
+    "status": "NOT_QUALIFIED",
+    "reasons": [
+      "required_recipe_not_qualified:brain-build",
+      "required_recipe_not_qualified:brain-focused",
+      "required_recipe_not_qualified:brain-control-focused",
+      "required_observation_missing:brain-adoption",
+      "required_observation_missing:brain-full-suite",
+      "required_review_not_qualified",
+      "checkpoint_candidate_stale"
+    ]
+  },
+  "limitations": [
+    "Stored execution, provenance, actor, reviewer, and acceptance fields are reported claims; the CLI does not authenticate them or execute recipe argv."
+  ]
+}

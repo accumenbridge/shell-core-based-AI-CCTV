@@ -1,0 +1,127 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "f8924045-dc01-4b9c-acd8-c7babd3c2a43",
+  "revision": 2,
+  "previousEventId": "e498cc6a-19f3-49e5-9424-21017b1bcd64",
+  "reportedActor": "/root",
+  "recordedAt": "2026-10-01T06:00:30.894Z",
+  "platformTask": {
+    "taskId": "PLATFORM-005A",
+    "status": "REPORTED_IN_PROGRESS",
+    "candidate": null,
+    "runIds": [
+      "a47aa840-ad6b-45ab-ae75-98c2080624a3"
+    ],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Existing platform coordinator continues private stopped-instance backup/verify/restore and explicit restart under PLATFORM-005A; reconcile later platform reports into a new checkpoint.",
+    "gates": [
+      {
+        "id": "PLATFORM-004-local-core",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-4-platform-004-result.json"
+        ],
+        "limitations": [
+          "Prior platform coordinator acceptance only; no new platform qualification from Brain adoption."
+        ]
+      },
+      {
+        "id": "PLATFORM-005A-execution",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md"
+        ],
+        "limitations": [
+          "Active parallel implementation; observed reports do not establish native recovery or full acceptance."
+        ]
+      },
+      {
+        "id": "native-lock-policy",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md"
+        ],
+        "limitations": [
+          "Previously denied native lock fixture remains unrun. No policy workaround."
+        ]
+      },
+      {
+        "id": "file-symlink-environment",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md"
+        ],
+        "limitations": [
+          "Prior Windows EPERM limitation remains separate."
+        ]
+      },
+      {
+        "id": "controller-crash",
+        "status": "DEFERRED",
+        "evidenceRefs": [
+          ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md"
+        ],
+        "limitations": [
+          "Deferred by platform user core-delivery priority."
+        ]
+      }
+    ],
+    "importProvenance": {
+      "sourceRef": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md",
+      "sourceSha256": "31d7ff7edf4c4f34d49ac47b78d9f9b86c142803580c872edea95173dff8329e",
+      "originalStatus": "IMPLEMENTING",
+      "observedAt": "2026-10-01T06:00:30.528Z",
+      "limitations": [
+        "Point-in-time import from concurrent platform work; no fresh platform source or result verification."
+      ]
+    }
+  },
+  "maintenanceTask": {
+    "taskId": "BRAIN-001",
+    "status": "IMPLEMENTING",
+    "candidate": {
+      "files": [
+        {
+          "path": ".brain/ROUTING.md",
+          "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308"
+        },
+        {
+          "path": ".brain/START_HERE.md",
+          "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2"
+        },
+        {
+          "path": ".brain/WORKFLOW.md",
+          "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43"
+        },
+        {
+          "path": ".brain/workflow/recipes.json",
+          "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75"
+        },
+        {
+          "path": "package.json",
+          "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554"
+        },
+        {
+          "path": "tests/brain-workflow.test.mjs",
+          "sha256": "a8bd29c13f3a1fdf8aa2f37ca04662d35cccd647a6a1709111215846252654cd"
+        },
+        {
+          "path": "tools/brain-core.mjs",
+          "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b"
+        },
+        {
+          "path": "tools/brain.mjs",
+          "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e"
+        }
+      ],
+      "digest": "798ad1dc674657f87c4da66fdd55f919ad518929d67609240eef9eaa5846f1d5"
+    },
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Build and qualify the frozen Brain candidate, preserve full-suite limitations, and obtain independent review.",
+    "gates": []
+  },
+  "integritySha256": "859c237693d58747d9ed0ff6b6eab59de53bdd726739ea43addeb1ee8a4c6a02"
+}

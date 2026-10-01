@@ -1,0 +1,55 @@
+- complementary:
+  - generic: Q
+  - generic: Quadbridge
+  - generic: PRODUCT WORKSPACE
+  - generic: Quadbridge Core Operations
+  - paragraph: "Core delivery: persisted requests, grounded Knowledge and owner-confirmed handoffs."
+  - navigation "Workspaces":
+    - link "Knowledge library":
+      - /url: "#/library"
+    - link "Service requests" [active]:
+      - /url: "#/requests"
+    - link "Request overview":
+      - /url: "#/request-overview"
+    - link "Cross-product handoffs":
+      - /url: "#/handoffs"
+  - generic: LOCAL DEVELOPER PROFILE
+  - paragraph: 3 selected modules
+  - paragraph: runtime-2cd07972-b233-4112-a510-39708d908d83
+- main:
+  - text: Tenant
+  - combobox "Tenant":
+    - option "customer-a" [selected]
+    - option "customer-b"
+  - generic: admin
+  - button "Sign out"
+  - heading "Service requests" [level=2]
+  - paragraph: Manage requests in your current tenant. Changes are saved by Service Desk.
+  - generic: Loaded requests
+  - strong: "2"
+  - generic: Current response · current tenant
+  - generic: Open in this list
+  - strong: "2"
+  - generic: Ready for review
+  - generic: Closed in this list
+  - strong: "0"
+  - generic: Owner-confirmed state
+  - heading "Create a request" [level=3]
+  - generic: Title
+  - textbox "Title"
+  - generic: Details
+  - textbox "Details"
+  - button "Create request"
+  - heading "Requests" [level=3]
+  - button "Refresh"
+  - article:
+    - generic: OPEN · revision 1
+    - heading "Core operations note" [level=3]
+    - paragraph: Apply the documented core backup retention procedure.
+    - paragraph: "Linked source: {\"productId\":\"core-ops-1002\",\"instanceId\":\"runtime-2cd07972-b233-4112-a510-39708d908d83\",\"resourceType\":\"knowledge.document\",\"resourceId\":\"5afd8cbe-637c-47ad-9a70-3bd523793a0a\",\"version\":1}"
+    - button "Close request"
+  - article:
+    - generic: OPEN · revision 1
+    - heading "Core delivery request" [level=3]
+    - paragraph: Verify the deployed local core workflow.
+    - button "Close request"

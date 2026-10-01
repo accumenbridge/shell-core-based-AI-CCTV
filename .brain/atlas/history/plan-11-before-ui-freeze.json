@@ -1,0 +1,1558 @@
+{
+  "schema": "brain.atlas.v1",
+  "projectId": "quadbridge-core-frameworks",
+  "title": "Quadbridge Product Studio",
+  "planRevision": 11,
+  "updatedAt": "2026-10-01T11:18:50.693Z",
+  "intentBasis": "User authorized the local full architecture program and on 2026-10-01 requested a reusable architecture-first Brain with visual planning, core prioritization and continuous review. Existing source architecture and bounded execution contracts remain authoritative. User 2026-10-01 explicitly created a complete-core actual realtime goal; checkpoint28 selects the continuous local core journey and grounded Brain readiness maintenance.",
+  "vision": {
+    "destination": "Build and operate reviewed products through a product-neutral Studio, with exact composition, immutable artifacts, domain ownership and understandable user journeys.",
+    "users": [
+      "Product developer",
+      "Local platform operator",
+      "Domain application user",
+      "Project owner reviewing direction and delivery"
+    ],
+    "nonGoals": [
+      "Changing the external Veyviz repository",
+      "Universal domain data ownership",
+      "Arbitrary executable import strings",
+      "Unapproved credentials, spending or deployments",
+      "Claiming production or bug-free status from local checks"
+    ],
+    "successSignals": [
+      {
+        "label": "Core journey acceptance",
+        "definition": "Candidate-specific demonstration of each required user journey with blocked and unrun checks retained.",
+        "baseline": null,
+        "target": null
+      },
+      {
+        "label": "Delivery cycle time",
+        "definition": "Elapsed time from agreed ready point to accepted core outcome, reporting blocked time separately.",
+        "baseline": null,
+        "target": null
+      },
+      {
+        "label": "Review rework",
+        "definition": "Revisions after a defined independent review point, with causes.",
+        "baseline": null,
+        "target": null
+      },
+      {
+        "label": "Escaped defects",
+        "definition": "Confirmed defects discovered after the defined acceptance boundary and exposure window.",
+        "baseline": null,
+        "target": null
+      }
+    ]
+  },
+  "policy": {
+    "coreFirst": "Finish the next coherent user journey and its essential correctness before speculative breadth. Current execution selection comes from .brain/CURRENT.md, not a copied next-action label.",
+    "workInProgressLimit": 1,
+    "reviewCadence": [
+      "Before a bounded milestone starts",
+      "After source or contract change that affects the plan",
+      "After actual check or review results",
+      "At a user-visible milestone demonstration",
+      "At a meaningful drift or repeated-failure finding"
+    ],
+    "nonNegotiables": [
+      "Keep neutral packages independent of domain modules and product wiring.",
+      "Preserve actor/product/instance/tenant/command identity and owner databases.",
+      "Build before source tests; preserve failed, blocked and unrun evidence.",
+      "Offline views gain no filesystem/build privileges.",
+      "Existing source catalogues remain authoritative; this atlas is not an allowed-module list."
+    ],
+    "deferRule": "Defer optional polish, speculative generalization and unrelated edge campaigns with a reason and revisit trigger. A concrete violation of the current outcome or essential invariant stays core."
+  },
+  "sourceRefs": [
+    {
+      "id": "architecture",
+      "path": "PLATFORM_ARCHITECTURE.md",
+      "role": "architecture",
+      "sha256": "0f14979eecf2ce1846d7ab00bcec820325046fb7ad2613c90604857f7ffe5118"
+    },
+    {
+      "id": "readme",
+      "path": "README.md",
+      "role": "user journeys",
+      "sha256": "23c5b6449aadac650acfad8d11f99e3871cf780b663fd66cf8129aa11b65a960"
+    },
+    {
+      "id": "status",
+      "path": "docs/STATUS.md",
+      "role": "historical status",
+      "sha256": "fe3ea0826a48e41cdbaf370fdca5ce541de0a702b62958cd61cb919ab679df82"
+    },
+    {
+      "id": "roadmap",
+      "path": ".brain/PLATFORM_ROADMAP.md",
+      "role": "program roadmap",
+      "sha256": "5b39cbf92fc655da51943bc80fcba4782017340e20c8b34359f58db26d620659"
+    },
+    {
+      "id": "checkpoint",
+      "path": ".brain/workflow/events/65a7e7d2-309f-40cf-8aca-c75d6f417de4.json",
+      "role": "immutable activation checkpoint28 history; live current authority derived separately by Brain",
+      "sha256": "a0a873a0c1523edf81e07b80349cda5ec971c74392a238a5fc858179ca3279ed"
+    },
+    {
+      "id": "outcome",
+      "path": ".brain/OUTCOME.md",
+      "role": "intent with stale next-step text",
+      "sha256": "7c20fddeae83424ad35b6fe3b1b0e51a57f4b0f3ea45c8141d40e7ef9e714cca"
+    },
+    {
+      "id": "brief",
+      "path": ".brain/BRIEF.md",
+      "role": "intent with historical next-step text",
+      "sha256": "ad1eacc038d94454d92bcb044cd5f75c33b03e49e53378767223b6abfe98bf65"
+    },
+    {
+      "id": "acceptance",
+      "path": ".brain/ACCEPTANCE.md",
+      "role": "acceptance history",
+      "sha256": "eef4b64a10f2e70e5458a1421cfc702f4033d223fa4fb4605d649eeea0446e2a"
+    },
+    {
+      "id": "structure",
+      "path": "FOLDER_STRUCTURE.md",
+      "role": "historical source layout",
+      "sha256": "004dadfdd0981b2d9e37ea812500f945837e8f1e5836fabcb2c8994821e34c9f"
+    },
+    {
+      "id": "old-map",
+      "path": "FULL_PLATFORM_BUILD_MAP.md",
+      "role": "target history",
+      "sha256": "850758dd0e91820a01666f1964081a7dd85dad75cc98711a22aa9257ed2d40bb"
+    },
+    {
+      "id": "studio-ui",
+      "path": "apps/studio-web/src/main.ts",
+      "role": "implemented UI source",
+      "sha256": "ff841faed5d12daa17ede376c1bc1514dd144d1f4c3ea8a991487f9199eabbd4"
+    },
+    {
+      "id": "contracts",
+      "path": "packages/contracts/src/index.ts",
+      "role": "public interfaces",
+      "sha256": "65344865bf676546c6ee0ab01b1fa4fc2071fb730664b2cd8cca31f26a666792"
+    },
+    {
+      "id": "control-contracts",
+      "path": "packages/control-plane/src/index.ts",
+      "role": "control-plane contracts",
+      "sha256": "107bdca35e29b8ac2359e65159c01645167e01acbacb6aba17ed043705dad78f"
+    },
+    {
+      "id": "studio-contracts",
+      "path": "packages/studio-model/src/index.ts",
+      "role": "construction declarations",
+      "sha256": "757a2d8fd90e99012aabca8828d56c59131f8e317e920b6ff90ec86a3e4d38f2"
+    },
+    {
+      "id": "cp4-result",
+      "path": ".brain/evidence/platform-004-result.json",
+      "role": "historical execution report",
+      "sha256": "1cbbb30533f5323096e11208a084073a49d3a2efd4bc37f6750f7a2f8ff99b74"
+    },
+    {
+      "id": "cp4-browser",
+      "path": ".brain/evidence/platform-004-browser-runtime-03.json",
+      "role": "historical browser report",
+      "sha256": "79777cb88491e232443e77fa68c48126d04a4d75bd6215a3d8c90833cd2323a4"
+    },
+    {
+      "id": "cp5-task",
+      "path": ".brain/tasks/PLATFORM-005A-CORE.md",
+      "role": "Historical local recovery execution contract",
+      "sha256": "ecd6d4468956118e76d7ddc5e04ffbe03e84ec901516f95746d0ee0b7339abf9"
+    },
+    {
+      "id": "cp6-task",
+      "path": ".brain/tasks/PLATFORM-006.md",
+      "role": "historical bounded Knowledge task",
+      "sha256": "980f71f1cd6e14959a0a0d7a94b5b8219993f17a804a42eb7f14fe4774469d6e"
+    },
+    {
+      "id": "cp7-task",
+      "path": ".brain/tasks/PLATFORM-007.md",
+      "role": "historical blocked construction qualification",
+      "sha256": "2b0f3cd4fdb3725a59d4b6ae14980805642b31d5d5aa5b6bcc52a2637eb0c583"
+    },
+    {
+      "id": "implementation",
+      "path": "IMPLEMENTATION_STATUS_0.3.md",
+      "role": "implemented and pending boundaries",
+      "sha256": "bed43db35e029b2bb512c31a96918c3e71d3786637e360b714689f9a0f1656fd"
+    },
+    {
+      "id": "construction-diagram",
+      "path": "docs/diagrams/construction.mmd",
+      "role": "architecture diagram",
+      "sha256": "cd076d150cc5435d94905f5529a2dcaa18d2b90bdd23733fcde50e6bed1c8dc0"
+    },
+    {
+      "id": "neutrality-diagram",
+      "path": "docs/diagrams/neutrality.mmd",
+      "role": "source ownership diagram",
+      "sha256": "61f815590d16dc313267e8a7b36d0b7eb352a29d6df1631484726a023f3a0a98"
+    },
+    {
+      "id": "cross-product-diagram",
+      "path": "docs/diagrams/cross-product.mmd",
+      "role": "runtime collaboration diagram",
+      "sha256": "bd8db6bd0c6c595257b598d9b646130296887e7517ec8e9848f802258c21c967"
+    },
+    {
+      "id": "job-diagram",
+      "path": "docs/diagrams/job-lifecycle.mmd",
+      "role": "job lifecycle diagram",
+      "sha256": "d88000d1ee637548225c726c943a23953772ab6376e4f0304937211943d61d67"
+    },
+    {
+      "id": "brain-design",
+      "path": "docs/brain/ARCHITECTURE.md",
+      "role": "reusable Brain target design",
+      "sha256": "595b29f8a2bf89e7a0e3454fa867a047756eab2d2ca14b1deb71fe928c764fc9"
+    },
+    {
+      "id": "cp5-accepted-event",
+      "path": ".brain/workflow/events/4aadba06-7d61-4e52-9b15-e0d91a44bf9a.json",
+      "sha256": "4146ca72d01682f2c033bacd7f2c968f7dada97f8c3e6fc87858192177dd52a9",
+      "role": "Historical local recovery acceptance event"
+    },
+    {
+      "id": "cp6-ready-event",
+      "path": ".brain/workflow/events/161d7ea9-6ffd-4949-82d7-ddbc8ef728b8.json",
+      "sha256": "12030de5d9f7429a0d7e97968f0434c6449754f79eed1ed3d430cc5fd8279afa",
+      "role": "Knowledge activation event; no implementation qualification"
+    },
+    {
+      "id": "cp5-result",
+      "path": ".brain/evidence/platform-005a-result-03.json",
+      "sha256": "d03cafa4d200ca3003d538e5610ddac6ca2404d13baa9c1066637428c455a04b",
+      "role": "Candidate-specific local recovery acceptance with retained limits"
+    },
+    {
+      "id": "core-task",
+      "path": ".brain/tasks/CORE-DELIVERY-001.md",
+      "role": "canonical current core execution task",
+      "sha256": "1c0c4525875befea703bd698394bd59acce281dd79cede53228a4c67e107f3b4"
+    },
+    {
+      "id": "core-plan",
+      "path": ".brain/evidence/core-delivery-001-plan-01.md",
+      "role": "source-grounded finite actual core journey plan",
+      "sha256": "1cf43c09ee8a0bbca38115db5feffebfe5f5e53eff5cd18db1d0c529d38f1a14"
+    },
+    {
+      "id": "brain5-task",
+      "path": ".brain/tasks/BRAIN-005.md",
+      "role": "current finite Brain readiness maintenance task",
+      "sha256": "d1a85d354832e7890c7ff0e9fe6998953da0ae8f3653adc613c3e5dced1bf80b"
+    },
+    {
+      "id": "brain5-plan",
+      "path": ".brain/evidence/brain-005-readiness-proposal-01.md",
+      "role": "initial source-grounded readiness proposal; broader integrated fix requires separately reviewed revision",
+      "sha256": "9acfe6be6d19668a71cda889cc4fd9642d0cf67edc6eabc3f71775f1e70f3fbd"
+    },
+    {
+      "id": "cp6-result",
+      "path": ".brain/evidence/platform-006-result-01.json",
+      "role": "actual attributed bounded Knowledge result",
+      "sha256": "fe579144ee39d8cf5de30404798da07d469ec12200a01272e07095648293a1a2"
+    },
+    {
+      "id": "cp7-result",
+      "path": ".brain/evidence/platform-007-result-02.json",
+      "role": "actual attributed construction result with blocked browser qualification",
+      "sha256": "3514d1a668081b769dda3a8c0d2e54bd188c3bcb2662e656b9616776c5203d4e"
+    },
+    {
+      "id": "core-ui-repair-plan",
+      "path": ".brain/evidence/core-delivery-001-ui-repair-plan-01.md",
+      "role": "Actual first-Products and explicit in-page immutable save repair, source-grounded Sol proposal",
+      "sha256": "192dfd11ca6c297cb2f21d9916fcf887f4be4ba8846c007839b51adff2ce1cc2"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "O-BUILD",
+      "kind": "outcome",
+      "title": "Build a usable product from reviewed capabilities",
+      "summary": "A developer can compose, validate, save and build an exact runnable product without modifying maintained hosts.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "J-CREATE",
+        "C-COMPOSITION",
+        "M-02"
+      ],
+      "sourceRefs": [
+        "readme",
+        "architecture"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "O-OPERATE",
+      "kind": "outcome",
+      "title": "Operate and recover an exact local product",
+      "summary": "An operator can promote, run, inspect, stop, restart and recover the bound local instance while preserving owner data and authority.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "J-OPERATE",
+        "J-RECOVER",
+        "M-03",
+        "M-04",
+        "M-05"
+      ],
+      "sourceRefs": [
+        "readme",
+        "cp5-task"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "O-KNOWLEDGE",
+      "kind": "outcome",
+      "title": "Use permitted Knowledge in a grounded answer",
+      "summary": "Bounded local extractive Knowledge accepted historically; continuously verify it with a newly composed product. Model/provider inference remains separate.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "J-KNOWLEDGE",
+        "M-06"
+      ],
+      "sourceRefs": [
+        "cp6-task"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "O-CONSTRUCT",
+      "kind": "outcome",
+      "title": "Edit definitions without losing canonical meaning",
+      "summary": "Import, edit, preview, save, export and build supported definitions through their canonical representation.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "J-EDIT",
+        "M-07"
+      ],
+      "sourceRefs": [
+        "cp7-task"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "O-PRODUCTION",
+      "kind": "outcome",
+      "title": "Qualify one supported operating profile",
+      "summary": "Hosted identity, durable storage, operational targets and deployment-specific qualification remain separate future work.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "later",
+      "priorityReason": "Local core journeys and a chosen operating profile must precede deployment qualification.",
+      "dependsOn": [],
+      "links": [
+        "M-PROD",
+        "B-PROVIDERS"
+      ],
+      "sourceRefs": [
+        "implementation"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "J-CREATE",
+      "kind": "journey",
+      "title": "Compose → preview → save → build",
+      "summary": "Developer pairs the local console, chooses reviewed modules/bindings, resolves errors, saves an immutable version and runs the fixed build.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [
+        "J-PAIR"
+      ],
+      "links": [
+        "S-PRODUCTS",
+        "S-BUILDS",
+        "C-COMPOSITION",
+        "M-02"
+      ],
+      "sourceRefs": [
+        "readme"
+      ],
+      "acceptance": [
+        "Catalogue and previews derive from canonical manifests and resolver.",
+        "A successful build identifies the exact saved version and immutable output.",
+        "Validation failures preserve the editable definition and explain the next action."
+      ]
+    },
+    {
+      "id": "J-OPERATE",
+      "kind": "journey",
+      "title": "Register → inspect → promote → run → stop",
+      "summary": "Operator registers a verified snapshot, inspects its inventory, promotes the exact version and controls its managed runtime.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "S-ARTIFACTS",
+        "S-RUNTIME",
+        "C-RUNTIME",
+        "M-03",
+        "M-04"
+      ],
+      "sourceRefs": [
+        "readme",
+        "cp4-result"
+      ],
+      "acceptance": [
+        "The running artifact matches the promoted immutable identity.",
+        "Stop and restart preserve retained data and revocations.",
+        "Unknown physical ownership remains visible and reserved."
+      ]
+    },
+    {
+      "id": "J-RECOVER",
+      "kind": "journey",
+      "title": "Stop → backup → verify → restore → restart/read",
+      "summary": "For the stopped instance, preserve a private backup and restore only through the bounded owner-aware recovery contract.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Core recovery dependency preserves the exact retained instance, data and revocations; acceptance is candidate-specific history.",
+      "dependsOn": [],
+      "links": [
+        "S-RUNTIME",
+        "ST-RECOVERY",
+        "C-RUNTIME",
+        "M-05"
+      ],
+      "sourceRefs": [
+        "cp5-task"
+      ],
+      "acceptance": [
+        "Demonstrate backup, verification and absent-original-root restore on the actual local profile.",
+        "After explicit same-instance restart, retained Desk data and revocations still hold.",
+        "Browser controls and native process closure are qualified separately."
+      ]
+    },
+    {
+      "id": "J-KNOWLEDGE",
+      "kind": "journey",
+      "title": "Ask → retrieve permitted excerpts → show cited extractive answer",
+      "summary": "A user enters a question and receives a clearly labelled local extractive answer with citations to authorized Knowledge.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "S-KNOWLEDGE",
+        "ST-KNOWLEDGE",
+        "M-06"
+      ],
+      "sourceRefs": [
+        "cp6-task"
+      ],
+      "acceptance": [
+        "Denied documents contribute no text or citations.",
+        "The UI explicitly distinguishes extractive output from model inference.",
+        "Empty results and unavailable capability have useful, truthful states."
+      ]
+    },
+    {
+      "id": "J-EDIT",
+      "kind": "journey",
+      "title": "Import → edit → preview → save/export → build",
+      "summary": "Developer edits a complete supported definition while preserving fields and seeing a graph derived from canonical metadata.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "S-EDITOR",
+        "ST-EDITOR",
+        "C-DEFINITION",
+        "M-07"
+      ],
+      "sourceRefs": [
+        "cp7-task"
+      ],
+      "acceptance": [
+        "Supported definition fields survive the complete round trip.",
+        "Unsupported graphs are explained rather than silently transformed.",
+        "Preview and build consume the same canonical definition."
+      ]
+    },
+    {
+      "id": "C-COMPOSITION",
+      "kind": "contract",
+      "title": "Exact composition and scoped public interfaces",
+      "summary": "Modules declare requirements; products and solution wiring select implementations. Selection never grants actor or tenant authority.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "A-NEUTRAL",
+        "A-DOMAINS",
+        "A-WIRING"
+      ],
+      "sourceRefs": [
+        "contracts",
+        "architecture"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "C-RUNTIME",
+      "kind": "contract",
+      "title": "Artifact, instance, authority and recovery identity",
+      "summary": "Preserve product/version/digest/instance/actor/command identity, owner databases and positive proof before releasing physical ownership.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "A-CONTROL",
+        "A-RUNTIME",
+        "ST-RECOVERY"
+      ],
+      "sourceRefs": [
+        "control-contracts",
+        "cp5-task"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "C-DEFINITION",
+      "kind": "contract",
+      "title": "Canonical construction declarations",
+      "summary": "UI/backend/AI/data contributions describe supported structure. Runtime strings never become executable imports.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "A-STUDIO",
+        "ST-EDITOR"
+      ],
+      "sourceRefs": [
+        "studio-contracts",
+        "cp7-task"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "A-STUDIO",
+      "kind": "component",
+      "title": "Studio presentation",
+      "summary": "apps/studio-web owns the actual operator interface. Declaration tables and plan previews are not finished visual editors.",
+      "owner": "Studio UI",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "A-CONTROL",
+        "S-PRODUCTS",
+        "S-RUNTIME"
+      ],
+      "sourceRefs": [
+        "studio-ui",
+        "implementation"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "A-CONTROL",
+      "kind": "component",
+      "title": "Local control plane",
+      "summary": "apps/control-plane and packages/control-plane own paired operator records and reviewed build/artifact/runtime/recovery operations.",
+      "owner": "Control plane",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "A-COMPOSE",
+        "A-RUNTIME",
+        "C-RUNTIME"
+      ],
+      "sourceRefs": [
+        "control-contracts",
+        "architecture"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "A-COMPOSE",
+      "kind": "component",
+      "title": "Canonical composition and build",
+      "summary": "packages/composition and fixed factory/build tools derive selections and immutable output from source manifests.",
+      "owner": "Composition and factory",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "A-NEUTRAL",
+        "A-WIRING",
+        "C-COMPOSITION"
+      ],
+      "sourceRefs": [
+        "architecture",
+        "construction-diagram"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "A-NEUTRAL",
+      "kind": "component",
+      "title": "Maintained neutral hosts",
+      "summary": "packages/contracts, backend-host, web-shell and worker-host expose neutral contracts and host selected reviewed code. Never import modules, products or solutions into packages.",
+      "owner": "Framework packages",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "A-DOMAINS"
+      ],
+      "sourceRefs": [
+        "architecture",
+        "neutrality-diagram"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "A-DOMAINS",
+      "kind": "component",
+      "title": "Domain modules own data and UI",
+      "summary": "modules/* own domain records, migrations, rules, operations and workspaces. No universal domain record or cross-owner database access.",
+      "owner": "Each domain module",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "C-COMPOSITION"
+      ],
+      "sourceRefs": [
+        "architecture"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "A-WIRING",
+      "kind": "component",
+      "title": "Products and solution wiring",
+      "summary": "products/* select exact versions; solutions/* translate public capabilities across owners. Source dependencies, runtime collaboration and UI containment are distinct graphs.",
+      "owner": "Products and solutions",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "A-DOMAINS",
+        "A-RUNTIME"
+      ],
+      "sourceRefs": [
+        "architecture",
+        "cross-product-diagram"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "A-RUNTIME",
+      "kind": "component",
+      "title": "Fixed exported runtime",
+      "summary": "apps/runtime serves the bound immutable app with web/backend and an optional worker. Each owner retains its data; the runtime does not follow arbitrary import URLs.",
+      "owner": "Runtime hosts",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "A-NEUTRAL",
+        "A-DOMAINS"
+      ],
+      "sourceRefs": [
+        "readme",
+        "architecture",
+        "job-diagram"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "S-PRODUCTS",
+      "kind": "screen",
+      "title": "Products and composition",
+      "summary": "Existing product selection, preview and save controls are the baseline; a complete end-state UX specification is still to be prepared.",
+      "owner": "Studio UX",
+      "intentStatus": "proposed",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "J-CREATE",
+        "C-DEFINITION"
+      ],
+      "sourceRefs": [
+        "studio-ui"
+      ],
+      "acceptance": [
+        "Identify user, entry point, primary action and successful destination.",
+        "Specify loading, empty, success, denied, error and recovery states where applicable.",
+        "Review keyboard focus, clear labels, responsive layout and preservation of user work against a prototype."
+      ]
+    },
+    {
+      "id": "S-BUILDS",
+      "kind": "screen",
+      "title": "Build queue and results",
+      "summary": "Show exact saved version, progress, failure/cancellation and resulting snapshot without implying product acceptance.",
+      "owner": "Studio UX",
+      "intentStatus": "proposed",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "J-CREATE"
+      ],
+      "sourceRefs": [
+        "studio-ui"
+      ],
+      "acceptance": [
+        "Identify user, entry point, primary action and successful destination.",
+        "Specify loading, empty, success, denied, error and recovery states where applicable.",
+        "Review keyboard focus, clear labels, responsive layout and preservation of user work against a prototype."
+      ]
+    },
+    {
+      "id": "S-ARTIFACTS",
+      "kind": "screen",
+      "title": "Artifacts and promotion",
+      "summary": "Inspect digest, inventory, capacity and promotion identity; attachments do not execute in the operator origin.",
+      "owner": "Studio UX",
+      "intentStatus": "proposed",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "J-OPERATE"
+      ],
+      "sourceRefs": [
+        "studio-ui"
+      ],
+      "acceptance": [
+        "Identify user, entry point, primary action and successful destination.",
+        "Specify loading, empty, success, denied, error and recovery states where applicable.",
+        "Review keyboard focus, clear labels, responsive layout and preservation of user work against a prototype."
+      ]
+    },
+    {
+      "id": "S-RUNTIME",
+      "kind": "screen",
+      "title": "Runtime and recovery",
+      "summary": "Start/observe/stop/restart and recovery controls need explicit identity, confirmation, uncertainty and retained-data messaging. Existing recovery code is not accepted just by being present.",
+      "owner": "Studio UX",
+      "intentStatus": "proposed",
+      "priority": "core",
+      "priorityReason": "Runtime and recovery controls must preserve explicit identity, confirmations and truthful stopped/unknown state.",
+      "dependsOn": [],
+      "links": [
+        "J-OPERATE",
+        "J-RECOVER"
+      ],
+      "sourceRefs": [
+        "studio-ui",
+        "cp4-browser",
+        "cp5-task"
+      ],
+      "acceptance": [
+        "Identify user, entry point, primary action and successful destination.",
+        "Specify loading, empty, success, denied, error and recovery states where applicable.",
+        "Review keyboard focus, clear labels, responsive layout and preservation of user work against a prototype.",
+        "Review actual recovery interactions at the current candidate; historical runtime screenshots are context only."
+      ]
+    },
+    {
+      "id": "S-KNOWLEDGE",
+      "kind": "screen",
+      "title": "Knowledge question and citations",
+      "summary": "Prepare the bounded question, permitted excerpts, citation navigation, empty and denied results. Full interaction design remains proposed.",
+      "owner": "Knowledge UX",
+      "intentStatus": "proposed",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "J-KNOWLEDGE"
+      ],
+      "sourceRefs": [
+        "cp6-task"
+      ],
+      "acceptance": [
+        "Identify user, entry point, primary action and successful destination.",
+        "Specify loading, empty, success, denied, error and recovery states where applicable.",
+        "Review keyboard focus, clear labels, responsive layout and preservation of user work against a prototype.",
+        "Label local extractive output accurately; no invented model inference."
+      ]
+    },
+    {
+      "id": "S-EDITOR",
+      "kind": "screen",
+      "title": "Canonical definition editor and graph",
+      "summary": "Prepare the full supported definition editor and derived graph, errors, preview, save and export. Do not present metadata tables as completed editors.",
+      "owner": "Construction UX",
+      "intentStatus": "proposed",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [],
+      "links": [
+        "J-EDIT"
+      ],
+      "sourceRefs": [
+        "cp7-task",
+        "implementation"
+      ],
+      "acceptance": [
+        "Identify user, entry point, primary action and successful destination.",
+        "Specify loading, empty, success, denied, error and recovery states where applicable.",
+        "Review keyboard focus, clear labels, responsive layout and preservation of user work against a prototype."
+      ]
+    },
+    {
+      "id": "M-01",
+      "kind": "milestone",
+      "title": "Pair the local operator",
+      "summary": "Paired control-plane and reliable immutable local records.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Entry dependency for privileged Studio work; historical delivery still refers to its original evidence.",
+      "dependsOn": [],
+      "links": [
+        "J-PAIR",
+        "ST-PAIR"
+      ],
+      "sourceRefs": [
+        "roadmap"
+      ],
+      "acceptance": [
+        "Demonstrate the bounded user journey with actual candidate-specific evidence; preserve all blocked and unrun gates."
+      ]
+    },
+    {
+      "id": "M-02",
+      "kind": "milestone",
+      "title": "Compose and build",
+      "summary": "Usable product definition to fixed immutable export.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Produces the immutable build required by artifact registration and later runtime operation.",
+      "dependsOn": [
+        "M-01"
+      ],
+      "links": [
+        "O-BUILD",
+        "J-CREATE"
+      ],
+      "sourceRefs": [
+        "roadmap"
+      ],
+      "acceptance": [
+        "Demonstrate the bounded user journey with actual candidate-specific evidence; preserve all blocked and unrun gates."
+      ]
+    },
+    {
+      "id": "M-03",
+      "kind": "milestone",
+      "title": "Register and promote",
+      "summary": "Exact artifact registration, inspection/download and local version promotion.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Binds the exact build to a promoted local version before runtime launch.",
+      "dependsOn": [
+        "M-02"
+      ],
+      "links": [
+        "O-OPERATE",
+        "J-OPERATE"
+      ],
+      "sourceRefs": [
+        "roadmap"
+      ],
+      "acceptance": [
+        "Demonstrate the bounded user journey with actual candidate-specific evidence; preserve all blocked and unrun gates."
+      ]
+    },
+    {
+      "id": "M-04",
+      "kind": "milestone",
+      "title": "Operate the local runtime",
+      "summary": "Start, observe, stop and restart one exact selected local runtime.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Supplies the retained instance and positive stop identity required for recovery.",
+      "dependsOn": [
+        "M-03"
+      ],
+      "links": [
+        "J-OPERATE"
+      ],
+      "sourceRefs": [
+        "roadmap"
+      ],
+      "acceptance": [
+        "Demonstrate the bounded user journey with actual candidate-specific evidence; preserve all blocked and unrun gates."
+      ]
+    },
+    {
+      "id": "M-05",
+      "kind": "milestone",
+      "title": "Recover retained local data",
+      "summary": "Historical local recovery core acceptance at its recorded candidate; hosted identity/storage and production remain separate work.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Local recovery is the accepted prerequisite for the next Knowledge outcome; original failures and blocked gates remain in its evidence.",
+      "dependsOn": [
+        "M-04"
+      ],
+      "links": [
+        "J-RECOVER",
+        "ST-RECOVERY"
+      ],
+      "sourceRefs": [
+        "roadmap",
+        "cp5-task",
+        "cp5-accepted-event",
+        "cp5-result"
+      ],
+      "acceptance": [
+        "Demonstrate the bounded user journey with actual candidate-specific evidence; preserve all blocked and unrun gates."
+      ]
+    },
+    {
+      "id": "M-06",
+      "kind": "milestone",
+      "title": "Grounded local Knowledge answer",
+      "summary": "Historical PLATFORM-006 local Knowledge milestone: authorized indexed excerpts and clearly labelled local extractive answers. Its candidate-specific accepted local result is retained separately from the current continuous core journey.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Historical core dependency: exact authorized excerpts and citations precede optional provider breadth. Current canonical work is CORE-DELIVERY-001.",
+      "dependsOn": [
+        "M-05"
+      ],
+      "links": [
+        "J-KNOWLEDGE",
+        "ST-KNOWLEDGE"
+      ],
+      "sourceRefs": [
+        "roadmap",
+        "checkpoint",
+        "cp6-task",
+        "cp6-ready-event"
+      ],
+      "acceptance": [
+        "Demonstrate the bounded user journey with actual candidate-specific evidence; preserve all blocked and unrun gates."
+      ]
+    },
+    {
+      "id": "M-07",
+      "kind": "milestone",
+      "title": "Construct through canonical editors",
+      "summary": "PLATFORM-007 full-definition import/edit/preview/save/export/build work retains its blocked qualification. Current CORE-DELIVERY-001 proves the ordinary composition path; denied file import remains separately blocked.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Core construction dependency following Knowledge. Existing implementation and blocked historical qualification do not establish acceptance of the current continuous journey.",
+      "dependsOn": [
+        "M-06"
+      ],
+      "links": [
+        "J-EDIT",
+        "ST-EDITOR"
+      ],
+      "sourceRefs": [
+        "roadmap"
+      ],
+      "acceptance": [
+        "Demonstrate the bounded user journey with actual candidate-specific evidence; preserve all blocked and unrun gates."
+      ]
+    },
+    {
+      "id": "M-PROD",
+      "kind": "milestone",
+      "title": "Qualify a selected operating profile",
+      "summary": "Explicit hosted identity/storage/recovery/load and deployment-specific qualification.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "later",
+      "priorityReason": "A supported target and its permissions must be selected before external qualification.",
+      "dependsOn": [
+        "M-07"
+      ],
+      "links": [
+        "O-PRODUCTION"
+      ],
+      "sourceRefs": [
+        "roadmap"
+      ],
+      "acceptance": [
+        "Demonstrate the bounded user journey with actual candidate-specific evidence; preserve all blocked and unrun gates."
+      ]
+    },
+    {
+      "id": "ST-RECOVERY",
+      "kind": "story",
+      "title": "Recover a stopped instance without losing its meaning",
+      "summary": "As a local operator, I can back up and verify the positively stopped instance, restore its absent original root and explicitly restart/read it, preserving data and revocations.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "The accepted local recovery story remains tied to its original stopped-instance backup, restore and restart evidence.",
+      "dependsOn": [
+        "M-04"
+      ],
+      "links": [
+        "O-OPERATE",
+        "J-RECOVER",
+        "S-RUNTIME",
+        "C-RUNTIME",
+        "M-05"
+      ],
+      "sourceRefs": [
+        "cp5-task"
+      ],
+      "acceptance": [
+        "Use the mapped execution contract for exact allowed files, native proofs and checks.",
+        "Retained Desk data, committed WAL state and revocations survive recovery.",
+        "No new identity, reseeding, arbitrary restore destination or silent restart is introduced."
+      ]
+    },
+    {
+      "id": "ST-KNOWLEDGE",
+      "kind": "story",
+      "title": "Answer from permitted Knowledge excerpts",
+      "summary": "As a Knowledge user, I can ask a question and follow exact authorized citations so I can assess the extractive answer.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [
+        "M-05"
+      ],
+      "links": [
+        "O-KNOWLEDGE",
+        "J-KNOWLEDGE",
+        "S-KNOWLEDGE",
+        "M-06"
+      ],
+      "sourceRefs": [
+        "cp6-task"
+      ],
+      "acceptance": [
+        "Denied documents never appear.",
+        "Citations identify actual original permitted content.",
+        "Output is labelled local extractive answer; failures remain truthful."
+      ]
+    },
+    {
+      "id": "ST-EDITOR",
+      "kind": "story",
+      "title": "Round-trip a supported full definition",
+      "summary": "As a product developer, I can import, edit and export the full supported definition so later preview/save/build preserve its meaning.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Advances an authorized core journey or its required dependency.",
+      "dependsOn": [
+        "M-06"
+      ],
+      "links": [
+        "O-CONSTRUCT",
+        "J-EDIT",
+        "S-EDITOR",
+        "C-DEFINITION",
+        "M-07"
+      ],
+      "sourceRefs": [
+        "cp7-task"
+      ],
+      "acceptance": [
+        "Compare original and round-tripped canonical supported fields.",
+        "Explain unsupported structures before save/build.",
+        "Derive catalogue and graph from existing owner metadata."
+      ]
+    },
+    {
+      "id": "ST-UX",
+      "kind": "story",
+      "title": "Prepare the next milestone design packet",
+      "summary": "As the project owner, I can review the complete next journey, screen states and acceptance demonstration before its UI is implemented.",
+      "owner": "Platform coordinator",
+      "intentStatus": "proposed",
+      "priority": "core",
+      "priorityReason": "Prepare only the next milestone design packet; unresolved future designs stay visible without becoming simultaneous implementation.",
+      "dependsOn": [],
+      "links": [
+        "S-RUNTIME",
+        "S-KNOWLEDGE",
+        "S-EDITOR"
+      ],
+      "sourceRefs": [
+        "brain-design"
+      ],
+      "acceptance": [
+        "Wireframes or inspectable prototypes cover the next milestone states.",
+        "Record unresolved assumptions and design decisions.",
+        "Review actual UI separately against the approved design."
+      ]
+    },
+    {
+      "id": "B-EDGE",
+      "kind": "backlog",
+      "title": "Broader fault and stress campaigns",
+      "summary": "Controller-crash campaigns and duplicate verifier expansion remain deferred unless a concrete current failure makes them necessary.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "later",
+      "priorityReason": "The current direction prioritizes the usable local core; revisit when required by a selected release or observed core defect.",
+      "dependsOn": [],
+      "links": [
+        "M-04"
+      ],
+      "sourceRefs": [
+        "roadmap"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "B-PROVIDERS",
+      "kind": "backlog",
+      "title": "Additional providers and hosted adapters",
+      "summary": "Select and qualify one profile before expanding adapters or providers. External credentials and deployment require their own authorization.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "later",
+      "priorityReason": "No chosen external operating profile or credentials in this increment.",
+      "dependsOn": [],
+      "links": [
+        "O-PRODUCTION"
+      ],
+      "sourceRefs": [
+        "implementation"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "B-REFINE",
+      "kind": "backlog",
+      "title": "Nonessential visual polish",
+      "summary": "Refine presentation after the core interaction and its essential accessibility are usable. Essential keyboard access and clear failure handling remain part of core acceptance.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "later",
+      "priorityReason": "Revisit after a demonstrated journey or a concrete usability finding.",
+      "dependsOn": [],
+      "links": [
+        "ST-UX"
+      ],
+      "sourceRefs": [
+        "brain-design"
+      ],
+      "acceptance": []
+    },
+    {
+      "id": "J-PAIR",
+      "kind": "journey",
+      "title": "Launch → connect → pair the local Studio",
+      "summary": "The local operator opens the printed loopback address, selects Connect local Studio and enters the launcher pairing code. Offline viewing alone grants no local operations.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Pairing is the entry dependency for every privileged local Studio journey; it does not select new implementation work.",
+      "dependsOn": [],
+      "links": [
+        "O-BUILD",
+        "S-PAIR",
+        "ST-PAIR",
+        "M-01"
+      ],
+      "sourceRefs": [
+        "readme",
+        "roadmap"
+      ],
+      "acceptance": [
+        "Pair through the documented local launcher and printed loopback address.",
+        "Only the paired session can enter privileged workflows; each source write/build/start still requires its explicit confirmation."
+      ]
+    },
+    {
+      "id": "S-PAIR",
+      "kind": "screen",
+      "title": "Connect local Studio",
+      "summary": "Existing pairing flow is described in README. This is a proposed screen contract, not an approved wireframe or a fresh browser qualification.",
+      "owner": "Platform coordinator",
+      "intentStatus": "proposed",
+      "priority": "core",
+      "priorityReason": "Pairing is the entry dependency for every privileged local Studio journey; it does not select new implementation work.",
+      "dependsOn": [],
+      "links": [
+        "J-PAIR",
+        "M-01"
+      ],
+      "sourceRefs": [
+        "readme",
+        "roadmap"
+      ],
+      "acceptance": [
+        "Show the local connection entry and pairing-code input with clear labels.",
+        "Review failure/retry feedback, keyboard focus and transition to the paired console in an inspectable design before UI changes.",
+        "Keep pairing secrets out of atlas screenshots and reports."
+      ]
+    },
+    {
+      "id": "ST-PAIR",
+      "kind": "story",
+      "title": "Connect to the intended local Studio",
+      "summary": "As a local operator, I can enter the code printed by the selected launcher so I can access that local Studio session. This source-backed story maps the existing entry journey; it does not reopen historically accepted work.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Pairing is the entry dependency for every privileged local Studio journey; it does not select new implementation work.",
+      "dependsOn": [],
+      "links": [
+        "O-BUILD",
+        "J-PAIR",
+        "S-PAIR",
+        "M-01"
+      ],
+      "sourceRefs": [
+        "readme",
+        "roadmap"
+      ],
+      "acceptance": [
+        "Follow the README launch/connect/pair path for the selected local host.",
+        "Confirm the session reaches the paired console and retains operation-specific confirmation requirements."
+      ]
+    },
+    {
+      "id": "M-CORE",
+      "kind": "milestone",
+      "title": "Complete continuous deployed local core product journey",
+      "summary": "New composition through actual immutable local application, all three domains, persistence, restart and recovery. Existing denied file import stays separately blocked.",
+      "owner": "Root coordinator with Sol planning/review and Luna implementation",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "User explicitly requested complete core goal and realtime deployed testing on 2026-10-01.",
+      "dependsOn": [],
+      "links": [
+        "J-CREATE",
+        "J-EDIT",
+        "J-OPERATE",
+        "J-RECOVER",
+        "J-KNOWLEDGE"
+      ],
+      "sourceRefs": [
+        "core-task",
+        "core-plan",
+        "architecture",
+        "readme",
+        "contracts",
+        "control-contracts",
+        "studio-contracts",
+        "studio-ui",
+        "core-ui-repair-plan"
+      ],
+      "acceptance": [
+        "Ordinary confirmed save, exact build/register/promote/start of newly composed all-local product.",
+        "Actual tenant-scoped Desk record, worker-indexed Knowledge with exact cited local answer and Handoff destination receipt.",
+        "Same-instance restart and private verified absent-owned-root recovery retain data and credentials; original-owner positive closure.",
+        "Fresh build and required actual full suite, exact independent review, preserved blocked/unrun scopes."
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "id": "OBS-01",
+      "nodeId": "M-01",
+      "state": "reported",
+      "summary": "Roadmap records PLATFORM-001 accepted.",
+      "sourceRefs": [
+        "roadmap"
+      ],
+      "candidate": null,
+      "observedAt": "2026-10-01T06:59:04.3Z",
+      "provenance": "reported-history",
+      "limitations": [
+        "Historical or attributed observation; not a fresh acceptance of current source."
+      ]
+    },
+    {
+      "id": "OBS-02",
+      "nodeId": "M-02",
+      "state": "reported",
+      "summary": "Roadmap records PLATFORM-002 accepted in local scope.",
+      "sourceRefs": [
+        "roadmap"
+      ],
+      "candidate": null,
+      "observedAt": "2026-10-01T06:59:04.3Z",
+      "provenance": "reported-history",
+      "limitations": [
+        "Historical or attributed observation; not a fresh acceptance of current source."
+      ]
+    },
+    {
+      "id": "OBS-03",
+      "nodeId": "M-03",
+      "state": "reported",
+      "summary": "Roadmap records accessible local acceptance with blocked fixture gates retained.",
+      "sourceRefs": [
+        "roadmap"
+      ],
+      "candidate": null,
+      "observedAt": "2026-10-01T06:59:04.3Z",
+      "provenance": "reported-history",
+      "limitations": [
+        "Historical or attributed observation; not a fresh acceptance of current source."
+      ]
+    },
+    {
+      "id": "OBS-04",
+      "nodeId": "M-04",
+      "state": "reported",
+      "summary": "Roadmap and candidate report record local-core acceptance; controller-crash and duplicate-verifier work deferred.",
+      "sourceRefs": [
+        "roadmap",
+        "cp4-result",
+        "cp4-browser"
+      ],
+      "candidate": null,
+      "observedAt": "2026-10-01T06:59:04.3Z",
+      "provenance": "reported-history",
+      "limitations": [
+        "Historical or attributed observation; not a fresh acceptance of current source."
+      ]
+    },
+    {
+      "id": "OBS-05",
+      "nodeId": "M-05",
+      "state": "reported",
+      "summary": "The platform coordinator recorded ACCEPTED local recovery core for PLATFORM-005A-CORE at event revision14. Its own exact-candidate suite reported 266 tests: 264 passed, 0 failed, 2 blocked skips. Native and ordinary browser recovery evidence is attributed to that platform result. This is separate from the atlas audit suite and does not erase its failure.",
+      "sourceRefs": [
+        "cp5-accepted-event",
+        "cp5-result"
+      ],
+      "candidate": "7423f199e70374095f449e85275f0ce59676aa150c7ed814acee4eb41289ea61",
+      "observedAt": "2026-10-01T07:59:32.91Z",
+      "provenance": "reported-history",
+      "limitations": [
+        "Historical local-core acceptance only; original failed runs remain preserved. Native lock policy and file-symlink environment checks remain blocked.",
+        "Hosted/provider/production scope remains unqualified. The atlas did not independently execute the platform recovery journey."
+      ]
+    },
+    {
+      "id": "OBS-06",
+      "nodeId": "M-06",
+      "state": "reported",
+      "summary": "Task: PLATFORM-006\nStatus: READY\nCandidate: unbound\nNext action: Luna applies the finite prepared proposal after checking every existing-file baseline SHA and new-file absence. Complete core Knowledge answer workflow, build before focused tests, freeze exact candidate before final required suite, obtain independent Sol review and ordinary app UI proof. Root alone maintains Brain.\nBlockers: none reported\nRun records: none\nReview records: none\nGates: CP5-local-prerequisite=PASSED, CP6-implementation=NOT_RUN",
+      "sourceRefs": [
+        "checkpoint",
+        "cp6-ready-event",
+        "cp6-task"
+      ],
+      "candidate": null,
+      "observedAt": "2026-10-01T07:59:32.91Z",
+      "provenance": "reported-history",
+      "limitations": [
+        "Recorded READY checkpoint only: implementation and qualification are NOT_RUN; prepared files are not executed source.",
+        "This snapshot does not dispatch implementation or change the canonical task. Later checkpoint changes require reconciliation."
+      ]
+    },
+    {
+      "id": "OBS-07",
+      "nodeId": "M-07",
+      "state": "not_run",
+      "summary": "Canonical editor outcome is planned; declaration tables do not establish it.",
+      "sourceRefs": [
+        "cp7-task",
+        "implementation"
+      ],
+      "candidate": null,
+      "observedAt": "2026-10-01T06:59:04.3Z",
+      "provenance": "reported-history",
+      "limitations": [
+        "Historical or attributed observation; not a fresh acceptance of current source."
+      ]
+    },
+    {
+      "id": "OBS-PROD",
+      "nodeId": "M-PROD",
+      "state": "not_run",
+      "summary": "Hosted operating profile and production qualification remain unqualified.",
+      "sourceRefs": [
+        "roadmap",
+        "implementation"
+      ],
+      "candidate": null,
+      "observedAt": "2026-10-01T06:59:04.3Z",
+      "provenance": "reported-history",
+      "limitations": [
+        "Historical or attributed observation; not a fresh acceptance of current source."
+      ]
+    },
+    {
+      "id": "OBS-UI",
+      "nodeId": "A-STUDIO",
+      "state": "implemented",
+      "summary": "UI source contains Products, Builds, Artifacts and Runtime controls; source presence does not establish full design or browser acceptance.",
+      "sourceRefs": [
+        "studio-ui",
+        "cp5-accepted-event",
+        "cp5-result"
+      ],
+      "candidate": null,
+      "observedAt": "2026-10-01T07:59:32.91Z",
+      "provenance": "source-inspection",
+      "limitations": [
+        "No fresh screenshot or interaction review performed for this atlas."
+      ]
+    },
+    {
+      "id": "OBS-UX",
+      "nodeId": "ST-UX",
+      "state": "unknown",
+      "summary": "A complete approved end-state UX specification was not found in the inspected material.",
+      "sourceRefs": [
+        "studio-ui",
+        "implementation",
+        "cp6-task",
+        "cp7-task"
+      ],
+      "candidate": null,
+      "observedAt": "2026-10-01T06:59:04.3Z",
+      "provenance": "source-inspection",
+      "limitations": [
+        "This is a scoped inspection finding, not proof that no design exists elsewhere.",
+        "Historical screenshots are not a current visual review."
+      ]
+    },
+    {
+      "id": "OBS-06-RESULT",
+      "nodeId": "M-06",
+      "state": "reported",
+      "summary": "Coordinator result01 accepts bounded local extractive Knowledge: actual full suite284/282pass/0fail/2blocked and actual app UI citations. This supersedes earlier READY observation as current reported history without erasing it.",
+      "sourceRefs": [
+        "cp6-result"
+      ],
+      "candidate": "d755c06582f2dc00a217e6dcef86ae037f908e7bf8ff355369a9748ea5c02e17",
+      "observedAt": "2026-10-01T10:28:41.35Z",
+      "provenance": "reported-history",
+      "limitations": [
+        "Attributed historical local scope, no fresh source execution by atlas, no external model inference."
+      ]
+    },
+    {
+      "id": "OBS-07-RESULT",
+      "nodeId": "M-07",
+      "state": "blocked",
+      "summary": "Complete-definition construction implemented; result02 preserves file-import browser policy block and full-suite startup-heartbeat failure (299pass/1fail/2blocked). Not accepted complete construction qualification.",
+      "sourceRefs": [
+        "cp7-result"
+      ],
+      "candidate": "840e8716776771b30a1b8227c5a04c1795e7b41492695bea7db310e6d7230b96",
+      "observedAt": "2026-10-01T10:28:41.35Z",
+      "provenance": "reported-history",
+      "limitations": [
+        "No permission workaround. Continuous New composition is a distinct planned core journey, not qualification of denied import."
+      ]
+    },
+    {
+      "id": "OBS-CORE-READY",
+      "nodeId": "M-CORE",
+      "state": "not_run",
+      "summary": "Explicit goal and finite plan activated at checkpoint28. Actual continuous core runtime journey still to execute.",
+      "sourceRefs": [
+        "core-task",
+        "core-plan",
+        "checkpoint"
+      ],
+      "candidate": null,
+      "observedAt": "2026-10-01T10:28:41.35Z",
+      "provenance": "reported-history",
+      "limitations": [
+        "Plan intent acceptance does not establish implementation, execution or delivery acceptance. Hosted/provider/production remain unqualified."
+      ]
+    }
+  ],
+  "retrospectives": [
+    {
+      "id": "RET-DRIFT",
+      "problem": "Several planning documents retain older next-milestone text while the canonical checkpoint has advanced.",
+      "evidenceRefs": [
+        "brief",
+        "outcome",
+        "acceptance",
+        "old-map",
+        "checkpoint"
+      ],
+      "hypothesis": "Duplicated next-step prose can direct effort toward old work; the amount of wasted effort is not measured.",
+      "action": "Use the execution checkpoint for current work and reconcile historical prose explicitly; keep generated views derived from linked source.",
+      "owner": "Project coordinator",
+      "measure": "At the next milestone review, inspect whether current-work references agree and record any misdirected work actually observed.",
+      "status": "proposed"
+    },
+    {
+      "id": "RET-UX",
+      "problem": "The inspected project has real UI and task contracts but no complete approved end-state UX specification.",
+      "evidenceRefs": [
+        "studio-ui",
+        "implementation",
+        "cp6-task",
+        "cp7-task"
+      ],
+      "hypothesis": "Preparing the next journey and screen states before UI implementation may reduce review rework.",
+      "action": "Prepare an inspectable design packet for the next UI-bearing milestone and compare the resulting candidate against it.",
+      "owner": "Project coordinator and UX reviewer",
+      "measure": "Record design-related review revisions for comparable milestones; baseline is currently unknown.",
+      "status": "proposed"
+    }
+  ],
+  "focusNodeId": "M-CORE"
+}

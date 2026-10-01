@@ -1,0 +1,39 @@
+{
+  "status": "PARTIAL_WITH_BLOCKED_CSP_GATE",
+  "assertions": [
+    "initial login view",
+    "invalid pairing code shows bounded error",
+    "valid local pairing",
+    "compose draft survives ordinary route rerenders",
+    "two immutable product versions saved through canonical preview",
+    "legacy success is labeled admission-only and exposes no unverified export action",
+    "exact version 2 build confirmation and durable admission",
+    "logout after admission",
+    "ordinary logout and re-pair restores the active build view",
+    "accepted build continues after logout and succeeds",
+    "browser inspects verified export",
+    "browser requests and observes cancellation",
+    "operations labels deployment and model-serving unattached",
+    "logout returns to pairing view",
+    "both immutable product versions were durably saved"
+  ],
+  "notes": [],
+  "blockedGates": [
+    {
+      "gate": "controlled delayed catalogue/logout response and stale-overview generation race",
+      "status": "BLOCKED_CSP",
+      "detail": "Playwright wait_for_function attempted to evaluate a predicate under this page CSP; the browser refused because unsafe-eval is disallowed. The deterministic delay-injection assertion is not being rerun."
+    }
+  ],
+  "fixture": {
+    "reviewedSourceFingerprint": "889313656d19a3924e7a2e4ccf78d5eb60aeaaa91d95ae834bea44a56d4ebf8f",
+    "nodeVersion": "v24.19.0",
+    "hostIdentity": {
+      "kind": "powershell7-file-host",
+      "sha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+      "version": "7.6.5",
+      "policy": "RemoteSigned"
+    }
+  },
+  "serverExit": 0
+}

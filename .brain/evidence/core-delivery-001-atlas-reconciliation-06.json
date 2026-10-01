@@ -1,0 +1,111 @@
+{
+  "schema": "quadbridge.atlas-reconciliation.v1",
+  "archivedRevision": 10,
+  "newRevision": 11,
+  "before": [
+    {
+      "id": "M-06",
+      "kind": "milestone",
+      "title": "Grounded local Knowledge answer",
+      "summary": "Current bounded Knowledge milestone: authorized indexed excerpts and clearly labelled local extractive answers. READY is not implemented or qualified.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Current canonical task PLATFORM-006: complete question, authorized excerpts and exact citations before optional provider breadth.",
+      "dependsOn": [
+        "M-05"
+      ],
+      "links": [
+        "J-KNOWLEDGE",
+        "ST-KNOWLEDGE"
+      ],
+      "sourceRefs": [
+        "roadmap",
+        "checkpoint",
+        "cp6-task",
+        "cp6-ready-event"
+      ],
+      "acceptance": [
+        "Demonstrate the bounded user journey with actual candidate-specific evidence; preserve all blocked and unrun gates."
+      ]
+    },
+    {
+      "id": "M-07",
+      "kind": "milestone",
+      "title": "Construct through canonical editors",
+      "summary": "Full-definition import/edit/preview/save/export/build round trip.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Follows Knowledge: complete supported definition round trips without inventing a second model.",
+      "dependsOn": [
+        "M-06"
+      ],
+      "links": [
+        "J-EDIT",
+        "ST-EDITOR"
+      ],
+      "sourceRefs": [
+        "roadmap"
+      ],
+      "acceptance": [
+        "Demonstrate the bounded user journey with actual candidate-specific evidence; preserve all blocked and unrun gates."
+      ]
+    }
+  ],
+  "after": [
+    {
+      "id": "M-06",
+      "kind": "milestone",
+      "title": "Grounded local Knowledge answer",
+      "summary": "Historical PLATFORM-006 local Knowledge milestone: authorized indexed excerpts and clearly labelled local extractive answers. Its candidate-specific accepted local result is retained separately from the current continuous core journey.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Historical core dependency: exact authorized excerpts and citations precede optional provider breadth. Current canonical work is CORE-DELIVERY-001.",
+      "dependsOn": [
+        "M-05"
+      ],
+      "links": [
+        "J-KNOWLEDGE",
+        "ST-KNOWLEDGE"
+      ],
+      "sourceRefs": [
+        "roadmap",
+        "checkpoint",
+        "cp6-task",
+        "cp6-ready-event"
+      ],
+      "acceptance": [
+        "Demonstrate the bounded user journey with actual candidate-specific evidence; preserve all blocked and unrun gates."
+      ]
+    },
+    {
+      "id": "M-07",
+      "kind": "milestone",
+      "title": "Construct through canonical editors",
+      "summary": "PLATFORM-007 full-definition import/edit/preview/save/export/build work retains its blocked qualification. Current CORE-DELIVERY-001 proves the ordinary composition path; denied file import remains separately blocked.",
+      "owner": "Platform coordinator",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Core construction dependency following Knowledge. Existing implementation and blocked historical qualification do not establish acceptance of the current continuous journey.",
+      "dependsOn": [
+        "M-06"
+      ],
+      "links": [
+        "J-EDIT",
+        "ST-EDITOR"
+      ],
+      "sourceRefs": [
+        "roadmap"
+      ],
+      "acceptance": [
+        "Demonstrate the bounded user journey with actual candidate-specific evidence; preserve all blocked and unrun gates."
+      ]
+    }
+  ],
+  "reason": "Independent actual live review found historical M06 description and priority falsely naming PLATFORM006 current; clarify M06/M07 history without editing any old observation or source pin.",
+  "limitations": [
+    "Metadata wording only; no additional source, browser, runtime or delivery pass."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "taskId": "PLATFORM-006",
+  "candidate": "d755c06582f2dc00a217e6dcef86ae037f908e7bf8ff355369a9748ea5c02e17",
+  "status": "UNSUPPORTED_PROFILE_FIXTURE_REFUSED",
+  "actualUIError": "The verified runtime source or process protocol changed.",
+  "code": "RUNTIME_SOURCE_INVALID",
+  "product": "knowledge@0.2.1",
+  "artifactDigest": "c6a1f4b6afed13ae7f82ef7624ad5fd6d87bbaea08a853a58f55b3ae819c23a4",
+  "capturedPlanBindings": [
+    "desk.requests.create.v2:http",
+    "knowledge.document.read.v1:local"
+  ],
+  "observedOutcome": "No runtime instance; physical slot EMPTY. Fixed fixture closed, worker observed PID12884 exited.",
+  "cause": "runtimePlanIdentity rejects non-local bindings for the selected managed local profile. Sol source inspection and Luna captured-plan inspection independently confirm this expected refusal.",
+  "resolution": "Preserve Knowledge HTTP definition and runtime profile. Use existing Combined0.2.1 local bindings for actual Knowledge workspace browser qualification.",
+  "evidenceRefs": [
+    ".brain/evidence/platform-006-browser-profile-refusal-01.txt",
+    ".local/platform-006-validation/browser-knowledge-02.closed.json"
+  ],
+  "limitations": [
+    "Failed fixture selection remains failure history; does not establish a source runtime defect or Knowledge browser pass."
+  ]
+}

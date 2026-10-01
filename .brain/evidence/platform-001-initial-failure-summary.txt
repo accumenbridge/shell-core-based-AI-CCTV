@@ -1,0 +1,5 @@
+Initial focused run before repairs (summary; raw terminal output was not retained):
+Command: node --test --test-reporter=tap tests/ai-core.test.mjs tests/control-plane.test.mjs tests/control-plane-http.test.mjs tests/reliability-baseline.test.mjs
+Result: 25 passed, 4 failed (29 total).
+Failures: two token redaction assertions passed strings to assert.doesNotMatch (requires RegExp); a Windows temporary-directory cleanup hit ENOTEMPTY contention; and a legacy admission fixture used malformed version key 'broken', causing validation to fail earlier than the assertion intended.
+Repairs: use explicit string inclusion checks for secrets; bounded rm retries; use a valid semantic-version key with intentionally mismatched stored definition identity to test admission rejection.

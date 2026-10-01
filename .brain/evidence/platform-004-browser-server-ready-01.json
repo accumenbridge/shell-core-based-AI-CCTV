@@ -1,0 +1,738 @@
+{
+  "schema": "quadbridge.browser-fixture-ready.v1",
+  "fixtureId": "a939c59f-1a29-4e5d-bb38-84b14fe4522c",
+  "url": "http://127.0.0.1:63672",
+  "product": {
+    "productId": "combined",
+    "version": "0.2.0",
+    "artifactDigest": "bc50103030b887882e287771ad6a2d2866b578732e098e2b57f7315292154968",
+    "buildId": "ee3b4e07-810c-47c0-8b85-dfced934c546",
+    "snapshotId": "0ce2d3b8-1d4c-450f-98f9-b88f846325e1",
+    "snapshotDigest": "bc50103030b887882e287771ad6a2d2866b578732e098e2b57f7315292154968",
+    "releaseDigest": "9952150c879b0789122ae2e43c8ab70d4b5811fae89bc02b8c0011a1e9fe045c",
+    "sizeBytes": 640351,
+    "fileCount": 141,
+    "entries": [
+      {
+        "path": ".artifacts/combined/backend-catalog.mjs",
+        "digest": "d663dbb6dfea6f8c0cb3867671f5b03e2e917a097980be5e7933990540ec60d2",
+        "sizeBytes": 5379
+      },
+      {
+        "path": ".artifacts/combined/composition.js",
+        "digest": "2d519c1441db2f314ac53dc3f2f2f39f8d6ad3c164114a993dfa692f6bef2439",
+        "sizeBytes": 297
+      },
+      {
+        "path": ".artifacts/combined/plan.json",
+        "digest": "1b27c8429b4dc7501d547ae1d20ea8d6889bf2f490f40090a78b26b7713181eb",
+        "sizeBytes": 11428
+      },
+      {
+        "path": ".artifacts/combined/release.json",
+        "digest": "9952150c879b0789122ae2e43c8ab70d4b5811fae89bc02b8c0011a1e9fe045c",
+        "sizeBytes": 4072
+      },
+      {
+        "path": ".artifacts/combined/solution.mjs",
+        "digest": "b2a42c58e65f27d8ee08475c38133d6a3bbb0dc0b743be9cf3f77f85902d7dff",
+        "sizeBytes": 78
+      },
+      {
+        "path": ".artifacts/combined/web.json",
+        "digest": "c704da383d23a16e250e639bccbf8122db800624507d6c83c3a008c10d35b6f5",
+        "sizeBytes": 1498
+      },
+      {
+        "path": "apps/runtime/dist/index.d.ts",
+        "digest": "e4323c9a7219952d5d769ca752932f11b33867553d4b65095dcc4e58a3aa0036",
+        "sizeBytes": 1409
+      },
+      {
+        "path": "apps/runtime/dist/index.js",
+        "digest": "4eda85028d0d45c444b54661187d9c2238bd8e7ec404021f8ccb9dad0850710c",
+        "sizeBytes": 6782
+      },
+      {
+        "path": "apps/runtime/dist/index.js.map",
+        "digest": "5492191a17fa77bfb0aa3ef68b52fdac0a5e2f30f187e8b964f08c0ce48914f4",
+        "sizeBytes": 7202
+      },
+      {
+        "path": "apps/runtime/dist/main.d.ts",
+        "digest": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "sizeBytes": 11
+      },
+      {
+        "path": "apps/runtime/dist/main.js",
+        "digest": "3e973a95999b28b5b5dec4cdbfa8f7d732c6916869e28060cf29c4ac5deddd04",
+        "sizeBytes": 1811
+      },
+      {
+        "path": "apps/runtime/dist/main.js.map",
+        "digest": "2d547f9dc021c3515987b68522e8d4cd8a36d2c906399c77694e84d766a186bc",
+        "sizeBytes": 2539
+      },
+      {
+        "path": "apps/runtime/package.json",
+        "digest": "2093359e21ad1167f0e225683353edebe4bdc83743c71c157731cc86877720b7",
+        "sizeBytes": 549
+      },
+      {
+        "path": "apps/runtime/src/index.ts",
+        "digest": "b56c9ca308312bb48d686223f9ab877b45653dfe1ff583b3afe9e4590db4b5e4",
+        "sizeBytes": 8289
+      },
+      {
+        "path": "apps/runtime/src/main.ts",
+        "digest": "3d289459d64baeb7563cf45361a0a563d35a82147a9e776ae43061dd22605a63",
+        "sizeBytes": 1818
+      },
+      {
+        "path": "apps/runtime/tsconfig.json",
+        "digest": "8c60973ed1459feb21802b33dd4459517f8e001518a6978e2e7e2e9ec196bcb9",
+        "sizeBytes": 820
+      },
+      {
+        "path": "generated/catalog.mjs",
+        "digest": "523f13aeea57ea6daa00f042bd8680129bc209f56c132d316e356ead6e6eab17",
+        "sizeBytes": 5370
+      },
+      {
+        "path": "generated/solution-catalog.mjs",
+        "digest": "90e1cac90c89f66c982e013453e9a34b56160c1fa3006621a17a9070d8e85173",
+        "sizeBytes": 102
+      },
+      {
+        "path": "modules/handoff/dist/index.d.ts",
+        "digest": "054da2345cc7b55b93b188db879066ce2d01cb2bd900ce169be255159036518f",
+        "sizeBytes": 1028
+      },
+      {
+        "path": "modules/handoff/dist/index.js",
+        "digest": "96f8c2f235b00200ceb5345d2c89cb5cc0433696479aeb4edf9c2473cfe6b791",
+        "sizeBytes": 11997
+      },
+      {
+        "path": "modules/handoff/dist/index.js.map",
+        "digest": "afcd7a95ff53731807c7a56acbb9acfae551a38e80b8abe90dd0dfec656dcbc6",
+        "sizeBytes": 10314
+      },
+      {
+        "path": "modules/handoff/dist/ui.d.ts",
+        "digest": "1df73f8472ac3b46b3e90a093eb7ad0c8f2d451ac2ff328fe6e8b39b77f055b9",
+        "sizeBytes": 99
+      },
+      {
+        "path": "modules/handoff/dist/ui.js",
+        "digest": "043c8d8f606f3c2a247caed6c931ce260e4c4392008f15aa2f0052a07d0494f4",
+        "sizeBytes": 7438
+      },
+      {
+        "path": "modules/handoff/dist/ui.js.map",
+        "digest": "79949e540f77a09496437b2468779beee2022d2b6077d8f6e6fe844ec5c17f75",
+        "sizeBytes": 7439
+      },
+      {
+        "path": "modules/handoff/module.json",
+        "digest": "a29d73d36870113e477f71d45c0f6537b1d90fe757745596048e1e576e13539c",
+        "sizeBytes": 2313
+      },
+      {
+        "path": "modules/handoff/package.json",
+        "digest": "a59e9cac48272ff6b548805a145797be43d45aae9bd37a46a07507ba2c8e400f",
+        "sizeBytes": 592
+      },
+      {
+        "path": "modules/handoff/src/index.ts",
+        "digest": "c329c58b33ea8634543a1bdcf97d960765b3bc861f51dfaadacb234967b2d3c2",
+        "sizeBytes": 13114
+      },
+      {
+        "path": "modules/handoff/src/ui.ts",
+        "digest": "5bf0ee4d94d78c2a56e1cce22e44f2d9bb2754affa24c32febef375dc1c433a0",
+        "sizeBytes": 6399
+      },
+      {
+        "path": "modules/handoff/tsconfig.json",
+        "digest": "b534b1e5a4ac853bedb306189d5eb15737128d03a645785682737f1f117b1b1b",
+        "sizeBytes": 491
+      },
+      {
+        "path": "modules/knowledge/dist/index.d.ts",
+        "digest": "314983d975b0ae54ec95dda602b681b7aa3582cb1129e357bbc5388164adb396",
+        "sizeBytes": 945
+      },
+      {
+        "path": "modules/knowledge/dist/index.js",
+        "digest": "7ae276ab970f50a0922e573b1bce6c1344c6d9a3a5e03454db678608c87bd9de",
+        "sizeBytes": 5451
+      },
+      {
+        "path": "modules/knowledge/dist/index.js.map",
+        "digest": "abdbb50f14e3db5c821e8f73908cdf33badf599350bb478c6b4cfa47650e3b7d",
+        "sizeBytes": 5330
+      },
+      {
+        "path": "modules/knowledge/dist/ui.d.ts",
+        "digest": "1df73f8472ac3b46b3e90a093eb7ad0c8f2d451ac2ff328fe6e8b39b77f055b9",
+        "sizeBytes": 99
+      },
+      {
+        "path": "modules/knowledge/dist/ui.js",
+        "digest": "67fd06615ed16d755b9c76eb35264ad9b2cec4a924b99ca483423b88a352f554",
+        "sizeBytes": 4010
+      },
+      {
+        "path": "modules/knowledge/dist/ui.js.map",
+        "digest": "2f697b9cf2db36eb2882d31bee5be161746b7c08bd157e9d4eaefa367e0b30ac",
+        "sizeBytes": 4513
+      },
+      {
+        "path": "modules/knowledge/module.json",
+        "digest": "0cef67b3289d9e09b6d3ad894866053b2a9539891187dcdcdbc06cc05efd18f9",
+        "sizeBytes": 3108
+      },
+      {
+        "path": "modules/knowledge/package.json",
+        "digest": "950cfd77532b6755e20126254a38c391e24826490f04b32ca3e4cccabba65edd",
+        "sizeBytes": 554
+      },
+      {
+        "path": "modules/knowledge/src/index.ts",
+        "digest": "f94c8ca39019091748081b37e8f5631710b95d2b69276daff5aeb58e66532cd2",
+        "sizeBytes": 6412
+      },
+      {
+        "path": "modules/knowledge/src/ui.ts",
+        "digest": "5f07be62ac11c057ea4d2d4abeef3c1f6864e4693b64795a3112d5d82e851a05",
+        "sizeBytes": 4511
+      },
+      {
+        "path": "modules/knowledge/tsconfig.json",
+        "digest": "5ceb52a02364664f51c79a573432c69d26ea3b5fd1b5ddc0cd724293ef4579da",
+        "sizeBytes": 435
+      },
+      {
+        "path": "modules/service-desk/dist/index.d.ts",
+        "digest": "589049ab85176a2ab718a3f0af5b891f8634eb507f39c8e6bcf5a788eecf1fdf",
+        "sizeBytes": 1018
+      },
+      {
+        "path": "modules/service-desk/dist/index.js",
+        "digest": "1805074cdf3fac41d9f83cb522f73b530834a81701f127106e9caf810c6a08d3",
+        "sizeBytes": 5266
+      },
+      {
+        "path": "modules/service-desk/dist/index.js.map",
+        "digest": "ca8394945006b4f21af5e03ae0a1c492083ca8a5e132732440a130cedd03263d",
+        "sizeBytes": 5552
+      },
+      {
+        "path": "modules/service-desk/dist/ui.d.ts",
+        "digest": "d7c62d2a4cf14ba3ceed69e9efead0ee71cd7d2c4e2cd8e5393bd532047346db",
+        "sizeBytes": 264
+      },
+      {
+        "path": "modules/service-desk/dist/ui.js",
+        "digest": "a9ad8591d9446939e29466978bd95562aee86dc59936a1f16b2c738e6f45416f",
+        "sizeBytes": 3414
+      },
+      {
+        "path": "modules/service-desk/dist/ui.js.map",
+        "digest": "53b0222eb648d0f9726ca87e13dcaa55e0ee3e5c14da955bf1a95ecdd95a1dc1",
+        "sizeBytes": 3943
+      },
+      {
+        "path": "modules/service-desk/dist/ui/overview.css",
+        "digest": "d5eac48954d0c8c06cdcf64a71061b4c8a887fc6115557e10aadf74f8d32e69f",
+        "sizeBytes": 208
+      },
+      {
+        "path": "modules/service-desk/dist/ui/overview.d.ts",
+        "digest": "6d85de294153dcb027e77c8b96016b4e767a90b7c6fb9b8202f01c52d14c811f",
+        "sizeBytes": 214
+      },
+      {
+        "path": "modules/service-desk/dist/ui/overview.js",
+        "digest": "fc729bc748d4f9c27914c6506943c8238e87734a9792de84dfe4e16a3f3b3326",
+        "sizeBytes": 1232
+      },
+      {
+        "path": "modules/service-desk/dist/ui/overview.js.map",
+        "digest": "2c75651f1bb56ff857e217a4a1ca4728558595dbc9cc95f556793c3bc414e9fa",
+        "sizeBytes": 1490
+      },
+      {
+        "path": "modules/service-desk/module.json",
+        "digest": "448b03e9a8a8cc94cd65451d22cb2fdb3db9074e7b1df471acc27414e428e698",
+        "sizeBytes": 2674
+      },
+      {
+        "path": "modules/service-desk/package.json",
+        "digest": "1802a2613603271e93d8024bd17ae69db93f2bac4cd4861dd445dc010c8ed1da",
+        "sizeBytes": 557
+      },
+      {
+        "path": "modules/service-desk/src/index.ts",
+        "digest": "a013d0e6034fca24434e54b6096d748127fabfe6a414b822d91c8954afc2d69c",
+        "sizeBytes": 6246
+      },
+      {
+        "path": "modules/service-desk/src/ui.ts",
+        "digest": "8363b8a32a1114489b5d131518ae25baa14dfcdde5dcd912552b529c5d287ab2",
+        "sizeBytes": 3754
+      },
+      {
+        "path": "modules/service-desk/src/ui/overview.css",
+        "digest": "d5eac48954d0c8c06cdcf64a71061b4c8a887fc6115557e10aadf74f8d32e69f",
+        "sizeBytes": 208
+      },
+      {
+        "path": "modules/service-desk/src/ui/overview.ts",
+        "digest": "5de3636f9ae8ec385625e4eb9c5509a1670984b7547ce57c74968b1f01926d55",
+        "sizeBytes": 1270
+      },
+      {
+        "path": "modules/service-desk/tsconfig.json",
+        "digest": "5ceb52a02364664f51c79a573432c69d26ea3b5fd1b5ddc0cd724293ef4579da",
+        "sizeBytes": 435
+      },
+      {
+        "path": "package.json",
+        "digest": "6af398a834b57d5da8c8bd3a89fb0c2a8635c47f29ac108ab8aba29d14ba182d",
+        "sizeBytes": 281
+      },
+      {
+        "path": "packages/backend-host/dist/http.d.ts",
+        "digest": "8a5e6c23c077fd47a748807f13e2ddf14bbe809e8a620dd1f89f9c033b742f38",
+        "sizeBytes": 1033
+      },
+      {
+        "path": "packages/backend-host/dist/http.js",
+        "digest": "115aaa61669ba03d3130d8069c94b1c498d92c1ae764f529e8e533a37c650a47",
+        "sizeBytes": 9284
+      },
+      {
+        "path": "packages/backend-host/dist/http.js.map",
+        "digest": "97574414cf3a08dfd02de98ef1e61eb434ee356c2252c174ec0ce3421bc01a8e",
+        "sizeBytes": 9506
+      },
+      {
+        "path": "packages/backend-host/dist/index.d.ts",
+        "digest": "df604cafebd6b05352147a022725e5b0aac857562c047ce1c67bd74cde9c2c86",
+        "sizeBytes": 2797
+      },
+      {
+        "path": "packages/backend-host/dist/index.js",
+        "digest": "2151df16dc951f32adbca9a788b29ad2ee894c8e877b0757fc32583fe794a59b",
+        "sizeBytes": 5654
+      },
+      {
+        "path": "packages/backend-host/dist/index.js.map",
+        "digest": "0efb3aab1fb91405c5ac5c73061d2daf3919e849605b948cb17ea9100a920f45",
+        "sizeBytes": 6573
+      },
+      {
+        "path": "packages/backend-host/package.json",
+        "digest": "86c0f02c63e6a47ff65dddc805ce4abfb47be75a245e7d653645a41413ddd434",
+        "sizeBytes": 483
+      },
+      {
+        "path": "packages/backend-host/src/http.ts",
+        "digest": "4cbd148e77a1c69ad7d36f5f309f94202c78d4f12cf32342bbbd2bed7d80003e",
+        "sizeBytes": 10326
+      },
+      {
+        "path": "packages/backend-host/src/index.ts",
+        "digest": "f58c254b5b94e3d25dfeb9da47e227d53ac59a26d5d0ff877b3f53153e95b4a4",
+        "sizeBytes": 6717
+      },
+      {
+        "path": "packages/backend-host/tsconfig.json",
+        "digest": "c40d7e42d4d28fa0c812ed1d1a18594c5d1883ef64bd141fea592e5cbe707122",
+        "sizeBytes": 329
+      },
+      {
+        "path": "packages/composition/dist/index.d.ts",
+        "digest": "d01f9d0fecc79482bb9b251e8c7b4fdf66ac802100f7e42614a28aba28bf7bc9",
+        "sizeBytes": 960
+      },
+      {
+        "path": "packages/composition/dist/index.js",
+        "digest": "3a0c690dc6fbc51dc1d1038e084b6975060ee86d621fb93ad9461e49f6f1005a",
+        "sizeBytes": 6978
+      },
+      {
+        "path": "packages/composition/dist/index.js.map",
+        "digest": "0b673dab12517d710b131369379ce2b51fc34bf880a896b800851e844eada413",
+        "sizeBytes": 8649
+      },
+      {
+        "path": "packages/composition/dist/integrity.d.ts",
+        "digest": "2262238e6b412b3da76fcbfe2f60f4e7a1872b8639cc617cde3cd457b34511b6",
+        "sizeBytes": 1787
+      },
+      {
+        "path": "packages/composition/dist/integrity.js",
+        "digest": "2379816a942ecfbb17c4719080b439591bc33b2916f93d2ee2d0a1dcd18629cd",
+        "sizeBytes": 20581
+      },
+      {
+        "path": "packages/composition/dist/integrity.js.map",
+        "digest": "b005a5ebcbdb75e5a494ab64ae5783775f2a65f1afbcfdfd0ec34b2cc6115331",
+        "sizeBytes": 20499
+      },
+      {
+        "path": "packages/composition/dist/snapshot-access.d.ts",
+        "digest": "07b9157c153677bbb543614f251953ca712fa405cd661373ad03a35d181dbcd6",
+        "sizeBytes": 1232
+      },
+      {
+        "path": "packages/composition/dist/snapshot-access.js",
+        "digest": "947aba74249c387c1f7986352a52a8593079d33ad338fcab6b227f35cce4399d",
+        "sizeBytes": 12004
+      },
+      {
+        "path": "packages/composition/dist/snapshot-access.js.map",
+        "digest": "a6727d5edd38b418aa244ccc1938ca79a5ee88e2b7959edeba1ac102ba393d82",
+        "sizeBytes": 11817
+      },
+      {
+        "path": "packages/composition/dist/studio.d.ts",
+        "digest": "bc5ca35e3f511a1b274223e3c9d92a11828d955e5f7088e355956d0197021946",
+        "sizeBytes": 1756
+      },
+      {
+        "path": "packages/composition/dist/studio.js",
+        "digest": "0b82c227be8a934c13f82fe0240aa981f99173663b8a81df085d67002ed79cf6",
+        "sizeBytes": 7079
+      },
+      {
+        "path": "packages/composition/dist/studio.js.map",
+        "digest": "e824a718b86a73ecadbe7f8b0432b2dc5a7195b6fa98a33a8044896fda43f760",
+        "sizeBytes": 7646
+      },
+      {
+        "path": "packages/composition/package.json",
+        "digest": "dfcddc24509a7d3699b6c4c04a06df1e092ec0011ade976fa68946be71c5c9bb",
+        "sizeBytes": 442
+      },
+      {
+        "path": "packages/composition/src/index.ts",
+        "digest": "50f99424b38e315a9558055f4aea8e4537a7f13ffb672e678bc5d10ba3ae41a5",
+        "sizeBytes": 7405
+      },
+      {
+        "path": "packages/composition/src/integrity.ts",
+        "digest": "71c32ee6cec7d45fc241190c92f850c8e867ffd4d194d667e671743d8f65331c",
+        "sizeBytes": 21707
+      },
+      {
+        "path": "packages/composition/src/snapshot-access.ts",
+        "digest": "97fa166ba41bbb814d87dd72882f7d3716856ad12e316b67083a33c78cc76dd3",
+        "sizeBytes": 11901
+      },
+      {
+        "path": "packages/composition/src/studio.ts",
+        "digest": "9a2aae3f53b3a5214e8f2abe66aefd72a5ca905eef9eef68ccdb47e33420bb9b",
+        "sizeBytes": 7732
+      },
+      {
+        "path": "packages/composition/tsconfig.json",
+        "digest": "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1",
+        "sizeBytes": 273
+      },
+      {
+        "path": "packages/connections/dist/index.d.ts",
+        "digest": "8b172b360f59b2494a2d937d1b1e6a0ebec1b5cdaecb9abbf5e63a87d693ab0c",
+        "sizeBytes": 1431
+      },
+      {
+        "path": "packages/connections/dist/index.js",
+        "digest": "9d649b4198bc790161c135ac121039fce1eeaefa89c8aa17208c9d08bf18a6c6",
+        "sizeBytes": 9598
+      },
+      {
+        "path": "packages/connections/dist/index.js.map",
+        "digest": "914b42743d884353623c93560145d811e54a2fce542d73f500a4103fe82b3b6f",
+        "sizeBytes": 9886
+      },
+      {
+        "path": "packages/connections/package.json",
+        "digest": "4878d00d155649f22c5c83def1b4ab95835fcad20ef43073844fc645ed0213ca",
+        "sizeBytes": 442
+      },
+      {
+        "path": "packages/connections/src/index.ts",
+        "digest": "9b7225de0920bcc782e741d43f247c44b1922ff8bb303936ba4afeb0f2369911",
+        "sizeBytes": 10926
+      },
+      {
+        "path": "packages/connections/tsconfig.json",
+        "digest": "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1",
+        "sizeBytes": 273
+      },
+      {
+        "path": "packages/contracts/dist/index.d.ts",
+        "digest": "e1ddcbcf99a0f6b002efe4b9583a1e070bfecbff8ec4beff057410bb58853762",
+        "sizeBytes": 6505
+      },
+      {
+        "path": "packages/contracts/dist/index.js",
+        "digest": "cb30002c1664a374216bbb3212e0eb1f173cd29c827f786c9faae6943ed0fe1e",
+        "sizeBytes": 1927
+      },
+      {
+        "path": "packages/contracts/dist/index.js.map",
+        "digest": "ab9e6a183caee1842f7b6f153c9a1d4389bcd543c2db4aedc2c00a7de5a580d1",
+        "sizeBytes": 2190
+      },
+      {
+        "path": "packages/contracts/package.json",
+        "digest": "190b192652234b5c1875c3014eb72001e6a6ae77bd28c69c10829b52d5e59ebe",
+        "sizeBytes": 400
+      },
+      {
+        "path": "packages/contracts/src/index.ts",
+        "digest": "1c457a05415c388967cbe6e1490376ed0538448c7612ddf9561e53ff0a7d1fcf",
+        "sizeBytes": 7882
+      },
+      {
+        "path": "packages/contracts/tsconfig.json",
+        "digest": "3b612bbcc4309a9da4bbff6fc5e2d266f9578f884a8671cc51d00c43a89d3ccf",
+        "sizeBytes": 217
+      },
+      {
+        "path": "packages/local-access/dist/index.d.ts",
+        "digest": "65bf8134d465288b7a58297dbbd1a50371d6d28bed50ec28b492460c0cb55d0f",
+        "sizeBytes": 1264
+      },
+      {
+        "path": "packages/local-access/dist/index.js",
+        "digest": "d2450b73e95c18b8258fa6fb8ee632115fb7025e0bec4eecbd684623b3f2e985",
+        "sizeBytes": 6107
+      },
+      {
+        "path": "packages/local-access/dist/index.js.map",
+        "digest": "535fd62650ebe3bcf549ea08baa0e9017c494f9f1cd7b0e36063b8ac6969f455",
+        "sizeBytes": 5632
+      },
+      {
+        "path": "packages/local-access/package.json",
+        "digest": "14472fafb8bd74aacc8c2dddfeb0ab9fd6c138b5041b97d0f4983cb607dff8cd",
+        "sizeBytes": 478
+      },
+      {
+        "path": "packages/local-access/src/index.ts",
+        "digest": "fce97413cd3b27c8ae915286d1c10c4aa37168550deffaf77f0e7996b62bac91",
+        "sizeBytes": 7150
+      },
+      {
+        "path": "packages/local-access/tsconfig.json",
+        "digest": "31dbcfd33d2091b8225ba45bffd0c396c2351db4b754270721461b225f8c05cb",
+        "sizeBytes": 324
+      },
+      {
+        "path": "packages/sqlite/dist/index.d.ts",
+        "digest": "0b5c2ae05b724dfb658e7129e759cdb7a7c063a46fb6f11541226662ef5fd377",
+        "sizeBytes": 1821
+      },
+      {
+        "path": "packages/sqlite/dist/index.js",
+        "digest": "313f32645269c518d715bd17e199f85ac816063cdfff13e53f445f88cf8add0e",
+        "sizeBytes": 13228
+      },
+      {
+        "path": "packages/sqlite/dist/index.js.map",
+        "digest": "c08b26ad307750fbc40d45bb302011347f7b108deafccc27c99c192d27b53b06",
+        "sizeBytes": 11000
+      },
+      {
+        "path": "packages/sqlite/package.json",
+        "digest": "82f370af2a574bfd3d4cadce7b4a2855b1667a475f4d9ba1d48c9b169d1e779e",
+        "sizeBytes": 437
+      },
+      {
+        "path": "packages/sqlite/src/index.ts",
+        "digest": "03fb605c558044e72002d3787b7b7b974de3850597fb06852e07883c3d7d1e08",
+        "sizeBytes": 14659
+      },
+      {
+        "path": "packages/sqlite/tsconfig.json",
+        "digest": "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1",
+        "sizeBytes": 273
+      },
+      {
+        "path": "packages/web-shell/dist/dom.d.ts",
+        "digest": "0163f9132891d0d974ceeb9085001e8abc5475138258223c49eeebe886a552a0",
+        "sizeBytes": 1073
+      },
+      {
+        "path": "packages/web-shell/dist/dom.js",
+        "digest": "789d4978a93a7735c5d82337d6c7d58f9f11e91bad3c9c89619f93b29f1b4537",
+        "sizeBytes": 2355
+      },
+      {
+        "path": "packages/web-shell/dist/dom.js.map",
+        "digest": "425632146a9f18365e988201de2127b82afa6840e5661d9da89beb989cec0cbd",
+        "sizeBytes": 2981
+      },
+      {
+        "path": "packages/web-shell/dist/index.d.ts",
+        "digest": "fc2d00f720c71e0de917f99b6ad8e8b12f20c3bac4415ea38e654ddd7bd09914",
+        "sizeBytes": 430
+      },
+      {
+        "path": "packages/web-shell/dist/index.js",
+        "digest": "220df0d8124858abb83256ecd6888765715fd3ed2ebdf123f99dc4cbec8700e1",
+        "sizeBytes": 15789
+      },
+      {
+        "path": "packages/web-shell/dist/index.js.map",
+        "digest": "f995ac927d8eb89d8e737015d9dd86c110cd94185ec8ba079a62d07d5040ae1e",
+        "sizeBytes": 15455
+      },
+      {
+        "path": "packages/web-shell/dist/react-adapter.d.ts",
+        "digest": "de6ce2b14f5e11df7febde050a660bfeb3f7db4aeb99f5b924e57cb246eac081",
+        "sizeBytes": 630
+      },
+      {
+        "path": "packages/web-shell/dist/react-adapter.js",
+        "digest": "872c251edf149ebbeb5c52297bcf9075bf377f4ec78b134c9ecf695c0b520092",
+        "sizeBytes": 783
+      },
+      {
+        "path": "packages/web-shell/dist/react-adapter.js.map",
+        "digest": "ab7d292898d3ca67df9851eead141c861db76413078304f22b620aaacea3f1a7",
+        "sizeBytes": 823
+      },
+      {
+        "path": "packages/web-shell/dist/shell.css",
+        "digest": "1e0b3d3e60031bb59efd26c628265b8c2265a946a6fa6a971934d0983e2aff4f",
+        "sizeBytes": 10538
+      },
+      {
+        "path": "packages/web-shell/package.json",
+        "digest": "b0c24cbb45e2b35d5277504376cadcc25c741f1ae78a0c6df0524fe16134cc81",
+        "sizeBytes": 440
+      },
+      {
+        "path": "packages/web-shell/src/dom.ts",
+        "digest": "14dfeecc630f1b229ae487ce209756df91a4610b6a4ad11500ff7af30af50920",
+        "sizeBytes": 2567
+      },
+      {
+        "path": "packages/web-shell/src/index.ts",
+        "digest": "52ddad4ccd1b003cdc3144afc1e39b24189c5b9a8cac9e9180aa8b5cc708502c",
+        "sizeBytes": 16978
+      },
+      {
+        "path": "packages/web-shell/src/react-adapter.ts",
+        "digest": "65959d9eae79cb3f80c71b1d3ce2910e4206918ed1bda697733195fe8057c315",
+        "sizeBytes": 1312
+      },
+      {
+        "path": "packages/web-shell/src/shell.css",
+        "digest": "1e0b3d3e60031bb59efd26c628265b8c2265a946a6fa6a971934d0983e2aff4f",
+        "sizeBytes": 10538
+      },
+      {
+        "path": "packages/web-shell/tsconfig.json",
+        "digest": "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1",
+        "sizeBytes": 273
+      },
+      {
+        "path": "packages/worker-host/dist/index.d.ts",
+        "digest": "d75f2ec55ec615d583859cf502859e220120dc07031e33636a3a13ad94b89f74",
+        "sizeBytes": 784
+      },
+      {
+        "path": "packages/worker-host/dist/index.js",
+        "digest": "45a437b9bfc87d7e60d8ce68817c002555b5ad7fed2dace784a0f5524d9a5215",
+        "sizeBytes": 3712
+      },
+      {
+        "path": "packages/worker-host/dist/index.js.map",
+        "digest": "4df6e6038601ae7eaa71e63020e0d188964873c94c07f0e61a6a0db9b010c3f2",
+        "sizeBytes": 3763
+      },
+      {
+        "path": "packages/worker-host/package.json",
+        "digest": "1f3afb329d62a1c72047813e76f1e6530b2170b43e9fb69b5b5d7b70448ccb99",
+        "sizeBytes": 442
+      },
+      {
+        "path": "packages/worker-host/src/index.ts",
+        "digest": "ab86d7d5222d05983d63c3820396593ebd9490aef7a3be7c2476da72b38293f8",
+        "sizeBytes": 3911
+      },
+      {
+        "path": "packages/worker-host/tsconfig.json",
+        "digest": "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1",
+        "sizeBytes": 273
+      },
+      {
+        "path": "products/combined/product.json",
+        "digest": "a3576cd4daa6e5eccceeba2b03a4472e4fa4f5db1ecc11ce441dcec1de9f7f00",
+        "sizeBytes": 673
+      },
+      {
+        "path": "profiles/local-developer.json",
+        "digest": "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1",
+        "sizeBytes": 1075
+      },
+      {
+        "path": "QUADBRIDGE-SNAPSHOT.json",
+        "digest": "fa03878cd9c0fa989b297fa83c6bd67a629ef002e38535b4df31876e738a4246",
+        "sizeBytes": 15802
+      },
+      {
+        "path": "README.md",
+        "digest": "300b062cca09aa9997e4e3c7579d090b5930c8f1038765eb125de7eef7e84ab9",
+        "sizeBytes": 377
+      },
+      {
+        "path": "solutions/knowledge-to-desk/solution.json",
+        "digest": "21eab4f7ee5a273df687a805055dd3c35b746ed35a12e94711529a5f8fa2a9ee",
+        "sizeBytes": 2057
+      },
+      {
+        "path": "solutions/knowledge-to-desk/wiring.mjs",
+        "digest": "5c2def96393bb5f02c95d362624fec14637c83513daf8b266ce7ce547656bb9f",
+        "sizeBytes": 4280
+      },
+      {
+        "path": "tools/demo.mjs",
+        "digest": "fd370eb6e9119d04bcb70ea5170df1fac33024b9a0fa49cdebd6b533316e56e1",
+        "sizeBytes": 3889
+      },
+      {
+        "path": "tools/link-workspaces.mjs",
+        "digest": "bef21a5c9e216974017aa425d7e9eb425eeb399ac8e0dab9a91f7477e1fc5a2c",
+        "sizeBytes": 1212
+      },
+      {
+        "path": "tools/local-profile.mjs",
+        "digest": "b780e4f6dfbb1048bed4efe5b83e60a959cdc9556c6de63935426d50aa4e4590",
+        "sizeBytes": 3864
+      }
+    ]
+  },
+  "sourceFingerprint": "16af88cca68e6f29491df46709e4b0b0aa1df04e98ca5316064c22f1662c064d",
+  "studioMainSha256": "7b103038dec78a32276010c51ec9b54257930dfa40580c180afedee907d14987",
+  "selectedHost": {
+    "kind": "powershell7-file-host",
+    "version": "7.6.5",
+    "sha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+    "policy": "RemoteSigned"
+  },
+  "owner": {
+    "root": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\q4br-tsw6nL",
+    "databasePath": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\q4br-tsw6nL\\.local\\control-plane.sqlite",
+    "stopFile": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\platform-004-validation\\browser-server.stop",
+    "closedFile": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\platform-004-validation\\browser-server.closed.json"
+  },
+  "pairingCodeRecorded": false
+}

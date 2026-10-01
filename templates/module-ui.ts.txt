@@ -1,0 +1,9 @@
+import type { Workspace } from '@quadbridge/contracts';
+import { el,field,heading,section,formAction } from '@quadbridge/web-shell/dom';
+export const workspace:Workspace={mount(ctx){
+ ctx.root.append(heading('__NAME__','Product-owned module using the maintained shell.'));
+ const card=section(),form=el('form'),title=field('Title','title'),list=el('div');form.append(title.wrap);card.append(form,list);ctx.root.append(card);
+ const refresh=async()=>{const result=await ctx.api.get('/api/__NAME__') as {items:{id:string;title:string}[]};if(ctx.signal.aborted)return;list.replaceChildren(...result.items.map(item=>el('p','list-item',item.title)));};
+ if(ctx.permissions.includes('__NAME__.write'))formAction(form,'Add item',async()=>{await ctx.api.post('/api/__NAME__',{title:title.input.value});form.reset();await refresh();},ctx.signal,ctx.notice);else form.remove();
+ void refresh().catch(e=>ctx.notice(e.message));return()=>{};
+}};

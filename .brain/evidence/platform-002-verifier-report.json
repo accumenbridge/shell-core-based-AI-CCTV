@@ -1,0 +1,37 @@
+{
+  "status": "PASSED_FOR_LOCAL_FRAMEWORK_SCOPE",
+  "at": "2026-09-30T19:29:35.618Z",
+  "node": "v24.19.0",
+  "typescript": "5.8.3",
+  "sourceFingerprint": "46950c47decc2cd50a8999e336aa7130f1d1693642e0506547a835c9da57b0af",
+  "checks": {
+    "typeScriptProjectBuild": "PASSED",
+    "tests": {
+      "status": "PASSED",
+      "counts": {
+        "tests": 188,
+        "passed": 188,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    }
+  },
+  "execution": {
+    "build": {
+      "exitCode": 0,
+      "signal": null
+    },
+    "tests": {
+      "exitCode": 0,
+      "signal": null
+    }
+  },
+  "currentRunEvidence": {
+    "claims": [
+      "The maintained TypeScript project build completed in this run.",
+      "The current TAP run reported 188 passing tests across 18 discovered test files."
+    ]
+  }
+}

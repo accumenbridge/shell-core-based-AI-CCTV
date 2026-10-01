@@ -1,0 +1,33 @@
+TAP version 13
+# Subtest: real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+not ok 1 - real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+  ---
+  duration_ms: 14531.1049
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\control-plane-artifacts.test.mjs:87:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\q3-UDwK84\\checkout\\.local\\platform-builds\\snapshots\\25657eb0-f3cd-4f48-a959-0913836839e7\\README.md'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:697:25)
+    async readFile (node:internal/fs/promises:1348:14)
+    async TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-artifacts.test.mjs:123:24)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+ok 2 - fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+  ---
+  duration_ms: 3122.07
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17760.7996
+EXIT=1

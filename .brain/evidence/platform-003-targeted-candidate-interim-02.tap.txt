@@ -1,0 +1,112 @@
+TAP version 13
+# Subtest: real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+not ok 1 - real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+  ---
+  duration_ms: 13145.2488
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\control-plane-artifacts.test.mjs:142:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   destination_verified: 0,
+    +   physical_state: 'NO_PUBLICATION',
+    +   staging_clean: 0,
+    +   state: 'ABORTED'
+    -   destination_verified: 1,
+    -   physical_state: 'MOVE_OBSERVED',
+    -   staging_clean: 1,
+    -   state: 'REGISTERED'
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    state: 'REGISTERED'
+    physical_state: 'MOVE_OBSERVED'
+    destination_verified: 1
+    staging_clean: 1
+  actual:
+    state: 'ABORTED'
+    physical_state: 'NO_PUBLICATION'
+    destination_verified: 0
+    staging_clean: 0
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-artifacts.test.mjs:237:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: separate Node owners serialize physical publication, retain interrupted ownership, and recheck session after a real SQLite lock
+ok 2 - separate Node owners serialize physical publication, retain interrupted ownership, and recheck session after a real SQLite lock
+  ---
+  duration_ms: 45431.7351
+  type: 'test'
+  ...
+# Subtest: fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+ok 3 - fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+  ---
+  duration_ms: 3354.6225
+  type: 'test'
+  ...
+# Subtest: registry publisher proof parsing rejects ambiguous, mismatched, and oversized output
+ok 4 - registry publisher proof parsing rejects ambiguous, mismatched, and oversized output
+  ---
+  duration_ms: 0.3488
+  type: 'test'
+  ...
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 5 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 4.4908
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 6 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 21.8509
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 7 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 30.9132
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 8 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 4.0284
+  type: 'test'
+  ...
+# Subtest: schema 3 artifact publication facts are added without changing older operation values
+ok 9 - schema 3 artifact publication facts are added without changing older operation values
+  ---
+  duration_ms: 17.2276
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 10 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 1.6768
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 11 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 1.522
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 10
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 62027.0209
+TARGETED_EXIT_CODE=1

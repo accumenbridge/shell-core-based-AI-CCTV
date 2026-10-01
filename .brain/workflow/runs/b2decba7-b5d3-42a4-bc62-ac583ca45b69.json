@@ -1,0 +1,172 @@
+{
+  "schema": "brain.evidence-record.v1",
+  "kind": "run",
+  "id": "b2decba7-b5d3-42a4-bc62-ac583ca45b69",
+  "taskId": "PLATFORM-007",
+  "recipeId": "brain-build",
+  "contractDigest": "e3f6aac8c9087d292f930d70e6d55ecbb7114eb80e4b644e7c4e27149b1ab3ec",
+  "recipeDigest": "67124401b4ebb22c4673119b81f64f45d43aea195dd54cc2f2ba122c04442323",
+  "candidate": {
+    "files": [
+      {
+        "path": "apps/control-plane/src/operator-server.ts",
+        "sha256": "ac16b51e899fea7cd4119f681c3f2727fc0470e0745eb17111235923f68614cd"
+      },
+      {
+        "path": "apps/studio-web/src/main.ts",
+        "sha256": "ff841faed5d12daa17ede376c1bc1514dd144d1f4c3ea8a991487f9199eabbd4"
+      },
+      {
+        "path": "apps/studio-web/static/studio.css",
+        "sha256": "b7eead083dd183df490b5312b166c016f5bd629608e9381767cff494590ce933"
+      },
+      {
+        "path": "docs/STATUS.md",
+        "sha256": "fe3ea0826a48e41cdbaf370fdca5ce541de0a702b62958cd61cb919ab679df82"
+      },
+      {
+        "path": "docs/STUDIO_INTEGRATION.md",
+        "sha256": "f2000f0a18726f1fe7c9fc7698ebb56de3c256e4ccea7af6a355fe30af127799"
+      },
+      {
+        "path": "packages/composition/src/studio.ts",
+        "sha256": "e0d317bdbc16ee0f202e598f91220fcc749a3387401a2ea65856afbf9bf8697b"
+      },
+      {
+        "path": "packages/control-plane/src/index.ts",
+        "sha256": "107bdca35e29b8ac2359e65159c01645167e01acbacb6aba17ed043705dad78f"
+      },
+      {
+        "path": "README.md",
+        "sha256": "bedaaf51f5f53824d28953bb08f5320b0de1e35809741e3678b018a8629c7ee3"
+      },
+      {
+        "path": "tests/control-plane-artifacts.test.mjs",
+        "sha256": "4c7f2f5447a4c99d600e35967c894e8bb977318fda7605f76797c6ed7560cbfb"
+      },
+      {
+        "path": "tests/control-plane-http.test.mjs",
+        "sha256": "f5faefb1e0b3ba494576fa6172f294387549e41dc97408690b6f7c789650cf10"
+      },
+      {
+        "path": "tests/studio-integration.test.mjs",
+        "sha256": "92c32bb381681510c5bb785e0fc3f9ad5769e3a28190770d3d34f3f4eab23897"
+      },
+      {
+        "path": "tests/studio-product-editor.test.mjs",
+        "sha256": "817c60b8c650167e590941472fe5f2544fb117cf46f9dfb91e29fa40e5e28fbf"
+      },
+      {
+        "path": "tests/visual-edition.test.mjs",
+        "sha256": "1e57b43232eddaf6e714c2bc3723370044d7fbb4920d59a142a6b5ffb9ff5419"
+      },
+      {
+        "path": "tools/studio-catalogue.mjs",
+        "sha256": "f3f7d4e611978b8b4e096fc96be9d6404c0ed31b25e04bcadd319badc94086cf"
+      },
+      {
+        "path": "visual/studio.css",
+        "sha256": "05e6d50ba1d8a1db6d61e66ab38f4613eddfc6d2040b7c3f1065d5e5e4ffe4e7"
+      },
+      {
+        "path": "visual/studio.js",
+        "sha256": "8ce9a902154e3bada85aa548d74c19e5e3857ded89c3f6ab4564a5a977be66d2"
+      }
+    ],
+    "digest": "feae2158e39dca364b28001d70d9ca78ca1486f3970e1aa5c49113c58e8e0026"
+  },
+  "recordedAt": "2026-10-01T09:24:37.329Z",
+  "command": {
+    "argv": [
+      "npm.cmd",
+      "run",
+      "build"
+    ],
+    "cwd": "."
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "os": "win32"
+  },
+  "status": "PASSED",
+  "exitCode": 0,
+  "artifacts": [
+    {
+      "sourceRef": ".local/platform-007-final-build-04.log",
+      "path": ".brain/workflow/artifacts/b2decba7-b5d3-42a4-bc62-ac583ca45b69/platform-007-final-build-04.log",
+      "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+      "bytes": 454
+    },
+    {
+      "sourceRef": ".local/platform-007-final-pre-build-context-04.json",
+      "path": ".brain/workflow/artifacts/b2decba7-b5d3-42a4-bc62-ac583ca45b69/platform-007-final-pre-build-context-04.json",
+      "sha256": "d18b3eebcaf945b45c94f8d8166111e0e8b1bba07684c4cee87713da016b1afb",
+      "bytes": 158326
+    },
+    {
+      "sourceRef": ".local/platform-007-applied-postcheck-01.json",
+      "path": ".brain/workflow/artifacts/b2decba7-b5d3-42a4-bc62-ac583ca45b69/platform-007-applied-postcheck-01.json",
+      "sha256": "b617a80a0b02a507cd09eaf1574d937bf091f58c6ea9bdf4478509b9a2d39865",
+      "bytes": 6097
+    },
+    {
+      "sourceRef": ".local/platform-007-prepared-manifest.json",
+      "path": ".brain/workflow/artifacts/b2decba7-b5d3-42a4-bc62-ac583ca45b69/platform-007-prepared-manifest.json",
+      "sha256": "61173f21f9be59931de68c52e0f8f895478ed12aea139172101af2e9cde178ab",
+      "bytes": 4305
+    },
+    {
+      "sourceRef": ".local/platform-007-build-01.log",
+      "path": ".brain/workflow/artifacts/b2decba7-b5d3-42a4-bc62-ac583ca45b69/platform-007-build-01.log",
+      "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+      "bytes": 454
+    },
+    {
+      "sourceRef": ".local/platform-007-build-03.log",
+      "path": ".brain/workflow/artifacts/b2decba7-b5d3-42a4-bc62-ac583ca45b69/platform-007-build-03.log",
+      "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+      "bytes": 454
+    },
+    {
+      "sourceRef": ".local/platform-007-focused-ui-02.tap.txt",
+      "path": ".brain/workflow/artifacts/b2decba7-b5d3-42a4-bc62-ac583ca45b69/platform-007-focused-ui-02.tap.txt",
+      "sha256": "fb36e161cc87e61b5ad1dd790addbd3189bebf461142f2b0d64e3da528b19f2b",
+      "bytes": 3295
+    },
+    {
+      "sourceRef": ".local/platform-007-focused-http-01.tap.txt",
+      "path": ".brain/workflow/artifacts/b2decba7-b5d3-42a4-bc62-ac583ca45b69/platform-007-focused-http-01.tap.txt",
+      "sha256": "75b995cecdf81ca92b5b994bd9b2b3fb43124c70205c1f29bb4e766b13d63aa9",
+      "bytes": 1489
+    },
+    {
+      "sourceRef": ".local/platform-007-focused-http-02.tap.txt",
+      "path": ".brain/workflow/artifacts/b2decba7-b5d3-42a4-bc62-ac583ca45b69/platform-007-focused-http-02.tap.txt",
+      "sha256": "0b4a287f5d6b79d27ccb878338ff049645121f133cd1d2765e8b852d45876b42",
+      "bytes": 1557
+    },
+    {
+      "sourceRef": ".local/platform-007-focused-http-03.tap.txt",
+      "path": ".brain/workflow/artifacts/b2decba7-b5d3-42a4-bc62-ac583ca45b69/platform-007-focused-http-03.tap.txt",
+      "sha256": "67db804f9d8c4cc73733bc1d648711f01448b3d18fc2e94e7c4e7a330fff95ab",
+      "bytes": 744
+    },
+    {
+      "sourceRef": ".local/platform-007-focused-artifact-01.tap.txt",
+      "path": ".brain/workflow/artifacts/b2decba7-b5d3-42a4-bc62-ac583ca45b69/platform-007-focused-artifact-01.tap.txt",
+      "sha256": "8387aa39a140e04de990ff4e6a8418d8ef829cdc29c5c6bfdce0bcd1b76fed37",
+      "bytes": 389
+    }
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "/root actual exec3084dc fresh final build04 exit0 with exact16 source before/after independently matched. Luna attributed actual focused after build03:14/14 UI,2/2HTTP,1/1 filtered actualsaved-definition build/register/verify; root read raw logs/exit markers."
+  },
+  "limitations": [
+    "Build recipe qualifies compilation only; full suite and independent exact source/browser review separate.",
+    "Initial manifest application and four narrow repairs preserved. Earlier HTTP01/02 failed; build01 raw EXIT_CODE0, draft TS call mismatch fixed before qualification (no failed build01 claim).",
+    "Initial prebuild01 capture60f1... differs from repaired final candidate; final context04 is actual before root build04, not a retrospective focused precheck. Focused results attributed to sole implementation writer; final full suite will bind actual current source before invocation.",
+    "No provider, hosted or production qualification; offline stays data-only."
+  ],
+  "integritySha256": "3816ec009aa27732d09e533adb660d50138a626ba503e1e5f7733ccad76ed635"
+}

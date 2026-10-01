@@ -1,0 +1,81 @@
+{
+  "schema": "brain.local-observation-history.v1",
+  "taskId": "BRAIN-005",
+  "candidate": "421397fde93da06f05bb71a317f9c2ea351bc32ceea637088bba3a174268d525",
+  "contractDigest": "dfb64576342f002cc03f88810169062c2e705f3d4880758de90ddfd2998c5b40",
+  "finalFocused": {
+    "build": "PASSED",
+    "workflow": 14,
+    "controlAndLive": 12,
+    "atlas": 12,
+    "beforeAfterHashesMatch": true,
+    "observer": "/root/brain_readiness_implementation actual commands, separate /root/brain_oversight_plan source and output review"
+  },
+  "retainedEarlierFailures": [
+    {
+      "artifact": ".local/brain-005-workflow-initial-failure.txt",
+      "binding": "No complete before-run manifest; preserved historical output only, not assigned retrospectively to final candidate.",
+      "cause": "New fixture required correct canonical task-map adoption."
+    },
+    {
+      "candidate": "f1d59b39dedc905699edba13ec6242d52a38c566c05f87f0e37bca9acec63120",
+      "artifacts": [
+        ".local/brain-005-final-control-live.tap.txt",
+        ".local/brain-005-final-atlas.tap.txt"
+      ],
+      "cause": "Test expectations: refreshed approval now rejects NOT_READY; atlas generated sample title was M-06 title."
+    },
+    {
+      "candidate": "0521642f205eef7da921767707762e6fdca14edb660ab6b1c73fb54c800041eb",
+      "artifact": ".local/brain-005-candidate-final-control-live.tap.txt",
+      "cause": "First old-approval assertion was also changed; restored STALE_BASELINE while the refreshed request remains NOT_READY."
+    }
+  ],
+  "adoption": {
+    "beforeReconciliation": {
+      "actualExitCode": 1,
+      "integrity": "VALID",
+      "readiness": "NOT_READY",
+      "governingDrift": "README.md",
+      "artifact": ".local/brain-005-preflight-before-reconcile.json",
+      "candidate": "f1d59b39dedc905699edba13ec6242d52a38c566c05f87f0e37bca9acec63120"
+    },
+    "afterExplicitOwnerReconciliation": {
+      "actualExitCode": 0,
+      "integrity": "VALID",
+      "readiness": "READY",
+      "artifact": ".local/brain-005-preflight-after-reconcile.json",
+      "candidate": "421397fde93da06f05bb71a317f9c2ea351bc32ceea637088bba3a174268d525"
+    },
+    "runtimeFilesUnchangedBetweenObservations": [
+      "tools/brain-atlas.mjs",
+      "tools/brain-control.mjs",
+      "tools/brain-core.mjs",
+      "tools/brain-live-ui.mjs",
+      "tools/brain-live.mjs",
+      "tools/brain-readiness.mjs",
+      "tools/brain.mjs"
+    ],
+    "entry": "Coordinator added preflight to .brain/START_HERE.md; canonical task CORE-DELIVERY-001 and focus M-CORE."
+  },
+  "browser": {
+    "automatedReport": ".local/brain-005-observation-browser.json",
+    "desktopMobile": "PASSED_FOR_OBSERVED_BROWSER_SCOPE",
+    "canonicalDom": "PASSED",
+    "atlasVisual": "BLOCKED_OR_UNCONFIRMED",
+    "visualFinding": ".local/brain-005-visual-check.json",
+    "detail": "Initial atlas iframe screenshot blank despite canonical DOM assertions. Follow-up could not stabilize/scroll panel within30s; console reported CSP-blocked externally injected Kaspersky script and malformed CSP warnings. The cause of the blank capture is not proven. No CSP, security product, browser policy or permission changes were made."
+  },
+  "cleanup": {
+    "observationServer": "exec39103 exit0, close marker and candidate unchanged",
+    "visualCheckServer": "exec1155 exit0, close marker and candidate unchanged",
+    "provider": "No provider was dispatched by these observation probes."
+  },
+  "fullSuite": "PENDING_COORDINATED_SLOT",
+  "limitations": [
+    "Source review and local checks do not guarantee bug-free architecture or authenticate reported evidence.",
+    "Existing independent Codex work must follow the adopted entry workflow; Brain does not prevent arbitrary direct file edits.",
+    "Current platform has no managed execution profile; controller mode remains observation-only.",
+    "Full atlas visual qualification is not claimed from DOM checks; browser-policy observations remain distinct from passes."
+  ]
+}

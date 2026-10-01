@@ -1,0 +1,30 @@
+{
+  "schema": "quadbridge.core-delivery-001-closed.v1",
+  "fixtureId": "bb2d1ea3-66b1-4b07-8889-2a1f447ca494",
+  "closed": true,
+  "originalOwnerCloseObserved": true,
+  "sourceCandidateDigest": "60d43fc75eeacb293b769596080797cdf7dea11ca3ae842343e6ebb51f559fd5",
+  "sourceCandidateUnchanged": true,
+  "runtimeSummary": {
+    "runtimeSlot": {
+      "state": "EMPTY",
+      "occupied": false,
+      "instanceId": null
+    },
+    "recoverySlot": {
+      "state": "EMPTY",
+      "occupied": false
+    },
+    "runtimes": [],
+    "backups": [],
+    "initialCounts": {
+      "builds": 0,
+      "registeredArtifacts": 0,
+      "promotedReleases": 0,
+      "runtimes": 0,
+      "backups": 0,
+      "savedDefinitions": 4
+    }
+  },
+  "allCurrentRuntimesPositivelyStopped": false
+}

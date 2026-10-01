@@ -1,0 +1,32 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "SOURCE_REVIEW_REQUIRES_REPAIR",
+  "qualification": "COMPILATION_AND_SOURCE_REVIEW_ONLY_NATIVE_NOT_RUN",
+  "hashes": {
+    "apps/control-plane/src/runtime-manager.ts": "c2d81f10175f78840674979a7395442f03414e32c76bda12c4257529690a229d",
+    "packages/control-plane/src/index.ts": "3ababd0aef46b3dee703a321dad24f7107888a58d47198c793eeae53d1083123",
+    "tools/runtime-supervisor.mjs": "71059f016c03d1cc666615943c3d8d40cf0cefb111d0d7ed66c895ff6dfbaf95",
+    "tools/build-job.ps1": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9"
+  },
+  "checks": {
+    "source_build_after_repair": {"log_exit_marker": 0, "evidence": "platform-004-build-manager-source-15.log"},
+    "prior_source_build": {"log_exit_marker": 2, "reason": "Duplicate controlLines declaration", "evidence": "platform-004-build-manager-source-14.log"},
+    "focused_manager_regressions": "PENDING",
+    "native_helper_and_runtime": "NOT_RUN",
+    "actual_operator_http_and_browser": "NOT_RUN",
+    "full_cp4_npm_test_and_verifier": "NOT_RUN"
+  },
+  "independent_reviews": {
+    "probe_sol_high": "First/last four hashes matched; approval withheld for gate-consumption postpublication lstat race and silent malformed/incomplete terminal-event discard. Owned enrollment/stable restart/config/health/public projection/shared cleanup seams otherwise coherent for reviewed scope.",
+    "architect_sol_high": "Complete review findings include independent native proof versus control EPIPE, swallowed background settlement failures and pre-admission failure ownership. Final review still open after repair."
+  },
+  "repairs_required": [
+    "Validate complete closed temporary gate and physical parent before nonoverwrite publication; successful consumption must not cause producer ENOENT failure.",
+    "Strictly validate terminal supervisor event types/order/duplicates and partial final record, surfacing bounded protocol failure separately from native physical proof.",
+    "Preserve exact EMPTY and matching helper closure despite a separate control-pipe error.",
+    "Retain bounded background settlement/audit failure and propagate through shutdown while preserving reservation.",
+    "Only a confirmed exactly admitted attempt may enter preparation settlement; preserve the original error when admission rolled back."
+  ],
+  "root_reconciliation": "Root matched current hashes, read and archived compilation logs, forwarded all findings to Luna. Writer reports repair in progress. No launch or lifecycle acceptance is claimed."
+}

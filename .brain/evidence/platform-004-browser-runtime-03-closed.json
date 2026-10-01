@@ -1,0 +1,30 @@
+{
+  "schema": "quadbridge.browser-fixture-closed.v1",
+  "fixtureId": "8016eb92-850e-4edd-a343-e2a93a809904",
+  "closed": true,
+  "summary": {
+    "slot": {
+      "state": "EMPTY",
+      "occupied": false,
+      "instanceId": null
+    },
+    "runtimes": [
+      {
+        "id": "runtime-6b905e58-9fde-4a4c-81e3-893000cf257f",
+        "productId": "combined",
+        "version": "0.2.0",
+        "artifactDigest": "68944a5fd29630ade00bbfd73fb04272b4a472a26c36a3fb49792c614086562c",
+        "instanceState": "STOPPED",
+        "currentAttempt": 2,
+        "operationId": "9b57f4d2-18e3-4441-8280-d1a55e9d190c",
+        "attemptState": "STOPPED",
+        "physicalState": "EMPTY",
+        "emptyObserved": 1,
+        "helperClosed": 1,
+        "executionClean": 1,
+        "commandKind": "RESTART",
+        "commandState": "SUCCEEDED"
+      }
+    ]
+  }
+}

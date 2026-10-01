@@ -1,0 +1,12 @@
+import { randomUUID } from 'node:crypto';
+import { SqliteOwner } from '@quadbridge/sqlite';
+import { object, text } from '@quadbridge/contracts';
+import type { ModuleEnvironment, HostedModule } from '@quadbridge/backend-host';
+export function register(env:ModuleEnvironment):HostedModule {
+ const store=new SqliteOwner(env.dataPath,env.manifest.id);
+ store.migrate([{version:1,sql:'CREATE TABLE items(id TEXT NOT NULL,tenant TEXT NOT NULL,title TEXT NOT NULL,PRIMARY KEY(tenant,id));'}],env.manifest.schema);
+ return {manifest:env.manifest,services:{},routes:[
+ {method:'GET',path:'/api/__NAME__',permission:'__NAME__.read',kind:'read',handle(ctx){return {items:store.db.prepare('SELECT id,title FROM items WHERE tenant=? ORDER BY id LIMIT 100').all(ctx.tenantId)};}},
+ {method:'POST',path:'/api/__NAME__',permission:'__NAME__.write',kind:'write',handle(ctx,input,_q,key){const b=object(input,['title']);const title=text(b.title,'title',200);return store.command(ctx,'__NAME__.create',key,{title},'__NAME__.write',()=>{const record={id:randomUUID(),title};store.db.prepare('INSERT INTO items VALUES(?,?,?)').run(record.id,ctx.tenantId,title);return record;});}}
+ ],close:()=>store.close()};
+}

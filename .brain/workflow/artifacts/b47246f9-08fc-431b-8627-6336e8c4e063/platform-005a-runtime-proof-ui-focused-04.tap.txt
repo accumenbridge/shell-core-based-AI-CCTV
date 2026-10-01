@@ -1,0 +1,59 @@
+TAP version 13
+# Subtest: runtime overview consumes the public promoted-release array and offers the exact release
+ok 1 - runtime overview consumes the public promoted-release array and offers the exact release
+  ---
+  duration_ms: 10.1246
+  type: 'test'
+  ...
+# Subtest: runtime UI reports UNKNOWN stop facts and reuses the same request key after an ambiguous start error
+ok 2 - runtime UI reports UNKNOWN stop facts and reuses the same request key after an ambiguous start error
+  ---
+  duration_ms: 3.787
+  type: 'test'
+  ...
+# Subtest: runtime action success messages require proof in the exact current-attempt DTO
+ok 3 - runtime action success messages require proof in the exact current-attempt DTO
+  ---
+  duration_ms: 3.3406
+  type: 'test'
+  ...
+# Subtest: runtime overview and detail responses cannot restore stale routes, attempts, or application addresses
+ok 4 - runtime overview and detail responses cannot restore stale routes, attempts, or application addresses
+  ---
+  duration_ms: 2.9326
+  type: 'test'
+  ...
+# Subtest: a stale runtime overview failure cannot replace a newer successful refresh
+ok 5 - a stale runtime overview failure cannot replace a newer successful refresh
+  ---
+  duration_ms: 1.4818
+  type: 'test'
+  ...
+# Subtest: runtime confirmations survive same-attempt polling and are scoped away from a successor attempt
+ok 6 - runtime confirmations survive same-attempt polling and are scoped away from a successor attempt
+  ---
+  duration_ms: 1.6372
+  type: 'test'
+  ...
+# Subtest: recovery controls require positive stop proof, verify opaque backups, and confirm backup and absent-root restore
+ok 7 - recovery controls require positive stop proof, verify opaque backups, and confirm backup and absent-root restore
+  ---
+  duration_ms: 15.2665
+  type: 'test'
+  ...
+# Subtest: recovery controls stay hidden when a stopped runtime lacks current positive cleanup facts
+ok 8 - recovery controls stay hidden when a stopped runtime lacks current positive cleanup facts
+  ---
+  duration_ms: 1.6227
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 110.7257
+EXIT_CODE=0

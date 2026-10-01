@@ -1,0 +1,86 @@
+[
+  {
+    "fixture": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\q3-gvlsiE",
+    "createdUtc": "2026-09-30T22:00:24.4266752Z",
+    "files": [
+      {
+        "path": "apps/control-plane/src/artifact-store.ts",
+        "currentSha256": "0d7ae71a1304f1ed9b3c545124f5e3f49e08f790918b9340bed4ae06ab3b53f9",
+        "fixtureSha256": "0d7ae71a1304f1ed9b3c545124f5e3f49e08f790918b9340bed4ae06ab3b53f9",
+        "matches": true
+      },
+      {
+        "path": "apps/control-plane/src/operator-server.ts",
+        "currentSha256": "77071301d8742e1e4ed1cb865eb41288d46bfe01cc5bfdf938bb0a748265537a",
+        "fixtureSha256": "77071301d8742e1e4ed1cb865eb41288d46bfe01cc5bfdf938bb0a748265537a",
+        "matches": true
+      },
+      {
+        "path": "packages/control-plane/src/index.ts",
+        "currentSha256": "c8632a41cacd61201ee732601706d3dd71121bdb3b153a6d0d2223ffbf831a76",
+        "fixtureSha256": "c8632a41cacd61201ee732601706d3dd71121bdb3b153a6d0d2223ffbf831a76",
+        "matches": true
+      },
+      {
+        "path": "packages/composition/src/snapshot-access.ts",
+        "currentSha256": "97fa166ba41bbb814d87dd72882f7d3716856ad12e316b67083a33c78cc76dd3",
+        "fixtureSha256": "97fa166ba41bbb814d87dd72882f7d3716856ad12e316b67083a33c78cc76dd3",
+        "matches": true
+      },
+      {
+        "path": "packages/composition/src/integrity.ts",
+        "currentSha256": "71c32ee6cec7d45fc241190c92f850c8e867ffd4d194d667e671743d8f65331c",
+        "fixtureSha256": "71c32ee6cec7d45fc241190c92f850c8e867ffd4d194d667e671743d8f65331c",
+        "matches": true
+      },
+      {
+        "path": "tools/registry-publish.ps1",
+        "currentSha256": "21193a3fb4ac19b966bc797f980eddc800cf7673485060ab02a09caa9adf3bb9",
+        "fixtureSha256": "21193a3fb4ac19b966bc797f980eddc800cf7673485060ab02a09caa9adf3bb9",
+        "matches": true
+      }
+    ]
+  },
+  {
+    "fixture": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\q3-Umn11e",
+    "createdUtc": "2026-09-30T21:51:03.2077952Z",
+    "files": [
+      {
+        "path": "apps/control-plane/src/artifact-store.ts",
+        "currentSha256": "0d7ae71a1304f1ed9b3c545124f5e3f49e08f790918b9340bed4ae06ab3b53f9",
+        "fixtureSha256": "0d7ae71a1304f1ed9b3c545124f5e3f49e08f790918b9340bed4ae06ab3b53f9",
+        "matches": true
+      },
+      {
+        "path": "apps/control-plane/src/operator-server.ts",
+        "currentSha256": "77071301d8742e1e4ed1cb865eb41288d46bfe01cc5bfdf938bb0a748265537a",
+        "fixtureSha256": "77071301d8742e1e4ed1cb865eb41288d46bfe01cc5bfdf938bb0a748265537a",
+        "matches": true
+      },
+      {
+        "path": "packages/control-plane/src/index.ts",
+        "currentSha256": "c8632a41cacd61201ee732601706d3dd71121bdb3b153a6d0d2223ffbf831a76",
+        "fixtureSha256": "c8632a41cacd61201ee732601706d3dd71121bdb3b153a6d0d2223ffbf831a76",
+        "matches": true
+      },
+      {
+        "path": "packages/composition/src/snapshot-access.ts",
+        "currentSha256": "97fa166ba41bbb814d87dd72882f7d3716856ad12e316b67083a33c78cc76dd3",
+        "fixtureSha256": "97fa166ba41bbb814d87dd72882f7d3716856ad12e316b67083a33c78cc76dd3",
+        "matches": true
+      },
+      {
+        "path": "packages/composition/src/integrity.ts",
+        "currentSha256": "71c32ee6cec7d45fc241190c92f850c8e867ffd4d194d667e671743d8f65331c",
+        "fixtureSha256": "71c32ee6cec7d45fc241190c92f850c8e867ffd4d194d667e671743d8f65331c",
+        "matches": true
+      },
+      {
+        "path": "tools/registry-publish.ps1",
+        "currentSha256": "21193a3fb4ac19b966bc797f980eddc800cf7673485060ab02a09caa9adf3bb9",
+        "fixtureSha256": "21193a3fb4ac19b966bc797f980eddc800cf7673485060ab02a09caa9adf3bb9",
+        "matches": true
+      }
+    ]
+  }
+]

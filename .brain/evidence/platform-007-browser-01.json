@@ -1,0 +1,30 @@
+{
+  "schema": "quadbridge.reported-browser-observation.v1",
+  "taskId": "PLATFORM-007",
+  "candidate": "feae2158e39dca364b28001d70d9ca78ca1486f3970e1aa5c49113c58e8e0026",
+  "observer": "/root ordinary Chrome through CUA",
+  "status": "BLOCKED",
+  "observed": [
+    "Earlier owned tab imported the complete synthetic construction definition via ordinary file chooser.",
+    "Actual paired preview returned VALIDATED_DEFINITION_NOT_RUNNING and the source graph preserved exact module versions and custom binding IDs.",
+    "Malformed binding edit remained visible, disabled preview and removed prior save/export actions; restoring bindings allowed preview again.",
+    "Save opened an actual confirm dialog; click and later observation failed with browser transport focus timeouts. Dialog was later absent, which did not establish a committed save.",
+    "Documented tab recovery and runtime reset removed the stale owned tab. A fresh owned tab reconnected and paired normally.",
+    "Fresh ordinary file chooser upload was explicitly blocked by Chrome extension Allow access to file URLs permission.",
+    "Owned browser tab was closed; the unrelated user-owned tab was untouched.",
+    "Owned fixture stop was requested with its exact fixture identity. Actual session58956 exited0 after awaited close and emitted CP7_BROWSER_SERVER_CLOSED.",
+    "Closed fixture database observation contains only the four imported source products and zero builds. The attempted custom product save did not commit."
+  ],
+  "blocked": [
+    "Remaining ordinary paired save/new-version/conflict/export/build browser journey: BLOCKED_BROWSER_PERMISSION after preceding transport failures.",
+    "Ordinary offline file import/export journey: NOT_RUN, blocked prerequisite file upload permission; no alternate serving or permission workaround attempted."
+  ],
+  "limitations": [
+    "Source/component/HTTP/real artifact tests remain separate from browser evidence.",
+    "Earlier transport failures were not security-policy denials. The later explicit file upload permission refusal is separately recorded.",
+    "Two initial private fixture starts exited1 before ready because coordinator copy omitted existing reviewed recovery helpers; corrected fixture copies only, framework source remained frozen.",
+    "No raw ready file, pairing secret, private token or credentials are included in this report.",
+    "No browser permissions, authentication, local security controls or maintained framework source were changed to complete qualification."
+  ],
+  "closedEvidence": ".local/platform-007-validation/browser-01.closed.json"
+}

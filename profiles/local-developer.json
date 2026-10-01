@@ -1,0 +1,43 @@
+{
+  "id": "quadbridge.local-developer.v1",
+  "profile": "loopback-developer-only",
+  "defaultTenants": [
+    "customer-a",
+    "customer-b"
+  ],
+  "providerSeeds": [
+    {
+      "contract": "desk.requests.create.v2",
+      "serviceActor": "knowledge-link",
+      "permissions": [
+        "desk.create",
+        "desk.receipts.read"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "contract": "desk.requests.create.v2",
+      "revision": "local-link-v2",
+      "serviceActor": "knowledge-link",
+      "local": {
+        "tenantMapping": "identity"
+      },
+      "http": {
+        "sourceTenants": [
+          "org-a",
+          "org-b"
+        ],
+        "destinationProduct": "service-desk",
+        "destinationInstance": "service-desk-local",
+        "tenantMap": {
+          "org-a": "customer-a",
+          "org-b": "customer-b"
+        },
+        "defaultOrigin": "http://127.0.0.1:4310",
+        "portOffset": 10
+      }
+    }
+  ],
+  "notice": "These are reviewed local developer seed instructions, not domain-module permission grants or production provisioning."
+}

@@ -1,0 +1,85 @@
+- complementary:
+  - text: Quadbridge Product Studio
+  - generic: Paired local operator
+  - navigation:
+    - button "Overview"
+    - button "Products"
+    - button "Modules"
+    - button "Ui"
+    - button "Backend"
+    - button "Ai"
+    - button "Data"
+    - button "Builds"
+    - button "Artifacts"
+    - button "Runtime Instances"
+    - button "Environments"
+    - button "Deployments"
+    - button "Audit"
+    - button "Operations"
+- main:
+  - generic: paired local control plane
+  - heading "Runtime Instances" [level=1]
+  - generic: Stored source records and validated local plans.
+  - generic: v0.3.0
+  - button "Disconnect"
+  - heading "Managed local runtime" [level=2]
+  - generic: local-only
+  - paragraph: Launch rechecks the pinned local process-owner profile; stored runtimes are never recovered by PID.
+  - paragraph: "Physical slot: EMPTY · 0 reserved bytes. UNKNOWN retains the slot and data until its original process owner proves an empty process tree."
+  - paragraph: A fixed local process starts only an exact promoted release. No hosted deployment or provider is attached.
+  - heading "Promoted releases" [level=2]
+  - paragraph: Choose the exact product version; start and restart require confirmation.
+  - article:
+    - heading "core-ops-1002@1.0.0" [level=3]
+    - generic: Promoted local immutable release
+    - generic: promoted
+    - paragraph: f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7
+    - checkbox "Start this exact promoted local release on this machine."
+    - text: Start this exact promoted local release on this machine.
+    - button "Start local runtime"
+  - heading "Runtime instances" [level=2]
+  - article:
+    - heading "core-ops-1002@1.0.0" [level=3]
+    - generic: runtime-2cd07972-b233-4112-a510-39708d908d83 · attempt 2
+    - generic: STOPPED
+    - paragraph: Artifact f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7
+    - paragraph: Separate worker required · positively-stopped
+    - button "Refresh events and address"
+    - checkbox "Restart this same stopped instance and release."
+    - text: Restart this same stopped instance and release.
+    - button "Restart exact runtime"
+    - generic: "{\"at\":1790856943436,\"role\":\"web-backend\",\"type\":\"ROLE_READY\"} {\"at\":1790856943480,\"type\":\"API_READY\"} {\"at\":1790856943696,\"role\":\"worker\",\"type\":\"ROLE_READY\"}"
+    - heading "Private local recovery" [level=4]
+    - paragraph: Recovery is available only after the current attempt has positive stop and cleanup proof. Backups contain private runtime data and are not downloadable.
+    - alert: Restore requires the exact runtime data destination to be absent
+    - button "Load backups"
+    - checkbox "Create a private backup of this exact stopped runtime."
+    - text: Create a private backup of this exact stopped runtime.
+    - button "Create backup"
+    - article:
+      - strong: Backup from attempt 2
+      - generic: a992e29459142d128e6210e87e88074c0a940fa7c3111d3683936b15f8cb31d8
+      - generic: verified
+      - paragraph: 10 files · 297498 bytes · 10/1/2026, 5:47:53 PM
+      - button "Verify again"
+      - checkbox "Restore these verified bytes into the absent runtime data location."
+      - text: Restore these verified bytes into the absent runtime data location.
+      - button "Restore this backup"
+    - heading "Recent recovery operations" [level=4]
+    - table:
+      - rowgroup:
+        - row "Kind State Physical state Destination Staging Issue":
+          - columnheader "Kind"
+          - columnheader "State"
+          - columnheader "Physical state"
+          - columnheader "Destination"
+          - columnheader "Staging"
+          - columnheader "Issue"
+      - rowgroup:
+        - row "BACKUP SUCCEEDED CLEAN verified clean —":
+          - cell "BACKUP"
+          - cell "SUCCEEDED"
+          - cell "CLEAN"
+          - cell "verified"
+          - cell "clean"
+          - cell "—"

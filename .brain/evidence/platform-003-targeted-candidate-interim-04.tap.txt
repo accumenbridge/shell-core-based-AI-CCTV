@@ -1,0 +1,78 @@
+TAP version 13
+# Subtest: real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+ok 1 - real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+  ---
+  duration_ms: 54515.3319
+  type: 'test'
+  ...
+# SYMLINK_CASE_BLOCKED: host did not permit creating the owned fixture link (EPERM)
+# Subtest: separate Node owners serialize physical publication, retain interrupted ownership, and recheck session after a real SQLite lock
+ok 2 - separate Node owners serialize physical publication, retain interrupted ownership, and recheck session after a real SQLite lock
+  ---
+  duration_ms: 46008.3534
+  type: 'test'
+  ...
+# Subtest: fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+ok 3 - fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+  ---
+  duration_ms: 3427.5952
+  type: 'test'
+  ...
+# Subtest: registry publisher proof parsing rejects ambiguous, mismatched, and oversized output
+ok 4 - registry publisher proof parsing rejects ambiguous, mismatched, and oversized output
+  ---
+  duration_ms: 0.3148
+  type: 'test'
+  ...
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 5 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 4.4378
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 6 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 39.5607
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 7 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 33.3801
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 8 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 4.1088
+  type: 'test'
+  ...
+# Subtest: schema 3 artifact publication facts are added without changing older operation values
+ok 9 - schema 3 artifact publication facts are added without changing older operation values
+  ---
+  duration_ms: 17.6344
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 10 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 1.5516
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 11 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 1.5128
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 104067.8833
+TARGETED_EXIT_CODE=0

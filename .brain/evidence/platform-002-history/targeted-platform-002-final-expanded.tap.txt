@@ -1,0 +1,299 @@
+TAP version 13
+# Subtest: Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+ok 1 - Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+  ---
+  duration_ms: 19786.8981
+  type: 'test'
+  ...
+# Subtest: worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+ok 2 - worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+  ---
+  duration_ms: 12035.5785
+  type: 'test'
+  ...
+# Subtest: missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+ok 3 - missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+  ---
+  duration_ms: 6271.4695
+  type: 'test'
+  ...
+# Unable to clean private build work EBUSY: resource busy or locked, unlink 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-build-runner-Aj8UEp\\source\\.local\\platform-builds\\work\\cf87662c-6675-4639-bb8c-88f50775e161\\attempt-1-184375fa-17a1-46ae-92e7-fa95eaba73ec\\cleanup-held-file.bin'
+# Subtest: Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+ok 4 - Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+  ---
+  duration_ms: 8310.3602
+  type: 'test'
+  ...
+# Subtest: source and pinned compiler drift are rejected before a build is admitted
+ok 5 - source and pinned compiler drift are rejected before a build is admitted
+  ---
+  duration_ms: 2942.6544
+  type: 'test'
+  ...
+# Subtest: source and toolchain drift after admission fail the queued request before export
+ok 6 - source and toolchain drift after admission fail the queued request before export
+  ---
+  duration_ms: 6050.2312
+  type: 'test'
+  ...
+# Subtest: fixed factory output tampering fails before a local snapshot is published
+not ok 7 - fixed factory output tampering fails before a local snapshot is published
+  ---
+  duration_ms: 10323.5674
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\build-worker-process.test.mjs:234:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Factory output differs from its trusted input: generated\/catalog\.mjs/. Input:
+    
+    'QB_READY:[redacted]\r\n' +
+      'QB_EXIT:[redacted]\r\n' +
+      'Local workspace links prepared. No third-party packages were downloaded.\n' +
+      'Assembled combined: 3 modules, worker=true\n' +
+      'Assembled knowledge: 2 modules, worker=true\n' +
+      'Assembled neutral: 0 modules, worker=false\n' +
+      'Assembled runner-probe-product: 1 modules, worker=false\n' +
+      'Assembled service-desk: 1 modules, worker=false\n' +
+      'Built visual Studio from 3 actual modules and 5 products. Offline mode makes no API calls.\n' +
+      'QB_READY:[redacted]\r\n' +
+      'QB_EXIT:[redacted]\r\n' +
+      'Assembled runner-probe-product at [project]\\.local\\platform-builds\\snapshots\\d524db1e-04ef-4b41-97a9-6a5301118506; no existing data or credentials copied.\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    QB_READY:[redacted]
+    QB_EXIT:[redacted]
+    Local workspace links prepared. No third-party packages were downloaded.
+    Assembled combined: 3 modules, worker=true
+    Assembled knowledge: 2 modules, worker=true
+    Assembled neutral: 0 modules, worker=false
+    Assembled runner-probe-product: 1 modules, worker=false
+    Assembled service-desk: 1 modules, worker=false
+    Built visual Studio from 3 actual modules and 5 products. Offline mode makes no API calls.
+    QB_READY:[redacted]
+    QB_EXIT:[redacted]
+    Assembled runner-probe-product at [project]\.local\platform-builds\snapshots\d524db1e-04ef-4b41-97a9-6a5301118506; no existing data or credentials copied.
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/build-worker-process.test.mjs:243:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+ok 8 - real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+  ---
+  duration_ms: 12208.2468
+  type: 'test'
+  ...
+# Subtest: real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+ok 9 - real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+  ---
+  duration_ms: 8689.3936
+  type: 'test'
+  ...
+# Subtest: paired console starts with no private build-host profile and reports build requests unavailable
+ok 10 - paired console starts with no private build-host profile and reports build requests unavailable
+  ---
+  duration_ms: 1103.6281
+  type: 'test'
+  ...
+# Subtest: two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+ok 11 - two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+  ---
+  duration_ms: 29.2789
+  type: 'test'
+  ...
+# Subtest: cleanup failure records UNKNOWN and cannot publish a clean cancellation
+ok 12 - cleanup failure records UNKNOWN and cannot publish a clean cancellation
+  ---
+  duration_ms: 11.0388
+  type: 'test'
+  ...
+# Subtest: terminal publication rechecks lease time after waiting for another SQLite writer
+ok 13 - terminal publication rechecks lease time after waiting for another SQLite writer
+  ---
+  duration_ms: 1669.3787
+  type: 'test'
+  ...
+# Subtest: public health and static entry are narrow while state and audit require pairing and exact Host
+ok 14 - public health and static entry are narrow while state and audit require pairing and exact Host
+  ---
+  duration_ms: 177.4243
+  type: 'test'
+  ...
+# Subtest: pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+ok 15 - pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+  ---
+  duration_ms: 45.5321
+  type: 'test'
+  ...
+# Subtest: pairing attempts are bounded and expire their rate window
+ok 16 - pairing attempts are bounded and expire their rate window
+  ---
+  duration_ms: 35.5869
+  type: 'test'
+  ...
+# Subtest: authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+ok 17 - authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+  ---
+  duration_ms: 39.5911
+  type: 'test'
+  ...
+# Subtest: AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+ok 18 - AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+  ---
+  duration_ms: 37.8851
+  type: 'test'
+  ...
+# Subtest: build requests fail closed without an executor and deployment requests enforce immutable references
+ok 19 - build requests fail closed without an executor and deployment requests enforce immutable references
+  ---
+  duration_ms: 43.3872
+  type: 'test'
+  ...
+# Subtest: overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+ok 20 - overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+  ---
+  duration_ms: 59.5336
+  type: 'test'
+  ...
+# Subtest: a body is rejected if its exact authenticated session expires while the stream is pending
+ok 21 - a body is rejected if its exact authenticated session expires while the stream is pending
+  ---
+  duration_ms: 32.059
+  type: 'test'
+  ...
+# Subtest: a body is rejected if that session logs out before streaming completes
+ok 22 - a body is rejected if that session logs out before streaming completes
+  ---
+  duration_ms: 35.189
+  type: 'test'
+  ...
+# Subtest: canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+ok 23 - canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+  ---
+  duration_ms: 118.005
+  type: 'test'
+  ...
+# Subtest: logout during awaited worker admission rejects the original request before queue mutation
+ok 24 - logout during awaited worker admission rejects the original request before queue mutation
+  ---
+  duration_ms: 32.0878
+  type: 'test'
+  ...
+# Subtest: logout during awaited result inspection returns 401 and accepted work remains independent of the session
+ok 25 - logout during awaited result inspection returns 401 and accepted work remains independent of the session
+  ---
+  duration_ms: 34.3758
+  type: 'test'
+  ...
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 26 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 4.0398
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 27 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 40.218
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 28 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 28.6144
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 29 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 4.6682
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 30 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 1.3932
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 31 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 1.2494
+  type: 'test'
+  ...
+# Subtest: source paths normalize both separators and exclude operational components exactly
+ok 32 - source paths normalize both separators and exclude operational components exactly
+  ---
+  duration_ms: 0.6337
+  type: 'test'
+  ...
+# Subtest: maintained fingerprint ignores operational records and changes with source
+ok 33 - maintained fingerprint ignores operational records and changes with source
+  ---
+  duration_ms: 63.122
+  type: 'test'
+  ...
+# Subtest: portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+ok 34 - portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+  ---
+  duration_ms: 41.4816
+  type: 'test'
+  ...
+# Subtest: TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+ok 35 - TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+  ---
+  duration_ms: 1.1564
+  type: 'test'
+  ...
+# Subtest: TAP verification follows actual Node nested, TODO, and skipped report counts
+ok 36 - TAP verification follows actual Node nested, TODO, and skipped report counts
+  ---
+  duration_ms: 674.8573
+  type: 'test'
+  ...
+# Subtest: TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+ok 37 - TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+  ---
+  duration_ms: 0.3759
+  type: 'test'
+  ...
+# Subtest: TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+ok 38 - TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+  ---
+  duration_ms: 0.1969
+  type: 'test'
+  ...
+# Subtest: build failure reports tests as NOT_RUN and claims only current passing evidence
+ok 39 - build failure reports tests as NOT_RUN and claims only current passing evidence
+  ---
+  duration_ms: 1.0031
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+ok 40 - START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+  ---
+  duration_ms: 563.3074
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+ok 41 - START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+  ---
+  duration_ms: 4666.3452
+  type: 'test'
+  ...
+# {"fixture":"portable source copy","cwd":"foreign directory","health":{"path":"/healthz","status":200,"body":{"status":"ok"}},"page":{"path":"/","status":200}}
+1..41
+# tests 41
+# suites 0
+# pass 40
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 86850.5391
+EXIT_CODE=1

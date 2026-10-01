@@ -1,0 +1,22 @@
+{
+  "schema": "brain.task-contract.v1",
+  "taskId": "BRAIN-004",
+  "title": "Repair Brain qualification and add live managed project oversight",
+  "authorization": {"kind": "authorized", "reference": "User in review-astra-analyse the brain module and how it is used, 2026-10-01: ok do, after the audit and bounded prototype recommendation; explicit two-chat coordination reply."},
+  "sourceTaskRef": ".brain/tasks/BRAIN-004.md",
+  "owners": {"coordinator": "/root Brain implementation; shared checkpoint published by platform coordinator", "implementer": "/root Brain implementation", "reviewer": "/root/brain_oversight_plan"},
+  "allowedPaths": ["tools/brain-core.mjs", "tools/brain-control.mjs", "tools/brain-app-server.mjs", "tools/brain-live.mjs", "tools/brain-live-ui.mjs", "tests/brain-workflow.test.mjs", "tests/brain-control.test.mjs", "tests/brain-live.test.mjs", "docs/brain/CONTROL.md"],
+  "excludedActions": ["Platform source, shared recipes or package.json edits", "Changing global configuration, credentials, deployment or external repositories", "Taking over unmanaged desktop conversations", "Claiming model reports are independently observed evidence", "Granting offline pages build or filesystem authority"],
+  "prerequisites": ["Platform coordinator transitions maintenance from BRAIN-001 before changes to its accepted source"],
+  "criteria": [
+    {"id": "BRAIN-CLI", "description": "Qualification rejects unresolved contradictory evidence and planning supports absent future files without weakening bound candidate checks.", "evidenceScope": "Focused CLI regressions."},
+    {"id": "BRAIN-RECORDS", "description": "Managed records bind project, root, approved baseline, work order and candidate; actual execution is distinguished from reported claims.", "evidenceScope": "Controller regressions and actual bounded run."},
+    {"id": "BRAIN-CHECKPOINT", "description": "Stale decisions, interrupted output and restart uncertainty do not silently authorize work or acceptance.", "evidenceScope": "Real controller lifecycle with deterministic adapter fixtures; live transport recorded separately."},
+    {"id": "BRAIN-ACCEPTANCE", "description": "A bounded candidate requires observed checks and explicit current human disposition; worker cannot rewrite controller acceptance through its patch.", "evidenceScope": "Managed candidate and decision tests."},
+    {"id": "BRAIN-ADOPTION", "description": "The live view distinguishes canonical current execution, historical atlas observations, source drift, planning gaps and managed-session limits.", "evidenceScope": "HTTP integration and actual browser review."},
+    {"id": "BRAIN-REGRESSION", "description": "Fresh build, focused Brain checks and required full suite recorded with blocked/browser/provider limits preserved.", "evidenceScope": "Candidate-specific local execution logs."}
+  ],
+  "requiredRecipeIds": ["brain-build", "brain-focused", "brain-control-focused"],
+  "requiredObservationRecipeIds": ["brain-adoption", "brain-full-suite"],
+  "reviewRequirement": {"required": true, "independence": "independent_reported"}
+}

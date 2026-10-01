@@ -1,0 +1,31 @@
+{
+  "schema": "quadbridge.combined-answer-browser-closed.v1",
+  "fixtureId": "5d7886c3-283b-4402-a6c4-00223ee06e91",
+  "closed": true,
+  "summary": {
+    "slot": {
+      "state": "EMPTY",
+      "occupied": false,
+      "instanceId": null
+    },
+    "runtimes": [
+      {
+        "id": "runtime-16cd1b43-8743-4c7e-b6ce-98eb3a744524",
+        "productId": "combined",
+        "version": "0.2.1",
+        "artifactDigest": "18cbee0441a41eba9952cbc5872536a67348ffc4e47c2532ba3a240043194412",
+        "instanceState": "STOPPED",
+        "currentAttempt": 1,
+        "operationId": "6c7281ab-8aaf-41cf-9379-5cf2a3aa1289",
+        "attemptState": "STOPPED",
+        "physicalState": "EMPTY",
+        "emptyObserved": 1,
+        "helperClosed": 1,
+        "executionClean": 1,
+        "commandKind": "START",
+        "commandState": "SUCCEEDED"
+      }
+    ]
+  },
+  "removalResults": []
+}

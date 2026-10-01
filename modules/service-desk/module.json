@@ -1,0 +1,132 @@
+{
+  "id": "service-desk",
+  "version": "0.2.0",
+  "abi": "quadbridge.module.v1",
+  "dependencies": [],
+  "provides": [
+    "desk.requests.create.v1",
+    "desk.requests.create.v2"
+  ],
+  "requires": [],
+  "permissions": [
+    "desk.read",
+    "desk.create",
+    "desk.close",
+    "desk.receipts.read"
+  ],
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/api/requests",
+      "permission": "desk.read",
+      "kind": "read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/requests",
+      "permission": "desk.create",
+      "kind": "write"
+    },
+    {
+      "method": "POST",
+      "path": "/api/requests/close",
+      "permission": "desk.close",
+      "kind": "write"
+    },
+    {
+      "method": "POST",
+      "path": "/api/requests/commit",
+      "permission": "desk.create",
+      "kind": "write"
+    },
+    {
+      "method": "GET",
+      "path": "/api/requests/receipt",
+      "permission": "desk.receipts.read",
+      "kind": "read"
+    }
+  ],
+  "workspaces": [
+    {
+      "id": "desk.requests",
+      "label": "Service requests",
+      "path": "/requests",
+      "permission": "desk.read",
+      "export": "workspace"
+    },
+    {
+      "id": "service-desk.overview",
+      "label": "Request overview",
+      "path": "/request-overview",
+      "permission": "desk.read",
+      "export": "overviewWorkspace"
+    }
+  ],
+  "schema": {
+    "current": 1,
+    "readMin": 1,
+    "readMax": 1
+  },
+  "background": false,
+  "browserAssets": [
+    "ui/overview.css"
+  ],
+  "studio": {
+    "label": "Service Desk",
+    "summary": "Service-request UI and backend capability.",
+    "category": "operations",
+    "layers": [
+      "ui",
+      "backend",
+      "data"
+    ],
+    "ui": {
+      "routes": [
+        {
+          "path": "/requests",
+          "workspace": "desk.requests",
+          "label": "Service requests",
+          "nav": "Operations"
+        },
+        {
+          "path": "/request-overview",
+          "workspace": "service-desk.overview",
+          "label": "Request overview",
+          "nav": "Operations"
+        }
+      ]
+    },
+    "backend": {
+      "services": [
+        {
+          "id": "request-writer-v2",
+          "contract": "desk.requests.create.v2",
+          "visibility": "product"
+        }
+      ]
+    },
+    "data": {
+      "stores": [
+        {
+          "id": "service-requests",
+          "kind": "relational",
+          "ownership": "module"
+        }
+      ],
+      "schemas": [
+        {
+          "id": "service-desk",
+          "version": 1
+        }
+      ]
+    },
+    "deployment": {
+      "processes": [
+        {
+          "id": "service-desk-api",
+          "kind": "http"
+        }
+      ]
+    }
+  }
+}

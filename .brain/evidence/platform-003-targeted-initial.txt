@@ -1,0 +1,31 @@
+✖ real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release (10312.2927ms)
+✖ fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files (4.6963ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10414.4985
+
+✖ failing tests:
+
+test at tests\control-plane-artifacts.test.mjs:87:1
+✖ real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release (10312.2927ms)
+  Error [PlatformError]: Invalid audit limit
+      at fail (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/packages/control-plane/dist/index.js:19:35)
+      at ControlPlaneStore.auditLog (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/packages/control-plane/dist/index.js:991:13)
+      at TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-artifacts.test.mjs:93:41)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'INVALID'
+  }
+
+test at tests\control-plane-artifacts.test.mjs:176:1
+✖ fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files (4.6963ms)
+  ReferenceError: Cannot access 'writeFile' before initialization
+      at TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-artifacts.test.mjs:190:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+EXIT=1

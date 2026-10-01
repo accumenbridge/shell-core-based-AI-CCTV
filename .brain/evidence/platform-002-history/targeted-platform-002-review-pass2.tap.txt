@@ -1,0 +1,287 @@
+TAP version 13
+# Subtest: Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+ok 1 - Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+  ---
+  duration_ms: 18002.9625
+  type: 'test'
+  ...
+# Subtest: worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+ok 2 - worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+  ---
+  duration_ms: 12619.724
+  type: 'test'
+  ...
+# Subtest: missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+not ok 3 - missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+  ---
+  duration_ms: 5004.9579
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\build-worker-process.test.mjs:141:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /QB_READY:\[redacted\]/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/build-worker-process.test.mjs:151:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Unable to clean private build work EBUSY: resource busy or locked, unlink 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-build-runner-HMETJX\\source\\.local\\platform-builds\\work\\511987e3-9087-4ffa-9df7-e69661aedf96\\attempt-1-2d3b20bd-cf54-4048-8152-4b0c0b383ed2\\cleanup-held-file.bin'
+# Subtest: Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+ok 4 - Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+  ---
+  duration_ms: 7170.1137
+  type: 'test'
+  ...
+# Subtest: source and pinned compiler drift are rejected before a build is admitted
+ok 5 - source and pinned compiler drift are rejected before a build is admitted
+  ---
+  duration_ms: 2608.3469
+  type: 'test'
+  ...
+# Subtest: source and toolchain drift after admission fail the queued request before export
+ok 6 - source and toolchain drift after admission fail the queued request before export
+  ---
+  duration_ms: 5434.4964
+  type: 'test'
+  ...
+# Subtest: fixed factory output tampering fails before a local snapshot is published
+ok 7 - fixed factory output tampering fails before a local snapshot is published
+  ---
+  duration_ms: 9800.762
+  type: 'test'
+  ...
+# Subtest: real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+ok 8 - real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+  ---
+  duration_ms: 11041.912
+  type: 'test'
+  ...
+# Subtest: real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+ok 9 - real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+  ---
+  duration_ms: 7622.6404
+  type: 'test'
+  ...
+# Subtest: paired console starts with no private build-host profile and reports build requests unavailable
+ok 10 - paired console starts with no private build-host profile and reports build requests unavailable
+  ---
+  duration_ms: 930.4087
+  type: 'test'
+  ...
+# Subtest: two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+ok 11 - two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+  ---
+  duration_ms: 32.2613
+  type: 'test'
+  ...
+# Subtest: cleanup failure records UNKNOWN and cannot publish a clean cancellation
+ok 12 - cleanup failure records UNKNOWN and cannot publish a clean cancellation
+  ---
+  duration_ms: 13.2761
+  type: 'test'
+  ...
+# Subtest: build request keys are idempotent for the same actor/input and conflict on changed input
+ok 13 - build request keys are idempotent for the same actor/input and conflict on changed input
+  ---
+  duration_ms: 11.5469
+  type: 'test'
+  ...
+# Subtest: terminal publication rechecks lease time after waiting for another SQLite writer
+ok 14 - terminal publication rechecks lease time after waiting for another SQLite writer
+  ---
+  duration_ms: 1908.4632
+  type: 'test'
+  ...
+# Subtest: public health and static entry are narrow while state and audit require pairing and exact Host
+ok 15 - public health and static entry are narrow while state and audit require pairing and exact Host
+  ---
+  duration_ms: 281.5169
+  type: 'test'
+  ...
+# Subtest: pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+ok 16 - pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+  ---
+  duration_ms: 44.0691
+  type: 'test'
+  ...
+# Subtest: pairing attempts are bounded and expire their rate window
+ok 17 - pairing attempts are bounded and expire their rate window
+  ---
+  duration_ms: 37.0919
+  type: 'test'
+  ...
+# Subtest: authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+ok 18 - authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+  ---
+  duration_ms: 42.3049
+  type: 'test'
+  ...
+# Subtest: AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+ok 19 - AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+  ---
+  duration_ms: 39.4637
+  type: 'test'
+  ...
+# Subtest: build requests fail closed without an executor and deployment requests enforce immutable references
+ok 20 - build requests fail closed without an executor and deployment requests enforce immutable references
+  ---
+  duration_ms: 44.6055
+  type: 'test'
+  ...
+# Subtest: overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+ok 21 - overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+  ---
+  duration_ms: 58.6623
+  type: 'test'
+  ...
+# Subtest: a body is rejected if its exact authenticated session expires while the stream is pending
+ok 22 - a body is rejected if its exact authenticated session expires while the stream is pending
+  ---
+  duration_ms: 32.5722
+  type: 'test'
+  ...
+# Subtest: a body is rejected if that session logs out before streaming completes
+ok 23 - a body is rejected if that session logs out before streaming completes
+  ---
+  duration_ms: 32.5382
+  type: 'test'
+  ...
+# Subtest: canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+ok 24 - canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+  ---
+  duration_ms: 118.8087
+  type: 'test'
+  ...
+# Subtest: logout during awaited worker admission rejects the original request before queue mutation
+ok 25 - logout during awaited worker admission rejects the original request before queue mutation
+  ---
+  duration_ms: 34.6291
+  type: 'test'
+  ...
+# Subtest: logout during awaited result inspection returns 401 and accepted work remains independent of the session
+ok 26 - logout during awaited result inspection returns 401 and accepted work remains independent of the session
+  ---
+  duration_ms: 36.2385
+  type: 'test'
+  ...
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 27 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 4.0402
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 28 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 236.4775
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 29 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 33.3053
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 30 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 4.2216
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 31 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 1.4378
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 32 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 1.2639
+  type: 'test'
+  ...
+# Subtest: source paths normalize both separators and exclude operational components exactly
+ok 33 - source paths normalize both separators and exclude operational components exactly
+  ---
+  duration_ms: 0.6534
+  type: 'test'
+  ...
+# Subtest: maintained fingerprint ignores operational records and changes with source
+ok 34 - maintained fingerprint ignores operational records and changes with source
+  ---
+  duration_ms: 164.8492
+  type: 'test'
+  ...
+# Subtest: portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+ok 35 - portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+  ---
+  duration_ms: 38.3942
+  type: 'test'
+  ...
+# Subtest: reviewed source copy detects a maintained input changed while the asynchronous copy is active
+ok 36 - reviewed source copy detects a maintained input changed while the asynchronous copy is active
+  ---
+  duration_ms: 131.7215
+  type: 'test'
+  ...
+# Subtest: TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+ok 37 - TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+  ---
+  duration_ms: 1.2357
+  type: 'test'
+  ...
+# Subtest: TAP verification follows actual Node nested, TODO, and skipped report counts
+ok 38 - TAP verification follows actual Node nested, TODO, and skipped report counts
+  ---
+  duration_ms: 726.7282
+  type: 'test'
+  ...
+# Subtest: TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+ok 39 - TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+  ---
+  duration_ms: 0.3279
+  type: 'test'
+  ...
+# Subtest: TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+ok 40 - TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+  ---
+  duration_ms: 0.1701
+  type: 'test'
+  ...
+# Subtest: build failure reports tests as NOT_RUN and claims only current passing evidence
+ok 41 - build failure reports tests as NOT_RUN and claims only current passing evidence
+  ---
+  duration_ms: 0.9579
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+ok 42 - START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+  ---
+  duration_ms: 124.5069
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+ok 43 - START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+  ---
+  duration_ms: 3964.5359
+  type: 'test'
+  ...
+# {"fixture":"portable source copy","cwd":"foreign directory","health":{"path":"/healthz","status":200,"body":{"status":"ok"}},"page":{"path":"/","status":200}}
+1..43
+# tests 43
+# suites 0
+# pass 42
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 79430.4737
+EXIT_CODE=1

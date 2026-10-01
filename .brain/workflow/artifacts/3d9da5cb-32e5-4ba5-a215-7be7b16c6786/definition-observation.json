@@ -1,0 +1,127 @@
+{
+  "product": {
+    "id": "core-ops-1002",
+    "title": "Quadbridge Core Operations",
+    "description": "Core delivery: persisted requests, grounded Knowledge and owner-confirmed handoffs.",
+    "version": "1.0.0",
+    "platformAbi": "quadbridge.module.v1",
+    "layout": "sidebar",
+    "modules": [
+      {
+        "id": "handoff",
+        "version": "0.2.1"
+      },
+      {
+        "id": "knowledge",
+        "version": "0.2.1"
+      },
+      {
+        "id": "service-desk",
+        "version": "0.2.0"
+      }
+    ],
+    "bindings": [
+      {
+        "instanceId": "core-desk-link",
+        "implementation": "service-desk",
+        "scope": "application",
+        "mode": "local",
+        "consumer": "handoff",
+        "contract": "desk.requests.create.v2"
+      },
+      {
+        "instanceId": "core-document-link",
+        "implementation": "knowledge",
+        "scope": "application",
+        "mode": "local",
+        "consumer": "handoff",
+        "contract": "knowledge.document.read.v1"
+      }
+    ],
+    "wiring": "knowledge-to-desk"
+  },
+  "exactLoaded": {
+    "bindings": [
+      {
+        "consumer": "handoff",
+        "contract": "desk.requests.create.v2",
+        "implementation": "service-desk",
+        "instanceId": "core-desk-link",
+        "mode": "local",
+        "scope": "application"
+      },
+      {
+        "consumer": "handoff",
+        "contract": "knowledge.document.read.v1",
+        "implementation": "knowledge",
+        "instanceId": "core-document-link",
+        "mode": "local",
+        "scope": "application"
+      }
+    ],
+    "description": "Core delivery: persisted requests, grounded Knowledge and owner-confirmed handoffs.",
+    "id": "core-ops-1002",
+    "layout": "sidebar",
+    "modules": [
+      {
+        "id": "handoff",
+        "version": "0.2.1"
+      },
+      {
+        "id": "knowledge",
+        "version": "0.2.1"
+      },
+      {
+        "id": "service-desk",
+        "version": "0.2.0"
+      }
+    ],
+    "platformAbi": "quadbridge.module.v1",
+    "title": "Quadbridge Core Operations",
+    "version": "1.0.0",
+    "wiring": "knowledge-to-desk"
+  },
+  "restored": {
+    "bindings": [
+      {
+        "consumer": "handoff",
+        "contract": "desk.requests.create.v2",
+        "implementation": "service-desk",
+        "instanceId": "core-desk-link",
+        "mode": "local",
+        "scope": "application"
+      },
+      {
+        "consumer": "handoff",
+        "contract": "knowledge.document.read.v1",
+        "implementation": "knowledge",
+        "instanceId": "core-document-link",
+        "mode": "local",
+        "scope": "application"
+      }
+    ],
+    "description": "Core delivery: persisted requests, grounded Knowledge and owner-confirmed handoffs.",
+    "id": "core-ops-1002",
+    "layout": "sidebar",
+    "modules": [
+      {
+        "id": "handoff",
+        "version": "0.2.1"
+      },
+      {
+        "id": "knowledge",
+        "version": "0.2.1"
+      },
+      {
+        "id": "service-desk",
+        "version": "0.2.0"
+      }
+    ],
+    "platformAbi": "quadbridge.module.v1",
+    "title": "Quadbridge Core Operations",
+    "version": "1.0.0",
+    "wiring": "knowledge-to-desk"
+  },
+  "semanticMatch": true,
+  "editClearsPreview": true
+}

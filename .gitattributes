@@ -1,0 +1,2 @@
+# Preserve literal source and evidence bytes used by repository SHA-256 pins across checkouts.
+* -text

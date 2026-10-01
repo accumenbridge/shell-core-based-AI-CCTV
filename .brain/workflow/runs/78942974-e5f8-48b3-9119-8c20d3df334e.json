@@ -1,0 +1,191 @@
+{
+  "schema": "brain.evidence-record.v1",
+  "kind": "review",
+  "id": "78942974-e5f8-48b3-9119-8c20d3df334e",
+  "taskId": "PLATFORM-006",
+  "contractDigest": "86c15ccebff51f1ddc0b6193ecf4d05ea7cb2c6d6f969f350139b2500ee93f15",
+  "candidate": {
+    "files": [
+      {
+        "path": "apps/control-plane/src/source-import.ts",
+        "sha256": "dac9c38a03a6adb0993cdcf9e25ac121a07c247e063598960593874e20f02a25"
+      },
+      {
+        "path": "apps/runtime/package.json",
+        "sha256": "5f6b26f50da3e23e8623e8cdded3dc292c8fe095487160849ca2f2dd72aaa93c"
+      },
+      {
+        "path": "docs/STATUS.md",
+        "sha256": "d130b7efbd0fcf5bfe296a1aff5a72e3ca2d26991eb81279fed6d22015fb7593"
+      },
+      {
+        "path": "IMPLEMENTATION_STATUS_0.3.md",
+        "sha256": "bed43db35e029b2bb512c31a96918c3e71d3786637e360b714689f9a0f1656fd"
+      },
+      {
+        "path": "modules/handoff/module.json",
+        "sha256": "8611a8a506ac03d097ef832c7579ad8d63409f9cfc12b5c728a4be46ecebf4d3"
+      },
+      {
+        "path": "modules/handoff/package.json",
+        "sha256": "dbf855deb04eddafb0b03d6c4c821c34c08c24f329a6f112ca1c0bafb00917b1"
+      },
+      {
+        "path": "modules/knowledge/module.json",
+        "sha256": "3d0fe0f46a5a0428d254ac7415e1e3df1e9b9c1401f90b05210897f51a59ac1e"
+      },
+      {
+        "path": "modules/knowledge/package.json",
+        "sha256": "d7ff85466aa78d51af7b091fa8ee70e8494c85835980abe40fcb57b967bb0e3a"
+      },
+      {
+        "path": "modules/knowledge/src/index.ts",
+        "sha256": "52a64e0bc7754e0bcbd0cbc76eba6d5b7c7493d34825b281c7dc07985cfdb15a"
+      },
+      {
+        "path": "modules/knowledge/src/ui.ts",
+        "sha256": "bbd6d806b3334462fd324a7b0b456c1993b22a224f2d70dd41f3cce421623ba2"
+      },
+      {
+        "path": "modules/knowledge/tsconfig.json",
+        "sha256": "7c632ef78fe2fe1983a97ac7bd63207e097b50f8a19e8b97c963614d7fba33ea"
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "147e4bbcfdd0121f0994ea72badba3c0bb65f22ac70d06ea380691d2a5876e77"
+      },
+      {
+        "path": "packages/ai-core/src/index.ts",
+        "sha256": "72f502724b9f1759d8708e92e9cde98b1432650ebb5dccce7fcbf5d6311bfba1"
+      },
+      {
+        "path": "packages/backend-host/src/http.ts",
+        "sha256": "068f320aec5321fcd55e1002a251fd13f7d2ad4456f817bc13615d33268bb3f0"
+      },
+      {
+        "path": "packages/backend-host/src/index.ts",
+        "sha256": "114611c9a6580d20c5e81a958c365f40f79b55ca7232bc492c5a27e8a8d53875"
+      },
+      {
+        "path": "packages/composition/src/integrity.ts",
+        "sha256": "793fe843fe513aaeac1e673976a23a935336d9abccc07c018803e536931232b3"
+      },
+      {
+        "path": "packages/composition/src/workspace-closure.ts",
+        "sha256": "f8c736c93e5ed7c8324ad9a9f45a5ad0f5104921544eaf626f596f8bef4dd73d"
+      },
+      {
+        "path": "packages/contracts/src/index.ts",
+        "sha256": "65344865bf676546c6ee0ab01b1fa4fc2071fb730664b2cd8cca31f26a666792"
+      },
+      {
+        "path": "packages/web-shell/src/index.ts",
+        "sha256": "547d2eded7fb7d07316863e40b2759ede64140c410b9412bfbbba1f384bc7a89"
+      },
+      {
+        "path": "PLATFORM_ARCHITECTURE.md",
+        "sha256": "0f14979eecf2ce1846d7ab00bcec820325046fb7ad2613c90604857f7ffe5118"
+      },
+      {
+        "path": "products/combined/product.json",
+        "sha256": "fd589ed0f91e06b630884e3bef5fd0312ebdc34a80efc9e8fcb32ce680fde038"
+      },
+      {
+        "path": "products/knowledge/product.json",
+        "sha256": "7fb1af22757ff740c9aaf622bef55ab04a77652de7965646fe140c4c0352f12c"
+      },
+      {
+        "path": "README.md",
+        "sha256": "daa0884e017bb39a3e0861f16e416b6a01bccb2cdcf931d775652debfbefab6b"
+      },
+      {
+        "path": "tests/ai-core.test.mjs",
+        "sha256": "68b6fe1ef81f7c1ca5dbf2ed165dba827f181e07a7b80d844d293f13c7807f94"
+      },
+      {
+        "path": "tests/composition.test.mjs",
+        "sha256": "1f8eb891b0b8300467d30eeb7e4688451b8784ffda443df9edae277e0e56cecb"
+      },
+      {
+        "path": "tests/factory-lifecycle.test.mjs",
+        "sha256": "2413992f790accceaaf2d75d76f55adb2342ec0000bcecdb630f442845695b75"
+      },
+      {
+        "path": "tests/knowledge-answer-ui.test.mjs",
+        "sha256": "47e8f72f706f514a180821854618383fd4820c2bc78c44db5922bc7dc4f70876"
+      },
+      {
+        "path": "tests/knowledge-answer.test.mjs",
+        "sha256": "3828253f11d8842d29ef04e3b66a584d2e1e877ba6ca2222d5078b051b949c5e"
+      },
+      {
+        "path": "tests/workspace-closure.test.mjs",
+        "sha256": "41b1d6f6b798802890305209c60b1ccc05e155b2d3a5495caa7b1720364a9be7"
+      },
+      {
+        "path": "tools/build.mjs",
+        "sha256": "a89e9ed4997041dd1b0b46c10d7bdceb686be2bdff1109c54b06579044d64c84"
+      },
+      {
+        "path": "tools/factory.mjs",
+        "sha256": "fc1e8b8bb0953216bb61df7b31893d3be23319f733fd02cb5fee8af2f281f62c"
+      }
+    ],
+    "digest": "d755c06582f2dc00a217e6dcef86ae037f908e7bf8ff355369a9748ea5c02e17"
+  },
+  "recordedAt": "2026-10-01T08:21:18.732Z",
+  "reviewer": "/root/repo_brain_architect",
+  "implementer": "/root/repo_brain_validation",
+  "independence": "independent_reported",
+  "outcome": "ACCEPTED",
+  "scope": "Exact31 source and attributed focused48of48 scope: Knowledge-owned tenant READY retrieval/excerpts/citations/post-await reread; actual bounded generic provider executor; original HTTP LocalAccess auth/cancel path; source-derived exact closure/new exports and actual captured old Combined0.2.0 verifier check. Browser, final full suite and full increment acceptance remain separate.",
+  "artifacts": [
+    {
+      "sourceRef": ".brain/evidence/platform-006-final-candidate-01.json",
+      "path": ".brain/workflow/artifacts/78942974-e5f8-48b3-9119-8c20d3df334e/platform-006-final-candidate-01.json",
+      "sha256": "c68189205b9a273f2ea5c79ff8e13a25d83f358f8c8f566ac95498debc39a336",
+      "bytes": 5057
+    },
+    {
+      "sourceRef": ".local/platform-006-final-build-03.log",
+      "path": ".brain/workflow/artifacts/78942974-e5f8-48b3-9119-8c20d3df334e/platform-006-final-build-03.log",
+      "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+      "bytes": 454
+    },
+    {
+      "sourceRef": ".local/platform-006-focused-02.tap.txt",
+      "path": ".brain/workflow/artifacts/78942974-e5f8-48b3-9119-8c20d3df334e/platform-006-focused-02.tap.txt",
+      "sha256": "3edb1e2c520f9c9ab15703cdf2600f420efb989489588df12eac3417aff0ca35",
+      "bytes": 9619
+    },
+    {
+      "sourceRef": ".local/platform-006-focused-01.tap.txt",
+      "path": ".brain/workflow/artifacts/78942974-e5f8-48b3-9119-8c20d3df334e/platform-006-focused-01.tap.txt",
+      "sha256": "d20732f64b7ad79945a1c462ac8dd15ef47eee1dc01930057267f78de1351ece",
+      "bytes": 14159
+    },
+    {
+      "sourceRef": ".local/platform-006-old-snapshot-check-01.log",
+      "path": ".brain/workflow/artifacts/78942974-e5f8-48b3-9119-8c20d3df334e/platform-006-old-snapshot-check-01.log",
+      "sha256": "c1aa9ec9865be04e9b0649437ec00cca2ead1492b0aadf2ba5bc496e57a78800",
+      "bytes": 237
+    },
+    {
+      "sourceRef": ".brain/evidence/platform-006-old-snapshot-check-01.json",
+      "path": ".brain/workflow/artifacts/78942974-e5f8-48b3-9119-8c20d3df334e/platform-006-old-snapshot-check-01.json",
+      "sha256": "098d32f5197951ffc86122841d02fd96b40d9d3fa0f747e038cbce09416d46fb",
+      "bytes": 1497
+    }
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "Actual separate Sol/high agent /root/repo_brain_architect returned APPROVED_SOURCE_AND_FOCUSED_SCOPE for candidate d755c06582f2dc00a217e6dcef86ae037f908e7bf8ff355369a9748ea5c02e17, independently hash-matched before and after review; root received concrete earlier corrections and final approval."
+  },
+  "limitations": [
+    "Reviewer read source/raw logs and actual root/worker exit reports; these are attributed tool observations, not cryptographically authenticated reviewer identity or test execution.",
+    "First focused01 four failures preserved; final focused02 48/48. Raw focused/build02 files have no exit markers; worker tool-exit0 provenance reported separately. Root build03 and old-snapshot log contain actual exit0 markers.",
+    "New export focused tests qualify copied roots/dependencies, not an exported answer runtime launch. Ordinary UI/full suite pending separately.",
+    "No model inference/provider credential/hosted/production acceptance."
+  ],
+  "integritySha256": "a223af7287dc184628575651950868b4fddff4980dd5bddabb5314bdb7f919f9"
+}

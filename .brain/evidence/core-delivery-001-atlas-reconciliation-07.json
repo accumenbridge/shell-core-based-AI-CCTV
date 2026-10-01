@@ -1,0 +1,18 @@
+{
+  "schema": "quadbridge.atlas-reconciliation.v1",
+  "archivedRevision": 11,
+  "newRevision": 12,
+  "changes": [
+    {
+      "id": "studio-ui",
+      "path": "apps/studio-web/src/main.ts",
+      "before": "ff841faed5d12daa17ede376c1bc1514dd144d1f4c3ea8a991487f9199eabbd4",
+      "after": "66b19078409bdb9ded87d47fdade294ef7659a7e3bd0965473ee97c1656617a0",
+      "reason": "Actual observed first-Products render race and native save transport obstacle repaired per Sol2path plan. Root read original navigation/session/API guards and new unchecked exact-preview identity approval; fresh build and6 compiled handler checks actualpass. Source semantic reconciliation only; native/browser acceptance pending."
+    }
+  ],
+  "candidate": "90fd7ce4e8a423fc38ef7ac9743ed5a591d7e6f2f55c4f2b82c8c0d81f8a25dc",
+  "limitations": [
+    "No automatic repin; no source-independent authorization or delivery acceptance."
+  ]
+}

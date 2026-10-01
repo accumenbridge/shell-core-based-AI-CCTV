@@ -1,0 +1,14 @@
+flowchart TB
+  DEF[Product definition] --> FACTORY[Build-time resolver and factory]
+  MOD[Reviewed domain manifests and implementations] --> FACTORY
+  FACTORY --> PLAN[Per-product exact composition and artifacts]
+  PLAN --> WEB[Maintained Web shell]
+  PLAN --> API[Maintained backend host]
+  PLAN --> JOB[Optional worker host]
+  WEB -->|declared own-module operations| API
+  API --> OWN[Selected domain owners]
+  JOB -->|fenced owner commit| OWN
+  OWN --> SQL[Owner-local persistence]
+  OWN --> PORT[Public capability]
+  WIRE[Product-owned solution wiring] --> PORT
+  WIRE --> DEST[Other product public operation]

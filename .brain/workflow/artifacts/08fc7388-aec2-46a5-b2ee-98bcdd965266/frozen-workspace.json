@@ -1,0 +1,13 @@
+{
+  "schema": "brain.frozen-test-workspace.v1",
+  "createdAt": "2026-10-01T05:57:15.112Z",
+  "sourceRoot": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS",
+  "root": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F\\source",
+  "temp": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F",
+  "maintainedFingerprint": "02c6cde1b90cd7961b888dd33f92cd8f704043bbca26a92e2f453a8e49ef232b",
+  "sourceUnchangedDuringCopy": true,
+  "brainCandidate": "15957c3e789c6a54f0c289920ee6bb2d92b35a0fd13a08577a82a90104b151ed",
+  "hostProfile": "Existing selected private build-host profile copied unchanged; no credentials or policy changes.",
+  "dependencies": "Existing pinned TypeScript/Node typings linked using repository copyPortableFixture helper.",
+  "note": "Frozen maintained source for BRAIN-001 regression execution; operational Brain records excluded by existing copy policy."
+}

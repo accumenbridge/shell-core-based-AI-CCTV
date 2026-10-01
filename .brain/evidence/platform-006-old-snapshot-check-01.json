@@ -1,0 +1,36 @@
+{
+  "schema": "quadbridge.captured-snapshot-check.v1",
+  "status": "PASSED",
+  "scope": "New freshly built CP6 verifier reads preserved old Combined0.2.0 snapshot using its archived identity and captured manifests only; read-only, no old runtime launch or rewrite.",
+  "expected": {
+    "buildId": "f057bf47-ae4d-4831-964d-d7767393433c",
+    "productId": "combined",
+    "version": "0.2.0",
+    "inputDigest": "e53b5c98643a7d5e808fa6e9c16011d189e6852126dd267e532a2b125497241b",
+    "sourceFingerprint": "2e3f6c838b55ee6fdfe8157eed9323566c616185962b407b7413123d12d2baeb",
+    "toolchainDigest": "e7b996ca33a56116457764adc9356415e7cad2f04ee0612141de27097b912ee2",
+    "recipeVersion": "local-compiled-export-v1",
+    "releaseDigest": "9952150c879b0789122ae2e43c8ab70d4b5811fae89bc02b8c0011a1e9fe045c",
+    "snapshotDigest": "68944a5fd29630ade00bbfd73fb04272b4a472a26c36a3fb49792c614086562c"
+  },
+  "snapshotDigest": "68944a5fd29630ade00bbfd73fb04272b4a472a26c36a3fb49792c614086562c",
+  "releaseDigest": "9952150c879b0789122ae2e43c8ab70d4b5811fae89bc02b8c0011a1e9fe045c",
+  "fileCount": 141,
+  "sizeBytes": 640351,
+  "capturedModules": [
+    {
+      "id": "knowledge",
+      "version": "0.2.0"
+    },
+    {
+      "id": "handoff",
+      "version": "0.2.0"
+    }
+  ],
+  "provenanceRefs": [
+    ".local/platform-004-validation/browser-server-release-shape-03.provenance.json"
+  ],
+  "limitations": [
+    "No old-data migration, automatic adoption or general multiversion catalogue qualification."
+  ]
+}

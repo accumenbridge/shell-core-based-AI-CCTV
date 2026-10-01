@@ -1,0 +1,85 @@
+{
+  "schema": "quadbridge.attributed-journey-review.v1",
+  "taskId": "CORE-DELIVERY-001",
+  "reportedReviewer": "/root/repo_brain_architect",
+  "reportedRole": "Sol/high independent architect/reviewer",
+  "outcome": "APPROVED_BOUNDED_JOURNEY_EVIDENCE_PENDING_REQUIRED_SUITE",
+  "attributionLimit": "Independent reading of recorded evidence, not independent execution or authenticated model identity. Final core acceptance remains pending matching required full-suite evidence.",
+  "binding": {
+    "candidateDigest": "b44af13a43163ecd15c7c5f0f50e05f92dd31b9957d0955c55ee834b32798436",
+    "contractDigest": "e0dccd6167a0cb5089fa4eee7892831becc744167780ae043065b1d142ae7065",
+    "fileCount": 196,
+    "fixtureId": "252ed9e2-2097-4d49-8e78-cbbc7fc4e100",
+    "productId": "core-ops-1002",
+    "version": "1.0.0",
+    "buildId": "7527b752-96f8-4458-b6c9-76eedc4ce7b7",
+    "artifactDigest": "f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7",
+    "instanceId": "runtime-2cd07972-b233-4112-a510-39708d908d83",
+    "backupDigest": "a992e29459142d128e6210e87e88074c0a940fa7c3111d3683936b15f8cb31d8"
+  },
+  "reviewedJourney": [
+    "Actual saved definition and exact loaded JSON match semantically, including description, exact module versions and custom local binding identities. Edit invalidation is recorded. Build and registered inventory DOM identify the actual newly saved product.",
+    "Promoted release, build and runtime snapshot identities agree. Actual application DOM shows the created direct Desk request, indexed Knowledge document and honest local extractive answer with exact source title/version/characters20–53; no-evidence output is explicit.",
+    "Handoff DOM and read-only owner observations distinguish source ACCEPTED, separate technical job SUCCEEDED, destination COMMITTED typed receipt and the actual target-owned Desk request linked to the source document and exact runtime.",
+    "Tenant-b actual DOM and read-only selected-tenant observations contain no customer-a records. Viewer UI is read-only. This is bounded ordinary scope evidence, not a permission matrix.",
+    "Same-instance attempt2 restart retains all Desk, Knowledge and Handoff records and technical job records, every frozen runtime identity field and the credential-file hash.",
+    "Verified backup, existing-root restore refusal, original-owner positive-stop checks, current backup revalidation and exact contained test-owned removal are recorded. Ordinary restore reports SUCCEEDED/CLEAN without a public destructive operation.",
+    "Restored attempt3 RUNNING DOM records web/API and separate-worker readiness. Restored admin UI renders both Desk requests, the original Knowledge document/exact answer and original Handoff target. Final attempt3 STOPPED DOM and original close metadata record EMPTY/helperClosed/executionClean, empty runtime and recovery slots and unchanged candidate."
+  ],
+  "independentComparisons": {
+    "allThreeObservationsSameFixture": true,
+    "runtimeFrozenIdentityUnchanged": true,
+    "credentialsHashUnchanged": true,
+    "deskRowsUnchanged": true,
+    "knowledgeRowsAndJobsUnchanged": true,
+    "handoffRowsRelationshipsReceiptsAndJobsUnchanged": true,
+    "attempts": [1, 2, 3],
+    "candidateBeforeAfterCloseInventoryIdentical": true,
+    "candidateBeforeAfterCloseMatchesCanonical196Context": true,
+    "all196CurrentSourceHashesMatch": true,
+    "method": "Read-only JSON comparisons and actual file hashing. No test/build/browser/native launches by this reviewer."
+  },
+  "closure": {
+    "metadataOriginalOwnerCloseObserved": true,
+    "finalAttempt": 3,
+    "finalOperationId": "12ac4a44-5407-4901-b4dc-429587c56275",
+    "finalState": "STOPPED",
+    "physicalState": "EMPTY",
+    "emptyObserved": true,
+    "helperClosed": true,
+    "executionClean": true,
+    "runtimeSlotEmpty": true,
+    "recoverySlotEmpty": true,
+    "outerProcessObservation": {
+      "reportedBy": "/root",
+      "execSession": 84300,
+      "exitCode": 0,
+      "marker": "CORE_DELIVERY_SERVER_CLOSED",
+      "scope": "Coordinator reports literal tool observation separately from the reviewed original-owner metadata; reviewer did not independently observe the running process or infer exit from PID absence."
+    }
+  },
+  "hashedEvidence": [
+    {"path": ".local/core-delivery-001/definition-observation.json", "sha256": "8f5049280d88350fea541ae5f48961f629492934763b13c19439bcebc06b6385"},
+    {"path": ".local/core-delivery-001/domain-before-restart.json", "sha256": "ac5edd4acaa4252b1b3a9039a8a219d13eb49074ee488d32e291b5db4b60a4b4"},
+    {"path": ".local/core-delivery-001/domain-after-restart.json", "sha256": "5d59f71cec7e7853adf166e31cd82208f7ce197f05d4fa674b8b14cb6c9c1a68"},
+    {"path": ".local/core-delivery-001/domain-after-restore.json", "sha256": "516f3b6a09cbc62230fb00214c817859d0335d6504517ed8830080ff84454b7c"},
+    {"path": ".local/core-delivery-001/domain-tenant-b.json", "sha256": "1c7e87d89979a8ff2aaae03cd582ba530d9f5ffc24b076c3ce00019996c5e395"},
+    {"path": ".local/core-delivery-001/live.remove-result.json", "sha256": "c40783907544577beecc7636b6418afa94944f282c545759c53b2d6fb5633db1"},
+    {"path": ".local/core-delivery-001/live.closed.json", "sha256": "0fe3951fa502f8737b29f65a29eb93392db92188919500a3cbf4ce79d82fd7a5"},
+    {"path": ".local/core-delivery-001/candidate.before.json", "sha256": "97d801386b280016e08eb839172fd33291dd621015f5a113b2347a1166a2342b"},
+    {"path": ".local/core-delivery-001/candidate.after-close.json", "sha256": "97d801386b280016e08eb839172fd33291dd621015f5a113b2347a1166a2342b"},
+    {"path": ".local/core-delivery-001/restored-answer.dom.txt", "sha256": "1b2ff7c4d5a702e413689cd4621462d8ff4a8b14d2266ea91a831eb1292457f4"},
+    {"path": ".local/core-delivery-001/runtime-restored-running.dom.txt", "sha256": "028794e88461565905a24ebf9814203f5932c3f6dea8bce4b26d80abd0748263"},
+    {"path": ".local/core-delivery-001/final-stop.dom.txt", "sha256": "fa6457a32f6b0e8be34a07276c70a51ee0341457eedadd950ed26657fd0c0848"}
+  ],
+  "limitations": [
+    "Final required npm test is pending; no whole-core acceptance is issued here.",
+    "Final-stop screenshot timed out in CDP; its actual DOM and physical metadata are reviewed, not a nonexistent screenshot.",
+    "Restored viewer read-only behavior is supported, but its immediate Knowledge document-list readiness was not qualified; do not claim that observation established document visibility. Restored admin documents and citations were observed.",
+    "Browser citation DOM records exact displayed title/version/range/text; it is not a captured internal body-digest response. Canonical citation validation has separate source/test evidence.",
+    "Earlier browser failures, blocked file-upload permission and historical native/publisher failures remain preserved. No permission workaround, provider inference, hosted/production or stress/crash acceptance follows.",
+    "Private ready records, credentials, pairing codes and owner tokens were not copied into this review. No maintained source or shared checkpoint was edited."
+  ],
+  "substantiveMissingJourneyProof": [],
+  "pendingFinalAcceptance": ["Matching required full-suite raw completion and source-after-run binding", "Coordinator final sanitized journey/result record and final checkpoint acceptance"]
+}

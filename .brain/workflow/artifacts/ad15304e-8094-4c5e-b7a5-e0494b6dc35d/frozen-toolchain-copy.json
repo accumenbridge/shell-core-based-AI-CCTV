@@ -1,0 +1,23 @@
+{
+  "observedAt": "2026-10-01T06:03:26.862Z",
+  "root": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F\\source",
+  "maintainedFingerprint": "3c6a0f636d8534476186c3607315a322cc8c39470a1d5b3956116d12449a951f",
+  "dependencies": [
+    {
+      "name": "typescript",
+      "fileCount": 130,
+      "inventorySha256": "7f3b77150c6c81dc2fcb05ab3dcf7bfe982e72d34e6ca8ca98da467d4e44bce4"
+    },
+    {
+      "name": "@types/node",
+      "fileCount": 73,
+      "inventorySha256": "88a62eb3b05d8e722bb2a790f60907522cf4fa5f0cf2c87ddc34171e9b9b010d"
+    },
+    {
+      "name": "undici-types",
+      "fileCount": 41,
+      "inventorySha256": "bca0e5baa3f2fe9223de413327dcf3f9311999a79a0a6d522faf45d286a70f5e"
+    }
+  ],
+  "scope": "Replaced only three owned temporary dependency junctions with byte-identical normal files from installed pinned dependencies. Source dependencies and security checks unchanged; no download or policy change."
+}

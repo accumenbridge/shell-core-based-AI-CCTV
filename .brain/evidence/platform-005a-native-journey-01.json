@@ -1,0 +1,43 @@
+{
+  "schema": "quadbridge.platform-native-journey.v1",
+  "task": "PLATFORM-005A-CORE",
+  "recordedAt": "2026-10-01T07:02:00.7201607Z",
+  "status": "PASSED_ORDINARY_LOCAL_CORE_JOURNEY",
+  "observer": "Implementation agent observed exec session19012 completion; root read complete saved raw TAP and current test source.",
+  "commandScope": "Reported named Node TAP run of the stopped Desk backup test in tests/control-plane-artifacts.test.mjs; raw TAP does not contain the full invocation argv.",
+  "artifact": {
+    "path": ".brain/evidence/platform-005a-recovery-desk-journey-01.tap.txt",
+    "sha256": "62ec711878340c62b3f35bf09d2840b0c55d86161d2ead9d1dc7efec90056ca9"
+  },
+  "counts": {
+    "tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "exitCode": 0,
+  "durationMs": 54556.566,
+  "observedTestSourceAfterRun": {
+    "path": "tests/control-plane-artifacts.test.mjs",
+    "sha256": "1cc88fa06ba21b2a76b93a25360c4d32e0705e875ec8064d0443d1d65a003278"
+  },
+  "observedRecoverySourceAfterRun": {
+    "path": "apps/control-plane/src/runtime-recovery.ts",
+    "sha256": "02f9fdb51c5cbfac1a12d92ae19e861fdc3ee03626a462979b8a31bea90e3f1d"
+  },
+  "scopes": [
+    "Real paired HTTP runtime and recovery calls on a test-owned registered/promoted Desk snapshot.",
+    "Real application write/logout; older read-only transaction excludes new record while committed WAL remains across positive STOP.",
+    "Backup driver EMPTY/helper-close, publisher result/close, publication/verification/cleanup assertions; opaque list and verified digest.",
+    "Test-owned exact data-root removal after resolved containment/positive stop, restore without overwrite, exact credential bytes.",
+    "Explicit same-instance restart/read, preserved desk.create revocation via denied original write replay, app logout and second positive stop."
+  ],
+  "limitations": [
+    "Root independently read current pins after run, not a full source inventory before run. Final frozen-candidate full suite and independent review remain required.",
+    "No ordinary browser/provider/hosted/production qualification.",
+    "Passing test teardown and worker reports no quarantine; no broader process-crash/interrupt campaign."
+  ],
+  "nextAction": "Minimal docs and final freeze, required full repository suite, exact independent review and ordinary recovery browser journey."
+}

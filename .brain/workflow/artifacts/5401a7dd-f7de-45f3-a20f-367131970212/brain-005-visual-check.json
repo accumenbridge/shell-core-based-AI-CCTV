@@ -1,0 +1,24 @@
+{
+  "status": "FAILED_OR_BLOCKED",
+  "console": [
+    {
+      "type": "error",
+      "text": "The Content-Security-Policy directive 'form-action' contains 'script-src-elem' as a source expression. Did you want to add it as a directive and forget a semicolon?"
+    },
+    {
+      "type": "error",
+      "text": "The Content-Security-Policy directive 'form-action' contains the keyword 'none' alongside with other source expressions. The keyword 'none' must be the only source expression in the directive value, otherwise it is ignored."
+    },
+    {
+      "type": "error",
+      "text": "Loading the script 'http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=yVJpcbtBvomGt39OtRsqfPArEV6QNqpBf3oVUap5x3KJ3jkBuoeGljYihnrpJwAE' violates the following Content Security Policy directive: \"default-src 'none'\". Note that 'script-src-elem' was not explicitly set, so 'default-src' is used as a fallback. The action has been blocked."
+    }
+  ],
+  "failures": [
+    {
+      "url": "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js",
+      "failure": "csp"
+    }
+  ],
+  "error": "Locator.scroll_into_view_if_needed: Timeout 29974ms exceeded.\nCall log:\n  - attempting scroll into view action\n    - waiting for element to be stable\n"
+}

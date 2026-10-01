@@ -1,0 +1,47 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "65a7e7d2-309f-40cf-8aca-c75d6f417de4",
+  "revision": 28,
+  "previousEventId": "02247aa7-c917-4cbe-981c-9f223ed8cc29",
+  "reportedActor": "/root core-goal coordinator",
+  "recordedAt": "2026-10-01T10:26:48.949Z",
+  "platformTask": {
+    "taskId": "CORE-DELIVERY-001",
+    "status": "READY",
+    "candidate": null,
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Reconcile atlas plan5 with current core goal, then sole Luna implements finite readiness/entry corrections and prepares source-only real live fixture. Freeze before actual continuous core journey and one shared final suite.",
+    "gates": [
+      {
+        "id": "CORE-DELIVERY-001-execution",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Goal/plan adopted; no fresh execution result inferred."
+        ]
+      }
+    ]
+  },
+  "maintenanceTask": {
+    "taskId": "BRAIN-005",
+    "status": "READY",
+    "candidate": null,
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Luna implements exactly five-file current managed readiness contract after root atlas reconciliation; no other-chat writers/runtime launches.",
+    "gates": [
+      {
+        "id": "BRAIN-005-execution",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Goal/plan adopted; no fresh execution result inferred."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "9afb55e34e2e999ccc7df496764b75a161f47ce619e0f3df9ad0b1db76636996"
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "brain.atlas-reconciliation.v1",
+  "observedAt": "2026-10-01T07:17:00.085Z",
+  "projectId": "quadbridge-core-frameworks",
+  "fromRevision": 1,
+  "toRevision": 2,
+  "reconciled": [
+    {
+      "id": "architecture",
+      "path": "PLATFORM_ARCHITECTURE.md",
+      "previousSha256": "281a6b771f5ae96ad2835536b4ee0ddb6e4357a169005dab552617e2f2c39206",
+      "currentSha256": "91c3a71e9f68d426a9fe3396ad5bcc49a846d4c101bb4369867e3f8115fa4180"
+    },
+    {
+      "id": "readme",
+      "path": "README.md",
+      "previousSha256": "7e0149394fb4d5af317ab417fb8d437fb42b6b67c8f7791ef81eda4dcb7a714e",
+      "currentSha256": "900ad12067a90378fc82b47441ca3473c671e6816d923dbc3bc34aa9c2c38eb9"
+    },
+    {
+      "id": "status",
+      "path": "docs/STATUS.md",
+      "previousSha256": "69bd3b012dd5ba4acfdc80b7e74aacf5d591ce2db511b06d0db26b46a458f108",
+      "currentSha256": "cd5ed9853ea4c11d94a9a859b560b83d6cff6dd0d8ec976f6ec3a43e94c6e8fa"
+    },
+    {
+      "id": "checkpoint",
+      "path": ".brain/CURRENT.md",
+      "previousSha256": "6f6932570d378c2bad174983e0f4bceec0f734605f914d5e62f39c99c41f2b0c",
+      "currentSha256": "074d3cadbdcd7d619019fec6670c5bfcbdca58fe275b71ce591928755eb2d986"
+    },
+    {
+      "id": "cp6-task",
+      "path": ".brain/tasks/PLATFORM-006.md",
+      "previousSha256": "e381034c340e9c733ed74006e43ddd09be9522ff43ddec01640c8cfbb825a6e8",
+      "currentSha256": "25808e1a1aa35a71b882d186ec9d6bd5be523dcb112e13a7926fd939b3b2cbe3"
+    },
+    {
+      "id": "implementation",
+      "path": "IMPLEMENTATION_STATUS_0.3.md",
+      "previousSha256": "673d572d88bb87849fe0e01ed8443d9b6855e7049437d41dc6ec16ba50fd93e4",
+      "currentSha256": "0ee835c626c5f3e18199431387358dc8c4d02213edfe2e12e75cb3a6724c6be4"
+    }
+  ],
+  "decision": "Read the changed recovery documentation and updated Knowledge contract. The mapped outcomes and owner boundaries remain applicable. Refresh the checkpoint observation to revision 10 and pin the reviewed source bytes; do not promote any milestone acceptance.",
+  "limitations": [
+    "Source digest matching is not semantic design verification.",
+    "Platform execution claims remain attributed history; the canonical coordinator owns acceptance.",
+    "Tests ran against the unchanged atlas tool and tests; this is a planning-data refresh after the frozen test candidate was captured."
+  ]
+}

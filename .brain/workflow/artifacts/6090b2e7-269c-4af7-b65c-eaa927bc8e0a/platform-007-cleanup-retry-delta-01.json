@@ -1,0 +1,13 @@
+{
+  "taskId": "PLATFORM-007",
+  "baseFileList": "exact16 post-CP7 candidate",
+  "changedFiles": [
+    {
+      "path": "tests/control-plane-artifacts.test.mjs",
+      "beforeSha256": "4c7f2f5447a4c99d600e35967c894e8bb977318fda7605f76797c6ed7560cbfb",
+      "afterSha256": "64151cb1d7799ea5435089f40e868bcc23a3b57aeb3bfdf9af0a7c7e186e7a83",
+      "changed": true
+    }
+  ],
+  "unchangedFileCount": 15
+}

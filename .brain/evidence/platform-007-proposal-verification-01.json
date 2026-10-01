@@ -1,0 +1,7 @@
+{
+  "verified": 16,
+  "newPaths": [
+    "tests/studio-product-editor.test.mjs"
+  ],
+  "manifestSha": "61173f21f9be59931de68c52e0f8f895478ed12aea139172101af2e9cde178ab"
+}

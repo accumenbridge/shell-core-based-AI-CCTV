@@ -1,0 +1,75 @@
+{
+  "schema": "brain.task-contract.v1",
+  "taskId": "PLATFORM-006",
+  "title": "Usable authorized Knowledge question-to-cited-extractive-answer workflow",
+  "authorization": {
+    "kind": "authorized",
+    "reference": "User's full local architecture build and repeated do all authorization, with explicit Sol/high planner and Luna/xhigh implementation agents and core-work priority. CP5 local recovery accepted; no external effect authorization."
+  },
+  "sourceTaskRef": ".brain/tasks/PLATFORM-006.md",
+  "owners": {
+    "coordinator": "/root",
+    "implementer": "/root/repo_brain_validation",
+    "reviewer": "/root/repo_brain_architect"
+  },
+  "allowedPaths": [
+    "packages/ai-core/src/index.ts",
+    "packages/backend-host/src/index.ts",
+    "packages/backend-host/src/http.ts",
+    "packages/contracts/src/index.ts",
+    "packages/web-shell/src/index.ts",
+    "modules/knowledge/src/index.ts",
+    "modules/knowledge/src/ui.ts",
+    "modules/knowledge/module.json",
+    "modules/knowledge/package.json",
+    "modules/knowledge/tsconfig.json",
+    "modules/handoff/module.json",
+    "modules/handoff/package.json",
+    "products/knowledge/product.json",
+    "products/combined/product.json",
+    "apps/runtime/package.json",
+    "package-lock.json",
+    "packages/composition/src/workspace-closure.ts",
+    "tools/factory.mjs",
+    "tools/build.mjs",
+    "packages/composition/src/integrity.ts",
+    "apps/control-plane/src/source-import.ts",
+    "README.md",
+    "docs/STATUS.md",
+    "PLATFORM_ARCHITECTURE.md",
+    "IMPLEMENTATION_STATUS_0.3.md",
+    "tests/ai-core.test.mjs",
+    "tests/knowledge-answer.test.mjs",
+    "tests/knowledge-answer-ui.test.mjs",
+    "tests/workspace-closure.test.mjs",
+    "tests/composition.test.mjs",
+    "tests/factory-lifecycle.test.mjs"
+  ],
+  "excludedActions": [
+    "External repositories, credentials, entitlements, providers, spending, deployment or global configuration",
+    "Editing exported snapshots as framework source",
+    "Weakening local security, reseeding removed identities/grants or replacing owner data",
+    "Exhaustive fault/stress campaigns or inferred browser/provider/production success"
+  ],
+  "prerequisites": [
+    "PLATFORM-005A-CORE accepted local core at .brain/evidence/platform-005a-result-03.json",
+    "Read .brain/tasks/PLATFORM-006.md and .brain/evidence/platform-006-implementation-map-04.md"
+  ],
+  "criteria": [
+    {
+      "id": "BRAIN-REGRESSION",
+      "description": "Fresh build and required full-suite observation; indexed authorized tenant document to exact cited Local extractive answer and no-evidence result; bounded async provider and real cancellation/original-session revalidation; existing Handoff and captured/new export closure coherence; independent exact source review and ordinary app UI qualification.",
+      "evidenceScope": "Observed local deterministic extractive workflow only. Knowledge owns documents and citation meaning; generic ai-core receives only bounded neutral chunks. Blocked native, browser, provider or production gates remain separately recorded."
+    }
+  ],
+  "requiredRecipeIds": [
+    "brain-build"
+  ],
+  "requiredObservationRecipeIds": [
+    "brain-full-suite"
+  ],
+  "reviewRequirement": {
+    "required": true,
+    "independence": "independent_reported"
+  }
+}

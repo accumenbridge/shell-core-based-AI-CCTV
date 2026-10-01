@@ -1,0 +1,42 @@
+TAP version 13
+# Subtest: real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+not ok 1 - real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+  ---
+  duration_ms: 54139.4805
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\control-plane-artifacts.test.mjs:174:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    fixture cleanup follows release and observed close of the only file-lock process
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-artifacts.test.mjs:524:10)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# SYMLINK_CASE_BLOCKED: host did not permit creating the owned fixture link (EPERM)
+# Subtest: separate Node owners serialize physical publication, retain interrupted ownership, and recheck session after a real SQLite lock
+ok 2 - separate Node owners serialize physical publication, retain interrupted ownership, and recheck session after a real SQLite lock
+  ---
+  duration_ms: 42410.9458
+  type: 'test'
+  ...
+# Subtest: fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+ok 3 - fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+  ---
+  duration_ms: 3383.1475
+  type: 'test'
+  ...
+# Subtest: registry publisher proof parsing rejects ambiguous, mismatched, and oversized output
+ok 4 - registry publisher proof parsing rejects ambiguous, mismatched, and oversized output
+  ---
+  duration_ms: 0.304
+  type: 'test'
+  ...

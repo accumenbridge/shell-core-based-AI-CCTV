@@ -1,0 +1,40 @@
+{
+  "schema": "quadbridge.core-ui-repair-result.v1",
+  "taskId": "CORE-DELIVERY-001",
+  "status": "IMPLEMENTED_FOCUSED_NOT_BROWSER_QUALIFIED",
+  "candidate": "90fd7ce4e8a423fc38ef7ac9743ed5a591d7e6f2f55c4f2b82c8c0d81f8a25dc",
+  "files": [
+    {
+      "path": "apps/studio-web/src/main.ts",
+      "sha256": "66b19078409bdb9ded87d47fdade294ef7659a7e3bd0965473ee97c1656617a0"
+    },
+    {
+      "path": "tests/studio-product-editor.test.mjs",
+      "sha256": "77218a3a646d9eb4ab5822d10d795da71b3b04c1161b58ed8cb7e25c819cc0d3"
+    }
+  ],
+  "actualBuild": {
+    "exitCode": 0,
+    "log": ".local/core-delivery-001-ui-build-02.log"
+  },
+  "actualFocused": {
+    "exitCode": 0,
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "log": ".local/core-delivery-001-ui-focused-02.tap.txt"
+  },
+  "preservedFailure": {
+    "exitCode": 1,
+    "tests": 6,
+    "passed": 4,
+    "failed": 2,
+    "log": ".local/core-delivery-001-ui-focused-01.tap.txt",
+    "diagnosis": "Actual controlled harness omitted browser hash # normalization and tested literal JSON quotes against escaped textarea markup. Only harness corrected; no additional application repair indicated."
+  },
+  "provenance": "Actual sole Luna writer reported frozen2; root recomputed exact hashes and inspected build/TAP outputs. Independent source review pending.",
+  "limitations": [
+    "Compiled VM handler checks do not qualify actual browser save/store/native build or continuous deployed journey. Earlier blocked import/native dialog history retained."
+  ]
+}

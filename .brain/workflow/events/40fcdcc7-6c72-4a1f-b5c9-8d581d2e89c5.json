@@ -1,0 +1,352 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "40fcdcc7-6c72-4a1f-b5c9-8d581d2e89c5",
+  "revision": 11,
+  "previousEventId": "78b3ca0c-56f7-4876-ae74-008f191f8843",
+  "reportedActor": "/root platform coordinator",
+  "recordedAt": "2026-10-01T07:17:32.933Z",
+  "platformTask": {
+    "gates": [
+      {
+        "id": "PLATFORM-004-local-core",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-4-platform-004-result.json"
+        ],
+        "limitations": [
+          "Prior platform coordinator acceptance only; no new platform qualification from Brain adoption."
+        ]
+      },
+      {
+        "id": "PLATFORM-005A-execution",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md"
+        ],
+        "limitations": [
+          "Active parallel implementation; observed reports do not establish native recovery or full acceptance."
+        ]
+      },
+      {
+        "id": "native-lock-policy",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md"
+        ],
+        "limitations": [
+          "Previously denied native lock fixture remains unrun. No policy workaround."
+        ]
+      },
+      {
+        "id": "file-symlink-environment",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md"
+        ],
+        "limitations": [
+          "Prior Windows EPERM limitation remains separate."
+        ]
+      },
+      {
+        "id": "controller-crash",
+        "status": "DEFERRED",
+        "evidenceRefs": [
+          ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md"
+        ],
+        "limitations": [
+          "Deferred by platform user core-delivery priority."
+        ]
+      },
+      {
+        "id": "PLATFORM-005A-source-checkpoint-01",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/evidence/platform-005a-manager-checkpoint-01.json"
+        ],
+        "limitations": [
+          "Independent source review requires four narrow manager repairs. Build0/store3of3 component scope only; no native recovery or platform acceptance."
+        ]
+      },
+      {
+        "id": "imported-platform-history",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/workflow/events/b0bb5934-0e0c-47a4-99b0-6615f4fad927.json",
+          ".brain/workflow/contracts/PLATFORM-005A.json",
+          ".brain/tasks/PLATFORM-005A.md"
+        ],
+        "limitations": [
+          "Execution continuation under original scope. Prior imported task and evidence retained; no candidate acceptance or task-budget reset."
+        ]
+      },
+      {
+        "id": "PLATFORM-005A-source-checkpoint-02",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/evidence/platform-005a-manager-checkpoint-02.json",
+          ".brain/evidence/platform-005a-source-review-02.json"
+        ],
+        "limitations": [
+          "Approved source/component scope only: build0/store3of3/HTTP15of15. No native recovery/browser/full acceptance. Earlier failed checkpoint retained."
+        ]
+      },
+      {
+        "id": "PLATFORM-005A-driver-core-finding-03",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/evidence/platform-005a-driver-core-finding-03.json"
+        ],
+        "limitations": [
+          "Concrete ordinary BACKUP ReferenceError found after prior static approval, before native. Earlier approval retained as history and cannot authorize uncorrected first native use."
+        ]
+      },
+      {
+        "id": "PLATFORM-005A-source-checkpoint-04",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/evidence/platform-005a-source-review-04.json"
+        ],
+        "limitations": [
+          "Narrow source/probe/components only: build0/focus26of26. Actual native recovery, final UI/browser/full acceptance pending. Earlier failures retained."
+        ]
+      },
+      {
+        "id": "PLATFORM-005A-native-core-journey-01",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/evidence/platform-005a-native-journey-01.json",
+          ".brain/evidence/platform-005a-recovery-desk-journey-01.tap.txt"
+        ],
+        "limitations": [
+          "Named actual local test only,1of1/EXIT0. Observed test/source pins afterrun; final frozen-candidate suite/review and ordinary browser pending. No provider/hosted/production claim."
+        ]
+      },
+      {
+        "id": "PLATFORM-005A-full-suite-01",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/f80c4809-7ff3-467a-be69-ed54abccd98a.json"
+        ],
+        "limitations": [
+          "Actual259tests256pass1fail2skip,exit1. Fixed tool omitted in no-host fixture; focused fixture repair1of1exit0. Final required rerun pending."
+        ]
+      }
+    ],
+    "nextAction": "Revised22-file source frozen after minimal recovery tool fixture-copy repair. Fresh root build/full-suite and ordinary Studio recovery browser journey next; final Sol review. Preserve failed prior suite259/256pass1fail2skip.",
+    "blockers": [],
+    "status": "REVIEW",
+    "taskId": "PLATFORM-005A-CORE",
+    "runIds": [
+      "1e87e4bf-fa01-4e88-8f3c-b5855e6a7000",
+      "f80c4809-7ff3-467a-be69-ed54abccd98a"
+    ],
+    "candidate": {
+      "files": [
+        {
+          "path": "apps/control-plane/src/build-inputs.ts",
+          "sha256": "8536915eda4de98fca5c2ed23a8a83c1752d8eaf681647d26ff20274b85e9c72"
+        },
+        {
+          "path": "apps/control-plane/src/main.ts",
+          "sha256": "4eea7a1c88c1a97c42b7b6737a2d6e0615d2394bc7e3eae9d1ea0bba0ef9ea7a"
+        },
+        {
+          "path": "apps/control-plane/src/operator-server.ts",
+          "sha256": "0d02e1b136d135807461a1fbbcad423b8aaf7e3c691b6d27503eaf625f3b8989"
+        },
+        {
+          "path": "apps/control-plane/src/runtime-manager.ts",
+          "sha256": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b"
+        },
+        {
+          "path": "apps/control-plane/src/runtime-recovery.ts",
+          "sha256": "02f9fdb51c5cbfac1a12d92ae19e861fdc3ee03626a462979b8a31bea90e3f1d"
+        },
+        {
+          "path": "apps/studio-web/src/main.ts",
+          "sha256": "c1eea89928f157dc3178ff9e2d27e4f2deb744d8fad4beb018b7176166a8d902"
+        },
+        {
+          "path": "docs/STATUS.md",
+          "sha256": "cd5ed9853ea4c11d94a9a859b560b83d6cff6dd0d8ec976f6ec3a43e94c6e8fa"
+        },
+        {
+          "path": "docs/STUDIO_INTEGRATION.md",
+          "sha256": "d7c4a023101c7e5dcc96067eb25cbfb0fb37266290a3d65aca8b6ccaaf87abec"
+        },
+        {
+          "path": "IMPLEMENTATION_STATUS_0.3.md",
+          "sha256": "0ee835c626c5f3e18199431387358dc8c4d02213edfe2e12e75cb3a6724c6be4"
+        },
+        {
+          "path": "packages/control-plane/src/index.ts",
+          "sha256": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5"
+        },
+        {
+          "path": "PLATFORM_ARCHITECTURE.md",
+          "sha256": "91c3a71e9f68d426a9fe3396ad5bcc49a846d4c101bb4369867e3f8115fa4180"
+        },
+        {
+          "path": "README.md",
+          "sha256": "900ad12067a90378fc82b47441ca3473c671e6816d923dbc3bc34aa9c2c38eb9"
+        },
+        {
+          "path": "tests/control-plane-artifacts.test.mjs",
+          "sha256": "1cc88fa06ba21b2a76b93a25360c4d32e0705e875ec8064d0443d1d65a003278"
+        },
+        {
+          "path": "tests/control-plane-build-host.test.mjs",
+          "sha256": "c5941bdcc1e28ec70d61bd3c745dcacb304c4c8d84316afad3381650cfecfdf6"
+        },
+        {
+          "path": "tests/control-plane-http.test.mjs",
+          "sha256": "c3a59b4d3ad0e5f91b18c92c0a1af93e4be634b848f3568f28b8ae65e98e58cb"
+        },
+        {
+          "path": "tests/control-plane-main.test.mjs",
+          "sha256": "b278b7117e7535d6380943756366c20a87f527a7965f7c4e9e8d87786e631861"
+        },
+        {
+          "path": "tests/control-plane.test.mjs",
+          "sha256": "3304f9ff64a01a81d6effb71a723136e6cbc711b7ef31a7924f64f46864884f2"
+        },
+        {
+          "path": "tests/managed-runtime-recovery-store.test.mjs",
+          "sha256": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+        },
+        {
+          "path": "tests/managed-runtime-store.test.mjs",
+          "sha256": "2de1db607bf5aa8a93b81b15eaacc152383634466f80501a0884283598222de1"
+        },
+        {
+          "path": "tests/studio-runtime-ui.test.mjs",
+          "sha256": "3fe82fa020cc550be44dd2fc8c4494373eeb1ee4da0fb6e79b6875ca33d20ef7"
+        },
+        {
+          "path": "tools/runtime-recovery-publish.ps1",
+          "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+        },
+        {
+          "path": "tools/runtime-recovery.mjs",
+          "sha256": "8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35"
+        }
+      ],
+      "digest": "0e1661168ae21880af8c4fb2b6498c147e81e66e08ce231a4170b8acff9a3fef"
+    },
+    "reviewIds": []
+  },
+  "maintenanceTask": {
+    "taskId": "BRAIN-001",
+    "status": "ACCEPTED",
+    "candidate": {
+      "files": [
+        {
+          "path": ".brain/ROUTING.md",
+          "sha256": "c324b0a60f4817eb9f5eb5d1c57348ff31e31918d643cfbb11d6d98e823c4308"
+        },
+        {
+          "path": ".brain/START_HERE.md",
+          "sha256": "9210b74a6633b4bf3a988415fb0484d7eb992689fd3b17552b615ee1f23587b2"
+        },
+        {
+          "path": ".brain/WORKFLOW.md",
+          "sha256": "6b32165feb61eebf811b4a7be0963010180f8aade5aa97be1d453267d3147f43"
+        },
+        {
+          "path": ".brain/workflow/recipes.json",
+          "sha256": "39976698a2805e5fc3554d1dace5c05ac3d20116f95b6b0dc1a5a840ef190c75"
+        },
+        {
+          "path": "package.json",
+          "sha256": "53e1f306444f7f1b422cd036274c560865bf40ec6cfbf1180308f72ff11cd554"
+        },
+        {
+          "path": "tests/brain-workflow.test.mjs",
+          "sha256": "a8bd29c13f3a1fdf8aa2f37ca04662d35cccd647a6a1709111215846252654cd"
+        },
+        {
+          "path": "tools/brain-core.mjs",
+          "sha256": "ab41dcd35d2459e231a2f34e5971cdb4bd4e00de8fa181b72a1d6278e53d775b"
+        },
+        {
+          "path": "tools/brain.mjs",
+          "sha256": "5941315d34338ccf07318bcf5b1a96bc18f78072bd87de59689301c19a543b7e"
+        }
+      ],
+      "digest": "798ad1dc674657f87c4da66fdd55f919ad518929d67609240eef9eaa5846f1d5"
+    },
+    "runIds": [
+      "0654d999-c751-46d3-a93c-0dce1c35e890",
+      "a0e7433c-6569-4fec-b68e-a806700874de",
+      "0aa4e527-3ed7-4585-8863-8e43ce8eea92",
+      "ad15304e-8094-4c5e-b7a5-e0494b6dc35d"
+    ],
+    "reviewIds": [
+      "07f14a58-ea61-4c2a-b037-83476dac9bef"
+    ],
+    "blockers": [],
+    "nextAction": "BRAIN-001 implementation complete. Use the documented CLI for future authorized work; the existing platform coordinator continues the mapped platform task.",
+    "gates": [
+      {
+        "id": "brain-focused",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/a0e7433c-6569-4fec-b68e-a806700874de.json"
+        ],
+        "limitations": [
+          "10 real isolated CLI workflow tests."
+        ]
+      },
+      {
+        "id": "brain-adoption",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/0aa4e527-3ed7-4585-8863-8e43ce8eea92.json"
+        ],
+        "limitations": [
+          "Project metadata consistency only."
+        ]
+      },
+      {
+        "id": "repository-suite",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/ad15304e-8094-4c5e-b7a5-e0494b6dc35d.json"
+        ],
+        "limitations": [
+          "255 tests: 252 passed, 1 failed, 2 skipped. Actual required invocation; skipped gates stay unqualified.",
+          "Initial linked-toolchain fixture failure is separately preserved. Concurrent platform source after the frozen capture is outside this run."
+        ]
+      },
+      {
+        "id": "file-symlink-environment",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/ad15304e-8094-4c5e-b7a5-e0494b6dc35d.json"
+        ],
+        "limitations": [
+          "Actual full-suite skip: Windows denied owned file-symlink fixture creation with EPERM."
+        ]
+      },
+      {
+        "id": "native-staging-lock-policy",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/ad15304e-8094-4c5e-b7a5-e0494b6dc35d.json"
+        ],
+        "limitations": [
+          "Previously denied native fixture remained skipped before setup through the process-local sentinel; no policy workaround."
+        ]
+      },
+      {
+        "id": "browser-provider-production",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "No new browser, provider or production qualification is claimed by this development-only Brain change."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "ffb2051a9c90d8963457fc1d13bff0bfbddde910c23ec01a54f27520622e4f79"
+}

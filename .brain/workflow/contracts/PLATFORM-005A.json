@@ -1,0 +1,14 @@
+{
+  "schema": "brain.task-contract.v1",
+  "taskId": "PLATFORM-005A",
+  "title": "Usable private backup and restore — imported platform context",
+  "authorization": {"kind": "reported_import", "reference": "The platform coordinator advanced project.current_work to PLATFORM-005A during BRAIN-001. Preserve its actual mapping and recorded scope; this import grants no new authority or qualification."},
+  "sourceTaskRef": ".brain/tasks/PLATFORM-005A.md",
+  "owners": {"coordinator": "Existing platform coordinator", "implementer": "Existing platform implementation agent", "reviewer": "Existing platform independent reviewer"},
+  "allowedPaths": [".brain/tasks/PLATFORM-005A.md"],
+  "excludedActions": ["New platform acceptance inferred from migration", "Changing ongoing application work", "External deployment, credentials, providers or spending"],
+  "prerequisites": [],
+  "criteria": [{"id": "PLATFORM-CONTEXT", "description": "Preserve the mapped backup/restore task and its observed progress without independently qualifying it.", "evidenceScope": "Reported import only. Candidate is the observed task document, not executable platform source."}],
+  "requiredRecipeIds": [],
+  "reviewRequirement": {"required": false, "independence": "none"}
+}

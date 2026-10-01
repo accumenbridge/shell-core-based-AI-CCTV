@@ -1,0 +1,16 @@
+{
+  "schema": "quadbridge.runtime-recovery-browser-remove-result.v1",
+  "fixtureId": "f9b3b95a-c7d4-4e08-823d-6be9d49d8864",
+  "ok": true,
+  "instanceId": "runtime-09d58c9e-79a9-4fd5-a143-83057e24bb87",
+  "artifactDigest": "8723581398c7aefdbc540d3d6ae99b633bec2261ebf21e2d426a5ad34fda6eba",
+  "removed": true,
+  "scannedEntries": 12,
+  "stopProof": {
+    "state": "STOPPED",
+    "physicalState": "EMPTY",
+    "emptyObserved": true,
+    "helperClosed": true,
+    "executionClean": true
+  }
+}

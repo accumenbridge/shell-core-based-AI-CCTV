@@ -1,0 +1,18 @@
+{
+  "status": "PASSED_FOR_OBSERVED_BROWSER_SCOPE",
+  "checks": [
+    "Connected live console shows the canonical current task; managed Prepare/Start remain disabled without a profile.",
+    "Fresh opaque atlas frame displays canonical task and stored focus separately.",
+    "Console fits390px viewport without horizontal overflow.",
+    "No page JavaScript errors observed."
+  ],
+  "limitations": [
+    "Observation-only Brain console; no provider dispatch or platform application mutation.",
+    "No file-upload operation or blocked browser-policy workaround."
+  ],
+  "canonicalTask": "CORE-DELIVERY-001",
+  "taskLabel": "Complete one actual deployed local core product journey",
+  "managedMode": "Observation only: managed proposals are unavailable until the current readiness reasons are reconciled. The platform chat remains independent.",
+  "readinessLabel": "READY \u00b7 task CORE-DELIVERY-001 \u00b7 focus M-CORE",
+  "atlasCanonicalPanel": "Canonical current work\n\nCORE-DELIVERY-001 \u00b7 Complete one actual deployed local core product journey \u00b7 READY\n\nAtlas planning focus: M-CORE \u00b7 Complete continuous deployed local core product journey \u00b7 ALIGNED\n\nThe task comes from the project\u2019s canonical execution contract and checkpoint. The focus comes from this plan; their alignment is inspected separately."
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "APPROVED_ISOLATED_PROTOCOL_INCREMENT",
+  "test_capture": "platform-004-runtime-protocol-test-01.mjs.txt",
+  "test_sha256": "89a6d53ec5d04db724f09cf216d0e55a8e87750a378a9c81b5d43c9a07a65dd1",
+  "fixture_sha256": "33b21de828c42ab45def79eabc2c87d87bfc4cecf9862686e84e062674f75e0a",
+  "build": {
+    "exit_code": 0,
+    "evidence": "platform-004-build-runtime-protocol-30.log"
+  },
+  "checks": {
+    "tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "root_cases": 5,
+    "nested_cases": 3,
+    "exit_code": 0,
+    "evidence": "platform-004-runtime-protocol-focused-01.tap.txt"
+  },
+  "scope": "Seven actual normal-File pinned Windows PS7/Node helper invocations. READY before script/heartbeat markers; fragmented matching RESUME starts parent and heartbeat descendant. STOP, duplicate RESUME after start, wrong-nonce RESUME/STOP, malformed control and pre-RESUME EOF yield exact nonce-bound numeric EMPTY124 and original helper close124/nullsignal. Started descendant heartbeat ceases. Coalesced matching RESUME/STOP allows scheduling race while requiring exact exit proof. Unproved teardown only kills original current helper object and retains files; no stored PID control. Worker reports seven proof-qualified owned temp trees removed, none remain.",
+  "review": "Root read raw build/TAP and sources, matched hashes. Independent Sol/high matched exact source/core and accepted direct helper scope, with maintenance concern below. No application-source changes or concrete behavior/evidence blocker.",
+  "repair": "Completed: exactly four unused manager/supervisor constant/assertion lines removed, checkpoint pins retained in evidence. Initial and intermediate runs preserved separately; final fresh build31 and focused03 qualify updated test.",
+  "manifest_note": "Archived worker manifest platform-004-runtime-protocol-run-01.json selectedProfile.helperSha256/helperVersion describe the PowerShell executable, while source.helperSha256 describes build-job.ps1. Preserve raw record; do not conflate them.",
+  "limits": "Selected exact Windows helper RuntimeProtocol profile only. Default helper regressions have their own earlier2/2 record; supervisor/managed runtime workflows separate. No helper crash/UNKNOWN, browser/full/frozen-candidate or production acceptance. Earlier Desk restart503 unexplained, CP4 IMPLEMENTING.",
+  "final_candidate": {
+    "todo": 0,
+    "passed": 8,
+    "skipped": 0,
+    "build_evidence": "platform-004-build-runtime-protocol-31.log",
+    "test_capture": "platform-004-runtime-protocol-test-02.mjs.txt",
+    "exit_code": 0,
+    "failed": 0,
+    "test_evidence": "platform-004-runtime-protocol-focused-03.tap.txt",
+    "review": "Independent Sol/high exact first/last hashes; reconstituting four removed unrelated constants/assertion lines yields prior89a6d5 pin. Root matched capture/core and read raw build/TAP. Actual behavior scope retained; no full-candidate approval.",
+    "fixture_sha256": "33b21de828c42ab45def79eabc2c87d87bfc4cecf9862686e84e062674f75e0a",
+    "cancelled": 0,
+    "test_sha256": "8f444013395030d4ee00cbaceaa29449f003034971652d38f03fa0403da6052e",
+    "tests": 8
+  }
+}

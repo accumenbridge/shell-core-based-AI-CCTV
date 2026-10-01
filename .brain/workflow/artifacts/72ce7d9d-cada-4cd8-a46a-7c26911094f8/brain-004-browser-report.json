@@ -1,0 +1,16 @@
+{
+  "status": "PASSED_FOR_OBSERVED_BROWSER_SCOPE",
+  "checks": [
+    "Actual Codex-produced HTML rendered in opaque preview; two browser activations count 0 to 2.",
+    "Demo console fits 390px viewport.",
+    "Current platform console is observation-only, with canonical task, source freshness and planning gaps. Mobile viewport has no horizontal overflow.",
+    "Fresh project atlas renders in opaque read-only frame."
+  ],
+  "limitations": [
+    "CUA unavailable: failed to write kernel assets; normal installed Playwright used without policy overrides.",
+    "Candidate acceptance is not a human disposition; no acceptance action submitted."
+  ],
+  "platformTask": "Complete canonical construction definition import/edit/preview/save/export/build",
+  "platformStatus": "READY\nNOT_QUALIFIED",
+  "nextAction": "Luna finite16 CP7 scratch proposal; independent Sol plan/review. Apply only after authorized Brain chat freezes nine-file source and completes its non-overlapping build/focused boundary. Root records actual evidence, then paired/offline browser and one frozen final required suite."
+}

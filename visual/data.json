@@ -1,0 +1,1691 @@
+{
+  "modules": [
+    {
+      "id": "handoff",
+      "version": "0.2.1",
+      "abi": "quadbridge.module.v1",
+      "dependencies": [
+        {
+          "id": "knowledge",
+          "version": "0.2.1"
+        }
+      ],
+      "provides": [],
+      "requires": [
+        "knowledge.document.read.v1",
+        "desk.requests.create.v2"
+      ],
+      "permissions": [
+        "handoff.read",
+        "handoff.create",
+        "handoff.reconcile"
+      ],
+      "routes": [
+        {
+          "method": "GET",
+          "path": "/api/handoffs",
+          "permission": "handoff.read",
+          "kind": "read"
+        },
+        {
+          "method": "POST",
+          "path": "/api/handoffs",
+          "permission": "handoff.create",
+          "kind": "write"
+        },
+        {
+          "method": "POST",
+          "path": "/api/handoffs/reconcile",
+          "permission": "handoff.reconcile",
+          "kind": "write"
+        },
+        {
+          "method": "GET",
+          "path": "/api/handoffs/options",
+          "permission": "handoff.read",
+          "kind": "read"
+        }
+      ],
+      "workspaces": [
+        {
+          "id": "handoff.requests",
+          "label": "Cross-product handoffs",
+          "path": "/handoffs",
+          "permission": "handoff.read",
+          "export": "workspace"
+        }
+      ],
+      "schema": {
+        "current": 2,
+        "readMin": 2,
+        "readMax": 2
+      },
+      "background": true,
+      "studio": {
+        "label": "Handoff",
+        "summary": "Cross-product workflow and receipt reconciliation.",
+        "category": "integration",
+        "layers": [
+          "ui",
+          "backend",
+          "worker",
+          "integration",
+          "data"
+        ],
+        "ui": {
+          "routes": [
+            {
+              "path": "/handoffs",
+              "workspace": "handoff.requests",
+              "label": "Cross-product handoffs",
+              "nav": "Integrations"
+            }
+          ]
+        },
+        "backend": {
+          "events": [
+            {
+              "id": "handoff.committed",
+              "direction": "publish",
+              "schema": "handoff.receipt.v1"
+            }
+          ]
+        },
+        "data": {
+          "stores": [
+            {
+              "id": "handoff-records",
+              "kind": "relational",
+              "ownership": "module"
+            }
+          ],
+          "schemas": [
+            {
+              "id": "handoff",
+              "version": 2
+            }
+          ]
+        },
+        "deployment": {
+          "processes": [
+            {
+              "id": "handoff-api",
+              "kind": "http"
+            },
+            {
+              "id": "handoff-worker",
+              "kind": "worker"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "knowledge",
+      "version": "0.2.1",
+      "abi": "quadbridge.module.v1",
+      "dependencies": [],
+      "provides": [
+        "knowledge.document.read.v1",
+        "knowledge.document.retrieve.v1"
+      ],
+      "requires": [],
+      "permissions": [
+        "knowledge.read",
+        "knowledge.write"
+      ],
+      "routes": [
+        {
+          "method": "GET",
+          "path": "/api/documents",
+          "permission": "knowledge.read",
+          "kind": "read"
+        },
+        {
+          "method": "GET",
+          "path": "/api/documents/search",
+          "permission": "knowledge.read",
+          "kind": "read"
+        },
+        {
+          "method": "POST",
+          "path": "/api/documents/answer",
+          "permission": "knowledge.read",
+          "kind": "read"
+        },
+        {
+          "method": "POST",
+          "path": "/api/documents",
+          "permission": "knowledge.write",
+          "kind": "write"
+        },
+        {
+          "method": "POST",
+          "path": "/api/documents/cancel-index",
+          "permission": "knowledge.write",
+          "kind": "write"
+        }
+      ],
+      "workspaces": [
+        {
+          "id": "knowledge.library",
+          "label": "Knowledge library",
+          "path": "/library",
+          "permission": "knowledge.read",
+          "export": "workspace"
+        }
+      ],
+      "schema": {
+        "current": 1,
+        "readMin": 1,
+        "readMax": 1
+      },
+      "background": true,
+      "studio": {
+        "label": "Knowledge",
+        "summary": "Document library with local extractive answers grounded in indexed sources.",
+        "category": "knowledge",
+        "layers": [
+          "ui",
+          "backend",
+          "worker",
+          "ai",
+          "data"
+        ],
+        "ui": {
+          "routes": [
+            {
+              "path": "/library",
+              "workspace": "knowledge.library",
+              "label": "Knowledge library",
+              "nav": "Knowledge"
+            }
+          ],
+          "extensionPoints": [
+            "knowledge.document.actions"
+          ]
+        },
+        "backend": {
+          "services": [
+            {
+              "id": "document-reader",
+              "contract": "knowledge.document.read.v1",
+              "visibility": "product"
+            },
+            {
+              "id": "document-retriever",
+              "contract": "knowledge.document.retrieve.v1",
+              "visibility": "product"
+            }
+          ],
+          "jobs": [
+            {
+              "kind": "knowledge.index",
+              "permission": "knowledge.write"
+            }
+          ]
+        },
+        "ai": {
+          "pipelines": [
+            {
+              "id": "knowledge-rag",
+              "label": "Knowledge retrieval pipeline",
+              "input": "query",
+              "output": "grounded-context"
+            },
+            {
+              "id": "knowledge-extractive-answer",
+              "label": "Local extractive answer",
+              "input": "question",
+              "output": "cited-source-excerpts"
+            }
+          ],
+          "models": [
+            {
+              "capability": "text.embedding",
+              "modality": "embedding",
+              "placement": "either",
+              "accelerator": "either"
+            },
+            {
+              "capability": "text.generate",
+              "modality": "text",
+              "placement": "either",
+              "accelerator": "either"
+            }
+          ]
+        },
+        "data": {
+          "stores": [
+            {
+              "id": "knowledge-records",
+              "kind": "relational",
+              "ownership": "module"
+            },
+            {
+              "id": "knowledge-vectors",
+              "kind": "vector",
+              "ownership": "module"
+            }
+          ],
+          "schemas": [
+            {
+              "id": "knowledge",
+              "version": 1
+            }
+          ]
+        },
+        "deployment": {
+          "processes": [
+            {
+              "id": "knowledge-api",
+              "kind": "http"
+            },
+            {
+              "id": "knowledge-worker",
+              "kind": "worker"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "service-desk",
+      "version": "0.2.0",
+      "abi": "quadbridge.module.v1",
+      "dependencies": [],
+      "provides": [
+        "desk.requests.create.v1",
+        "desk.requests.create.v2"
+      ],
+      "requires": [],
+      "permissions": [
+        "desk.read",
+        "desk.create",
+        "desk.close",
+        "desk.receipts.read"
+      ],
+      "routes": [
+        {
+          "method": "GET",
+          "path": "/api/requests",
+          "permission": "desk.read",
+          "kind": "read"
+        },
+        {
+          "method": "POST",
+          "path": "/api/requests",
+          "permission": "desk.create",
+          "kind": "write"
+        },
+        {
+          "method": "POST",
+          "path": "/api/requests/close",
+          "permission": "desk.close",
+          "kind": "write"
+        },
+        {
+          "method": "POST",
+          "path": "/api/requests/commit",
+          "permission": "desk.create",
+          "kind": "write"
+        },
+        {
+          "method": "GET",
+          "path": "/api/requests/receipt",
+          "permission": "desk.receipts.read",
+          "kind": "read"
+        }
+      ],
+      "workspaces": [
+        {
+          "id": "desk.requests",
+          "label": "Service requests",
+          "path": "/requests",
+          "permission": "desk.read",
+          "export": "workspace"
+        },
+        {
+          "id": "service-desk.overview",
+          "label": "Request overview",
+          "path": "/request-overview",
+          "permission": "desk.read",
+          "export": "overviewWorkspace"
+        }
+      ],
+      "schema": {
+        "current": 1,
+        "readMin": 1,
+        "readMax": 1
+      },
+      "background": false,
+      "browserAssets": [
+        "ui/overview.css"
+      ],
+      "studio": {
+        "label": "Service Desk",
+        "summary": "Service-request UI and backend capability.",
+        "category": "operations",
+        "layers": [
+          "ui",
+          "backend",
+          "data"
+        ],
+        "ui": {
+          "routes": [
+            {
+              "path": "/requests",
+              "workspace": "desk.requests",
+              "label": "Service requests",
+              "nav": "Operations"
+            },
+            {
+              "path": "/request-overview",
+              "workspace": "service-desk.overview",
+              "label": "Request overview",
+              "nav": "Operations"
+            }
+          ]
+        },
+        "backend": {
+          "services": [
+            {
+              "id": "request-writer-v2",
+              "contract": "desk.requests.create.v2",
+              "visibility": "product"
+            }
+          ]
+        },
+        "data": {
+          "stores": [
+            {
+              "id": "service-requests",
+              "kind": "relational",
+              "ownership": "module"
+            }
+          ],
+          "schemas": [
+            {
+              "id": "service-desk",
+              "version": 1
+            }
+          ]
+        },
+        "deployment": {
+          "processes": [
+            {
+              "id": "service-desk-api",
+              "kind": "http"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "products": [
+    {
+      "id": "combined",
+      "version": "0.2.1",
+      "platformAbi": "quadbridge.module.v1",
+      "title": "Operations + Knowledge",
+      "description": "Two domain families composed into one application.",
+      "layout": "sidebar",
+      "modules": [
+        {
+          "id": "service-desk",
+          "version": "0.2.0"
+        },
+        {
+          "id": "knowledge",
+          "version": "0.2.1"
+        },
+        {
+          "id": "handoff",
+          "version": "0.2.1"
+        }
+      ],
+      "bindings": [
+        {
+          "contract": "knowledge.document.read.v1",
+          "instanceId": "local-documents",
+          "implementation": "knowledge",
+          "scope": "application",
+          "consumer": "handoff",
+          "mode": "local"
+        },
+        {
+          "contract": "desk.requests.create.v2",
+          "instanceId": "local-desk",
+          "implementation": "service-desk",
+          "scope": "application",
+          "consumer": "handoff",
+          "mode": "local"
+        }
+      ],
+      "wiring": "knowledge-to-desk"
+    },
+    {
+      "id": "knowledge",
+      "version": "0.2.1",
+      "platformAbi": "quadbridge.module.v1",
+      "title": "Knowledge Library",
+      "description": "Documents, background indexing and connected-product action.",
+      "layout": "top",
+      "modules": [
+        {
+          "id": "knowledge",
+          "version": "0.2.1"
+        },
+        {
+          "id": "handoff",
+          "version": "0.2.1"
+        }
+      ],
+      "bindings": [
+        {
+          "contract": "knowledge.document.read.v1",
+          "instanceId": "local-documents",
+          "implementation": "knowledge",
+          "scope": "application",
+          "consumer": "handoff",
+          "mode": "local"
+        },
+        {
+          "contract": "desk.requests.create.v2",
+          "instanceId": "connected-desk",
+          "implementation": "configured-desk-http",
+          "scope": "application",
+          "consumer": "handoff",
+          "mode": "http"
+        }
+      ],
+      "wiring": "knowledge-to-desk"
+    },
+    {
+      "id": "neutral",
+      "version": "0.2.0",
+      "platformAbi": "quadbridge.module.v1",
+      "title": "Neutral shell",
+      "description": "A runnable application with no business-domain modules.",
+      "layout": "sidebar",
+      "modules": [],
+      "bindings": []
+    },
+    {
+      "id": "service-desk",
+      "version": "0.2.0",
+      "platformAbi": "quadbridge.module.v1",
+      "title": "Service Desk",
+      "description": "A small non-AI business product.",
+      "layout": "sidebar",
+      "modules": [
+        {
+          "id": "service-desk",
+          "version": "0.2.0"
+        }
+      ],
+      "bindings": []
+    }
+  ],
+  "solutions": [
+    {
+      "id": "knowledge-to-desk",
+      "version": "0.2.0",
+      "source": "knowledge",
+      "destination": "service-desk",
+      "contract": "desk.requests.create.v2",
+      "mode": "http",
+      "tenantMap": {
+        "org-a": "customer-a",
+        "org-b": "customer-b"
+      },
+      "credential": "runtime-generated service credential; not embedded in this definition",
+      "semantics": "Destination owns requests. Source owns the handoff record and retry identity. No distributed transaction.",
+      "studio": {
+        "consumer": "handoff",
+        "label": "Knowledge to Service Desk",
+        "ports": [
+          {
+            "contract": "knowledge.document.read.v1",
+            "choices": [
+              {
+                "id": "local",
+                "label": "Knowledge in this application",
+                "binding": {
+                  "instanceId": "local-documents",
+                  "implementation": "knowledge",
+                  "scope": "application",
+                  "mode": "local"
+                }
+              }
+            ]
+          },
+          {
+            "contract": "desk.requests.create.v2",
+            "choices": [
+              {
+                "id": "local",
+                "label": "Service Desk in this application",
+                "binding": {
+                  "instanceId": "local-desk",
+                  "implementation": "service-desk",
+                  "scope": "application",
+                  "mode": "local"
+                },
+                "prerequisites": [
+                  "Uses the reviewed local-developer service identity; no production grants are changed."
+                ]
+              },
+              {
+                "id": "connected",
+                "label": "A separately running Service Desk",
+                "binding": {
+                  "instanceId": "connected-desk",
+                  "implementation": "configured-desk-http",
+                  "scope": "application",
+                  "mode": "http"
+                },
+                "prerequisites": [
+                  "Requires an explicitly configured destination, tenant mapping and authorized service identity. The Studio does not provision another product automatically."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "packages": [
+    {
+      "id": "ai-core",
+      "version": "0.3.0"
+    },
+    {
+      "id": "backend-host",
+      "version": "0.2.0"
+    },
+    {
+      "id": "composition",
+      "version": "0.2.0"
+    },
+    {
+      "id": "connections",
+      "version": "0.2.0"
+    },
+    {
+      "id": "contracts",
+      "version": "0.2.0"
+    },
+    {
+      "id": "control-plane",
+      "version": "0.3.0"
+    },
+    {
+      "id": "local-access",
+      "version": "0.2.0"
+    },
+    {
+      "id": "module-sdk",
+      "version": "0.3.0"
+    },
+    {
+      "id": "sqlite",
+      "version": "0.2.0"
+    },
+    {
+      "id": "studio-model",
+      "version": "0.3.0"
+    },
+    {
+      "id": "web-shell",
+      "version": "0.2.0"
+    },
+    {
+      "id": "worker-host",
+      "version": "0.2.0"
+    }
+  ],
+  "plans": {
+    "combined": {
+      "valid": true,
+      "plan": {
+        "product": {
+          "id": "combined",
+          "version": "0.2.1",
+          "platformAbi": "quadbridge.module.v1",
+          "title": "Operations + Knowledge",
+          "description": "Two domain families composed into one application.",
+          "layout": "sidebar",
+          "modules": [
+            {
+              "id": "handoff",
+              "version": "0.2.1"
+            },
+            {
+              "id": "knowledge",
+              "version": "0.2.1"
+            },
+            {
+              "id": "service-desk",
+              "version": "0.2.0"
+            }
+          ],
+          "bindings": [
+            {
+              "contract": "desk.requests.create.v2",
+              "instanceId": "local-desk",
+              "implementation": "service-desk",
+              "scope": "application",
+              "consumer": "handoff",
+              "mode": "local"
+            },
+            {
+              "contract": "knowledge.document.read.v1",
+              "instanceId": "local-documents",
+              "implementation": "knowledge",
+              "scope": "application",
+              "consumer": "handoff",
+              "mode": "local"
+            }
+          ],
+          "wiring": "knowledge-to-desk"
+        },
+        "modules": [
+          {
+            "id": "knowledge",
+            "version": "0.2.1",
+            "abi": "quadbridge.module.v1",
+            "dependencies": [],
+            "provides": [
+              "knowledge.document.read.v1",
+              "knowledge.document.retrieve.v1"
+            ],
+            "requires": [],
+            "permissions": [
+              "knowledge.read",
+              "knowledge.write"
+            ],
+            "routes": [
+              {
+                "method": "GET",
+                "path": "/api/documents",
+                "permission": "knowledge.read",
+                "kind": "read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/documents/search",
+                "permission": "knowledge.read",
+                "kind": "read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/documents/answer",
+                "permission": "knowledge.read",
+                "kind": "read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/documents",
+                "permission": "knowledge.write",
+                "kind": "write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/documents/cancel-index",
+                "permission": "knowledge.write",
+                "kind": "write"
+              }
+            ],
+            "workspaces": [
+              {
+                "id": "knowledge.library",
+                "label": "Knowledge library",
+                "path": "/library",
+                "permission": "knowledge.read",
+                "export": "workspace"
+              }
+            ],
+            "schema": {
+              "current": 1,
+              "readMin": 1,
+              "readMax": 1
+            },
+            "background": true,
+            "studio": {
+              "label": "Knowledge",
+              "summary": "Document library with local extractive answers grounded in indexed sources.",
+              "category": "knowledge",
+              "layers": [
+                "ui",
+                "backend",
+                "worker",
+                "ai",
+                "data"
+              ],
+              "ui": {
+                "routes": [
+                  {
+                    "path": "/library",
+                    "workspace": "knowledge.library",
+                    "label": "Knowledge library",
+                    "nav": "Knowledge"
+                  }
+                ],
+                "extensionPoints": [
+                  "knowledge.document.actions"
+                ]
+              },
+              "backend": {
+                "services": [
+                  {
+                    "id": "document-reader",
+                    "contract": "knowledge.document.read.v1",
+                    "visibility": "product"
+                  },
+                  {
+                    "id": "document-retriever",
+                    "contract": "knowledge.document.retrieve.v1",
+                    "visibility": "product"
+                  }
+                ],
+                "jobs": [
+                  {
+                    "kind": "knowledge.index",
+                    "permission": "knowledge.write"
+                  }
+                ]
+              },
+              "ai": {
+                "pipelines": [
+                  {
+                    "id": "knowledge-rag",
+                    "label": "Knowledge retrieval pipeline",
+                    "input": "query",
+                    "output": "grounded-context"
+                  },
+                  {
+                    "id": "knowledge-extractive-answer",
+                    "label": "Local extractive answer",
+                    "input": "question",
+                    "output": "cited-source-excerpts"
+                  }
+                ],
+                "models": [
+                  {
+                    "capability": "text.embedding",
+                    "modality": "embedding",
+                    "placement": "either",
+                    "accelerator": "either"
+                  },
+                  {
+                    "capability": "text.generate",
+                    "modality": "text",
+                    "placement": "either",
+                    "accelerator": "either"
+                  }
+                ]
+              },
+              "data": {
+                "stores": [
+                  {
+                    "id": "knowledge-records",
+                    "kind": "relational",
+                    "ownership": "module"
+                  },
+                  {
+                    "id": "knowledge-vectors",
+                    "kind": "vector",
+                    "ownership": "module"
+                  }
+                ],
+                "schemas": [
+                  {
+                    "id": "knowledge",
+                    "version": 1
+                  }
+                ]
+              },
+              "deployment": {
+                "processes": [
+                  {
+                    "id": "knowledge-api",
+                    "kind": "http"
+                  },
+                  {
+                    "id": "knowledge-worker",
+                    "kind": "worker"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "service-desk",
+            "version": "0.2.0",
+            "abi": "quadbridge.module.v1",
+            "dependencies": [],
+            "provides": [
+              "desk.requests.create.v1",
+              "desk.requests.create.v2"
+            ],
+            "requires": [],
+            "permissions": [
+              "desk.read",
+              "desk.create",
+              "desk.close",
+              "desk.receipts.read"
+            ],
+            "routes": [
+              {
+                "method": "GET",
+                "path": "/api/requests",
+                "permission": "desk.read",
+                "kind": "read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/requests",
+                "permission": "desk.create",
+                "kind": "write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/requests/close",
+                "permission": "desk.close",
+                "kind": "write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/requests/commit",
+                "permission": "desk.create",
+                "kind": "write"
+              },
+              {
+                "method": "GET",
+                "path": "/api/requests/receipt",
+                "permission": "desk.receipts.read",
+                "kind": "read"
+              }
+            ],
+            "workspaces": [
+              {
+                "id": "desk.requests",
+                "label": "Service requests",
+                "path": "/requests",
+                "permission": "desk.read",
+                "export": "workspace"
+              },
+              {
+                "id": "service-desk.overview",
+                "label": "Request overview",
+                "path": "/request-overview",
+                "permission": "desk.read",
+                "export": "overviewWorkspace"
+              }
+            ],
+            "schema": {
+              "current": 1,
+              "readMin": 1,
+              "readMax": 1
+            },
+            "background": false,
+            "browserAssets": [
+              "ui/overview.css"
+            ],
+            "studio": {
+              "label": "Service Desk",
+              "summary": "Service-request UI and backend capability.",
+              "category": "operations",
+              "layers": [
+                "ui",
+                "backend",
+                "data"
+              ],
+              "ui": {
+                "routes": [
+                  {
+                    "path": "/requests",
+                    "workspace": "desk.requests",
+                    "label": "Service requests",
+                    "nav": "Operations"
+                  },
+                  {
+                    "path": "/request-overview",
+                    "workspace": "service-desk.overview",
+                    "label": "Request overview",
+                    "nav": "Operations"
+                  }
+                ]
+              },
+              "backend": {
+                "services": [
+                  {
+                    "id": "request-writer-v2",
+                    "contract": "desk.requests.create.v2",
+                    "visibility": "product"
+                  }
+                ]
+              },
+              "data": {
+                "stores": [
+                  {
+                    "id": "service-requests",
+                    "kind": "relational",
+                    "ownership": "module"
+                  }
+                ],
+                "schemas": [
+                  {
+                    "id": "service-desk",
+                    "version": 1
+                  }
+                ]
+              },
+              "deployment": {
+                "processes": [
+                  {
+                    "id": "service-desk-api",
+                    "kind": "http"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "handoff",
+            "version": "0.2.1",
+            "abi": "quadbridge.module.v1",
+            "dependencies": [
+              {
+                "id": "knowledge",
+                "version": "0.2.1"
+              }
+            ],
+            "provides": [],
+            "requires": [
+              "knowledge.document.read.v1",
+              "desk.requests.create.v2"
+            ],
+            "permissions": [
+              "handoff.read",
+              "handoff.create",
+              "handoff.reconcile"
+            ],
+            "routes": [
+              {
+                "method": "GET",
+                "path": "/api/handoffs",
+                "permission": "handoff.read",
+                "kind": "read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/handoffs",
+                "permission": "handoff.create",
+                "kind": "write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/handoffs/reconcile",
+                "permission": "handoff.reconcile",
+                "kind": "write"
+              },
+              {
+                "method": "GET",
+                "path": "/api/handoffs/options",
+                "permission": "handoff.read",
+                "kind": "read"
+              }
+            ],
+            "workspaces": [
+              {
+                "id": "handoff.requests",
+                "label": "Cross-product handoffs",
+                "path": "/handoffs",
+                "permission": "handoff.read",
+                "export": "workspace"
+              }
+            ],
+            "schema": {
+              "current": 2,
+              "readMin": 2,
+              "readMax": 2
+            },
+            "background": true,
+            "studio": {
+              "label": "Handoff",
+              "summary": "Cross-product workflow and receipt reconciliation.",
+              "category": "integration",
+              "layers": [
+                "ui",
+                "backend",
+                "worker",
+                "integration",
+                "data"
+              ],
+              "ui": {
+                "routes": [
+                  {
+                    "path": "/handoffs",
+                    "workspace": "handoff.requests",
+                    "label": "Cross-product handoffs",
+                    "nav": "Integrations"
+                  }
+                ]
+              },
+              "backend": {
+                "events": [
+                  {
+                    "id": "handoff.committed",
+                    "direction": "publish",
+                    "schema": "handoff.receipt.v1"
+                  }
+                ]
+              },
+              "data": {
+                "stores": [
+                  {
+                    "id": "handoff-records",
+                    "kind": "relational",
+                    "ownership": "module"
+                  }
+                ],
+                "schemas": [
+                  {
+                    "id": "handoff",
+                    "version": 2
+                  }
+                ]
+              },
+              "deployment": {
+                "processes": [
+                  {
+                    "id": "handoff-api",
+                    "kind": "http"
+                  },
+                  {
+                    "id": "handoff-worker",
+                    "kind": "worker"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "bindings": [
+          {
+            "contract": "desk.requests.create.v2",
+            "instanceId": "local-desk",
+            "implementation": "service-desk",
+            "scope": "application",
+            "consumer": "handoff",
+            "mode": "local"
+          },
+          {
+            "contract": "knowledge.document.read.v1",
+            "instanceId": "local-documents",
+            "implementation": "knowledge",
+            "scope": "application",
+            "consumer": "handoff",
+            "mode": "local"
+          }
+        ],
+        "permissions": [
+          "desk.close",
+          "desk.create",
+          "desk.read",
+          "desk.receipts.read",
+          "handoff.create",
+          "handoff.read",
+          "handoff.reconcile",
+          "knowledge.read",
+          "knowledge.write"
+        ],
+        "requiresWorker": true
+      }
+    },
+    "knowledge": {
+      "valid": true,
+      "plan": {
+        "product": {
+          "id": "knowledge",
+          "version": "0.2.1",
+          "platformAbi": "quadbridge.module.v1",
+          "title": "Knowledge Library",
+          "description": "Documents, background indexing and connected-product action.",
+          "layout": "top",
+          "modules": [
+            {
+              "id": "handoff",
+              "version": "0.2.1"
+            },
+            {
+              "id": "knowledge",
+              "version": "0.2.1"
+            }
+          ],
+          "bindings": [
+            {
+              "contract": "desk.requests.create.v2",
+              "instanceId": "connected-desk",
+              "implementation": "configured-desk-http",
+              "scope": "application",
+              "consumer": "handoff",
+              "mode": "http"
+            },
+            {
+              "contract": "knowledge.document.read.v1",
+              "instanceId": "local-documents",
+              "implementation": "knowledge",
+              "scope": "application",
+              "consumer": "handoff",
+              "mode": "local"
+            }
+          ],
+          "wiring": "knowledge-to-desk"
+        },
+        "modules": [
+          {
+            "id": "knowledge",
+            "version": "0.2.1",
+            "abi": "quadbridge.module.v1",
+            "dependencies": [],
+            "provides": [
+              "knowledge.document.read.v1",
+              "knowledge.document.retrieve.v1"
+            ],
+            "requires": [],
+            "permissions": [
+              "knowledge.read",
+              "knowledge.write"
+            ],
+            "routes": [
+              {
+                "method": "GET",
+                "path": "/api/documents",
+                "permission": "knowledge.read",
+                "kind": "read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/documents/search",
+                "permission": "knowledge.read",
+                "kind": "read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/documents/answer",
+                "permission": "knowledge.read",
+                "kind": "read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/documents",
+                "permission": "knowledge.write",
+                "kind": "write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/documents/cancel-index",
+                "permission": "knowledge.write",
+                "kind": "write"
+              }
+            ],
+            "workspaces": [
+              {
+                "id": "knowledge.library",
+                "label": "Knowledge library",
+                "path": "/library",
+                "permission": "knowledge.read",
+                "export": "workspace"
+              }
+            ],
+            "schema": {
+              "current": 1,
+              "readMin": 1,
+              "readMax": 1
+            },
+            "background": true,
+            "studio": {
+              "label": "Knowledge",
+              "summary": "Document library with local extractive answers grounded in indexed sources.",
+              "category": "knowledge",
+              "layers": [
+                "ui",
+                "backend",
+                "worker",
+                "ai",
+                "data"
+              ],
+              "ui": {
+                "routes": [
+                  {
+                    "path": "/library",
+                    "workspace": "knowledge.library",
+                    "label": "Knowledge library",
+                    "nav": "Knowledge"
+                  }
+                ],
+                "extensionPoints": [
+                  "knowledge.document.actions"
+                ]
+              },
+              "backend": {
+                "services": [
+                  {
+                    "id": "document-reader",
+                    "contract": "knowledge.document.read.v1",
+                    "visibility": "product"
+                  },
+                  {
+                    "id": "document-retriever",
+                    "contract": "knowledge.document.retrieve.v1",
+                    "visibility": "product"
+                  }
+                ],
+                "jobs": [
+                  {
+                    "kind": "knowledge.index",
+                    "permission": "knowledge.write"
+                  }
+                ]
+              },
+              "ai": {
+                "pipelines": [
+                  {
+                    "id": "knowledge-rag",
+                    "label": "Knowledge retrieval pipeline",
+                    "input": "query",
+                    "output": "grounded-context"
+                  },
+                  {
+                    "id": "knowledge-extractive-answer",
+                    "label": "Local extractive answer",
+                    "input": "question",
+                    "output": "cited-source-excerpts"
+                  }
+                ],
+                "models": [
+                  {
+                    "capability": "text.embedding",
+                    "modality": "embedding",
+                    "placement": "either",
+                    "accelerator": "either"
+                  },
+                  {
+                    "capability": "text.generate",
+                    "modality": "text",
+                    "placement": "either",
+                    "accelerator": "either"
+                  }
+                ]
+              },
+              "data": {
+                "stores": [
+                  {
+                    "id": "knowledge-records",
+                    "kind": "relational",
+                    "ownership": "module"
+                  },
+                  {
+                    "id": "knowledge-vectors",
+                    "kind": "vector",
+                    "ownership": "module"
+                  }
+                ],
+                "schemas": [
+                  {
+                    "id": "knowledge",
+                    "version": 1
+                  }
+                ]
+              },
+              "deployment": {
+                "processes": [
+                  {
+                    "id": "knowledge-api",
+                    "kind": "http"
+                  },
+                  {
+                    "id": "knowledge-worker",
+                    "kind": "worker"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "handoff",
+            "version": "0.2.1",
+            "abi": "quadbridge.module.v1",
+            "dependencies": [
+              {
+                "id": "knowledge",
+                "version": "0.2.1"
+              }
+            ],
+            "provides": [],
+            "requires": [
+              "knowledge.document.read.v1",
+              "desk.requests.create.v2"
+            ],
+            "permissions": [
+              "handoff.read",
+              "handoff.create",
+              "handoff.reconcile"
+            ],
+            "routes": [
+              {
+                "method": "GET",
+                "path": "/api/handoffs",
+                "permission": "handoff.read",
+                "kind": "read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/handoffs",
+                "permission": "handoff.create",
+                "kind": "write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/handoffs/reconcile",
+                "permission": "handoff.reconcile",
+                "kind": "write"
+              },
+              {
+                "method": "GET",
+                "path": "/api/handoffs/options",
+                "permission": "handoff.read",
+                "kind": "read"
+              }
+            ],
+            "workspaces": [
+              {
+                "id": "handoff.requests",
+                "label": "Cross-product handoffs",
+                "path": "/handoffs",
+                "permission": "handoff.read",
+                "export": "workspace"
+              }
+            ],
+            "schema": {
+              "current": 2,
+              "readMin": 2,
+              "readMax": 2
+            },
+            "background": true,
+            "studio": {
+              "label": "Handoff",
+              "summary": "Cross-product workflow and receipt reconciliation.",
+              "category": "integration",
+              "layers": [
+                "ui",
+                "backend",
+                "worker",
+                "integration",
+                "data"
+              ],
+              "ui": {
+                "routes": [
+                  {
+                    "path": "/handoffs",
+                    "workspace": "handoff.requests",
+                    "label": "Cross-product handoffs",
+                    "nav": "Integrations"
+                  }
+                ]
+              },
+              "backend": {
+                "events": [
+                  {
+                    "id": "handoff.committed",
+                    "direction": "publish",
+                    "schema": "handoff.receipt.v1"
+                  }
+                ]
+              },
+              "data": {
+                "stores": [
+                  {
+                    "id": "handoff-records",
+                    "kind": "relational",
+                    "ownership": "module"
+                  }
+                ],
+                "schemas": [
+                  {
+                    "id": "handoff",
+                    "version": 2
+                  }
+                ]
+              },
+              "deployment": {
+                "processes": [
+                  {
+                    "id": "handoff-api",
+                    "kind": "http"
+                  },
+                  {
+                    "id": "handoff-worker",
+                    "kind": "worker"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "bindings": [
+          {
+            "contract": "desk.requests.create.v2",
+            "instanceId": "connected-desk",
+            "implementation": "configured-desk-http",
+            "scope": "application",
+            "consumer": "handoff",
+            "mode": "http"
+          },
+          {
+            "contract": "knowledge.document.read.v1",
+            "instanceId": "local-documents",
+            "implementation": "knowledge",
+            "scope": "application",
+            "consumer": "handoff",
+            "mode": "local"
+          }
+        ],
+        "permissions": [
+          "handoff.create",
+          "handoff.read",
+          "handoff.reconcile",
+          "knowledge.read",
+          "knowledge.write"
+        ],
+        "requiresWorker": true
+      }
+    },
+    "neutral": {
+      "valid": true,
+      "plan": {
+        "product": {
+          "id": "neutral",
+          "version": "0.2.0",
+          "platformAbi": "quadbridge.module.v1",
+          "title": "Neutral shell",
+          "description": "A runnable application with no business-domain modules.",
+          "layout": "sidebar",
+          "modules": [],
+          "bindings": []
+        },
+        "modules": [],
+        "bindings": [],
+        "permissions": [],
+        "requiresWorker": false
+      }
+    },
+    "service-desk": {
+      "valid": true,
+      "plan": {
+        "product": {
+          "id": "service-desk",
+          "version": "0.2.0",
+          "platformAbi": "quadbridge.module.v1",
+          "title": "Service Desk",
+          "description": "A small non-AI business product.",
+          "layout": "sidebar",
+          "modules": [
+            {
+              "id": "service-desk",
+              "version": "0.2.0"
+            }
+          ],
+          "bindings": []
+        },
+        "modules": [
+          {
+            "id": "service-desk",
+            "version": "0.2.0",
+            "abi": "quadbridge.module.v1",
+            "dependencies": [],
+            "provides": [
+              "desk.requests.create.v1",
+              "desk.requests.create.v2"
+            ],
+            "requires": [],
+            "permissions": [
+              "desk.read",
+              "desk.create",
+              "desk.close",
+              "desk.receipts.read"
+            ],
+            "routes": [
+              {
+                "method": "GET",
+                "path": "/api/requests",
+                "permission": "desk.read",
+                "kind": "read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/requests",
+                "permission": "desk.create",
+                "kind": "write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/requests/close",
+                "permission": "desk.close",
+                "kind": "write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/requests/commit",
+                "permission": "desk.create",
+                "kind": "write"
+              },
+              {
+                "method": "GET",
+                "path": "/api/requests/receipt",
+                "permission": "desk.receipts.read",
+                "kind": "read"
+              }
+            ],
+            "workspaces": [
+              {
+                "id": "desk.requests",
+                "label": "Service requests",
+                "path": "/requests",
+                "permission": "desk.read",
+                "export": "workspace"
+              },
+              {
+                "id": "service-desk.overview",
+                "label": "Request overview",
+                "path": "/request-overview",
+                "permission": "desk.read",
+                "export": "overviewWorkspace"
+              }
+            ],
+            "schema": {
+              "current": 1,
+              "readMin": 1,
+              "readMax": 1
+            },
+            "background": false,
+            "browserAssets": [
+              "ui/overview.css"
+            ],
+            "studio": {
+              "label": "Service Desk",
+              "summary": "Service-request UI and backend capability.",
+              "category": "operations",
+              "layers": [
+                "ui",
+                "backend",
+                "data"
+              ],
+              "ui": {
+                "routes": [
+                  {
+                    "path": "/requests",
+                    "workspace": "desk.requests",
+                    "label": "Service requests",
+                    "nav": "Operations"
+                  },
+                  {
+                    "path": "/request-overview",
+                    "workspace": "service-desk.overview",
+                    "label": "Request overview",
+                    "nav": "Operations"
+                  }
+                ]
+              },
+              "backend": {
+                "services": [
+                  {
+                    "id": "request-writer-v2",
+                    "contract": "desk.requests.create.v2",
+                    "visibility": "product"
+                  }
+                ]
+              },
+              "data": {
+                "stores": [
+                  {
+                    "id": "service-requests",
+                    "kind": "relational",
+                    "ownership": "module"
+                  }
+                ],
+                "schemas": [
+                  {
+                    "id": "service-desk",
+                    "version": 1
+                  }
+                ]
+              },
+              "deployment": {
+                "processes": [
+                  {
+                    "id": "service-desk-api",
+                    "kind": "http"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "bindings": [],
+        "permissions": [
+          "desk.close",
+          "desk.create",
+          "desk.read",
+          "desk.receipts.read"
+        ],
+        "requiresWorker": false
+      }
+    }
+  },
+  "sourceVersion": "0.2.0",
+  "studioVersion": "1.0"
+}

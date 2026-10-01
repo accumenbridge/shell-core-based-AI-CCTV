@@ -1,0 +1,13 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "APPROVED_NARROW_REPAIR_FOR_BROWSER_PROGRESSION",
+  "manager": {"capture":"platform-004-runtime-manager-repair-01.ts.txt","sha256":"68580233249a2d4a5f25cac35ac531e7835cca5061fa8a019d399522b18c2dda","built_sha256":"cea98e487d838b96f259f5848ec870155f22f45d5b0bb23918d10a68ad7a5eba"},
+  "test": {"capture":"platform-004-artifact-test-repair-01.mjs.txt","sha256":"34b8ad3dcaf6b6d9281133320dd2a8815f1ebac50291cd06d60b944f928d08e5"},
+  "build": {"evidence":"platform-004-build-repair-classification-33.log","exit_code":0},
+  "check": {"evidence":"platform-004-runtime-restart-repair-01.tap.txt","tests":2,"passed":2,"failed":0,"cancelled":0,"skipped":0,"todo":0,"exit_code":0,"duration_ms":37241.1782},
+  "change": "Only the caught typed RUNTIME_REPAIR_REQUIRED OR existing START material condition changes durable preparation classification. In-memory reversal reproduces prior9f75e766...6993 exactly, independently matched by root and Sol. No store/schema/dispatch/physical authority change.",
+  "scope": "Real build/register/promote/native START/STOP followed by paired marker-loss RESTART409. Exact attempt2/instance REPAIR_REQUIRED, FAILED RESTART, no dispatch/gates/readiness/EMPTY/helper facts, NOT_DISPATCHED and positive preparation cleanup releases own slot/execution. Prior successful START/STOP unchanged. Four prepared private files and access main DB bytes equal; missing COMPLETE stays absent during assertions and fixture alone restores original marker afterward. Non-repair control mutates only test-owned control-plane config_digest, then real completed preparation hits typed identity mismatch and remains PREPARATION_FAILED/FAILED without dispatch or private-file/access-DB changes.",
+  "review": "Independent Sol/high first/last manager/test/built hashes stable. Root read fresh build/raw TAP/captures and verified exact expression-only diff. No blocker for ordinary browser progression.",
+  "limits": "Control-plane digest mutation qualifies classification, not natural corruption provenance or all auth failures. Main access-file equality does not separately qualify arbitrary module/WAL byte equality. No browser/full/frozen/whole-CP4 acceptance yet. Prior intermittent restart503 unrelated and unexplained."
+}

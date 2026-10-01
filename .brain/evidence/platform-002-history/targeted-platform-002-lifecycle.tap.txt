@@ -1,0 +1,236 @@
+TAP version 13
+# file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/build-worker-process.test.mjs:146
+#     assert.equal(existsSync(join(context.root,'.local','platform-builds',...attempts[0].ref.split('/')),false);
+#                                                                                                              ^
+# SyntaxError: missing ) after argument list
+#     at compileSourceTextModule (node:internal/modules/esm/utils:318:16)
+#     at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:89:18)
+#     at \#translate (node:internal/modules/esm/loader:434:20)
+#     at afterLoad (node:internal/modules/esm/loader:502:29)
+#     at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:507:12)
+#     at \#getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+#     at afterResolve (node:internal/modules/esm/loader:607:52)
+#     at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+#     at node:internal/modules/esm/loader:632:32
+#     at TracingChannel.tracePromise (node:diagnostics_channel:362:14)
+# Node.js v24.19.0
+# Subtest: tests\\build-worker-process.test.mjs
+not ok 1 - tests\\build-worker-process.test.mjs
+  ---
+  duration_ms: 108.8143
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\build-worker-process.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: paired console starts with no private build-host profile and reports build requests unavailable
+ok 2 - paired console starts with no private build-host profile and reports build requests unavailable
+  ---
+  duration_ms: 696.6179
+  type: 'test'
+  ...
+# Subtest: two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+ok 3 - two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+  ---
+  duration_ms: 28.7448
+  type: 'test'
+  ...
+# Subtest: cleanup failure records UNKNOWN and cannot publish a clean cancellation
+not ok 4 - cleanup failure records UNKNOWN and cannot publish a clean cancellation
+  ---
+  duration_ms: 13.2644
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\control-plane-build-lifecycle.test.mjs:86:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    a prior UNKNOWN cleanup result cannot be rewritten as clean
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-build-lifecycle.test.mjs:95:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: terminal publication rechecks lease time after waiting for another SQLite writer
+ok 5 - terminal publication rechecks lease time after waiting for another SQLite writer
+  ---
+  duration_ms: 1919.8855
+  type: 'test'
+  ...
+# Subtest: public health and static entry are narrow while state and audit require pairing and exact Host
+ok 6 - public health and static entry are narrow while state and audit require pairing and exact Host
+  ---
+  duration_ms: 100.673
+  type: 'test'
+  ...
+# Subtest: pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+ok 7 - pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+  ---
+  duration_ms: 40.9362
+  type: 'test'
+  ...
+# Subtest: pairing attempts are bounded and expire their rate window
+ok 8 - pairing attempts are bounded and expire their rate window
+  ---
+  duration_ms: 33.2428
+  type: 'test'
+  ...
+# Subtest: authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+ok 9 - authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+  ---
+  duration_ms: 41.5999
+  type: 'test'
+  ...
+# Subtest: AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+ok 10 - AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+  ---
+  duration_ms: 40.9872
+  type: 'test'
+  ...
+# Subtest: build requests fail closed without an executor and deployment requests enforce immutable references
+ok 11 - build requests fail closed without an executor and deployment requests enforce immutable references
+  ---
+  duration_ms: 44.2317
+  type: 'test'
+  ...
+# Subtest: overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+ok 12 - overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+  ---
+  duration_ms: 57.4303
+  type: 'test'
+  ...
+# Subtest: a body is rejected if its exact authenticated session expires while the stream is pending
+ok 13 - a body is rejected if its exact authenticated session expires while the stream is pending
+  ---
+  duration_ms: 32.6131
+  type: 'test'
+  ...
+# Subtest: a body is rejected if that session logs out before streaming completes
+ok 14 - a body is rejected if that session logs out before streaming completes
+  ---
+  duration_ms: 35.5049
+  type: 'test'
+  ...
+# Subtest: canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+ok 15 - canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+  ---
+  duration_ms: 120.2679
+  type: 'test'
+  ...
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 16 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 4.0023
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 17 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 26.6489
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 18 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 32.4806
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 19 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 4.1334
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 20 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 1.3053
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 21 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 1.2077
+  type: 'test'
+  ...
+# Subtest: source paths normalize both separators and exclude operational components exactly
+ok 22 - source paths normalize both separators and exclude operational components exactly
+  ---
+  duration_ms: 0.6392
+  type: 'test'
+  ...
+# Subtest: maintained fingerprint ignores operational records and changes with source
+ok 23 - maintained fingerprint ignores operational records and changes with source
+  ---
+  duration_ms: 202.3851
+  type: 'test'
+  ...
+# Subtest: portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+ok 24 - portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+  ---
+  duration_ms: 32.8801
+  type: 'test'
+  ...
+# Subtest: TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+ok 25 - TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+  ---
+  duration_ms: 1.1851
+  type: 'test'
+  ...
+# Subtest: TAP verification follows actual Node nested, TODO, and skipped report counts
+ok 26 - TAP verification follows actual Node nested, TODO, and skipped report counts
+  ---
+  duration_ms: 419.2471
+  type: 'test'
+  ...
+# Subtest: TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+ok 27 - TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+  ---
+  duration_ms: 0.3627
+  type: 'test'
+  ...
+# Subtest: TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+ok 28 - TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+  ---
+  duration_ms: 0.2186
+  type: 'test'
+  ...
+# Subtest: build failure reports tests as NOT_RUN and claims only current passing evidence
+ok 29 - build failure reports tests as NOT_RUN and claims only current passing evidence
+  ---
+  duration_ms: 1.0386
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+ok 30 - START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+  ---
+  duration_ms: 258.7217
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+ok 31 - START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+  ---
+  duration_ms: 3285.279
+  type: 'test'
+  ...
+# {"fixture":"portable source copy","cwd":"foreign directory","health":{"path":"/healthz","status":200,"body":{"status":"ok"}},"page":{"path":"/","status":200}}
+1..31
+# tests 31
+# suites 0
+# pass 29
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9367.2998
+
+EXIT_CODE=1

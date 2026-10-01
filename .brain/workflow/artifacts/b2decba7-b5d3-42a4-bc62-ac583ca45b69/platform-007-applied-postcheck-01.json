@@ -1,0 +1,118 @@
+{
+  "taskId": "PLATFORM-007",
+  "sourceManifestSha256": "61173f21f9be59931de68c52e0f8f895478ed12aea139172101af2e9cde178ab",
+  "files": [
+    {
+      "path": "packages/composition/src/studio.ts",
+      "baselineSha256": "9a2aae3f53b3a5214e8f2abe66aefd72a5ca905eef9eef68ccdb47e33420bb9b",
+      "proposedSha256": "e0d317bdbc16ee0f202e598f91220fcc749a3387401a2ea65856afbf9bf8697b",
+      "appliedSha256": "e0d317bdbc16ee0f202e598f91220fcc749a3387401a2ea65856afbf9bf8697b",
+      "differsFromProposal": false
+    },
+    {
+      "path": "tools/studio-catalogue.mjs",
+      "baselineSha256": "35a78bab82255ac9e5c4e120890f6d2d5cae5fe190752ef358036459cfbdfe3b",
+      "proposedSha256": "f3f7d4e611978b8b4e096fc96be9d6404c0ed31b25e04bcadd319badc94086cf",
+      "appliedSha256": "f3f7d4e611978b8b4e096fc96be9d6404c0ed31b25e04bcadd319badc94086cf",
+      "differsFromProposal": false
+    },
+    {
+      "path": "apps/control-plane/src/operator-server.ts",
+      "baselineSha256": "0d02e1b136d135807461a1fbbcad423b8aaf7e3c691b6d27503eaf625f3b8989",
+      "proposedSha256": "bc56a389ecadff391b5ad240de2dfb990f1b0692a64118c8f84f82644438c3d2",
+      "appliedSha256": "ac16b51e899fea7cd4119f681c3f2727fc0470e0745eb17111235923f68614cd",
+      "differsFromProposal": true
+    },
+    {
+      "path": "packages/control-plane/src/index.ts",
+      "baselineSha256": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5",
+      "proposedSha256": "107bdca35e29b8ac2359e65159c01645167e01acbacb6aba17ed043705dad78f",
+      "appliedSha256": "107bdca35e29b8ac2359e65159c01645167e01acbacb6aba17ed043705dad78f",
+      "differsFromProposal": false
+    },
+    {
+      "path": "apps/studio-web/src/main.ts",
+      "baselineSha256": "0b8f12a155fe0992e85819b82fc4e3fb3169822939845b17648e5a8238c943c3",
+      "proposedSha256": "fca066a737bd9b12c1269ae01b0e7e1a562269db87d3f57ca94535c9fffe8ffc",
+      "appliedSha256": "ff841faed5d12daa17ede376c1bc1514dd144d1f4c3ea8a991487f9199eabbd4",
+      "differsFromProposal": true
+    },
+    {
+      "path": "apps/studio-web/static/studio.css",
+      "baselineSha256": "5777208560b74631b6230ed5373c0f77ed095fc51ad678289a96fec9dc70e342",
+      "proposedSha256": "b7eead083dd183df490b5312b166c016f5bd629608e9381767cff494590ce933",
+      "appliedSha256": "b7eead083dd183df490b5312b166c016f5bd629608e9381767cff494590ce933",
+      "differsFromProposal": false
+    },
+    {
+      "path": "visual/studio.js",
+      "baselineSha256": "ffc4f303b97b86b954e9c3da71c9c23af2ee29f627e00d057f682a9d29c01e89",
+      "proposedSha256": "8ce9a902154e3bada85aa548d74c19e5e3857ded89c3f6ab4564a5a977be66d2",
+      "appliedSha256": "8ce9a902154e3bada85aa548d74c19e5e3857ded89c3f6ab4564a5a977be66d2",
+      "differsFromProposal": false
+    },
+    {
+      "path": "visual/studio.css",
+      "baselineSha256": "509a431b7b190d94bb536b72f80d36095e62f175e6909042e7a90150e4cc03b5",
+      "proposedSha256": "05e6d50ba1d8a1db6d61e66ab38f4613eddfc6d2040b7c3f1065d5e5e4ffe4e7",
+      "appliedSha256": "05e6d50ba1d8a1db6d61e66ab38f4613eddfc6d2040b7c3f1065d5e5e4ffe4e7",
+      "differsFromProposal": false
+    },
+    {
+      "path": "tests/studio-integration.test.mjs",
+      "baselineSha256": "92c32bb381681510c5bb785e0fc3f9ad5769e3a28190770d3d34f3f4eab23897",
+      "proposedSha256": "92c32bb381681510c5bb785e0fc3f9ad5769e3a28190770d3d34f3f4eab23897",
+      "appliedSha256": "92c32bb381681510c5bb785e0fc3f9ad5769e3a28190770d3d34f3f4eab23897",
+      "differsFromProposal": false
+    },
+    {
+      "path": "tests/control-plane-http.test.mjs",
+      "baselineSha256": "c3a59b4d3ad0e5f91b18c92c0a1af93e4be634b848f3568f28b8ae65e98e58cb",
+      "proposedSha256": "a509d4db34e3df2e4e34c3596760cede34f4e3429d6fc271f7be6456f0a07011",
+      "appliedSha256": "f5faefb1e0b3ba494576fa6172f294387549e41dc97408690b6f7c789650cf10",
+      "differsFromProposal": true
+    },
+    {
+      "path": "tests/studio-product-editor.test.mjs",
+      "baselineSha256": null,
+      "proposedSha256": "817c60b8c650167e590941472fe5f2544fb117cf46f9dfb91e29fa40e5e28fbf",
+      "appliedSha256": "817c60b8c650167e590941472fe5f2544fb117cf46f9dfb91e29fa40e5e28fbf",
+      "differsFromProposal": false
+    },
+    {
+      "path": "tests/visual-edition.test.mjs",
+      "baselineSha256": "2043f45230b6429794f6b26f3e59028ed8499dcd3b23a9f71e8f6b24908a7d20",
+      "proposedSha256": "76c3ed89a42ba118fdc201cb7c0468be3cb7d92afd3b66560164eb972de918a3",
+      "appliedSha256": "1e57b43232eddaf6e714c2bc3723370044d7fbb4920d59a142a6b5ffb9ff5419",
+      "differsFromProposal": true
+    },
+    {
+      "path": "tests/control-plane-artifacts.test.mjs",
+      "baselineSha256": "1cc88fa06ba21b2a76b93a25360c4d32e0705e875ec8064d0443d1d65a003278",
+      "proposedSha256": "4c7f2f5447a4c99d600e35967c894e8bb977318fda7605f76797c6ed7560cbfb",
+      "appliedSha256": "4c7f2f5447a4c99d600e35967c894e8bb977318fda7605f76797c6ed7560cbfb",
+      "differsFromProposal": false
+    },
+    {
+      "path": "README.md",
+      "baselineSha256": "daa0884e017bb39a3e0861f16e416b6a01bccb2cdcf931d775652debfbefab6b",
+      "proposedSha256": "bedaaf51f5f53824d28953bb08f5320b0de1e35809741e3678b018a8629c7ee3",
+      "appliedSha256": "bedaaf51f5f53824d28953bb08f5320b0de1e35809741e3678b018a8629c7ee3",
+      "differsFromProposal": false
+    },
+    {
+      "path": "docs/STUDIO_INTEGRATION.md",
+      "baselineSha256": "d7c4a023101c7e5dcc96067eb25cbfb0fb37266290a3d65aca8b6ccaaf87abec",
+      "proposedSha256": "f2000f0a18726f1fe7c9fc7698ebb56de3c256e4ccea7af6a355fe30af127799",
+      "appliedSha256": "f2000f0a18726f1fe7c9fc7698ebb56de3c256e4ccea7af6a355fe30af127799",
+      "differsFromProposal": false
+    },
+    {
+      "path": "docs/STATUS.md",
+      "baselineSha256": "d130b7efbd0fcf5bfe296a1aff5a72e3ca2d26991eb81279fed6d22015fb7593",
+      "proposedSha256": "fe3ea0826a48e41cdbaf370fdca5ce541de0a702b62958cd61cb919ab679df82",
+      "appliedSha256": "fe3ea0826a48e41cdbaf370fdca5ce541de0a702b62958cd61cb919ab679df82",
+      "differsFromProposal": false
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+TAP version 13
+# Subtest: paired console starts with no private build-host profile and reports build requests unavailable
+ok 1 - paired console starts with no private build-host profile and reports build requests unavailable
+  ---
+  duration_ms: 708.5783
+  type: 'test'
+  ...
+# Subtest: two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+not ok 2 - two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+  ---
+  duration_ms: 24.7337
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\control-plane-build-lifecycle.test.mjs:41:1'
+  failureType: 'testCodeFailure'
+  error: 'Invalid audit limit'
+  code: 'INVALID'
+  name: 'PlatformError'
+  stack: |-
+    fail (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/packages/control-plane/dist/index.js:7:35)
+    ControlPlaneStore.auditLog (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/packages/control-plane/dist/index.js:582:13)
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-build-lifecycle.test.mjs:57:24)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: terminal publication rechecks lease time after waiting for another SQLite writer
+ok 3 - terminal publication rechecks lease time after waiting for another SQLite writer
+  ---
+  duration_ms: 1629.0607
+  type: 'test'
+  ...
+# Subtest: public health and static entry are narrow while state and audit require pairing and exact Host
+ok 4 - public health and static entry are narrow while state and audit require pairing and exact Host
+  ---
+  duration_ms: 86.0614
+  type: 'test'
+  ...
+# Subtest: pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+ok 5 - pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+  ---
+  duration_ms: 42.1789
+  type: 'test'
+  ...
+# Subtest: pairing attempts are bounded and expire their rate window
+ok 6 - pairing attempts are bounded and expire their rate window
+  ---
+  duration_ms: 33.2234
+  type: 'test'
+  ...
+# Subtest: authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+ok 7 - authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+  ---
+  duration_ms: 38.1317
+  type: 'test'
+  ...
+# Subtest: AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+ok 8 - AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+  ---
+  duration_ms: 37.5912
+  type: 'test'
+  ...
+# Subtest: build requests fail closed without an executor and deployment requests enforce immutable references
+ok 9 - build requests fail closed without an executor and deployment requests enforce immutable references
+  ---
+  duration_ms: 43.7487
+  type: 'test'
+  ...
+# Subtest: overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+ok 10 - overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+  ---
+  duration_ms: 58.5903
+  type: 'test'
+  ...
+# Subtest: a body is rejected if its exact authenticated session expires while the stream is pending
+ok 11 - a body is rejected if its exact authenticated session expires while the stream is pending
+  ---
+  duration_ms: 31.716
+  type: 'test'
+  ...
+# Subtest: a body is rejected if that session logs out before streaming completes
+ok 12 - a body is rejected if that session logs out before streaming completes
+  ---
+  duration_ms: 32.0263
+  type: 'test'
+  ...
+# Subtest: canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+ok 13 - canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+  ---
+  duration_ms: 116.6323
+  type: 'test'
+  ...
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 14 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 4.3237
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 15 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 36.4102
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 16 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 34.3144
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 17 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 3.9684
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 18 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 1.4183
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 19 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 1.2785
+  type: 'test'
+  ...
+# Subtest: source paths normalize both separators and exclude operational components exactly
+ok 20 - source paths normalize both separators and exclude operational components exactly
+  ---
+  duration_ms: 0.6334
+  type: 'test'
+  ...
+# Subtest: maintained fingerprint ignores operational records and changes with source
+ok 21 - maintained fingerprint ignores operational records and changes with source
+  ---
+  duration_ms: 14.6769
+  type: 'test'
+  ...
+# Subtest: portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+ok 22 - portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+  ---
+  duration_ms: 47.2334
+  type: 'test'
+  ...
+# Subtest: TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+ok 23 - TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+  ---
+  duration_ms: 1.1715
+  type: 'test'
+  ...
+# Subtest: TAP verification follows actual Node nested, TODO, and skipped report counts
+ok 24 - TAP verification follows actual Node nested, TODO, and skipped report counts
+  ---
+  duration_ms: 543.5984
+  type: 'test'
+  ...
+# Subtest: TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+ok 25 - TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+  ---
+  duration_ms: 0.3469
+  type: 'test'
+  ...
+# Subtest: TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+ok 26 - TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+  ---
+  duration_ms: 0.2016
+  type: 'test'
+  ...
+# Subtest: build failure reports tests as NOT_RUN and claims only current passing evidence
+ok 27 - build failure reports tests as NOT_RUN and claims only current passing evidence
+  ---
+  duration_ms: 0.9918
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+ok 28 - START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+  ---
+  duration_ms: 284.6798
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+ok 29 - START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+  ---
+  duration_ms: 3380.4473
+  type: 'test'
+  ...
+# {"fixture":"portable source copy","cwd":"foreign directory","health":{"path":"/healthz","status":200,"body":{"status":"ok"}},"page":{"path":"/","status":200}}
+1..29
+# tests 29
+# suites 0
+# pass 28
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9433.7855
+
+EXIT_CODE=1

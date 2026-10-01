@@ -1,0 +1,457 @@
+{
+  "schema": "brain.atlas-audit-result.v1",
+  "recordedAt": "2026-10-01T07:58:00.243Z",
+  "scope": "BRAIN-003 audit and repair of the reusable planning atlas; not platform release qualification.",
+  "repairs": [
+    "Reject ambiguous source/observation evidence IDs.",
+    "Bind inspection to the complete profile and validate the complete source-check set, identities, pins and states.",
+    "Refuse replacement of another project page or a legacy page without identity.",
+    "Expose planning gaps, an explicit focus, and observation/node navigation.",
+    "Adopt atlas preparation in AGENTS.md; fix portable guide dependencies.",
+    "Add pairing map and reconcile checkpoint summary/hash from one captured file."
+  ],
+  "candidate": {
+    "schema": "brain.atlas-validation-snapshot.v1",
+    "createdAt": "2026-10-01T07:47:55.882Z",
+    "root": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-atlas-audit-WoVvOm\\source",
+    "maintainedFingerprint": "8f6d752bb46a7f057e16b428b7d800d17e2ec4138e6322d77becc2ee93e7af72",
+    "files": [
+      {
+        "path": "tools/brain-atlas.mjs",
+        "sha256": "f97cbf215a038d585b9f315bffac4c63d772cbce811667e384e833734270a08e"
+      },
+      {
+        "path": "tests/brain-atlas.test.mjs",
+        "sha256": "4f168cb14ff751184d597a35c04f69340272d8567703600afe64d367b3489089"
+      },
+      {
+        "path": "docs/brain/ARCHITECTURE.md",
+        "sha256": "595b29f8a2bf89e7a0e3454fa867a047756eab2d2ca14b1deb71fe928c764fc9"
+      },
+      {
+        "path": "docs/brain/README.md",
+        "sha256": "b8c0ef7bb275b847970e45a13416996f67bdf6ec4f619b240e2817875d89f545"
+      },
+      {
+        "path": ".brain/atlas/project.json",
+        "sha256": "2b67a777b8890416aa48d837422395d462f6eb81b5e2f72e2b310a50521fda7f"
+      },
+      {
+        "path": ".brain/tasks/BRAIN-003.md",
+        "sha256": "32e51b4c5036c8acd7ca7803b7897e4db6ff86bd8c4fe18b043c5bb4d7e33230"
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "f5fa2f703d6159e325b579e0f8003fb18988d33cf961816da5bca038c7b5605d"
+      }
+    ],
+    "candidateDigest": "d209f683474e4267607848b0c6442f12786989bbe88b32c779d2a41e18243cfd",
+    "dependencies": [
+      {
+        "name": "typescript",
+        "files": 130,
+        "digest": "7f3b77150c6c81dc2fcb05ab3dcf7bfe982e72d34e6ca8ca98da467d4e44bce4"
+      },
+      {
+        "name": "@types/node",
+        "files": 73,
+        "digest": "88a62eb3b05d8e722bb2a790f60907522cf4fa5f0cf2c87ddc34171e9b9b010d"
+      },
+      {
+        "name": "undici-types",
+        "files": 41,
+        "digest": "bca0e5baa3f2fe9223de413327dcf3f9311999a79a0a6d522faf45d286a70f5e"
+      }
+    ],
+    "limitations": [
+      "Complete maintained source captured before checks; another chat may subsequently change the live platform.",
+      "Installed pinned dependencies copied byte-identically to owned temporary files; no downloads or policy changes.",
+      "Existing private local build-host profile copied unchanged, contents not logged."
+    ],
+    "unchangedAfterChecks": true,
+    "comparisons": [
+      {
+        "path": "tools/brain-atlas.mjs",
+        "sha256": "f97cbf215a038d585b9f315bffac4c63d772cbce811667e384e833734270a08e",
+        "frozenMatches": true,
+        "currentMatches": true
+      },
+      {
+        "path": "tests/brain-atlas.test.mjs",
+        "sha256": "4f168cb14ff751184d597a35c04f69340272d8567703600afe64d367b3489089",
+        "frozenMatches": true,
+        "currentMatches": true
+      },
+      {
+        "path": "docs/brain/ARCHITECTURE.md",
+        "sha256": "595b29f8a2bf89e7a0e3454fa867a047756eab2d2ca14b1deb71fe928c764fc9",
+        "frozenMatches": true,
+        "currentMatches": true
+      },
+      {
+        "path": "docs/brain/README.md",
+        "sha256": "b8c0ef7bb275b847970e45a13416996f67bdf6ec4f619b240e2817875d89f545",
+        "frozenMatches": true,
+        "currentMatches": true
+      },
+      {
+        "path": ".brain/atlas/project.json",
+        "sha256": "2b67a777b8890416aa48d837422395d462f6eb81b5e2f72e2b310a50521fda7f",
+        "frozenMatches": true,
+        "currentMatches": true
+      },
+      {
+        "path": ".brain/tasks/BRAIN-003.md",
+        "sha256": "32e51b4c5036c8acd7ca7803b7897e4db6ff86bd8c4fe18b043c5bb4d7e33230",
+        "frozenMatches": true,
+        "currentMatches": true
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "f5fa2f703d6159e325b579e0f8003fb18988d33cf961816da5bca038c7b5605d",
+        "frozenMatches": true,
+        "currentMatches": true
+      }
+    ]
+  },
+  "checks": {
+    "build": {
+      "command": "npm run build",
+      "exitCode": 0
+    },
+    "focused": {
+      "command": "node --test tests/brain-atlas.test.mjs",
+      "exitCode": 0,
+      "counts": {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "repository": {
+      "command": "npm test",
+      "exitCode": 1,
+      "counts": {
+        "tests": 270,
+        "pass": 267,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 2,
+        "todo": 0
+      },
+      "failures": [
+        "✖ Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup"
+      ],
+      "skipped": [
+        "﹣ BLOCKED_ENV: bounded snapshot verification rejects a file symlink when the host permits fixture creation (12394.49ms) # BLOCKED_ENV: host denied creation of the owned file-symlink fixture (EPERM)",
+        "﹣ native staging-file lock retains uncertain cleanup after an observed registry move (0.2531ms) # BLOCKED_POLICY: the native staging-file-lock fixture command is blocked in this process context"
+      ]
+    },
+    "workflow": {
+      "command": "node tools/brain.mjs validate",
+      "recordedAt": "2026-10-01T07:52:19.1520708Z",
+      "exitCode": 0,
+      "output": "VALID — revision 13, 16 records, 13 committed events"
+    },
+    "logs": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\checks-54ff59fc4e0041858c87a10516583a13"
+  },
+  "view": {
+    "path": ".brain/atlas/history/PROJECT_ATLAS-0004.html",
+    "sha256": "20c5a9fcdff9acc3d8076543525d3c88211f9fc4057294902265614e496d7629",
+    "bytes": 107301,
+    "projectId": "quadbridge-core-frameworks",
+    "profileDigest": "e47175ac5a86df52a7c05a1cec03f18fe4e3adaa4bd51848199c129cdf223c43",
+    "inspectedAt": "2026-10-01T07:48:51.230Z",
+    "recheckedAt": "2026-10-01T07:48:51.281Z",
+    "sourceStatus": "DEGRADED",
+    "warnings": [
+      "studio-ui: pinned digest differs from current file"
+    ]
+  },
+  "browser": {
+    "schema": "brain.atlas-browser-check.v1",
+    "startedAt": "2026-10-01T07:52:12.911215+00:00",
+    "htmlPath": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.brain\\atlas\\history\\PROJECT_ATLAS-0004.html",
+    "htmlSha256": "20c5a9fcdff9acc3d8076543525d3c88211f9fc4057294902265614e496d7629",
+    "status": "PASSED_WITH_ENVIRONMENT_INJECTION",
+    "checks": [
+      {
+        "name": "generated artifact has zero scripts; browser injection identified separately",
+        "result": "PASSED",
+        "injectedScriptCount": 1
+      },
+      {
+        "name": "unique anchors and all internal links",
+        "result": "PASSED",
+        "ids": 88,
+        "uniqueIds": 88,
+        "links": 359,
+        "missing": []
+      },
+      {
+        "name": "1440px layout and focus-node navigation",
+        "result": "PASSED",
+        "scroll": 1440,
+        "viewport": 1440
+      },
+      {
+        "name": "390px layout and focus-node navigation",
+        "result": "PASSED",
+        "scroll": 390,
+        "viewport": 390
+      },
+      {
+        "name": "320px layout and focus-node navigation",
+        "result": "PASSED",
+        "scroll": 320,
+        "viewport": 320
+      },
+      {
+        "name": "keyboard first-link navigation",
+        "result": "PASSED",
+        "target": "#planning-gaps"
+      },
+      {
+        "name": "no page script errors or unidentified external resource requests",
+        "result": "PASSED"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-1440.png",
+        "sha256": "bc0e71e49dcad9d257f736d92714f02b5631b7b5f48ac14b83b43d7a9360119b",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-1440-planning-focus.png",
+        "sha256": "b833315ba58a7591babff4c95736f733ff118ee3c07919ba55e5026b6f04079a",
+        "width": 1440,
+        "height": 1000,
+        "section": "planning-focus"
+      },
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-1440-map.png",
+        "sha256": "e966be83b56ef0a99659ed45eefdf2a661e6f86e8b15081217e77396da1f7661",
+        "width": 1440,
+        "height": 1000,
+        "section": "map"
+      },
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-390.png",
+        "sha256": "17943a1390446b3b996f08387a0ae26caff935a24013dcdd4c042a1ca8223113",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-390-planning-focus.png",
+        "sha256": "894cbc7852e8fa10400dcc32a7bf038098170f87e384ff6f499f4357f329cdbd",
+        "width": 390,
+        "height": 844,
+        "section": "planning-focus"
+      },
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-390-map.png",
+        "sha256": "0bfd9fc479ae339e6af6b9772209cc2c81b849bafec7a6d60cec09bc04142d78",
+        "width": 390,
+        "height": 844,
+        "section": "map"
+      },
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-05\\atlas-320.png",
+        "sha256": "15cafc7256d7e28edcbcb574cf3ed2f89f170f48c826f66e9480e227966e068b",
+        "width": 320,
+        "height": 844
+      }
+    ],
+    "limitations": [
+      "Only the read-only atlas page is covered; no platform runtime, provider, full UX design or production qualification.",
+      "The Codex browser connector failed before initialization (missing kernel assets); ordinary repository Playwright/Chrome is used without a policy bypass.",
+      "Installed Kaspersky injects its own external script into the browser response. It is absent from the exact generated artifact; no antivirus, CSP or browser policy was changed."
+    ],
+    "stage": "anchor-integrity",
+    "navigation": {
+      "status": 200,
+      "title": "Quadbridge Product Studio — project atlas",
+      "url": "http://127.0.0.1:60075/atlas",
+      "scriptCount": 1
+    },
+    "browserScripts": [
+      {
+        "type": "text/javascript",
+        "id": "",
+        "src": "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=6klVGpNC80KdwlIDFWOaSfmmKXGEmtACOcpVknZeSZJkWVTQnXr1kOJ4OE1GWat-",
+        "text": ""
+      }
+    ],
+    "responseSha256": "705c80a999cd37c979088d1c599c1f5947e588132c0c34a4f4a3e052c0d27529",
+    "environmentRequests": [
+      "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=6klVGpNC80KdwlIDFWOaSfmmKXGEmtACOcpVknZeSZJkWVTQnXr1kOJ4OE1GWat-",
+      "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=uBWtb16PvO8STvJRsmNNY9KggyUqFYYEHm7ByZ6DOPJWL2lzoOjvSJNkDBA8MQb3",
+      "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=3oB3GPQhOI8yJGAmbCJ8JuTB-jDlypUghEdFg_WojpnN2tKEoNYPsYo-H8oN1w8V",
+      "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=Qc_Mb6TL0QXGQM6xX941Q8GP723kAzruaNaj-erHHTduk9PHqgwFYV7klqpkSjDm",
+      "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=DaLdW55NH2we56Cx5e-0_9VmHp4kIxZYDyqOCjsr6YCCXlKUphpnVWaggIUkytlv"
+    ],
+    "browserVersion": "154.0.8037.59",
+    "finishedAt": "2026-10-01T07:52:18.261332+00:00"
+  },
+  "independentReview": {
+    "schema": "brain.atlas-attributed-review.v1",
+    "provenance": "Read-only subagent review messages in the current audit; not authenticated proof of reviewer identity or execution.",
+    "sourceReview": {
+      "reviewer": "/root/atlas_audit",
+      "result": "No material remaining finding in reviewed atlas/tool test scope.",
+      "toolSha256": "f97cbf215a038d585b9f315bffac4c63d772cbce811667e384e833734270a08e",
+      "testsSha256": "4f168cb14ff751184d597a35c04f69340272d8567703600afe64d367b3489089",
+      "scope": "Evidence ID ambiguity, profile/inspection/check-set binding, state consistency, output identity, planning focus and gaps, story membership semantics, regression coverage.",
+      "execution": "No build or tests run by reviewer."
+    },
+    "planningReview": {
+      "reviewer": "/root/brain_state_review",
+      "result": "No material planning/adoption blocker remains after checkpoint observation reconciliation.",
+      "profileFileSha256": "2b67a777b8890416aa48d837422395d462f6eb81b5e2f72e2b310a50521fda7f",
+      "canonicalProfileDigest": "e47175ac5a86df52a7c05a1cec03f18fe4e3adaa4bd51848199c129cdf223c43",
+      "pageSha256": "20c5a9fcdff9acc3d8076543525d3c88211f9fc4057294902265614e496d7629",
+      "scope": "AGENTS discovery retains canonical authority; both portable guides are included; source-backed pairing nodes; OBS05 reports checkpoint13 REVIEW with prior failures; proposed designs and source drift remain visible.",
+      "execution": "Planning/data review only; full suite and browser qualification performed separately by root."
+    }
+  },
+  "evidenceFiles": [
+    {
+      "path": ".brain/evidence/brain-atlas-audit/build.log",
+      "sha256": "97906f2a52ca509f8e1ac01192d76b70d9b082ffc9c88189cb0ea8fe240f9ad7"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/focused.log",
+      "sha256": "7119bebdeeccfb3a1479339a1731b9f0c1f8bb7e5a3e1871f99746e6d5fa1b0f"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/full.log",
+      "sha256": "38f8abf58662c8ae9d95fd2f844ac0fa50f04d703000e2e09430f068ca6fb029"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/test-run.json",
+      "sha256": "10173c05ae94d093fbebd9d30e74c0091fe7c3fb6b77b39898671b8e249f87c7"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/browser-result.json",
+      "sha256": "ba22a2d0b5455a9ea9c621e602cbc15a3bd671e18ba91e6b574181964ebfeb7a"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/browser-check.py",
+      "sha256": "1460b12a0c9feb9efdd0a82213328605d9648d382faf87ee88311dc1afa4eb18"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/render-inspection.json",
+      "sha256": "0e135bddd69611daf7994260b23849ef19056551ffd678c832bdc8a3619576a4"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/independent-review.json",
+      "sha256": "58e7a0032214824a248975eb67ab642de21556dbe7315689090d3635b7cdc322"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/workflow-validation.json",
+      "sha256": "e701202a2581efd2f1086c26daa6b45baa95881056b06caa759914e21cf6fe49"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/isolated-build-worker.log",
+      "sha256": "56e607eb81112b29d6b69064d90b3eb520c9900d734ef06e14a7b402ac9a426b"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/isolated-build-worker.json",
+      "sha256": "69c68e866e0cec04f0aab8603acc18efed91059ba809c03380fb76fba71dd470"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/platform-failure-diagnosis.json",
+      "sha256": "4b2227ace18a232d746df757d6f3ec3fcd23a4c6123759135491eeacc8cab4c7"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/atlas-1440.png",
+      "sha256": "bc0e71e49dcad9d257f736d92714f02b5631b7b5f48ac14b83b43d7a9360119b"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/atlas-1440-planning-focus.png",
+      "sha256": "b833315ba58a7591babff4c95736f733ff118ee3c07919ba55e5026b6f04079a"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/atlas-1440-map.png",
+      "sha256": "e966be83b56ef0a99659ed45eefdf2a661e6f86e8b15081217e77396da1f7661"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/atlas-390.png",
+      "sha256": "17943a1390446b3b996f08387a0ae26caff935a24013dcdd4c042a1ca8223113"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/atlas-390-planning-focus.png",
+      "sha256": "894cbc7852e8fa10400dcc32a7bf038098170f87e384ff6f499f4357f329cdbd"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/atlas-390-map.png",
+      "sha256": "0bfd9fc479ae339e6af6b9772209cc2c81b849bafec7a6d60cec09bc04142d78"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-audit/atlas-320.png",
+      "sha256": "15cafc7256d7e28edcbcb574cf3ed2f89f170f48c826f66e9480e227966e068b"
+    }
+  ],
+  "isolatedReplay": {
+    "startedAt": "2026-10-01T07:57:23.6666176Z",
+    "root": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-atlas-audit-WoVvOm\\source",
+    "candidateDigest": "d209f683474e4267607848b0c6442f12786989bbe88b32c779d2a41e18243cfd",
+    "command": "node --test --test-name-pattern=\"Windows job cancellation and timeout\" tests/build-worker-process.test.mjs",
+    "purpose": "Diagnose the full-suite failure on the unchanged, already freshly built candidate. Does not supersede the full-suite result.",
+    "exitCode": 0,
+    "finishedAt": "2026-10-01T07:57:51.0899310Z"
+  },
+  "platformDiagnosis": {
+    "schema": "brain.atlas-audit-diagnostic.v1",
+    "test": "Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup",
+    "ownerBoundary": "Existing platform test and implementation belong to the separate platform work; not edited by the Brain atlas audit.",
+    "reviewer": "/root/atlas_audit",
+    "observedFacts": [
+      "First descendant heartbeat wait is bounded at 10 seconds and begins before worker source/toolchain preparation.",
+      "Worker timeout is 6 seconds from spawning PowerShell; it includes native helper compilation, job setup and Node startup.",
+      "The prior recorded failure occurred before cancellation was requested. Current run stack must be retained alongside this diagnosis.",
+      "Reviewer confirmed relevant live source matches the frozen candidate byte-for-byte."
+    ],
+    "hypothesis": "Full-suite resource contention can exhaust one of the pre-heartbeat startup windows. This is plausible, not an established cause.",
+    "requiredInvariant": "Observe a living descendant before cancellation. CLEAN requires nonce-bound empty-job proof, helper close, stopped descendant and then owned workspace removal. Uncertain termination remains UNKNOWN with quarantine.",
+    "interpretation": "An isolated passing replay supports timing sensitivity but never erases the full-suite failure or proves its exact cause."
+  },
+  "visualInspection": {
+    "reviewer": "root coordinator",
+    "kind": "Direct screenshot inspection",
+    "result": "Desktop overview/map and mobile overview/focus remain readable and within their viewport. Complete UX specification and comprehensive accessibility audit are outside this check.",
+    "screenshots": [
+      "atlas-1440.png",
+      "atlas-390.png",
+      "atlas-1440-map.png",
+      "atlas-390-planning-focus.png"
+    ]
+  },
+  "auditExecutionHistory": {
+    "rejectedSnapshot": ".local/brain-003/freeze-rejected-01.json",
+    "browserAttempts": [
+      ".local/brain-003/browser/result.json",
+      ".local/brain-003/browser-diagnostic-02/result.json",
+      ".local/brain-003/browser-diagnostic-03/result.json",
+      ".local/brain-003/browser-04/result.json"
+    ],
+    "notes": [
+      "First freeze rejected concurrent final edits before any build or test; the second stable snapshot is the sole qualification candidate.",
+      "First page-capture helper tried to substitute a second inspection timestamp and was correctly rejected by the new binding check. The repaired helper compares independent renders allowing only their naturally different visible timestamp; it never mutates inspection data.",
+      "Initial browser assertion assumed all scripts belonged to the artifact. Diagnostic runs identified installed antivirus response injection. Final checks retain the security software and separately assess artifact scripts, unidentified resources and actual page interactions."
+    ]
+  },
+  "limitations": [
+    "No guarantee of bug-free code or complete UX design follows from these checks.",
+    "Atlas remains a read-only planning layer; automatic dispatch, verification runner and enforced ownership are future controller work.",
+    "Repository suite is evaluated at its exact frozen candidate. Concurrent platform changes outside the listed owned files are not qualified by this run.",
+    "The ordinary native-lock policy block and any file-symlink environment denial remain separately skipped, not passed.",
+    "Provider/live deployment qualification was not performed.",
+    "Prior failed results and legacy snapshots are preserved. Shared canonical task/checkpoint files were not edited by this task."
+  ]
+}

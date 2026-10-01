@@ -1,0 +1,59 @@
+- complementary:
+  - generic: Q
+  - generic: Quadbridge
+  - generic: PRODUCT WORKSPACE
+  - generic: Quadbridge Core Operations
+  - paragraph: "Core delivery: persisted requests, grounded Knowledge and owner-confirmed handoffs."
+  - navigation "Workspaces":
+    - link "Knowledge library":
+      - /url: "#/library"
+    - link "Service requests":
+      - /url: "#/requests"
+    - link "Request overview":
+      - /url: "#/request-overview"
+    - link "Cross-product handoffs":
+      - /url: "#/handoffs"
+  - generic: LOCAL DEVELOPER PROFILE
+  - paragraph: 3 selected modules
+  - paragraph: runtime-2cd07972-b233-4112-a510-39708d908d83
+- main:
+  - text: Tenant
+  - combobox "Tenant":
+    - option "customer-a" [selected]
+    - option "customer-b"
+  - generic: admin
+  - button "Sign out"
+  - heading "Cross-product handoffs" [level=2]
+  - paragraph: Choose a permitted document and request a linked action. The destination remains the owner of its record.
+  - generic: Loaded handoffs
+  - strong: "1"
+  - generic: Current response · current tenant
+  - generic: Destination confirmed
+  - strong: "1"
+  - generic: Separate from local job success
+  - generic: Confirmation needed
+  - strong: "0"
+  - generic: Check the original receipt
+  - generic: Knowledge
+  - generic: →
+  - generic: Bound public operation
+  - generic: →
+  - generic: Service Desk
+  - heading "Create a linked request" [level=3]
+  - status: Connection prerequisites checked. Authorization is checked again when you submit.
+  - button "Refresh documents & connection"
+  - generic: Source document
+  - combobox "Source document":
+    - option "Choose a source document"
+    - option "Core operations note · v1" [selected]
+  - generic: Reason for the service request
+  - textbox "Reason for the service request"
+  - button "Request Service Desk action"
+  - heading "Requests and confirmations" [level=3]
+  - article:
+    - generic: Destination confirmed
+    - heading "Core operations note" [level=3]
+    - paragraph: "Local execution: Local completion recorded. Source workflow: Destination linked."
+    - generic "Technical details" [active]
+    - paragraph: 4b033789-0bba-47c8-9d63-d5422554f66e
+    - paragraph: "{\"instanceId\":\"runtime-2cd07972-b233-4112-a510-39708d908d83\",\"productId\":\"core-ops-1002\",\"tenantId\":\"customer-a\",\"resourceType\":\"desk.request\",\"resourceId\":\"2c29b42d-eb2f-417e-96c0-bcb6dc54dd97\",\"version\":1}"

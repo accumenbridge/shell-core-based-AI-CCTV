@@ -1,0 +1,38 @@
+{
+  "schema": "quadbridge.core-browser-observation.v1",
+  "taskId": "CORE-DELIVERY-001",
+  "status": "BLOCKED_BEFORE_SAVE",
+  "candidate": "60d43fc75eeacb293b769596080797cdf7dea11ca3ae842343e6ebb51f559fd5",
+  "candidateFiles": 196,
+  "fixtureId": "bb2d1ea3-66b1-4b07-8889-2a1f447ca494",
+  "actualServerSession": 16380,
+  "actualOuterExit": 0,
+  "observed": [
+    "Fresh private reviewed source/toolchain compiled, actual full console started, zero initial builds/artifacts/promotions/runtimes/backups; four source catalogue products.",
+    "Actual Chrome3 normal pairing succeeded; no credential or permission change.",
+    "First Products navigation left Reviewed modules empty. Second Products visit rendered all three source modules. Sol independently confirmed redundant hashchange/navigation-generation race in maintained UI.",
+    "Ordinary New composition selected Handoff and resolved Handoff0.2.1, Knowledge0.2.1, ServiceDesk0.2.0, all-local bindings.",
+    "Complete JSON edit set core-ops-1001@1.0.0, description and custom core-desk-link/core-document-link identities. Actual exact preview displayed source graph and VALIDATED_DEFINITION_NOT_RUNNING.",
+    "Save through Playwright stalled. Fresh same-browser tab restored complete JSON and exact preview. Documented AX click opened exact immutable-save JavaScript confirmation; getJsDialog observed confirm, but accept and browser keyboard failed with CDP focus-emulation timeout.",
+    "Read-only actual control-plane database after failed save showed only four source products and zero builds; custom save did not commit.",
+    "Exact UUID STOP request awaited original full-console close. Actual outer tool session exited0. Closed record has both slots EMPTY, no runtimes/backups, candidate unchanged. Both owned browser tabs closed."
+  ],
+  "provenance": "Actual root CUA browser operations, read-only native SQLite query, reviewed frozen helper and actual exec/write_stdin observations; not simulated.",
+  "references": {
+    "context": ".local/core-delivery-001-attempt-01/core-context.json",
+    "helper": ".local/core-delivery-001-attempt-01/live-server.mjs",
+    "privateCompileLog": ".local/core-delivery-001-attempt-01/private-build.log",
+    "candidateBefore": ".local/core-delivery-001-attempt-01/candidate.before.json",
+    "candidateAfterBuild": ".local/core-delivery-001-attempt-01/candidate.after-build.json",
+    "candidateAfterClose": ".local/core-delivery-001-attempt-01/candidate.after-close.json",
+    "closed": ".local/core-delivery-001-attempt-01/live.closed.json",
+    "repairPlan": ".brain/evidence/core-delivery-001-ui-repair-plan-01.md"
+  },
+  "limitations": [
+    "No saved custom version, build, promotion, managed app, domain or recovery journey qualified by this attempt.",
+    "Native dialog handling failed in browser tooling; this is not a permission grant, policy bypass or successful confirmation.",
+    "Earlier file-upload policy block remains separately BLOCKED. No permission change or workaround was attempted.",
+    "No successful screenshot captured at the blocked confirmation; actual DOM and tool observations only.",
+    "Private ready file retains pairing code locally and is excluded from public evidence. No credentials, owner tokens or nonce are copied here."
+  ]
+}

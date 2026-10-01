@@ -1,0 +1,14 @@
+{
+  "schema": "brain.task-contract.v1",
+  "taskId": "PLATFORM-004",
+  "title": "Managed local runtime — imported platform context",
+  "authorization": {"kind": "reported_import", "reference": "Existing mapped .brain/tasks/PLATFORM-004.md and preserved legacy progress; this import grants no new authorization or qualification."},
+  "sourceTaskRef": ".brain/tasks/PLATFORM-004.md",
+  "owners": {"coordinator": "Legacy platform coordinator", "implementer": "Legacy platform implementation agent", "reviewer": "Legacy platform independent reviewer"},
+  "allowedPaths": ["apps/control-plane/src/runtime-manager.ts", "apps/control-plane/src/main.ts", "packages/control-plane/src/index.ts", "tools/runtime-supervisor.mjs", "tests/control-plane-artifacts.test.mjs"],
+  "excludedActions": ["New acceptance inferred from migration", "Deployment, providers, credentials or external changes", "Overriding the user's core-delivery priority"],
+  "prerequisites": [],
+  "criteria": [{"id": "PLATFORM-CONTEXT", "description": "Preserve the latest observed platform status and its scope without claiming independent verification.", "evidenceScope": "Reported import only. The legacy contract and linked evidence retain their original scope."}],
+  "requiredRecipeIds": [],
+  "reviewRequirement": {"required": false, "independence": "none"}
+}

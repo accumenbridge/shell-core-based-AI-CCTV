@@ -1,0 +1,16 @@
+{
+  "schema": "brain.ancillary-change.v1",
+  "recordedAt": "2026-10-01T07:09:09.696Z",
+  "task": "PLATFORM-005A-CORE",
+  "coreCandidateUnchanged": true,
+  "frozenFingerprint": "aebe87cdb2c116b1839749db8a892ad04b3916cbdb5a0f53615b7c6c45e06259",
+  "currentFingerprint": "6de97355792ddb8501bd186d7dc0e594c3adfebde32822b54548f0c9fb807689",
+  "changes": [
+    {
+      "path": "tools/brain-atlas.mjs",
+      "before": "bcccbbccc3158a760f1c2d664a96df90fcbfcc0a311cd0cb061633e720194183",
+      "after": "607d3a8677ba37431184a2e80d4069b9d147701e13293ec6d1ccb007c798109b"
+    }
+  ],
+  "scope": "Unrelated other-chat Brain atlas file outside CP5 manifest. Preserve edit; wide197-file freeze is not unchanged and no whole-inventory same-byte claim follows."
+}

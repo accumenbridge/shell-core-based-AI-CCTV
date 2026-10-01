@@ -1,0 +1,8 @@
+{
+  "Command": "npm.cmd test",
+  "StartedAt": "2026-10-01T11:30:16.9569457Z",
+  "FinishedAt": "2026-10-01T11:42:00.1178755Z",
+  "ExitCode": 1,
+  "AfterBrainCaptureExit": 0,
+  "AfterCoreCaptureExit": 0
+}

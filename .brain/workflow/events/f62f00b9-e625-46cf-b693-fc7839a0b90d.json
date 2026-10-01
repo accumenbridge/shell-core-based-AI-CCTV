@@ -1,0 +1,133 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "f62f00b9-e625-46cf-b693-fc7839a0b90d",
+  "revision": 22,
+  "previousEventId": "ff7a53fa-275c-4564-8930-bce2fc0d0a6c",
+  "reportedActor": "/root platform coordinator",
+  "recordedAt": "2026-10-01T09:08:02.203Z",
+  "platformTask": {
+    "taskId": "PLATFORM-007",
+    "status": "IMPLEMENTING",
+    "candidate": null,
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Brain-only source/build/live/browser boundary complete and closed. Verify finite16 CP7 baseline/proposed manifest, authorize sole Luna application, capture candidate before fresh build and focused checks, freeze for exact Sol review, ordinary paired/offline browser and required shared suite.",
+    "gates": [
+      {
+        "id": "CP6-local-prerequisite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/evidence/platform-006-result-01.json"
+        ],
+        "limitations": [
+          "Bounded local extractive core; two full-suite blocked skips and no hosted/provider/production inference."
+        ]
+      },
+      {
+        "id": "CP7-execution",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/tasks/PLATFORM-007.md",
+          ".brain/evidence/platform-007-implementation-map-03.md"
+        ],
+        "limitations": [
+          "Scratch proposal only; no maintained implementation, build, tests or browser qualification yet."
+        ]
+      }
+    ]
+  },
+  "maintenanceTask": {
+    "taskId": "BRAIN-004",
+    "status": "REVIEW",
+    "candidate": {
+      "files": [
+        {
+          "path": "docs/brain/CONTROL.md",
+          "sha256": "cd84b18b3fe11346a30c0a82199f363292f48efd31d40ed7070469f148e23709"
+        },
+        {
+          "path": "tests/brain-control.test.mjs",
+          "sha256": "c9b6eb5eba9e8cddf4698f1a31dce04dec243f680b432ae007d71165b3b80db0"
+        },
+        {
+          "path": "tests/brain-live.test.mjs",
+          "sha256": "299ec7925178a37ecae37f977aa830c3dd19afcf6e92d1702aeb692e4def382e"
+        },
+        {
+          "path": "tests/brain-workflow.test.mjs",
+          "sha256": "d478d508e6693ac0ff89047ea9b09e5d1f6e3cfd37d9d7bd0e2d91d52fef4db4"
+        },
+        {
+          "path": "tools/brain-app-server.mjs",
+          "sha256": "7bf18811b487a10a96505b0845f2a3966bf7cca866a5201583be971c2f6f46d7"
+        },
+        {
+          "path": "tools/brain-control.mjs",
+          "sha256": "4882a2dd66fc66e0cc3b8b23b2a57e1710fceec35a554401b974ffd9843acc21"
+        },
+        {
+          "path": "tools/brain-core.mjs",
+          "sha256": "d2fd69c0a88cc18aff1e3f9e645cea4275d1f1d3fbb0222df025044344bd82df"
+        },
+        {
+          "path": "tools/brain-live-ui.mjs",
+          "sha256": "8c05753cebc6ffd2e27119f76fb918a8208da12208e1ec9139dbd168849ce071"
+        },
+        {
+          "path": "tools/brain-live.mjs",
+          "sha256": "3401aa6bd5a853fb45a5310b1c6642e68dfc21664438c0eaa0fbee5c5cb883d0"
+        }
+      ],
+      "digest": "ed44fcbaba980b3c302640dfe258c46946eba6d8475eaaa51012e6090584d67b"
+    },
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Exact9 ed44fcb... frozen after actual before/after build06, focused13/13+control10/10, independent delta review and real installed CodexLuna/xhigh scratch execution/ordinary Chrome live view. Other authorized chat publishes task-specific records only; root final shared suite records exact candidate before acceptance. All provider/probe servers closed.",
+    "gates": [
+      {
+        "id": "BRAIN-004-authorized",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/tasks/BRAIN-004.md"
+        ],
+        "limitations": [
+          "Root verified explicit human ok do and Yes—coordinate the two chats in review-astra-analyse the brain module and how it is used; other chat owns finite9 Brain-only source paths."
+        ]
+      },
+      {
+        "id": "BRAIN-001-history",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/workflow/events/57b477c0-c75d-45ac-aaef-928359d72d1a.json"
+        ],
+        "limitations": [
+          "Historical BRAIN-001 acceptance preserved in immutable events; no current BRAIN-004 execution qualification."
+        ]
+      },
+      {
+        "id": "BRAIN-004-execution",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/contracts/BRAIN-004.json"
+        ],
+        "limitations": [
+          "New declared files intentionally absent at READY/null. No proof of live controller or isolated execution."
+        ]
+      },
+      {
+        "id": "BRAIN-004-focused-core-06",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".local/brain-004-before-06.json",
+          ".local/brain-004-after-06.json"
+        ],
+        "limitations": [
+          "Reported other authorized chat actual exec10685 exit0/build0/13and10pass; immutable records pending. Root independently matched nine-file after candidate."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "c67a073fc526eeeaef9b2b15fbc882f458f2d4f9edc1014e49b958aa68b292f8"
+}

@@ -1,0 +1,9 @@
+{
+  "command": "npm.cmd test",
+  "startedUtc": "2026-10-01T12:24:02.2773426Z",
+  "endedUtc": "2026-10-01T12:35:07.0950037Z",
+  "outerExitCode": 1,
+  "toolSessionId": 71578,
+  "observedToolExitCode": 1,
+  "rawOutputPath": ".local/core-delivery-001-final-suite.log"
+}

@@ -1,0 +1,218 @@
+{
+  "schema": "brain.atlas-reconciliation.v1",
+  "recordedAt": "2026-10-01T08:02:18.964Z",
+  "fromRevision": 4,
+  "toRevision": 5,
+  "observedAt": "2026-10-01T07:59:32.910Z",
+  "checkpointRevision": 15,
+  "checkpointSha256": "11e7f4b099aa1ba9f03aca74885ea267871460537bf149a9fa50f01d7e70b2a2",
+  "decision": "Source-backed data-only reconciliation after independent review: switch planning focus to READY Knowledge; preserve candidate-limited historical recovery acceptance and the separate failed atlas repository suite.",
+  "profileSha256": "c8fe77c982d2ca515a1692fc518f1970e45f4077aee2ba2b8d086f8eee2d15b6",
+  "reviewer": "/root/brain_state_review",
+  "review": "Proposed exact reconciliation and verified historical source/evidence hashes; implementation/controller authority unchanged.",
+  "sourceAudit": ".brain/evidence/brain-atlas-audit-result.json",
+  "qualifiedCodeUnchanged": true,
+  "independentReview": {
+    "reviewer": "/root/brain_state_review",
+    "kind": "Attributed read-only review",
+    "result": "No material data mismatch. M06 READY/unexecuted, M05 historical candidate-specific local acceptance, preserved failures/blocked gates, correct focus priority.",
+    "profileSha256": "c8fe77c982d2ca515a1692fc518f1970e45f4077aee2ba2b8d086f8eee2d15b6"
+  },
+  "view": {
+    "path": ".brain/atlas/history/PROJECT_ATLAS-0005.html",
+    "sha256": "f3468c0704e792aaf39c4029807a543fb390199e711b0915a05c9fde8588378d",
+    "bytes": 108523,
+    "projectId": "quadbridge-core-frameworks",
+    "profileDigest": "63e2ed39c05f50a79eaeb97b10665c8a30445f09881ca8f6fdeac7c4d44b2f96",
+    "inspectedAt": "2026-10-01T08:00:07.880Z",
+    "recheckedAt": "2026-10-01T08:00:07.924Z",
+    "sourceStatus": "VALID",
+    "warnings": []
+  },
+  "browser": {
+    "schema": "brain.atlas-browser-check.v1",
+    "startedAt": "2026-10-01T08:00:08.445518+00:00",
+    "htmlPath": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.brain\\atlas\\history\\PROJECT_ATLAS-0005.html",
+    "htmlSha256": "f3468c0704e792aaf39c4029807a543fb390199e711b0915a05c9fde8588378d",
+    "status": "PASSED_WITH_ENVIRONMENT_INJECTION",
+    "checks": [
+      {
+        "name": "generated artifact has zero scripts; browser injection identified separately",
+        "result": "PASSED",
+        "injectedScriptCount": 1
+      },
+      {
+        "name": "unique anchors and all internal links",
+        "result": "PASSED",
+        "ids": 91,
+        "uniqueIds": 91,
+        "links": 375,
+        "missing": []
+      },
+      {
+        "name": "1440px layout and focus-node navigation",
+        "result": "PASSED",
+        "scroll": 1440,
+        "viewport": 1440
+      },
+      {
+        "name": "390px layout and focus-node navigation",
+        "result": "PASSED",
+        "scroll": 390,
+        "viewport": 390
+      },
+      {
+        "name": "320px layout and focus-node navigation",
+        "result": "PASSED",
+        "scroll": 320,
+        "viewport": 320
+      },
+      {
+        "name": "keyboard first-link navigation",
+        "result": "PASSED",
+        "target": "#planning-gaps"
+      },
+      {
+        "name": "no page script errors or unidentified external resource requests",
+        "result": "PASSED"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-final\\atlas-1440.png",
+        "sha256": "21a96fe109c836382fcfca8507971815482cbbfa0c9f3c6df5952398c0016e13",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-final\\atlas-1440-planning-focus.png",
+        "sha256": "890eb917dc0e0c8ceb08f111e66a86a6ec65050de2b21992ad3378edac63705f",
+        "width": 1440,
+        "height": 1000,
+        "section": "planning-focus"
+      },
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-final\\atlas-1440-map.png",
+        "sha256": "e1b3d53d6bcfe89c1cdd699745856ffb332d388e6b7753cc120f96ea01225aa2",
+        "width": 1440,
+        "height": 1000,
+        "section": "map"
+      },
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-final\\atlas-390.png",
+        "sha256": "09b4d6ccd1b614ad649d00c013dd99f3e252fe8d66f83fbd86940bf2b615b6fd",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-final\\atlas-390-planning-focus.png",
+        "sha256": "52f03b528541d6ebfeb70374d91f5be31c6a789ffadf5126c225fda93560f6a4",
+        "width": 390,
+        "height": 844,
+        "section": "planning-focus"
+      },
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-final\\atlas-390-map.png",
+        "sha256": "68b9164f38b931ea8e7334aa9ca936c32ee166847e7fd27e3a71073dcb763c32",
+        "width": 390,
+        "height": 844,
+        "section": "map"
+      },
+      {
+        "path": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\brain-003\\browser-final\\atlas-320.png",
+        "sha256": "69162387983a558320d568a8748443d6042a1f9f665443332af58142d5786d6d",
+        "width": 320,
+        "height": 844
+      }
+    ],
+    "limitations": [
+      "Only the read-only atlas page is covered; no platform runtime, provider, full UX design or production qualification.",
+      "The Codex browser connector failed before initialization (missing kernel assets); ordinary repository Playwright/Chrome is used without a policy bypass.",
+      "Installed Kaspersky injects its own external script into the browser response. It is absent from the exact generated artifact; no antivirus, CSP or browser policy was changed."
+    ],
+    "stage": "anchor-integrity",
+    "navigation": {
+      "status": 200,
+      "title": "Quadbridge Product Studio — project atlas",
+      "url": "http://127.0.0.1:52177/atlas",
+      "scriptCount": 1
+    },
+    "browserScripts": [
+      {
+        "type": "text/javascript",
+        "id": "",
+        "src": "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=7I0PIz2_iuL8r6CiBgvvTJnNs4SyP1RwK0BKCLlXn8jIybSFXf-No3TnlhtDGfsw",
+        "text": ""
+      }
+    ],
+    "responseSha256": "da3d9362378ff4fb11397532097a80a1201390b2e9d6f47ef613db297ca4d8c3",
+    "environmentRequests": [
+      "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=7I0PIz2_iuL8r6CiBgvvTJnNs4SyP1RwK0BKCLlXn8jIybSFXf-No3TnlhtDGfsw",
+      "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=yZQ0a_s0QW8aWQWefgVLTolzOZRX0QvZjE-qQZb6U7B0uuYtbzSQE4RPOwdxGMvd",
+      "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=42PFPSYyCM9rC3QA1GNitfJ6DOmxmnBTcmQ6CnaiTZEwuqbXA6pL5mSRfClI-lT9",
+      "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=YwCAt3J9r5NZABJgHzWc_9Q0su1OchYTAWzPBebHPqCo2UcsIyvTAq8ewl5wlkRN",
+      "http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=Qt8MaM49r9GaHHOiapnFUWC5R58qBT4KXFt5xlTeecSPNIq7ta5xzcJN87tjFvs1"
+    ],
+    "browserVersion": "154.0.8037.59",
+    "finishedAt": "2026-10-01T08:00:13.182261+00:00"
+  },
+  "artifacts": [
+    {
+      "path": ".brain/evidence/brain-atlas-reconciliation-03/result.json",
+      "sha256": "ba293d7de4b8933c30ab362dea8be793c5782ef157eea400d5bfe05bdae1ecb4"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-reconciliation-03/browser-check.py",
+      "sha256": "e3a76561f8e4e8626b584ebc7f5e1bcc4ccc56b3480f5685a23381a7722dd57c"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-reconciliation-03/final-render-inspection.json",
+      "sha256": "5834812b657313a330ae63c2054166840d1d2c78911da44262b113c181b81768"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-reconciliation-03/atlas-1440.png",
+      "sha256": "21a96fe109c836382fcfca8507971815482cbbfa0c9f3c6df5952398c0016e13"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-reconciliation-03/atlas-1440-planning-focus.png",
+      "sha256": "890eb917dc0e0c8ceb08f111e66a86a6ec65050de2b21992ad3378edac63705f"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-reconciliation-03/atlas-1440-map.png",
+      "sha256": "e1b3d53d6bcfe89c1cdd699745856ffb332d388e6b7753cc120f96ea01225aa2"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-reconciliation-03/atlas-390.png",
+      "sha256": "09b4d6ccd1b614ad649d00c013dd99f3e252fe8d66f83fbd86940bf2b615b6fd"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-reconciliation-03/atlas-390-planning-focus.png",
+      "sha256": "52f03b528541d6ebfeb70374d91f5be31c6a789ffadf5126c225fda93560f6a4"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-reconciliation-03/atlas-390-map.png",
+      "sha256": "68b9164f38b931ea8e7334aa9ca936c32ee166847e7fd27e3a71073dcb763c32"
+    },
+    {
+      "path": ".brain/evidence/brain-atlas-reconciliation-03/atlas-320.png",
+      "sha256": "69162387983a558320d568a8748443d6042a1f9f665443332af58142d5786d6d"
+    }
+  ],
+  "latestValidation": {
+    "atlas": {
+      "exitCode": 0,
+      "output": "Atlas structure: VALID\nPlanning gaps: 11 identified by limited checks; informational, not a readiness gate.\nSource inspection: VALID\nChecked 28 source reference(s).\n"
+    },
+    "canonicalWorkflow": {
+      "exitCode": 1,
+      "output": "INVALID\nENOENT: ENOENT: no such file or directory, lstat 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\packages\\composition\\src\\workspace-closure.ts'\n"
+    }
+  },
+  "limitations": [
+    "Data-only update after the frozen revision4 code qualification; no claim that full npm test ran against current parallel platform changes.",
+    "The full atlas audit suite remains267passed/1failed/2blocked, with the failed native startup test passing in isolation; neither result supersedes the other.",
+    "The separate platform coordinator owns its new task and implementation. A live workflow validation failure from its declared uncreated file is retained; no placeholder or shared checkpoint mutation was made here.",
+    "Eleven planning gaps remain explicit; this is not the future autonomous controller or complete UX design.",
+    "Browser evidence includes installed antivirus response injection, separately recorded; no policy/security bypass."
+  ]
+}

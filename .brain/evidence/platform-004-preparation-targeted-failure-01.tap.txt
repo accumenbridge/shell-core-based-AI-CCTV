@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 1 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 4.6386
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 2 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 23.2935
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 3 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 30.9012
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 4 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 4.2575
+  type: 'test'
+  ...
+# Subtest: schema 3 artifact publication facts are added without changing older operation values
+ok 5 - schema 3 artifact publication facts are added without changing older operation values
+  ---
+  duration_ms: 15.5893
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 6 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 1.6882
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 7 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 1.6349
+  type: 'test'
+  ...
+# Subtest: managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+ok 8 - managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+  ---
+  duration_ms: 23.6721
+  type: 'test'
+  ...
+# Subtest: managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+ok 9 - managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+  ---
+  duration_ms: 3.4524
+  type: 'test'
+  ...
+# Subtest: schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+ok 10 - schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+  ---
+  duration_ms: 2.7098
+  type: 'test'
+  ...
+# Subtest: canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+ok 11 - canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+  ---
+  duration_ms: 7.3062
+  type: 'test'
+  ...
+# Subtest: runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+not ok 12 - runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+  ---
+  duration_ms: 7.1521
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\runtime-manager-preparation.test.mjs:57:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/runtime-manager-preparation.test.mjs:63:10)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Error: Test "runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store" at tests\\runtime-manager-preparation.test.mjs:57:1 generated asynchronous activity after the test ended. This activity created the error "RuntimePreparationError: Managed runtime enrollment path or immutable identity is invalid" and would have caused the test to fail, but instead triggered an unhandledRejection event.
+1..12
+# tests 12
+# suites 0
+# pass 11
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 162.4962

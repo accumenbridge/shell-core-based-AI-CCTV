@@ -1,0 +1,30 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "SOURCE_REVIEW_REQUIRES_REPAIR",
+  "qualification": "FRESH_BUILD_AND_FOCUSED_COMPONENTS_NATIVE_NOT_RUN",
+  "hashes": {
+    "apps/control-plane/src/runtime-manager.ts": "de27a610e443f70dada82ea46a2d1f47a691133d7e5d8a16d815a8d3f34c893e",
+    "tests/runtime-manager-preparation.test.mjs": "e813d45ace0589d6fcb9b7ce7cedbe60903bb3df9a8e0a96ab8ae15ddc461e9c",
+    "packages/control-plane/src/index.ts": "f129e74d45b92d517f44de2a5f068b432a29337303c2309627ec82226bfb06c8",
+    "tools/runtime-supervisor.mjs": "e8bee18aed4399433f6a85cf653c78401f2b5cb8576aee8d8a9da61df33e9d52",
+    "tools/build-job.ps1": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9",
+    "tests/managed-runtime-store.test.mjs": "885a3cdf97997e3b849e65c733f425e5c2713c59ce0813d4942587d5d03bdeec"
+  },
+  "checks": {
+    "fresh_build": {"worker_reported_exit_code": 0, "evidence": "platform-004-build-manager-source-19.log", "note": "Raw log has no exit marker; full build output read independently."},
+    "focused": {"worker_reported_exit_code": 0, "tests": 17, "passed": 17, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "evidence": "platform-004-manager-focused-05.tap.txt"},
+    "prior_focused_03": {"passed": 16, "failed": 1, "reason": "Synthetic deadline omitted from new tail fixture", "evidence": "platform-004-manager-focused-failure-03.tap.txt"},
+    "prior_focused_04": {"passed": 16, "failed": 1, "reason": "Expected startup error wording in tail fixture", "evidence": "platform-004-manager-focused-failure-04.tap.txt"},
+    "native_runtime_http_browser_full_verifier": "NOT_RUN"
+  },
+  "independent_reviews": {
+    "architect_sol_high": "Six matching hashes; bounded/public-close retry repaired. Useful close regression stubs finalizer and does not prove native wait. Sole remaining source blocker: established event channel disappearance is accepted.",
+    "probe_sol_high": "Six matching hashes; coalesced zero-byte tail, semantic test identity and real consumer teardown repaired. Same known-channel ENOENT blocker. Other previously reviewed seams remain coherent for source scope."
+  },
+  "repairs_required": [
+    "Distinguish never-created event channel from ENOENT after observed dev/ino, even zero-byte initial observation; retain bounded event error without erasing exact native physical proof.",
+    "Add known-channel removal and legitimate never-created absence regressions, then fresh matching build/tests/source review."
+  ],
+  "root_reconciliation": "Root matched six hashes/read/archived build and TAP plus preserved failures; both Sol reviewers withhold source approval for the same narrow blocker. Luna repairing; native launch remains held."
+}

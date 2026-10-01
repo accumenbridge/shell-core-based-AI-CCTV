@@ -1,0 +1,25 @@
+{
+  "schema": "brain.workflow-audit-finding.v1",
+  "status": "OPEN",
+  "title": "Unbound planned tasks prematurely require every future source file",
+  "observedContext": "Canonical revision15 maps PLATFORM-006 READY with candidate:null. Its contract explicitly includes new files that are not created until authorized implementation.",
+  "reproduction": "node tools/brain.mjs validate returns INVALID ENOENT for packages/composition/src/workspace-closure.ts while it remains absent.",
+  "affectedCode": [
+    {"path":"tools/brain-core.mjs","line":954,"finding":"validate checks every allowedPaths file before considering checkpoint/task state."},
+    {"path":"tools/brain-core.mjs","line":1023,"finding":"context computes a materialized candidate before reading its unbound task state."}
+  ],
+  "independentReview": {
+    "reviewer": "/root/atlas_audit",
+    "kind": "Attributed read-only source review",
+    "conclusion": "Workflow lifecycle inconsistency for planned additions. Not atlas source drift and not proof the Knowledge implementation failed."
+  },
+  "repairRequirements": [
+    "Distinguish a declared, unbound plan from an existing materialized candidate in validate and context.",
+    "Preserve lexical path confinement, existing-parent symlink/junction checks and strict source/evidence matching for bound candidates and acceptance.",
+    "Never create placeholder product files merely to satisfy Brain validation.",
+    "Test READY with planned absent files, later materialization, unsafe paths, and bound/accepted missing-source failure."
+  ],
+  "coordination": "The accepted current BRAIN-001 maintenance candidate includes brain-core.mjs and its workflow tests. Editing them also triggers STALE_ACCEPTANCE until a new qualified maintenance checkpoint is published. Shared checkpoint ownership remains with the active platform coordinator; this atlas audit did not rewrite that acceptance or the platform task.",
+  "atlasAudit": ".brain/evidence/brain-atlas-audit-result.json",
+  "currentAtlasDataQualification": ".brain/evidence/brain-atlas-reconciliation-03.json"
+}

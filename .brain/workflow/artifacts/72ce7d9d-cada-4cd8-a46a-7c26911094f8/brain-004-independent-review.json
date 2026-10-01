@@ -1,0 +1,25 @@
+{
+  "schema": "brain.independent-source-review.v1",
+  "reviewer": "/root/brain_oversight_plan",
+  "implementer": "/root Brain implementation",
+  "outcome": "ACCEPTED",
+  "candidate": "ed44fcbaba980b3c302640dfe258c46946eba6d8475eaaa51012e6090584d67b",
+  "contractDigest": "4aa4223e13a277e22835b8f564ffe46affdd3c3e8ed99b821df32217b71f47e6",
+  "priorCandidate": "d775ce09f1ea6ac052142a2575c0bf8c1924b7ead2cd68225d961637f78f52c5",
+  "scope": "Bounded nine-file BRAIN-004 source implementation and sole subsequent mobile wrapping delta.",
+  "findingsResolved": [
+    "Ambiguous turn/start acknowledgement and active protocol loss retain UNKNOWN and terminate owned server.",
+    "Atlas source inspection binds approval baseline.",
+    "Required UNKNOWN runs cannot be concealed by earlier passes.",
+    "Unexpected item types fail closed.",
+    "Late proposals discarded after replan; forced check interruption remains uncertain.",
+    "Whole proposal validation before writes; exact candidate human review.",
+    "Host/Bearer/Origin controls and opaque preview sandbox.",
+    "Only UI body overflow-wrap:anywhere differs from accepted prior candidate; other eight file hashes unchanged."
+  ],
+  "provenance": "Separate read-only reviewer independently hashed all nine paths, recomputed candidate and read focused05. Delta reviewer reproduced prior UI hash by reversing the single CSS declaration. Reviewer did not execute tests or edit records.",
+  "limitations": [
+    "Source review is separate from actual provider/browser/full-suite observations.",
+    "No OS isolation, bug-free guarantee or platform acceptance claim."
+  ]
+}

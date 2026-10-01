@@ -1,0 +1,47 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "67b4058b-520b-42e5-b8e0-ad888ce7ec74",
+  "revision": 29,
+  "previousEventId": "65a7e7d2-309f-40cf-8aca-c75d6f417de4",
+  "reportedActor": "/root coordinated core delivery and Brain readiness",
+  "recordedAt": "2026-10-01T10:36:07.199Z",
+  "platformTask": {
+    "taskId": "CORE-DELIVERY-001",
+    "status": "READY",
+    "candidate": null,
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Core196 app source frozen and actual build01 passed; Luna prepares fresh source-only private runtime fixture for ordinary complete live journey. Sole separate Brain writer owns readiness and README correction.",
+    "gates": [
+      {
+        "id": "CORE-DELIVERY-001-execution",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Goal/plan adopted; no fresh execution result inferred."
+        ]
+      }
+    ]
+  },
+  "maintenanceTask": {
+    "taskId": "BRAIN-005",
+    "status": "IMPLEMENTING",
+    "candidate": null,
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Authorized Brain chat sole Luna writes finite13 readiness/documentation paths, Sol independently reviews. Actual candidate not yet frozen. Pure focused checks only; full npm test waits for root native fixture closure.",
+    "gates": [
+      {
+        "id": "BRAIN-005-execution",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Goal/plan adopted; no fresh execution result inferred."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "839163eda9e0c01ec588e93cf0d744958f9e0847eec17ff6c412e0ff4905716a"
+}

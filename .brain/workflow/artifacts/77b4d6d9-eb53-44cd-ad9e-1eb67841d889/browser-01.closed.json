@@ -1,0 +1,25 @@
+{
+  "fixtureId": "10fb076c-74d7-4316-b6f7-4b946e8db189",
+  "pid": 32036,
+  "status": "CLOSED",
+  "candidate": "feae2158e39dca364b28001d70d9ca78ca1486f3970e1aa5c49113c58e8e0026",
+  "builds": [],
+  "products": [
+    {
+      "id": "combined",
+      "version": "0.2.1"
+    },
+    {
+      "id": "knowledge",
+      "version": "0.2.1"
+    },
+    {
+      "id": "neutral",
+      "version": "0.2.0"
+    },
+    {
+      "id": "service-desk",
+      "version": "0.2.0"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "quadbridge.atlas-reconciliation.v1",
+  "archivedRevision": 6,
+  "newRevision": 7,
+  "checkpointRevision": 28,
+  "observedAt": "2026-10-01T10:31:24.483Z",
+  "changes": [
+    {
+      "id": "readme",
+      "previous": "bedaaf51f5f53824d28953bb08f5320b0de1e35809741e3678b018a8629c7ee3",
+      "current": "b3b15a364066fcb029917012b2c311ff594c5235e29843de881048601f731f99",
+      "reason": "Luna actual one-file full-console entry correction independently read by root; no runtime implementation change."
+    },
+    {
+      "id": "brain5-task",
+      "previous": "909f2fd693a890643e8cd8792f24c38ae5e4ab9120920b6605826e7d70161c7f",
+      "current": "e76dc3d1f574f54e00e424f6ae926fa8a538d0f3837c43e60723881975c7c1be",
+      "reason": "Coordinated authorized normal+managed shared readiness exact12-source scope; separate one writer/reviewer, root state ownership."
+    },
+    {
+      "id": "checkpoint",
+      "previous": "8211a34bfedefaf7defc55992d8e9c5399d3ea4a875faf7600ecb8b2079619a5",
+      "current": null,
+      "reason": "CURRENT.md is derived mutable execution authority, explicitly read fresh rather than pinned as durable source; task/source refs remain pinned. Historical immutable event refs unchanged."
+    }
+  ],
+  "limitations": [
+    "No new execution result; root scope and actual README correction only."
+  ]
+}

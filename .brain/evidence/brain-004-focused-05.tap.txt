@@ -1,0 +1,214 @@
+TAP version 13
+# Subtest: explicit-root init and render keep two temporary project atlases independent
+ok 1 - explicit-root init and render keep two temporary project atlases independent
+  ---
+  duration_ms: 1252.6933
+  type: 'test'
+  ...
+# Subtest: structural validation reports broken links, cycles, and malformed dependencies without throwing
+ok 2 - structural validation reports broken links, cycles, and malformed dependencies without throwing
+  ---
+  duration_ms: 1.0766
+  type: 'test'
+  ...
+# Subtest: source inspection distinguishes matched pins, drift, and missing pinned files
+ok 3 - source inspection distinguishes matched pins, drift, and missing pinned files
+  ---
+  duration_ms: 10.6619
+  type: 'test'
+  ...
+# Subtest: offline rendering escapes hostile text and gives each observation one canonical anchor
+ok 4 - offline rendering escapes hostile text and gives each observation one canonical anchor
+  ---
+  duration_ms: 1.3734
+  type: 'test'
+  ...
+# Subtest: render refuses to replace an arbitrary existing user file
+ok 5 - render refuses to replace an arbitrary existing user file
+  ---
+  duration_ms: 410.8851
+  type: 'test'
+  ...
+# Subtest: source paths escaping the selected project root are structurally invalid
+ok 6 - source paths escaping the selected project root are structurally invalid
+  ---
+  duration_ms: 4.849
+  type: 'test'
+  ...
+# Subtest: source inspection marks junction traversal unsafe
+ok 7 - source inspection marks junction traversal unsafe
+  ---
+  duration_ms: 6.7239
+  type: 'test'
+  ...
+# Subtest: source and observation identifiers cannot collide across reference namespaces
+ok 8 - source and observation identifiers cannot collide across reference namespaces
+  ---
+  duration_ms: 0.2485
+  type: 'test'
+  ...
+# Subtest: inspection binds the full profile and checked source set; renderer derives status from checks
+ok 9 - inspection binds the full profile and checked source set; renderer derives status from checks
+  ---
+  duration_ms: 6.4866
+  type: 'test'
+  ...
+# Subtest: planning focus and bounded gaps stay distinct from structure and current-work selection
+ok 10 - planning focus and bounded gaps stay distinct from structure and current-work selection
+  ---
+  duration_ms: 5.179
+  type: 'test'
+  ...
+# Subtest: renderer requires generated output identity and gives actionable legacy migration error
+ok 11 - renderer requires generated output identity and gives actionable legacy migration error
+  ---
+  duration_ms: 695.3802
+  type: 'test'
+  ...
+# Subtest: managed feature edits only its candidate, observes real checks and requires a current review
+ok 12 - managed feature edits only its candidate, observes real checks and requires a current review
+  ---
+  duration_ms: 574.7453
+  type: 'test'
+  ...
+# Subtest: whole proposal validation prevents partial out-of-scope changes
+ok 13 - whole proposal validation prevents partial out-of-scope changes
+  ---
+  duration_ms: 66.2544
+  type: 'test'
+  ...
+# Subtest: source drift, stale decisions and cross-project replay are rejected
+ok 14 - source drift, stale decisions and cross-project replay are rejected
+  ---
+  duration_ms: 65.9486
+  type: 'test'
+  ...
+# Subtest: pause and direction changes wait for acknowledgement and discard late output
+ok 15 - pause and direction changes wait for acknowledgement and discard late output
+  ---
+  duration_ms: 82.59
+  type: 'test'
+  ...
+# Subtest: failed actual check is retained and cannot be accepted
+ok 16 - failed actual check is retained and cannot be accepted
+  ---
+  duration_ms: 581.6308
+  type: 'test'
+  ...
+# Subtest: lost agent connection preserves UNKNOWN and never silently redispatches
+ok 17 - lost agent connection preserves UNKNOWN and never silently redispatches
+  ---
+  duration_ms: 82.4161
+  type: 'test'
+  ...
+# Subtest: changed architecture source invalidates review even outside editable inputs
+ok 18 - changed architecture source invalidates review even outside editable inputs
+  ---
+  duration_ms: 528.3848
+  type: 'test'
+  ...
+# Subtest: App Server ambiguous turn acknowledgement and protocol loss remain uncertain
+ok 19 - App Server ambiguous turn acknowledgement and protocol loss remain uncertain
+  ---
+  duration_ms: 0.6823
+  type: 'test'
+  ...
+# Subtest: proposal adapter interrupts unknown item types instead of authorizing future tools
+ok 20 - proposal adapter interrupts unknown item types instead of authorizing future tools
+  ---
+  duration_ms: 0.2051
+  type: 'test'
+  ...
+# Subtest: live console refreshes project state and rejects unauthorized, stale and foreign-origin decisions
+ok 21 - live console refreshes project state and rejects unauthorized, stale and foreign-origin decisions
+  ---
+  duration_ms: 153.788
+  type: 'test'
+  ...
+# Subtest: bootstrap checkpoint, sourceTaskRef mapping, focused context, and project adoption preserve imported scope
+ok 22 - bootstrap checkpoint, sourceTaskRef mapping, focused context, and project adoption preserve imported scope
+  ---
+  duration_ms: 643.6624
+  type: 'test'
+  ...
+# Subtest: required records, copied evidence, independent review, and observation-only blocked suite gate control acceptance
+ok 23 - required records, copied evidence, independent review, and observation-only blocked suite gate control acceptance
+  ---
+  duration_ms: 2202.9293
+  type: 'test'
+  ...
+# Subtest: stale candidate evidence and stale scoped source cannot qualify after a source edit
+ok 24 - stale candidate evidence and stale scoped source cannot qualify after a source edit
+  ---
+  duration_ms: 923.3935
+  type: 'test'
+  ...
+# Subtest: recipe definition changes invalidate otherwise passing record qualification
+ok 25 - recipe definition changes invalidate otherwise passing record qualification
+  ---
+  duration_ms: 753.0994
+  type: 'test'
+  ...
+# Subtest: expected revision and the non-expiring participating-writer lock reject conflicting publication
+ok 26 - expected revision and the non-expiring participating-writer lock reject conflicting publication
+  ---
+  duration_ms: 446.1814
+  type: 'test'
+  ...
+# Subtest: stale generated view is detected and repaired from the current pointer
+ok 27 - stale generated view is detected and repaired from the current pointer
+  ---
+  duration_ms: 576.5642
+  type: 'test'
+  ...
+# Subtest: orphan event material is reported but does not block a later same-revision publication
+ok 28 - orphan event material is reported but does not block a later same-revision publication
+  ---
+  duration_ms: 625.8797
+  type: 'test'
+  ...
+# Subtest: self-review, wrong-task evidence references, and imported acceptance are rejected
+ok 29 - self-review, wrong-task evidence references, and imported acceptance are rejected
+  ---
+  duration_ms: 1194.1122
+  type: 'test'
+  ...
+# Subtest: path traversal and junction source paths fail closed
+ok 30 - path traversal and junction source paths fail closed
+  ---
+  duration_ms: 516.0702
+  type: 'test'
+  ...
+# Subtest: a historical accepted task remains readable after source, contract, and recipe evolution
+ok 31 - a historical accepted task remains readable after source, contract, and recipe evolution
+  ---
+  duration_ms: 1375.348
+  type: 'test'
+  ...
+# Subtest: READY future files remain a plan; bound missing files cannot qualify
+ok 32 - READY future files remain a plan; bound missing files cannot qualify
+  ---
+  duration_ms: 953.443
+  type: 'test'
+  ...
+# Subtest: planned files do not bypass parent type or path confinement
+ok 33 - planned files do not bypass parent type or path confinement
+  ---
+  duration_ms: 454.8567
+  type: 'test'
+  ...
+# Subtest: unselected failures veto positives until same-scope evidenced resolution
+ok 34 - unselected failures veto positives until same-scope evidenced resolution
+  ---
+  duration_ms: 2500.0422
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13343.0823

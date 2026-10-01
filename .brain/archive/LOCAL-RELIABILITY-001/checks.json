@@ -1,0 +1,159 @@
+{
+  "schema": "brain.check-catalog.v1",
+  "status": "bound",
+  "checks": [
+    {
+      "id": "baseline-dependency-install",
+      "criterion_refs": [
+        "BASE-5"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "ci",
+        "--ignore-scripts"
+      ],
+      "cwd": ".",
+      "environment_ref": "Windows project root; package.json requires Node >=22.16.0; record exact Node/npm versions at run time.",
+      "expected_assertions": [
+        "Locked dependency installation completes with lifecycle scripts disabled."
+      ],
+      "timeout_seconds": 1800,
+      "side_effects": "Creates ignored node_modules/ and may use the configured npm cache.",
+      "evidence_level": "real_integration",
+      "state": "PASSED",
+      "evidence_ref": ".brain/evidence/baseline-result.json"
+    },
+    {
+      "id": "baseline-targeted-regressions",
+      "criterion_refs": [
+        "BASE-1",
+        "BASE-2",
+        "BASE-3",
+        "BASE-4"
+      ],
+      "kind": "automated",
+      "argv": [
+        "node.exe",
+        "--test",
+        "--test-reporter=tap",
+        "tests/factory-lifecycle.test.mjs",
+        "tests/studio-integration.test.mjs",
+        "tests/reliability-baseline.test.mjs"
+      ],
+      "cwd": ".",
+      "environment_ref": "Windows project root; package.json requires Node >=22.16.0; record exact Node/npm versions at run time.",
+      "expected_assertions": [
+        "Existing generated-module and paired-Studio lifecycle workflows retain all assertions.",
+        "reliability-baseline tests exercise launcher control flow, portable-copy and source fingerprint behavior, and verifier failure/reporting cases."
+      ],
+      "timeout_seconds": 900,
+      "side_effects": "Tests may spawn local processes, use bounded loopback ports, and create temporary fixtures; each test must clean up its owned resources.",
+      "evidence_level": "real_integration",
+      "state": "PASSED",
+      "evidence_ref": ".brain/evidence/baseline-result.json"
+    },
+    {
+      "id": "baseline-build",
+      "criterion_refs": [
+        "BASE-1",
+        "BASE-2",
+        "BASE-3",
+        "BASE-4"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "build"
+      ],
+      "cwd": ".",
+      "environment_ref": "Windows project root; package.json requires Node >=22.16.0; record exact Node/npm versions at run time.",
+      "expected_assertions": [
+        "Build completes from current maintained source with no stale-dist success claim."
+      ],
+      "timeout_seconds": 900,
+      "side_effects": "Writes ignored build output under dist/ and .artifacts/.",
+      "evidence_level": "real_integration",
+      "state": "PASSED",
+      "evidence_ref": ".brain/evidence/baseline-result.json"
+    },
+    {
+      "id": "baseline-full-suite",
+      "criterion_refs": [
+        "BASE-1",
+        "BASE-2",
+        "BASE-3",
+        "BASE-4",
+        "BASE-5"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "test"
+      ],
+      "cwd": ".",
+      "environment_ref": "Windows project root; package.json requires Node >=22.16.0; record exact Node/npm versions at run time.",
+      "expected_assertions": [
+        "Source build runs first",
+        "All discovered TAP tests pass",
+        "Counts, skipped/TODO cases, and failures are reported without normalization into a false pass."
+      ],
+      "timeout_seconds": 1800,
+      "side_effects": "Build output and test temporary files; tests may start local child processes and loopback servers.",
+      "evidence_level": "real_integration",
+      "state": "PASSED",
+      "evidence_ref": ".brain/evidence/baseline-result.json"
+    },
+    {
+      "id": "baseline-verifier",
+      "criterion_refs": [
+        "BASE-1",
+        "BASE-3",
+        "BASE-4"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "verify"
+      ],
+      "cwd": ".",
+      "environment_ref": "Windows project root; package.json requires Node >=22.16.0; record exact Node/npm versions at run time.",
+      "expected_assertions": [
+        "Explicit TAP output; at least one discovered test file and a known test count greater than zero",
+        "Fail closed on unknown, zero, malformed, ambiguous, nonzero test exit, failures/cancellations, spawn-error, signal, and inconsistent-count cases",
+        "Build failure leaves tests NOT_RUN, not zero passed",
+        "Conditional current proof claims based on actual evidence."
+      ],
+      "timeout_seconds": 1800,
+      "side_effects": "Runs build and repository checks; may write ignored generated outputs and temporary local state.",
+      "evidence_level": "real_integration",
+      "state": "PASSED",
+      "evidence_ref": ".brain/evidence/baseline-result.json"
+    },
+    {
+      "id": "separate-studio-browser-gate",
+      "criterion_refs": [
+        "Browser acceptance (separate gate)"
+      ],
+      "kind": "automated",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "test:studio-browser"
+      ],
+      "cwd": ".",
+      "environment_ref": "Windows with the project's supported Playwright Chromium executable installed.",
+      "expected_assertions": [
+        "Real browser assertions only after the required Chromium executable is available."
+      ],
+      "timeout_seconds": 900,
+      "side_effects": "Starts a browser and local test server; may write test results.",
+      "evidence_level": "real_integration",
+      "state": "BLOCKED_PREREQUISITE_MISSING",
+      "blocker": "Required Chromium executable is absent. The current managed PowerShell PATH also does not resolve python; earlier unrestricted inspection found Python 3.14.6 and Playwright. No browser command/assertion ran."
+    }
+  ],
+  "note": "Recipes are bound metadata, not an execution engine. PLANNED means NOT_RUN. Timeouts bound individual commands and are not a task, model, token, or spend budget. Browser acceptance is separate from BASELINE-001; no navigation-policy claim follows from the missing browser executable."
+}

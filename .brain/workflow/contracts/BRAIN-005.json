@@ -1,0 +1,81 @@
+{
+  "schema": "brain.task-contract.v1",
+  "taskId": "BRAIN-005",
+  "title": "Ground normal and managed execution in current canonical task and plan",
+  "authorization": {
+    "kind": "authorized",
+    "reference": "User 2026-10-01 explicit complete core/create goal/proceed/actual realtime testing instruction; existing Sol/high brain and Luna/xhigh brawn authorization. External actions remain excluded. Separate authorized Brain review chat user explicitly requested fixing actual atlas/execution integration, coordinated by root into the same finite contract."
+  },
+  "sourceTaskRef": ".brain/tasks/BRAIN-005.md",
+  "owners": {
+    "coordinator": "/root",
+    "implementer": "/root/brain_readiness_implementation",
+    "reviewer": "/root/brain_oversight_plan"
+  },
+  "allowedPaths": [
+    "tools/brain-control.mjs",
+    "tools/brain-live-ui.mjs",
+    "tests/brain-control.test.mjs",
+    "tests/brain-live.test.mjs",
+    "docs/brain/README.md",
+    "tools/brain-core.mjs",
+    "tools/brain.mjs",
+    "tools/brain-readiness.mjs",
+    "tools/brain-atlas.mjs",
+    "tools/brain-live.mjs",
+    "tests/brain-workflow.test.mjs",
+    "tests/brain-atlas.test.mjs",
+    "README.md"
+  ],
+  "excludedActions": [
+    "Platform app changes, atlas/checkpoint edits by worker, silent repinning, hardcoded project task/node policy, external actions, automatic source integration."
+  ],
+  "prerequisites": [
+    "Root activates new maintenance before changing BRAIN004 accepted source."
+  ],
+  "criteria": [
+    {
+      "id": "BRAIN-RECORDS",
+      "description": "One current snapshot readiness derives source freshness and canonical task/focus/profile linkage, rejects preparation before effects and blocks stale run.",
+      "evidenceScope": "Actual generic controller paths and focused tests."
+    },
+    {
+      "id": "BRAIN-ADOPTION",
+      "description": "Observation/UI remains usable and reflects exact shared bounded readiness reasons; explicit root reconciliation, no implicit source acceptance.",
+      "evidenceScope": "Actual HTTP/state/UI checks; atlas metadata separate."
+    },
+    {
+      "id": "BRAIN-REGRESSION",
+      "description": "Fresh build/control focused/independent review/adoption and shared full-suite observation.",
+      "evidenceScope": "Actual reported execution, failures/blockers preserved."
+    },
+    {
+      "id": "BRAIN-CHECKPOINT",
+      "description": "Managed preparation and execution require the current canonical task, source and accepted plan focus; stale readiness refuses effects.",
+      "evidenceScope": "Fresh snapshot and actual generic controller refusal and reconciliation checks."
+    },
+    {
+      "id": "BRAIN-ACCEPTANCE",
+      "description": "Accepted plan intent and observable acceptance ground the selected authorized task; UI and server share bounded readiness reasons.",
+      "evidenceScope": "Actual source linkage, controller and live state/action checks; no implicit task acceptance."
+    },
+    {
+      "id": "BRAIN-CLI",
+      "description": "Normal execution context and validate expose integrity separately from current-task/plan readiness; preflight and new/resumed IMPLEMENTING admission refuse ungrounded work while results and reconciliation remain writable.",
+      "evidenceScope": "Actual CLI/controller/live tests in generic temporary projects; no hardcoded task policy."
+    }
+  ],
+  "requiredRecipeIds": [
+    "brain-build",
+    "brain-control-focused",
+    "brain-focused"
+  ],
+  "requiredObservationRecipeIds": [
+    "brain-adoption",
+    "brain-full-suite"
+  ],
+  "reviewRequirement": {
+    "required": true,
+    "independence": "independent_reported"
+  }
+}

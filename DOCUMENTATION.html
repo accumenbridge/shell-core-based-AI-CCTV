@@ -1,0 +1,684 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Quadbridge Product Platform · Foundation 0.2</title><style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#132431;background:#f5f7f9;line-height:1.6}*{box-sizing:border-box}body{margin:0}header{background:#142b3b;color:white;padding:26px 5vw}header strong{font-size:24px}header p{margin:5px 0 0;color:#d2e0e8}.layout{display:grid;grid-template-columns:240px minmax(0,1040px);gap:28px;max-width:1370px;margin:auto;padding:28px}nav{position:sticky;top:18px;align-self:start}nav a{display:block;color:#173d53;text-decoration:none;padding:10px 14px;border-bottom:1px solid #dbe2e7}nav a:hover{background:#e3edf3}main{min-width:0}section{background:white;border:1px solid #d9e0e5;border-radius:8px;padding:32px;margin-bottom:26px;scroll-margin-top:12px}h1{font-size:27px;line-height:1.25}h2{font-size:21px;margin-top:30px}h3{font-size:17px}a{color:#075b91}table{border-collapse:collapse;width:100%;display:block;overflow:auto;font-size:14px}th,td{border-bottom:1px solid #dbe3e8;text-align:left;padding:11px;vertical-align:top}th{background:#edf3f7}pre{background:#152633;color:#e5edf3;padding:18px;overflow:auto;border-radius:6px;font-size:13px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}p code,td code{font-size:.9em}.eyebrow{font-size:11px;letter-spacing:1px;color:#526d7b;font-weight:700}footer{padding:22px 5vw;color:#526775;font-size:13px}@media(max-width:850px){.layout{display:block;padding:15px}nav{position:static;display:flex;flex-wrap:wrap;margin-bottom:18px}nav a{padding:8px;font-size:13px}section{padding:18px}h1{font-size:23px}}
+</style></head><body><aside style="padding:18px;background:#eaf3ec;color:#234b36"><strong>Studio integration 1 is now included.</strong> This page preserves the Foundation 0.2 reference. <a href="OPEN_PLATFORM.html">Open the updated visual Studio</a> · <a href="docs/STUDIO_INTEGRATION.md">Current operation and validation limits</a>. Current test results are in evidence/last_run.json.</aside><div style="padding:12px 5vw;background:#eaf3ec;color:#24573b;font-family:system-ui;font-size:13px"><a href="OPEN_PLATFORM.html">← Open the visual studio</a> · This is the retained Foundation 0.2 technical reader. Current visual-edition results: <a href="evidence/last_run.json">test report</a>.</div><header><strong>Quadbridge Product Platform</strong><p>Foundation 0.2 · corrected reusable hosts, cross-product receipts and developer tooling · local preview</p></header><div class="layout"><nav><a href="#start">Start and run</a><a href="#architecture">Architecture</a><a href="#fixes">R01–R10 corrections</a><a href="#upgrade">Upgrade safely</a><a href="#developer">Developer guide</a><a href="#status">Readiness</a><a href="#validation">Validation</a><a href="FOLDER_STRUCTURE.md">Source inventory</a><a href="CODEX_START.md">Coding continuation</a><a href="evidence/last_run.json">Actual test report</a><a href="remediation-source.patch">Source-only patch</a></nav><main><section id="start"><div class="eyebrow">FOUNDATION 0.2 · Start and run</div><h1>Quadbridge Product Platform — Foundation 0.2</h1>
+<p><strong>Complete corrected source, compiled local products, regression tests and developer tools.</strong>
+This release fixes review findings R01–R10 in the reusable platform. It is still a local developer preview, not a production-qualified platform or a Veyviz replacement.</p>
+<p>The maintained Web shell, backend host, worker host and composition code are shared packages. Products supply definitions; domain modules own their business records. No camera, AI model, private repository or external database server is required by these reference products.</p>
+<h2>Run the included build</h2>
+<p>Requires Node.js <strong>22.16 or newer</strong>. Execution was verified on <strong>22.16.0</strong>, where <code>node:sqlite</code> is experimental. Other versions are not independently qualified by this delivery.</p>
+<pre><code class="language-text">npm run setup
+npm run demo
+</code></pre>
+<p>No package download is required for these two commands. <code>setup</code> creates local workspace links; the launcher starts the included compiled products and prints generated local <code>admin</code> / <code>viewer</code> credentials.</p>
+<table>
+<thead>
+<tr>
+  <th>Product</th>
+  <th>Local address</th>
+  <th>Exercise</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Neutral shell</td>
+  <td>http://127.0.0.1:4300</td>
+  <td>No business modules</td>
+</tr>
+<tr>
+  <td>Service Desk</td>
+  <td>http://127.0.0.1:4310</td>
+  <td>Owned requests and two named workspaces, including a lazy helper and CSS</td>
+</tr>
+<tr>
+  <td>Knowledge Library</td>
+  <td>http://127.0.0.1:4320</td>
+  <td>Persisted text, separate indexing worker, FTS search and connected handoff</td>
+</tr>
+<tr>
+  <td>Combined</td>
+  <td>http://127.0.0.1:4330</td>
+  <td>Same domain modules in one host with a local public-contract adapter</td>
+</tr>
+</tbody>
+</table>
+<p>Only Knowledge and Combined start workers. Ctrl+C stops the processes; local records remain in <code>.local/</code>. Runtime data and credentials are excluded from this archive.</p>
+<p><strong>The developer HTTP profile is loopback-only and refuses production startup. Do not weaken this guard to expose it publicly.</strong></p>
+<h2>What changed</h2>
+<table>
+<thead>
+<tr>
+  <th>Area</th>
+  <th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Tenant-safe shell</td>
+  <td>Accepted context, request clients and workspace lifetime share one immutable scope. Pending replacement cannot mount obsolete metadata.</td>
+</tr>
+<tr>
+  <td>Recovery and multiple screens</td>
+  <td>Unchanged successful bootstrap restores a cleared view. Each route loads its declared export, not a hard-coded default.</td>
+</tr>
+<tr>
+  <td>Frontend assembly</td>
+  <td>Selected ESM imports, literal lazy imports and declared browser assets are traced, served and hashed; private backend/unselected module files remain unserved.</td>
+</tr>
+<tr>
+  <td>Cross-product acceptance</td>
+  <td>Actual destination product, instance, tenant and service actor are checked. A validated v2 receipt identifies the committed resource and original command.</td>
+</tr>
+<tr>
+  <td>Partial failure</td>
+  <td>External acceptance is durable independently of local attempt state. Cancellation, revocation and exhausted retries do not mean the destination did nothing.</td>
+</tr>
+<tr>
+  <td>Explicit reconciliation</td>
+  <td>Authorized receipt lookup checks the original operation without submitting a new command.</td>
+</tr>
+<tr>
+  <td>Scheduling</td>
+  <td>Module round-robin, rotating tenant partitions and advancing bounded job scans prevent the reviewed starvation paths.</td>
+</tr>
+<tr>
+  <td>Replaceability</td>
+  <td>Worker depends on <code>JobExecutionStore</code>, not SQLite. Independent ephemeral conformance implementation runs with SQLite absent.</td>
+</tr>
+<tr>
+  <td>Construction</td>
+  <td>Eager local provider bindings contribute startup edges; binding cycles are rejected.</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="docs/REMEDIATION.md">REMEDIATION</a> for exact files, tests and limits.</p>
+<h2>Try the connected example</h2>
+<p>Sign in to Knowledge, add a titled document and allow the worker to index it. In <strong>Cross-product handoffs</strong>, use that document ID and a request reason. Service Desk owns the resulting request; Knowledge shows destination acceptance, local job status and its own workflow separately.</p>
+<p>The mapping <code>org-a → customer-a</code> is explicit. The destination service receives create and original-receipt-read permissions, not ordinary document or Service Desk list access. A known destination commit can coexist with a failed/cancelled local attempt. An authorized <strong>Check original receipt</strong> action can reconcile it; it is not a resend.</p>
+<p>Service Desk's <strong>Request overview</strong> is a second named workspace, implemented through a lazy helper and declared CSS. It is a real multi-file assembly proof, not a second business backend.</p>
+<h2>Updating from 0.1</h2>
+<p><strong>Use a new extracted directory. Do not recursively copy over an active checkout or automatically reuse old data/configuration.</strong></p>
+<p>Read <a href="docs/UPGRADE_FROM_0_1.md">UPGRADE_FROM_0_1</a> before adopting the source patch or older local data. Human v1 request operations remain. New integrations use <code>desk.requests.create.v2</code>. Old pending v1 handoffs are held for explicit original-protocol reconciliation, not resent via v2. New grants are not silently added to existing seeded principals.</p>
+<h2>Rebuild and verify</h2>
+<pre><code class="language-text">npm ci
+npm run verify
+</code></pre>
+<p>This installs pinned development tools, builds all packages/products and executes the automated suite. In this environment fresh installation failed on registry DNS; the recorded build used exactly matching preinstalled tools. That is not a successful fresh <code>npm ci</code> claim.</p>
+<p>For the compiled-only subset without downloads:</p>
+<pre><code class="language-text">npm run setup
+npm run test:compiled
+</code></pre>
+<p>The full verification currently has <strong>116 passing tests</strong>; the compiled subset has <strong>98</strong>, included in those 116. See <a href="evidence/last_run.json">actual evidence</a>. Shell tests use controlled document/event/request ports; real browser and React acceptance are separate.</p>
+<h2>Create another product</h2>
+<p>After installing the development tools:</p>
+<pre><code class="language-text">npm run factory -- create-module checklist
+npm run factory -- create-product facility --modules checklist
+npm run build
+npm run demo -- --product facility --port 4350
+</code></pre>
+<p>The generated module has owned persistence, an authorized API and a workspace. Replace example rules with your actual business rules and tests. Maintained host source is not copied or edited. Refresh/review the lockfile after changing the workspace set.</p>
+<p>To export one selected product into a new directory:</p>
+<pre><code class="language-text">npm run factory -- assemble service-desk ../ServiceDesk_Local_Assembly
+</code></pre>
+<p>Exports are fixed release artifacts, not new editable framework authorities. Do not copy local data or credentials into them.</p>
+<h2>Supported frontend profile</h2>
+<p>The initial renderer is native browser DOM behind a renderer-neutral mount/dispose contract. The build now includes static/literal ESM dependency closure and declared assets. It deliberately rejects unsupported browser packages, arbitrary dynamic imports and server-only imports. Third-party React bundling is <strong>not</strong> implicitly implemented by tracing these files. The optional React root adapter remains unqualified against actual React/ReactDOM.</p>
+<h2>Start points</h2>
+<ul>
+<li><a href="PLATFORM_ARCHITECTURE.md">Architecture</a></li>
+<li><a href="docs/DEVELOPER_GUIDE.md">Developer guide</a></li>
+<li><a href="docs/REMEDIATION.md">Corrections and regressions</a></li>
+<li><a href="docs/UPGRADE_FROM_0_1.md">Upgrade and legacy-operation rules</a></li>
+<li><a href="docs/STATUS.md">Status</a> and <a href="evidence/VALIDATION.md">validation limits</a></li>
+<li><a href="docs/SECURITY_AND_LIFECYCLE.md">Security/lifecycle</a></li>
+<li><a href="docs/VEYVIZ_ADOPTION.md">Veyviz adoption boundary</a></li>
+<li><a href="CODEX_START.md">Coding continuation</a></li>
+</ul>
+<p>The platform remains the engineering target. Browser/React integration, production adapters, published-version rollout, recovery and specialized AI/video packages are not made complete by this stabilization release.</p>
+</section><section id="architecture"><div class="eyebrow">FOUNDATION 0.2 · Architecture</div><h1>Product-neutral construction architecture — Foundation 0.2</h1>
+<h2>1. Decision and source precedence</h2>
+<p>Build a reusable construction framework with maintained application hosts, optional capability implementations, domain-owned modules, explicit instance bindings and controlled cross-product integration. The platform itself is the first engineering deliverable. The two small domain applications are acceptance consumers—not a requirement to finish Veyviz before the platform.</p>
+<p>The supplied <strong>Veyviz Platform Architecture Authority v1.6</strong> describes a CCTV/AI product-family target, not this implemented neutral framework. Its small neutral foundation, public ownership boundaries, static reviewed contributions and separation of logical modules from deployed processes are retained as design inputs. The user's later platform-first direction governs this independent repository. This document does not revise Veyviz's authority, move its records, or replace its CapabilityPack catalogue.</p>
+<p><code>reference/Veyviz_Authority_v1.6.md</code> is preserved as source context only. Its Veyviz-specific job, source, topology, grant and release bindings are not copied into this platform's neutral contracts. In particular, earlier Forensics persistence language is not used to reclassify any current Veyviz records.</p>
+<h2>2. Governing structure</h2>
+<table>
+<thead>
+<tr>
+  <th>Layer</th>
+  <th>Implementation here</th>
+  <th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Public neutral contracts</td>
+  <td><code>packages/contracts</code></td>
+  <td>Scope, actor, module ABI, route/workspace declarations and operation failure vocabulary</td>
+</tr>
+<tr>
+  <td>Composition</td>
+  <td><code>packages/composition</code></td>
+  <td>Deterministic exact-version selection, dependency/collision checks, explicit provider/instance binding and removal assessment</td>
+</tr>
+<tr>
+  <td>Backend host</td>
+  <td><code>packages/backend-host</code></td>
+  <td>Registered operations, lifecycle, authority integration and a thin Node HTTP adapter</td>
+</tr>
+<tr>
+  <td>Web shell</td>
+  <td><code>packages/web-shell</code></td>
+  <td>Session/tenant UI boundary, navigation, declared workspace loading, request scopes and cleanup</td>
+</tr>
+<tr>
+  <td>Worker host</td>
+  <td><code>packages/worker-host</code></td>
+  <td>Claim, lease renewal, handler execution, fenced commit and failure handling</td>
+</tr>
+<tr>
+  <td>Local profile adapters</td>
+  <td><code>packages/sqlite</code>, <code>packages/local-access</code></td>
+  <td>Real local persistence and a loopback-only authentication/authorization implementation</td>
+</tr>
+<tr>
+  <td>Cross-product transport</td>
+  <td><code>packages/connections</code></td>
+  <td>A bound command over local/HTTP transport, fixed destination, explicit tenant mapping and unchanged command identity</td>
+</tr>
+<tr>
+  <td>Business modules</td>
+  <td><code>modules/*</code></td>
+  <td>Domain records, rules, migrations, APIs, handlers and UI</td>
+</tr>
+<tr>
+  <td>Product definitions</td>
+  <td><code>products/*/product.json</code></td>
+  <td>Which modules and bindings form a product</td>
+</tr>
+<tr>
+  <td>Solution wiring</td>
+  <td><code>solutions/knowledge-to-desk</code></td>
+  <td>Explicit translation and service identity for one cross-domain operation</td>
+</tr>
+<tr>
+  <td>Composition executable</td>
+  <td><code>apps/runtime</code></td>
+  <td>Loads a selected built plan and wires its actual application instances</td>
+</tr>
+<tr>
+  <td>Factory tools</td>
+  <td><code>tools</code></td>
+  <td>Generate owned examples, build exact registrations and export selected assemblies</td>
+</tr>
+</tbody>
+</table>
+<p>A package is not automatically a service. The backend and Web-serving adapter share one process in this profile. The worker is another process only for products that select background work. Domains use separate owner databases on the same local filesystem; separate schemas do not imply a database server per module.</p>
+<h2>3. Three independent graphs</h2>
+<p><strong>Source dependencies:</strong> neutral packages do not import reference-domain packages. Domain code consumes public framework interfaces. Solution-owned adapters consume the participating public capabilities. Products supply configuration; no <code>if customer</code> or camera context enters the core.</p>
+<p><strong>Runtime collaboration:</strong> a source domain can call a destination public operation locally or remotely. Requests/results can flow in both directions without introducing import cycles or shared writable business data.</p>
+<p><strong>UI containment:</strong> navigation hosts a domain workspace. A DOM/React parent does not become the owner of the displayed record. Closing that workspace cancels view reads but does not cancel an accepted durable job.</p>
+<h2>4. Mandatory mechanism versus selected adapter</h2>
+<p>Module composition and public boundaries are neutral mechanisms. An authenticated-app profile selects identity/access and persistence implementations. The supplied local profile uses one working implementation instead of many empty adapter classes.</p>
+<p>No product is forced to select jobs, knowledge, Service Desk, AI, video, sensors, notifications or reporting. A headless worker uses the corresponding host contract and does not require browser assets to start. The neutral application has no domain workspaces and no worker process.</p>
+<p>The Node HTTP adapter delegates protocol handling to Node's standard HTTP server. SQLite is an explicit local adapter, not a universal domain repository. Browser DOM APIs render the first reference modules; React is an optional renderer integration seam. Hosted Nest/React/PostgreSQL/OIDC adapters are future supported-profile work, not silently implemented by naming them.</p>
+<h2>5. Contract and provider ownership</h2>
+<p>A business module owns the meaning of its exported operation. A consumer can request a narrower port. A solution adapter makes the mapping explicit. The framework validates registration and lifecycle but never invents an operation's domain semantics.</p>
+<p>The reference public capability family is:</p>
+<ul>
+<li><code>knowledge.document.read.v1</code>: returns a permitted original document record from Knowledge.</li>
+<li><code>desk.requests.create.v1</code>: retained original owned create operation for existing consumers.</li>
+<li><code>desk.requests.create.v2</code>: opt-in cross-product operation returning a validated committed-resource receipt; original-receipt lookup is separately authorized.</li>
+</ul>
+<p>Handoff selects the explicit v2 destination contract and depends on these meanings, not their repositories. Its adapter reconstructs a <strong>destination-owned</strong> context and enforces that provider's current module mode and grants. A source permission is not destination permission. A returned resource reference is not an access credential.</p>
+<p>Contracts and module package versions are separate identities. The initial resolver deliberately supports exact versions and one module ABI; it does not claim arbitrary SemVer-range or binary compatibility.</p>
+<h2>6. Composition and instance scope</h2>
+<ol>
+<li>Product selection identifies exact module versions and required bindings.</li>
+<li>Build creates <code>.artifacts/&lt;product&gt;/plan.json</code>, static frontend registration, selected backend registration and executable fingerprints.</li>
+<li>Application startup verifies its selected executable files and plan, loads reviewed local factories, applies compatible owner migrations, and starts modules in dependency order.</li>
+<li>Scope activation combines selected code with a real principal, tenant grants and module mode.</li>
+<li>Each request/workspace/job has its own lifetime and records.</li>
+</ol>
+<p>A binding distinguishes <strong>contract, implementation, instance ID, consumer, lifetime and local/HTTP placement</strong>. The scoped-binding utility demonstrates application-, module- and request-cache isolation. The supplied reference solution deliberately accepts only application-scoped, stateless ports; it rejects unsupported shorter-lived adapter declarations rather than pretending they are wired. Request-scoped resource-bearing adapters must integrate actual disposal with the host that owns them.</p>
+<p>Eager local bindings add provider-before-consumer construction dependencies. Binding-only cycles fail resolution; remote providers do not become hidden local modules.</p>
+<p>Commercial plans are not implemented here. Product manifests select software; <code>LocalAccess</code> independently supplies developer-scope grants. Veyviz's actual commercial catalogue remains untouched.</p>
+<h2>7. Ownership, persistence and writes</h2>
+<p>Each module receives its own data path and creates a concrete owner repository. The foundation does not own a universal Person/Asset/Document/Incident table.</p>
+<p><code>SqliteOwner.command()</code> checks authority, starts an owner-local transaction, reconciles the original command key and digest, runs the domain change, and commits the result receipt/audit. The same identity and normalized input return the original result; changed input conflicts. Permission is checked again before returning an old receipt.</p>
+<p>Knowledge inserts its document and indexing job in the same owner transaction. Handoff inserts its relationship and delivery intent in its own transaction. Service Desk independently commits the destination request. No transaction spans these databases or a remote server.</p>
+<p>This profile is deliberately bounded: short synchronous SQLite transactions, limited row sets, one local filesystem, no horizontally distributed database protocol. A production adapter must preserve the same selected invariants, not merely offer generic CRUD.</p>
+<h2>8. Background execution and external uncertainty</h2>
+<p>A job has a stable identity, actor/tenant/permission binding, deadline, attempt, lease token and due time. A worker claims it atomically, rechecks current permission and module mode, prepares work outside the transaction, and commits only while its lease still owns completion.</p>
+<p>The worker consumes the neutral <code>JobExecutionStore</code> port from <code>packages/contracts</code>, not a concrete database queue. Store calls may be asynchronous; <code>finish()</code> is awaited. The selected adapter owns the atomic completion relationship. An independent ephemeral conformance adapter exercises the same host with SQLite absent; this does not qualify another production store.</p>
+<p>The completion callback and final job status share the owner transaction in the SQLite adapter. A stale attempt cannot update domain state. Computation may happen more than once; the code does not promise exactly-once execution.</p>
+<p>A cross-product timeout means destination acceptance is unknown. Retry uses the <strong>same</strong> remote command key. The receiving owner deduplicates inside its business transaction. Handoff separately owns a durable delivery-fact row, its technical job, and its business relationship. A validated receipt is retained before local business completion is attempted. Revocation, cancellation, lease loss or exhaustion may prevent business completion but cannot turn known external acceptance into nonacceptance.</p>
+<p>A narrow fact-only recorder can retain the outcome of an already dispatched operation without granting new dispatch or business-write authority. Explicit <code>handoff.reconcile</code> performs a destination receipt lookup (never a resend), then the source owner validates current authority before adopting its relationship outcome. A failed/not-found lookup leaves acceptance uncertainty intact. No generic model agent or automatic new-identity retry is used.</p>
+<p>Queued cancellation is immediately cancelled. Running cancellation is a request; the active attempt must settle or expire before its cancelled outcome is recorded. Lease expiry fences commits; it does not prove physical compute or an external action has stopped. The supplied handlers do not run native GPU tasks.</p>
+<h2>9. Cross-product modes</h2>
+<p><strong>Composed mode:</strong> Combined selects the Service Desk, Knowledge and Handoff modules in one application. Each still owns its persistence. A local adapter invokes the real Service Desk operation under the configured service principal.</p>
+<p><strong>Connected mode:</strong> Knowledge runs separately and calls Service Desk's fixed HTTPS-capable command adapter. The local proof uses loopback HTTP. Its <code>org-a → customer-a</code> mapping is explicit; tenant IDs are not assumed equal. The reference service credential has <code>desk.create</code> and <code>desk.receipts.read</code>, not document-read or ordinary Service Desk list authority. Original-receipt reads are limited to that actor and tenant. A receipt-only grant can be used without create authority.</p>
+<p>The destination preflight resolves actual authenticated product/instance/tenant/service-actor identity. Mutation also checks the expected destination headers before executing a command. The returned <code>quadbridge.command-receipt.v1</code> must match the explicit contract, original key, destination, actor and committed resource type/version. HTTP 202 or a bare ID never proves business commit. This is a declared opt-in receipt protocol, not a global semantic wrapper inferred from any successful HTTP response.</p>
+<p>Only the fixed command and receipt paths and origin from trusted instance configuration are usable. Request data cannot choose a URL, credential or destination tenant. Redirects are refused. The source cannot impersonate its user at the target merely by forwarding an identifier.</p>
+<h2>10. Frontend and renderer contract</h2>
+<p>The shell owns authentication UX, product metadata, selected tenant, stable workspace paths, coarse failures and lifecycle. The domain workspace owns its content surface only.</p>
+<p>A workspace receives <code>root</code>, immutable scope/permission views, <code>AbortSignal</code>, limited own-module API operations and a notification callback. It receives no session token, repository, framework-private store or mandatory site/floor/document fields. Dynamic imports come from build-generated static maps, never request data.</p>
+<p>The same shell uses sidebar or top navigation according to the product definition. Domain views may use native DOM or a supplied React root adapter; the framework does not impose the reference form design on all products.</p>
+<p>Requested tenant selection and accepted bootstrap are different states. Scope changes abort old work, clear old nodes and remove obsolete bootstrap immediately. Navigation cannot mount old metadata while a replacement is pending. Each workspace API captures the same immutable accepted scope as its displayed context, checks its generation before dispatch and after return, and cannot act on a different selected tenant. Background jobs remain owned by the server. Access refresh and workspace generation are fenced separately. Unchanged metadata preserves a valid current view, but successful recovery remounts one cleared by a failed refresh. The loader uses the exact declared own workspace export and validates its mount shape. Browser tests covering these behaviors are authored but environmental browser navigation was blocked in this session; no browser qualification is inferred from type checking.</p>
+<h3>Selected frontend build profile</h3>
+<p>The product build creates the complete selected native-ESM dependency closure: static imports/exports, literal dynamic imports, literal URL assets and module <code>browserAssets</code>. Nested helpers and assets are served through the generated allowlist and included in release hashes; web metadata is itself hashed. Backend entrypoints and unselected domain assets remain unserved.</p>
+<p>Unknown/server-only packages, escaping paths, symlinks and nonliteral dynamic imports are rejected. CSS/assets are declared separately rather than imported as native JavaScript. This is a deliberately narrow build adapter, not a general bundler or a qualified React profile. A real third-party renderer/bundler integration remains separate work.</p>
+<h3>Local scheduling policy</h3>
+<p>Module queues use round-robin selection. The SQLite adapter rotates due tenant partitions and advances bounded per-tenant keyset scans, preserving cursors across restarts. Paused work cannot permanently pin the first candidate window. Technical stop reason is separate from the last execution error. A non-reentrant worker prevents overlapping ticks from claiming extra work.</p>
+<p>Fair claiming does not preempt a long handler or guarantee a fixed wall-clock response time. The single local worker still requires short/cooperative preparation or a separate qualified compute adapter for heavy work.</p>
+<h2>11. Disablement, migration and upgrades</h2>
+<p><code>enabled</code> permits authorized reads and writes. <code>read-only</code> retains permitted history but denies new commands and pauses new job claims. <code>off</code> denies the module's operations and removes its workspace. The code does not confuse those modes with package installation or data purge.</p>
+<p>Migration history is hashed and ordered. Editing an applied migration or opening a newer unsupported generation is rejected. Reader/writer changes require owner-specific evolution. Removal assessment reports dependents, retained records and pending jobs; destructive uninstall, data purge, global rollback and historical-reader migration are <strong>not implemented</strong>.</p>
+<p>Handoff migration 1 remains byte-identical; migration 2 preserves old protocol rows and adds delivery facts. Existing pending v1 commands are not automatically retried through v2, whose receipt namespace is different. They require original-protocol reconciliation. New permissions and bindings are explicit; existing seeded principals are not silently regranted.</p>
+<p>Package versions and per-product build records support explicit adoption. Two actual 0.1/0.2 local neutral runtimes were exercised independently, with the older executable and reported version unchanged. This is narrower than published package adoption or shared-data rolling migration. This release does not claim a tested rolling upgrade between two independently published framework versions. Exported products contain fixed package versions; they are artifacts of the maintained source, not a recommendation to edit forked shell copies.</p>
+<h2>12. Verification and admission to broader use</h2>
+<p>Actual checks cover exact composition and provider ordering, owner transactions, migrations, role/tenant negatives, job restart and fencing, queue fairness, an independent worker process, local and HTTP cross-product commands, typed receipts and failure-state preservation, receipt-only reconciliation, multi-file asset closure, neutral export, a generated module without host edits, and a worker-store replacement with SQLite absent. Shell transitions run against actual compiled code using controlled document/event/request ports, not a real browser.</p>
+<p>The next engineering work is to complete real browser/React acceptance, production identity/storage/runtime adapters, package publication/version adoption, resource limits for real workloads, operational lifecycle and a selected consumer adapter for existing Veyviz. Do not replace Veyviz's owners, grant model access, or declare production readiness from this developer-profile proof.</p>
+<h2>13. Remediation records</h2>
+<p>The R01–R10 implementation map, regression identities and limits are in <code>docs/REMEDIATION.md</code>. Source compatibility, legacy pending commands and new explicit permissions are described in <code>docs/UPGRADE_FROM_0_1.md</code>. These updates refine the same framework rather than introduce new business owners.</p>
+</section><section id="fixes"><div class="eyebrow">FOUNDATION 0.2 · R01–R10 corrections</div><h1>Foundation 0.2 — review remediation R01–R10</h1>
+<p><strong>Scope:</strong> correct the delivered product-neutral Foundation 0.1 source. No Veyviz code, repository branch, customer permission, camera, model or deployment is changed. Original archive is preserved. This is source implementation and local verification, not production qualification.</p>
+<h2>Correction map</h2>
+<table>
+<thead>
+<tr>
+  <th>Finding</th>
+  <th>Implemented change</th>
+  <th>Main code</th>
+  <th>Executable regression</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>R01: mixed tenant context</td>
+  <td>Separate requested/accepted scope; clear obsolete bootstrap; bind view API and late results to its immutable accepted generation. Logout clears old controls immediately.</td>
+  <td><code>packages/web-shell/src/index.ts</code></td>
+  <td><code>tests/shell-regressions.test.mjs</code>: delayed tenant replacement, navigation, reads/writes, late failures and notices</td>
+</tr>
+<tr>
+  <td>R02: external commit lost behind job failure</td>
+  <td>Owner-local delivery facts with original binding/command, NOT_SENT/UNKNOWN/COMMITTED and retained receipt. Fact-only recording precedes fenced business completion; explicit read-only lookup reconciliation.</td>
+  <td><code>modules/handoff/src/index.ts</code>, SQLite queue state</td>
+  <td><code>tests/hardening.test.mjs</code>: revoke/cancel/lease loss/deadline/restart; lookup does not resend; legacy v1 replay blocked</td>
+</tr>
+<tr>
+  <td>R03: assumed instance</td>
+  <td>Preflight authenticates actual destination scope; mutation rechecks expected product/instance/service actor; received receipt must match destination, tenant and original command.</td>
+  <td><code>packages/connections</code>, backend HTTP, solution wiring</td>
+  <td>Wrong product/instance/principal/tenant and post-preflight mutation checks</td>
+</tr>
+<tr>
+  <td>R04: 202 treated as commit</td>
+  <td>Opt-in committed receipt contract; exact supported status, contract, actor, scope, resource and command validation. A queued ID is not a business resource.</td>
+  <td>Service Desk v2 and connection receipt validator</td>
+  <td>Incompatible 202/malformed/incorrect receipt cases, normal local/HTTP v2 cases</td>
+</tr>
+<tr>
+  <td>R05: incomplete browser files</td>
+  <td>Build-selected literal ESM dependency closure, lazy helpers, URL assets and declared CSS/assets; safe boundaries; executable hash coverage includes web metadata and nested files.</td>
+  <td><code>tools/frontend-closure.mjs</code>, build/runtime</td>
+  <td><code>tests/frontend-assembly.test.mjs</code>: helper/CSS/asset HTTP, hashes, unsupported import rejection, private/unselected 404s</td>
+</tr>
+<tr>
+  <td>R06: ignored export</td>
+  <td>Load exactly the selected declared own export and validate mount shape. No silent default substitution.</td>
+  <td>Web shell; Service Desk overview workspace</td>
+  <td>Two named routes; missing/wrong export; selected lazy load</td>
+</tr>
+<tr>
+  <td>R07: queue starvation</td>
+  <td>Rotating module registration; bounded tenant partition rotation; persistent advancing eligibility cursor; non-reentrant worker tick.</td>
+  <td>Worker host and SQLite queue</td>
+  <td>Paused first 100; large enabled backlog; restart and competing queues; sync/async paths</td>
+</tr>
+<tr>
+  <td>R08: blank after recovered bootstrap</td>
+  <td>Cleared view invalidates cached render state. Same valid bootstrap remounts; unchanged polling preserves live scope identity.</td>
+  <td>Web shell</td>
+  <td>Transient failure/unchanged recovery and superseded refresh cases</td>
+</tr>
+<tr>
+  <td>R09: provider order</td>
+  <td>Local eager bindings add provider-before-consumer edges. Provider presence/contract and cycles checked. HTTP provider stays remote.</td>
+  <td>Composition resolver</td>
+  <td>Binding-only order and cycle tests</td>
+</tr>
+<tr>
+  <td>R10: SQLite-tied worker</td>
+  <td>Neutral <code>JobExecutionStore</code> and job/attempt contracts; sync/async port operations. Owning store supplies atomic completion.</td>
+  <td>Contracts and worker host</td>
+  <td><code>tests/adapter-replacement.test.mjs</code> + independent in-memory adapter; SQLite package absent</td>
+</tr>
+</tbody>
+</table>
+<h2>Cross-product state is three-dimensional</h2>
+<ol>
+<li><strong>Delivery fact:</strong> original destination/command, dispatch uncertainty, validated receipt.</li>
+<li><strong>Technical job:</strong> queued/running/failed/cancelled/expired/succeeded with attempts and stop reason.</li>
+<li><strong>Source workflow:</strong> the Handoff owner's adopted business state.</li>
+</ol>
+<p>A destination receipt can be retained after local write authority or a worker lease is lost. Its fact-only recorder can update only that existing delivery's receipt; it cannot dispatch another request or mark business completion. The normal worker or explicit <code>handoff.reconcile</code> operation must still satisfy current owner authority before adopting the source outcome.</p>
+<p>An UNKNOWN record remains UNKNOWN when retries expire. A read-only destination lookup uses the original actor/tenant/command key and requires <code>desk.receipts.read</code>. Lookup absence/error does not prove no prior commit. Receipt retrieval grants no ordinary destination record-list or document access.</p>
+<p>Connection identity includes implementation/binding revision, actual product/instance, service actor, contract, tenant mapping and destination path/origin. Credential bytes are excluded from the binding identity: rotating a token for the same principal need not retarget an operation. Changing the principal or destination cannot silently replay an unresolved operation under a different receipt namespace.</p>
+<h2>Scheduling bounds and their limits</h2>
+<p>The host rotates among ready module stores. The SQLite adapter rotates tenant partitions and scans at most 16 due tenant partitions and 100 candidate jobs per selected partition per claim. Cursor progress is persisted. These are local implementation defaults, not throughput/SLA guarantees.</p>
+<p>Claim fairness does not preempt a long handler. A synchronous blocking handler can still delay a single-process worker; native/CPU-heavy work requires the separate execution profile already described in the architecture. Lease fencing is not proof of external-action reversal or physical compute termination.</p>
+<h2>Frontend profile and replacement proof</h2>
+<p>The supported closure includes static imports/exports, literal <code>import()</code>, literal <code>new URL(..., import.meta.url)</code>, and <code>browserAssets</code> copied from the module's source tree. CSS dependencies are included. Absolute/unselected/server-only imports and nonliteral dynamic imports fail build. This is a bounded native-ESM profile, not a general-purpose replacement for Vite/Webpack or a complete React build adapter.</p>
+<p>The second worker-store implementation is <strong>ephemeral test/conformance code</strong>. It proves the host's dependency boundary, rollback behavior and async compatibility without SQLite. It does not establish production persistence, distributed queue semantics or durability after process loss.</p>
+<h2>Compatibility</h2>
+<p>Framework packages and product definitions select 0.2.0. Module ABI naming remains v1, but 0.1 framework package mixing is not promised. Public Service Desk v1 stays available; v2 is explicit for new integrations. Handoff schema migration 1 is unchanged; migration 2 preserves old data and blocks legacy v1 automatic resubmission. Read <a href="docs/UPGRADE_FROM_0_1.md">UPGRADE_FROM_0_1.md</a>.</p>
+<h2>Evidence</h2>
+<p>The complete build and suite: <a href="evidence/last_run.json">last_run.json</a>.
+Current scope: <a href="evidence/VALIDATION.md">VALIDATION.md</a>.
+Baseline check: <a href="evidence/baseline_regressions.json">baseline_regressions.json</a>.
+Actual browser result: <a href="evidence/browser_run.json">browser_run.json</a>.
+Local old/new-version isolation: <a href="evidence/version_isolation.json">version_isolation.json</a>.</p>
+<p>All ten findings have implemented corrections and local regressions. Real browser/React acceptance, published-package adoption, production identity/storage/recovery, native workloads and Veyviz integration remain separate.</p>
+</section><section id="upgrade"><div class="eyebrow">FOUNDATION 0.2 · Upgrade safely</div><h1>Adopting Foundation 0.2 from 0.1</h1>
+<h2>Recommended path</h2>
+<p>Extract the complete 0.2 archive into a <strong>new directory</strong>. Run <code>npm run setup</code>, then <code>npm run demo</code> with new local data. Keep the original source and data intact. This is a local framework preview, not an automatically managed production upgrade.</p>
+<p>The accompanying source patch is for the exact original 0.1 archive, not an arbitrary checkout. Use <code>git apply --check</code> first and review changes. The patch does not contain refreshed compiled output: run the build using the pinned development tools before starting patched source. The complete archive already contains the updated compiled products.</p>
+<h2>Package and browser compatibility</h2>
+<p>All maintained packages, reference modules and selected product definitions are 0.2.0. Rebuild an exact composition; do not mix 0.1 clients with 0.2 framework packages merely because the module ABI retains its v1 name. There is no independent published-package rolling-upgrade guarantee.</p>
+<p>The browser loader now honors the exact <code>export</code> name. Modules can use selected multi-file native ESM and declared assets. Unsupported bare browser imports fail build rather than being exposed through the server. Existing single-workspace examples remain valid.</p>
+<h2>Explicit destination contract</h2>
+<p>Existing human <code>GET/POST /api/requests</code> and <code>desk.requests.create.v1</code> remain. New cross-product wiring selects:</p>
+<ul>
+<li><code>desk.requests.create.v2</code> and <code>POST /api/requests/commit</code> for an explicit COMMITTED receipt;</li>
+<li><code>GET /api/requests/receipt?commandId=...</code> for <strong>lookup only</strong>;</li>
+<li>exact destination product, instance, tenant mapping and destination service actor;</li>
+<li>original command identity preserved across retries and receipt reads.</li>
+</ul>
+<p><code>desk.receipts.read</code> permits only the authenticated actor's original v2 receipts in its permitted tenant. It does not grant normal <code>desk.read</code>. <code>handoff.reconcile</code> permits the source's explicit reconciliation operation. The fresh local example seeds these grants; <strong>existing seeded principals are not silently changed</strong>. An operator must review and deliberately apply any local grant/configuration migration, or use a separate clean preview data directory. Do not hand-copy secrets into source.</p>
+<h2>Existing local data</h2>
+<p>Service Desk's existing migration is unchanged. Handoff migration 1 is unchanged. Handoff migration 2 adds a protocol marker and an owner-local delivery-fact table. Queue metadata adds a separate stop reason and scheduling cursors. Tests exercise old schema preservation and refusal of edited migration history.</p>
+<p>These migrations do not supply a backup/restore system. Preserve a consistent stopped local data copy before experimenting with existing data. Opening migrated Handoff data with old 0.1 code is not supported and must not be called rollback.</p>
+<h3>Legacy pending cross-product operations</h3>
+<p>A v1 destination command may already have committed even when the old source records no receipt. <strong>Do not send that old operation through v2:</strong> the receiver's operation/receipt namespace changed, so it could create a second resource.</p>
+<p>The 0.2 source retains those v1 rows and reports <code>RECONCILIATION_REQUIRED</code>; already accepted v1 rows retain their target references and are labelled legacy. It does not fabricate a v2 receipt, silently rewrite the old command identity or automatically resend.</p>
+<p>Resolve a legacy pending operation through its original receiver/actor/tenant/command protocol and an explicit reviewed migration. An automated legacy reconciliation tool is not included. This deliberate hold is safer than duplicating a cross-product business action.</p>
+<h3>New v2 operations</h3>
+<p>A recorded COMMITTED receipt can coexist with a failed/cancelled local job. UNKNOWN remains after timeout, cancellation or exhaustion. The authorized <strong>Check original receipt</strong> action checks the original command without resending. Source business completion still passes its owner command and current authority. Technical attempt history is not rewritten to look successful.</p>
+<p>Changing a destination binding or service principal for a pending operation requires reconciliation rather than retargeting it. Same-principal credential rotation is distinct from choosing another identity.</p>
+<h2>What the version exercise proves</h2>
+<p><code>tools/version-isolation.mjs --older-root &lt;original-0.1-directory&gt;</code> runs actual old/new neutral snapshots in separate temporary local instances and verifies the older runtime stays on 0.1 with unchanged executable bytes when 0.2 starts.</p>
+<p>It does <strong>not</strong> prove published package distribution, shared-data migration rollback, browser compatibility, production rolling upgrades or fleet operation. See <code>evidence/version_isolation.json</code>.</p>
+</section><section id="developer"><div class="eyebrow">FOUNDATION 0.2 · Developer guide</div><h1>Building a product with this framework</h1>
+<h2>A normal new product</h2>
+<p>Run the factory's <code>create-module</code> and <code>create-product</code> commands in the root README. Generated files belong to the product/module. The shell and hosts remain shared package dependencies. <code>npm run build</code> generates static registrations from reviewed local manifests; no runtime file discovery occurs from customer input.</p>
+<p>The module generator implements a real scoped item table, migration, GET, idempotent POST and UI. It does not decide your domain: replace the sample business behavior, add invariants/retention, and write acceptance tests before shipping it.</p>
+<h2>A module's actual entry point</h2>
+<pre><code class="language-ts">export function register(env: ModuleEnvironment): HostedModule {
+  // Construct only this owner's repository and supported ports.
+  return { manifest: env.manifest, services, routes, close };
+}
+</code></pre>
+<p>Routes must match the manifest's method/path/permission/kind. Unknown routes, duplicate contributions, host-auth route collisions and missing declared implementations fail startup/build. A typed manifest requirement is not an IAM grant.</p>
+<p>Do not start tenant business work in <code>register()</code>. Registration sets up repositories and handlers. A public operation or admitted worker starts scope-specific work.</p>
+<h2>Backend operations</h2>
+<p>Use module-specific input parsing. The helper <code>object()</code> rejects unknown fields, but it is not a replacement for domain validation. Keep conditional updates and invariants under the owner. Use the receipt/transaction helper only where its semantics fit. Do not return an ORM entity merely because the example uses a small matching DTO.</p>
+<p>Do not await inside <code>SqliteOwner.transaction()</code> or its command callback. Obtain external results before the transaction, then check current applicability while committing. Another module's database handle is never a public integration API.</p>
+<h2>Public capability and solution adapter</h2>
+<p>Declare the provided/required contract in <code>module.json</code>. A product binds the consumer to an exact implementation/instance. Local eager bindings add startup dependencies automatically and must be acyclic; HTTP bindings retain a remote provider. Its selected solution contributes the actual typed translation, currently illustrated by <code>solutions/knowledge-to-desk/wiring.mjs</code>.</p>
+<p>A new capability needs a real adapter. The resolver does not pretend that matching strings generate its behavior. Put a new adapter in product/solution-owned code, not a giant switch in <code>packages/backend-host</code>.</p>
+<h2>Scope and identity</h2>
+<p><code>RequestContext</code> is created after authentication and supplies tenant, product/instance and actor. <code>assertAllowed</code> is rechecked at consequential operations. A tenant header is only a selector. Reference rows have compound tenant/record identity.</p>
+<p>For cross-product calls, use an explicit product/instance/tenant map and a destination-authorized service identity. The configured identity is validated against the actual destination and checked again at mutation. New reference Handoffs use <code>desk.requests.create.v2</code> with an explicit committed receipt. Do not accept an HTTP 202 job ID as a committed record. Original receipt retrieval is a separate operation and permission. Source-user identity is not a forwarded grant. Dedicated service permissions and immutable request IDs make retries explicit. Do not hard-code production endpoints or credentials in a module.</p>
+<h2>UI contribution</h2>
+<pre><code class="language-ts">export const workspace: Workspace = {
+  mount(ctx) {
+    // Build content inside ctx.root using your renderer.
+    // Reads and subscriptions use ctx.signal.
+    return () =&gt; { /* dispose this view's resources */ };
+  }
+};
+</code></pre>
+<p>Each declared workspace names its actual export, for example <code>workspace</code> or <code>overviewWorkspace</code>. The shell loads that exact export from the statically selected module and validates <code>mount</code>. Several workspaces can coexist in one module; they need distinct paths/IDs and correct permissions.</p>
+<p>The supported native-ESM profile follows relative static imports and literal <code>import('./ui/detail.js')</code>. Declare non-code browser assets in <code>module.json</code>, for example <code>&quot;browserAssets&quot;: [&quot;ui/detail.css&quot;, &quot;ui/icon.svg&quot;]</code>; files are copied from the module's <code>src/</code> tree. Literal <code>new URL('./icon.svg', import.meta.url)</code> is supported for tracked assets. CSS dependency files must exist in the declared/copied tree. Do not use Node libraries, arbitrary dynamic import strings or undeclared browser packages. A different third-party bundler/React build profile is not implemented by this scanner.</p>
+<p>The module is statically known; code loads only when the selected workspace is mounted. Generic host API calls are restricted to that contribution's declared own-module operations. Additional public capabilities must receive a deliberate host adapter, not an unrestricted <code>fetch</code> object.</p>
+<p>A workspace context and its API are bound to one accepted scope. After abort, do not submit new calls; late results and notices cannot update another generation. Requested tenant selection is not an accepted scope.</p>
+<p>Do not mutate another workspace's state. Do not equate unmount with cancelling a durable server job. Add separate backend cancellation only when its operation semantics require it.</p>
+<h2>React integration</h2>
+<pre><code class="language-tsx">import { createRoot } from 'react-dom/client';
+import { reactWorkspace } from '@quadbridge/web-shell/react-adapter';
+export const workspace = reactWorkspace(createRoot, ctx =&gt; &lt;YourWorkspace context={ctx} /&gt;);
+</code></pre>
+<p>This is a consumer integration example. Install/build the consumer's real React packages using its toolchain. The neutral foundation does not bundle a React version. The provided port-lifecycle checks are not React runtime proof.</p>
+<h2>Worker handler</h2>
+<p>Worker registrations use <code>JobExecutionStore</code> from the neutral contracts package. The host does not import SQLite. Implement <code>claim</code>, <code>renew</code>, <code>assertCurrent</code>, <code>finish</code> and <code>fail</code>, retaining the adapter-owned atomic completion relationship. These calls may be async; the local reference adapter stays synchronous. The independent memory adapter under <code>tests/fixtures</code> is ephemeral conformance code, not a replacement production database.</p>
+<p>Prepare expensive work outside the transaction. Return a short <code>commit()</code> callback that applies its owner-local result. The worker verifies its current lease and authority before that callback. Use stable identities for external effects that may occur before commit; never claim a database transaction can undo a remote operation. The handler receives a current job/attempt check; invoke it immediately before an external dispatch and durably mark uncertainty. Record received external facts separately before a source business completion that may be refused. Read-only reconciliation must not submit another effect.</p>
+<p>The reference scheduler rotates modules and tenant partitions with bounded advancing eligibility scans. This prevents the reviewed starvation but does not preempt a long-running handler or guarantee latency under arbitrary load.</p>
+<p>The reference index is bounded text processing. Long native tasks require a supported execution adapter with physical resource admission and confirmed cleanup; the generic worker's lease alone is insufficient.</p>
+<h2>Reference HTTP operations</h2>
+<p>All requests use the local identity profile. Domain requests require <code>X-QB-Tenant</code>; writes require <code>Idempotency-Key</code>, JSON content and same-origin cookies or an approved service bearer identity.</p>
+<table>
+<thead>
+<tr>
+  <th>Operation</th>
+  <th>Contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>POST <code>/api/session</code></td>
+  <td><code>{username,password}</code> → local session cookie</td>
+</tr>
+<tr>
+  <td>GET <code>/api/bootstrap</code></td>
+  <td>permitted scope, modules, workspaces and exposed operations</td>
+</tr>
+<tr>
+  <td>POST <code>/api/modules/mode</code></td>
+  <td><code>{moduleId,mode}</code>; requires platform module-management grant</td>
+</tr>
+<tr>
+  <td>GET/POST <code>/api/requests</code></td>
+  <td>list or create Service Desk request</td>
+</tr>
+<tr>
+  <td>POST <code>/api/requests/close</code></td>
+  <td><code>{id,expectedVersion}</code></td>
+</tr>
+<tr>
+  <td>GET/POST <code>/api/documents</code></td>
+  <td>list metadata or submit <code>{title,body}</code> with an indexing job</td>
+</tr>
+<tr>
+  <td>GET <code>/api/documents/search?q=...</code></td>
+  <td>scoped indexed results; not an exhaustive-world search</td>
+</tr>
+<tr>
+  <td>POST <code>/api/documents/cancel-index</code></td>
+  <td><code>{documentId}</code>; reports actual job cancellation state</td>
+</tr>
+<tr>
+  <td>GET/POST <code>/api/handoffs</code></td>
+  <td>list or request <code>{documentId,reason}</code>; acceptance, job and source state remain separate</td>
+</tr>
+<tr>
+  <td>POST <code>/api/requests/commit</code></td>
+  <td>v2 create → validated COMMITTED receipt; requires <code>desk.create</code></td>
+</tr>
+<tr>
+  <td>GET <code>/api/requests/receipt?commandId=...</code></td>
+  <td>lookup original actor-scoped receipt; requires <code>desk.receipts.read</code>; never creates</td>
+</tr>
+<tr>
+  <td>POST <code>/api/handoffs/reconcile</code></td>
+  <td><code>{id}</code>; requires <code>handoff.reconcile</code>; look up existing dispatch and adopt under owner authority</td>
+</tr>
+</tbody>
+</table>
+<h2>Release adoption</h2>
+<p>Edit maintained source, rebuild, review the product plan and test applicable consumers. An exported directory is an immutable candidate artifact. Do not edit its shared package source and call that a framework upgrade. Published-package distribution, multiple supported release families and production rollout remain separate work.</p>
+<h2>Legacy integration warning</h2>
+<p>Do not retarget an old pending v1 handoff to v2. See <code>UPGRADE_FROM_0_1.md</code>. A protocol-compatible field shape is not proof of identical deduplication or completion meaning. Existing grants remain unchanged until explicitly migrated.</p>
+</section><section id="status"><div class="eyebrow">FOUNDATION 0.2 · Readiness</div><h1>Implementation and acceptance — Foundation 0.2</h1>
+<p><strong>Local developer preview / framework stabilization.</strong> This fixes R01–R10 without adding unrelated capability families or changing Veyviz. It is not a stable universal SDK or a production profile.</p>
+<table>
+<thead>
+<tr>
+  <th>Area</th>
+  <th>Actual status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Neutral backend/Web/worker construction</td>
+  <td>Implemented; original local startup/generator/export tests retained</td>
+</tr>
+<tr>
+  <td>Scope-bound Web requests, refresh recovery and named exports</td>
+  <td>Corrected; actual compiled shell through controlled document/event/request ports, not real browser</td>
+</tr>
+<tr>
+  <td>Multi-file frontend closure</td>
+  <td>Implemented native-ESM profile; helpers/lazy chunks/assets/hash checks and actual HTTP responses tested</td>
+</tr>
+<tr>
+  <td>Local/HTTP cross-product receipt protocol</td>
+  <td>Explicit v2 with destination product/instance/service actor/tenant/original-key validation; real local HTTP tested</td>
+</tr>
+<tr>
+  <td>External outcome versus job state</td>
+  <td>Durable separate facts; revocation/cancellation/lease expiry/restart/exhaustion cases tested</td>
+</tr>
+<tr>
+  <td>Explicit receipt reconciliation</td>
+  <td>Lookup only, separately authorized; source adoption passes normal owner command</td>
+</tr>
+<tr>
+  <td>Legacy Handoff data</td>
+  <td>Migration preserves v1 data; no automatic cross-version resend; manual original-protocol reconciliation remains</td>
+</tr>
+<tr>
+  <td>Scheduling</td>
+  <td>Module round-robin and bounded advancing tenant/job cursors tested; no wall-clock latency guarantee</td>
+</tr>
+<tr>
+  <td>Provider construction</td>
+  <td>Local binding dependencies/cycles checked</td>
+</tr>
+<tr>
+  <td>Storage replacement seam</td>
+  <td>Neutral worker execution port; independent ephemeral conformance store with SQLite physically absent; sync and async cases</td>
+</tr>
+<tr>
+  <td>SQLite/access runtime profile</td>
+  <td>Real local adapter remains; not a hosted production default</td>
+</tr>
+<tr>
+  <td>Four reference products</td>
+  <td>Neutral, Service Desk (two workspaces), Knowledge and Combined; small acceptance consumers</td>
+</tr>
+<tr>
+  <td>Framework version isolation</td>
+  <td>Actual 0.1/0.2 separate local neutral instances tested; not published-version rollout</td>
+</tr>
+<tr>
+  <td>Browser acceptance</td>
+  <td>Attempted; four APIs ready, Chromium navigation blocked, zero browser assertions executed</td>
+</tr>
+<tr>
+  <td>Actual React/ReactDOM and third-party UI bundler</td>
+  <td>Not implemented/qualified by this native-ESM closure; renderer adapter exists</td>
+</tr>
+<tr>
+  <td>Production OIDC/Nest/database/security/fleet</td>
+  <td>Not implemented or qualified</td>
+</tr>
+<tr>
+  <td>Notifications, object storage, AI/RAG/video</td>
+  <td>Optional future families, not implemented here</td>
+</tr>
+<tr>
+  <td>Backup restore, signing, HA, destructive uninstall/purge</td>
+  <td>Not implemented</td>
+</tr>
+<tr>
+  <td>Veyviz migration/tenant/camera/deployment changes</td>
+  <td>None</td>
+</tr>
+</tbody>
+</table>
+<p>The full suite reports 116 passes; compiled-only has 98 of those tests. Source fingerprint and logs are in <code>evidence/</code>. These counts are not a completion percentage. No inherited Veyviz acceptance criterion is promoted by these different reference applications.</p>
+<h2>Next bounded work</h2>
+<p>Run the actual browser suite in a permitted environment and implement one real React/bundler consumer adapter. Then select one production identity/persistence/execution profile and prove independently adopted package versions. Do not add new domain concepts to neutral packages or build every provider in advance.</p>
+</section><section id="validation"><div class="eyebrow">FOUNDATION 0.2 · Validation</div><h1>Foundation 0.2 — actual verification and exclusions</h1>
+<p><strong>Result: PASSED_FOR_LOCAL_FRAMEWORK_SCOPE.</strong> This is source stabilization and local reference-product evidence, not a production or customer-product qualification.</p>
+<h2>Executed on the corrected source</h2>
+<table>
+<thead>
+<tr>
+  <th>Check</th>
+  <th>Actual result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Complete TypeScript package/product build</td>
+  <td>Passed with TypeScript 5.8.3 and Node 22.16.0</td>
+</tr>
+<tr>
+  <td>Full automated suite</td>
+  <td>116 passed; no failed, skipped or cancelled tests</td>
+</tr>
+<tr>
+  <td>Compiled-only suite</td>
+  <td>98 passed; a subset of the 116, not additional coverage</td>
+</tr>
+<tr>
+  <td>Comparable new regressions on original 0.1</td>
+  <td>20 cases: 14 fail, 6 pass (expected negative baseline)</td>
+</tr>
+<tr>
+  <td>The same comparable cases on 0.2</td>
+  <td>All 20 pass</td>
+</tr>
+<tr>
+  <td>Independent worker-store adapter</td>
+  <td>Strict compile plus actual worker execution with SQLite package physically absent; sync/async and rollback/fencing cases</td>
+</tr>
+<tr>
+  <td>Multi-file UI assembly</td>
+  <td>Actual build and Node HTTP asset reads, lazy helper/CSS/asset closure, negative exposure and hash checks</td>
+</tr>
+<tr>
+  <td>Local old/new release isolation</td>
+  <td>Separate actual 0.1 and 0.2 neutral HTTP processes; older stays 0.1 and its executable hash is unchanged</td>
+</tr>
+<tr>
+  <td>Browser attempt</td>
+  <td>Four real local API endpoints ready; Chromium blocked navigation; zero browser assertions executed</td>
+</tr>
+</tbody>
+</table>
+<p><code>npm run verify</code> generates the current fingerprint, build log and tests log. Tests exercise actual local HTTP servers, SQLite transactions, child worker processes, selected exports, generated modules, lease/retry behavior and partial cross-product failures.</p>
+<p>The shell regression harness imports the actual compiled shell and controls document, event, timer and fetch interfaces. It is <strong>not a real DOM renderer, browser, React or live server-security proof</strong>. The frontend-assembly HTTP checks establish served bytes and dependency material; they are not a claim that a browser rendered those assets.</p>
+<p>The independent memory adapter is ephemeral conformance code, not another durable/production database. Local version isolation is not package-registry distribution, shared-data rolling migration, browser compatibility or fleet rollout.</p>
+<h2>Development dependencies and lockfile</h2>
+<p>A fresh <code>npm ci --ignore-scripts</code> attempt failed with <code>EAI_AGAIN</code> resolving registry.npmjs.org. No fresh dependency installation is claimed. Build/test execution used exact matching preinstalled TypeScript 5.8.3, @types/node 22.19.7 and undici-types 6.21.0. Temporary local tool links are excluded from the archive.</p>
+<p>The updated workspace lockfile was reconciled successfully using <code>npm install --package-lock-only --ignore-scripts --offline --no-audit --no-fund</code>. No additional third-party runtime dependency was introduced. Logs are preserved separately.</p>
+<h2>Initial failures retained</h2>
+<p>The first stabilization build missed the moved <code>JobState</code> import. That was corrected before the successful complete build. The first existing-suite run had two failures because its adapter fixtures still used the old cross-product signature; they were updated to assert the explicit v2 binding/receipt, not weakened to accept arbitrary success. Subsequent full runs passed.</p>
+<p>The first original-code regression experiment hung on the baseline's unguarded reentrant worker tick. The test was bounded so it reports a failure rather than hanging; the same bounded case is used for the completed original/corrected comparison. Original evidence is retained under <code>history/v0.1/</code>, current stabilization attempts under <code>history/</code>.</p>
+<h2>Browser limitation</h2>
+<p><code>tools/browser_test.py</code> starts actual local products and workers, uses generated temporary credentials, then performs normal Playwright/Chromium navigation. Chromium returned <code>ERR_BLOCKED_BY_ADMINISTRATOR</code>. The runner records <code>BLOCKED_BY_ENVIRONMENT</code>, not PASS. No navigation-policy bypass was attempted; temporary data and processes were cleaned up.</p>
+<p>The included suite now also exercises the second Service Desk workspace. It remains authored but unexecuted in a real browser. Actual React/ReactDOM and a third-party browser bundler remain unqualified.</p>
+<h2>Excluded proof</h2>
+<p>No production identity/storage/security assurance, external tenant/camera/model use, native-work cancellation, published-version rolling upgrade, signed supply chain, backup restore, HA/fleet operation, destructive uninstall, Veyviz migration or deployment was performed. A trusted in-process module is not a hostile-plugin sandbox. No prior Veyviz acceptance criteria are marked passed.</p>
+<h2>Re-run</h2>
+<pre><code class="language-text">npm run setup
+npm run test:compiled
+</code></pre>
+<p>After a successful permitted development install:</p>
+<pre><code class="language-text">npm ci
+npm run verify
+</code></pre>
+<p>Browser: <code>npm run test:browser</code> requires Python Playwright and an installed browser in an environment allowing normal local navigation. Do not bypass organization controls. Version isolation: <code>node tools/version-isolation.mjs --older-root &lt;extracted-original-0.1&gt;</code>.</p>
+<p>Fresh-archive integrity and extraction results are recorded in <code>PACKAGING.json</code> and <code>fresh_extraction.json</code> when the final bundle is assembled. Checksums detect changed bytes, not trusted signatures.</p>
+</section></main></div><footer>Static offline project guide. Source and compiled builds included. Browser/React acceptance, production profiles and Veyviz integration are not claimed.</footer></body></html>

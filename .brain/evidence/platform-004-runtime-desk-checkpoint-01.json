@@ -1,0 +1,17 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "ACCEPTED_ACTUAL_DESK_JOURNEY_SCOPE",
+  "recipe": ["node", "--test", "--test-name-pattern=promoted Service Desk release", "--test-reporter=tap", "tests/control-plane-artifacts.test.mjs"],
+  "checks": {"exit_code": 0, "tests": 1, "passed": 1, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0, "evidence": "platform-004-runtime-desk-first-04.tap.txt", "provenance": "Raw EXIT_CODE marker and writer report; root and independent Sol read raw TAP."},
+  "core_hashes": {
+    "apps/control-plane/src/runtime-manager.ts": "9f75e766a5f50d85dd4f4a6d8eef7400bd57faa0ef180af20d458daab7876993",
+    "tools/runtime-supervisor.mjs": "e8bee18aed4399433f6a85cf653c78401f2b5cb8576aee8d8a9da61df33e9d52",
+    "tools/build-job.ps1": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9"
+  },
+  "test_candidate_limit": "Root observed artifact test b64546e8594f923040d076f6e957951a21e6bfa6284be5b3c4cd89c8c83bd49b immediately after reported pass. File subsequently changed for Combined; independent Sol observed b09dcb7f...bde5f. No frozen whole-candidate approval inferred. Writer successful-run test-pin provenance requested; final frozen tests must qualify current complete candidate.",
+  "actual_scope": "Real private reviewed source/toolchain fixture, actual worker build success, immutable registry register/promote, build worker closed. Actual manager, selected normal-File PS7 native Job Object and fixed supervisor perform canonical enrollment and immutable role launch. Business HTTP health/login/create, positive first EMPTY/helperClosed/executionClean stop with empty slot, same instance attempt2 restart, unchanged private credential-file hash and exact retained request read, second positive stop and fixture teardown. No registry/runtime/proof doubles in this slice.",
+  "review": "Independent Sol/high accepts this actual evidence scope and matched unchanged core pins. Runtime close precedes dependency teardown/owned removal; uncertainty retains fixture/resources and fails teardown. No secrets printed by this slice.",
+  "history": "Failed01/02 direct register-return fixture TypeError and03 missing separately pinned operational supervisor before dispatch retained. Three failed runs, two distinct prelaunch fixture causes.",
+  "remaining": "Actual compiler files unavailable, checkout rebuild independence, revoked identities/grants no-reseed negatives, Combined worker/domain completion, role/helper failure/UNKNOWN/reopen, crossprocess/session/SQLite/original-identity gates, RuntimeProtocol variants, paired operator HTTP, ordinary browser, full npm test/verifier and final exact-candidate review. CP4 remains IMPLEMENTING."
+}

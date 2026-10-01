@@ -1,0 +1,20 @@
+{
+  "name": "@quadbridge/runtime",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@quadbridge/contracts": "0.2.0",
+    "@quadbridge/composition": "0.2.0",
+    "@quadbridge/sqlite": "0.2.0",
+    "@quadbridge/local-access": "0.2.0",
+    "@quadbridge/backend-host": "0.2.0",
+    "@quadbridge/worker-host": "0.2.0",
+    "@quadbridge/web-shell": "0.2.0",
+    "@quadbridge/connections": "0.2.0",
+    "@quadbridge/service-desk": "0.2.0",
+    "@quadbridge/knowledge": "0.2.1",
+    "@quadbridge/handoff": "0.2.1",
+    "@quadbridge/ai-core": "0.3.0"
+  }
+}

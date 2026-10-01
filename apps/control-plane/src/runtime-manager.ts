@@ -1,0 +1,1353 @@
+import { createHash, randomBytes, randomUUID } from 'node:crypto';
+import { spawn, type ChildProcess } from 'node:child_process';
+import { DatabaseSync } from 'node:sqlite';
+import { closeSync, fstatSync, lstatSync, mkdirSync, openSync, opendirSync, readFileSync, readdirSync, realpathSync, symlinkSync, unlinkSync, writeFileSync, linkSync, readSync, rmSync } from 'node:fs';
+import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { performance } from 'node:perf_hooks';
+import { canonical, PlatformError } from '@quadbridge/contracts';
+import type { PrincipalSeed } from '@quadbridge/local-access';
+import type { BoundedSnapshot, SnapshotAccessLimits } from '@quadbridge/composition/snapshot-access';
+import { readBoundedSnapshot } from '@quadbridge/composition/snapshot-access';
+import { ARTIFACT_REGISTRY_LIMITS, type ControlPlaneStore } from '@quadbridge/control-plane';
+import { assertWindowsBuildHost, type WindowsBuildHostProfile } from './build-host.js';
+import type { LocalArtifactStore } from './artifact-store.js';
+
+const sha256 = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
+const RUNTIME_ID = /^runtime-[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const PRODUCT_ID = /^[a-z][a-z0-9-]{1,47}$/;
+const VERSION = /^\d{1,6}\.\d{1,6}\.\d{1,6}$/;
+const SNAPSHOT_LIMITS: SnapshotAccessLimits = ARTIFACT_REGISTRY_LIMITS;
+const HEX256 = /^[a-f0-9]{64}$/;
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const NODE_VERSION_PIN = 'v24.19.0';
+const NODE_SHA256_PIN = '3602f2bb1a10f2cbab4c36886218a33c1ab3db87290e73b033c46c77147d0237';
+const POWERSHELL_SHA256_PIN = '362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139';
+const RUNTIME_RECIPE = 'managed-local-runtime-supervisor-v1';
+
+export class RuntimePreparationError extends Error {
+  constructor(readonly code: 'RUNTIME_UNAVAILABLE'|'RUNTIME_REPAIR_REQUIRED'|'RUNTIME_SOURCE_INVALID'|'RUNTIME_IDENTITY_CHANGED', message: string) {
+    super(message); this.name = 'RuntimePreparationError';
+  }
+}
+
+export interface RuntimePlanIdentity {
+  productId: string;
+  version: string;
+  workerRequired: boolean;
+  plan: Record<string, any>;
+  profile: Record<string, any>;
+  profileDigest: string;
+}
+
+export interface AdaptedRuntimeConfiguration {
+  config: Record<string, any>;
+  seedPrincipals: PrincipalSeed[];
+  seedDigest: string;
+  configDigest: string;
+  credentialReference: string;
+}
+
+export interface PreparedRuntimeEnrollment extends AdaptedRuntimeConfiguration {
+  enrollmentDigest: string;
+  freshEnrollment: boolean;
+}
+
+export interface RuntimeEnrollmentIdentity {
+  instanceId: string;
+  productId: string;
+  version: string;
+  artifactDigest: string;
+  profileDigest: string;
+  configDigest: string;
+  adapterDigest: string;
+}
+
+function assertPhysicalRoot(root: string): string {
+  const full = resolve(root), info = lstatSync(full);
+  if (!info.isDirectory() || info.isSymbolicLink() || realpathSync(full).toLowerCase() !== full.toLowerCase())
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime state must be under a physical project directory');
+  return full;
+}
+
+function assertWithin(root: string, target: string, allowRoot = false): string {
+  const base = resolve(root), full = resolve(target), rel = relative(base, full);
+  if ((!allowRoot && !rel) || rel === '..' || rel.startsWith(`..${sep}`) || isAbsolute(rel) || resolve(base, rel) !== full)
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime path escaped its private owner root');
+  return full;
+}
+
+function physicalDirectoryUnder(root: string, target: string, create: boolean): string {
+  const base = assertPhysicalRoot(root), full = assertWithin(base, target, true);
+  if (full === base) return base;
+  const rel = relative(base, full), parts = rel.split(sep).filter(Boolean);
+  let current = base;
+  for (const part of parts) {
+    current = join(current, part);
+    try {
+      const info = lstatSync(current);
+      if (!info.isDirectory() || info.isSymbolicLink() || realpathSync(current).toLowerCase() !== current.toLowerCase())
+        throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime state contains a link or non-directory component');
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== 'ENOENT' || !create) throw error;
+      mkdirSync(current);
+      const info = lstatSync(current);
+      if (!info.isDirectory() || info.isSymbolicLink() || realpathSync(current).toLowerCase() !== current.toLowerCase())
+        throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime state could not be created as a physical directory');
+    }
+  }
+  return full;
+}
+
+function portableRelative(path: string): string[] {
+  if (typeof path !== 'string' || !path || path.includes('\\') || path.startsWith('/') || path.length > 240)
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted runtime contains an unsupported path');
+  const parts = path.split('/');
+  if (parts.some(part => !part || part === '.' || part === '..' || /[\x00-\x1f\x7f:]/.test(part) || /[. ]$/.test(part) ||
+      /^(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\.|$)/i.test(part)))
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted runtime contains an unsupported Windows path');
+  return parts;
+}
+
+function writeExactFile(path: string, bytes: Uint8Array): void {
+  if (resolve(path).length >= 240) throw new RuntimePreparationError('RUNTIME_UNAVAILABLE', 'Managed runtime file path exceeds the supported Windows path bound');
+  const parent = dirname(path);
+  const parentInfo = lstatSync(parent);
+  if (!parentInfo.isDirectory() || parentInfo.isSymbolicLink() || realpathSync(parent).toLowerCase() !== resolve(parent).toLowerCase())
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime file parent is not a physical private directory');
+  writeFileSync(path, bytes, { flag: 'wx' });
+  const info = lstatSync(path);
+  if (!info.isFile() || info.isSymbolicLink() || realpathSync(path).toLowerCase() !== resolve(path).toLowerCase() || info.size !== bytes.byteLength)
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Managed runtime copy did not remain a physical exact file');
+}
+
+/** Copies the exact verified registry buffers and independently rechecks the complete snapshot before any mutation. */
+export function copyVerifiedRuntimeSnapshot(snapshot: BoundedSnapshot, destination: string, expected: Record<string, unknown>): BoundedSnapshot {
+  const target = resolve(destination);
+  if (target.length >= 240) throw new RuntimePreparationError('RUNTIME_UNAVAILABLE', 'Managed runtime path exceeds the supported Windows path bound');
+  assertPhysicalRoot(dirname(target));
+  try { lstatSync(target); throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime execution destination already exists'); }
+  catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
+  if (!Array.isArray(snapshot.entries) || snapshot.entries.length > SNAPSHOT_LIMITS.maxFiles ||
+      !Number.isSafeInteger(snapshot.fileCount) || snapshot.fileCount !== snapshot.entries.length ||
+      !Number.isSafeInteger(snapshot.sizeBytes) || snapshot.sizeBytes < 1 || snapshot.sizeBytes > SNAPSHOT_LIMITS.maxArtifactBytes)
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted runtime exceeds its exact copied-entry bounds');
+  let actualTotalBytes = 0;
+  const seen = new Set<string>(), filePaths = new Set<string>(), directorySpellings = new Map<string,string>(), entries = snapshot.entries.map(entry => {
+    const parts=portableRelative(entry.path),folded=entry.path.toLowerCase(),output=assertWithin(target,join(target,...parts));
+    const manifestEntry = entry.path === 'QUADBRIDGE-SNAPSHOT.json';
+    const entryLimit = manifestEntry ? SNAPSHOT_LIMITS.maxManifestBytes : SNAPSHOT_LIMITS.maxFileBytes;
+    if (!Buffer.isBuffer(entry.bytes) || !Number.isSafeInteger(entry.sizeBytes) || entry.sizeBytes < 0 ||
+        entry.bytes.byteLength > entryLimit || entry.sizeBytes > entryLimit ||
+        !HEX256.test(entry.digest) || sha256(entry.bytes) !== entry.digest || entry.bytes.byteLength !== entry.sizeBytes ||
+        actualTotalBytes + entry.bytes.byteLength > SNAPSHOT_LIMITS.maxArtifactBytes ||
+        seen.has(folded) || output.length >= 240)
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Verified runtime entry identity or path changed before its private copy');
+    actualTotalBytes += entry.bytes.byteLength;
+    seen.add(folded);filePaths.add(folded);
+    for(let index=1;index<parts.length;index++){
+      const exact=parts.slice(0,index).join('/'),key=exact.toLowerCase(),prior=directorySpellings.get(key);
+      if(prior!==undefined&&prior!==exact)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Promoted runtime directory paths collide on Windows');
+      directorySpellings.set(key,exact);
+    }
+    return {entry,parts,output};
+  });
+  if (actualTotalBytes !== snapshot.sizeBytes)
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted runtime byte total differs from its verified inventory before private copy');
+  for (const {entry} of entries) {
+    const parts=entry.path.toLowerCase().split('/');
+    for(let index=1;index<parts.length;index++)if(filePaths.has(parts.slice(0,index).join('/')))
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Promoted runtime file paths contain a file/directory collision');
+  }
+  mkdirSync(target, { recursive: false });
+  const root = assertPhysicalRoot(target);
+  for (const {entry,parts,output} of entries) {
+    let parent = root;
+    for (const part of parts.slice(0, -1)) {
+      parent = join(parent, part);
+      try { mkdirSync(parent); }
+      catch (error) { if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error; }
+      const info = lstatSync(parent);
+      if (!info.isDirectory() || info.isSymbolicLink() || realpathSync(parent).toLowerCase() !== parent.toLowerCase())
+        throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Managed runtime copy encountered a linked directory');
+    }
+    writeExactFile(output, entry.bytes);
+  }
+  const copied = readBoundedSnapshot(root, expected as any, SNAPSHOT_LIMITS);
+  if (copied.snapshotDigest !== snapshot.snapshotDigest || copied.releaseDigest !== snapshot.releaseDigest ||
+      copied.entriesJson !== snapshot.entriesJson || copied.sizeBytes !== snapshot.sizeBytes)
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Private runtime bytes differ from the promoted immutable artifact');
+  return copied;
+}
+
+/** Adds only verified in-copy workspace junctions; no checkout path can become a runtime dependency. */
+export function linkCopiedRuntimeWorkspaces(root: string): string[] {
+  const base = assertPhysicalRoot(root);
+  const byName = new Map<string, string>();
+  for (const group of ['packages', 'modules', 'apps']) {
+    const groupPath = join(base, group);
+    let names: string[];
+    try { names = readdirSync(groupPath); }
+    catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') continue; throw error; }
+    for (const folder of names.sort()) {
+      const target = join(groupPath, folder);
+      let info;
+      try { info = lstatSync(target); }
+      catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') continue; throw error; }
+      if (info.isSymbolicLink() || !info.isDirectory() || realpathSync(target).toLowerCase() !== target.toLowerCase())
+        throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted runtime workspace contains a link or non-directory');
+      const packagePath = join(target, 'package.json');
+      try { info = lstatSync(packagePath); }
+      catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') continue; throw error; }
+      if (!info.isFile() || info.isSymbolicLink() || realpathSync(packagePath).toLowerCase() !== packagePath.toLowerCase())
+        throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted runtime workspace manifest is not a physical file');
+      const pkg = JSON.parse(readFileSync(packagePath, 'utf8')) as Record<string, unknown>;
+      if (typeof pkg.name !== 'string' || !/^@quadbridge\/[a-z][a-z0-9-]{1,47}$/.test(pkg.name))
+        throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted runtime has an unsupported workspace name');
+      if (byName.has(pkg.name)) throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted runtime repeats a workspace package identity');
+      byName.set(pkg.name, target);
+    }
+  }
+  const linkRoot = join(base, 'node_modules');
+  try { lstatSync(linkRoot); throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted runtime unexpectedly includes a dependency-link directory'); }
+  catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
+  mkdirSync(linkRoot);
+  const scope = join(linkRoot, '@quadbridge');
+  mkdirSync(scope);
+  const links: string[] = [];
+  for (const [name, target] of [...byName.entries()].sort(([a], [b]) => a.localeCompare(b))) {
+    const link = join(scope, name.slice('@quadbridge/'.length));
+    if (link.length >= 240 || target.length >= 240) throw new RuntimePreparationError('RUNTIME_UNAVAILABLE', 'Runtime workspace link exceeds the supported Windows path bound');
+    symlinkSync(target, link, process.platform === 'win32' ? 'junction' : 'dir');
+    const linkInfo = lstatSync(link), linkedTarget = realpathSync(link);
+    if (!linkInfo.isSymbolicLink() || linkedTarget.toLowerCase() !== target.toLowerCase() || !linkedTarget.toLowerCase().startsWith(`${base.toLowerCase()}${sep}`))
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Runtime workspace link escaped its copied inventory');
+    links.push(name);
+  }
+  const actual = readdirSync(scope).sort();
+  if (actual.join('\0') !== links.map(name => name.slice('@quadbridge/'.length)).sort().join('\0'))
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Runtime workspace link inventory changed during setup');
+  return links;
+}
+
+function objectAt(snapshot: BoundedSnapshot, path: string): { value: Record<string, any>; bytes: Buffer } {
+  const entry = snapshot.entries.find(item => item.path === path);
+  if (!entry) throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', `Promoted runtime is missing its fixed ${path} input`);
+  let value: unknown;
+  try { value = JSON.parse(entry.bytes.toString('utf8')) as unknown; }
+  catch { throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', `Promoted runtime contains invalid JSON in ${path}`); }
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', `Promoted runtime contains malformed ${path}`);
+  return { value: value as Record<string, any>, bytes: entry.bytes };
+}
+
+export function runtimePlanIdentity(snapshot: BoundedSnapshot, productId: string, version: string): RuntimePlanIdentity {
+  if (!PRODUCT_ID.test(productId) || !VERSION.test(version)) throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Runtime release identity is invalid');
+  const { value: plan } = objectAt(snapshot, `.artifacts/${productId}/plan.json`);
+  const { value: profile, bytes: profileBytes } = objectAt(snapshot, 'profiles/local-developer.json');
+  if (!plan.product || typeof plan.product !== 'object' || plan.product.id !== productId || plan.product.version !== version ||
+      !Array.isArray(plan.modules) || !Array.isArray(plan.bindings) || typeof plan.requiresWorker !== 'boolean' ||
+      plan.modules.some((item: any) => !item || typeof item.id !== 'string') ||
+      plan.bindings.some((binding: any) => !binding || binding.mode !== 'local' || typeof binding.consumer !== 'string' ||
+        typeof binding.instanceId !== 'string' || typeof binding.contract !== 'string' || typeof binding.implementation !== 'string'))
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'This promoted product is not a reviewed local-only runtime plan');
+  if (profile.id !== 'quadbridge.local-developer.v1' || profile.profile !== 'loopback-developer-only' ||
+      !Array.isArray(profile.defaultTenants) || !Array.isArray(profile.providerSeeds) || !Array.isArray(profile.connections))
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted local developer profile is not supported');
+  return { productId, version, workerRequired: plan.requiresWorker, plan, profile, profileDigest: sha256(profileBytes) };
+}
+
+export async function adaptCanonicalLocalConfiguration(input: {
+  executionRoot: string;
+  planIdentity: RuntimePlanIdentity;
+  instanceId: string;
+  dataDirectory: string;
+  credentialReference: string;
+}): Promise<AdaptedRuntimeConfiguration> {
+  if (!RUNTIME_ID.test(input.instanceId) || !PRODUCT_ID.test(input.planIdentity.productId))
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Generated local runtime identity is invalid');
+  const helper = join(assertPhysicalRoot(input.executionRoot), 'tools', 'local-profile.mjs');
+  const info = lstatSync(helper);
+  if (!info.isFile() || info.isSymbolicLink() || realpathSync(helper).toLowerCase() !== helper.toLowerCase())
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted canonical local configuration helper is not a physical file');
+  const imported = await import(pathToFileURL(helper).href) as { localConfiguration?: Function };
+  if (typeof imported.localConfiguration !== 'function') throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted local configuration helper is unavailable');
+  const credentials = {
+    admin: randomBytes(32).toString('base64url'),
+    viewer: randomBytes(32).toString('base64url'),
+    serviceToken: randomBytes(32).toString('base64url')
+  };
+  let generated: any;
+  try { generated = imported.localConfiguration(input.planIdentity.plan, input.planIdentity.profile, { credentials, dataDirectory: input.dataDirectory }); }
+  catch { throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'The promoted local profile could not produce a supported local runtime configuration'); }
+  const config = generated?.config;
+  const principals = config?.principals;
+  if (!config || typeof config !== 'object' || config.instanceId !== `${input.planIdentity.productId}-local` ||
+      config.dataDirectory !== input.dataDirectory || !Array.isArray(principals) || !principals.length ||
+      !config.connections || typeof config.connections !== 'object' || Array.isArray(config.connections))
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'The canonical local profile returned an unexpected configuration');
+  const allowedConnections = new Set(input.planIdentity.plan.bindings.map((binding: any) => binding.instanceId));
+  if (Object.keys(config.connections).some(key => !allowedConnections.has(key)))
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'The canonical local profile returned an unbound connection');
+  const bindingsByInstance = new Map<string, any>(input.planIdentity.plan.bindings.map((binding: any) => [binding.instanceId, binding]));
+  for (const [instanceId, connection] of Object.entries(config.connections) as [string, any][]) {
+    const binding = bindingsByInstance.get(instanceId);
+    if (!binding || binding.mode !== 'local' || !connection || connection.mode !== 'local' || connection.destinationProduct !== input.planIdentity.productId ||
+        connection.destinationInstance !== config.instanceId || 'baseUrl' in connection)
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Canonical runtime connections differ from the local-only reviewed plan');
+    connection.destinationInstance = input.instanceId;
+  }
+  const seedPrincipals = principals as PrincipalSeed[];
+  if (seedPrincipals.some(principal => !principal || typeof principal.id !== 'string' || !Array.isArray(principal.grants) ||
+      (principal.password !== undefined && typeof principal.password !== 'string') ||
+      (principal.serviceToken !== undefined && typeof principal.serviceToken !== 'string')))
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'The canonical local profile returned malformed enrollment principals');
+  const seedDigest = sha256(canonical(seedPrincipals));
+  config.instanceId = input.instanceId;
+  config.principals = [];
+  const configDigest = sha256(canonical({ config, seedDigest, profileDigest: input.planIdentity.profileDigest }));
+  return { config, seedPrincipals, seedDigest, configDigest, credentialReference: input.credentialReference };
+}
+
+function readPrivateJson(path: string,limit=1024*1024): Record<string, any> {
+  const full=resolve(path),named=lstatSync(full);
+  if (!named.isFile() || named.isSymbolicLink() || realpathSync(full).toLowerCase() !== full.toLowerCase() || named.size<1 || named.size > limit)
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Private runtime enrollment metadata is missing or unsafe');
+  const descriptor=openSync(full,'r');let bytes:Buffer;
+  try{
+    const opened=fstatSync(descriptor);
+    if(!opened.isFile()||opened.dev!==named.dev||opened.ino!==named.ino||opened.size!==named.size)throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Private runtime metadata changed while opening');
+    bytes=Buffer.alloc(opened.size);let offset=0;
+    while(offset<bytes.length){const count=readSync(descriptor,bytes,offset,bytes.length-offset,offset);if(count<1)throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Private runtime metadata changed while reading');offset+=count;}
+    const probe=Buffer.alloc(1),extra=readSync(descriptor,probe,0,1,opened.size),after=fstatSync(descriptor),afterName=lstatSync(full);
+    if(extra!==0||after.size!==opened.size||after.dev!==opened.dev||after.ino!==opened.ino||afterName.dev!==opened.dev||afterName.ino!==opened.ino||
+       realpathSync(full).toLowerCase()!==full.toLowerCase())throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Private runtime metadata changed while reading');
+  }finally{closeSync(descriptor);}
+  let value: unknown;
+  try { value = JSON.parse(bytes!.toString('utf8')) as unknown; }
+  catch { throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Private runtime enrollment metadata is incomplete'); }
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Private runtime enrollment metadata is malformed');
+  return value as Record<string, any>;
+}
+
+function verifyBindingBeforeOpen(accessPath: string, productId: string, instanceId: string): void {
+  const info = lstatSync(accessPath);
+  if (!info.isFile() || info.isSymbolicLink() || realpathSync(accessPath).toLowerCase() !== resolve(accessPath).toLowerCase())
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Completed runtime access storage is missing or unsafe');
+  const db = new DatabaseSync(accessPath, { readOnly: true, timeout: 1000 });
+  try {
+    const rows = db.prepare('SELECT product,instance FROM instance_binding').all() as { product: string; instance: string }[];
+    if (rows.length !== 1 || rows[0]!.product !== productId || rows[0]!.instance !== instanceId)
+      throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Completed runtime access binding is missing or changed');
+  } catch (error) {
+    if (error instanceof RuntimePreparationError) throw error;
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Completed runtime access storage cannot be validated');
+  } finally { db.close(); }
+}
+
+function optionalLstat(path: string) {
+  try { return lstatSync(path); }
+  catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined; throw error; }
+}
+
+function boundedDirectoryNames(path:string,limit=16384):string[]{
+  const directory=opendirSync(path),names:string[]=[];
+  try{
+    for(;;){
+      const entry=directory.readSync();if(!entry)break;
+      names.push(entry.name);
+      if(names.length>limit)throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime data exceeds its directory-entry bound');
+    }
+  }finally{directory.closeSync();}
+  return names;
+}
+
+export function runtimeDataDirectory(projectRoot: string, instanceId: string, artifactDigest: string): string {
+  if (!RUNTIME_ID.test(instanceId) || !HEX256.test(artifactDigest))
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime data identity is invalid');
+  const project = resolve(projectRoot);
+  const target = resolve(project, '.local', 'platform-runtime-data', instanceId, artifactDigest);
+  if (target.length >= 240 || ['enrollment-intent.json','enrollment-complete.json','runtime-config.json','enrollment-private.json','credentials.json','access.sqlite']
+      .some(name => join(target, name).length >= 240))
+    throw new RuntimePreparationError('RUNTIME_UNAVAILABLE', 'Managed runtime data path exceeds the supported Windows path bound');
+  return target;
+}
+
+function validateEnrollmentIdentity(identity: RuntimeEnrollmentIdentity, projectRoot: string, dataDirectory: string,
+  config: Record<string, any>, seeds: readonly PrincipalSeed[], seedDigest: string): void {
+  if (!identity || !RUNTIME_ID.test(identity.instanceId) || !PRODUCT_ID.test(identity.productId) || !VERSION.test(identity.version) ||
+      !HEX256.test(identity.artifactDigest) || !HEX256.test(identity.profileDigest) || !HEX256.test(identity.configDigest) || !HEX256.test(identity.adapterDigest) ||
+      typeof projectRoot !== 'string' || !projectRoot || resolve(dataDirectory) !== runtimeDataDirectory(projectRoot, identity.instanceId, identity.artifactDigest))
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime enrollment path or immutable identity is invalid');
+  if (!Array.isArray(seeds) || !seeds.length || seeds.some(principal => !principal || typeof principal.id !== 'string' || !principal.id ||
+      !Array.isArray(principal.grants) || (principal.password !== undefined && typeof principal.password !== 'string') ||
+      (principal.serviceToken !== undefined && typeof principal.serviceToken !== 'string') || (!principal.password && !principal.serviceToken) ||
+      principal.grants.some((grant: any) => !grant || typeof grant.tenantId !== 'string' || !Array.isArray(grant.permissions) ||
+        grant.permissions.some((permission: any) => typeof permission !== 'string'))))
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Canonical enrollment principals are malformed');
+  const actualSeedDigest = sha256(canonical(seeds));
+  if (!HEX256.test(seedDigest) || actualSeedDigest !== seedDigest || !config || typeof config !== 'object' || Array.isArray(config) ||
+      config.instanceId !== identity.instanceId || config.dataDirectory !== resolve(dataDirectory) || !Array.isArray(config.principals) || config.principals.length !== 0 ||
+      !config.connections || typeof config.connections !== 'object' || Array.isArray(config.connections) ||
+      sha256(canonical({ config, seedDigest, profileDigest: identity.profileDigest })) !== identity.configDigest)
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Canonical runtime configuration does not match its immutable enrollment identity');
+}
+
+function assertPhysicalDataTree(root: string,scan:RuntimeCleanupScan={started:performance.now(),entries:0}): void {
+  const pending: Array<{path:string;depth:number}> = [{path:root,depth:0}];
+  while (pending.length) {
+    cleanupScanCheck(scan);
+    const current = pending.pop()!;
+    const directory=opendirSync(current.path);
+    try{for(;;){
+      cleanupScanCheck(scan);
+      const item=directory.readSync();if(!item)break;
+      const name=item.name;
+      cleanupScanCheck(scan,1);
+      const path = join(current.path,name);
+      if (path.length >= 240) throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime data path exceeds the supported Windows path bound');
+      const info = lstatSync(path);
+      if (info.isSymbolicLink() || realpathSync(path).toLowerCase() !== path.toLowerCase())
+        throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime data contains a link or reparse point');
+      if (info.isDirectory()) {
+        if (current.depth + 1 > 32) throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime data exceeds its physical validation depth');
+        pending.push({path,depth:current.depth+1});
+      } else if (!info.isFile()) throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime data contains a special file');
+    }}finally{directory.closeSync();}
+    cleanupScanCheck(scan);
+  }
+}
+
+function expectedGrantRows(principals: readonly PrincipalSeed[]) {
+  return principals.flatMap(principal => principal.grants.flatMap(grant => grant.permissions.map(permission => `${principal.id}\0${grant.tenantId}\0${permission}`))).sort();
+}
+
+function verifyFreshAccessRows(access: any, seeds: readonly PrincipalSeed[], productId: string, instanceId: string): void {
+  const bindings = access.store.db.prepare('SELECT product,instance FROM instance_binding').all();
+  if (bindings.length !== 1 || bindings[0]!.product !== productId || bindings[0]!.instance !== instanceId)
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'New runtime access binding does not match its enrollment intent');
+  const actualPrincipals = access.store.db.prepare('SELECT id,kind,active FROM principals ORDER BY id').all() as { id: string; kind: string; active: number }[];
+  const expectedPrincipals = seeds.map(principal => ({ id: principal.id, kind: principal.serviceToken ? 'service' : 'user', active: 1 })).sort((a,b) => a.id.localeCompare(b.id));
+  if (canonical(actualPrincipals) !== canonical(expectedPrincipals))
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Canonical runtime enrollment principal set is incomplete');
+  const actualGrants = (access.store.db.prepare('SELECT principal,tenant,permission FROM grants').all() as {principal:string;tenant:string;permission:string}[])
+    .map(row => `${row.principal}\0${row.tenant}\0${row.permission}`).sort();
+  if (canonical(actualGrants) !== canonical(expectedGrantRows(seeds)))
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Canonical runtime enrollment grant set is incomplete');
+  for (const principal of seeds) {
+    if (principal.password) {
+      const before = Number((access.store.db.prepare('SELECT COUNT(*) AS count FROM sessions').get() as {count:number}).count);
+      const session = access.login(principal.id, principal.password);
+      access.logout(session.token);
+      const after = Number((access.store.db.prepare('SELECT COUNT(*) AS count FROM sessions').get() as {count:number}).count);
+      if (after !== before) throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Canonical runtime credential verification did not close its session');
+    }
+    if (principal.serviceToken) {
+      const service = access.authenticate(undefined, principal.serviceToken);
+      if (service.id !== principal.id || service.kind !== 'service') throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Canonical runtime service identity did not verify');
+    }
+  }
+}
+
+export function completedRuntimeEnrollment(input: {
+  projectRoot: string;
+  dataDirectory: string;
+  identity: Omit<RuntimeEnrollmentIdentity,'configDigest'>;
+}): AdaptedRuntimeConfiguration | undefined {
+  const dataDirectory = runtimeDataDirectory(input.projectRoot,input.identity.instanceId,input.identity.artifactDigest);
+  if (resolve(input.dataDirectory)!==dataDirectory) throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime data path does not match its exact immutable identity');
+  const project=assertPhysicalRoot(input.projectRoot),local=physicalDirectoryUnder(project,join(project,'.local'),false);
+  const dataRoot=join(local,'platform-runtime-data');
+  const dataRootInfo=optionalLstat(dataRoot);if(!dataRootInfo)return undefined;
+  physicalDirectoryUnder(local,dataRoot,false);
+  const dataParent=dirname(dataDirectory),parentInfo=optionalLstat(dataParent);
+  if(!parentInfo)return undefined;
+  physicalDirectoryUnder(dataRoot,dataParent,false);
+  const targetInfo=optionalLstat(dataDirectory);
+  if(!targetInfo){
+    if(boundedDirectoryNames(dataParent,1).length)throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','This runtime identity already has unbound local data');
+    return undefined;
+  }
+  physicalDirectoryUnder(dataRoot,dataDirectory,false);
+  assertPhysicalDataTree(dataDirectory);
+  const intentPath=join(dataDirectory,'enrollment-intent.json'),completePath=join(dataDirectory,'enrollment-complete.json');
+  const configPath=join(dataDirectory,'runtime-config.json'),seedPath=join(dataDirectory,'enrollment-private.json'),credentialsPath=join(dataDirectory,'credentials.json');
+  const accessPath=join(dataDirectory,'access.sqlite');
+  const entries=boundedDirectoryNames(dataDirectory);
+  if(!entries.length)return undefined;
+  if(!entries.includes('enrollment-complete.json'))throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Existing runtime data has no valid completed enrollment marker; it will not be reseeded');
+  const marker=readPrivateJson(completePath),storedIntent=readPrivateJson(intentPath),storedConfig=readPrivateJson(configPath),storedSeedsObject=readPrivateJson(seedPath),storedCredentials=readPrivateJson(credentialsPath);
+  const storedSeeds=storedSeedsObject.principals;
+  if(!Array.isArray(storedSeeds))throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Completed runtime private enrollment is malformed');
+  const seedDigest=sha256(canonical(storedSeeds));
+  const configDigest=sha256(canonical({config:storedConfig,seedDigest,profileDigest:input.identity.profileDigest}));
+  const binding={schema:'quadbridge.managed-runtime-enrollment.v1',state:'INTENT',...input.identity,configDigest,dataDirectory,seedDigest};
+  const intentDigest=sha256(canonical(binding));
+  if(marker.schema!=='quadbridge.managed-runtime-enrollment.v1'||marker.state!=='COMPLETE'||marker.intentDigest!==intentDigest||
+      canonical(storedIntent)!==canonical(binding)||marker.instanceId!==input.identity.instanceId||marker.productId!==input.identity.productId||
+      marker.version!==input.identity.version||marker.artifactDigest!==input.identity.artifactDigest||marker.profileDigest!==input.identity.profileDigest||
+      marker.adapterDigest!==input.identity.adapterDigest||marker.seedDigest!==seedDigest||marker.configDigest!==configDigest||
+      storedConfig.instanceId!==input.identity.instanceId||storedConfig.dataDirectory!==dataDirectory||!Array.isArray(storedConfig.principals)||storedConfig.principals.length!==0||
+      sha256(canonical({schema:'quadbridge.managed-runtime-credentials.v1',principals:storedSeeds.filter((p:any)=>p.password).map((p:any)=>({id:p.id,password:p.password}))}))!==sha256(canonical(storedCredentials)))
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Completed runtime enrollment does not match its immutable instance binding');
+  validateEnrollmentIdentity({...input.identity,configDigest},dataDirectoryProject(input.projectRoot),dataDirectory,storedConfig,storedSeeds,seedDigest);
+  verifyBindingBeforeOpen(accessPath,input.identity.productId,input.identity.instanceId);
+  return {config:storedConfig,seedPrincipals:storedSeeds,seedDigest,configDigest,credentialReference:`${input.identity.instanceId}:${input.identity.artifactDigest}`};
+}
+
+function dataDirectoryProject(projectRoot:string):string { return resolve(projectRoot); }
+
+/** Fresh enrollment reserves the canonical access database exclusively and writes its completion marker last. */
+export async function enrollOrVerifyRuntimeAccess(input: {
+  projectRoot: string;
+  executionRoot: string;
+  dataDirectory: string;
+  identity: RuntimeEnrollmentIdentity;
+  seedPrincipals: readonly PrincipalSeed[];
+  config: Record<string, any>;
+  seedDigest: string;
+  authorize?: () => unknown;
+}): Promise<'ENROLLED'|'VERIFIED_EXISTING'> {
+  const dataDirectory=resolve(input.dataDirectory);
+  validateEnrollmentIdentity(input.identity,input.projectRoot,dataDirectory,input.config,input.seedPrincipals,input.seedDigest);
+  const binding:Omit<RuntimeEnrollmentIdentity,'configDigest'>={instanceId:input.identity.instanceId,productId:input.identity.productId,version:input.identity.version,
+    artifactDigest:input.identity.artifactDigest,profileDigest:input.identity.profileDigest,adapterDigest:input.identity.adapterDigest};
+  const existing=completedRuntimeEnrollment({projectRoot:input.projectRoot,dataDirectory,identity:binding});
+  if(existing){
+    if(existing.configDigest!==input.identity.configDigest||existing.seedDigest!==input.seedDigest||canonical(existing.config)!==canonical(input.config))
+      throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Restart configuration differs from the one-time completed enrollment');
+    return 'VERIFIED_EXISTING';
+  }
+  const intent={schema:'quadbridge.managed-runtime-enrollment.v1',state:'INTENT',...input.identity,dataDirectory,seedDigest:input.seedDigest};
+  const intentDigest=sha256(canonical(intent));
+  const privatePayloads=[
+    ['enrollment-intent.json',canonical(intent)],['runtime-config.json',canonical(input.config)],
+    ['enrollment-private.json',canonical({principals:input.seedPrincipals})],
+    ['credentials.json',canonical({schema:'quadbridge.managed-runtime-credentials.v1',principals:input.seedPrincipals.filter(principal=>principal.password).map(principal=>({id:principal.id,password:principal.password}))})]
+  ] as const;
+  if(privatePayloads.some(([name,value])=>Buffer.byteLength(value)>1024*1024||join(dataDirectory,name).length>=240))
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Canonical runtime enrollment exceeds its private metadata bound');
+  const imported=await import(pathToFileURL(join(assertPhysicalRoot(input.executionRoot),'packages/local-access/dist/index.js')).href) as {LocalAccess?:new(path:string,scope:{productId:string;instanceId:string})=>any};
+  if(typeof imported.LocalAccess!=='function')throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Promoted runtime LocalAccess implementation is unavailable');
+  if(input.authorize){
+    if(input.authorize.constructor.name==='AsyncFunction')throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','Original runtime authorization must be synchronous');
+    const auth=input.authorize();
+    if((auth!==null&&(typeof auth==='object'||typeof auth==='function')&&typeof (auth as any).then==='function')||auth===false)
+      throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','Original operator session is no longer authorized');
+  }
+  const project=assertPhysicalRoot(input.projectRoot),local=physicalDirectoryUnder(project,join(project,'.local'),false),dataRoot=join(local,'platform-runtime-data');
+  physicalDirectoryUnder(local,dataRoot,true);
+  const dataParent=dirname(dataDirectory);
+  physicalDirectoryUnder(dataRoot,dataParent,true);
+  if(boundedDirectoryNames(dataParent).some(entry=>entry!==basename(dataDirectory)))
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','This runtime identity already contains other bound data');
+  physicalDirectoryUnder(dataRoot,dataDirectory,true);
+  const entries=boundedDirectoryNames(dataDirectory);
+  const accessPath=join(dataDirectory,'access.sqlite');
+  const suffixes=['','-wal','-shm','-journal'];
+  if(entries.length||suffixes.some(suffix=>optionalLstat(accessPath+suffix)))
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Existing runtime access material cannot be freshly enrolled or reseeded');
+  for(const [name,value] of privatePayloads)writeExactFile(join(dataDirectory,name),Buffer.from(value));
+  // Reserve a previously absent SQLite path with wx before the canonical implementation opens it.
+  const reservationFd=openSync(accessPath,'wx');
+  try{
+    const reserved=fstatSync(reservationFd),beforeOpen=lstatSync(accessPath);
+    if(!reserved.isFile()||!beforeOpen.isFile()||beforeOpen.isSymbolicLink()||reserved.dev!==beforeOpen.dev||reserved.ino!==beforeOpen.ino||
+        realpathSync(accessPath).toLowerCase()!==accessPath.toLowerCase()||suffixes.slice(1).some(suffix=>optionalLstat(accessPath+suffix)))
+      throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Fresh access storage could not be exclusively reserved');
+    const access=new imported.LocalAccess(accessPath,{productId:input.identity.productId,instanceId:input.identity.instanceId});
+    try{
+      const afterOpen=lstatSync(accessPath),stillReserved=fstatSync(reservationFd);
+      if(!afterOpen.isFile()||afterOpen.isSymbolicLink()||afterOpen.dev!==reserved.dev||afterOpen.ino!==reserved.ino||stillReserved.dev!==reserved.dev||stillReserved.ino!==reserved.ino)
+        throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Reserved runtime access storage changed before canonical enrollment');
+      access.seed(input.seedPrincipals);
+      verifyFreshAccessRows(access,input.seedPrincipals,input.identity.productId,input.identity.instanceId);
+    }finally{access.close();}
+  }finally{closeSync(reservationFd);}
+  writeExactFile(join(dataDirectory,'enrollment-complete.json'),Buffer.from(canonical({schema:'quadbridge.managed-runtime-enrollment.v1',state:'COMPLETE',intentDigest,
+    instanceId:input.identity.instanceId,productId:input.identity.productId,version:input.identity.version,artifactDigest:input.identity.artifactDigest,
+    profileDigest:input.identity.profileDigest,configDigest:input.identity.configDigest,adapterDigest:input.identity.adapterDigest,seedDigest:input.seedDigest,completedAt:Date.now()})));
+  return 'ENROLLED';
+}
+
+/** Writes only the frozen private enrollment inputs. Canonical LocalAccess construction and seeding run inside the owned supervisor job. */
+export async function prepareRuntimeEnrollment(input: {
+  projectRoot: string;
+  executionRoot: string;
+  identity: Omit<RuntimeEnrollmentIdentity,'configDigest'>;
+  planIdentity: RuntimePlanIdentity;
+  freshEnrollmentAllowed: boolean;
+  authorize: RuntimeAuthorize;
+}): Promise<PreparedRuntimeEnrollment> {
+  const dataDirectory=runtimeDataDirectory(input.projectRoot,input.identity.instanceId,input.identity.artifactDigest);
+  const existing=completedRuntimeEnrollment({projectRoot:input.projectRoot,dataDirectory,identity:input.identity});
+  if(existing){
+    const intent=readPrivateJson(join(dataDirectory,'enrollment-intent.json'));
+    return {...existing,enrollmentDigest:sha256(canonical(intent)),freshEnrollment:false};
+  }
+  if(input.freshEnrollmentAllowed!==true)throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','A stopped runtime has no complete enrollment; restart will not reseed it');
+  // Any extant directory, even empty, can be residue from a failed first enrollment.
+  if(optionalLstat(dataDirectory))throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Existing runtime data is incomplete; it will not be reseeded');
+  const adapted=await adaptCanonicalLocalConfiguration({executionRoot:input.executionRoot,planIdentity:input.planIdentity,instanceId:input.identity.instanceId,
+    dataDirectory,credentialReference:`${input.identity.instanceId}:${input.identity.artifactDigest}`});
+  assertRuntimeAuthorization(input.authorize);
+  const fullIdentity:RuntimeEnrollmentIdentity={...input.identity,configDigest:adapted.configDigest};
+  validateEnrollmentIdentity(fullIdentity,input.projectRoot,dataDirectory,adapted.config,adapted.seedPrincipals,adapted.seedDigest);
+  const intent={schema:'quadbridge.managed-runtime-enrollment.v1',state:'INTENT',...fullIdentity,dataDirectory,seedDigest:adapted.seedDigest};
+  const configJson=canonical(adapted.config),intentJson=canonical(intent),seedsJson=canonical({principals:adapted.seedPrincipals});
+  const credentialPayload={schema:'quadbridge.managed-runtime-credentials.v1',principals:adapted.seedPrincipals.filter(principal=>principal.password).map(principal=>({id:principal.id,password:principal.password}))};
+  const credentialJson=canonical(credentialPayload);
+  const privateFiles:[string,string][]=[['enrollment-intent.json',intentJson],['runtime-config.json',configJson],['enrollment-private.json',seedsJson],['credentials.json',credentialJson]];
+  if(privateFiles.some(([name,value])=>Buffer.byteLength(value)>1024*1024||join(dataDirectory,name).length>=240)||
+      Buffer.byteLength(configJson)+Buffer.byteLength(intentJson)+Buffer.byteLength(seedsJson)+Buffer.byteLength(credentialJson)>2*1024*1024)
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Canonical runtime enrollment exceeds its private metadata bounds');
+  assertRuntimeAuthorization(input.authorize);
+  const project=assertPhysicalRoot(input.projectRoot),local=physicalDirectoryUnder(project,join(project,'.local'),false),dataRoot=physicalDirectoryUnder(local,join(local,'platform-runtime-data'),true);
+  const dataParent=join(dataRoot,input.identity.instanceId);
+  if(optionalLstat(dataParent))throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Runtime instance data already exists without a completed enrollment');
+  physicalDirectoryUnder(dataRoot,dataParent,true);
+  if(boundedDirectoryNames(dataParent,1).length)throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Runtime instance data contains unbound entries');
+  const created=mkdirSync(dataDirectory);
+  void created;
+  if(!lstatSync(dataDirectory).isDirectory()||lstatSync(dataDirectory).isSymbolicLink()||realpathSync(dataDirectory).toLowerCase()!==dataDirectory.toLowerCase())
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Runtime enrollment directory is not a physical private directory');
+  for(const [name,value] of privateFiles)writeExactFile(join(dataDirectory,name),Buffer.from(value));
+  return {...adapted,enrollmentDigest:sha256(intentJson),freshEnrollment:true};
+}
+
+export function runtimeEntryBytes(snapshot: BoundedSnapshot, path: string): Buffer {
+  const entry = snapshot.entries.find(item => item.path === path);
+  if (!entry) throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', `Promoted runtime is missing ${path}`);
+  return entry.bytes;
+}
+
+export function runtimeSnapshotExpected(snapshot: BoundedSnapshot): Record<string, unknown> {
+  const manifest = snapshot.manifest as Record<string, unknown>;
+  return {
+    buildId: manifest.buildId, productId: manifest.productId, version: manifest.version,
+    inputDigest: manifest.inputDigest, sourceFingerprint: manifest.sourceFingerprint,
+    toolchainDigest: manifest.toolchainDigest, recipeVersion: manifest.recipeVersion,
+    releaseDigest: manifest.releaseDigest, snapshotDigest: snapshot.snapshotDigest
+  };
+}
+
+export function runtimePrivateRoot(root: string): string {
+  const project = assertPhysicalRoot(root), local = physicalDirectoryUnder(project, join(project, '.local'), true);
+  const execution = physicalDirectoryUnder(local, join(local, 'platform-runtime-executions'), true);
+  physicalDirectoryUnder(local, join(local, 'platform-runtime-data'), true);
+  return execution;
+}
+
+type RuntimeToolchain = {
+  host: WindowsBuildHostProfile;
+  nodePath: string;
+  nodeDigest: string;
+  buildJobDigest: string;
+  supervisorDigest: string;
+  preflightDigest: string;
+  toolchainDigest: string;
+  recipeDigest: string;
+};
+type RuntimeProof = { exitCode: number|null; signal: NodeJS.Signals|null; markerCode: number|null; empty: boolean };
+type RuntimeExitObservation={complete:boolean;emptyObserved:boolean;helperClosed:boolean;proof?:RuntimeProof};
+type RuntimeRunner = {
+  instanceId:string; operationId:string; ownerToken:string; nonce:string; commandId:string; attempt:number;
+  dataDirectory:string; executionRoot:string; operationRoot:string; enrollmentDigest:string; workerRequired:boolean;
+  child:ChildProcess; closed:Promise<{code:number|null;signal:NodeJS.Signals|null}>; closeValue?:{code:number|null;signal:NodeJS.Signals|null};
+  closeError?:Error; stdoutBuffer:string; stdoutBytes:number; stderrBytes:number; ready:boolean; exitMarker?:{code:number|null;empty:boolean};
+  eventOffset:number; eventBytes:number; eventRemainder:string; eventDev?:number; eventIno?:number;
+  phase:number; url?:string; port?:number; stopping:boolean; stopReason?:'STOP'|'OPERATOR_SHUTDOWN'|'START_FAILED'|'REQUIRED_ROLE_EXIT'; controlLines:Set<string>;
+  protocolError?:Error; controlError?:Error; operationalError?:'RUNTIME_EVENT_INVALID'|'RUNTIME_SETTLEMENT_FAILED';
+  terminalEventsRead?:boolean; terminalEventInvalid?:boolean; executionCleanObserved?:boolean; terminalSettlement?:boolean; terminalResult?:RuntimeExitObservation;
+  pendingEvents?:Record<string,any>[]; terminalRoleFailure?:'web-backend'|'worker'; terminalSupervisorFailure?:boolean;
+  monitorPromise?:Promise<unknown>; finalization?:Promise<RuntimeExitObservation>; proof?:RuntimeProof; deadline:number;
+};
+type RuntimeRequest = { productId:string; version:string; requestKey:string };
+type RuntimeStopRequest = { instanceId:string; requestKey:string };
+type RuntimeAuthorize = () => unknown;
+
+function assertRuntimeAuthorization(authorize:RuntimeAuthorize):void{
+  if(typeof authorize!=='function'||authorize.constructor.name==='AsyncFunction')
+    throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','Original runtime authorization must be synchronous');
+  const result=authorize();
+  if((result!==null&&(typeof result==='object'||typeof result==='function')&&typeof (result as any).then==='function')||result===false)
+    throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','Original operator session is no longer authorized');
+}
+
+function physicalRegularFile(path:string):string {
+  const full=resolve(path),info=lstatSync(full);
+  if(!info.isFile()||info.isSymbolicLink()||realpathSync(full).toLowerCase()!==full.toLowerCase())
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','A fixed managed runtime input is not a physical file');
+  if(full.length>=240)throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','A fixed managed runtime path exceeds the supported bound');
+  return full;
+}
+function readPhysicalBytes(path:string,maxBytes=1024*1024):Buffer {
+  const full=physicalRegularFile(path),named=lstatSync(full);
+  if(named.size<1||named.size>maxBytes)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','A fixed managed runtime input exceeds its byte bound');
+  const descriptor=openSync(full,'r');
+  try{
+    const opened=fstatSync(descriptor);
+    if(!opened.isFile()||opened.dev!==named.dev||opened.ino!==named.ino||opened.size!==named.size)
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','A fixed managed runtime input changed while opening');
+    const bytes=Buffer.alloc(opened.size);let offset=0;
+    while(offset<bytes.length){const count=readSync(descriptor,bytes,offset,bytes.length-offset,offset);if(count<1)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','A fixed managed runtime input changed while reading');offset+=count;}
+    const probe=Buffer.alloc(1),extra=readSync(descriptor,probe,0,1,opened.size),after=fstatSync(descriptor),afterPath=lstatSync(full);
+    if(extra!==0||after.size!==opened.size||after.dev!==opened.dev||after.ino!==opened.ino||afterPath.dev!==opened.dev||afterPath.ino!==opened.ino||
+       realpathSync(full).toLowerCase()!==full.toLowerCase())throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','A fixed managed runtime input changed while reading');
+    return bytes;
+  }finally{closeSync(descriptor);}
+}
+function fileDigest(path:string,maxBytes=1024*1024):string {
+  const full=physicalRegularFile(path),named=lstatSync(full);
+  if(named.size<1||named.size>maxBytes)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','A fixed managed runtime input exceeds its byte bound');
+  const descriptor=openSync(full,'r'),hash=createHash('sha256'),buffer=Buffer.alloc(64*1024);
+  try{
+    const opened=fstatSync(descriptor);
+    if(!opened.isFile()||opened.dev!==named.dev||opened.ino!==named.ino||opened.size!==named.size)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','A fixed managed runtime input changed while opening');
+    let offset=0;
+    while(offset<opened.size){const length=Math.min(buffer.length,opened.size-offset),count=readSync(descriptor,buffer,0,length,offset);
+      if(count<1)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','A fixed managed runtime input changed while hashing');hash.update(buffer.subarray(0,count));offset+=count;}
+    const probe=Buffer.alloc(1),extra=readSync(descriptor,probe,0,1,opened.size),after=fstatSync(descriptor),afterPath=lstatSync(full);
+    if(extra!==0||after.size!==opened.size||after.dev!==opened.dev||after.ino!==opened.ino||afterPath.dev!==opened.dev||afterPath.ino!==opened.ino||
+       realpathSync(full).toLowerCase()!==full.toLowerCase())throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','A fixed managed runtime input changed while hashing');
+    return hash.digest('hex');
+  }finally{closeSync(descriptor);}
+}
+function privateRuntimeEnvironment():NodeJS.ProcessEnv {
+  const env:NodeJS.ProcessEnv={NODE_ENV:'development'};
+  for(const key of ['PATH','SystemRoot','WINDIR','TEMP','TMP','COMSPEC','PATHEXT'])if(process.env[key])env[key]=process.env[key];
+  return env;
+}
+function capturedToolchain(root:string):RuntimeToolchain {
+  if(process.platform!=='win32')throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','Managed local runtime is available only through the selected Windows process-owner profile');
+  if(process.version!==NODE_VERSION_PIN)throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The pinned local Node runtime is unavailable');
+  const nodePath=physicalRegularFile(process.execPath),nodeDigest=fileDigest(nodePath,512*1024*1024);
+  if(nodeDigest!==NODE_SHA256_PIN)throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The pinned local Node executable identity changed');
+  let host:WindowsBuildHostProfile|undefined;
+  try{host=assertWindowsBuildHost(root,root);}catch{throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The selected local PowerShell host did not pass its normal File preflight');}
+  if(!host||host.kind!=='powershell7-file-host'||host.version!=='7.6.5'||host.sha256!==POWERSHELL_SHA256_PIN||host.policy!=='RemoteSigned')
+    throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The selected local PowerShell host identity is not supported');
+      const buildJobDigest=fileDigest(join(root,'tools','build-job.ps1'));
+  const supervisorDigest=fileDigest(join(root,'tools','runtime-supervisor.mjs'));
+  const preflightDigest=fileDigest(join(root,'tools','build-host-preflight.ps1'));
+  const toolchainDigest=sha256(canonical({nodePath,nodeDigest,nodeVersion:process.version,host:{kind:host.kind,sha256:host.sha256,version:host.version,policy:host.policy},buildJobDigest,supervisorDigest,preflightDigest}));
+  return {host,nodePath,nodeDigest,buildJobDigest,supervisorDigest,preflightDigest,toolchainDigest,recipeDigest:sha256(RUNTIME_RECIPE)};
+}
+export function captureManagedRuntimeNativeHost(root:string):{hostPath:string;nodePath:string;toolchainDigest:string;buildJobDigest:string} {
+  const captured=capturedToolchain(resolve(root));
+  return {hostPath:captured.host.path,nodePath:captured.nodePath,toolchainDigest:captured.toolchainDigest,buildJobDigest:captured.buildJobDigest};
+}
+function writePrivateCanonical(path:string,value:unknown,maxBytes=1024*1024):void {
+  const bytes=Buffer.from(canonical(value));
+  if(bytes.length<1||bytes.length>maxBytes)throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Private runtime metadata exceeds its fixed bound');
+  writeExactFile(path,bytes);
+}
+type RuntimeCleanupScan={started:number;entries:number};
+function cleanupScanCheck(scan:RuntimeCleanupScan,added=0):void{
+  scan.entries+=added;
+  if(scan.entries>16384||performance.now()-scan.started>2000)
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime cleanup exceeds its metadata scan bound');
+}
+function cleanupDirectoryNames(path:string,scan:RuntimeCleanupScan):string[]{
+  const directory=opendirSync(path),names:string[]=[];
+  try{for(;;){cleanupScanCheck(scan);const entry=directory.readSync();if(!entry)break;cleanupScanCheck(scan,1);names.push(entry.name);}}
+  finally{directory.closeSync();}
+  cleanupScanCheck(scan);return names;
+}
+function removeCopiedWorkspaceLinks(operationRoot:string,scan:RuntimeCleanupScan):void{
+  cleanupScanCheck(scan);
+  const snapshotRoot=join(operationRoot,'snapshot'),scope=join(snapshotRoot,'node_modules','@quadbridge');
+  const nodeModules=join(snapshotRoot,'node_modules');
+  const nodeInfo=optionalLstat(nodeModules);if(!nodeInfo)return;
+  if(!nodeInfo.isDirectory()||nodeInfo.isSymbolicLink()||realpathSync(nodeModules).toLowerCase()!==nodeModules.toLowerCase())
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime dependency-link root changed before cleanup');
+  const nodeNames=cleanupDirectoryNames(nodeModules,scan);
+  if(nodeNames.some(name=>name!=='@quadbridge'))throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime dependency-link inventory changed before cleanup');
+  if(!nodeNames.length)return;
+  const scopeInfo=optionalLstat(scope);if(!scopeInfo)return;
+  if(!scopeInfo.isDirectory()||scopeInfo.isSymbolicLink()||realpathSync(scope).toLowerCase()!==scope.toLowerCase())
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime workspace-link scope changed before cleanup');
+  const expected=new Map<string,string>();
+  for(const group of ['packages','modules','apps']){
+    const groupPath=join(snapshotRoot,group);if(!optionalLstat(groupPath))continue;
+    physicalDirectoryUnder(snapshotRoot,groupPath,false);
+    for(const name of cleanupDirectoryNames(groupPath,scan)){
+      const target=join(groupPath,name),targetInfo=optionalLstat(target);if(!targetInfo)continue;
+      if(!targetInfo.isDirectory()||targetInfo.isSymbolicLink()||realpathSync(target).toLowerCase()!==target.toLowerCase())
+        throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Copied runtime workspace changed before link cleanup');
+      const packagePath=join(target,'package.json'),packageInfo=optionalLstat(packagePath);if(!packageInfo)continue;
+      if(!packageInfo.isFile()||packageInfo.isSymbolicLink()||realpathSync(packagePath).toLowerCase()!==packagePath.toLowerCase())
+        throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Copied runtime workspace manifest changed before link cleanup');
+      let manifest:Record<string,unknown>;
+      try{manifest=JSON.parse(readPhysicalBytes(packagePath,64*1024).toString('utf8')) as Record<string,unknown>;}catch{throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Copied runtime workspace manifest is invalid during cleanup');}
+      cleanupScanCheck(scan);
+      if(typeof manifest.name==='string'&&/^@quadbridge\/[a-z][a-z0-9-]{1,47}$/.test(manifest.name)){
+        const link=join(scope,manifest.name.slice('@quadbridge/'.length));
+        if(expected.has(link.toLowerCase()))throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Copied runtime workspace identities collide during cleanup');
+        expected.set(link.toLowerCase(),target);
+      }
+    }
+  }
+  for(const name of cleanupDirectoryNames(scope,scan)){
+    const link=join(scope,name),target=expected.get(link.toLowerCase()),info=optionalLstat(link);
+    if(!target||!info?.isSymbolicLink()||realpathSync(link).toLowerCase()!==target.toLowerCase())
+      throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime workspace link is not an exact copied-inventory link');
+    unlinkSync(link);
+    cleanupScanCheck(scan);
+    if(optionalLstat(link))throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime workspace link cleanup was not observed');
+  }
+}
+function removeOwnedExecution(root:string,path:string):void {
+  const base=runtimePrivateRoot(root),target=assertWithin(base,path);
+  try{lstatSync(target);}catch(error){if((error as NodeJS.ErrnoException).code==='ENOENT')return;throw error;}
+  const scan:RuntimeCleanupScan={started:performance.now(),entries:0};
+  physicalDirectoryUnder(base,target,false);cleanupScanCheck(scan);removeCopiedWorkspaceLinks(target,scan);assertPhysicalDataTree(target,scan);
+  rmSync(target,{recursive:true,force:false,maxRetries:0});
+  if(optionalLstat(target))throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Owned runtime execution cleanup was not observed');
+}
+function waitMs(ms:number):Promise<void>{return new Promise(resolveDelay=>setTimeout(resolveDelay,ms));}
+async function waitRunnerClose(runner:RuntimeRunner,timeoutMs:number):Promise<boolean>{
+  if(runner.closeValue)return true;
+  return new Promise(resolveClose=>{
+    let settled=false;
+    const timer=setTimeout(()=>{if(!settled){settled=true;resolveClose(!!runner.closeValue);}},Math.max(0,timeoutMs));
+    void runner.closed.then(()=>{if(!settled){settled=true;clearTimeout(timer);resolveClose(true);}});
+  });
+}
+
+/** Owns only process trees created in this process; reopening this manager never infers control of stored processes. */
+export class ManagedRuntimeManager {
+  private readonly active=new Map<string,RuntimeRunner>();
+  private readonly operations=new Set<Promise<unknown>>();
+  private closing=false;
+  private closePromise?:Promise<void>;
+  private constructor(private readonly root:string,private readonly store:ControlPlaneStore,private readonly artifacts:LocalArtifactStore){
+    assertPhysicalRoot(root);
+  }
+  static create(root:string,store:ControlPlaneStore,artifacts:LocalArtifactStore):ManagedRuntimeManager {
+    return new ManagedRuntimeManager(resolve(root),store,artifacts);
+  }
+  private track<T>(promise:Promise<T>):Promise<T>{
+    this.operations.add(promise);
+    void promise.finally(()=>this.operations.delete(promise)).catch(()=>{});
+    return promise;
+  }
+  capability(){return {status:'local-only' as const,profile:'selected-windows-powershell7',details:'Launch rechecks the pinned local process-owner profile; stored runtimes are never recovered by PID.'};}
+  list(){
+    return {capability:this.capability(),slot:this.store.managedRuntimeSlot(),instances:this.store.managedRuntimeInstances(16 as 200).map((row:any)=>{
+      const runner=this.active.get(row.id),live=!!runner&&!runner.stopping&&runner.closeValue===undefined&&runner.child.exitCode===null&&runner.child.signalCode===null;
+      return {...row,processObservation:live?'owned-in-this-process':row.state==='STOPPED'?'positively-stopped':'not-observed-in-this-process',
+        ...(runner?.operationalError?{operationalError:runner.operationalError}:{})};
+    })};
+  }
+  detail(instanceId:string){
+    const value=this.store.managedRuntime(instanceId) as Record<string,any>|undefined;if(!value)return undefined;
+    const runner=this.active.get(instanceId);
+    const live=!!runner&&!runner.stopping&&runner.closeValue===undefined&&runner.child.exitCode===null&&runner.child.signalCode===null;
+    return {...value,processObservation:live?'owned-in-this-process':value.state==='STOPPED'?'positively-stopped':'not-observed-in-this-process',
+      ...(live&&runner?.phase>0&&runner.url?{url:runner.url}:{}),...(runner?.operationalError?{operationalError:runner.operationalError}:{}),
+      ...(runner?.controlError?{controlWarning:'RUNTIME_CONTROL_CHANNEL_ERROR'}:{}),
+      events:this.store.managedRuntimeEvents(instanceId)};
+  }
+  start(input:RuntimeRequest,actorId:string,authorize:RuntimeAuthorize){
+    if(this.closing)throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The local runtime manager is closing');
+    assertRuntimeAuthorization(authorize);
+    return this.track(this.startNew(input,actorId,authorize));
+  }
+  restart(input:RuntimeStopRequest,actorId:string,authorize:RuntimeAuthorize){
+    if(this.closing)throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The local runtime manager is closing');
+    assertRuntimeAuthorization(authorize);
+    return this.track(this.restartStopped(input,actorId,authorize));
+  }
+  stop(input:RuntimeStopRequest,actorId:string,authorize:RuntimeAuthorize){
+    if(this.closing)throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The local runtime manager is closing');
+    assertRuntimeAuthorization(authorize);
+    return this.track(this.stopActive(input,actorId,authorize));
+  }
+  private commandView(result:any,instanceId:string){
+    const {ownerToken:_privateOwnerToken,...safe}=result;
+    const commandId=typeof result?.command?.id==='string'?result.command.id:undefined;
+    const runner=this.active.get(instanceId);
+    return {...safe,...(runner?.operationalError?{operationalError:runner.operationalError}:{}),...(runner?.controlError?{controlWarning:'RUNTIME_CONTROL_CHANNEL_ERROR'}:{}),
+      ...(commandId?{command:this.store.managedRuntimeCommand(commandId)??safe.command}:{}),instance:this.store.managedRuntime(instanceId)??safe.instance};
+  }
+  private authorizeCurrent(authorize:RuntimeAuthorize,runner?:RuntimeRunner):void{
+    if(this.closing||runner?.stopping)throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The managed runtime operation is shutting down');
+    assertRuntimeAuthorization(authorize);
+  }
+  private validateRequestKey(value:unknown):asserts value is string{
+    if(typeof value!=='string'||value.length>128||!/^[A-Za-z0-9._:-]{8,128}$/.test(value))
+      throw new PlatformError('INVALID','Invalid runtime request key');
+  }
+  private startNew(input:RuntimeRequest,actorId:string,authorize:RuntimeAuthorize){
+    if(!input||typeof input!=='object'||typeof input.productId!=='string'||!PRODUCT_ID.test(input.productId)||typeof input.version!=='string'||!VERSION.test(input.version))
+      throw new PlatformError('INVALID','Invalid promoted runtime identity');
+    this.validateRequestKey(input.requestKey);
+    const prior=this.store.managedRuntimeCommandForRequest(actorId,input.requestKey,'START',{productId:input.productId,version:input.version});
+    if(prior)return this.commandView(prior,prior.instance.id as string);
+    return this.startAttempt({kind:'START',instanceId:`runtime-${randomUUID()}`,productId:input.productId,version:input.version,
+      requestKey:input.requestKey,actorId,authorize});
+  }
+  private restartStopped(input:RuntimeStopRequest,actorId:string,authorize:RuntimeAuthorize){
+    if(!input||typeof input!=='object'||typeof input.instanceId!=='string'||!RUNTIME_ID.test(input.instanceId))
+      throw new PlatformError('INVALID','Invalid runtime instance reference');
+    this.validateRequestKey(input.requestKey);
+    const prior=this.store.managedRuntimeCommandForRequest(actorId,input.requestKey,'RESTART',{instanceId:input.instanceId});
+    if(prior)return this.commandView(prior,input.instanceId);
+    const instance=this.store.managedRuntime(input.instanceId) as Record<string,any>|undefined;
+    if(!instance)throw new PlatformError('NOT_FOUND','Managed runtime instance not found');
+    if(instance.state!=='STOPPED')throw new PlatformError('CONFLICT','Only an exact positively stopped runtime can restart');
+    return this.startAttempt({kind:'RESTART',instanceId:input.instanceId,productId:instance.productId,version:instance.version,
+      artifactDigest:instance.artifactDigest,requestKey:input.requestKey,actorId,authorize,existing:instance});
+  }
+  private async startAttempt(input:{kind:'START'|'RESTART';instanceId:string;productId:string;version:string;artifactDigest?:string;
+    requestKey:string;actorId:string;authorize:RuntimeAuthorize;existing?:Record<string,any>}):Promise<Record<string,unknown>>{
+    const authorize=()=>this.authorizeCurrent(input.authorize);
+    const host=capturedToolchain(this.root);
+    authorize();
+    const release=this.store.artifactReleases().find((row:any)=>row.productId===input.productId&&row.version===input.version) as Record<string,any>|undefined;
+    if(!release||input.artifactDigest&&release.artifactDigest!==input.artifactDigest)
+      throw new PlatformError('NOT_FOUND','No exact promoted local artifact is available');
+    const verified=await this.artifacts.verifyArtifact(release.artifactDigest) as {artifact:Record<string,any>;snapshot:BoundedSnapshot};
+    authorize();
+    if(verified.artifact.digest!==release.artifactDigest||verified.artifact.productId!==input.productId||verified.artifact.version!==input.version||
+       verified.artifact.originatingActorId!==release.originatingActorId||verified.snapshot.snapshotDigest!==release.artifactDigest)
+      throw new RuntimePreparationError('RUNTIME_IDENTITY_CHANGED','Promoted artifact identity changed during runtime preparation');
+    const planIdentity=runtimePlanIdentity(verified.snapshot,input.productId,input.version);
+    if(input.existing&&input.existing.profileDigest!==planIdentity.profileDigest)
+      throw new RuntimePreparationError('RUNTIME_IDENTITY_CHANGED','The stopped runtime profile no longer matches its promoted release');
+    const adapterDigest=sha256(canonical({recipe:'managed-local-identity-adapter-v1',changes:['config.instanceId','same-product-local-destinationInstance']}));
+    const operationId=randomUUID(),ownerId=randomUUID(),ownerToken=randomBytes(32).toString('base64url');
+    const dataDirectory=runtimeDataDirectory(this.root,input.instanceId,release.artifactDigest);
+    let privateEnrollment:PreparedRuntimeEnrollment|undefined,operationRoot:string|undefined,runner:RuntimeRunner|undefined,dispatched=false,prepared=false,admitted=false;
+    const executionBase=join(this.root,'.local','platform-runtime-executions'),instanceExecutionRoot=join(executionBase,input.instanceId);
+    const executionRoot=join(instanceExecutionRoot,operationId);
+    const helperSourceBytes=readPhysicalBytes(join(this.root,'tools','build-job.ps1'));
+    const supervisorSourceBytes=readPhysicalBytes(join(this.root,'tools','runtime-supervisor.mjs'));
+    if(sha256(helperSourceBytes)!==host.buildJobDigest||sha256(supervisorSourceBytes)!==host.supervisorDigest)
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','A fixed managed runtime recipe changed after toolchain capture');
+    const executionOverhead=helperSourceBytes.length+supervisorSourceBytes.length+1024*1024+64*1024+512*1024;
+    const executionBytes=verified.snapshot.sizeBytes+executionOverhead;
+    if(executionBytes>128*1024*1024)throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The promoted artifact exceeds the managed execution-area limit');
+    let result:any;
+    try{
+      if(input.kind==='START'){
+        result=this.store.beginManagedRuntimeStart({instanceId:input.instanceId,operationId,ownerId,ownerToken,actorId:input.actorId,
+          originatingActorId:release.originatingActorId,requestKey:input.requestKey,productId:input.productId,version:input.version,
+          artifactDigest:release.artifactDigest,profileDigest:planIdentity.profileDigest,configDigest:'0'.repeat(64),adapterDigest,
+          toolchainDigest:host.toolchainDigest,recipeDigest:host.recipeDigest,workerRequired:planIdentity.workerRequired,preparationComplete:false,executionBytes},authorize);
+      }else{
+        if(!input.existing||input.existing.artifactDigest!==release.artifactDigest||input.existing.adapterDigest!==adapterDigest||
+           input.existing.toolchainDigest!==host.toolchainDigest||input.existing.recipeDigest!==host.recipeDigest)
+          throw new RuntimePreparationError('RUNTIME_IDENTITY_CHANGED','The selected runtime profile or toolchain differs from its stopped identity');
+        result=this.store.beginManagedRuntimeRestart({instanceId:input.instanceId,operationId,ownerId,ownerToken,actorId:input.actorId,
+          requestKey:input.requestKey,profileDigest:planIdentity.profileDigest,configDigest:input.existing.configDigest,adapterDigest,
+          toolchainDigest:host.toolchainDigest,recipeDigest:host.recipeDigest,executionBytes},authorize);
+      }
+      if(result.reused)return this.commandView(result,input.instanceId);
+      if(result.operationId!==operationId||result.ownerToken!==ownerToken)throw new PlatformError('CONFLICT','Runtime command did not retain this process ownership');
+      admitted=true;
+      authorize();
+      const ownedExecutionBase=runtimePrivateRoot(this.root);
+      if(resolve(ownedExecutionBase)!==resolve(executionBase))throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime execution owner changed');
+      physicalDirectoryUnder(ownedExecutionBase,instanceExecutionRoot,true);
+      mkdirSync(executionRoot);
+      operationRoot=executionRoot;
+      if(!lstatSync(executionRoot).isDirectory()||lstatSync(executionRoot).isSymbolicLink()||realpathSync(executionRoot).toLowerCase()!==executionRoot.toLowerCase())
+        throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime execution root is not a physical private directory');
+      const snapshotRoot=join(operationRoot,'snapshot');
+      const copied=copyVerifiedRuntimeSnapshot(verified.snapshot,snapshotRoot,runtimeSnapshotExpected(verified.snapshot));
+      linkCopiedRuntimeWorkspaces(snapshotRoot);
+      const enrollmentIdentity={instanceId:input.instanceId,productId:input.productId,version:input.version,artifactDigest:release.artifactDigest,
+        profileDigest:planIdentity.profileDigest,adapterDigest};
+      privateEnrollment=await prepareRuntimeEnrollment({projectRoot:this.root,executionRoot:snapshotRoot,identity:enrollmentIdentity,planIdentity,
+        freshEnrollmentAllowed:input.kind==='START',authorize});
+      prepared=true;
+      if(privateEnrollment.configDigest!== (input.existing?.configDigest??privateEnrollment.configDigest))
+        throw new RuntimePreparationError('RUNTIME_IDENTITY_CHANGED','Completed runtime enrollment differs from its exact stopped identity');
+      if(input.kind==='START')this.store.completeManagedRuntimePreparation(input.instanceId,operationId,ownerToken,privateEnrollment.configDigest,authorize);
+      const nodePath=physicalRegularFile(process.execPath);
+      if(fileDigest(nodePath,512*1024*1024)!==NODE_SHA256_PIN||process.version!==NODE_VERSION_PIN)throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The pinned Node runtime changed during preparation');
+      const copiedHelper=join(operationRoot,'build-job.ps1'),copiedSupervisor=join(operationRoot,'runtime-supervisor.mjs');
+      writeExactFile(copiedHelper,helperSourceBytes);
+      writeExactFile(copiedSupervisor,supervisorSourceBytes);
+      if(fileDigest(copiedHelper)!==host.buildJobDigest||fileDigest(copiedSupervisor)!==host.supervisorDigest)
+        throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The copied native runtime recipe changed during preparation');
+      const nonce=randomBytes(24).toString('base64url');
+      const supervisorConfig={schema:'quadbridge.managed-runtime-supervisor.v1',attemptId:operationId,operationId,nonce,instanceId:input.instanceId,
+        productId:input.productId,version:input.version,artifactDigest:release.artifactDigest,profileDigest:planIdentity.profileDigest,
+        configDigest:privateEnrollment.configDigest,adapterDigest,enrollmentDigest:privateEnrollment.enrollmentDigest,freshEnrollment:privateEnrollment.freshEnrollment,
+        projectRoot:this.root,snapshotRoot,dataDirectory,nodePath,nodeVersion:process.version,nodeDigest:NODE_SHA256_PIN,workerRequired:planIdentity.workerRequired};
+      writePrivateCanonical(join(operationRoot,'supervisor-config.json'),supervisorConfig);
+      // Recheck every captured executable identity immediately before the irreversible dispatch write.
+      const checked=capturedToolchain(this.root);
+      if(checked.toolchainDigest!==host.toolchainDigest||checked.host.path!==host.host.path||fileDigest(copiedHelper)!==host.buildJobDigest||fileDigest(copiedSupervisor)!==host.supervisorDigest)
+        throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','Pinned runtime host inputs changed before dispatch');
+      authorize();
+      const startupDeadline=Date.now()+30_000;
+      this.store.markManagedRuntimeStarting(input.instanceId,operationId,ownerToken,authorize);
+      dispatched=true;
+      const commandPath=checked.host.path;
+      const helperArgs=['-NoLogo','-NoProfile','-NonInteractive','-File',copiedHelper,'-RunnerNonce',nonce,'-NodeExe',nodePath,'-WorkingDirectory',operationRoot,
+        '-ScriptPath',copiedSupervisor,'-ArgumentsJson',JSON.stringify(['--config',join(operationRoot,'supervisor-config.json')]),'-LogPath',join(operationRoot,'private.log'),'-RuntimeProtocol'];
+      runner=this.spawnRunner({instanceId:input.instanceId,operationId,ownerToken,nonce,commandId:result.command.id,attempt:Number(result.instance.currentAttempt),
+        dataDirectory,executionRoot,operationRoot,enrollmentDigest:privateEnrollment.enrollmentDigest,workerRequired:planIdentity.workerRequired,hostPath:commandPath,args:helperArgs,deadline:startupDeadline});
+      this.active.set(input.instanceId,runner);
+      const runnerAuthorize=()=>this.authorizeCurrent(input.authorize,runner);
+      await this.driveStartup(runner,runnerAuthorize);
+      runnerAuthorize();
+      this.store.recordManagedRuntimeReadiness(input.instanceId,operationId,ownerToken,{apiReady:true,workerAttached:planIdentity.workerRequired,port:runner.port!});
+      runnerAuthorize();
+      this.store.publishManagedRuntimeRunning(input.instanceId,operationId,ownerToken,runnerAuthorize);
+      runner.monitorPromise=this.monitorRunner(runner);
+      void runner.monitorPromise.catch(()=>{});
+      return this.commandView(result,input.instanceId);
+    }catch(error){
+      const code=error instanceof RuntimePreparationError?error.code:'RUNTIME_START_FAILED';
+      if(!admitted)throw error;
+      if(!dispatched){
+        let clean=false;
+        try{if(operationRoot)removeOwnedExecution(this.root,operationRoot);clean=true;}catch{}
+        const repairRequired=(error instanceof RuntimePreparationError&&error.code==='RUNTIME_REPAIR_REQUIRED')||
+          (input.kind==='START'&&(prepared||optionalLstat(dataDirectory)!==undefined));
+        this.store.settleManagedRuntimePreparation(input.instanceId,operationId,ownerToken,{executionClean:clean,repairRequired,
+          errorCode:/^[A-Z][A-Z0-9_]{1,63}$/.test(code)?code:'RUNTIME_PREPARATION_FAILED'});
+      }else if(runner){
+        runner.stopping=true;runner.stopReason=this.closing?'OPERATOR_SHUTDOWN':'START_FAILED';runner.url=undefined;runner.port=undefined;
+        await this.finalizeRunner(runner,runner.stopReason,15000);
+      }else{
+        this.store.recordManagedRuntimeUnknown(input.instanceId,operationId,ownerToken,'RUNTIME_EXIT_UNVERIFIED','Runtime process-tree exit remains unverified');
+      }
+      throw error;
+    }
+  }
+  private spawnRunner(input:{instanceId:string;operationId:string;ownerToken:string;nonce:string;commandId:string;attempt:number;dataDirectory:string;
+    executionRoot:string;operationRoot:string;enrollmentDigest:string;workerRequired:boolean;hostPath:string;args:string[];deadline:number}):RuntimeRunner{
+    let child:ChildProcess;
+    try{child=spawn(input.hostPath,input.args,{cwd:input.operationRoot,env:privateRuntimeEnvironment(),shell:false,windowsHide:true,stdio:['pipe','pipe','pipe']});}
+    catch{throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The fixed native runtime helper could not be started');}
+    let resolveClose!:(value:{code:number|null;signal:NodeJS.Signals|null})=>void;
+    const closed=new Promise<{code:number|null;signal:NodeJS.Signals|null}>(resolvePromise=>{resolveClose=resolvePromise;});
+    const runner:RuntimeRunner={...input,child,closed,stdoutBuffer:'',stdoutBytes:0,stderrBytes:0,ready:false,eventOffset:0,eventBytes:0,eventRemainder:'',
+      phase:0,stopping:false,controlLines:new Set()};
+    child.once('error',error=>{runner.closeError=error instanceof Error?error:new Error('Native runtime helper error');});
+    child.once('close',(code,signal)=>{
+      runner.closeValue={code,signal};
+      if(runner.stdoutBuffer.length){runner.protocolError=new Error('Incomplete native runtime protocol line');runner.stdoutBuffer='';}
+      resolveClose({code,signal});
+    });
+    child.stdout?.on('data',(chunk:Buffer)=>{
+      runner.stdoutBytes+=chunk.length;
+      if(runner.stdoutBytes>4096){runner.protocolError=new Error('Native runtime protocol exceeded its fixed bound');return;}
+      runner.stdoutBuffer+=chunk.toString('ascii');
+      for(;;){
+        const newline=runner.stdoutBuffer.indexOf('\n');if(newline<0)break;
+        let line=runner.stdoutBuffer.slice(0,newline);runner.stdoutBuffer=runner.stdoutBuffer.slice(newline+1);
+        if(line.endsWith('\r'))line=line.slice(0,-1);
+        if(line===`QB_READY:${runner.nonce}`){if(runner.ready||runner.exitMarker){runner.protocolError=new Error('Duplicate native runtime assignment record');continue;}runner.ready=true;continue;}
+        const exit=new RegExp(`^QB_EXIT:${runner.nonce}:(\\d+):EMPTY$`).exec(line);
+        if(exit){if(runner.exitMarker){runner.protocolError=new Error('Duplicate native runtime exit record');continue;}runner.exitMarker={code:Number(exit[1]),empty:true};continue;}
+        if(line===`QB_EXIT:${runner.nonce}:UNKNOWN`){if(runner.exitMarker){runner.protocolError=new Error('Duplicate native runtime exit record');continue;}runner.exitMarker={code:null,empty:false};continue;}
+        runner.protocolError=new Error('Unexpected native runtime protocol record');
+      }
+    });
+    child.stderr?.on('data',(chunk:Buffer)=>{runner.stderrBytes=Math.min(65536,runner.stderrBytes+chunk.length);});
+    child.stdin?.on('error',error=>{runner.controlError=error instanceof Error?error:new Error('Native runtime control channel failed');});
+    return runner;
+  }
+  private sendControl(runner:RuntimeRunner,line:string):void{
+    if(!['RESUME','STOP'].some(kind=>line===`${kind}:${runner.nonce}`))throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Invalid fixed native runtime control');
+    if(runner.controlLines.has(line))return;
+    if(runner.child.exitCode!==null||runner.child.signalCode!==null||!runner.child.stdin)return;
+    runner.controlLines.add(line);
+    try{runner.child.stdin.write(`${line}\n`);}catch{runner.controlError=new Error('Native runtime control channel failed');}
+  }
+  private async readEvents(runner:RuntimeRunner):Promise<Record<string,any>[]> {
+    const path=join(runner.operationRoot,'events.ndjson');let descriptor:number,namedBefore;
+    let chunk=Buffer.alloc(0);
+    try{namedBefore=lstatSync(path);}catch(error){
+      if((error as NodeJS.ErrnoException).code==='ENOENT'){
+        if(runner.eventDev!==undefined||runner.eventIno!==undefined||runner.eventOffset>0)
+          throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The established managed runtime event channel disappeared');
+        const pending=runner.pendingEvents??[];runner.pendingEvents=[];return pending;
+      }
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event channel could not be opened');
+    }
+    if(!namedBefore.isFile()||namedBefore.isSymbolicLink()||realpathSync(path).toLowerCase()!==path.toLowerCase())
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event channel is not a physical file');
+    try{descriptor=openSync(path,'r');}catch{throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event channel could not be opened');}
+    try{
+      const named=lstatSync(path),opened=fstatSync(descriptor);
+      if(!named.isFile()||named.isSymbolicLink()||realpathSync(path).toLowerCase()!==path.toLowerCase()||opened.dev!==named.dev||opened.ino!==named.ino||
+         named.dev!==namedBefore.dev||named.ino!==namedBefore.ino||
+         runner.eventDev!==undefined&&(runner.eventDev!==opened.dev||runner.eventIno!==opened.ino)||opened.size<runner.eventOffset||opened.size>64*1024)
+        throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event channel identity or size changed');
+      runner.eventDev=opened.dev;runner.eventIno=opened.ino;
+      const length=opened.size-runner.eventOffset;
+      if(length>0){
+        chunk=Buffer.alloc(length);let offset=0;
+        while(offset<length){const count=readSync(descriptor,chunk,offset,length-offset,runner.eventOffset+offset);if(count<1)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event channel was truncated');offset+=count;}
+        const after=fstatSync(descriptor),afterName=lstatSync(path);
+        if(after.dev!==opened.dev||after.ino!==opened.ino||after.size<opened.size||afterName.dev!==opened.dev||afterName.ino!==opened.ino)
+          throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event channel changed while being read');
+        runner.eventOffset+=length;runner.eventBytes+=length;
+        if(runner.eventBytes>64*1024)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event channel exceeded its fixed bound');
+      }
+    }finally{closeSync(descriptor);}
+    const lines=(runner.eventRemainder+chunk!.toString('utf8')).split('\n');runner.eventRemainder=lines.pop()??'';
+    if(Buffer.byteLength(runner.eventRemainder)>4096)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event record exceeded its fixed bound');
+    const result:Record<string,any>[]=[];
+    for(const line of lines){
+      if(!line||Buffer.byteLength(line)>4096)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event record is empty or oversized');
+      let parsed:unknown;try{parsed=JSON.parse(line) as unknown;}catch{throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event record is malformed');}
+      if(!parsed||typeof parsed!=='object'||Array.isArray(parsed))throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event record is malformed');
+      const event=parsed as Record<string,any>;
+      if(event.schema!=='quadbridge.managed-runtime-event.v1'||event.attemptId!==runner.operationId||event.operationId!==runner.operationId||
+         event.instanceId!==runner.instanceId||event.nonce!==runner.nonce||event.bindingDigest!==runner.enrollmentDigest)
+        throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event identity changed');
+      result.push(event);
+    }
+    const combined=[...(runner.pendingEvents??[]),...result];runner.pendingEvents=[];
+    return combined;
+  }
+  private exactEvent(event:Record<string,any>,names:string[]):void{
+    if(Object.keys(event).sort().join('\0')!==['schema','type','attemptId','operationId','instanceId','nonce','bindingDigest',...names].sort().join('\0'))
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event contains an unexpected field');
+  }
+  private validateTerminalFailure(runner:RuntimeRunner,event:Record<string,any>):void{
+    if(event.type==='ROLE_FAILED'){
+      this.exactEvent(event,['role','code']);
+      if(!['web-backend','worker'].includes(event.role)||typeof event.code!=='string'||!/^[A-Z][A-Z0-9_]{1,63}$/.test(event.code)||
+         runner.terminalRoleFailure||runner.terminalSupervisorFailure||event.role==='web-backend'&&runner.phase<3||
+         event.role==='worker'&&(!runner.workerRequired||runner.phase<5))
+        throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime terminal role event is invalid or out of order');
+      runner.terminalRoleFailure=event.role;
+      return;
+    }
+    if(event.type==='SUPERVISOR_FAILED'){
+      this.exactEvent(event,['code']);
+      if(typeof event.code!=='string'||!/^[A-Z][A-Z0-9_]{1,63}$/.test(event.code)||runner.terminalSupervisorFailure)
+        throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime terminal supervisor event is invalid or duplicated');
+      runner.terminalSupervisorFailure=true;
+      return;
+    }
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime emitted a nonterminal event after readiness');
+  }
+  private publishGate(runner:RuntimeRunner,kind:'ENROLL'|'LAUNCH',digest:string):void{
+    const target=join(runner.operationRoot,`${kind.toLowerCase()}-gate.json`),temporary=join(runner.operationRoot,`.${kind.toLowerCase()}-${randomUUID()}.tmp`);
+    const record={schema:'quadbridge.managed-runtime-gate.v1',kind,attemptId:runner.operationId,operationId:runner.operationId,
+      instanceId:runner.instanceId,nonce:runner.nonce,bindingDigest:digest,decision:'ALLOW'};
+    const parent=dirname(target),parentInfo=lstatSync(parent);
+    if(!parentInfo.isDirectory()||parentInfo.isSymbolicLink()||realpathSync(parent).toLowerCase()!==resolve(parent).toLowerCase())
+      throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime gate parent is not a physical private directory');
+    writePrivateCanonical(temporary,record,4096);
+    try{
+      const tempInfo=lstatSync(temporary);
+      if(!tempInfo.isFile()||tempInfo.isSymbolicLink()||realpathSync(temporary).toLowerCase()!==temporary.toLowerCase()||tempInfo.size>4096)
+        throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime authorization record is not a bounded physical file');
+      linkSync(temporary,target);
+    }catch(error){try{unlinkSync(temporary);}catch{}throw error;}
+    // linkSync is the non-overwriting publication point. The one-use supervisor may
+    // consume target immediately, so no post-publication target lookup is safe.
+    try{unlinkSync(temporary);}catch{}
+  }
+  private validateRuntimeEvent(runner:RuntimeRunner,event:Record<string,any>,authorize:RuntimeAuthorize):void{
+    const failure=event.type==='SUPERVISOR_FAILED'||event.type==='ROLE_FAILED';
+    if(failure){
+      this.validateTerminalFailure(runner,event);
+      if(event.type==='ROLE_FAILED'){
+        this.store.recordManagedRuntimeEvent(runner.instanceId,runner.operationId,runner.ownerToken,{type:'ROLE_EXITED',role:event.role,code:event.code});
+      }
+      throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','A required managed runtime role did not become ready');
+    }
+      if(event.type==='ENROLL_AUTH_REQUIRED'){
+      this.exactEvent(event,['intentDigest']);if(runner.phase!==0||event.intentDigest!==runner.enrollmentDigest)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime enrollment gate is out of order');
+      authorize();this.store.authorizeManagedRuntimeStage(runner.instanceId,runner.operationId,runner.ownerToken,'ENROLLMENT',authorize);
+      this.publishGate(runner,'ENROLL',runner.enrollmentDigest);runner.phase=1;return;
+    }
+    if(event.type==='ENROLLMENT_CLOSED'){
+      this.exactEvent(event,['intentDigest']);if(runner.phase!==1||event.intentDigest!==runner.enrollmentDigest)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime enrollment completion is out of order');
+      const instance=this.store.managedRuntime(runner.instanceId) as Record<string,any>;
+      const checked=completedRuntimeEnrollment({projectRoot:this.root,dataDirectory:runner.dataDirectory,identity:{instanceId:runner.instanceId,
+        productId:instance.productId,version:instance.version,artifactDigest:instance.artifactDigest,profileDigest:instance.profileDigest,adapterDigest:instance.adapterDigest}});
+      const intent=readPrivateJson(join(runner.dataDirectory,'enrollment-intent.json'),256*1024);
+      if(!checked||checked.configDigest!==instance.configDigest||sha256(canonical(intent))!==runner.enrollmentDigest)
+        throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Canonical managed runtime enrollment did not independently verify');
+      runner.phase=2;return;
+    }
+    if(event.type==='LAUNCH_AUTH_REQUIRED'){
+      this.exactEvent(event,['configDigest']);if(runner.phase!==2)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime launch gate is out of order');
+      const instance=this.store.managedRuntime(runner.instanceId) as Record<string,any>;
+      if(event.configDigest!==instance.configDigest)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime launch configuration changed');
+      authorize();this.store.authorizeManagedRuntimeStage(runner.instanceId,runner.operationId,runner.ownerToken,'LAUNCH',authorize);
+      this.publishGate(runner,'LAUNCH',runner.enrollmentDigest);runner.phase=3;return;
+    }
+    if(event.type==='ROLE_READY'){
+      if(runner.phase===3&&event.role==='web-backend'){
+        this.exactEvent(event,['role','url','port']);
+        const port=event.port;let url:URL;try{url=new URL(event.url);}catch{throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime web readiness URL is invalid');}
+        if(url.protocol!=='http:'||url.hostname!=='127.0.0.1'||url.port!==String(port)||url.pathname!=='/'||url.username||url.password||url.search||url.hash||
+           !Number.isInteger(port)||port<1||port>65535)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime web readiness identity is invalid');
+        runner.url=url.origin;runner.port=port;runner.phase=4;
+        this.store.recordManagedRuntimeEvent(runner.instanceId,runner.operationId,runner.ownerToken,{type:'ROLE_READY',role:'web-backend'});return;
+      }
+      if(runner.phase===5&&runner.workerRequired&&event.role==='worker'){
+        this.exactEvent(event,['role']);runner.phase=6;
+        this.store.recordManagedRuntimeEvent(runner.instanceId,runner.operationId,runner.ownerToken,{type:'ROLE_READY',role:'worker'});return;
+      }
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime role readiness is duplicated or out of order');
+    }
+    if(event.type==='API_READY'){
+      this.exactEvent(event,['url','background']);
+      const expected=runner.workerRequired?'SEPARATE_WORKER_REQUIRED':'NOT_REQUIRED';
+      if(runner.phase!==4||event.url!==runner.url||event.background!==expected)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime API readiness did not match its selected roles');
+      runner.phase=5;this.store.recordManagedRuntimeEvent(runner.instanceId,runner.operationId,runner.ownerToken,{type:'API_READY'});return;
+    }
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime event type is not part of the fixed protocol');
+  }
+  private async driveStartup(runner:RuntimeRunner,authorize:RuntimeAuthorize):Promise<void>{
+    const deadline=runner.deadline;let resumed=false;
+    while(Date.now()<deadline){
+      if(runner.protocolError)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Native runtime process proof was malformed');
+      if(runner.closeValue)throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','Native runtime exited before readiness completed');
+      if(runner.ready&&!resumed){authorize();this.sendControl(runner,`RESUME:${runner.nonce}`);resumed=true;}
+      const events=await this.readEvents(runner);
+      for(let index=0;index<events.length;index++)try{this.validateRuntimeEvent(runner,events[index]!,authorize);}
+      catch(error){runner.pendingEvents=events.slice(index+1);throw error;}
+      if(runner.phase===5&&!runner.workerRequired||runner.phase===6&&runner.workerRequired)return;
+      await waitMs(20);
+    }
+    throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','Managed runtime readiness exceeded its fixed 30-second bound');
+  }
+  private async tryStopOwner(runner:RuntimeRunner,timeoutMs:number):Promise<RuntimeExitObservation>{
+    if(runner.child.exitCode===null&&runner.child.signalCode===null)this.sendControl(runner,`STOP:${runner.nonce}`);
+    if(!runner.closeValue){
+      await waitRunnerClose(runner,timeoutMs);
+    }
+    const value=runner.closeValue,marker=runner.exitMarker;
+    const helperClosed=!!value,emptyObserved=!!value&&!!marker?.empty&&marker.code===value.code&&value.signal===null&&!runner.protocolError&&!runner.closeError;
+    const proof=value?{exitCode:value.code,signal:value.signal,markerCode:marker?.code??null,empty:emptyObserved}:undefined;
+    if(emptyObserved&&proof)runner.proof=proof;
+    return {complete:emptyObserved,emptyObserved,helperClosed,...(proof?{proof}:{})};
+  }
+  private async captureTerminalEvents(runner:RuntimeRunner):Promise<void>{
+    if(runner.terminalEventsRead)return;
+    let events:Record<string,any>[];
+    try{
+      events=await this.readEvents(runner);
+      if(runner.eventRemainder)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime ended with an incomplete event record');
+      runner.terminalEventsRead=true;
+    }catch(error){
+      runner.terminalEventInvalid=true;runner.operationalError='RUNTIME_EVENT_INVALID';return;
+    }
+    for(const event of events){
+      try{
+        this.validateTerminalFailure(runner,event);
+        if(event.type==='ROLE_FAILED')this.store.recordManagedRuntimeEvent(runner.instanceId,runner.operationId,runner.ownerToken,{type:'ROLE_EXITED',role:event.role,code:event.code});
+      }catch(error){
+        if(!(error instanceof RuntimePreparationError))runner.operationalError='RUNTIME_SETTLEMENT_FAILED';
+        else runner.terminalEventInvalid=true;
+      }
+    }
+    if(runner.terminalEventInvalid&&runner.operationalError!=='RUNTIME_SETTLEMENT_FAILED')runner.operationalError='RUNTIME_EVENT_INVALID';
+  }
+  private async stopActive(input:RuntimeStopRequest,actorId:string,authorize:RuntimeAuthorize):Promise<Record<string,unknown>>{
+    if(!input||typeof input!=='object'||typeof input.instanceId!=='string'||!RUNTIME_ID.test(input.instanceId))throw new PlatformError('INVALID','Invalid runtime instance reference');
+    this.validateRequestKey(input.requestKey);
+    const prior=this.store.managedRuntimeCommandForRequest(actorId,input.requestKey,'STOP',{instanceId:input.instanceId});
+    if(prior)return this.commandView(prior,input.instanceId);
+    const runner=this.active.get(input.instanceId);
+    if(!runner||runner.child.exitCode!==null||runner.child.signalCode!==null)throw new PlatformError('CONFLICT','This process has no live owned runtime tree to stop');
+    const result=this.store.requestManagedRuntimeStop({instanceId:runner.instanceId,operationId:runner.operationId,commandId:randomUUID(),actorId,
+      requestKey:input.requestKey,ownerToken:runner.ownerToken},authorize);
+    if(result.reused)return this.commandView(result,runner.instanceId);
+    runner.stopping=true;runner.stopReason='STOP';
+    runner.url=undefined;runner.port=undefined;
+    await this.finalizeRunner(runner,'STOP',15000);
+    return this.commandView({...result,instance:this.store.managedRuntime(runner.instanceId)},runner.instanceId);
+  }
+  private finalizeRunner(runner:RuntimeRunner,reason:'STOP'|'OPERATOR_SHUTDOWN'|'START_FAILED'|'REQUIRED_ROLE_EXIT',timeoutMs:number):Promise<RuntimeExitObservation>{
+    if(runner.terminalSettlement&&runner.terminalResult)return Promise.resolve(runner.terminalResult);
+    if(runner.finalization)return runner.finalization;
+    const promise=(async()=>{
+      try{
+      const observation=await this.tryStopOwner(runner,timeoutMs);let executionClean=runner.executionCleanObserved===true;
+      if(observation.helperClosed)await this.captureTerminalEvents(runner);
+      if(observation.complete&&!executionClean)try{removeOwnedExecution(this.root,runner.operationRoot);executionClean=true;runner.executionCleanObserved=true;}catch{}
+      if(reason==='STOP'){
+        this.store.completeManagedRuntimeStop(runner.instanceId,runner.operationId,runner.ownerToken,{emptyObserved:observation.emptyObserved,
+          helperClosed:observation.helperClosed,executionClean,errorCode:observation.complete&&executionClean?undefined:executionClean?'RUNTIME_EXIT_UNVERIFIED':'CLEANUP_UNKNOWN'});
+      }else{
+        const current=this.store.managedRuntime(runner.instanceId) as Record<string,any>|undefined;
+        if(current&&!['STOPPED','REPAIR_REQUIRED','PREPARATION_FAILED'].includes(current.state))
+          this.store.settleManagedRuntimeOwnerExit(runner.instanceId,runner.operationId,runner.ownerToken,{reason,emptyObserved:observation.emptyObserved,
+            helperClosed:observation.helperClosed,executionClean,errorCode:observation.complete&&executionClean?'RUNTIME_OWNER_EXIT':'RUNTIME_EXIT_UNVERIFIED'});
+      }
+      if(observation.complete&&executionClean){
+        const persisted=this.store.managedRuntimeAttempt(runner.instanceId,runner.operationId) as Record<string,any>|undefined;
+        if(!persisted||persisted.id!==runner.operationId||persisted.instanceId!==runner.instanceId||persisted.commandId!==runner.commandId||
+           !['STOPPED','REPAIR_REQUIRED','PREPARATION_FAILED'].includes(persisted.state)||!['SUCCEEDED','FAILED'].includes(persisted.commandState)||
+           persisted.stopCommandId!==null&&!['SUCCEEDED','FAILED'].includes(persisted.stopCommandState)||
+           persisted.physicalState!=='EMPTY'||!persisted.emptyObserved||!persisted.helperClosed||!persisted.executionClean)
+          throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','The exact runtime owner did not commit a terminal physical settlement');
+        runner.terminalSettlement=true;runner.terminalResult=observation;
+      }
+      if(runner.operationalError==='RUNTIME_SETTLEMENT_FAILED'&&runner.terminalSettlement)
+        runner.operationalError=runner.terminalEventInvalid?'RUNTIME_EVENT_INVALID':undefined;
+      if(observation.complete&&executionClean&&!runner.operationalError){
+        runner.url=undefined;runner.port=undefined;
+        if(this.active.get(runner.instanceId)===runner)this.active.delete(runner.instanceId);
+      }
+      return observation;
+      }catch(error){
+        runner.operationalError='RUNTIME_SETTLEMENT_FAILED';
+        throw error;
+      }
+    })();
+    runner.finalization=promise;
+    void promise.then(()=>{if(runner.finalization===promise&&!runner.terminalSettlement)runner.finalization=undefined;},()=>{if(runner.finalization===promise)runner.finalization=undefined;});
+    return promise;
+  }
+  private async monitorRunner(runner:RuntimeRunner):Promise<void>{
+    await runner.closed;
+    if(runner.stopping){
+      const reason=runner.stopReason??'OPERATOR_SHUTDOWN';
+      try{await this.finalizeRunner(runner,reason,0);}catch{runner.operationalError='RUNTIME_SETTLEMENT_FAILED';}
+      return;
+    }
+    runner.stopping=true;runner.stopReason='REQUIRED_ROLE_EXIT';runner.url=undefined;runner.port=undefined;
+    try{await this.finalizeRunner(runner,'REQUIRED_ROLE_EXIT',0);}catch{runner.operationalError='RUNTIME_SETTLEMENT_FAILED';}
+  }
+  async close(){
+    if(this.closePromise)return this.closePromise;
+    this.closing=true;
+    const closing=(async()=>{
+      const initialRunners=[...this.active.values()];
+      for(const runner of initialRunners){
+        if(!runner.stopping){runner.stopping=true;runner.stopReason='OPERATOR_SHUTDOWN';}
+        runner.url=undefined;runner.port=undefined;
+        if(runner.child.exitCode===null&&runner.child.signalCode===null)this.sendControl(runner,`STOP:${runner.nonce}`);
+      }
+      while(this.operations.size)await Promise.allSettled([...this.operations]);
+      const runners=[...new Set([...initialRunners,...this.active.values()])];
+      for(const runner of runners){
+        if(runner.stopReason)await this.finalizeRunner(runner,runner.stopReason,runner.closeValue?0:15000);
+      }
+      // The manager performs the exact-owner finalization itself above. A monitor
+      // can still be awaiting a helper which did not produce a close event; never
+      // let that observational task hold shutdown open after bounded proof failed.
+      // Successful terminal settlement is cached, so a late monitor has no further
+      // store or filesystem effects.
+      for(const runner of runners){
+        if(runner.operationalError)throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime shutdown or event settlement remains unverified');
+        const attempt=this.store.managedRuntimeAttempt(runner.instanceId,runner.operationId) as Record<string,any>|undefined;
+        if(!runner.proof?.empty||runner.closeValue?.signal||runner.closeValue?.code!==runner.exitMarker?.code||!runner.exitMarker?.empty||
+            !attempt||!['STOPPED','REPAIR_REQUIRED','PREPARATION_FAILED'].includes(attempt.state)||!['SUCCEEDED','FAILED'].includes(attempt.commandState)||
+            !attempt.emptyObserved||!attempt.helperClosed||!attempt.executionClean||attempt.physicalState!=='EMPTY')
+          throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','A managed runtime process owner remains physically unverified; its slot and files are retained');
+      }
+    })();
+    this.closePromise=closing;
+    void closing.catch(()=>{if(this.closePromise===closing)this.closePromise=undefined;});
+    return closing;
+  }
+}

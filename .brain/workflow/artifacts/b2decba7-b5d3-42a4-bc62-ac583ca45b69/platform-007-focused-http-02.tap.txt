@@ -1,0 +1,41 @@
+TAP version 13
+# Subtest: canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+ok 1 - canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+  ---
+  duration_ms: 172.1153
+  type: 'test'
+  ...
+# Subtest: complete ProductDefinition keeps custom reviewed bindings through exact read-only preview, immutable save and build
+not ok 2 - complete ProductDefinition keeps custom reviewed bindings through exact read-only preview, immutable save and build
+  ---
+  duration_ms: 59.321
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\control-plane-http.test.mjs:452:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + undefined
+    - 'VALIDATED_DEFINITION_NOT_RUNNING'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'VALIDATED_DEFINITION_NOT_RUNNING'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane-http.test.mjs:473:12)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 336.0623
+EXIT_CODE=1

@@ -1,0 +1,1017 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { createHash, randomUUID } from 'node:crypto';
+import { execFile, spawn } from 'node:child_process';
+import { copyFile, mkdir, mkdtemp, readFile, readdir, rename, rm, symlink, unlink, writeFile } from 'node:fs/promises';
+import { dirname, join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { ROOT } from '../apps/runtime/dist/index.js';
+import { LocalAccess } from '../packages/local-access/dist/index.js';
+import { ARTIFACT_REGISTRY_LIMITS, ControlPlaneStore } from '../packages/control-plane/dist/index.js';
+import { resolve } from '../packages/composition/dist/index.js';
+import { readBoundedSnapshot, verifyStoredEntryMetadata } from '../packages/composition/dist/snapshot-access.js';
+import { LocalArtifactStore, parseRegistryPublisherTranscript } from '../apps/control-plane/dist/artifact-store.js';
+import { LocalBuildWorker } from '../apps/control-plane/dist/build-worker.js';
+import { ManagedRuntimeManager, runtimeDataDirectory } from '../apps/control-plane/dist/runtime-manager.js';
+import { createOperatorServer } from '../apps/control-plane/dist/operator-server.js';
+import { copyPrivateToolchain, copyReviewedBuildInputs } from '../apps/control-plane/dist/build-inputs.js';
+import { importSourceSnapshot, loadSourceSnapshot } from '../apps/control-plane/dist/source-import.js';
+
+const WINDOWS = process.platform === 'win32';
+const actor = 'system:artifact-acceptance';
+
+async function waitForBuild(store,id,timeoutMs=90000) {
+  const end=Date.now()+timeoutMs;
+  while(Date.now()<end) {
+    const row=store.build(id);
+    if(row&&['SUCCEEDED','FAILED','CANCELLED'].includes(row.state))return row;
+    await new Promise(resolve=>setTimeout(resolve,50));
+  }
+  throw new Error(`Build ${id} did not settle before the bounded fixture deadline`);
+}
+
+async function fixture(t,{binaryAsset=false,productId='service-desk'}={}) {
+  const temp=await mkdtemp(join(tmpdir(),'q3-'));
+  const root=join(temp,'checkout'), dbPath=join(temp,'control-plane.sqlite');
+  let store,worker,artifacts,operator,runtimes;
+  const externalOwners=new Set();
+  t.after(async()=>{
+    const cleanupErrors=[];
+    for(const owner of externalOwners) {
+      if(!owner.closed) {
+        try { owner.go?.();owner.release?.();await owner.waitForClose?.(); }
+        catch(error) { cleanupErrors.push(error); }
+      }
+    }
+    const unprovenOwners=[...externalOwners].filter(owner=>!owner.closed||!owner.safeCleanup);
+    let runtimeSettled=true;
+    try { await runtimes?.close(); }
+    catch(error) { runtimeSettled=false;cleanupErrors.push(new Error('Owned managed runtime close was not positively observed',{cause:error})); }
+    for(const [name,close] of [['operator',()=>operator?.close()]]) {
+      try { await close(); }
+      catch(error) { cleanupErrors.push(new Error(`Owned ${name} close was not positively observed`,{cause:error})); }
+    }
+    if(runtimeSettled) {
+      for(const [name,close] of [['worker',()=>worker?.close()],['registry',()=>artifacts?.close()]]) {
+        try { await close(); }
+        catch(error) { cleanupErrors.push(new Error(`Owned ${name} close was not positively observed`,{cause:error})); }
+      }
+      try { await store?.close(); }
+      catch(error) { cleanupErrors.push(new Error('Database close failed',{cause:error})); }
+    }
+    if(unprovenOwners.length||cleanupErrors.length)
+      throw new Error(`Artifact fixture retained at ${temp}; independent owner proof or owned-resource cleanup failed`,{cause:new AggregateError(cleanupErrors)});
+    try { await rm(temp,{recursive:true,force:true,maxRetries:4,retryDelay:100}); }
+    catch(error) { throw new Error(`Artifact fixture cleanup failed at ${temp}`,{cause:error}); }
+  });
+  await copyReviewedBuildInputs(ROOT,root);
+  await copyPrivateToolchain(ROOT,root);
+  let binaryExpected;
+  if(binaryAsset) {
+    const manifestPath=join(root,'modules','service-desk','module.json');
+    const manifest=JSON.parse(await readFile(manifestPath,'utf8'));
+    manifest.browserAssets=[...manifest.browserAssets,'ui/fixture.png'];
+    await writeFile(manifestPath,`${JSON.stringify(manifest,null,2)}\n`);
+    const assetPath=join(root,'modules','service-desk','src','ui','fixture.png');
+    await mkdir(dirname(assetPath),{recursive:true});
+    binaryExpected=Buffer.from([0x00,0xff,0x89,0x50,0x4e,0x47,0x00,0xfe,0x80,0x00]);
+    await writeFile(assetPath,binaryExpected);
+  }
+  await mkdir(join(root,'.local'),{recursive:true});
+  await copyFile(join(ROOT,'.local','platform-build-host.json'),join(root,'.local','platform-build-host.json'));
+  await copyFile(join(ROOT,'tools','registry-publish.ps1'),join(root,'tools','registry-publish.ps1'));
+  await copyFile(join(ROOT,'tools','runtime-supervisor.mjs'),join(root,'tools','runtime-supervisor.mjs'));
+  const snapshot=loadSourceSnapshot(root);
+  store=new ControlPlaneStore(dbPath);
+  importSourceSnapshot(store,snapshot);
+  artifacts=await LocalArtifactStore.create(root,store);
+  worker=await LocalBuildWorker.create({root,store,snapshot,pollMs:50,leaseMs:30000,timeoutMs:60000});
+  await worker.start();
+  const productRow=store.products().find(row=>row.id===productId);
+  assert.ok(productRow,`the source import includes the reference ${productId} version`);
+  const product=store.product(productRow.id,productRow.version);
+  const plan=resolve(product,snapshot.modules);
+  return {
+    temp,root,dbPath,snapshot,product,plan,
+    get store(){return store;},set store(value){store=value;},
+    get worker(){return worker;},set worker(value){worker=value;},
+    get artifacts(){return artifacts;},set artifacts(value){artifacts=value;},
+    get operator(){return operator;},set operator(value){operator=value;},get runtimes(){return runtimes;},set runtimes(value){runtimes=value;},binaryExpected,
+    ownProcess(owner){externalOwners.add(owner);return owner;},
+    async build(key='artifact-real-build') {
+      const admitted=await worker.admit(plan.product,plan,`${key}-${randomUUID()}`,actor);
+      const final=await waitForBuild(store,admitted.id);
+      assert.equal(final.state,'SUCCEEDED',store.buildLog(admitted.id));
+      assert.ok(final.snapshotDigest);
+      return final;
+    }
+  };
+}
+
+async function pairedFetch(server,path,{method='GET',body,cookie}={}) {
+  const headers={Origin:server.url};
+  if(cookie)headers.Cookie=cookie;
+  if(body!==undefined)headers['Content-Type']='application/json';
+  return fetch(server.url+path,{method,headers,body:body===undefined?undefined:JSON.stringify(body)});
+}
+async function waitBounded(signal,label,timeoutMs=10000) {
+  let timer;
+  try {
+    await Promise.race([signal,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error(`${label} did not arrive before the fixture deadline`)),timeoutMs);})]);
+  } finally { clearTimeout(timer); }
+}
+async function pair(server) {
+  const response=await pairedFetch(server,'/platform-api/session',{method:'POST',body:{code:server.pairingCode}});
+  assert.equal(response.status,200,await response.text());
+  return response.headers.get('set-cookie').split(';',1)[0];
+}
+
+function launchRegistryOwner(root,dbPath,buildId,mode,extra='') {
+  const child=spawn(process.execPath,[join(ROOT,'tests','fixtures','artifact-registry-owner.mjs'),root,dbPath,buildId,mode,String(extra)],
+    {cwd:ROOT,windowsHide:true,shell:false,stdio:['pipe','pipe','pipe']});
+  const owner={child,mode,stdout:'',stderr:'',closed:false,safeCleanup:false,helperClosed:false,cleanupConfirmed:false,closeResult:undefined};
+  owner.closedPromise=new Promise(resolve=>child.once('close',(code,signal)=>{
+    owner.closed=true;owner.safeCleanup=owner.cleanupConfirmed||owner.helperClosed;owner.closeResult={code,signal};resolve(owner.closeResult);
+  }));
+  child.once('error',error=>{owner.spawnError=error;owner.stderr=(owner.stderr+String(error)).slice(-32_768);});
+  child.stdout.on('data',chunk=>{
+    owner.stdout=(owner.stdout+chunk.toString('utf8')).slice(-32_768);
+    if(owner.stdout.includes('READY_AFTER\n'))owner.helperClosed=true;
+    if(owner.stdout.includes('CLEAN_CLOSED\n')||owner.stdout.includes('RELEASED\n'))owner.cleanupConfirmed=true;
+  });
+  child.stderr.on('data',chunk=>{owner.stderr=(owner.stderr+chunk.toString('utf8')).slice(-32_768);});
+  owner.waitFor=async(marker,timeoutMs=90_000)=>{
+    const end=Date.now()+timeoutMs;
+    while(Date.now()<end) {
+      if(owner.stdout.includes(marker))return;
+      if(owner.closed)throw new Error(`Registry child closed before ${marker}: ${JSON.stringify(owner.closeResult)} ${owner.stderr} ${owner.stdout}`);
+      await new Promise(resolve=>setTimeout(resolve,20));
+    }
+    throw new Error(`Registry child did not emit ${marker} before its deadline: ${owner.stderr} ${owner.stdout}`);
+  };
+  owner.waitForClose=async(timeoutMs=60_000)=>{
+    let timer;
+    try {
+      const result=await Promise.race([owner.closedPromise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error(`Registry child did not close: ${owner.stderr} ${owner.stdout}`)),timeoutMs);})]);
+      return result;
+    } finally { clearTimeout(timer); }
+  };
+  owner.go=()=>{if(!owner.closed)child.stdin.write('GO\n');};
+  return owner;
+}
+
+function launchStagingFileLock(executable,path) {
+  const child=spawn(executable,['-NoLogo','-NoProfile','-NonInteractive','-File',join(ROOT,'tests','fixtures','hold-staging-file.ps1'),path],
+    {cwd:ROOT,windowsHide:true,shell:false,stdio:['pipe','pipe','pipe']});
+  const owner={child,stdout:'',stderr:'',closed:false,lockObserved:false,released:false,safeCleanup:false};
+  owner.closedPromise=new Promise(resolve=>child.once('close',(code,signal)=>{
+    owner.closed=true;owner.closeResult={code,signal};owner.safeCleanup=owner.lockObserved&&owner.released;resolve(owner.closeResult);
+  }));
+  child.once('error',error=>{owner.spawnError=error;owner.stderr=(owner.stderr+String(error)).slice(-8192);});
+  child.stdout.on('data',chunk=>{
+    owner.stdout=(owner.stdout+chunk.toString('utf8')).slice(-8192);
+    if(/LOCKED\r?\n/.test(owner.stdout))owner.lockObserved=true;
+    if(/RELEASED\r?\n/.test(owner.stdout))owner.released=true;
+  });
+  child.stderr.on('data',chunk=>{owner.stderr=(owner.stderr+chunk.toString('utf8')).slice(-8192);});
+  child.stdin.on('error',error=>{owner.stdinError=error;owner.stderr=(owner.stderr+`stdin: ${error}`).slice(-8192);});
+  owner.waitFor=async(marker,timeoutMs=15000)=>{
+    const end=Date.now()+timeoutMs;
+    while(Date.now()<end) {
+      if(owner.stdout.includes(marker))return;
+      if(owner.closed)throw new Error(`File-lock fixture closed before ${marker}: ${owner.stderr}`);
+      await new Promise(resolve=>setTimeout(resolve,20));
+    }
+    throw new Error(`File-lock fixture did not emit ${marker}: ${owner.stderr}`);
+  };
+  owner.releaseRequested=false;
+  owner.release=()=>{
+    if(owner.releaseRequested||owner.closed)return;
+    owner.releaseRequested=true;
+    try { child.stdin.write('GO\n'); }
+    catch(error) { owner.stdinError=error;owner.stderr=(owner.stderr+`stdin: ${error}`).slice(-8192); }
+  };
+  owner.waitForClose=async(timeoutMs=25000)=>{
+    let timer;
+    try { return await Promise.race([owner.closedPromise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error(`File-lock fixture did not close: ${owner.stderr}`)),timeoutMs);})]); }
+    finally { clearTimeout(timer); }
+  };
+  return owner;
+}
+
+test('real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release', {skip:!WINDOWS}, async t=>{
+  const context=await fixture(t,{binaryAsset:true});
+  assert.equal(context.artifacts.capability.status,'ready',context.artifacts.capability.detail);
+  context.operator=await createOperatorServer({root:context.root,store:context.store,snapshot:context.snapshot,artifactStore:context.artifacts,port:0,pairingCode:'artifact-test-pairing-code-123456'});
+  let cookie=await pair(context.operator);
+  const build=await context.build();
+  const buildIdentity=context.store.artifactBuildIdentity(build.id);
+  const sourceSnapshot=join(context.root,'.local','platform-builds','snapshots',buildIdentity.snapshotId);
+  const sourceProof=readBoundedSnapshot(sourceSnapshot,buildIdentity,ARTIFACT_REGISTRY_LIMITS);
+  const expectedReadme=await readFile(join(sourceSnapshot,'README.md'));
+  const expectedRuntime=await readFile(join(sourceSnapshot,'apps','runtime','dist','main.js'));
+  const expectedBinary=await readFile(join(sourceSnapshot,'modules','service-desk','dist','ui','fixture.png'));
+  assert.deepEqual(expectedBinary,context.binaryExpected,'the bounded source snapshot includes the fixture binary asset');
+  assert.throws(()=>readBoundedSnapshot(sourceSnapshot,buildIdentity,{...ARTIFACT_REGISTRY_LIMITS,maxFileBytes:1}),/per-file registry limit/);
+  assert.throws(()=>readBoundedSnapshot(sourceSnapshot,buildIdentity,{...ARTIFACT_REGISTRY_LIMITS,maxFiles:1}),/file limit/);
+  assert.throws(()=>readBoundedSnapshot(sourceSnapshot,buildIdentity,{...ARTIFACT_REGISTRY_LIMITS,maxArtifactBytes:1}),/artifact byte limit/);
+  assert.throws(()=>readBoundedSnapshot(sourceSnapshot,buildIdentity,{...ARTIFACT_REGISTRY_LIMITS,maxManifestBytes:1}),/manifest exceeds/);
+  assert.throws(()=>readBoundedSnapshot(sourceSnapshot,buildIdentity,{...ARTIFACT_REGISTRY_LIMITS,maxMetadataEntries:1}),/directory-entry scan/);
+  assert.throws(()=>readBoundedSnapshot(sourceSnapshot,buildIdentity,{...ARTIFACT_REGISTRY_LIMITS,maxDirectoryDepth:0}),/directory depth/);
+  for(const unsafePath of ['../escape','C:/outside','folder./file','CON.txt']) {
+    const row={id:'a'.repeat(64),path:unsafePath,digest:'b'.repeat(64),sizeBytes:1};
+    assert.throws(()=>verifyStoredEntryMetadata(JSON.stringify([row]),buildIdentity.snapshotDigest),/unsafe Windows portable path/);
+  }
+  const publisherBytes=await readFile(join(context.root,'tools','registry-publish.ps1'));
+  const baseIntent={operationId:randomUUID(),ownerToken:randomUUID().replaceAll('-',''),buildId:build.id,artifactDigest:buildIdentity.snapshotDigest,
+    snapshotId:buildIdentity.snapshotId,originatingActorId:buildIdentity.originatingActorId,productId:buildIdentity.productId,version:buildIdentity.version,
+    inputDigest:buildIdentity.inputDigest,releaseDigest:buildIdentity.releaseDigest,sizeBytes:sourceProof.sizeBytes,fileCount:sourceProof.fileCount,
+    stagingOverheadBytes:publisherBytes.length,observedRegistryBytes:0,observedObjectDirectories:0,hostIdentity:context.artifacts.capability.hostIdentity,
+    publisherDigest:createHash('sha256').update(publisherBytes).digest('hex'),registeringActorId:actor};
+  const beforeOperations=context.store.artifactOperationCount(),beforeAudit=context.store.auditLog(500).length;
+  for(const observation of [
+    {registryBytes:ARTIFACT_REGISTRY_LIMITS.maxRegistryBytes,stagingBytes:0,objectDirectories:0},
+    {registryBytes:0,stagingBytes:ARTIFACT_REGISTRY_LIMITS.maxStagingBytes,objectDirectories:0},
+    {registryBytes:0,stagingBytes:0,objectDirectories:ARTIFACT_REGISTRY_LIMITS.maxObjectDirectories}
+  ]) {
+    assert.throws(()=>context.store.beginArtifactPublication({...baseIntent,operationId:randomUUID(),ownerToken:randomUUID().replaceAll('-','')},()=>undefined,()=>observation),/capacity is exhausted/);
+    assert.equal(context.store.artifactRegistrySlot().operationId,null,'capacity rejection leaves no physical reservation');
+  }
+  const untrustedPath=join(context.artifacts.stagingRoot,`bounds-${randomUUID()}`),tooDeep=join(untrustedPath,...Array.from({length:ARTIFACT_REGISTRY_LIMITS.maxDirectoryDepth+2},(_,index)=>`d${index}`));
+  try {
+    await mkdir(tooDeep,{recursive:true});
+    await assert.rejects(context.artifacts.list(),/directory depth/,'empty nested directories count toward the bounded physical scan');
+  } finally { await rm(untrustedPath,{recursive:true,force:true,maxRetries:2,retryDelay:50}); }
+  const tooManyObjects=Array.from({length:ARTIFACT_REGISTRY_LIMITS.maxObjectDirectories+1},(_,index)=>join(context.artifacts.objectsRoot,`fixture-${String(index).padStart(3,'0')}`));
+  try {
+    for(const path of tooManyObjects)await mkdir(path);
+    await assert.rejects(context.artifacts.list(),/object-directory capacity/,'empty object directories count against physical capacity');
+  } finally { for(const path of tooManyObjects)await rm(path,{recursive:true,force:true,maxRetries:2,retryDelay:50}); }
+  const transition={...baseIntent,operationId:randomUUID(),ownerToken:randomUUID().replaceAll('-','')};
+  const reserved=context.store.beginArtifactPublication(transition,()=>undefined,()=>({registryBytes:0,stagingBytes:0,objectDirectories:0}));
+  assert.equal(reserved.kind,'RESERVED');
+  assert.throws(()=>context.store.recordArtifactPublication(transition.operationId,transition.ownerToken,'PUBLISHED'),/observed no-overwrite move/);
+  assert.throws(()=>context.store.recordArtifactPublication(transition.operationId,transition.ownerToken,'STAGING_CLEAN'),/requires verified destination bytes/);
+  const rejectedFacts=context.store.db.prepare('SELECT state,destination_verified,staging_clean FROM artifact_operations WHERE id=?').get(transition.operationId);
+  assert.deepEqual({...rejectedFacts},{state:'RESERVED',destination_verified:0,staging_clean:0},'out-of-order facts cannot manufacture successful publication');
+  assert.equal(context.store.artifactRegistrySlot().operationId,transition.operationId);
+  assert.equal(context.store.abortArtifactPublication(transition.operationId,transition.ownerToken,'Out-of-order publication facts were rejected'),true);
+  assert.equal(context.store.artifactRegistrySlot().operationId,null);
+  assert.equal(context.store.artifactOperationCount(),beforeOperations+1,'only the explicitly aborted transition fixture remains in history');
+  assert.equal(context.store.auditLog(500).length,beforeAudit+2,'capacity rejections and out-of-order facts do not add audit; reservation and abort do');
+  const operationsBeforeOrigin=context.store.artifactOperationCount(),auditBeforeOrigin=context.store.auditLog(500).length;
+  const savedBuildActor=context.store.db.prepare('SELECT actor_id AS actor FROM builds WHERE id=?').get(build.id).actor;
+  try {
+    context.store.db.prepare('UPDATE builds SET actor_id=? WHERE id=?').run('system:changed-origin',build.id);
+    assert.throws(()=>context.store.beginArtifactPublication({...baseIntent,operationId:randomUUID(),ownerToken:randomUUID().replaceAll('-','')},()=>undefined,
+      ()=>({registryBytes:0,stagingBytes:0,objectDirectories:0})),/differs from the verified artifact identity/);
+  } finally {
+    context.store.db.prepare('UPDATE builds SET actor_id=? WHERE id=?').run(savedBuildActor,build.id);
+  }
+  assert.equal(context.store.artifactOperationCount(),operationsBeforeOrigin,'captured-origin drift creates no operation');
+  assert.equal(context.store.auditLog(500).length,auditBeforeOrigin,'captured-origin drift creates no audit row');
+  const thenableObserver=Object.assign(()=>({registryBytes:0,stagingBytes:0,objectDirectories:0}),{then:(resolve)=>resolve?.()});
+  assert.throws(()=>context.store.beginArtifactPublication({...baseIntent,operationId:randomUUID(),ownerToken:randomUUID().replaceAll('-','')},()=>undefined,thenableObserver),/must be synchronous/);
+  assert.equal(context.store.artifactOperationCount(),operationsBeforeOrigin,'thenable observation creates no operation');
+  const initialRegistered=context.store.auditLog(500).filter(row=>row.action==='artifact.registered').length;
+  const first=await pairedFetch(context.operator,`/platform-api/artifacts/register`,{method:'POST',cookie,body:{confirm:true,buildId:build.id}});
+  assert.equal(first.status,201);
+  const registration=await first.json();
+  assert.equal(registration.status,'REGISTERED_VERIFIED_LOCAL_ARTIFACT');
+  const digest=registration.artifact.digest;
+  assert.equal(digest,build.snapshotDigest);
+  const firstAudit=context.store.auditLog(500);
+  assert.equal(firstAudit.filter(row=>row.action==='artifact.registered').length,initialRegistered+1);
+  const registeringActor=registration.artifact.registeringActorId;
+  assert.equal(firstAudit.find(row=>row.action==='artifact.operation.settled')?.actorId,registeringActor,'operation facts retain the initiating/registering actor');
+
+  const repeated=await pairedFetch(context.operator,'/platform-api/artifacts/register',{method:'POST',cookie,body:{confirm:true,buildId:build.id}});
+  assert.equal(repeated.status,201);
+  assert.equal(context.store.auditLog(500).filter(row=>row.action==='artifact.registered').length,initialRegistered+1,'equal registration does not duplicate the audit');
+  const status=await pairedFetch(context.operator,'/platform-api/artifacts',{cookie});
+  assert.equal(status.status,200);
+  const registry=await status.json();
+  assert.ok(registry.artifacts.some(item=>item.digest===digest));
+  assert.ok(registry.operationHistory.limit<=200);
+  const durableFact=context.store.db.prepare('SELECT state,physical_state,destination_verified,staging_clean FROM artifact_operations WHERE artifact_digest=? AND kind=\'REGISTER\' AND state=\'REGISTERED\' ORDER BY created DESC LIMIT 1').get(digest);
+  assert.deepEqual({...durableFact},{state:'REGISTERED',physical_state:'MOVE_OBSERVED',destination_verified:1,staging_clean:1});
+
+  const inspection=await pairedFetch(context.operator,`/platform-api/artifacts/${digest}`,{cookie});
+  assert.equal(inspection.status,200);
+  const artifact=await inspection.json();
+  assert.ok(Array.isArray(artifact.entries)&&artifact.entries.length>1);
+  assert.equal(Object.hasOwn(artifact,'objectRef'),false);
+  const readme=artifact.entries.find(entry=>entry.path==='README.md');
+  assert.ok(readme,'verified entry selectors are included in the metadata response');
+  const download=await pairedFetch(context.operator,`/platform-api/artifacts/${digest}/entries/${readme.id}`,{cookie});
+  assert.equal(download.status,200);
+  assert.match(download.headers.get('content-type'),/^application\/octet-stream/);
+  assert.match(download.headers.get('content-disposition'),/attachment/);
+  assert.equal(download.headers.get('x-content-type-options'),'nosniff');
+  assert.equal(download.headers.get('cache-control'),'no-store');
+  assert.deepEqual(Buffer.from(await download.arrayBuffer()),expectedReadme);
+  const runtimeEntry=artifact.entries.find(entry=>entry.path==='apps/runtime/dist/main.js');
+  assert.ok(runtimeEntry,'the verified inventory exposes an opaque selector for a JavaScript entry');
+  const runtimeResponse=await pairedFetch(context.operator,`/platform-api/artifacts/${digest}/entries/${runtimeEntry.id}`,{cookie});
+  assert.equal(runtimeResponse.status,200);
+  assert.match(runtimeResponse.headers.get('content-disposition'),/attachment/);
+  assert.match(runtimeResponse.headers.get('content-type'),/^application\/octet-stream/);
+  assert.deepEqual(Buffer.from(await runtimeResponse.arrayBuffer()),expectedRuntime);
+  const binaryEntry=artifact.entries.find(entry=>entry.path==='modules/service-desk/dist/ui/fixture.png');
+  assert.ok(binaryEntry,'the fixture export includes its reviewed non-text browser asset');
+  const binaryResponse=await pairedFetch(context.operator,`/platform-api/artifacts/${digest}/entries/${binaryEntry.id}`,{cookie});
+  assert.equal(binaryResponse.status,200);
+  assert.match(binaryResponse.headers.get('content-disposition'),/attachment/);
+  assert.match(binaryResponse.headers.get('content-type'),/^application\/octet-stream/);
+  assert.equal(binaryResponse.headers.get('x-content-type-options'),'nosniff');
+  assert.deepEqual(Buffer.from(await binaryResponse.arrayBuffer()),expectedBinary,'download preserves exact NUL and non-UTF8 bytes');
+  const htmlEntries=artifact.entries.filter(entry=>entry.path.toLowerCase().endsWith('.html'));
+  for(const htmlEntry of htmlEntries) {
+    const htmlResponse=await pairedFetch(context.operator,`/platform-api/artifacts/${digest}/entries/${htmlEntry.id}`,{cookie});
+    assert.equal(htmlResponse.status,200);
+    assert.match(htmlResponse.headers.get('content-disposition'),/attachment/);
+    assert.match(htmlResponse.headers.get('content-type'),/^application\/octet-stream/);
+    assert.equal(htmlResponse.headers.get('x-content-type-options'),'nosniff');
+  }
+
+  const promotionBody={confirm:true,productId:context.product.id,version:context.product.version,artifactDigest:digest};
+  const promoted=await pairedFetch(context.operator,'/platform-api/releases',{method:'POST',cookie,body:promotionBody});
+  assert.equal(promoted.status,201);
+  assert.equal((await promoted.json()).artifactDigest,digest);
+  const auditAfterPromotion=context.store.auditLog(500).filter(row=>row.action==='artifact.release.promoted').length;
+  const repeatedPromotion=await pairedFetch(context.operator,'/platform-api/releases',{method:'POST',cookie,body:promotionBody});
+  assert.equal(repeatedPromotion.status,201);
+  assert.equal(context.store.auditLog(500).filter(row=>row.action==='artifact.release.promoted').length,auditAfterPromotion);
+
+  const secondBuild=await context.build('artifact-same-version-second-build');
+  const secondIdentity=context.store.artifactBuildIdentity(secondBuild.id);
+  assert.notEqual(secondIdentity.snapshotDigest,digest,'each successful build has its own exact snapshot identity');
+  const secondSnapshot=join(context.root,'.local','platform-builds','snapshots',secondIdentity.snapshotId);
+  const secondProof=readBoundedSnapshot(secondSnapshot,secondIdentity,ARTIFACT_REGISTRY_LIMITS);
+  assert.ok(secondProof.entries.length>1);
+  const expectedSecondReadme=await readFile(join(secondSnapshot,'README.md'));
+  const orphanBuild=await context.build('artifact-final-audit-failure');
+  const orphanIdentity=context.store.artifactBuildIdentity(orphanBuild.id);
+  assert.notEqual(orphanIdentity.snapshotDigest,digest);
+  const orphanSnapshot=join(context.root,'.local','platform-builds','snapshots',orphanIdentity.snapshotId);
+  const expectedOrphanReadme=await readFile(join(orphanSnapshot,'README.md'));
+  const observedCapacity=(await context.artifacts.list()).capacity;
+  const unresolvedIntent={...baseIntent,operationId:randomUUID(),ownerToken:randomUUID().replaceAll('-',''),buildId:secondBuild.id,
+    artifactDigest:secondIdentity.snapshotDigest,snapshotId:secondIdentity.snapshotId,originatingActorId:secondIdentity.originatingActorId,
+    productId:secondIdentity.productId,version:secondIdentity.version,inputDigest:secondIdentity.inputDigest,releaseDigest:secondIdentity.releaseDigest,
+    sizeBytes:secondProof.sizeBytes,fileCount:secondProof.fileCount};
+  const unresolved=context.store.beginArtifactPublication(unresolvedIntent,()=>undefined,()=>({registryBytes:observedCapacity.registryBytes,
+    stagingBytes:observedCapacity.stagingBytes,objectDirectories:observedCapacity.objectDirectories}));
+  assert.equal(unresolved.kind,'RESERVED');
+  const slotBeforeRestart=context.store.artifactRegistrySlot();
+  await context.operator.close();context.operator=undefined;
+  await context.artifacts.close();context.artifacts=undefined;
+  context.artifacts=await LocalArtifactStore.create(context.root,context.store);
+  const restartedRegistry=await context.artifacts.list();
+  const unresolvedView=restartedRegistry.operations.find(operation=>operation.id===unresolvedIntent.operationId);
+  assert.equal(unresolvedView.state,'RESERVED');
+  assert.equal(unresolvedView.physicalState,'NONE');
+  assert.equal(unresolvedView.ownerObservation,'not-observed-in-this-process');
+  assert.equal(unresolvedView.destinationVerified,false);
+  assert.equal(unresolvedView.stagingClean,false);
+  assert.deepEqual({...context.store.artifactRegistrySlot()},{...slotBeforeRestart},'restart preserves the complete global reservation');
+  context.operator=await createOperatorServer({root:context.root,store:context.store,snapshot:context.snapshot,artifactStore:context.artifacts,port:0,pairingCode:'artifact-test-pairing-code-123456'});
+  cookie=await pair(context.operator);
+  const auditBeforeBlockedRegistration=context.store.auditLog(500).length;
+  const blockedRegistration=await pairedFetch(context.operator,'/platform-api/artifacts/register',{method:'POST',cookie,body:{confirm:true,buildId:secondBuild.id}});
+  assert.equal(blockedRegistration.status,409);
+  await blockedRegistration.text();
+  assert.equal(context.store.artifactRegistrySlot().operationId,unresolvedIntent.operationId);
+  assert.equal(context.store.auditLog(500).length,auditBeforeBlockedRegistration,'unobserved prior ownership cannot be stolen by a new operator process');
+  assert.equal(context.store.abortArtifactPublication(unresolvedIntent.operationId,unresolvedIntent.ownerToken,'Fixture proves no staging or publisher was started'),true);
+  assert.equal(context.store.artifactRegistrySlot().operationId,null);
+  await context.worker.close();context.worker=undefined;
+  const legacyAdmission=context.store.requestBuild(context.product.id,context.product.version,actor);
+  assert.equal(legacyAdmission.state,'QUEUED');
+  assert.equal(context.store.build(legacyAdmission.id).inputDigest,null);
+  const legacyRegistration=await pairedFetch(context.operator,'/platform-api/artifacts/register',{method:'POST',cookie,body:{confirm:true,buildId:legacyAdmission.id}});
+  assert.equal(legacyRegistration.status,409);
+  await legacyRegistration.text();
+  assert.equal(context.store.build(legacyAdmission.id).state,'QUEUED','legacy admission is retained without becoming executable or registrable');
+  for(const packagePath of ['node_modules/typescript','node_modules/@types/node','node_modules/undici-types'])
+    await rm(join(context.root,packagePath),{recursive:true,force:true,maxRetries:2,retryDelay:50});
+  await assert.rejects(readFile(join(context.root,'node_modules','typescript','package.json')),{code:'ENOENT'});
+
+  const operationCountBeforeLogout=context.store.artifactOperationCount();
+  let releaseRegistration,signalRegistration;
+  const registrationGate=new Promise(resolve=>{releaseRegistration=resolve;});
+  const registrationStarted=new Promise(resolve=>{signalRegistration=resolve;});
+  const originalRegister=context.artifacts.register.bind(context.artifacts);
+  context.artifacts.register=async(...args)=>{signalRegistration();await registrationGate;return originalRegister(...args);};
+  let pendingRegistration;
+  try {
+    pendingRegistration=pairedFetch(context.operator,'/platform-api/artifacts/register',{method:'POST',cookie,body:{confirm:true,buildId:secondBuild.id}});
+    await waitBounded(registrationStarted,'deferred registration start');
+    const logout=await pairedFetch(context.operator,'/platform-api/logout',{method:'POST',cookie,body:{}});
+    assert.equal(logout.status,200);
+  } finally {
+    releaseRegistration();
+    if(pendingRegistration)await pendingRegistration.catch(()=>undefined);
+    delete context.artifacts.register;
+  }
+  const expiredRegistration=await pendingRegistration;
+  assert.equal(expiredRegistration.status,401);
+  await expiredRegistration.text();
+  cookie=await pair(context.operator);
+  assert.equal(context.store.artifactOperationCount(),operationCountBeforeLogout,'logout during awaited registration writes no operation');
+  assert.equal(context.store.artifactRecord(secondIdentity.snapshotDigest),undefined,'logout during awaited registration creates no artifact');
+
+  let releaseRead,signalRead;
+  const readGate=new Promise(resolve=>{releaseRead=resolve;});
+  const readStarted=new Promise(resolve=>{signalRead=resolve;});
+  const originalVerify=context.artifacts.verifyArtifact.bind(context.artifacts);
+  context.artifacts.verifyArtifact=async(...args)=>{signalRead();await readGate;throw new Error('fixture deferred verification failure');};
+  let pendingRead;
+  try {
+    pendingRead=pairedFetch(context.operator,`/platform-api/artifacts/${digest}`,{cookie});
+    await waitBounded(readStarted,'deferred registry read start');
+    const logout=await pairedFetch(context.operator,'/platform-api/logout',{method:'POST',cookie,body:{}});
+    assert.equal(logout.status,200);
+  } finally {
+    releaseRead();
+    if(pendingRead)await pendingRead.catch(()=>undefined);
+    context.artifacts.verifyArtifact=originalVerify;
+  }
+  const expiredRead=await pendingRead;
+  assert.equal(expiredRead.status,401,'logout takes precedence over a deferred registry-read failure');
+  await expiredRead.text();
+  cookie=await pair(context.operator);
+
+  const secondRegistration=await pairedFetch(context.operator,'/platform-api/artifacts/register',{method:'POST',cookie,body:{confirm:true,buildId:secondBuild.id}});
+  if(secondRegistration.status!==201)throw new Error(`Fresh registration without compiler failed: ${await secondRegistration.text()}`);
+  const secondArtifact=(await secondRegistration.json()).artifact;
+  assert.equal(secondArtifact.digest,secondIdentity.snapshotDigest);
+  const alternatePromotion=await pairedFetch(context.operator,'/platform-api/releases',{method:'POST',cookie,body:{...promotionBody,artifactDigest:secondArtifact.digest}});
+  assert.equal(alternatePromotion.status,409);
+  await alternatePromotion.text();
+  assert.equal(context.store.auditLog(500).filter(row=>row.action==='artifact.release.promoted').length,auditAfterPromotion,'conflicting digest leaves the immutable release and audit unchanged');
+  const secondInspectionResponse=await pairedFetch(context.operator,`/platform-api/artifacts/${secondArtifact.digest}`,{cookie});
+  assert.equal(secondInspectionResponse.status,200);
+  const secondInspection=await secondInspectionResponse.json();
+  const secondReadme=secondInspection.entries.find(entry=>entry.path==='README.md');
+  const crossArtifactSelector=await pairedFetch(context.operator,`/platform-api/artifacts/${secondArtifact.digest}/entries/${readme.id}`,{cookie});
+  assert.equal(crossArtifactSelector.status,404,'an opaque selector is bound to its artifact digest');
+  await crossArtifactSelector.text();
+  const secondDownload=await pairedFetch(context.operator,`/platform-api/artifacts/${secondArtifact.digest}/entries/${secondReadme.id}`,{cookie});
+  assert.equal(secondDownload.status,200);
+  assert.deepEqual(Buffer.from(await secondDownload.arrayBuffer()),expectedSecondReadme);
+  const tamperedPath=join(context.artifacts.objectsRoot,digest,'README.md');
+  try {
+    await writeFile(tamperedPath,Buffer.from('tampered after registration'));
+    const tampered=await pairedFetch(context.operator,`/platform-api/artifacts/${digest}`,{cookie});
+    assert.notEqual(tampered.status,200,'registered snapshot content is reverified before inspection');
+    await tampered.text();
+  } finally { await writeFile(tamperedPath,expectedReadme); }
+  assert.equal((await context.artifacts.verifyArtifact(digest)).snapshot.snapshotDigest,digest,'restoring exact bytes restores verification');
+  const heldReadme=`${tamperedPath}.fixture-held`;
+  try {
+    await rename(tamperedPath,heldReadme);
+    await assert.rejects(context.artifacts.verifyArtifact(digest),/inventory|missing/i,'a missing registered file is rejected');
+  } finally {
+    try { await rename(heldReadme,tamperedPath); } catch(error) { if(error.code!=='ENOENT')throw error; }
+  }
+  assert.equal((await context.artifacts.verifyArtifact(digest)).snapshot.snapshotDigest,digest,'restoring the exact file restores verification');
+  context.store.db.exec(`CREATE TRIGGER fixture_fail_artifact_audit BEFORE INSERT ON audit WHEN NEW.action='artifact.registered' BEGIN SELECT RAISE(ABORT,'fixture final audit failure'); END`);
+  const failedFinalRegistration=await pairedFetch(context.operator,'/platform-api/artifacts/register',{method:'POST',cookie,body:{confirm:true,buildId:orphanBuild.id}});
+  assert.equal(failedFinalRegistration.status,500);
+  await failedFinalRegistration.text();
+  assert.equal(context.store.artifactRecord(orphanIdentity.snapshotDigest),undefined,'a failed final transaction never advertises the published object');
+  assert.equal(context.store.artifactRegistrySlot().operationId,null,'verified and cleaned publication does not retain a false active slot after final database failure');
+  const orphanOperation=context.store.artifactOperations(200).find(operation=>operation.artifactDigest===orphanIdentity.snapshotDigest&&operation.kind==='REGISTER');
+  assert.equal(orphanOperation.state,'PUBLISHED');
+  assert.equal(orphanOperation.destinationVerified,true);
+  assert.equal(orphanOperation.stagingClean,true);
+  const orphanObjectReadme=join(context.artifacts.objectsRoot,orphanIdentity.snapshotDigest,'README.md');
+  assert.deepEqual(await readFile(orphanObjectReadme),expectedOrphanReadme,'database failure retains the physically published bytes');
+  context.store.db.exec('DROP TRIGGER fixture_fail_artifact_audit');
+  const orphanAdoption=await pairedFetch(context.operator,'/platform-api/artifacts/register',{method:'POST',cookie,body:{confirm:true,buildId:orphanBuild.id}});
+  assert.equal(orphanAdoption.status,201);
+  assert.equal((await orphanAdoption.json()).artifact.digest,orphanIdentity.snapshotDigest);
+  const adoptionOperation=context.store.artifactOperations(200).find(operation=>operation.artifactDigest===orphanIdentity.snapshotDigest&&operation.kind==='ADOPT_ORPHAN');
+  assert.equal(adoptionOperation.physicalState,'PREEXISTING_VERIFIED');
+  assert.equal(adoptionOperation.destinationVerified,true);
+  assert.equal(adoptionOperation.stagingClean,true);
+  assert.equal(context.store.auditLog(500).filter(row=>row.action==='artifact.registered').some(row=>row.subject===orphanIdentity.snapshotDigest),false,
+    'verified orphan adoption records its own fact without fabricating the rolled-back registration audit');
+
+  await context.operator.close();context.operator=undefined;
+  await context.artifacts.close();context.artifacts=undefined;
+  context.store.close();context.store=undefined;
+  const profile=join(context.root,'.local','platform-build-host.json'),heldProfile=`${profile}.fixture-held`;
+  await rename(profile,heldProfile);
+  context.store=new ControlPlaneStore(context.dbPath);
+  context.artifacts=await LocalArtifactStore.create(context.root,context.store);
+  assert.equal(context.artifacts.capability.status,'unavailable','metadata and promotion do not depend on a compiler host');
+  const reopened=await context.artifacts.verifyArtifact(digest);
+  assert.equal(reopened.snapshot.snapshotDigest,digest);
+  assert.deepEqual((await context.artifacts.entry(digest,readme.id)).bytes,expectedReadme);
+  const promotedAfterRestart=await context.artifacts.promote(context.product.id,context.product.version,digest,registeringActor,()=>undefined);
+  assert.equal(promotedAfterRestart.artifactDigest,digest);
+});
+
+test('a promoted Service Desk release runs as an owned local runtime, preserves a request through stop and restart, and leaves exact exit proof', {skip:!WINDOWS}, async t=>{
+  const context=await fixture(t);
+  const build=await context.build('runtime-service-desk-build');
+  const registration=await context.artifacts.register(build.id,'system:runtime-registry-test',()=>undefined);
+  const digest=registration.digest;
+  await context.artifacts.promote(context.product.id,context.product.version,digest,'system:runtime-promoter',()=>undefined);
+  await context.worker.close();context.worker=undefined;
+  context.runtimes=ManagedRuntimeManager.create(context.root,context.store,context.artifacts);
+  context.operator=await createOperatorServer({root:context.root,store:context.store,snapshot:context.snapshot,artifactStore:context.artifacts,
+    runtimeManager:context.runtimes,port:0,pairingCode:'runtime-test-pairing-code-123456'});
+  let controlCookie=await pair(context.operator);
+  const invalid=await pairedFetch(context.operator,'/platform-api/runtime-instances',{method:'POST',cookie:controlCookie,
+    body:{confirm:true,productId:context.product.id,version:context.product.version,requestKey:'runtime-desk-extra-0001',path:'C:/not-accepted'}});
+  assert.equal(invalid.status,400,'runtime requests reject client-supplied paths before admission');
+  await invalid.text();
+  assert.equal(context.store.managedRuntimeSlot().occupied,false);
+
+  let verifiedResolve,releaseVerification;
+  const verifiedAtGate=new Promise(resolve=>{verifiedResolve=resolve;});
+  const verificationGate=new Promise(resolve=>{releaseVerification=resolve;});
+  const originalVerify=context.artifacts.verifyArtifact.bind(context.artifacts);
+  context.artifacts.verifyArtifact=async digest=>{const value=await originalVerify(digest);verifiedResolve?.();await verificationGate;return value;};
+  let expiredStart;
+  try {
+    expiredStart=pairedFetch(context.operator,'/platform-api/runtime-instances',{method:'POST',cookie:controlCookie,
+      body:{confirm:true,productId:context.product.id,version:context.product.version,requestKey:'runtime-desk-expired-start-0001'}});
+    await waitBounded(verifiedAtGate,'runtime artifact verification barrier');
+    const expiredLogout=await pairedFetch(context.operator,'/platform-api/logout',{method:'POST',cookie:controlCookie,body:{}});
+    assert.equal(expiredLogout.status,200);
+  } finally {
+    releaseVerification?.();
+    context.artifacts.verifyArtifact=originalVerify;
+  }
+  assert.ok(expiredStart);
+  const expiredStartResponse=await expiredStart;
+  assert.equal(expiredStartResponse.status,401,'logout during real artifact verification prevents runtime admission');
+  await expiredStartResponse.text();
+  assert.equal(context.store.managedRuntimeSlot().occupied,false);
+  assert.equal(context.store.managedRuntimeInstances().length,0);
+  controlCookie=await pair(context.operator);
+
+  const startResponse=await pairedFetch(context.operator,'/platform-api/runtime-instances',{method:'POST',cookie:controlCookie,
+    body:{confirm:true,productId:context.product.id,version:context.product.version,requestKey:'runtime-desk-start-0001'}});
+  assert.equal(startResponse.status,202);
+  const start=await startResponse.json();
+  assert.equal(start.command.state,'SUCCEEDED');
+  assert.equal(start.instance.state,'RUNNING');
+  assert.ok(start.operationId);
+  const publicStart=JSON.stringify(start);
+  assert.doesNotMatch(publicStart,/ownerToken|dataDirectory|serviceToken|password|private\.log/);
+  const instanceId=start.instance.id;
+  const dataDirectory=runtimeDataDirectory(context.root,instanceId,digest);
+  const credentials=JSON.parse(await readFile(join(dataDirectory,'credentials.json'),'utf8'));
+  const admin=credentials.principals.find(principal=>principal.id==='admin');
+  const viewer=credentials.principals.find(principal=>principal.id==='viewer');
+  assert.ok(admin?.password,'the private enrollment contains the generated developer credential');
+  assert.ok(viewer?.password);
+  const credentialDigest=createHash('sha256').update(await readFile(join(dataDirectory,'credentials.json'))).digest('hex');
+
+  async function loginAndRead(url) {
+    const health=await fetch(`${url}/api/health`);
+    assert.equal(health.status,200);
+    const login=await fetch(`${url}/api/session`,{method:'POST',headers:{Origin:url,'Content-Type':'application/json'},
+      body:JSON.stringify({username:admin.id,password:admin.password})});
+    assert.equal(login.status,200);
+    const cookie=login.headers.get('set-cookie')?.split(';',1)[0];
+    assert.ok(cookie);
+    return cookie;
+  }
+  let detail=context.runtimes.detail(instanceId);
+  assert.equal(detail.processObservation,'owned-in-this-process');
+  const firstAttempt=detail.attempts.find(row=>row.attempt===detail.currentAttempt);
+  assert.equal(firstAttempt.apiReady,true);
+  assert.ok(detail.url);
+  const publicDetail=await pairedFetch(context.operator,`/platform-api/runtime-instances/${instanceId}`,{cookie:controlCookie});
+  assert.equal(publicDetail.status,200);
+  const publicDetailText=await publicDetail.text();
+  assert.doesNotMatch(publicDetailText,/ownerToken|dataDirectory|serviceToken|password|private\.log/);
+  const publicLog=await pairedFetch(context.operator,`/platform-api/runtime-instances/${instanceId}/log`,{cookie:controlCookie});
+  assert.equal(publicLog.status,200);
+  const publicLogText=await publicLog.text();
+  const serviceToken=credentials.principals.find(principal=>principal.id==='knowledge-link')?.serviceToken;
+  const privateValues=[admin.password,viewer.password,serviceToken,dataDirectory,join(context.root,'.local','platform-runtime-executions',instanceId,start.operationId)].filter(Boolean);
+  for(const value of privateValues){
+    assert.equal(publicStart.includes(value),false,'runtime start response excludes private credentials and paths');
+    assert.equal(publicDetailText.includes(value),false,'runtime detail excludes private credentials and paths');
+    assert.equal(publicLogText.includes(value),false,'runtime event output excludes private credentials and paths');
+  }
+  let cookie=await loginAndRead(detail.url);
+  const created=await fetch(`${detail.url}/api/requests`,{method:'POST',headers:{Origin:detail.url,Cookie:cookie,'X-QB-Tenant':'customer-a',
+    'Content-Type':'application/json','Idempotency-Key':'runtime-desk-request-0001'},body:JSON.stringify({title:'Runtime persistence check',details:'Created before the owned runtime stop.'})});
+  assert.equal(created.status,200);
+  const original=await created.json();
+  assert.equal(original.title,'Runtime persistence check');
+
+  const stopResponse=await pairedFetch(context.operator,`/platform-api/runtime-instances/${instanceId}/stop`,{method:'POST',cookie:controlCookie,
+    body:{confirm:true,requestKey:'runtime-desk-stop-0001'}});
+  assert.equal(stopResponse.status,202);
+  const stopped=await stopResponse.json();
+  assert.equal(stopped.command.state,'SUCCEEDED');
+  assert.equal(stopped.instance.state,'STOPPED');
+  const stopAttempt=stopped.instance.attempts.find(row=>row.attempt===stopped.instance.currentAttempt);
+  assert.equal(stopAttempt.emptyObserved,true);
+  assert.equal(stopAttempt.helperClosed,true);
+  assert.equal(stopAttempt.executionClean,true);
+  assert.equal(context.store.managedRuntimeSlot().occupied,false);
+
+  // A stopped owner may legitimately remove a principal and revoke a grant.
+  // Restart must preserve that access state rather than apply initial seeds.
+  const ownerAccess=new LocalAccess(join(dataDirectory,'access.sqlite'),{productId:context.product.id,instanceId});
+  try {
+    ownerAccess.store.db.prepare('DELETE FROM grants WHERE principal=? AND tenant=? AND permission=?').run('admin','customer-a','desk.create');
+    ownerAccess.store.db.prepare('DELETE FROM principals WHERE id=?').run('viewer');
+  } finally { ownerAccess.close(); }
+
+  const logout=await pairedFetch(context.operator,'/platform-api/logout',{method:'POST',cookie:controlCookie,body:{}});
+  assert.equal(logout.status,200);
+  const loggedOutRead=await pairedFetch(context.operator,`/platform-api/runtime-instances/${instanceId}`,{cookie:controlCookie});
+  assert.equal(loggedOutRead.status,401);
+  await loggedOutRead.text();
+  controlCookie=await pair(context.operator);
+
+  const restartResponse=await pairedFetch(context.operator,`/platform-api/runtime-instances/${instanceId}/restart`,{method:'POST',cookie:controlCookie,
+    body:{confirm:true,requestKey:'runtime-desk-restart-0001'}});
+  assert.equal(restartResponse.status,202);
+  const restarted=await restartResponse.json();
+  assert.equal(restarted.command.state,'SUCCEEDED');
+  assert.equal(restarted.instance.state,'RUNNING');
+  assert.equal(restarted.instance.currentAttempt,2);
+  assert.equal(createHash('sha256').update(await readFile(join(dataDirectory,'credentials.json'))).digest('hex'),credentialDigest,
+    'restart reuses the same private credential material rather than reseeding');
+  detail=context.runtimes.detail(instanceId);
+  assert.equal(detail.processObservation,'owned-in-this-process');
+  assert.equal(detail.attempts.find(row=>row.attempt===2).apiReady,true);
+  cookie=await loginAndRead(detail.url);
+  const listed=await fetch(`${detail.url}/api/requests`,{headers:{Cookie:cookie,'X-QB-Tenant':'customer-a'}});
+  assert.equal(listed.status,200);
+  const result=await listed.json();
+  assert.equal(result.items.length,1);
+  assert.equal(result.items[0].id,original.id);
+  assert.equal(result.items[0].title,original.title);
+  const revokedReplay=await fetch(`${detail.url}/api/requests`,{method:'POST',headers:{Origin:detail.url,Cookie:cookie,'X-QB-Tenant':'customer-a',
+    'Content-Type':'application/json','Idempotency-Key':'runtime-desk-request-0001'},
+    body:JSON.stringify({title:'Runtime persistence check',details:'Created before the owned runtime stop.'})});
+  assert.equal(revokedReplay.status,403,'revocation prevents replay of a previously successful write receipt');
+  await revokedReplay.text();
+  const removedPrincipal=await fetch(`${detail.url}/api/session`,{method:'POST',headers:{Origin:detail.url,'Content-Type':'application/json'},
+    body:JSON.stringify({username:viewer.id,password:viewer.password})});
+  assert.equal(removedPrincipal.status,401,'restart does not reseed a removed principal');
+  await removedPrincipal.text();
+  const revokedWrite=await fetch(`${detail.url}/api/requests`,{method:'POST',headers:{Origin:detail.url,Cookie:cookie,'X-QB-Tenant':'customer-a',
+    'Content-Type':'application/json','Idempotency-Key':'runtime-desk-revoked-create-0001'},
+    body:JSON.stringify({title:'Must stay denied',details:'The stopped owner revoked this grant.'})});
+  assert.equal(revokedWrite.status,403,'restart does not restore a revoked grant');
+  await revokedWrite.text();
+
+  const stoppedAgainResponse=await pairedFetch(context.operator,`/platform-api/runtime-instances/${instanceId}/stop`,{method:'POST',cookie:controlCookie,
+    body:{confirm:true,requestKey:'runtime-desk-stop-0002'}});
+  assert.equal(stoppedAgainResponse.status,202);
+  const stoppedAgain=await stoppedAgainResponse.json();
+  assert.equal(stoppedAgain.command.state,'SUCCEEDED');
+  assert.equal(stoppedAgain.instance.state,'STOPPED');
+  const finalAttempt=stoppedAgain.instance.attempts.find(row=>row.attempt===2);
+  assert.equal(finalAttempt.emptyObserved,true);
+  assert.equal(finalAttempt.helperClosed,true);
+  assert.equal(finalAttempt.executionClean,true);
+  assert.equal(context.store.managedRuntimeSlot().occupied,false);
+});
+
+test('a promoted Combined release starts its distinct worker role and indexes a real document before owned shutdown', {skip:!WINDOWS}, async t=>{
+  const context=await fixture(t,{productId:'combined'});
+  const build=await context.build('runtime-combined-build');
+  const registered=await context.artifacts.register(build.id,'system:combined-runtime-registry',()=>undefined);
+  const digest=registered.digest;
+  await context.artifacts.promote(context.product.id,context.product.version,digest,'system:combined-runtime-promoter',()=>undefined);
+  await context.worker.close();context.worker=undefined;
+  context.runtimes=ManagedRuntimeManager.create(context.root,context.store,context.artifacts);
+  const actor='system:combined-runtime-acceptance';
+  const started=await context.runtimes.start({productId:context.product.id,version:context.product.version,requestKey:'runtime-combined-start-0001'},actor,()=>undefined);
+  assert.equal(started.command.state,'SUCCEEDED');
+  assert.equal(started.instance.state,'RUNNING');
+  assert.equal(started.instance.workerRequired,true);
+  const instanceId=started.instance.id,detail=context.runtimes.detail(instanceId),attempt=detail.attempts.find(row=>row.attempt===detail.currentAttempt);
+  assert.equal(attempt.apiReady,true);
+  assert.equal(attempt.workerAttached,true);
+  assert.match(detail.events,/worker/);
+  const dataDirectory=runtimeDataDirectory(context.root,instanceId,digest);
+  const credentials=JSON.parse(await readFile(join(dataDirectory,'credentials.json'),'utf8'));
+  const admin=credentials.principals.find(principal=>principal.id==='admin');
+  assert.ok(admin?.password);
+  const login=await fetch(`${detail.url}/api/session`,{method:'POST',headers:{Origin:detail.url,'Content-Type':'application/json'},
+    body:JSON.stringify({username:admin.id,password:admin.password})});
+  assert.equal(login.status,200);
+  const cookie=login.headers.get('set-cookie')?.split(';',1)[0];
+  assert.ok(cookie);
+  const create=await fetch(`${detail.url}/api/documents`,{method:'POST',headers:{Origin:detail.url,Cookie:cookie,'X-QB-Tenant':'customer-a',
+    'Content-Type':'application/json','Idempotency-Key':'runtime-combined-document-0001'},
+    body:JSON.stringify({title:'Worker index acceptance',body:'The separate Combined worker indexes this owned runtime document.'})});
+  assert.equal(create.status,200);
+  const document=await create.json();
+  assert.equal(document.state,'PENDING');
+  const deadline=Date.now()+20000;let indexed;
+  while(Date.now()<deadline){
+    const response=await fetch(`${detail.url}/api/documents`,{headers:{Cookie:cookie,'X-QB-Tenant':'customer-a'}});
+    assert.equal(response.status,200);
+    const list=await response.json();indexed=list.items.find(item=>item.id===document.id);
+    if(indexed?.state==='READY'&&indexed.indexJob?.state==='SUCCEEDED')break;
+    await new Promise(resolve=>setTimeout(resolve,100));
+  }
+  assert.equal(indexed?.state,'READY','the independent runtime worker committed indexing');
+  assert.equal(indexed?.indexJob?.state,'SUCCEEDED');
+  const search=await fetch(`${detail.url}/api/documents/search?q=separate%20Combined%20worker`,{headers:{Cookie:cookie,'X-QB-Tenant':'customer-a'}});
+  assert.equal(search.status,200);
+  const matches=await search.json();
+  assert.ok(matches.items.some(item=>item.id===document.id));
+  const stopped=await context.runtimes.stop({instanceId,requestKey:'runtime-combined-stop-0001'},actor,()=>undefined);
+  assert.equal(stopped.command.state,'SUCCEEDED');
+  assert.equal(stopped.instance.state,'STOPPED');
+  const final=stopped.instance.attempts.find(row=>row.attempt===stopped.instance.currentAttempt);
+  assert.equal(final.emptyObserved,true);assert.equal(final.helperClosed,true);assert.equal(final.executionClean,true);
+});
+
+test('BLOCKED_ENV: bounded snapshot verification rejects a file symlink when the host permits fixture creation', {skip:!WINDOWS}, async t=>{
+  const context=await fixture(t);
+  const build=await context.build('artifact-file-symlink-fixture');
+  const identity=context.store.artifactBuildIdentity(build.id);
+  const source=join(context.root,'.local','platform-builds','snapshots',identity.snapshotId);
+  const linkPath=join(source,'fixture-link.txt'),externalSentinel=join(context.temp,'external-sentinel.txt');
+  await writeFile(externalSentinel,'must remain untouched');
+  try {
+    try { await symlink(externalSentinel,linkPath,'file'); }
+    catch(error) {
+      if(['EPERM','EACCES','ENOSYS'].includes(error?.code)) {
+        t.skip(`BLOCKED_ENV: host denied creation of the owned file-symlink fixture (${error.code})`);
+        return;
+      }
+      throw error;
+    }
+    assert.throws(()=>readBoundedSnapshot(source,identity,ARTIFACT_REGISTRY_LIMITS),/symlink|link|inventory/i,
+      'bounded source snapshot verification refuses a physical file link');
+    assert.equal(await readFile(externalSentinel,'utf8'),'must remain untouched','link rejection never follows or mutates its target');
+  } finally {
+    try { await unlink(linkPath); } catch(error) { if(error.code!=='ENOENT')throw error; }
+  }
+});
+
+test('native staging-file lock retains uncertain cleanup after an observed registry move', {skip:!WINDOWS}, async t=>{
+  if(process.env.QB_TEST_CP3_NATIVE_LOCK==='blocked-policy') {
+    t.skip('BLOCKED_POLICY: the native staging-file-lock fixture command is blocked in this process context');
+    return;
+  }
+  const context=await fixture(t);
+  const build=await context.build('artifact-native-cleanup-uncertain');
+  const identity=context.store.artifactBuildIdentity(build.id);
+  const originalPublisher=context.artifacts.runPublisher.bind(context.artifacts);
+  let cleanupLock,cleanupOperationId,cleanupLockReady=false,cleanupSetupError,cleanupFailure;
+  context.artifacts.runPublisher=async(executable,script,operationId,digest,authorize)=>{
+    const result=await originalPublisher(executable,script,operationId,digest,authorize);
+    cleanupOperationId=operationId;
+    cleanupLock=context.ownProcess(launchStagingFileLock(executable,script));
+    try { await cleanupLock.waitFor('LOCKED');cleanupLockReady=true; }
+    catch(error) {
+      cleanupSetupError=error instanceof Error?error.message:String(error);
+      cleanupLock.release();
+      try { await cleanupLock.waitForClose(); }
+      catch(closeError) { cleanupSetupError+=`; fixture close was not observed: ${closeError instanceof Error?closeError.message:String(closeError)}`; }
+    }
+    return result;
+  };
+  try {
+    try { await context.artifacts.register(build.id,'system:artifact-cleanup-test',()=>undefined); }
+    catch(error) { cleanupFailure=error; }
+  } finally {
+    context.artifacts.runPublisher=originalPublisher;
+    if(cleanupLock&&!cleanupLock.closed)cleanupLock.release();
+    if(cleanupLock&&!cleanupLock.closed)await cleanupLock.waitForClose();
+  }
+  assert.ok(cleanupLockReady,`the owned native file-lock fixture must acquire the staging publisher file: ${cleanupSetupError??cleanupLock?.stderr??''}`);
+  assert.match(String(cleanupFailure),/cleanup could not be verified/i,'a held staging file leaves publication unregistered and uncertain');
+  const cleanupOperation=context.store.artifactOperations(200).find(row=>row.id===cleanupOperationId);
+  assert.ok(cleanupOperation);
+  assert.equal(cleanupOperation.state,'UNKNOWN');
+  assert.equal(cleanupOperation.physicalState,'MOVE_OBSERVED');
+  assert.equal(cleanupOperation.destinationVerified,true,'the complete destination proof survives staging-cleanup uncertainty');
+  assert.equal(cleanupOperation.stagingClean,false);
+  assert.equal(context.store.artifactRecord(identity.snapshotDigest),undefined,'cleanup uncertainty is not advertised as a registered artifact');
+  assert.equal(context.store.artifactRegistrySlot().operationId,cleanupOperationId,'cleanup uncertainty retains the full physical reservation');
+  assert.ok((await readdir(join(context.artifacts.stagingRoot,cleanupOperationId))).includes('publisher.ps1'),'unknown private staging remains quarantined');
+  assert.equal(readBoundedSnapshot(join(context.artifacts.objectsRoot,identity.snapshotDigest),identity,ARTIFACT_REGISTRY_LIMITS).snapshotDigest,
+    identity.snapshotDigest,'the positively moved destination remains intact during staging quarantine');
+  assert.equal(cleanupLock.closed,true);
+  assert.equal(cleanupLock.safeCleanup,true,'fixture cleanup follows release and observed close of the only file-lock process');
+});
+
+test('separate Node owners serialize physical publication, retain interrupted ownership, and recheck session after a real SQLite lock', {skip:!WINDOWS}, async t=>{
+  const context=await fixture(t),owners=[];
+  try {
+    const firstBuild=await context.build('artifact-cross-process-owner-a');
+    const secondBuild=await context.build('artifact-cross-process-owner-b');
+    const adoptedWhileOwnerPaused=await context.build('artifact-orphan-adopted-before-original-owner-finalizes');
+    await context.worker.close();context.worker=undefined;
+
+    const first=context.ownProcess(launchRegistryOwner(context.root,context.dbPath,firstBuild.id,'pause-before'));owners.push(first);
+    await first.waitFor('READY_BEFORE');
+    const operationCountBeforeCompetitor=context.store.artifactOperationCount();
+    const auditBeforeCompetitor=context.store.auditLog(500).length;
+    const stagingBeforeCompetitor=(await readdir(context.artifacts.stagingRoot)).sort();
+    const competitor=context.ownProcess(launchRegistryOwner(context.root,context.dbPath,secondBuild.id,'try-conflict'));owners.push(competitor);
+    const competitorClose=await competitor.waitForClose();
+    assert.equal(competitorClose.code,0,competitor.stderr);
+    assert.match(competitor.stdout,/REGISTER_ERROR:\{"code":"CONFLICT"/);
+    assert.equal(context.store.artifactOperationCount(),operationCountBeforeCompetitor,'a separate process cannot create a second operation behind the durable slot');
+    assert.equal(context.store.auditLog(500).length,auditBeforeCompetitor,'a conflicting process writes no operation audit');
+    assert.deepEqual((await readdir(context.artifacts.stagingRoot)).sort(),stagingBeforeCompetitor,
+      'a conflicting process creates no private staging tree');
+    first.go();
+    const firstClose=await first.waitForClose();
+    assert.equal(firstClose.code,0,first.stderr);
+    assert.equal(first.safeCleanup,true,'the child confirmed adapter and database close before fixture cleanup');
+    const firstResult=/REGISTERED:(\{[^\r\n]+\})/.exec(first.stdout);
+    assert.ok(firstResult,first.stdout);
+    assert.equal(JSON.parse(firstResult[1]).digest,firstBuild.snapshotDigest);
+    assert.ok(context.store.artifactRecord(firstBuild.snapshotDigest));
+    assert.equal(context.store.artifactRegistrySlot().operationId,null,'observed owner completion releases the physical slot');
+
+    const pendingOwner=context.ownProcess(launchRegistryOwner(context.root,context.dbPath,adoptedWhileOwnerPaused.id,'pause-after'));owners.push(pendingOwner);
+    await pendingOwner.waitFor('READY_AFTER');
+    const adoptedSnapshot=context.store.artifactBuildIdentity(adoptedWhileOwnerPaused.id);
+    const adoptedObject=join(context.artifacts.objectsRoot,adoptedSnapshot.snapshotDigest);
+    assert.equal(readBoundedSnapshot(adoptedObject,adoptedSnapshot,ARTIFACT_REGISTRY_LIMITS).snapshotDigest,adoptedSnapshot.snapshotDigest);
+    const operationBeforeOrphanAdoption=context.store.artifactOperationCount();
+    const registeredAuditBeforeOrphanAdoption=context.store.auditLog(500).filter(row=>row.action==='artifact.registered').length;
+    const orphanAdopter='system:artifact-orphan-adopter';
+    const adoptedByOtherActor=await context.artifacts.register(adoptedWhileOwnerPaused.id,orphanAdopter,()=>undefined);
+    assert.equal(adoptedByOtherActor.registeringActorId,orphanAdopter);
+    assert.equal(context.store.artifactRegistrySlot().operationId!==null,true,'orphan adoption leaves the original physical reservation held');
+    pendingOwner.go();
+    const resumedOwnerClose=await pendingOwner.waitForClose();
+    assert.equal(resumedOwnerClose.code,0,pendingOwner.stderr);
+    assert.equal(pendingOwner.safeCleanup,true);
+    assert.equal(context.store.artifactRecord(adoptedSnapshot.snapshotDigest).registeringActorId,orphanAdopter,
+      'the original owner reconciliation does not replace the actor who adopted the verified orphan');
+    const reconciledOperation=context.store.artifactOperations(200).find(row=>row.buildId===adoptedWhileOwnerPaused.id&&row.kind==='REGISTER');
+    assert.equal(reconciledOperation.state,'REGISTERED');
+    assert.equal(reconciledOperation.registeringActorId,'system:artifact-process-test','the original operation retains its captured registering actor');
+    assert.equal(context.store.auditLog(500).filter(row=>row.action==='artifact.registered').length,registeredAuditBeforeOrphanAdoption,
+      'original owner finalization after adoption does not duplicate registration audit');
+    assert.equal(context.store.artifactOperationCount(),operationBeforeOrphanAdoption+1,
+      'the original operation and explicit orphan-adoption fact remain separately recorded');
+    assert.equal(context.store.artifactRegistrySlot().operationId,null,'the original positively observed owner can reconcile its own reservation');
+
+    context.store.db.exec('PRAGMA busy_timeout=5000');
+    context.operator=await createOperatorServer({root:context.root,store:context.store,snapshot:context.snapshot,artifactStore:context.artifacts,
+      port:0,pairingCode:'artifact-lock-pairing-code-1234567890',sessionTtlMs:1600});
+    const registrationLock=context.ownProcess(launchRegistryOwner(context.root,context.dbPath,'','hold-lock',2600));owners.push(registrationLock);
+    await registrationLock.waitFor('LOCKED');
+    const originalBegin=context.store.beginArtifactPublication.bind(context.store);
+    let registrationEntryAt,registrationFinalAuthorizationAt;
+    context.store.beginArtifactPublication=(intent,authorize,observe)=>{
+      registrationEntryAt=Date.now();
+      return originalBegin(intent,()=>{registrationFinalAuthorizationAt=Date.now();return authorize?.();},observe);
+    };
+    try {
+      const registrationCookie=await pair(context.operator);
+      const sessionResponse=await pairedFetch(context.operator,'/platform-api/session',{cookie:registrationCookie});
+      const registrationExpiresAt=(await sessionResponse.json()).expiresAt;
+      const operationCount=context.store.artifactOperationCount(),auditCount=context.store.auditLog(500).length;
+      const staging=(await readdir(context.artifacts.stagingRoot)).sort();
+      const started=Date.now();
+      const response=await pairedFetch(context.operator,'/platform-api/artifacts/register',{method:'POST',cookie:registrationCookie,
+        body:{confirm:true,buildId:secondBuild.id}});
+      const elapsed=Date.now()-started;
+      assert.equal(response.status,401,await response.text());
+      await registrationLock.waitFor('RELEASED');
+      assert.ok(registrationEntryAt<registrationExpiresAt,'the original session was alive when build input verification reached the registration transaction');
+      assert.ok(registrationFinalAuthorizationAt>=registrationExpiresAt,'registration authorization ran again after BEGIN IMMEDIATE released');
+      assert.ok(elapsed>=2100,`registration waited for the independent SQLite writer (${elapsed}ms)`);
+      assert.equal(context.store.artifactOperationCount(),operationCount,'expired final registration authorization writes no operation');
+      assert.equal(context.store.auditLog(500).length,auditCount,'expired final registration authorization writes no audit');
+      assert.equal(context.store.artifactRegistrySlot().operationId,null,'expired registration reserves no physical slot');
+      assert.deepEqual((await readdir(context.artifacts.stagingRoot)).sort(),staging,'expired registration creates no staging tree');
+      assert.equal(context.store.artifactRecord(secondBuild.snapshotDigest),undefined);
+    } finally { context.store.beginArtifactPublication=originalBegin; }
+    assert.equal((await registrationLock.waitForClose()).code,0,registrationLock.stderr);
+    assert.equal(registrationLock.safeCleanup,true,'the external SQLite lock owner closed before fixture cleanup');
+
+    const identity=context.store.artifactBuildIdentity(secondBuild.id);
+    const interrupted=context.ownProcess(launchRegistryOwner(context.root,context.dbPath,secondBuild.id,'pause-after'));owners.push(interrupted);
+    await interrupted.waitFor('READY_AFTER');
+    const objectPath=join(context.artifacts.objectsRoot,identity.snapshotDigest);
+    const moved=readBoundedSnapshot(objectPath,identity,ARTIFACT_REGISTRY_LIMITS);
+    assert.equal(moved.snapshotDigest,identity.snapshotDigest,'the helper closed after moving a complete object before the owner was interrupted');
+    const interruptedSlot=context.store.artifactRegistrySlot();
+    assert.ok(interruptedSlot.operationId);
+    assert.equal(context.store.artifactRecord(identity.snapshotDigest),undefined);
+    assert.equal(interrupted.child.kill(),true,'the paused owner is killed only after its publisher helper has closed');
+    const interruptedClose=await interrupted.waitForClose();
+    assert.notEqual(interruptedClose.code,0,'the owner process was interrupted before it could persist its move observation');
+    assert.equal(interrupted.helperClosed,true,'READY_AFTER follows the publisher nonce proof and helper close');
+    assert.equal(interrupted.safeCleanup,true,'the owned Node process closed after the publisher helper had already closed');
+    assert.deepEqual({...context.store.artifactRegistrySlot()},{...interruptedSlot},'a process crash never releases its full durable reservation');
+    assert.equal(context.store.artifactRecord(identity.snapshotDigest),undefined,'the moved object is not advertised by the interrupted owner');
+    const interruptedOperation=(await context.artifacts.list()).operations.find(row=>row.id===interruptedSlot.operationId);
+    assert.ok(interruptedOperation);
+    assert.equal(interruptedOperation.ownerObservation,'not-observed-in-this-process');
+    assert.equal(interruptedOperation.destinationVerified,false,'physical movement alone is not durable destination verification');
+    const adopted=await context.artifacts.register(secondBuild.id,'system:artifact-process-adopter',()=>undefined);
+    assert.equal(adopted.digest,identity.snapshotDigest,'a fresh explicit verification can adopt the complete orphan');
+    assert.deepEqual({...context.store.artifactRegistrySlot()},{...interruptedSlot},'metadata-only orphan adoption keeps the older unknown owner reservation intact');
+
+    const lock=context.ownProcess(launchRegistryOwner(context.root,context.dbPath,'','hold-lock',2600));owners.push(lock);
+    await lock.waitFor('LOCKED');
+    const originalPromote=context.store.promoteArtifact.bind(context.store);
+    let mutationEntryAt,finalAuthorizationAt;
+    context.store.promoteArtifact=(input,authorize)=>{
+      mutationEntryAt=Date.now();
+      return originalPromote(input,()=>{finalAuthorizationAt=Date.now();return authorize?.();});
+    };
+    const cookie=await pair(context.operator);
+    const sessionResponse=await pairedFetch(context.operator,'/platform-api/session',{cookie});
+    const expiresAt=(await sessionResponse.json()).expiresAt;
+    const auditBeforeExpiry=context.store.auditLog(500).length;
+    const started=Date.now();
+    const expiredMutation=await pairedFetch(context.operator,'/platform-api/releases',{method:'POST',cookie,
+      body:{confirm:true,productId:identity.productId,version:identity.version,artifactDigest:identity.snapshotDigest}});
+    const elapsed=Date.now()-started;
+    const mutationBody=await expiredMutation.text();
+    assert.equal(expiredMutation.status,401,`status=${expiredMutation.status} elapsed=${elapsed} mutationEntryAt=${mutationEntryAt} finalAuthorizationAt=${finalAuthorizationAt} expiresAt=${expiresAt} lock=${lock.stdout} body=${mutationBody}`);
+    await lock.waitFor('RELEASED');
+    assert.ok(mutationEntryAt<expiresAt,`the original session was live at the store mutation boundary (${mutationEntryAt} < ${expiresAt})`);
+    assert.ok(finalAuthorizationAt>=expiresAt,`the final in-transaction authorization ran after expiry (${finalAuthorizationAt} >= ${expiresAt})`);
+    assert.ok(elapsed>=2100,`request waited for the independent BEGIN IMMEDIATE holder (${elapsed}ms)`);
+    context.store.promoteArtifact=originalPromote;
+    const lockClose=await lock.waitForClose();
+    assert.equal(lockClose.code,0,lock.stderr);
+    assert.equal(lock.safeCleanup,true,'the external SQLite lock owner closed before fixture cleanup');
+    assert.equal(context.store.artifactReleases().some(row=>row.productId===identity.productId&&row.version===identity.version),false,
+      'the original session expired while SQLite BEGIN was blocked, so no release was promoted');
+    assert.equal(context.store.auditLog(500).length,auditBeforeExpiry,'expired final authorization writes no release audit');
+  } finally {
+    for(const owner of owners)if(!owner.closed&&['pause-before','pause-after'].includes(owner.mode))owner.go();
+    for(const owner of owners)if(!owner.closed)await owner.waitForClose();
+  }
+});
+
+function runPublisher(executable,script,registryRoot,operationId,digest,nonce) {
+  const args=['-NoLogo','-NoProfile','-NonInteractive','-File',script,registryRoot,operationId,digest,nonce];
+  return new Promise((resolve,reject)=>execFile(executable,args,
+    {cwd:ROOT,windowsHide:true,shell:false,timeout:15000,maxBuffer:8192,encoding:'utf8'},
+    (error,stdout,stderr)=>{
+      if(error&&typeof error.code!=='number') { reject(error); return; }
+      resolve({code:error?error.code:0,signal:error?.signal??null,stdout,stderr,error:error?.message??null});
+    }));
+}
+
+test('fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files', {skip:!WINDOWS}, async t=>{
+  const temp=await mkdtemp(join(tmpdir(),'qb-publisher-no-overwrite-'));
+  t.after(async()=>{await rm(temp,{recursive:true,force:true,maxRetries:4,retryDelay:100});});
+  const host=JSON.parse(await readFile(join(ROOT,'.local','platform-build-host.json'),'utf8'));
+  const script=join(ROOT,'tools','registry-publish.ps1');
+  const cases=[
+    {name:'empty-directory',kind:'directory'},
+    {name:'nonempty-directory',kind:'populated'},
+    {name:'regular-file',kind:'file'}
+  ];
+  for(const [index,item] of cases.entries()) {
+    const registryRoot=join(temp,item.name),operationId=randomUUID(),digest=String(index+1).repeat(64),nonce=String(index+1).repeat(24);
+    const source=join(registryRoot,'staging',operationId,'payload'),destination=join(registryRoot,'objects',digest);
+    await mkdir(source,{recursive:true});await mkdir(join(registryRoot,'objects'),{recursive:true});
+    await writeFile(join(source,'payload.txt'),'new-payload');
+    if(item.kind==='directory')await mkdir(destination);
+    if(item.kind==='populated'){await mkdir(destination);await writeFile(join(destination,'sentinel.txt'),'preserve-me');}
+    if(item.kind==='file')await writeFile(destination,'preserve-me');
+    const result=await runPublisher(host.path,script,registryRoot,operationId,digest,nonce);
+    assert.equal(result.code,3,`${item.name}: ${result.stderr}`);
+    assert.match(result.stdout,new RegExp(`QB_REGISTRY_MOVE:${nonce}:EXISTS`));
+    assert.equal(await readFile(join(source,'payload.txt'),'utf8'),'new-payload','occupied destinations never consume the staged source');
+    if(item.kind==='populated')assert.equal(await readFile(join(destination,'sentinel.txt'),'utf8'),'preserve-me');
+    if(item.kind==='file')assert.equal(await readFile(destination,'utf8'),'preserve-me');
+  }
+  const registryRoot=join(temp,'vacant'),operationId=randomUUID(),digest=createHash('sha256').update('vacant').digest('hex'),nonce='Z'.repeat(24);
+  const source=join(registryRoot,'staging',operationId,'payload'),destination=join(registryRoot,'objects',digest);
+  await mkdir(source,{recursive:true});await mkdir(join(registryRoot,'objects'),{recursive:true});
+  await writeFile(join(source,'verified.txt'),'complete bytes');
+  const result=await runPublisher(host.path,script,registryRoot,operationId,digest,nonce);
+  assert.equal(result.code,0, result.stderr);
+  assert.match(result.stdout,new RegExp(`QB_REGISTRY_MOVE:${nonce}:MOVED`));
+  assert.equal(await readFile(join(destination,'verified.txt'),'utf8'),'complete bytes');
+});
+
+test('registry publisher proof parsing rejects ambiguous, mismatched, and oversized output',()=>{
+  const nonce='A'.repeat(24),marker=`QB_REGISTRY_MOVE:${nonce}:MOVED`;
+  assert.equal(parseRegistryPublisherTranscript(`${marker}\n`,nonce,0,null),'MOVED');
+  assert.equal(parseRegistryPublisherTranscript(`QB_REGISTRY_MOVE:${nonce}:EXISTS\n`,nonce,3,null),'EXISTS');
+  assert.equal(parseRegistryPublisherTranscript(`QB_REGISTRY_MOVE:${nonce}:FAILED\n`,nonce,1,null),'FAILED');
+  assert.equal(parseRegistryPublisherTranscript(`noise\n${marker}\n`,nonce,0,null),'UNKNOWN');
+  assert.equal(parseRegistryPublisherTranscript(`${marker}\n${marker}\n`,nonce,0,null),'UNKNOWN');
+  assert.equal(parseRegistryPublisherTranscript(`noise\n${marker}\n`,nonce,0,null,true),'UNKNOWN',
+    'a valid suffix cannot erase evidence that the bounded stdout transcript overflowed');
+  assert.equal(parseRegistryPublisherTranscript(`${marker}\n`,nonce,3,null),'UNKNOWN','proof text and process exit code must agree');
+});

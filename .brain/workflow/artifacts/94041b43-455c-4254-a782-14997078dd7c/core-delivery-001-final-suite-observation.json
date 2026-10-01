@@ -1,0 +1,28 @@
+{
+  "command": "npm.cmd test",
+  "toolSessionId": 71578,
+  "outerExitCode": 1,
+  "summary": {
+    "tests": 308,
+    "pass": 306,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 1,
+    "todo": 0,
+    "durationMs": 663510.2916
+  },
+  "failures": [
+    {
+      "test": "Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup",
+      "failure": "Owned descendant did not start its marker heartbeat",
+      "file": "tests/build-worker-process.test.mjs",
+      "line": 93,
+      "elapsedMs": 18830.9836
+    }
+  ],
+  "actualSkipLines": [
+    "﹣ BLOCKED_ENV: bounded snapshot verification rejects a file symlink when the host permits fixture creation (13808.3573ms) # BLOCKED_ENV: host denied creation of the owned file-symlink fixture (EPERM)"
+  ],
+  "rawOutputPath": ".local/core-delivery-001-final-suite.log",
+  "scope": "One required npm.cmd test after fresh build; no retry."
+}

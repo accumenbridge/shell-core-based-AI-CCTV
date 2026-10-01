@@ -1,0 +1,17 @@
+TAP version 13
+# Subtest: main retains dependencies after shutdown audit rollback and retries the same proven owner without inventing STOP
+ok 1 - main retains dependencies after shutdown audit rollback and retries the same proven owner without inventing STOP
+  ---
+  duration_ms: 17423.1495
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17527.832
+EXIT_CODE=0

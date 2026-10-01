@@ -1,0 +1,298 @@
+TAP version 13
+# Subtest: AI pipeline validates and compiles into deterministic stages
+ok 1 - AI pipeline validates and compiles into deterministic stages
+  ---
+  duration_ms: 3.0783
+  type: 'test'
+  ...
+# Subtest: AI pipeline rejects cycles
+ok 2 - AI pipeline rejects cycles
+  ---
+  duration_ms: 0.4302
+  type: 'test'
+  ...
+# Subtest: model routing respects capability and placement
+ok 3 - model routing respects capability and placement
+  ---
+  duration_ms: 0.1193
+  type: 'test'
+  ...
+# Subtest: AI runtime validation rejects unknown kinds, coercible fields, unsafe policy values, and non-JSON config
+ok 4 - AI runtime validation rejects unknown kinds, coercible fields, unsafe policy values, and non-JSON config
+  ---
+  duration_ms: 1.4655
+  type: 'test'
+  ...
+# Subtest: lexical question terms discard common question words and remain bounded
+ok 5 - lexical question terms discard common question words and remain bounded
+  ---
+  duration_ms: 0.4717
+  type: 'test'
+  ...
+# Subtest: provider cancellation suppresses the caller but holds one of four slots until actual settlement
+ok 6 - provider cancellation suppresses the caller but holds one of four slots until actual settlement
+  ---
+  duration_ms: 3.067
+  type: 'test'
+  ...
+# Subtest: resolve neutral with only its selected capabilities
+ok 7 - resolve neutral with only its selected capabilities
+  ---
+  duration_ms: 1.0931
+  type: 'test'
+  ...
+# Subtest: resolve service-desk with only its selected capabilities
+ok 8 - resolve service-desk with only its selected capabilities
+  ---
+  duration_ms: 0.4761
+  type: 'test'
+  ...
+# Subtest: resolve knowledge with only its selected capabilities
+ok 9 - resolve knowledge with only its selected capabilities
+  ---
+  duration_ms: 6.6506
+  type: 'test'
+  ...
+# Subtest: resolve combined with only its selected capabilities
+ok 10 - resolve combined with only its selected capabilities
+  ---
+  duration_ms: 0.4098
+  type: 'test'
+  ...
+# Subtest: resolution order is deterministic
+ok 11 - resolution order is deterministic
+  ---
+  duration_ms: 1.4201
+  type: 'test'
+  ...
+# Subtest: unknown module fails closed
+ok 12 - unknown module fails closed
+  ---
+  duration_ms: 0.5015
+  type: 'test'
+  ...
+# Subtest: unsupported ABI fails
+ok 13 - unsupported ABI fails
+  ---
+  duration_ms: 0.2294
+  type: 'test'
+  ...
+# Subtest: exact version mismatch fails
+ok 14 - exact version mismatch fails
+  ---
+  duration_ms: 0.2121
+  type: 'test'
+  ...
+# Subtest: required dependency must be selected
+ok 15 - required dependency must be selected
+  ---
+  duration_ms: 0.2346
+  type: 'test'
+  ...
+# Subtest: dependency cycle rejected
+ok 16 - dependency cycle rejected
+  ---
+  duration_ms: 0.4415
+  type: 'test'
+  ...
+# Subtest: optional absent dependency is valid
+ok 17 - optional absent dependency is valid
+  ---
+  duration_ms: 0.3343
+  type: 'test'
+  ...
+# Subtest: duplicate public route rejected
+ok 18 - duplicate public route rejected
+  ---
+  duration_ms: 0.2955
+  type: 'test'
+  ...
+# Subtest: route permission must be owned
+ok 19 - route permission must be owned
+  ---
+  duration_ms: 0.2954
+  type: 'test'
+  ...
+# Subtest: required public port cannot be left unbound
+ok 20 - required public port cannot be left unbound
+  ---
+  duration_ms: 0.2208
+  type: 'test'
+  ...
+# Subtest: ambiguous consumer bindings rejected
+ok 21 - ambiguous consumer bindings rejected
+  ---
+  duration_ms: 0.2131
+  type: 'test'
+  ...
+# Subtest: same instance ID cannot imply different implementations
+ok 22 - same instance ID cannot imply different implementations
+  ---
+  duration_ms: 0.2509
+  type: 'test'
+  ...
+# Subtest: bindings do not supply a missing local provider
+ok 23 - bindings do not supply a missing local provider
+  ---
+  duration_ms: 0.1961
+  type: 'test'
+  ...
+# Subtest: application and module instance scopes are different
+ok 24 - application and module instance scopes are different
+  ---
+  duration_ms: 0.1713
+  type: 'test'
+  ...
+# Subtest: request instances are isolated and require a context
+ok 25 - request instances are isolated and require a context
+  ---
+  duration_ms: 0.1055
+  type: 'test'
+  ...
+# Subtest: removal blocked by retained records or dependents
+ok 26 - removal blocked by retained records or dependents
+  ---
+  duration_ms: 0.2992
+  type: 'test'
+  ...
+# Subtest: canonical JSON is stable, rejecting undefined and nonfinite numbers
+ok 27 - canonical JSON is stable, rejecting undefined and nonfinite numbers
+  ---
+  duration_ms: 0.0991
+  type: 'test'
+  ...
+# Subtest: input contracts reject unknown fields and invalid identifiers
+ok 28 - input contracts reject unknown fields and invalid identifiers
+  ---
+  duration_ms: 0.1471
+  type: 'test'
+  ...
+# Subtest: modules cannot shadow host-owned authentication routes
+ok 29 - modules cannot shadow host-owned authentication routes
+  ---
+  duration_ms: 0.2822
+  type: 'test'
+  ...
+# Subtest: selected composition determines the exact local package dependency closure
+ok 30 - selected composition determines the exact local package dependency closure
+  ---
+  duration_ms: 1.5956
+  type: 'test'
+  ...
+# Subtest: exported neutral product starts with all domain directories physically absent
+ok 31 - exported neutral product starts with all domain directories physically absent
+  ---
+  duration_ms: 777.1316
+  type: 'test'
+  ...
+# Subtest: exported Service Desk has no knowledge or handoff package and persists a real record
+ok 32 - exported Service Desk has no knowledge or handoff package and persists a real record
+  ---
+  duration_ms: 797.9603
+  type: 'test'
+  ...
+# Subtest: factory export includes the selected Knowledge package closure and actual ai-core dependency
+ok 33 - factory export includes the selected Knowledge package closure and actual ai-core dependency
+  ---
+  duration_ms: 370.881
+  type: 'test'
+  ...
+# Subtest: factory refuses collisions and path traversal
+ok 34 - factory refuses collisions and path traversal
+  ---
+  duration_ms: 466.9691
+  type: 'test'
+  ...
+# Subtest: generated full-stack module builds and runs without editing maintained shell source
+ok 35 - generated full-stack module builds and runs without editing maintained shell source
+  ---
+  duration_ms: 4801.1321
+  type: 'test'
+  ...
+# Subtest: real separate worker process completes a preexisting durable job
+ok 36 - real separate worker process completes a preexisting durable job
+  ---
+  duration_ms: 650.4546
+  type: 'test'
+  ...
+# Subtest: source-only provider omission is not mistaken for runtime completion
+ok 37 - source-only provider omission is not mistaken for runtime completion
+  ---
+  duration_ms: 57.6249
+  type: 'test'
+  ...
+# Subtest: React bridge cleanup is idempotent (port contract, not a React runtime test)
+ok 38 - React bridge cleanup is idempotent (port contract, not a React runtime test)
+  ---
+  duration_ms: 0.3194
+  type: 'test'
+  ...
+# Subtest: React bridge does not create a root after scope cancellation
+ok 39 - React bridge does not create a root after scope cancellation
+  ---
+  duration_ms: 0.1035
+  type: 'test'
+  ...
+# Subtest: generic framework packages import no reference-domain packages
+ok 40 - generic framework packages import no reference-domain packages
+  ---
+  duration_ms: 5.5385
+  type: 'test'
+  ...
+# Subtest: provider failure closes the started modules in reverse dependency order
+ok 41 - provider failure closes the started modules in reverse dependency order
+  ---
+  duration_ms: 0.4624
+  type: 'test'
+  ...
+# Subtest: Knowledge answer UI sends per-call cancellation and discards late answers after cancel or question edits
+ok 42 - Knowledge answer UI sends per-call cancellation and discards late answers after cancel or question edits
+  ---
+  duration_ms: 3.3903
+  type: 'test'
+  ...
+# Subtest: real Knowledge route answers only from indexed tenant records with exact UTF-16 citations
+ok 43 - real Knowledge route answers only from indexed tenant records with exact UTF-16 citations
+  ---
+  duration_ms: 153.6931
+  type: 'test'
+  ...
+# Subtest: Knowledge keeps document meaning inside its owner and rechecks the original read permission after provider await
+ok 44 - Knowledge keeps document meaning inside its owner and rechecks the original read permission after provider await
+  ---
+  duration_ms: 26.1224
+  type: 'test'
+  ...
+# Subtest: Knowledge rejects provider selections outside its captured excerpt set
+ok 45 - Knowledge rejects provider selections outside its captured excerpt set
+  ---
+  duration_ms: 11.0174
+  type: 'test'
+  ...
+# Subtest: HTTP logout during an awaited Knowledge provider suppresses the original answer response
+ok 46 - HTTP logout during an awaited Knowledge provider suppresses the original answer response
+  ---
+  duration_ms: 167.5734
+  type: 'test'
+  ...
+# Subtest: workspace export closure follows selected Knowledge package manifests and actual ai-core version
+ok 47 - workspace export closure follows selected Knowledge package manifests and actual ai-core version
+  ---
+  duration_ms: 9.1144
+  type: 'test'
+  ...
+# Subtest: workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+ok 48 - workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+  ---
+  duration_ms: 2.464
+  type: 'test'
+  ...
+1..48
+# tests 48
+# suites 0
+# pass 48
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8122.3552

@@ -1,0 +1,82 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "ff7a53fa-275c-4564-8930-bce2fc0d0a6c",
+  "revision": 21,
+  "previousEventId": "3fa30037-270f-4c37-a022-21a72dffd020",
+  "reportedActor": "/root platform coordinator",
+  "recordedAt": "2026-10-01T08:51:13.058Z",
+  "platformTask": {
+    "taskId": "PLATFORM-007",
+    "status": "READY",
+    "candidate": null,
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Luna finite16 CP7 scratch proposal; independent Sol plan/review. Apply only after authorized Brain chat freezes nine-file source and completes its non-overlapping build/focused boundary. Root records actual evidence, then paired/offline browser and one frozen final required suite.",
+    "gates": [
+      {
+        "id": "CP6-local-prerequisite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/evidence/platform-006-result-01.json"
+        ],
+        "limitations": [
+          "Bounded local extractive core; two full-suite blocked skips and no hosted/provider/production inference."
+        ]
+      },
+      {
+        "id": "CP7-execution",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/tasks/PLATFORM-007.md",
+          ".brain/evidence/platform-007-implementation-map-03.md"
+        ],
+        "limitations": [
+          "Scratch proposal only; no maintained implementation, build, tests or browser qualification yet."
+        ]
+      }
+    ]
+  },
+  "maintenanceTask": {
+    "taskId": "BRAIN-004",
+    "status": "IMPLEMENTING",
+    "candidate": null,
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Other human-authorized Brain chat has applied coherent two-file CLI qualification/planned-file fixes and is verifying them at coordinated boundary. Remaining new controller files stay proposed until root platform full suite finishes. Root retains checkpoint ownership; nine-file candidate unbound until materialized.",
+    "gates": [
+      {
+        "id": "BRAIN-004-authorized",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/tasks/BRAIN-004.md"
+        ],
+        "limitations": [
+          "Root verified explicit human ok do and Yes—coordinate the two chats in review-astra-analyse the brain module and how it is used; other chat owns finite9 Brain-only source paths."
+        ]
+      },
+      {
+        "id": "BRAIN-001-history",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/workflow/events/57b477c0-c75d-45ac-aaef-928359d72d1a.json"
+        ],
+        "limitations": [
+          "Historical BRAIN-001 acceptance preserved in immutable events; no current BRAIN-004 execution qualification."
+        ]
+      },
+      {
+        "id": "BRAIN-004-execution",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/contracts/BRAIN-004.json"
+        ],
+        "limitations": [
+          "New declared files intentionally absent at READY/null. No proof of live controller or isolated execution."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "c2ed69a867882857c0fc427180e30d2cfbc716f5f81ebfacfd34b46d8aa2d441"
+}

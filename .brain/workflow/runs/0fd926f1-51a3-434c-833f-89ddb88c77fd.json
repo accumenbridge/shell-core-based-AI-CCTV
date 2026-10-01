@@ -1,0 +1,135 @@
+{
+  "schema": "brain.evidence-record.v1",
+  "kind": "run",
+  "id": "0fd926f1-51a3-434c-833f-89ddb88c77fd",
+  "taskId": "BRAIN-005",
+  "recipeId": "brain-control-focused",
+  "contractDigest": "dfb64576342f002cc03f88810169062c2e705f3d4880758de90ddfd2998c5b40",
+  "recipeDigest": "7926e0527438112018eff0858e26f876dc05426bf02cad90db19133a6497402b",
+  "candidate": {
+    "files": [
+      {
+        "path": "docs/brain/README.md",
+        "sha256": "e96c0327708388f4d9e43a745bade1885a93075bfa878d85c55def26fd8d5f31"
+      },
+      {
+        "path": "README.md",
+        "sha256": "23c5b6449aadac650acfad8d11f99e3871cf780b663fd66cf8129aa11b65a960"
+      },
+      {
+        "path": "tests/brain-atlas.test.mjs",
+        "sha256": "d2b42ca842123b054869618b2ccadbdefe69079fa20380217c8ddda30ab4c42d"
+      },
+      {
+        "path": "tests/brain-control.test.mjs",
+        "sha256": "427c7254288a99bb7dfead1502c43864199cfc142e965b703f9a4a08c333ba4d"
+      },
+      {
+        "path": "tests/brain-live.test.mjs",
+        "sha256": "1b09ee2a3245cc081556739e1588a60330ed8813f2dfe4c46de1e1686f12c218"
+      },
+      {
+        "path": "tests/brain-workflow.test.mjs",
+        "sha256": "3f80033e866c0182af08e68ddba7716f47ab31d84fc703c75cd5aabddb194fdf"
+      },
+      {
+        "path": "tools/brain-atlas.mjs",
+        "sha256": "a36e611b4f9cc2e57e92140508aaebc2474b081f3a25b855eae02c88633e9dfd"
+      },
+      {
+        "path": "tools/brain-control.mjs",
+        "sha256": "bda70affa741477f2e46f6042aa8c508aa4e5f6bdc0775c43fe63a3d9b46a9b4"
+      },
+      {
+        "path": "tools/brain-core.mjs",
+        "sha256": "76cb2593d8482b744fdd716f2afe03817e77cb43622c3d91a46e6d29104febc3"
+      },
+      {
+        "path": "tools/brain-live-ui.mjs",
+        "sha256": "557090ab6b1a9a0a6d48822c5393f01efd5555ee077db5131df6e74272273b51"
+      },
+      {
+        "path": "tools/brain-live.mjs",
+        "sha256": "da7dd0aed0f143a9f52b16df270f920a62aedd401f2a9a256182eac3b9f6e1f9"
+      },
+      {
+        "path": "tools/brain-readiness.mjs",
+        "sha256": "1b64287430cf87ae11d0ae9b280ee635705605c94568ef35481c589a6326471f"
+      },
+      {
+        "path": "tools/brain.mjs",
+        "sha256": "b092e88771a467230dd65c2dcdee548e5ff296320dcff4173f7d00ff2d8d0016"
+      }
+    ],
+    "digest": "421397fde93da06f05bb71a317f9c2ea351bc32ceea637088bba3a174268d525"
+  },
+  "recordedAt": "2026-10-01T11:18:20.435Z",
+  "command": {
+    "argv": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "tests/brain-control.test.mjs",
+      "tests/brain-live.test.mjs"
+    ],
+    "cwd": "."
+  },
+  "environment": {
+    "platform": "win32",
+    "node": "v24.19.0",
+    "observer": "/root coordinated named agents and direct observations"
+  },
+  "status": "PASSED",
+  "exitCode": 0,
+  "counts": {
+    "tests": 12,
+    "passed": 12,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "artifacts": [
+    {
+      "sourceRef": ".local/brain-005-candidate-verified.json",
+      "path": ".brain/workflow/artifacts/0fd926f1-51a3-434c-833f-89ddb88c77fd/brain-005-candidate-verified.json",
+      "sha256": "ae37c1d0d42faba766544300d5da272a95d0e00cfccc4e6f586a3d4f5825c33b",
+      "bytes": 1891
+    },
+    {
+      "sourceRef": ".local/brain-005-candidate-after-tests.json",
+      "path": ".brain/workflow/artifacts/0fd926f1-51a3-434c-833f-89ddb88c77fd/brain-005-candidate-after-tests.json",
+      "sha256": "1bdbfcfe14f375a222ecc45a6da0be70d90fa457cd4116d6027848e08420bd7d",
+      "bytes": 1891
+    },
+    {
+      "sourceRef": ".local/brain-005-observation-history.json",
+      "path": ".brain/workflow/artifacts/0fd926f1-51a3-434c-833f-89ddb88c77fd/brain-005-observation-history.json",
+      "sha256": "f9a82c3c9105d8acf18f88326731dbb665b2511f9d3830234798d34fd5a839af",
+      "bytes": 3966
+    },
+    {
+      "sourceRef": ".local/brain-005-verified-control-live.tap.txt",
+      "path": ".brain/workflow/artifacts/0fd926f1-51a3-434c-833f-89ddb88c77fd/brain-005-verified-control-live.tap.txt",
+      "sha256": "04cac9a160a4ce1daa29ba45e02cc962b807e763d9d14251aac245a579fa86c3",
+      "bytes": 2949
+    },
+    {
+      "sourceRef": ".local/brain-005-verified-atlas.tap.txt",
+      "path": ".brain/workflow/artifacts/0fd926f1-51a3-434c-833f-89ddb88c77fd/brain-005-verified-atlas.tap.txt",
+      "sha256": "67d39f8537a9bedc1d906a248fc68b4fc064c22a860f492f09bb471302ff8c4c",
+      "bytes": 2929
+    }
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "Named implementation agent actually ran node --test --test-reporter=tap tests/brain-control.test.mjs tests/brain-live.test.mjs on frozen421397 candidate; final12passed. Additional atlas12passes attached separately."
+  },
+  "limitations": [
+    "Source review and local checks do not guarantee bug-free architecture or authenticate reported evidence.",
+    "Existing independent Codex work must follow the adopted entry workflow; Brain does not prevent arbitrary direct file edits.",
+    "Current platform has no managed execution profile; controller mode remains observation-only.",
+    "Full atlas visual qualification is not claimed from DOM checks; browser-policy observations remain distinct from passes."
+  ],
+  "integritySha256": "afc211ecf8c74c9841a781221acef73bf0859cf8763df85f7017c7d07dc2ba77"
+}

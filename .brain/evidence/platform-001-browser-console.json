@@ -1,0 +1,18 @@
+{
+  "status": "PASSED",
+  "checks": {
+    "initial_login": true,
+    "bad_code_error": true,
+    "valid_pairing": true,
+    "stored_products": 4,
+    "operations_text": "Quadbridge Product Studio\nPAIRED LOCAL OPERATOR\nOverviewProductsModulesUiBackendAiDataBuildsEnvironmentsDeploymentsAuditOperations\nPAIRED LOCAL CONTROL PLANE\nOperations\nStored source records and validated local plans.\nv0.3.0\nDisconnect\nProduct Composition\nATTACHED\n\nStored product versions are checked by the canonical exact-version resolver.\n\nApplication Runtime\nEXISTING-CORE-ONLY\n\nThe existing runtime and worker hosts remain available; this control plane does not start or manage an application instance.\n\nBuild Executor\nNOT-ATTACHED\n\nBuild requests are admitted as QUEUED records only.\n\nArtifact Registry\nNOT-ATTACHED\n\nNo artifact is produced or stored by this control plane.\n\nDeployment Controller\nNOT-ATTACHED\n\nDeployment requests are admitted as REQUESTED records only.\n\nModel Serving\nNOT-ATTACHED\n\nAI pipelines are validated plans; no model provider is invoked.",
+    "unattached_operations": [
+      "Build executor",
+      "Artifact registry",
+      "Deployment controller",
+      "Model serving"
+    ],
+    "logout": true
+  },
+  "browser": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+}

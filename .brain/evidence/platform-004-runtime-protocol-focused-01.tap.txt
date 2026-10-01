@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: RuntimeProtocol reports assignment, accepts fragmented nonce-bound controls and proves STOP
+ok 1 - RuntimeProtocol reports assignment, accepts fragmented nonce-bound controls and proves STOP
+  ---
+  duration_ms: 2880.0624
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol wrong-nonce and malformed pre-RESUME controls fail closed without execution
+    # Subtest: wrong-nonce RESUME
+    ok 1 - wrong-nonce RESUME
+      ---
+      duration_ms: 1152.4044
+      type: 'test'
+      ...
+    # Subtest: wrong-nonce STOP
+    ok 2 - wrong-nonce STOP
+      ---
+      duration_ms: 1153.3389
+      type: 'test'
+      ...
+    # Subtest: malformed control
+    ok 3 - malformed control
+      ---
+      duration_ms: 1132.0255
+      type: 'test'
+      ...
+    1..3
+ok 2 - RuntimeProtocol wrong-nonce and malformed pre-RESUME controls fail closed without execution
+  ---
+  duration_ms: 3438.7443
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol EOF before RESUME fails closed without executing the supervisor script
+ok 3 - RuntimeProtocol EOF before RESUME fails closed without executing the supervisor script
+  ---
+  duration_ms: 1131.6663
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol duplicate RESUME after the owned descendant starts terminates the whole job
+ok 4 - RuntimeProtocol duplicate RESUME after the owned descendant starts terminates the whole job
+  ---
+  duration_ms: 1842.7576
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol parses coalesced nonce-bound RESUME and STOP controls
+ok 5 - RuntimeProtocol parses coalesced nonce-bound RESUME and STOP controls
+  ---
+  duration_ms: 1070.6724
+  type: 'test'
+  ...
+1..5
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10423.3421
+EXIT_CODE=0

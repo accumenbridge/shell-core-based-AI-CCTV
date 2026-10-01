@@ -1,0 +1,11 @@
+{
+  "cleanupState": "UNKNOWN",
+  "observedBuildState": "CANCEL_REQUESTED",
+  "buildAttempt": 1,
+  "admittedBuildId": "83545175-ee14-462e-93e6-9496654113da",
+  "started": "2026-09-30T18:54:01+05:30",
+  "reason": "Native PowerShell -File invocation rejected the staged reviewed build helper by script execution policy; no bypass or alternate runner used.",
+  "status": "BLOCKED",
+  "rawLog": ".local/platform-002-validation/actual-compose-build-first-blocked.txt",
+  "outputPath": ""
+}

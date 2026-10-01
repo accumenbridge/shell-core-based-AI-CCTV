@@ -1,0 +1,7 @@
+Observed initial focused-run failure (actual command output summarized from this turn)
+Command: node --test --test-reporter=tap tests/brain-workflow.test.mjs
+Exit: 1
+TAP summary: 14 tests; 13 passed; 1 failed.
+Failure: preflight grounds new platform implementation in focus, prerequisite sources and the canonical task while leaving failures recordable.
+Assertion failed because the fixture still pointed project.commands_file at .brain/checks.json; CLI returned PROJECT_MAP_MISMATCH and integrity INVALID before exercising readiness.
+Disposition: corrected configureGroundedAtlas to adopt the canonical workflow map, then reran the same command successfully (14/14). This initial failure is preserved as a fixture setup issue, not hidden as a code pass.

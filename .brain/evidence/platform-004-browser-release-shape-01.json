@@ -1,0 +1,35 @@
+{
+  "schema": "brain.browser-observation.v1",
+  "task": "PLATFORM-004",
+  "state": "FAILED_REAL_UI_RELEASE_SHAPE_BEFORE_RUNTIME_START",
+  "browser": "Existing installed Chrome via CUA extension browser3; ordinary locators and DOM snapshots only",
+  "fixture_id": "a939c59f-1a29-4e5d-bb38-84b14fe4522c",
+  "server_script_capture": "platform-004-browser-server-01.mjs.txt",
+  "server_script_sha256": "5357ccac55ae8b8f6db599fafd0fd5ff72ab1df5fa910f3694563509b9ff6eac",
+  "ready_metadata": "platform-004-browser-server-ready-01.json",
+  "pairing_code_archived": false,
+  "studio_source_sha256": "1e6df60be1b9b6a09707d18dc2acd64e6c8a87a12fa5d2e2bc4bcb608ebd89a2",
+  "studio_main_sha256": "7b103038dec78a32276010c51ec9b54257930dfa40580c180afedee907d14987",
+  "artifact_digest": "bc50103030b887882e287771ad6a2d2866b578732e098e2b57f7315292154968",
+  "observations": [
+    "Connect Studio rendered",
+    "Existing test pairing code submitted normally and Paired local operator rendered",
+    "Runtime Instances route rendered EMPTY slot but No promoted local releases",
+    "Start local runtime locator deadline exceeded; no START submitted"
+  ],
+  "root_cause": "Canonical GET releases is a plain SQLite .all() array forwarded by artifact store/operator. UI reads releases.releases and mock fabricates that wrapper, so real promoted rows disappear. Root and independent Sol confirmed from source.",
+  "dom": "platform-004-browser-release-shape-01.dom.txt",
+  "screenshot": "platform-004-browser-release-shape-01.jpg",
+  "capture_note": "FullPage CDP screenshot timed out5s. After reading documented troubleshooting, normal viewport screenshot succeeded and was saved/visually reviewed. No CSP/policy rejection or override occurred.",
+  "close": {
+    "evidence": "platform-004-browser-server-closed-01.json",
+    "closed": true,
+    "runtime_count": 0,
+    "slot": "EMPTY",
+    "occupied": false,
+    "tab_closed": true,
+    "outer_exit_code": null,
+    "exit_provenance": "Worker cannot recover outer exit code; its later exec session query is Unknown process id and exact source-script process scan finds no matching Node server. Main closed record is independently retained. Root cross-agent exec polling also returned Unknown process id."
+  },
+  "next": "Luna sole writer consumes canonical release array, fixes mock and adds actual HTTP shape assertion. Fresh build/focused evidence/independent review then fresh browser fixture. This failed observation never qualifies runtime/browser acceptance."
+}

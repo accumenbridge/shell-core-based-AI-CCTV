@@ -1,0 +1,15 @@
+{
+  "schema": "brain.frozen-test-workspace.v1",
+  "createdAt": "2026-10-01T05:59:21.278Z",
+  "sourceRoot": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS",
+  "root": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F\\source",
+  "temp": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-brain-validation-3Evz8F",
+  "maintainedFingerprint": "3c6a0f636d8534476186c3607315a322cc8c39470a1d5b3956116d12449a951f",
+  "sourceUnchangedDuringCopy": true,
+  "brainCandidate": "798ad1dc674657f87c4da66fdd55f919ad518929d67609240eef9eaa5846f1d5",
+  "hostProfile": "Existing selected private build-host profile copied unchanged; no credentials or policy changes.",
+  "dependencies": "Existing pinned TypeScript/Node typings linked using repository copyPortableFixture helper.",
+  "note": "Frozen maintained source for BRAIN-001 regression execution; operational Brain records excluded by existing copy policy.",
+  "previousMaintainedFingerprint": "02c6cde1b90cd7961b888dd33f92cd8f704043bbca26a92e2f453a8e49ef232b",
+  "change": "Only the Brain test file was updated after the failed focused run. Concurrent platform source remains the initially frozen snapshot."
+}

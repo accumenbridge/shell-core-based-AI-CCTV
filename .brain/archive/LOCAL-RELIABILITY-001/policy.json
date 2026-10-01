@@ -1,0 +1,36 @@
+{
+  "schema": "brain.workflow-policy.v1",
+  "status": "bound_conventions_not_enforced",
+  "implementation_authorization_ref": "User instruction on 2026-09-30: 'ok proceed' for local setup and the bounded BASELINE-001 contract only.",
+  "defaults": {
+    "one_active_writer": true,
+    "unknown_outcome_requires_resolution": true,
+    "preserve_existing_owner_records": true,
+    "optional_improvements": "future_context_only",
+    "same_failure_limit_before_diagnosis": 2
+  },
+  "budget": {
+    "approved_budget_ref": null,
+    "include_brain_worker_review_tools": true,
+    "unknown_usage": "record_unknown_not_zero",
+    "renamed_task_resets_budget": false,
+    "verification_reserve": "No numeric budget was supplied. Track observable usage and preserve actual task/session limits; this JSON does not enforce them."
+  },
+  "routing": {
+    "direct": "Known reversible change inside the current task contract: relevant actual checks and existing required review.",
+    "integrated": "Cross-owner behavior: bounded contract, preserve interfaces, test lifecycle/integration, and report real health evidence.",
+    "sensitive": "Permissions, data, migration, installer, external system, credential, or release: preserve existing owner approval and recovery checks; outside current authorization unless explicitly added.",
+    "investigate": "Unresolved fact: bounded read-only investigation or authorized experiment tied to a named acceptance question."
+  },
+  "requires_applicable_approval": [
+    "changed customer outcome",
+    "changed acceptance meaning",
+    "new data access",
+    "destructive operation",
+    "credential change",
+    "external action",
+    "significant spend",
+    "deployment or release"
+  ],
+  "note": "These are coordinator conventions, not authenticated approval, a lock, sandbox, hard budget, test runner, or enforcement mechanism. Existing source instructions and tool controls prevail."
+}

@@ -1,0 +1,15 @@
+{
+  "status": "FAIL",
+  "assertions": [
+    "initial login view",
+    "invalid pairing code shows bounded error",
+    "valid local pairing",
+    "compose draft survives delayed catalogue rendering",
+    "two immutable product versions saved through canonical preview",
+    "exact version 2 build confirmation and durable admission"
+  ],
+  "notes": [],
+  "error": "Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self' http://gc.kis.v2.scr.kaspersky-labs.com ws://gc.kis.v2.scr.kaspersky-labs.com\".\n\n    at eval (<anonymous>)\n    at predicate (eval at evaluate (:302:30), <anonymous>:4:60)\n    at next (eval at evaluate (:302:30), <anonymous>:29:33)",
+  "trace": " ~~~~~~~~~~^\n        self._impl_obj.wait_for_function(\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<4 lines>...\n        )\n        ^\n    )\n    ^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\playwright\\_impl\\_sync_base.py\", line 115, in _sync\n    return task.result()\n           ~~~~~~~~~~~^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\playwright\\_impl\\_page.py\", line 1136, in wait_for_function\n    return await self._main_frame.wait_for_function(**locals_to_params(locals()))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\playwright\\_impl\\_frame.py\", line 910, in wait_for_function\n    await self._channel.send(\"waitForFunction\", self._timeout, params)\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 69, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n    )\n    ^\n  File \"C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 559, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self' http://gc.kis.v2.scr.kaspersky-labs.com ws://gc.kis.v2.scr.kaspersky-labs.com\".\n\n    at eval (<anonymous>)\n    at predicate (eval at evaluate (:302:30), <anonymous>:4:60)\n    at next (eval at evaluate (:302:30), <anonymous>:29:33)\n",
+  "serverExit": 1
+}

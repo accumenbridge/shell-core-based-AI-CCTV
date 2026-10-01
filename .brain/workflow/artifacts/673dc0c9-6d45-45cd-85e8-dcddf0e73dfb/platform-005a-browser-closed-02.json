@@ -1,0 +1,46 @@
+{
+  "schema": "quadbridge.runtime-recovery-browser-closed.v1",
+  "fixtureId": "f9b3b95a-c7d4-4e08-823d-6be9d49d8864",
+  "closed": true,
+  "summary": {
+    "slot": {
+      "state": "EMPTY",
+      "occupied": false,
+      "instanceId": null
+    },
+    "runtimes": [
+      {
+        "id": "runtime-09d58c9e-79a9-4fd5-a143-83057e24bb87",
+        "productId": "service-desk",
+        "version": "0.2.0",
+        "artifactDigest": "8723581398c7aefdbc540d3d6ae99b633bec2261ebf21e2d426a5ad34fda6eba",
+        "instanceState": "STOPPED",
+        "currentAttempt": 2,
+        "operationId": "19186117-efbf-4bc5-99d1-15d68b1bc0c6",
+        "attemptState": "STOPPED",
+        "physicalState": "EMPTY",
+        "emptyObserved": 1,
+        "helperClosed": 1,
+        "executionClean": 1,
+        "commandKind": "RESTART",
+        "commandState": "SUCCEEDED"
+      }
+    ]
+  },
+  "removalResults": [
+    {
+      "ok": true,
+      "instanceId": "runtime-09d58c9e-79a9-4fd5-a143-83057e24bb87",
+      "artifactDigest": "8723581398c7aefdbc540d3d6ae99b633bec2261ebf21e2d426a5ad34fda6eba",
+      "removed": true,
+      "scannedEntries": 12,
+      "stopProof": {
+        "state": "STOPPED",
+        "physicalState": "EMPTY",
+        "emptyObserved": true,
+        "helperClosed": true,
+        "executionClean": true
+      }
+    }
+  ]
+}

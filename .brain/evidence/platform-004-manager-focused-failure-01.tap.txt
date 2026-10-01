@@ -1,0 +1,120 @@
+TAP version 13
+# Subtest: managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+ok 1 - managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+  ---
+  duration_ms: 23.5084
+  type: 'test'
+  ...
+# Subtest: managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+ok 2 - managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+  ---
+  duration_ms: 3.9987
+  type: 'test'
+  ...
+# Subtest: schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+ok 3 - schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+  ---
+  duration_ms: 2.4572
+  type: 'test'
+  ...
+# Subtest: undispatched cleanup uncertainty cannot use JOB_EXIT and shutdown during STARTING fails the pending start
+ok 4 - undispatched cleanup uncertainty cannot use JOB_EXIT and shutdown during STARTING fails the pending start
+  ---
+  duration_ms: 4.1022
+  type: 'test'
+  ...
+# Subtest: schema 4 additive dispatch migration treats legacy mutable uncertainty labels conservatively
+ok 5 - schema 4 additive dispatch migration treats legacy mutable uncertainty labels conservatively
+  ---
+  duration_ms: 21.7025
+  type: 'test'
+  ...
+# Subtest: canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+ok 6 - canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+  ---
+  duration_ms: 6.7068
+  type: 'test'
+  ...
+# Subtest: fresh manager preparation writes only bounded enrollment inputs and rechecks authorization after canonical import
+ok 7 - fresh manager preparation writes only bounded enrollment inputs and rechecks authorization after canonical import
+  ---
+  duration_ms: 16.1695
+  type: 'test'
+  ...
+# Subtest: owned execution cleanup removes only exact copied-workspace junctions and quarantines changed targets
+not ok 8 - owned execution cleanup removes only exact copied-workspace junctions and quarantines changed targets
+  ---
+  duration_ms: 19.0559
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\runtime-manager-preparation.test.mjs:77:1'
+  failureType: 'testCodeFailure'
+  error: 'this.store.managedRuntimeAttempt is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:1561:50
+  ...
+# Subtest: one-use runtime gate is published without a post-publication lookup that can race its consumer
+not ok 9 - one-use runtime gate is published without a post-publication lookup that can race its consumer
+  ---
+  duration_ms: 73.5691
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\runtime-manager-preparation.test.mjs:111:1'
+  failureType: 'testCodeFailure'
+  error: 'Managed runtime file path exceeds the supported Windows path bound'
+  code: 'RUNTIME_UNAVAILABLE'
+  name: 'RuntimePreparationError'
+  stack: |-
+    writeExactFile (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:78:15)
+    writePrivateCanonical (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:782:5)
+    ManagedRuntimeManager.publishGate (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:1334:9)
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/runtime-manager-preparation.test.mjs:141:13)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: original runtime owner can reconcile a late close and retry a rolled-back settlement audit
+ok 10 - original runtime owner can reconcile a late close and retry a rolled-back settlement audit
+  ---
+  duration_ms: 20.2355
+  type: 'test'
+  ...
+# Subtest: late semantic event errors remain separate from a matching native empty and helper-close proof
+ok 11 - late semantic event errors remain separate from a matching native empty and helper-close proof
+  ---
+  duration_ms: 6.5463
+  type: 'test'
+  ...
+# Subtest: runtime start preserves an admission failure and does not settle or create an unowned execution
+ok 12 - runtime start preserves an admission failure and does not settle or create an unowned execution
+  ---
+  duration_ms: 464.0063
+  type: 'test'
+  ...
+# Subtest: verified snapshot copy preflights every path and digest before creating its destination
+ok 13 - verified snapshot copy preflights every path and digest before creating its destination
+  ---
+  duration_ms: 4.417
+  type: 'test'
+  ...
+# Subtest: runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+ok 14 - runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+  ---
+  duration_ms: 158.3253
+  type: 'test'
+  ...
+# Subtest: a failed canonical LocalAccess seed leaves repair-required evidence and never publishes enrollment completion
+ok 15 - a failed canonical LocalAccess seed leaves repair-required evidence and never publishes enrollment completion
+  ---
+  duration_ms: 19.2178
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 13
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 882.2524
+EXIT_CODE=1

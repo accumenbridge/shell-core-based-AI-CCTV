@@ -1,0 +1,30 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "ACCEPTED_ACTUAL_MAIN_AUDIT_ROLLBACK_RETRY_SCOPE",
+  "capture": "platform-004-artifact-test-main-shutdown-02.mjs.txt",
+  "capture_sha256": "7c3759a28765bd5c29082330f60ed751395a6f8c958353c4ec8e73ab0b778a06",
+  "capture_provenance": "Writer confirmed exact run-source hash; root captured/matched and independent Sol matched first/last capture and unchanged main/core pins.",
+  "checks": {
+    "tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "exit_code": 0,
+    "evidence": "platform-004-runtime-main-shutdown-audit-02.tap.txt",
+    "provenance": "Root read raw complete TAP/EXIT_CODE0."
+  },
+  "scope": "Real main/controller over a private actual built/registered/promoted Desk runtime. A separate SQLite observer installs a test-owned trigger only on original-owner operator-shutdown audit. First same main.close rejects with the injected SQLite error and exact runtime reservation remains; successful START/no STOP history retained. Trigger removed and observer closed, then same main.close retries exact original cached physical facts, commits STOPPED/EMPTY/helperClosed/executionClean, releases slot, retains original actor and data bytes. No invented STOP or export-copy patch. This directly exercises retained main dependencies/retry beyond prior EventEmitter component tests.",
+  "failure": {
+    "evidence": "platform-004-runtime-main-shutdown-audit-01.tap.txt",
+    "tests": 1,
+    "passed": 0,
+    "failed": 1,
+    "exit_code": 1,
+    "note": "Over-specific expected manager message did not match actual intended SQLite trigger rejection. Later retained-slot/retry assertions were not reached; no retry result inferred from that run."
+  },
+  "limits": "Data-byte retention does not prove a persisted business record in this main-only fixture. It does not qualify HTTP drain under an outstanding client request, helper UNKNOWN, distinct cross-session STOP actor or successor native callback. Those remain separate scopes. Previous unexplained restart503 remains open. CP4 remains IMPLEMENTING.",
+  "review": "Independent Sol/high accepted actual main retained-dependency/retry scope after raw log and source inspection. No doubles/export patch. Data assertions prove nonempty files, not byte equality or business records; no claim of outstanding HTTP drain, OS signal, native crash or distinct STOP actor."
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "brain.task-contract.v1",
+  "taskId": "BRAIN-001",
+  "title": "Repository Brain tooling and safe adoption",
+  "authorization": {"kind": "authorized", "reference": "User in this chat, 2026-10-01: ok proceed and implement it, following the proposed file-backed Brain design."},
+  "sourceTaskRef": ".brain/tasks/BRAIN-001.md",
+  "owners": {"coordinator": "/root", "implementer": "/root/brain_implementation; sequential test handoff /root/brain_tests", "reviewer": "/root/brain_state_review"},
+  "allowedPaths": ["tools/brain-core.mjs", "tools/brain.mjs", "tests/brain-workflow.test.mjs", "package.json", ".brain/WORKFLOW.md", ".brain/START_HERE.md", ".brain/ROUTING.md", ".brain/workflow/recipes.json"],
+  "excludedActions": ["Application/runtime behavior changes", "Automatic check execution or agent dispatch", "External systems, credentials, deployment or global configuration", "Replacing legacy platform evidence or claiming new platform acceptance"],
+  "prerequisites": [],
+  "criteria": [
+    {"id": "BRAIN-CLI", "description": "Usable validate, context, record and checkpoint commands with explicit root and actionable errors.", "evidenceScope": "Actual isolated CLI and core integration tests."},
+    {"id": "BRAIN-RECORDS", "description": "Immutable task/contract/candidate-bound records and copied evidence with integrity validation.", "evidenceScope": "Local file-backed records; attributed reports do not authenticate execution or approval."},
+    {"id": "BRAIN-CHECKPOINT", "description": "Exclusive participating-writer lock, stale revision rejection, immutable event before pointer and repairable generated view.", "evidenceScope": "Cooperating local CLI writers; no hostile-filesystem or power-loss guarantee."},
+    {"id": "BRAIN-ACCEPTANCE", "description": "Acceptance requires qualifying current-candidate evidence and required attributed independent review.", "evidenceScope": "Record consistency; unknown, blocked, stale or failed required evidence does not pass."},
+    {"id": "BRAIN-ADOPTION", "description": "Preserve legacy records and platform task mapping; generated current view clearly separates imported platform and maintenance work.", "evidenceScope": "Actual project validation and read-only context after adoption; no fresh platform qualification."},
+    {"id": "BRAIN-REGRESSION", "description": "Build first, execute focused checks and npm test, and record every blocked, skipped or unrelated failing suite gate separately.", "evidenceScope": "Fresh command logs and counts. Existing platform/native/provider exclusions do not become new tooling pass claims."}
+  ],
+  "requiredRecipeIds": ["brain-build", "brain-focused", "brain-adoption"],
+  "requiredObservationRecipeIds": ["brain-full-suite"],
+  "reviewRequirement": {"required": true, "independence": "independent_reported"}
+}

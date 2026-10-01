@@ -1,0 +1,101 @@
+TAP version 13
+# Subtest: public health and static entry are narrow while state and audit require pairing and exact Host
+ok 1 - public health and static entry are narrow while state and audit require pairing and exact Host
+  ---
+  duration_ms: 90.4528
+  type: 'test'
+  ...
+# Subtest: pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+ok 2 - pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+  ---
+  duration_ms: 47.5934
+  type: 'test'
+  ...
+# Subtest: managed runtime API exposes fixed authenticated routes and exact confirmed request envelopes
+ok 3 - managed runtime API exposes fixed authenticated routes and exact confirmed request envelopes
+  ---
+  duration_ms: 46.3235
+  type: 'test'
+  ...
+# Subtest: private recovery routes require confirmation and never expose operation ownership secrets
+ok 4 - private recovery routes require confirmation and never expose operation ownership secrets
+  ---
+  duration_ms: 39.2585
+  type: 'test'
+  ...
+# Subtest: managed runtime HTTP errors use fixed non-path messages
+ok 5 - managed runtime HTTP errors use fixed non-path messages
+  ---
+  duration_ms: 34.6669
+  type: 'test'
+  ...
+# Subtest: pairing attempts are bounded and expire their rate window
+ok 6 - pairing attempts are bounded and expire their rate window
+  ---
+  duration_ms: 35.4643
+  type: 'test'
+  ...
+# Subtest: authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+ok 7 - authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+  ---
+  duration_ms: 43.024
+  type: 'test'
+  ...
+# Subtest: AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+ok 8 - AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+  ---
+  duration_ms: 38.8846
+  type: 'test'
+  ...
+# Subtest: build requests fail closed without an executor and deployment requests enforce immutable references
+ok 9 - build requests fail closed without an executor and deployment requests enforce immutable references
+  ---
+  duration_ms: 47.7697
+  type: 'test'
+  ...
+# Subtest: overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+ok 10 - overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+  ---
+  duration_ms: 63.3195
+  type: 'test'
+  ...
+# Subtest: a body is rejected if its exact authenticated session expires while the stream is pending
+ok 11 - a body is rejected if its exact authenticated session expires while the stream is pending
+  ---
+  duration_ms: 35.7966
+  type: 'test'
+  ...
+# Subtest: a body is rejected if that session logs out before streaming completes
+ok 12 - a body is rejected if that session logs out before streaming completes
+  ---
+  duration_ms: 33.8461
+  type: 'test'
+  ...
+# Subtest: canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+ok 13 - canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+  ---
+  duration_ms: 117.5948
+  type: 'test'
+  ...
+# Subtest: logout during awaited worker admission rejects the original request before queue mutation
+ok 14 - logout during awaited worker admission rejects the original request before queue mutation
+  ---
+  duration_ms: 34.5234
+  type: 'test'
+  ...
+# Subtest: logout during awaited result inspection returns 401 and accepted work remains independent of the session
+ok 15 - logout during awaited result inspection returns 401 and accepted work remains independent of the session
+  ---
+  duration_ms: 39.1153
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 862.5366
+EXIT_CODE=0

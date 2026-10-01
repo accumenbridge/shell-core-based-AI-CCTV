@@ -1,0 +1,131 @@
+{
+  "status": "VALID",
+  "summary": {
+    "contractCount": 9,
+    "recipeCount": 7,
+    "recordCount": 35,
+    "eventCount": 29,
+    "revision": 29,
+    "eventId": "67b4058b-520b-42e5-b8e0-ad888ce7ec74",
+    "view": "CURRENT",
+    "uncommittedEventCount": 0
+  },
+  "errors": [],
+  "warnings": [],
+  "integrity": {
+    "status": "VALID",
+    "errors": [],
+    "warnings": [],
+    "summary": {
+      "contractCount": 9,
+      "recipeCount": 7,
+      "recordCount": 35,
+      "eventCount": 29,
+      "revision": 29,
+      "eventId": "67b4058b-520b-42e5-b8e0-ad888ce7ec74",
+      "view": "CURRENT",
+      "uncommittedEventCount": 0
+    }
+  },
+  "executionReadiness": {
+    "schema": "brain.execution-readiness.v1",
+    "status": "READY",
+    "ready": true,
+    "legacyCompatibility": false,
+    "reasons": [],
+    "advisories": [],
+    "canonicalTask": {
+      "taskId": "CORE-DELIVERY-001",
+      "sourceTaskRef": ".brain/tasks/CORE-DELIVERY-001.md"
+    },
+    "focus": {
+      "nodeId": "M-CORE",
+      "title": "Complete continuous deployed local core product journey",
+      "acceptance": [
+        "Ordinary confirmed save, exact build/register/promote/start of newly composed all-local product.",
+        "Actual tenant-scoped Desk record, worker-indexed Knowledge with exact cited local answer and Handoff destination receipt.",
+        "Same-instance restart and private verified absent-owned-root recovery retain data and credentials; original-owner positive closure.",
+        "Fresh build and required actual full suite, exact independent review, preserved blocked/unrun scopes."
+      ]
+    },
+    "governingSources": [
+      {
+        "id": "core-task",
+        "path": ".brain/tasks/CORE-DELIVERY-001.md",
+        "state": "MATCHED"
+      },
+      {
+        "id": "core-plan",
+        "path": ".brain/evidence/core-delivery-001-plan-01.md",
+        "state": "MATCHED"
+      },
+      {
+        "id": "architecture",
+        "path": "PLATFORM_ARCHITECTURE.md",
+        "state": "MATCHED"
+      },
+      {
+        "id": "readme",
+        "path": "README.md",
+        "state": "MATCHED"
+      },
+      {
+        "id": "contracts",
+        "path": "packages/contracts/src/index.ts",
+        "state": "MATCHED"
+      },
+      {
+        "id": "control-contracts",
+        "path": "packages/control-plane/src/index.ts",
+        "state": "MATCHED"
+      },
+      {
+        "id": "studio-contracts",
+        "path": "packages/studio-model/src/index.ts",
+        "state": "MATCHED"
+      },
+      {
+        "id": "studio-ui",
+        "path": "apps/studio-web/src/main.ts",
+        "state": "MATCHED"
+      },
+      {
+        "id": "core-ui-repair-plan",
+        "path": ".brain/evidence/core-delivery-001-ui-repair-plan-01.md",
+        "state": "MATCHED"
+      }
+    ],
+    "projection": {
+      "taskId": "CORE-DELIVERY-001",
+      "taskTitle": "Complete one actual deployed local core product journey",
+      "taskStatus": "READY",
+      "focusNodeId": "M-CORE",
+      "focusTitle": "Complete continuous deployed local core product journey",
+      "alignment": "ALIGNED"
+    },
+    "managed": {
+      "status": "NOT_READY",
+      "ready": false,
+      "available": false,
+      "profileStatus": "MISSING",
+      "reasons": [
+        {
+          "code": "MANAGED_PROFILE_MISSING",
+          "message": "No managed control profile is configured for the canonical task."
+        }
+      ]
+    }
+  },
+  "canonicalProjection": {
+    "taskId": "CORE-DELIVERY-001",
+    "taskTitle": "Complete one actual deployed local core product journey",
+    "taskStatus": "READY",
+    "focusNodeId": "M-CORE",
+    "focusTitle": "Complete continuous deployed local core product journey",
+    "alignment": "ALIGNED"
+  },
+  "scope": "project-local record consistency; no execution or approval authentication",
+  "readyForImplementation": true,
+  "admission": "READY",
+  "admissionReasons": []
+}

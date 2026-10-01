@@ -1,0 +1,23 @@
+{
+  "schema": "brain.read-only-probe.v1",
+  "date_local": "2026-10-01",
+  "state": "CLIENTS_PRESENT_ENGINE_UNAVAILABLE",
+  "scope": "Read-only existing command availability and local Docker endpoint probes. No install, service start, global config edit, image pull, container start or deployment.",
+  "docker": {
+    "client_available": true,
+    "client_path": "C:\\Users\\Lenovo\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe",
+    "version_reported": "29.8.1 build 4a63305",
+    "context": "default",
+    "endpoint": "npipe:////./pipe/docker_engine",
+    "environment_host_override": false,
+    "environment_context_override": false,
+    "server_probe": "docker version --format '{{json .Server}}'",
+    "server_result": "null and failed to connect: local docker_engine named pipe missing",
+    "execution_qualification": "NOT_RUN"
+  },
+  "wsl": {"command_available": true, "distribution_list": ["Ubuntu"], "execution_qualification": "NOT_RUN"},
+  "podman_available": false,
+  "postgres_command_available": false,
+  "psql_command_available": false,
+  "limits": "PATH/client/list observations only; no Linux, database, container, identity or production qualification. Hosted reference proposals remain unadopted and CP4 remains current. Initial availability PowerShell command had a parser error; corrected array capture succeeded before the separate exact local endpoint/server probes."
+}

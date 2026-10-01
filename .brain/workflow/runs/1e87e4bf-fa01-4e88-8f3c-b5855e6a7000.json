@@ -1,0 +1,143 @@
+{
+  "schema": "brain.evidence-record.v1",
+  "kind": "run",
+  "id": "1e87e4bf-fa01-4e88-8f3c-b5855e6a7000",
+  "taskId": "PLATFORM-005A-CORE",
+  "recipeId": "brain-build",
+  "contractDigest": "09d0ac04d25c84ead4857b38e016c3ad248e7eae36094e3f83d17aba9599f12d",
+  "recipeDigest": "67124401b4ebb22c4673119b81f64f45d43aea195dd54cc2f2ba122c04442323",
+  "candidate": {
+    "files": [
+      {
+        "path": "apps/control-plane/src/build-inputs.ts",
+        "sha256": "8536915eda4de98fca5c2ed23a8a83c1752d8eaf681647d26ff20274b85e9c72"
+      },
+      {
+        "path": "apps/control-plane/src/main.ts",
+        "sha256": "4eea7a1c88c1a97c42b7b6737a2d6e0615d2394bc7e3eae9d1ea0bba0ef9ea7a"
+      },
+      {
+        "path": "apps/control-plane/src/operator-server.ts",
+        "sha256": "0d02e1b136d135807461a1fbbcad423b8aaf7e3c691b6d27503eaf625f3b8989"
+      },
+      {
+        "path": "apps/control-plane/src/runtime-manager.ts",
+        "sha256": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b"
+      },
+      {
+        "path": "apps/control-plane/src/runtime-recovery.ts",
+        "sha256": "02f9fdb51c5cbfac1a12d92ae19e861fdc3ee03626a462979b8a31bea90e3f1d"
+      },
+      {
+        "path": "apps/studio-web/src/main.ts",
+        "sha256": "c1eea89928f157dc3178ff9e2d27e4f2deb744d8fad4beb018b7176166a8d902"
+      },
+      {
+        "path": "docs/STATUS.md",
+        "sha256": "cd5ed9853ea4c11d94a9a859b560b83d6cff6dd0d8ec976f6ec3a43e94c6e8fa"
+      },
+      {
+        "path": "docs/STUDIO_INTEGRATION.md",
+        "sha256": "d7c4a023101c7e5dcc96067eb25cbfb0fb37266290a3d65aca8b6ccaaf87abec"
+      },
+      {
+        "path": "IMPLEMENTATION_STATUS_0.3.md",
+        "sha256": "0ee835c626c5f3e18199431387358dc8c4d02213edfe2e12e75cb3a6724c6be4"
+      },
+      {
+        "path": "packages/control-plane/src/index.ts",
+        "sha256": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5"
+      },
+      {
+        "path": "PLATFORM_ARCHITECTURE.md",
+        "sha256": "91c3a71e9f68d426a9fe3396ad5bcc49a846d4c101bb4369867e3f8115fa4180"
+      },
+      {
+        "path": "README.md",
+        "sha256": "900ad12067a90378fc82b47441ca3473c671e6816d923dbc3bc34aa9c2c38eb9"
+      },
+      {
+        "path": "tests/control-plane-artifacts.test.mjs",
+        "sha256": "1cc88fa06ba21b2a76b93a25360c4d32e0705e875ec8064d0443d1d65a003278"
+      },
+      {
+        "path": "tests/control-plane-http.test.mjs",
+        "sha256": "c3a59b4d3ad0e5f91b18c92c0a1af93e4be634b848f3568f28b8ae65e98e58cb"
+      },
+      {
+        "path": "tests/control-plane-main.test.mjs",
+        "sha256": "b278b7117e7535d6380943756366c20a87f527a7965f7c4e9e8d87786e631861"
+      },
+      {
+        "path": "tests/control-plane.test.mjs",
+        "sha256": "3304f9ff64a01a81d6effb71a723136e6cbc711b7ef31a7924f64f46864884f2"
+      },
+      {
+        "path": "tests/managed-runtime-recovery-store.test.mjs",
+        "sha256": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+      },
+      {
+        "path": "tests/managed-runtime-store.test.mjs",
+        "sha256": "2de1db607bf5aa8a93b81b15eaacc152383634466f80501a0884283598222de1"
+      },
+      {
+        "path": "tests/studio-runtime-ui.test.mjs",
+        "sha256": "3fe82fa020cc550be44dd2fc8c4494373eeb1ee4da0fb6e79b6875ca33d20ef7"
+      },
+      {
+        "path": "tools/runtime-recovery-publish.ps1",
+        "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+      },
+      {
+        "path": "tools/runtime-recovery.mjs",
+        "sha256": "8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35"
+      }
+    ],
+    "digest": "f634e1d37e4aa7e74a7a87c513e73f069a8314a681b70f3730f911b76993d03d"
+  },
+  "recordedAt": "2026-10-01T07:09:09.822Z",
+  "command": {
+    "argv": [
+      "npm.cmd",
+      "run",
+      "build"
+    ],
+    "cwd": "."
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "os": "win32",
+    "scope": "Actual root npm.cmd run build. CP5 exact manifest captured before invocation remains unchanged after build; ancillary Atlas edit is separately reconciled."
+  },
+  "status": "PASSED",
+  "exitCode": 0,
+  "artifacts": [
+    {
+      "sourceRef": ".local/platform-005a-final-build-01.log",
+      "path": ".brain/workflow/artifacts/1e87e4bf-fa01-4e88-8f3c-b5855e6a7000/platform-005a-final-build-01.log",
+      "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+      "bytes": 454
+    },
+    {
+      "sourceRef": ".brain/evidence/platform-005a-final-candidate-01.json",
+      "path": ".brain/workflow/artifacts/1e87e4bf-fa01-4e88-8f3c-b5855e6a7000/platform-005a-final-candidate-01.json",
+      "sha256": "984ddc4b96e360ddb250d0c2d82b4093ffe0be145a49e21b2a54bcf1d37db63b",
+      "bytes": 31819
+    },
+    {
+      "sourceRef": ".brain/evidence/platform-005a-ancillary-change-01.json",
+      "path": ".brain/workflow/artifacts/1e87e4bf-fa01-4e88-8f3c-b5855e6a7000/platform-005a-ancillary-change-01.json",
+      "sha256": "3754f2424433bebb19d4b3928d3ca2e424ccf6a36cf1a345251fe10960f7a21e",
+      "bytes": 748
+    }
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "/root observed actual exec_command completion exit0, saved full npm output, and verified unchanged task candidate."
+  },
+  "limitations": [
+    "Build only; no runtime/browser/provider acceptance from compilation.",
+    "The broad197-file inventory changed solely in unrelated tools/brain-atlas.mjs; no unchanged broad-source claim. CP5 exact task manifest remains stable."
+  ],
+  "integritySha256": "377d0445f50a549f76c80a6be80eb6da5d19ccced590eaf90c7a0097f715c907"
+}

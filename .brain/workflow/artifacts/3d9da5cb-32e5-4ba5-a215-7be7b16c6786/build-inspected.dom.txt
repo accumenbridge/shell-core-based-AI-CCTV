@@ -1,0 +1,66 @@
+- complementary:
+  - text: Quadbridge Product Studio
+  - generic: Paired local operator
+  - navigation:
+    - button "Overview"
+    - button "Products"
+    - button "Modules"
+    - button "Ui"
+    - button "Backend"
+    - button "Ai"
+    - button "Data"
+    - button "Builds"
+    - button "Artifacts"
+    - button "Runtime Instances"
+    - button "Environments"
+    - button "Deployments"
+    - button "Audit"
+    - button "Operations"
+- main:
+  - generic: paired local control plane
+  - heading "Builds" [level=1]
+  - generic: Stored source records and validated local plans.
+  - generic: v0.3.0
+  - button "Disconnect"
+  - paragraph: Build requests run the fixed local compile and export recipe. Cancellation is available while work is active.
+  - alert: Build request admitted.
+  - article:
+    - heading "core-ops-1002@1.0.0" [level=3]
+    - generic: 7527b752-96f8-4458-b6c9-76eedc4ce7b7 · attempt 1
+    - generic: SUCCEEDED
+    - paragraph: Verified local snapshot
+    - button "Inspect verified export"
+    - button "View log"
+    - generic: "VERIFIED LOCAL EXPORT Snapshot identity: d8703039-cf47-4dc0-9cc0-85081d0ce0c8 Snapshot digest: f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7 Release digest: ed9f4c9d926d19ea431342de5fffdb2237233165a0344677054a4ff2a1e36419"
+  - heading "Request a local build" [level=2]
+  - paragraph: Confirm each request. A new idempotency key starts a distinct bounded build request.
+  - article:
+    - heading "Operations + Knowledge" [level=3]
+    - paragraph: combined@0.2.1 · 3 modules
+    - checkbox "I want to compile and export this product locally."
+    - text: I want to compile and export this product locally.
+    - button "Request build"
+  - article:
+    - heading "Quadbridge Core Operations" [level=3]
+    - paragraph: core-ops-1002@1.0.0 · 3 modules
+    - checkbox "I want to compile and export this product locally."
+    - text: I want to compile and export this product locally.
+    - button "Request build"
+  - article:
+    - heading "Knowledge Library" [level=3]
+    - paragraph: knowledge@0.2.1 · 2 modules
+    - checkbox "I want to compile and export this product locally."
+    - text: I want to compile and export this product locally.
+    - button "Request build"
+  - article:
+    - heading "Neutral shell" [level=3]
+    - paragraph: neutral@0.2.0 · 0 modules
+    - checkbox "I want to compile and export this product locally."
+    - text: I want to compile and export this product locally.
+    - button "Request build"
+  - article:
+    - heading "Service Desk" [level=3]
+    - paragraph: service-desk@0.2.0 · 1 modules
+    - checkbox "I want to compile and export this product locally."
+    - text: I want to compile and export this product locally.
+    - button "Request build"

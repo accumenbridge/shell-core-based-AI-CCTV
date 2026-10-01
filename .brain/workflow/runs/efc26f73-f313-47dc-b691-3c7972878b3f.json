@@ -1,0 +1,145 @@
+{
+  "schema": "brain.evidence-record.v1",
+  "kind": "run",
+  "id": "efc26f73-f313-47dc-b691-3c7972878b3f",
+  "taskId": "BRAIN-005",
+  "recipeId": "brain-full-suite",
+  "contractDigest": "dfb64576342f002cc03f88810169062c2e705f3d4880758de90ddfd2998c5b40",
+  "recipeDigest": "fedff282ea3ba6882b328eed16f8a368f4dbccfa83c323596c9b64d3611b235b",
+  "candidate": {
+    "files": [
+      {
+        "path": "docs/brain/README.md",
+        "sha256": "e96c0327708388f4d9e43a745bade1885a93075bfa878d85c55def26fd8d5f31"
+      },
+      {
+        "path": "README.md",
+        "sha256": "23c5b6449aadac650acfad8d11f99e3871cf780b663fd66cf8129aa11b65a960"
+      },
+      {
+        "path": "tests/brain-atlas.test.mjs",
+        "sha256": "d2b42ca842123b054869618b2ccadbdefe69079fa20380217c8ddda30ab4c42d"
+      },
+      {
+        "path": "tests/brain-control.test.mjs",
+        "sha256": "427c7254288a99bb7dfead1502c43864199cfc142e965b703f9a4a08c333ba4d"
+      },
+      {
+        "path": "tests/brain-live.test.mjs",
+        "sha256": "1b09ee2a3245cc081556739e1588a60330ed8813f2dfe4c46de1e1686f12c218"
+      },
+      {
+        "path": "tests/brain-workflow.test.mjs",
+        "sha256": "3f80033e866c0182af08e68ddba7716f47ab31d84fc703c75cd5aabddb194fdf"
+      },
+      {
+        "path": "tools/brain-atlas.mjs",
+        "sha256": "a36e611b4f9cc2e57e92140508aaebc2474b081f3a25b855eae02c88633e9dfd"
+      },
+      {
+        "path": "tools/brain-control.mjs",
+        "sha256": "bda70affa741477f2e46f6042aa8c508aa4e5f6bdc0775c43fe63a3d9b46a9b4"
+      },
+      {
+        "path": "tools/brain-core.mjs",
+        "sha256": "76cb2593d8482b744fdd716f2afe03817e77cb43622c3d91a46e6d29104febc3"
+      },
+      {
+        "path": "tools/brain-live-ui.mjs",
+        "sha256": "557090ab6b1a9a0a6d48822c5393f01efd5555ee077db5131df6e74272273b51"
+      },
+      {
+        "path": "tools/brain-live.mjs",
+        "sha256": "da7dd0aed0f143a9f52b16df270f920a62aedd401f2a9a256182eac3b9f6e1f9"
+      },
+      {
+        "path": "tools/brain-readiness.mjs",
+        "sha256": "1b64287430cf87ae11d0ae9b280ee635705605c94568ef35481c589a6326471f"
+      },
+      {
+        "path": "tools/brain.mjs",
+        "sha256": "b092e88771a467230dd65c2dcdee548e5ff296320dcff4173f7d00ff2d8d0016"
+      }
+    ],
+    "digest": "421397fde93da06f05bb71a317f9c2ea351bc32ceea637088bba3a174268d525"
+  },
+  "recordedAt": "2026-10-01T11:47:16.072Z",
+  "command": {
+    "argv": [
+      "npm.cmd",
+      "test"
+    ],
+    "cwd": "."
+  },
+  "environment": {
+    "platform": "win32",
+    "node": "v24.19.0",
+    "observer": "Root actual exec session6627",
+    "command": "npm.cmd test"
+  },
+  "status": "FAILED",
+  "exitCode": 1,
+  "counts": {
+    "tests": 308,
+    "passed": 305,
+    "failed": 2,
+    "cancelled": 0,
+    "skipped": 1,
+    "todo": 0
+  },
+  "artifacts": [
+    {
+      "sourceRef": ".local/brain-005-full-suite.log",
+      "path": ".brain/workflow/artifacts/efc26f73-f313-47dc-b691-3c7972878b3f/brain-005-full-suite.log",
+      "sha256": "574d0262455ac75d1ec18720cf87a95aa6342b666eef79f52dc5ce173183b3b9",
+      "bytes": 31752
+    },
+    {
+      "sourceRef": ".local/brain-005-full-suite-execution.json",
+      "path": ".brain/workflow/artifacts/efc26f73-f313-47dc-b691-3c7972878b3f/brain-005-full-suite-execution.json",
+      "sha256": "4968409af2ade544f067eadd2c6dd2dd15bec169cebc049ce1b9aeec9dda2e7a",
+      "bytes": 211
+    },
+    {
+      "sourceRef": ".local/brain-005-full-suite-observation.json",
+      "path": ".brain/workflow/artifacts/efc26f73-f313-47dc-b691-3c7972878b3f/brain-005-full-suite-observation.json",
+      "sha256": "b28be401f13ca3a73f1f44f1a3780f96e03191c73e539781ca28455beed4a532",
+      "bytes": 2512
+    },
+    {
+      "sourceRef": ".local/brain-005-suite-before-brain.json",
+      "path": ".brain/workflow/artifacts/efc26f73-f313-47dc-b691-3c7972878b3f/brain-005-suite-before-brain.json",
+      "sha256": "a1ee9c79491bbf4b4dbfb38cc71a6164f211dfe0565b388e732ff795a038ff0f",
+      "bytes": 421828
+    },
+    {
+      "sourceRef": ".local/brain-005-suite-after-brain.json",
+      "path": ".brain/workflow/artifacts/efc26f73-f313-47dc-b691-3c7972878b3f/brain-005-suite-after-brain.json",
+      "sha256": "a1ee9c79491bbf4b4dbfb38cc71a6164f211dfe0565b388e732ff795a038ff0f",
+      "bytes": 421828
+    },
+    {
+      "sourceRef": ".local/brain-005-suite-before-core.json",
+      "path": ".brain/workflow/artifacts/efc26f73-f313-47dc-b691-3c7972878b3f/brain-005-suite-before-core.json",
+      "sha256": "3110121cd270868e450692015500d2e1ab088157e9015ffd0195156b50bfe74b",
+      "bytes": 488457
+    },
+    {
+      "sourceRef": ".local/brain-005-suite-after-core.json",
+      "path": ".brain/workflow/artifacts/efc26f73-f313-47dc-b691-3c7972878b3f/brain-005-suite-after-core.json",
+      "sha256": "3110121cd270868e450692015500d2e1ab088157e9015ffd0195156b50bfe74b",
+      "bytes": 488457
+    }
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "Root actual exec session6627 finished exit1. Fixed npm.cmd test rebuilt source and ran308tests; all captured Brain13 and CORE196 hashes/contracts unchanged before/after. No source or test-policy modification during run."
+  },
+  "limitations": [
+    "The actual required suite exited1; this is not a successful full-repository qualification.",
+    "Current run has one EPERM blocked skip. Earlier separately blocked native staging-lock observation remains historical; this run passed that check without policy changes.",
+    "Only scoped candidate and contract equality is asserted, not whole-repository immutability or all descendant process absence.",
+    "No source changes, policy changes, skip flags or timeout changes were made by this suite observer."
+  ],
+  "integritySha256": "ce2ba3527b0a12f14cde90dcfbfafeaa68092073e798c72af4374f364f9d1344"
+}

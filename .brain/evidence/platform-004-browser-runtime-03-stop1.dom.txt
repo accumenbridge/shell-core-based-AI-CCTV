@@ -1,0 +1,51 @@
+- complementary:
+  - text: Quadbridge Product Studio
+  - generic: Paired local operator
+  - navigation:
+    - button "Overview"
+    - button "Products"
+    - button "Modules"
+    - button "Ui"
+    - button "Backend"
+    - button "Ai"
+    - button "Data"
+    - button "Builds"
+    - button "Artifacts"
+    - button "Runtime Instances"
+    - button "Environments"
+    - button "Deployments"
+    - button "Audit"
+    - button "Operations"
+- main:
+  - generic: paired local control plane
+  - heading "Runtime Instances" [level=1]
+  - generic: Stored source records and validated local plans.
+  - generic: v0.3.0
+  - button "Disconnect"
+  - alert: The runtime is STOPPED with an empty process tree and cleaned execution recorded.
+  - heading "Managed local runtime" [level=2]
+  - generic: local-only
+  - paragraph: Launch rechecks the pinned local process-owner profile; stored runtimes are never recovered by PID.
+  - paragraph: "Physical slot: EMPTY · 0 reserved bytes. UNKNOWN retains the slot and data until its original process owner proves an empty process tree."
+  - paragraph: A fixed local process starts only an exact promoted release. No hosted deployment or provider is attached.
+  - heading "Promoted releases" [level=2]
+  - paragraph: Choose the exact product version; start and restart require confirmation.
+  - article:
+    - heading "combined@0.2.0" [level=3]
+    - generic: Promoted local immutable release
+    - generic: promoted
+    - paragraph: 68944a5fd29630ade00bbfd73fb04272b4a472a26c36a3fb49792c614086562c
+    - checkbox "Start this exact promoted local release on this machine."
+    - text: Start this exact promoted local release on this machine.
+    - button "Start local runtime"
+  - heading "Runtime instances" [level=2]
+  - article:
+    - heading "combined@0.2.0" [level=3]
+    - generic: runtime-6b905e58-9fde-4a4c-81e3-893000cf257f · attempt 1
+    - generic: STOPPED
+    - paragraph: Artifact 68944a5fd29630ade00bbfd73fb04272b4a472a26c36a3fb49792c614086562c
+    - paragraph: Separate worker required · positively-stopped
+    - button "Inspect runtime"
+    - checkbox "Restart this same stopped instance and release."
+    - text: Restart this same stopped instance and release.
+    - button "Restart exact runtime"

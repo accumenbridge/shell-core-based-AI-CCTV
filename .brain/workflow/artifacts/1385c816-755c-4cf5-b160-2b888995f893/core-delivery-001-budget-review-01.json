@@ -1,0 +1,49 @@
+{
+  "schema": "quadbridge.attributed-source-review.v1",
+  "taskId": "CORE-DELIVERY-001",
+  "reportedReviewer": "/root/repo_brain_architect",
+  "reportedRole": "Sol/high independent architect/reviewer",
+  "outcome": "APPROVED_FOR_SOURCE_AND_FOCUSED_SCOPE",
+  "attributionLimit": "Reported review identity and observations are not authenticated model identity or external acceptance.",
+  "reviewedPaths": [
+    {"path": "apps/studio-web/src/main.ts", "sha256": "66b19078409bdb9ded87d47fdade294ef7659a7e3bd0965473ee97c1656617a0"},
+    {"path": "tests/studio-product-editor.test.mjs", "sha256": "77218a3a646d9eb4ab5822d10d795da71b3b04c1161b58ed8cb7e25c819cc0d3"},
+    {"path": "tests/build-worker-process.test.mjs", "sha256": "03e30051a9b7591c2bd7d2a30b4ece3e4be28686ab71a31daf4520fa5081195c"}
+  ],
+  "pinsMatchedBeforeAndAfter": true,
+  "candidateBinding": {
+    "contextPath": ".local/core-delivery-001-live-context.json",
+    "contractDigest": "e0dccd6167a0cb5089fa4eee7892831becc744167780ae043065b1d142ae7065",
+    "candidateDigest": "b44af13a43163ecd15c7c5f0f50e05f92dd31b9957d0955c55ee834b32798436",
+    "fileCount": 196,
+    "allExplicitFileHashesIndependentlyMatched": true,
+    "aggregateDigestIndependentlyRecomputed": true,
+    "beforeAndAfterContextsMatched": [".local/core-delivery-001-budget-before-parsed.json", ".local/core-delivery-001-budget-after-parsed.json"],
+    "scopeLimit": "The explicit full manifest binds the reviewed source; detailed incremental review concerns the three paths. Separate Brain changes and full delivery acceptance are not inferred."
+  },
+  "exactDelta": {
+    "previousCandidate": "90fd7ce4e8a423fc38ef7ac9743ed5a591d7e6f2f55c4f2b82c8c0d81f8a25dc",
+    "previousTestSha256": "62c0c9be3eb650ecf8d964fdf75e8c9bfd729fb6610f24d362d3d36f1b36bc46",
+    "description": "Only the first native cancellation/timeout test's timeoutMs:6000 override was removed, using its existing 15000 ms fixture default.",
+    "independentProof": "Restoring that one string in memory reproduces the previous entire test SHA. Substituting only that old file SHA into the current manifest reproduces the previous aggregate candidate digest. The two UI pins are unchanged.",
+    "preservedAssertions": ["Advancing real descendant heartbeat before cancellation", "CANCELLED and CLEAN", "Observed descendant exit", "Attempt directory removed after job proof", "Separate FAILED timeout with BUILD_TIMEOUT", "Timeout descendant exit, CLEAN and directory absence"],
+    "applicationOrHelperChange": false,
+    "priorUiReviewRef": ".brain/evidence/core-delivery-001-ui-repair-review-01.json"
+  },
+  "executedEvidenceRead": {
+    "build": {"path": ".local/core-delivery-001-budget-build-01.log", "sha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b", "rawExitCode": 0},
+    "nativeFocused": {"path": ".local/core-delivery-001-budget-native-01.tap.txt", "sha256": "20878167b557cad9e220346643b0e81d158a1392154ca8a51d7225fd37f0fe6a", "rawExitCode": 0, "tests": 1, "passed": 1, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0},
+    "savedDefinitionFocused": {"path": ".local/core-delivery-001-budget-build-artifact-01.tap.txt", "sha256": "621f99d79a5e3af786369c5908069f830d12ca0f49fb110fa81f25598d3977bf", "rawExitCode": 0, "tests": 1, "passed": 1, "failed": 0, "cancelled": 0, "skipped": 0, "todo": 0}
+  },
+  "preservedHistory": {
+    "fullSuitePath": ".local/brain-005-full-suite.log",
+    "tests": 308, "passed": 305, "failed": 2, "cancelled": 0, "skipped": 1, "todo": 0,
+    "failures": [
+      "Native cancellation case failed its first descendant marker wait before cancellation assertions. Competing test budgets justify the correction; exact historical BUILD_TIMEOUT is not established.",
+      "Saved-definition build/register case failed because fixed registry publisher lacked one valid physical result proof. Its later focused pass is supporting current evidence, not a diagnosis or source repair of that historical failure."
+    ]
+  },
+  "blockersInReviewedDelta": [],
+  "pendingGates": ["Matching coordinated required full suite", "Actual continuous ordinary local core browser/domain/runtime/recovery journey and original-owner closure"],
+  "limitations": ["Existing blocked file import remains blocked and is not bypassed by the in-page save control.", "Focused native and saved-definition passes do not establish whole-platform, hosted/provider or production acceptance.", "Read-only reviewer inspected source and existing logs and performed hash computations only; no tests, build, browser or native launches, maintained edits or checkpoint changes."]
+}

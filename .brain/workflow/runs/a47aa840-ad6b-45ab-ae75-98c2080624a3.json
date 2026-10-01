@@ -1,0 +1,78 @@
+{
+  "schema": "brain.evidence-record.v1",
+  "kind": "run",
+  "id": "a47aa840-ad6b-45ab-ae75-98c2080624a3",
+  "taskId": "PLATFORM-005A",
+  "recipeId": "brain-legacy-import",
+  "contractDigest": "c5b8287742af67d42dbe3a46657cc4a373adadaf3a29d5c0cdf38a8d22c23bb9",
+  "recipeDigest": "28982ad3309b366a5cfa20df321724dd6b7466f92fb1935887fdaba0aa564449",
+  "candidate": {
+    "files": [
+      {
+        "path": ".brain/tasks/PLATFORM-005A.md",
+        "sha256": "90fc8c4a6b0d5ce11b596e6bba52305883a38027010d2f0882f7f6a70dce4fd7"
+      }
+    ],
+    "digest": "c3286b4764edbc48f8584c873a23341fb35bfb5da9247db3f34f1a82dfd2ff21"
+  },
+  "recordedAt": "2026-10-01T06:00:30.740Z",
+  "command": {
+    "argv": [
+      "manual-context-import"
+    ],
+    "cwd": "."
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "win32",
+    "scope": "Point-in-time legacy document import; no platform command executed."
+  },
+  "status": "NOT_RUN",
+  "exitCode": null,
+  "artifacts": [
+    {
+      "sourceRef": ".local/brain-001/adoption-observation.json",
+      "path": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-observation.json",
+      "sha256": "206970affbaeb1d7c99e07bcda7edab9049e08df99a78815b7f8617b20ddae1d",
+      "bytes": 1258
+    },
+    {
+      "sourceRef": ".local/brain-001/adoption-0-project.json",
+      "path": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-0-project.json",
+      "sha256": "74c29db18a55d9ad94f9c390801b5ba9071f8137404ce92d130670a983be765f",
+      "bytes": 1163
+    },
+    {
+      "sourceRef": ".local/brain-001/adoption-1-PROGRESS.md",
+      "path": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-1-PROGRESS.md",
+      "sha256": "31d7ff7edf4c4f34d49ac47b78d9f9b86c142803580c872edea95173dff8329e",
+      "bytes": 29824
+    },
+    {
+      "sourceRef": ".local/brain-001/adoption-2-checks.json",
+      "path": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-2-checks.json",
+      "sha256": "5d7909f482a384e15d8a722ff3636225d961bdcfc68ce5ca3077ccb41470ef98",
+      "bytes": 14289
+    },
+    {
+      "sourceRef": ".local/brain-001/adoption-3-PLATFORM-005A.md",
+      "path": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-3-PLATFORM-005A.md",
+      "sha256": "90fc8c4a6b0d5ce11b596e6bba52305883a38027010d2f0882f7f6a70dce4fd7",
+      "bytes": 4902
+    },
+    {
+      "sourceRef": ".local/brain-001/adoption-4-platform-004-result.json",
+      "path": ".brain/workflow/artifacts/a47aa840-ad6b-45ab-ae75-98c2080624a3/adoption-4-platform-004-result.json",
+      "sha256": "1cbbb30533f5323096e11208a084073a49d3a2efd4bc37f6750f7a2f8ff99b74",
+      "bytes": 4992
+    }
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "/root observed and copied existing platform documents during authorized BRAIN-001 adoption."
+  },
+  "limitations": [
+    "NOT_RUN imported context; cannot qualify platform source, identity or acceptance."
+  ],
+  "integritySha256": "9e9e70f1c20b768be1044b19cb2127a99c15037cbee5ab94cef51e9403e57fe0"
+}

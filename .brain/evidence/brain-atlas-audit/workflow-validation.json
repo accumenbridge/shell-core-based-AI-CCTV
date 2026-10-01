@@ -1,0 +1,6 @@
+{
+  "command": "node tools/brain.mjs validate",
+  "recordedAt": "2026-10-01T07:52:19.1520708Z",
+  "exitCode": 0,
+  "output": "VALID — revision 13, 16 records, 13 committed events"
+}

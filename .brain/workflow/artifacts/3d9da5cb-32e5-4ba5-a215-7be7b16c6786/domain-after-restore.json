@@ -1,0 +1,252 @@
+{
+  "schema": "quadbridge.core-delivery-001.domain-observation.v1",
+  "observationOnly": true,
+  "fixtureId": "252ed9e2-2097-4d49-8e78-cbbc7fc4e100",
+  "tenant": "customer-a",
+  "fixtureOwner": {
+    "state": "PRESENT",
+    "exactPrivateRootBound": true,
+    "controlPlaneDatabase": "PRESENT"
+  },
+  "runtime": {
+    "state": "PRESENT",
+    "identity": {
+      "instanceId": "runtime-2cd07972-b233-4112-a510-39708d908d83",
+      "productId": "core-ops-1002",
+      "version": "1.0.0",
+      "artifactDigest": "f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7",
+      "profileDigest": "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1",
+      "configDigest": "eda38d55d78be26ee9fbbeff9f50cecb1f5a4d9f62af0ebce4bff6508cb5cac5",
+      "adapterDigest": "ff15b95f4a9c0cfa2dd4b50dd1e993937ca8ecaa59b2c3a7b532400d5bb6df08",
+      "toolchainDigest": "d6481e2b7ea008dd04fbb0bfcf2d1cc3741a8a639dcc4edc0c8e73bd9242853d",
+      "recipeDigest": "ff53ead9d28da5b75ad5d9ff1cfd664db80041dfba78984c21d886e67fb6af5d"
+    },
+    "lifecycle": {
+      "instanceState": "STOPPED",
+      "currentAttempt": 3,
+      "attempt": {
+        "id": "12ac4a44-5407-4901-b4dc-429587c56275",
+        "number": 3,
+        "commandId": "5630d44f-ec17-442b-aee3-553e055b4939",
+        "commandKind": "RESTART",
+        "commandState": "SUCCEEDED",
+        "state": "STOPPED",
+        "physicalState": "EMPTY",
+        "emptyObserved": true,
+        "helperClosed": true,
+        "executionClean": true,
+        "apiReady": true,
+        "workerRequired": true,
+        "workerAttached": true,
+        "stopCommandKind": "STOP",
+        "stopCommandState": "SUCCEEDED"
+      },
+      "preparationComplete": true
+    },
+    "promotedArtifact": {
+      "state": "PRESENT",
+      "identityMatches": true,
+      "artifactDigest": "f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7",
+      "buildId": "7527b752-96f8-4458-b6c9-76eedc4ce7b7",
+      "snapshotId": "d8703039-cf47-4dc0-9cc0-85081d0ce0c8",
+      "productId": "core-ops-1002",
+      "version": "1.0.0",
+      "snapshotDigest": "f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7",
+      "promotedRelease": {
+        "state": "PRESENT",
+        "productId": "core-ops-1002",
+        "version": "1.0.0",
+        "artifactDigest": "f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7",
+        "buildId": "7527b752-96f8-4458-b6c9-76eedc4ce7b7"
+      }
+    }
+  },
+  "ownerData": {
+    "state": "PRESENT",
+    "exactInstanceArtifactPathBound": true,
+    "enrollment": {
+      "state": "PRESENT",
+      "identityMatches": true
+    },
+    "accessDatabase": "PRESENT",
+    "credentials": {
+      "state": "PRESENT",
+      "sha256": "f9927c449db19f0e86681592b338b046ec162397219eedf926615d53c7710597"
+    }
+  },
+  "serviceDesk": {
+    "database": "PRESENT",
+    "requests": {
+      "state": "PRESENT",
+      "rows": [
+        {
+          "id": "4b5496d7-3d6b-4fd6-99c2-669898e603fe",
+          "tenant": "customer-a",
+          "title": "Core delivery request",
+          "state": "OPEN",
+          "version": 1,
+          "source": null,
+          "created": 1790856762289
+        },
+        {
+          "id": "2c29b42d-eb2f-417e-96c0-bcb6dc54dd97",
+          "tenant": "customer-a",
+          "title": "Core operations note",
+          "state": "OPEN",
+          "version": 1,
+          "source": {
+            "productId": "core-ops-1002",
+            "instanceId": "runtime-2cd07972-b233-4112-a510-39708d908d83",
+            "resourceType": "knowledge.document",
+            "resourceId": "5afd8cbe-637c-47ad-9a70-3bd523793a0a",
+            "version": 1
+          },
+          "created": 1790856826038
+        }
+      ]
+    }
+  },
+  "knowledge": {
+    "database": "PRESENT",
+    "documents": {
+      "state": "PRESENT",
+      "rows": [
+        {
+          "id": "5afd8cbe-637c-47ad-9a70-3bd523793a0a",
+          "tenant": "customer-a",
+          "title": "Core operations note",
+          "version": 1,
+          "state": "READY",
+          "created": 1790856781386,
+          "indexJob": {
+            "id": "35a1447e-f1f4-41cf-9e14-04b3cb8a9774",
+            "kind": "knowledge.index.v1",
+            "state": "SUCCEEDED",
+            "attempt": 1
+          }
+        }
+      ]
+    },
+    "technicalJobs": {
+      "state": "PRESENT",
+      "table": "PRESENT",
+      "jobs": [
+        {
+          "id": "35a1447e-f1f4-41cf-9e14-04b3cb8a9774",
+          "kind": "knowledge.index.v1",
+          "state": "SUCCEEDED",
+          "attempt": 1
+        }
+      ]
+    }
+  },
+  "handoff": {
+    "database": "PRESENT",
+    "records": {
+      "state": "PRESENT",
+      "rows": [
+        {
+          "id": "4b033789-0bba-47c8-9d63-d5422554f66e",
+          "tenant": "customer-a",
+          "documentId": "5afd8cbe-637c-47ad-9a70-3bd523793a0a",
+          "documentVersion": 1,
+          "title": "Core operations note",
+          "bindingRevision": "local-link-v2",
+          "state": "ACCEPTED",
+          "protocolVersion": 2,
+          "job": {
+            "id": "77feb468-c762-4f81-a088-22e43010b2f9",
+            "kind": "handoff.deliver.v1",
+            "state": "SUCCEEDED",
+            "attempt": 1
+          },
+          "originalCommand": {
+            "state": "PRESENT",
+            "commandId": "5cea0916-377f-4ec8-ab4f-d13895f3ff6c"
+          },
+          "relationship": {
+            "sourceDocument": {
+              "id": "5afd8cbe-637c-47ad-9a70-3bd523793a0a",
+              "version": 1,
+              "title": "Core operations note"
+            },
+            "destination": {
+              "productId": "core-ops-1002",
+              "instanceId": "runtime-2cd07972-b233-4112-a510-39708d908d83",
+              "tenantId": "customer-a"
+            },
+            "bindingKey": "{\"actor\":{\"id\":\"knowledge-link\",\"kind\":\"service\"},\"contract\":\"desk.requests.create.v2\",\"id\":\"core-desk-link\",\"instance\":\"runtime-2cd07972-b233-4112-a510-39708d908d83\",\"mode\":\"local\",\"origin\":null,\"path\":\"/api/requests/commit\",\"product\":\"core-ops-1002\",\"revision\":\"local-link-v2\",\"tenantMap\":{\"customer-a\":\"customer-a\",\"customer-b\":\"customer-b\"}}",
+            "deliveryCommandId": "handoff.4b033789-0bba-47c8-9d63-d5422554f66e",
+            "deliveryState": "COMMITTED",
+            "destinationMatchesRuntime": true,
+            "linkedTargetReference": {
+              "productId": "core-ops-1002",
+              "instanceId": "runtime-2cd07972-b233-4112-a510-39708d908d83",
+              "tenantId": "customer-a",
+              "resourceType": "desk.request",
+              "resourceId": "2c29b42d-eb2f-417e-96c0-bcb6dc54dd97",
+              "version": 1
+            },
+            "targetReferenceMatchesReceipt": true,
+            "targetSourceMatchesDocument": true
+          },
+          "destinationReceipt": {
+            "state": "PRESENT",
+            "receipt": {
+              "schema": "quadbridge.command-receipt.v1",
+              "contract": "desk.requests.create.v2",
+              "outcome": "COMMITTED",
+              "commandId": "handoff.4b033789-0bba-47c8-9d63-d5422554f66e",
+              "actor": {
+                "kind": "service",
+                "id": "knowledge-link"
+              },
+              "destination": {
+                "productId": "core-ops-1002",
+                "instanceId": "runtime-2cd07972-b233-4112-a510-39708d908d83",
+                "tenantId": "customer-a"
+              },
+              "resource": {
+                "type": "desk.request",
+                "id": "2c29b42d-eb2f-417e-96c0-bcb6dc54dd97",
+                "version": 1
+              }
+            }
+          },
+          "linkedTarget": {
+            "state": "PRESENT",
+            "rows": [
+              {
+                "id": "2c29b42d-eb2f-417e-96c0-bcb6dc54dd97",
+                "tenant": "customer-a",
+                "title": "Core operations note",
+                "state": "OPEN",
+                "version": 1,
+                "source": {
+                  "productId": "core-ops-1002",
+                  "instanceId": "runtime-2cd07972-b233-4112-a510-39708d908d83",
+                  "resourceType": "knowledge.document",
+                  "resourceId": "5afd8cbe-637c-47ad-9a70-3bd523793a0a",
+                  "version": 1
+                },
+                "created": 1790856826038
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "technicalJobs": {
+      "state": "PRESENT",
+      "table": "PRESENT",
+      "jobs": [
+        {
+          "id": "77feb468-c762-4f81-a088-22e43010b2f9",
+          "kind": "handoff.deliver.v1",
+          "state": "SUCCEEDED",
+          "attempt": 1
+        }
+      ]
+    }
+  }
+}

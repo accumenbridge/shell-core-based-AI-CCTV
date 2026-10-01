@@ -1,0 +1,109 @@
+{
+  "schema": "brain.recipe-catalog.v1",
+  "recipes": [
+    {
+      "id": "brain-build",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "build"
+      ],
+      "cwd": ".",
+      "description": "Compile current maintained source before testing.",
+      "criterionIds": [
+        "BRAIN-REGRESSION"
+      ],
+      "evidenceScope": "Actual build exit and output; no runtime qualification."
+    },
+    {
+      "id": "brain-focused",
+      "argv": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "tests/brain-workflow.test.mjs"
+      ],
+      "cwd": ".",
+      "description": "Exercise Brain CLI, records, acceptance and checkpoint behavior in isolated temporary repositories.",
+      "criterionIds": [
+        "BRAIN-CLI",
+        "BRAIN-RECORDS",
+        "BRAIN-CHECKPOINT",
+        "BRAIN-ACCEPTANCE"
+      ],
+      "evidenceScope": "Actual local tool integration; no product browser/provider qualification."
+    },
+    {
+      "id": "brain-full-suite",
+      "argv": [
+        "npm.cmd",
+        "test"
+      ],
+      "cwd": ".",
+      "description": "Execute the repository's required build and regression suite; preserve named blocked and skipped gates.",
+      "criterionIds": [
+        "BRAIN-REGRESSION"
+      ],
+      "evidenceScope": "Actual full-suite invocation. Any blocked/skipped platform profile gates remain separately unqualified."
+    },
+    {
+      "id": "brain-adoption",
+      "argv": [
+        "node",
+        "tools/brain.mjs",
+        "validate"
+      ],
+      "cwd": ".",
+      "description": "Validate adopted current pointer, contracts, records, canonical mappings and generated view.",
+      "criterionIds": [
+        "BRAIN-ADOPTION"
+      ],
+      "evidenceScope": "Project-local metadata consistency; not authenticated authority or fresh platform execution."
+    },
+    {
+      "id": "brain-legacy-import",
+      "argv": [
+        "manual-context-import"
+      ],
+      "cwd": ".",
+      "description": "Archive observed legacy platform documents without executing or qualifying any platform check.",
+      "criterionIds": [
+        "PLATFORM-CONTEXT"
+      ],
+      "evidenceScope": "NOT_RUN reported import only; immutable copies preserve the observed migration source."
+    },
+    {
+      "id": "brain-control-focused",
+      "argv": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "tests/brain-control.test.mjs",
+        "tests/brain-live.test.mjs"
+      ],
+      "cwd": ".",
+      "description": "Exercise managed Brain control and live project oversight in isolated projects.",
+      "criterionIds": [
+        "BRAIN-RECORDS",
+        "BRAIN-CHECKPOINT",
+        "BRAIN-ACCEPTANCE",
+        "BRAIN-ADOPTION"
+      ],
+      "evidenceScope": "Actual local controller/HTTP tests; live model and browser observations remain separately recorded."
+    },
+    {
+      "id": "core-live-journey",
+      "argv": [
+        "manual-core-live-journey"
+      ],
+      "cwd": ".",
+      "description": "Reported actual ordinary paired Studio and deployed immutable local domain/runtime/recovery journey; inert evidence recipe, not a dispatcher.",
+      "criterionIds": [
+        "CORE-JOURNEY",
+        "CORE-DOMAIN",
+        "CORE-RECOVERY"
+      ],
+      "evidenceScope": "Actual browser/native/domain evidence with precise candidate and immutable deployment identity, no prebuilt shortcuts; blocked import remains separate."
+    }
+  ]
+}

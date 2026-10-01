@@ -1,0 +1,23 @@
+flowchart LR
+  subgraph Shared[Maintained framework packages]
+  C[Neutral contracts]
+  H[Backend host]
+  S[Web shell]
+  P[Composition]
+  end
+  A[Service Desk domain] --> C
+  B[Knowledge domain] --> C
+  H --> C
+  S --> C
+  P --> C
+  R1[Service Desk product] --> A
+  R1 --> H
+  R1 --> S
+  R2[Knowledge product] --> B
+  R2 --> H
+  R2 --> S
+  R3[Combined solution] --> A
+  R3 --> B
+  N[Neutral product] --> H
+  N --> S
+  Note[No domain import points back into the shared foundation]

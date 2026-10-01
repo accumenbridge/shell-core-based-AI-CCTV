@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trip stops</title>
+</head>
+<body>
+  <main>
+    <h1>Trip stops</h1>
+    <p id="count" aria-live="polite">0</p>
+    <button id="add" type="button">Add a stop</button>
+  </main>
+  <script>
+    const count = document.getElementById("count");
+    const button = document.getElementById("add");
+    button.addEventListener("click", () => {
+      count.textContent = String(Number(count.textContent) + 1);
+    });
+  </script>
+</body>
+</html>

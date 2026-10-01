@@ -1,0 +1,61 @@
+{
+  "schema": "quadbridge.native-runtime-protocol-evidence.v1",
+  "recordedAt": "2026-10-01T09:01:09.9032259+05:30",
+  "maintenanceChange": "Removed unused manager and supervisor hash assertions from the direct-helper regression; the initial qualified run remains preserved in runtime-protocol-run-01.json.",
+  "source": {
+    "test": {
+      "path": "tests/runtime-protocol.test.mjs",
+      "sha256": "8f444013395030d4ee00cbaceaa29449f003034971652d38f03fa0403da6052e"
+    },
+    "fixture": {
+      "path": "tests/fixtures/runtime-protocol-heartbeat.mjs",
+      "sha256": "33b21de828c42ab45def79eabc2c87d87bfc4cecf9862686e84e062674f75e0a"
+    },
+    "helperSha256": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9",
+    "observedSupervisorSha256": "e8bee18aed4399433f6a85cf653c78401f2b5cb8576aee8d8a9da61df33e9d52",
+    "observedManagerSha256": "9f75e766a5f50d85dd4f4a6d8eef7400bd57faa0ef180af20d458daab7876993"
+  },
+  "selectedProfile": {
+    "hostHelperSha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+    "hostHelperVersion": "7.6.5",
+    "policy": "RemoteSigned",
+    "nodeVersion": "v24.19.0",
+    "nodeSha256": "3602f2bb1a10f2cbab4c36886218a33c1ab3db87290e73b033c46c77147d0237"
+  },
+  "build": {
+    "recipe": "npm run build",
+    "log": ".local/platform-004-validation/runtime-protocol-build-02.log",
+    "logSha256": "bb447b1012430c029eca58a265af2f8e3aaba014e453a259c0da15f5f226775b",
+    "exitCode": 0,
+    "containsExitCodeMarker": true
+  },
+  "focusedRun": {
+    "recipe": "node --test --test-reporter=tap tests/runtime-protocol.test.mjs",
+    "log": ".local/platform-004-validation/runtime-protocol-focused-03.tap.txt",
+    "logSha256": "faa74eb4dfacc2c9521c8dca3674a7ab4a0f4d0f0c6c84d5ba78116414917cc1",
+    "tests": 8,
+    "suites": 0,
+    "passed": 8,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "exitCode": 0,
+    "containsExitCodeMarker": true
+  },
+  "nativeObservations": {
+    "helperInvocations": 7,
+    "readyBeforeResumeWithoutStartedOrHeartbeat": true,
+    "wrongNonceMalformedAndPreResumeEofFailClosed": true,
+    "exactStopOrFailClosedExitCode": 124,
+    "terminalMarker": "one exact nonce-bound QB_EXIT:<code>:EMPTY record per helper",
+    "helperClose": "same numeric code and null signal",
+    "descendantHeartbeatCeasedAfterPositiveStop": true
+  },
+  "cleanup": {
+    "uncertainTreesRetained": 0,
+    "allTestOwnedTreesRemovedAfterExactProof": true,
+    "removalWasConstrainedToResolvedSystemTempChildren": true
+  },
+  "scope": "Direct selected-profile RuntimeProtocol helper qualification with a fixed benign Node script and owned heartbeat descendant; does not establish supervisor or managed-runtime end-to-end acceptance."
+}

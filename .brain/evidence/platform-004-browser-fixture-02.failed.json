@@ -1,0 +1,7 @@
+{
+  "schema": "quadbridge.browser-fixture-error.v1",
+  "fixtureId": "4e13e2c9-b544-44a1-a9c3-0cc4eeca103c",
+  "stage": "build-and-promote-combined",
+  "code": "BROWSER_FIXTURE_FAILED",
+  "cleanupFailures": []
+}

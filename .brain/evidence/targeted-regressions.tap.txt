@@ -1,0 +1,215 @@
+TAP version 13
+# Subtest: exported neutral product starts with all domain directories physically absent
+ok 1 - exported neutral product starts with all domain directories physically absent
+  ---
+  duration_ms: 632.8554
+  type: 'test'
+  ...
+# Subtest: exported Service Desk has no knowledge or handoff package and persists a real record
+ok 2 - exported Service Desk has no knowledge or handoff package and persists a real record
+  ---
+  duration_ms: 740.9123
+  type: 'test'
+  ...
+# Subtest: factory refuses collisions and path traversal
+ok 3 - factory refuses collisions and path traversal
+  ---
+  duration_ms: 474.6015
+  type: 'test'
+  ...
+# Subtest: generated full-stack module builds and runs without editing maintained shell source
+ok 4 - generated full-stack module builds and runs without editing maintained shell source
+  ---
+  duration_ms: 4312.8818
+  type: 'test'
+  ...
+# Subtest: real separate worker process completes a preexisting durable job
+ok 5 - real separate worker process completes a preexisting durable job
+  ---
+  duration_ms: 443.7996
+  type: 'test'
+  ...
+# Subtest: source-only provider omission is not mistaken for runtime completion
+ok 6 - source-only provider omission is not mistaken for runtime completion
+  ---
+  duration_ms: 56.5889
+  type: 'test'
+  ...
+# Subtest: React bridge cleanup is idempotent (port contract, not a React runtime test)
+ok 7 - React bridge cleanup is idempotent (port contract, not a React runtime test)
+  ---
+  duration_ms: 0.2827
+  type: 'test'
+  ...
+# Subtest: React bridge does not create a root after scope cancellation
+ok 8 - React bridge does not create a root after scope cancellation
+  ---
+  duration_ms: 0.1051
+  type: 'test'
+  ...
+# Subtest: generic framework packages import no reference-domain packages
+ok 9 - generic framework packages import no reference-domain packages
+  ---
+  duration_ms: 5.0584
+  type: 'test'
+  ...
+# Subtest: provider failure closes the started modules in reverse dependency order
+ok 10 - provider failure closes the started modules in reverse dependency order
+  ---
+  duration_ms: 0.4442
+  type: 'test'
+  ...
+# Subtest: source paths normalize both separators and exclude operational components exactly
+ok 11 - source paths normalize both separators and exclude operational components exactly
+  ---
+  duration_ms: 0.6171
+  type: 'test'
+  ...
+# Subtest: maintained fingerprint ignores operational records and changes with source
+ok 12 - maintained fingerprint ignores operational records and changes with source
+  ---
+  duration_ms: 12.814
+  type: 'test'
+  ...
+# Subtest: portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+ok 13 - portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+  ---
+  duration_ms: 39.153
+  type: 'test'
+  ...
+# Subtest: TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+ok 14 - TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+  ---
+  duration_ms: 1.2215
+  type: 'test'
+  ...
+# Subtest: TAP verification follows actual Node nested, TODO, and skipped report counts
+ok 15 - TAP verification follows actual Node nested, TODO, and skipped report counts
+  ---
+  duration_ms: 722.9353
+  type: 'test'
+  ...
+# Subtest: TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+ok 16 - TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+  ---
+  duration_ms: 0.351
+  type: 'test'
+  ...
+# Subtest: TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+ok 17 - TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+  ---
+  duration_ms: 0.1922
+  type: 'test'
+  ...
+# Subtest: build failure reports tests as NOT_RUN and claims only current passing evidence
+ok 18 - build failure reports tests as NOT_RUN and claims only current passing evidence
+  ---
+  duration_ms: 1.0057
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+ok 19 - START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+  ---
+  duration_ms: 330.3279
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+ok 20 - START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+  ---
+  duration_ms: 3846.3578
+  type: 'test'
+  ...
+# {"fixture":"portable source copy","cwd":"foreign directory","health":{"path":"/platform-api/overview","status":200,"platformVersion":"0.3.0"},"page":{"path":"/","status":200}}
+# Subtest: Studio: newly named products receive the reviewed local provider identity
+ok 21 - Studio: newly named products receive the reviewed local provider identity
+  ---
+  duration_ms: 1.388
+  type: 'test'
+  ...
+# Subtest: Studio: neutral product does not receive unrelated service identities
+ok 22 - Studio: neutral product does not receive unrelated service identities
+  ---
+  duration_ms: 0.5832
+  type: 'test'
+  ...
+# Subtest: Studio: local seed cannot request an undeclared permission
+ok 23 - Studio: local seed cannot request an undeclared permission
+  ---
+  duration_ms: 0.4551
+  type: 'test'
+  ...
+# Subtest: Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+ok 24 - Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+  ---
+  duration_ms: 0.2973
+  type: 'test'
+  ...
+# Subtest: Studio: unsupported remote fixture origin is refused
+ok 25 - Studio: unsupported remote fixture origin is refused
+  ---
+  duration_ms: 0.2076
+  type: 'test'
+  ...
+# Subtest: Studio: dependency explanation is source-derived and uses actual versions
+ok 26 - Studio: dependency explanation is source-derived and uses actual versions
+  ---
+  duration_ms: 0.1841
+  type: 'test'
+  ...
+# Subtest: Studio: no guessed provider for an unsupported new required contract
+ok 27 - Studio: no guessed provider for an unsupported new required contract
+  ---
+  duration_ms: 0.6041
+  type: 'test'
+  ...
+# Subtest: Studio: unused or invalid binding selection fails rather than retargeting
+ok 28 - Studio: unused or invalid binding selection fails rather than retargeting
+  ---
+  duration_ms: 0.1897
+  type: 'test'
+  ...
+# Subtest: Studio: import rejects runtime authority, path escape and unknown source wiring
+ok 29 - Studio: import rejects runtime authority, path escape and unknown source wiring
+  ---
+  duration_ms: 0.3772
+  type: 'test'
+  ...
+# Subtest: Studio: browser and CLI use the same compiled resolver
+ok 30 - Studio: browser and CLI use the same compiled resolver
+  ---
+  duration_ms: 5.2079
+  type: 'test'
+  ...
+# Subtest: Runtime: Handoff document picker uses the permitted Knowledge owner query
+ok 31 - Runtime: Handoff document picker uses the permitted Knowledge owner query
+  ---
+  duration_ms: 93.7072
+  type: 'test'
+  ...
+# Subtest: Runtime: missing destination authority is visible before new handoff submission
+ok 32 - Runtime: missing destination authority is visible before new handoff submission
+  ---
+  duration_ms: 84.8099
+  type: 'test'
+  ...
+# Subtest: Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+ok 33 - Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+  ---
+  duration_ms: 3019.436
+  type: 'test'
+  ...
+# Subtest: Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+ok 34 - Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+  ---
+  duration_ms: 6119.8744
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13316.9651

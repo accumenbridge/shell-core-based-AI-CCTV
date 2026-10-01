@@ -1,0 +1,35 @@
+The repository records authorize **local adoption followed by a bounded reliability baseline**, not whole-platform completion. This request routes as a read-only audit. I read the startup instructions, all mapped Brain records, local role profiles, status/evidence files, and relevant source. I made no edits, ran no application code or checks, changed no configuration, and dispatched no agents.
+
+**Authorized outcome and current task.** [OUTCOME.md](D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/.brain/OUTCOME.md) names revision `LOCAL-RELIABILITY-001`: safely adopt the source and make the Windows launcher, factory/Studio junction cleanup, portable source copying, and verification reporting reliable. Deployment, external systems, credentials, dependencies/version changes, Veyviz work, production qualification, and the larger roadmap remain outside authorization. Budget is unknown.
+
+[project.json](D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/.brain/project.json) maps current work to [BASELINE-001](D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/.brain/tasks/BASELINE-001.md). Its status is **READY AFTER ADOPTION CHECKPOINT**; source edits are not yet eligible. ADOPTION-001 is recorded complete, with 318 imported files and per-file provenance. [PROGRESS.md](D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/.brain/PROGRESS.md) still awaits the coordinator checkpoint. I also found no `.git/index`, so no staged adoption-tree base is presently available.
+
+There is a record inconsistency: ADOPTION-001 and ACCEPTANCE.md say JSON/TOML and path validation completed, while PROGRESS.md says structural review remains pending. All mapped canonical, check-catalogue, and policy paths exist; this audit does not independently revalidate the archive hashes or TOML parsing.
+
+**Brain/Brawn roles.**
+
+| Profile | Configured model / effort | Responsibility |
+|---|---|---|
+| [Brain](D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/.codex/agents/brain.toml) | `gpt-6.1-sol` / `high` | Coordinate approved intent, routing, tasks, and evidence-backed state. |
+| [Brawn](D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/.codex/agents/brawn.toml) | `gpt-6-luna` / `xhigh` | Implement only the authorized bounded task and report checks, cleanup, and candidate identity. |
+
+These are settings for roles when selected, not evidence that either role is running. Automatic dispatch is disabled; one coordinator owns shared Brain state. The profiles and policy do not enforce approval, isolation, locking, or budgets.
+
+**Canonical architecture versus roadmap.** [PLATFORM_ARCHITECTURE.md](D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/PLATFORM_ARCHITECTURE.md) remains the accepted product-neutral authority: neutral packages, maintained hosts, module-owned domain data/migrations, external product/solution wiring, explicit scope and bindings, static reviewed imports, owner-local transactions, fenced workers, and original-command reconciliation. `analysis/` and the Veyviz reference are supporting context.
+
+[IMPLEMENTATION_STATUS_0.3.md](D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/IMPLEMENTATION_STATUS_0.3.md) describes a **partial kernel** around that core. Source inspection confirms SQLite control-plane records, module metadata/SDK validation, and an AI DAG planner/model-candidate selector. Build requests create `QUEUED` records; deployment requests create `REQUESTED` records. Those records do not establish executing build workers or deployment controllers, and the AI planner does not establish inference serving.
+
+Production storage/authentication, artifact registry, isolated builders, deployment agents/drivers, secrets, telemetry, model serving, visual editors, signing/registry installation, and release promotion/rollback remain unfinished future work.
+
+**Next action and outstanding evidence gates.** When implementation work resumes, the next recorded step is the coordinator’s adoption checkpoint: audit Git identity and the trackable tree, reconcile structural-review status, stage only reviewed adoption files, record the staged-tree diff base, and reconcile fresh-session discovery. None of those mutations were performed here.
+
+After that checkpoint, BASELINE-001 requires:
+
+- Locked installation with scripts disabled, fresh build, targeted regressions, `npm test`, and `npm run verify`.
+- Launcher success/build-failure/start-failure evidence from a foreign directory, plus bounded real Studio startup and health evidence.
+- Cleanup, copy exclusions/fingerprint behavior, and fail-closed TAP/discovery/count/spawn/signal reporting.
+- Exact candidate/environment/results, skipped/TODO accounting, fixture versus live evidence, and cleanup records.
+
+[ACCEPTANCE.md](D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/.brain/ACCEPTANCE.md) marks all baseline gates **NOT_RUN**. Imported evidence contains differing historical counts—116/124/138 and a 143-pass platform log—which are not fresh baseline acceptance.
+
+Browser qualification is separately **BLOCKED**: I confirmed the recorded Chromium executable is absent. No current browser assertion or navigation-policy result is established. Historical administrator-policy navigation failures remain historical evidence; downloading a browser or bypassing policy is outside this bounded task.

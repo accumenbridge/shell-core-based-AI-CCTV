@@ -1,0 +1,29 @@
+{
+  "schema": "brain.component-checkpoint.v1",
+  "task": "PLATFORM-004",
+  "state": "APPROVED_FOR_MANAGER_LIFECYCLE_IMPLEMENTATION_WITH_RECORDED_REQUIREMENTS",
+  "qualification": "SOURCE_AND_STORE_COMPONENT_ONLY_NATIVE_NOT_RUN",
+  "supersedes_supervisor_source": "platform-004-supervisor-checkpoint.json",
+  "hashes": {
+    "tools/runtime-supervisor.mjs": "2d6696e4565ffcc5a6530de9819b79f47f48602fcefe951e4faed1b2e95481b0",
+    "tools/build-job.ps1": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9",
+    "packages/control-plane/src/index.ts": "d995593ae2988782955ba3a34b867d35417c031ca3d8a7aec0d07da7c2af1165"
+  },
+  "checks": {
+    "fresh_build": {"reported_exit_code": 0, "evidence": "platform-004-build-checkpoint-12.log"},
+    "supervisor_syntax": {"reported_exit_code": 0, "scope": "syntax only"},
+    "managed_store": {"passed": 5, "failed": 0, "skipped": 0, "evidence": "platform-004-store-checkpoint-04.tap.txt", "note": "Same unchanged store source; prior focused run, not a new rerun."}
+  },
+  "independent_reviews": {
+    "architect_sol_high": "Helper/store source approved for manager implementation; exact hashes and build/TAP inspected. Native Add-Type/default CP2/runtime behavior remains unqualified.",
+    "probe_sol_high": "Exact supervisor source coherent for manager implementation subject to recorded role-config drift and manager protocol delivery requirements. No native execution or rerun."
+  },
+  "requirements": [
+    "Revalidate exact canonical role configuration after authorization waits and immediately before each role spawn, or use verified pinned attempt-private frozen role configuration.",
+    "Publish complete bounded gate records before visibility with nonoverwrite semantics; a committed authorization bit is intent, not completed delivery/enrollment.",
+    "Buffer partial event records and reject malformed, duplicate, out-of-order or wrong attempt/operation/nonce facts.",
+    "One raw-output log capped at 1 MiB; separate fixed protocol metadata capped at 64 KiB and included in execution overhead.",
+    "Review complete manager lifecycle/source before first native runtime launch, then freshly qualify native default/runtime helper, enrollment, actual registered runtimes, sessions, browser, full suite and verifier."
+  ],
+  "root_reconciliation": "Independently matched latest supervisor/helper/store hashes, read/archived build12 output. No final maintained fingerprint or native/runtime acceptance claimed."
+}

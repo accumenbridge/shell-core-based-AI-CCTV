@@ -1,0 +1,21 @@
+{
+  "schema": "brain.atlas-attributed-review.v1",
+  "provenance": "Read-only subagent review messages in the current audit; not authenticated proof of reviewer identity or execution.",
+  "sourceReview": {
+    "reviewer": "/root/atlas_audit",
+    "result": "No material remaining finding in reviewed atlas/tool test scope.",
+    "toolSha256": "f97cbf215a038d585b9f315bffac4c63d772cbce811667e384e833734270a08e",
+    "testsSha256": "4f168cb14ff751184d597a35c04f69340272d8567703600afe64d367b3489089",
+    "scope": "Evidence ID ambiguity, profile/inspection/check-set binding, state consistency, output identity, planning focus and gaps, story membership semantics, regression coverage.",
+    "execution": "No build or tests run by reviewer."
+  },
+  "planningReview": {
+    "reviewer": "/root/brain_state_review",
+    "result": "No material planning/adoption blocker remains after checkpoint observation reconciliation.",
+    "profileFileSha256": "2b67a777b8890416aa48d837422395d462f6eb81b5e2f72e2b310a50521fda7f",
+    "canonicalProfileDigest": "e47175ac5a86df52a7c05a1cec03f18fe4e3adaa4bd51848199c129cdf223c43",
+    "pageSha256": "20c5a9fcdff9acc3d8076543525d3c88211f9fc4057294902265614e496d7629",
+    "scope": "AGENTS discovery retains canonical authority; both portable guides are included; source-backed pairing nodes; OBS05 reports checkpoint13 REVIEW with prior failures; proposed designs and source drift remain visible.",
+    "execution": "Planning/data review only; full suite and browser qualification performed separately by root."
+  }
+}

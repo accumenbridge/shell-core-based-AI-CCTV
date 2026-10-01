@@ -1,0 +1,1142 @@
+- complementary:
+  - text: Quadbridge Product Studio
+  - generic: Paired local operator
+  - navigation:
+    - button "Overview"
+    - button "Products"
+    - button "Modules"
+    - button "Ui"
+    - button "Backend"
+    - button "Ai"
+    - button "Data"
+    - button "Builds"
+    - button "Artifacts"
+    - button "Runtime Instances"
+    - button "Environments"
+    - button "Deployments"
+    - button "Audit"
+    - button "Operations"
+- main:
+  - generic: paired local control plane
+  - heading "Artifacts" [level=1]
+  - generic: Stored source records and validated local plans.
+  - generic: v0.3.0
+  - button "Disconnect"
+  - heading "Local artifact registry" [level=2]
+  - generic: publication ready
+  - paragraph: Fixed local no-overwrite publisher is pinned and passed its selected private host preflight.
+  - paragraph: Physical publication is separate from reading and promoting registered artifacts. Promoted releases can be started through Managed local runtime. Deployment and provider actions remain unattached.
+  - generic: 1 / 256 object directories
+  - generic: 746055 / 536870912 registry bytes
+  - generic: 0 / 134217728 staging bytes
+  - generic: 0 reserved bytes
+  - heading "Successful builds ready for registration" [level=2]
+  - paragraph: Registration verifies and copies the exact immutable snapshot digest.
+  - generic: No unregistered successful builds are available.
+  - heading "Registered immutable artifacts" [level=2]
+  - article:
+    - heading "core-ops-1002@1.0.0" [level=3]
+    - generic: Build 7527b752-96f8-4458-b6c9-76eedc4ce7b7
+    - generic: registered
+    - paragraph: Snapshot f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7
+    - paragraph: 151 files · 746055 bytes · registered 10/1/2026, 5:40:37 PM
+    - button "Verify and inspect"
+    - checkbox "Promote exactly core-ops-1002@1.0.0 as a local immutable release."
+    - text: Promote exactly core-ops-1002@1.0.0 as a local immutable release.
+    - button "Promote local release"
+  - 'heading "Verified inventory: core-ops-1002@1.0.0" [level=2]'
+  - button "Close details"
+  - paragraph: f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7
+  - paragraph: Verified files are downloaded as attachments and never run in the operator origin.
+  - table:
+    - rowgroup:
+      - row "Relative file SHA-256 Bytes Action":
+        - columnheader "Relative file"
+        - columnheader "SHA-256"
+        - columnheader "Bytes"
+        - columnheader "Action"
+    - rowgroup:
+      - row ".artifacts/core-ops-1002/backend-catalog.mjs e2871106d4a20781a3c4df3df8611ec9f0c11d2c9e1e110f64df80bb4345f6b9 5729 Download":
+        - cell ".artifacts/core-ops-1002/backend-catalog.mjs"
+        - cell "e2871106d4a20781a3c4df3df8611ec9f0c11d2c9e1e110f64df80bb4345f6b9"
+        - cell "5729"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/d0067d35d97070aea56ec3df3490822dd3425b3e4cfc392a1ba216b43da781e9
+      - row ".artifacts/core-ops-1002/composition.js 57d67e1ba67f06ebc93c25ae85be72e8c43f26033a46a84b041b6e5b79ed2821 301 Download":
+        - cell ".artifacts/core-ops-1002/composition.js"
+        - cell "57d67e1ba67f06ebc93c25ae85be72e8c43f26033a46a84b041b6e5b79ed2821"
+        - cell "301"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/ac8e91aaf930d2b35b4348204244a28537841d64c2c50b187fe7318fdb4fe688
+      - row ".artifacts/core-ops-1002/plan.json 403ac49c6e984d3b4dd56f7262bef9ef5443f51bfa82703b2a5901def893951e 12073 Download":
+        - cell ".artifacts/core-ops-1002/plan.json"
+        - cell "403ac49c6e984d3b4dd56f7262bef9ef5443f51bfa82703b2a5901def893951e"
+        - cell "12073"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/923cb2d0a10d0c6eddc2ef65fdd688d29f5aa61b62b3d606a4348e795526cf41
+      - row ".artifacts/core-ops-1002/release.json ed9f4c9d926d19ea431342de5fffdb2237233165a0344677054a4ff2a1e36419 4325 Download":
+        - cell ".artifacts/core-ops-1002/release.json"
+        - cell "ed9f4c9d926d19ea431342de5fffdb2237233165a0344677054a4ff2a1e36419"
+        - cell "4325"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/7738cc3a1265e2705b7fd6918172168b1141d05f3722a15d149d22e3ba305f92
+      - row ".artifacts/core-ops-1002/solution.mjs b2a42c58e65f27d8ee08475c38133d6a3bbb0dc0b743be9cf3f77f85902d7dff 78 Download":
+        - cell ".artifacts/core-ops-1002/solution.mjs"
+        - cell "b2a42c58e65f27d8ee08475c38133d6a3bbb0dc0b743be9cf3f77f85902d7dff"
+        - cell "78"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/ae8bffedf66e36faf0ae83226dbc028d6b1c37fe0ca9fc756b3533afc7c5c348
+      - row ".artifacts/core-ops-1002/web.json 3f8ed0489b194751e7777abc6241441af2a6981b48e9b301772d84fedad66ff2 1503 Download":
+        - cell ".artifacts/core-ops-1002/web.json"
+        - cell "3f8ed0489b194751e7777abc6241441af2a6981b48e9b301772d84fedad66ff2"
+        - cell "1503"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/ab0247445b6f1b2779c433aca8f84556421bcc99b5412e43ae1e9b0fc5c17877
+      - row "apps/runtime/dist/index.d.ts e4323c9a7219952d5d769ca752932f11b33867553d4b65095dcc4e58a3aa0036 1409 Download":
+        - cell "apps/runtime/dist/index.d.ts"
+        - cell "e4323c9a7219952d5d769ca752932f11b33867553d4b65095dcc4e58a3aa0036"
+        - cell "1409"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/162dd683343b7e05f67253767acb7102f713d85cf76b9773188bbc51d9ddade8
+      - row "apps/runtime/dist/index.js 4eda85028d0d45c444b54661187d9c2238bd8e7ec404021f8ccb9dad0850710c 6782 Download":
+        - cell "apps/runtime/dist/index.js"
+        - cell "4eda85028d0d45c444b54661187d9c2238bd8e7ec404021f8ccb9dad0850710c"
+        - cell "6782"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/a7cfdae21fec736292e9520cb34c44668e8f8ed29a8838ecca0c787d55abde1e
+      - row "apps/runtime/dist/index.js.map 5492191a17fa77bfb0aa3ef68b52fdac0a5e2f30f187e8b964f08c0ce48914f4 7202 Download":
+        - cell "apps/runtime/dist/index.js.map"
+        - cell "5492191a17fa77bfb0aa3ef68b52fdac0a5e2f30f187e8b964f08c0ce48914f4"
+        - cell "7202"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/d82a87b7e071e31f118b190877bf3c04343df546f28bbaf79b9cecb580bdae8f
+      - row "apps/runtime/dist/main.d.ts 8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881 11 Download":
+        - cell "apps/runtime/dist/main.d.ts"
+        - cell "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        - cell "11"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/237dacbd6006e6ae64630e452a7b8555c1cc17f8607586b61f1c41449c665414
+      - row "apps/runtime/dist/main.js 3e973a95999b28b5b5dec4cdbfa8f7d732c6916869e28060cf29c4ac5deddd04 1811 Download":
+        - cell "apps/runtime/dist/main.js"
+        - cell "3e973a95999b28b5b5dec4cdbfa8f7d732c6916869e28060cf29c4ac5deddd04"
+        - cell "1811"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/90ae6214038e6ebcab9135f52e79ffb7d9668edc508da4e4350d4e5a6fa48a13
+      - row "apps/runtime/dist/main.js.map 2d547f9dc021c3515987b68522e8d4cd8a36d2c906399c77694e84d766a186bc 2539 Download":
+        - cell "apps/runtime/dist/main.js.map"
+        - cell "2d547f9dc021c3515987b68522e8d4cd8a36d2c906399c77694e84d766a186bc"
+        - cell "2539"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/1a9db7f4282c9664fb1d883d0f1dbaf121f940cc7717e1a61301d0d28a988031
+      - row "apps/runtime/package.json 57ae337e27c1e0c34a30306b56592c7c70284f83ee58f2108c76ff5e9319e5c5 585 Download":
+        - cell "apps/runtime/package.json"
+        - cell "57ae337e27c1e0c34a30306b56592c7c70284f83ee58f2108c76ff5e9319e5c5"
+        - cell "585"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/2092505ed4541830e7dc64ce0e45eed0cd2e176473902b150a9bd471c05bf946
+      - row "apps/runtime/src/index.ts b56c9ca308312bb48d686223f9ab877b45653dfe1ff583b3afe9e4590db4b5e4 8289 Download":
+        - cell "apps/runtime/src/index.ts"
+        - cell "b56c9ca308312bb48d686223f9ab877b45653dfe1ff583b3afe9e4590db4b5e4"
+        - cell "8289"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/93db2c41ba7d1373fc710c8c230fd2f1108f6731357322048d3d15ac1a90c46b
+      - row "apps/runtime/src/main.ts 3d289459d64baeb7563cf45361a0a563d35a82147a9e776ae43061dd22605a63 1818 Download":
+        - cell "apps/runtime/src/main.ts"
+        - cell "3d289459d64baeb7563cf45361a0a563d35a82147a9e776ae43061dd22605a63"
+        - cell "1818"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/2632ec364cad307ec89658fc6d26ab334c7fc4fa821bb10f976c7764bd5146f9
+      - row "apps/runtime/tsconfig.json 8c60973ed1459feb21802b33dd4459517f8e001518a6978e2e7e2e9ec196bcb9 820 Download":
+        - cell "apps/runtime/tsconfig.json"
+        - cell "8c60973ed1459feb21802b33dd4459517f8e001518a6978e2e7e2e9ec196bcb9"
+        - cell "820"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/b608feff69083462f20f93112137eb3c5a7ea502211bb23ea0dca523e7c5faf9
+      - row "generated/catalog.mjs 02b1046c63587454956575f49682f4ccbed5bface270d830b02da0fb7e2e9ee7 5720 Download":
+        - cell "generated/catalog.mjs"
+        - cell "02b1046c63587454956575f49682f4ccbed5bface270d830b02da0fb7e2e9ee7"
+        - cell "5720"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/97603de940db79d2cf6d9d112269d7bc678f7fad1e4b7d37e008ef05f4b8be28
+      - row "generated/solution-catalog.mjs 90e1cac90c89f66c982e013453e9a34b56160c1fa3006621a17a9070d8e85173 102 Download":
+        - cell "generated/solution-catalog.mjs"
+        - cell "90e1cac90c89f66c982e013453e9a34b56160c1fa3006621a17a9070d8e85173"
+        - cell "102"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/1e9ff02a0dbcf44a60736ecef89f5a00dc513012d71f5b1fa543c38d13683399
+      - row "modules/handoff/dist/index.d.ts 054da2345cc7b55b93b188db879066ce2d01cb2bd900ce169be255159036518f 1028 Download":
+        - cell "modules/handoff/dist/index.d.ts"
+        - cell "054da2345cc7b55b93b188db879066ce2d01cb2bd900ce169be255159036518f"
+        - cell "1028"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/fde9f64a8233c162b4272afe72aa0030a92624e6ee93ffc4a75aa82f5aa549ee
+      - row "modules/handoff/dist/index.js 96f8c2f235b00200ceb5345d2c89cb5cc0433696479aeb4edf9c2473cfe6b791 11997 Download":
+        - cell "modules/handoff/dist/index.js"
+        - cell "96f8c2f235b00200ceb5345d2c89cb5cc0433696479aeb4edf9c2473cfe6b791"
+        - cell "11997"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/427a2ba0e8d26ff20fce795151d8cfd0c944986ef4dbdb51b02df9e7cb69b909
+      - row "modules/handoff/dist/index.js.map afcd7a95ff53731807c7a56acbb9acfae551a38e80b8abe90dd0dfec656dcbc6 10314 Download":
+        - cell "modules/handoff/dist/index.js.map"
+        - cell "afcd7a95ff53731807c7a56acbb9acfae551a38e80b8abe90dd0dfec656dcbc6"
+        - cell "10314"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/e6fac47e8f56dd265ddac8232eb2b8f0918572db1058161257ea4d028db782bf
+      - row "modules/handoff/dist/ui.d.ts 1df73f8472ac3b46b3e90a093eb7ad0c8f2d451ac2ff328fe6e8b39b77f055b9 99 Download":
+        - cell "modules/handoff/dist/ui.d.ts"
+        - cell "1df73f8472ac3b46b3e90a093eb7ad0c8f2d451ac2ff328fe6e8b39b77f055b9"
+        - cell "99"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/eb85ad8ef272aa8c1ce894932b504610bf3783d1bac4da68c6273ecdd11dff27
+      - row "modules/handoff/dist/ui.js 043c8d8f606f3c2a247caed6c931ce260e4c4392008f15aa2f0052a07d0494f4 7438 Download":
+        - cell "modules/handoff/dist/ui.js"
+        - cell "043c8d8f606f3c2a247caed6c931ce260e4c4392008f15aa2f0052a07d0494f4"
+        - cell "7438"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/0cd933908d2e1431376c421c647407f8abe51fc164751fd7e3003c807b03ac5a
+      - row "modules/handoff/dist/ui.js.map 79949e540f77a09496437b2468779beee2022d2b6077d8f6e6fe844ec5c17f75 7439 Download":
+        - cell "modules/handoff/dist/ui.js.map"
+        - cell "79949e540f77a09496437b2468779beee2022d2b6077d8f6e6fe844ec5c17f75"
+        - cell "7439"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/fc95bc7e849ad00632a3710321429375ecb158f8cea3a5123b4447e2b4c9c462
+      - row "modules/handoff/module.json 8611a8a506ac03d097ef832c7579ad8d63409f9cfc12b5c728a4be46ecebf4d3 2313 Download":
+        - cell "modules/handoff/module.json"
+        - cell "8611a8a506ac03d097ef832c7579ad8d63409f9cfc12b5c728a4be46ecebf4d3"
+        - cell "2313"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/4a0578bbe35b0343dbe8df08a7c8d5acf56078fc92ff8d6937b9761c1dac0202
+      - row "modules/handoff/package.json dbf855deb04eddafb0b03d6c4c821c34c08c24f329a6f112ca1c0bafb00917b1 592 Download":
+        - cell "modules/handoff/package.json"
+        - cell "dbf855deb04eddafb0b03d6c4c821c34c08c24f329a6f112ca1c0bafb00917b1"
+        - cell "592"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/413ab7cc003d4e6a4c14b4692a985b762c114c0fa29c04facc084769fdf21fa7
+      - row "modules/handoff/src/index.ts c329c58b33ea8634543a1bdcf97d960765b3bc861f51dfaadacb234967b2d3c2 13114 Download":
+        - cell "modules/handoff/src/index.ts"
+        - cell "c329c58b33ea8634543a1bdcf97d960765b3bc861f51dfaadacb234967b2d3c2"
+        - cell "13114"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/54658b964aab541738044e231ede8b7303c06f295d419e71f0275d31ca37ad2b
+      - row "modules/handoff/src/ui.ts 5bf0ee4d94d78c2a56e1cce22e44f2d9bb2754affa24c32febef375dc1c433a0 6399 Download":
+        - cell "modules/handoff/src/ui.ts"
+        - cell "5bf0ee4d94d78c2a56e1cce22e44f2d9bb2754affa24c32febef375dc1c433a0"
+        - cell "6399"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/f202de90a4d30f5893c215a9340219ca8eedbedbd7693e125c484780c23b3f65
+      - row "modules/handoff/tsconfig.json b534b1e5a4ac853bedb306189d5eb15737128d03a645785682737f1f117b1b1b 491 Download":
+        - cell "modules/handoff/tsconfig.json"
+        - cell "b534b1e5a4ac853bedb306189d5eb15737128d03a645785682737f1f117b1b1b"
+        - cell "491"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/1c9c57e5b7d388129aa236b272f6e7ed388b3602526b2910739254f579776b26
+      - row "modules/knowledge/dist/index.d.ts 2dab7f35a0e74cb89ed1e7ee1afceaafe8029cf09a54281618c3726288236d20 1690 Download":
+        - cell "modules/knowledge/dist/index.d.ts"
+        - cell "2dab7f35a0e74cb89ed1e7ee1afceaafe8029cf09a54281618c3726288236d20"
+        - cell "1690"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/56d8d63449e74bb297303bde9dff5f7ba08257d7d5c22c382d88391e877cbd49
+      - row "modules/knowledge/dist/index.js a8c5e9346c19a3aef529ddb182c4e991d1022fb57c1834cc5da7133f9d532336 12428 Download":
+        - cell "modules/knowledge/dist/index.js"
+        - cell "a8c5e9346c19a3aef529ddb182c4e991d1022fb57c1834cc5da7133f9d532336"
+        - cell "12428"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/643be67cc495c776be27281f7e5de05dd707b9fb4c83940d3ea3c0368be531b1
+      - row "modules/knowledge/dist/index.js.map 14544c993e5af1790b9caf8449cd19e0d6d691307f5ebdccd543cf26a2e944c2 12501 Download":
+        - cell "modules/knowledge/dist/index.js.map"
+        - cell "14544c993e5af1790b9caf8449cd19e0d6d691307f5ebdccd543cf26a2e944c2"
+        - cell "12501"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/e066f3d6fc4bc32cd5cc3c5a069d0ef5dd94e160741b358eaf2112bcdb8d910e
+      - row "modules/knowledge/dist/ui.d.ts 1df73f8472ac3b46b3e90a093eb7ad0c8f2d451ac2ff328fe6e8b39b77f055b9 99 Download":
+        - cell "modules/knowledge/dist/ui.d.ts"
+        - cell "1df73f8472ac3b46b3e90a093eb7ad0c8f2d451ac2ff328fe6e8b39b77f055b9"
+        - cell "99"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/383f8b56004816d86126f77d88ae3fd800a94d5e7647f9c2e0eabf2b0d2aa316
+      - row "modules/knowledge/dist/ui.js 3b5adddb968fbf260e31de5770e6169207d32e95618828112ad27efe5a3aa1ef 7880 Download":
+        - cell "modules/knowledge/dist/ui.js"
+        - cell "3b5adddb968fbf260e31de5770e6169207d32e95618828112ad27efe5a3aa1ef"
+        - cell "7880"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/6a5fb34ad331c3e5d826de0e5d8a8fa6dfac278d890e5e0cabb75e6c1437afcd
+      - row "modules/knowledge/dist/ui.js.map 872853c03aec8b07df0f84e8ca9177d0d9b50c073306ca527554589cf92b1f94 7994 Download":
+        - cell "modules/knowledge/dist/ui.js.map"
+        - cell "872853c03aec8b07df0f84e8ca9177d0d9b50c073306ca527554589cf92b1f94"
+        - cell "7994"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/0e7e0906c0c4873c2deae76190ebc3c03e031bfbbde2a24b540c7dd3ab4a005e
+      - row "modules/knowledge/module.json 3d0fe0f46a5a0428d254ac7415e1e3df1e9b9c1401f90b05210897f51a59ac1e 3625 Download":
+        - cell "modules/knowledge/module.json"
+        - cell "3d0fe0f46a5a0428d254ac7415e1e3df1e9b9c1401f90b05210897f51a59ac1e"
+        - cell "3625"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/9e91147dc582912acb935498a765a45bebb2701a351e3451108deac0be436b52
+      - row "modules/knowledge/package.json d7ff85466aa78d51af7b091fa8ee70e8494c85835980abe40fcb57b967bb0e3a 590 Download":
+        - cell "modules/knowledge/package.json"
+        - cell "d7ff85466aa78d51af7b091fa8ee70e8494c85835980abe40fcb57b967bb0e3a"
+        - cell "590"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/540be86b5750d7ece5b644a5ab35fcd0d684f7c639d0ce16f3c87109b3424e20
+      - row "modules/knowledge/src/index.ts 52a64e0bc7754e0bcbd0cbc76eba6d5b7c7493d34825b281c7dc07985cfdb15a 14222 Download":
+        - cell "modules/knowledge/src/index.ts"
+        - cell "52a64e0bc7754e0bcbd0cbc76eba6d5b7c7493d34825b281c7dc07985cfdb15a"
+        - cell "14222"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/7212cb30ca180dc65300524b76df9f3929b08bd537c7f6ee4df0810fe0bbd65f
+      - row "modules/knowledge/src/ui.ts bbd6d806b3334462fd324a7b0b456c1993b22a224f2d70dd41f3cce421623ba2 8565 Download":
+        - cell "modules/knowledge/src/ui.ts"
+        - cell "bbd6d806b3334462fd324a7b0b456c1993b22a224f2d70dd41f3cce421623ba2"
+        - cell "8565"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/02838d5b36fda9de5d9dfdeb0188e99d4c6a1270b8dd9fd1351dbed2bdc3d79c
+      - row "modules/knowledge/tsconfig.json 7c632ef78fe2fe1983a97ac7bd63207e097b50f8a19e8b97c963614d7fba33ea 487 Download":
+        - cell "modules/knowledge/tsconfig.json"
+        - cell "7c632ef78fe2fe1983a97ac7bd63207e097b50f8a19e8b97c963614d7fba33ea"
+        - cell "487"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/3c495a992adedc220fca0e1842306185185143d5eb9bbe00f3590f5232e54061
+      - row "modules/service-desk/dist/index.d.ts 589049ab85176a2ab718a3f0af5b891f8634eb507f39c8e6bcf5a788eecf1fdf 1018 Download":
+        - cell "modules/service-desk/dist/index.d.ts"
+        - cell "589049ab85176a2ab718a3f0af5b891f8634eb507f39c8e6bcf5a788eecf1fdf"
+        - cell "1018"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/198edcf9723e22f05fd589a37c358f8bb16b788f0c8b5238d2cf045dabd1c568
+      - row "modules/service-desk/dist/index.js 1805074cdf3fac41d9f83cb522f73b530834a81701f127106e9caf810c6a08d3 5266 Download":
+        - cell "modules/service-desk/dist/index.js"
+        - cell "1805074cdf3fac41d9f83cb522f73b530834a81701f127106e9caf810c6a08d3"
+        - cell "5266"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/c6aad4dc87b183931e086634b35892ae3230e5df06679092a4359951071578e1
+      - row "modules/service-desk/dist/index.js.map ca8394945006b4f21af5e03ae0a1c492083ca8a5e132732440a130cedd03263d 5552 Download":
+        - cell "modules/service-desk/dist/index.js.map"
+        - cell "ca8394945006b4f21af5e03ae0a1c492083ca8a5e132732440a130cedd03263d"
+        - cell "5552"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/2d9fe2abe0e389f0893a96ece4308caaf959f29d7ab7593031bd152dc76f678d
+      - row "modules/service-desk/dist/ui.d.ts d7c62d2a4cf14ba3ceed69e9efead0ee71cd7d2c4e2cd8e5393bd532047346db 264 Download":
+        - cell "modules/service-desk/dist/ui.d.ts"
+        - cell "d7c62d2a4cf14ba3ceed69e9efead0ee71cd7d2c4e2cd8e5393bd532047346db"
+        - cell "264"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/3568af62e3fd93fd4e672587aa94810f74de17827a0535490742c0ce0dcffdbc
+      - row "modules/service-desk/dist/ui.js a9ad8591d9446939e29466978bd95562aee86dc59936a1f16b2c738e6f45416f 3414 Download":
+        - cell "modules/service-desk/dist/ui.js"
+        - cell "a9ad8591d9446939e29466978bd95562aee86dc59936a1f16b2c738e6f45416f"
+        - cell "3414"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/01a1f1e266f5016de77d0a18a46b7745c4c247f2520165cec25505472d949c41
+      - row "modules/service-desk/dist/ui.js.map 53b0222eb648d0f9726ca87e13dcaa55e0ee3e5c14da955bf1a95ecdd95a1dc1 3943 Download":
+        - cell "modules/service-desk/dist/ui.js.map"
+        - cell "53b0222eb648d0f9726ca87e13dcaa55e0ee3e5c14da955bf1a95ecdd95a1dc1"
+        - cell "3943"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/32e7c66dd97f8174dd80c208a1f883a58ac929f153a9f6b30693278a45e645e3
+      - row "modules/service-desk/dist/ui/overview.css d5eac48954d0c8c06cdcf64a71061b4c8a887fc6115557e10aadf74f8d32e69f 208 Download":
+        - cell "modules/service-desk/dist/ui/overview.css"
+        - cell "d5eac48954d0c8c06cdcf64a71061b4c8a887fc6115557e10aadf74f8d32e69f"
+        - cell "208"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/2d991c8220e4910c3212daab82a9bed43988b735fca915f83eb8f9dbb5129c26
+      - row "modules/service-desk/dist/ui/overview.d.ts 6d85de294153dcb027e77c8b96016b4e767a90b7c6fb9b8202f01c52d14c811f 214 Download":
+        - cell "modules/service-desk/dist/ui/overview.d.ts"
+        - cell "6d85de294153dcb027e77c8b96016b4e767a90b7c6fb9b8202f01c52d14c811f"
+        - cell "214"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/90ba09270d2ac16e3f2a4ef74284b9e6adc83f9d9054a3827a55e807dcfe9af9
+      - row "modules/service-desk/dist/ui/overview.js fc729bc748d4f9c27914c6506943c8238e87734a9792de84dfe4e16a3f3b3326 1232 Download":
+        - cell "modules/service-desk/dist/ui/overview.js"
+        - cell "fc729bc748d4f9c27914c6506943c8238e87734a9792de84dfe4e16a3f3b3326"
+        - cell "1232"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/2acd37da08b0ce8df909685049030a654b9523bade8262f0ab2ddb3c008fb108
+      - row "modules/service-desk/dist/ui/overview.js.map 2c75651f1bb56ff857e217a4a1ca4728558595dbc9cc95f556793c3bc414e9fa 1490 Download":
+        - cell "modules/service-desk/dist/ui/overview.js.map"
+        - cell "2c75651f1bb56ff857e217a4a1ca4728558595dbc9cc95f556793c3bc414e9fa"
+        - cell "1490"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/9fbb93c45bda10293a6eb78d9e8284497e08b5bcb4ddfc876bc777e45b491222
+      - row "modules/service-desk/module.json 448b03e9a8a8cc94cd65451d22cb2fdb3db9074e7b1df471acc27414e428e698 2674 Download":
+        - cell "modules/service-desk/module.json"
+        - cell "448b03e9a8a8cc94cd65451d22cb2fdb3db9074e7b1df471acc27414e428e698"
+        - cell "2674"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/0d87763ee4558728e4d386e18613bb5944f10ab3f3be53aac395ee83d5f90c73
+      - row "modules/service-desk/package.json 1802a2613603271e93d8024bd17ae69db93f2bac4cd4861dd445dc010c8ed1da 557 Download":
+        - cell "modules/service-desk/package.json"
+        - cell "1802a2613603271e93d8024bd17ae69db93f2bac4cd4861dd445dc010c8ed1da"
+        - cell "557"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/c1ff4d5e35740f06f726cb98158ca0b3338d568e142cef9bff2681a22217cab8
+      - row "modules/service-desk/src/index.ts a013d0e6034fca24434e54b6096d748127fabfe6a414b822d91c8954afc2d69c 6246 Download":
+        - cell "modules/service-desk/src/index.ts"
+        - cell "a013d0e6034fca24434e54b6096d748127fabfe6a414b822d91c8954afc2d69c"
+        - cell "6246"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/0f08e7516724a7602626046ffa895c21c69741ae10b349f11137227e89d08426
+      - row "modules/service-desk/src/ui.ts 8363b8a32a1114489b5d131518ae25baa14dfcdde5dcd912552b529c5d287ab2 3754 Download":
+        - cell "modules/service-desk/src/ui.ts"
+        - cell "8363b8a32a1114489b5d131518ae25baa14dfcdde5dcd912552b529c5d287ab2"
+        - cell "3754"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/c2f7cab167da402b5fb820e817fbdec2fc884e82de93e78aea210eefcde5159d
+      - row "modules/service-desk/src/ui/overview.css d5eac48954d0c8c06cdcf64a71061b4c8a887fc6115557e10aadf74f8d32e69f 208 Download":
+        - cell "modules/service-desk/src/ui/overview.css"
+        - cell "d5eac48954d0c8c06cdcf64a71061b4c8a887fc6115557e10aadf74f8d32e69f"
+        - cell "208"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/65fcab55c259357b8b35ddc7e52cc562e82404e4f1773d71d05b664ef9ed449f
+      - row "modules/service-desk/src/ui/overview.ts 5de3636f9ae8ec385625e4eb9c5509a1670984b7547ce57c74968b1f01926d55 1270 Download":
+        - cell "modules/service-desk/src/ui/overview.ts"
+        - cell "5de3636f9ae8ec385625e4eb9c5509a1670984b7547ce57c74968b1f01926d55"
+        - cell "1270"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/9eb3553e21ec8baa61f48736ed86e7fb755efae4fe6f52a4e17814cd3a80106f
+      - row "modules/service-desk/tsconfig.json 5ceb52a02364664f51c79a573432c69d26ea3b5fd1b5ddc0cd724293ef4579da 435 Download":
+        - cell "modules/service-desk/tsconfig.json"
+        - cell "5ceb52a02364664f51c79a573432c69d26ea3b5fd1b5ddc0cd724293ef4579da"
+        - cell "435"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/d6fa3468fb33cc76ad55aa9656a046f6ee971ad1d12d112cdc53fa882f8a9bda
+      - row "package.json be4fc476c9e3e9ab8bb5034d294b5e24686bdd30294ee73f1ef0ba669d8c1f9e 291 Download":
+        - cell "package.json"
+        - cell "be4fc476c9e3e9ab8bb5034d294b5e24686bdd30294ee73f1ef0ba669d8c1f9e"
+        - cell "291"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/71764c94a12bdd1d538b8d97c51cd27b4a010ef466c3e9a901444eae747675eb
+      - row "packages/ai-core/dist/index.d.ts 5c7f256a3585a250817f150cf64892382c5bd4a86b64f76c2971085076267721 2445 Download":
+        - cell "packages/ai-core/dist/index.d.ts"
+        - cell "5c7f256a3585a250817f150cf64892382c5bd4a86b64f76c2971085076267721"
+        - cell "2445"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/73d7e9cda12dd7a88cb14ae0db1c9b9b98515ea5d77763f1dab3b70b9b7b5ca8
+      - row "packages/ai-core/dist/index.js b8e84bb3e53ef5879eef4fbc19671d625d4f1d9f534e31f549be568fd6ef79f7 11028 Download":
+        - cell "packages/ai-core/dist/index.js"
+        - cell "b8e84bb3e53ef5879eef4fbc19671d625d4f1d9f534e31f549be568fd6ef79f7"
+        - cell "11028"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/349702efa12327e0e5b0b57e81f0110f33fb5eeab3df4015be34e45258645915
+      - row "packages/ai-core/dist/index.js.map c9b0ce9ce2c249e19c5818c97eaa53efdbbe1cd164d2779b7dfe35bb4cfe9da4 12527 Download":
+        - cell "packages/ai-core/dist/index.js.map"
+        - cell "c9b0ce9ce2c249e19c5818c97eaa53efdbbe1cd164d2779b7dfe35bb4cfe9da4"
+        - cell "12527"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/894ed0aeb500bc790fc0db0271b2a7af37bb9bae5e979c349cd099eecfdf3a43
+      - row "packages/ai-core/package.json 0b79e8504d9d5ba536d109e61cc827e4af85d56f09505c706448ba7829ef0212 266 Download":
+        - cell "packages/ai-core/package.json"
+        - cell "0b79e8504d9d5ba536d109e61cc827e4af85d56f09505c706448ba7829ef0212"
+        - cell "266"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/f3ae1c26e10c561f44d99b921b51d5f178372350c65f81ce5dc9ff52248e4d8a
+      - row "packages/ai-core/src/index.ts 72f502724b9f1759d8708e92e9cde98b1432650ebb5dccce7fcbf5d6311bfba1 12005 Download":
+        - cell "packages/ai-core/src/index.ts"
+        - cell "72f502724b9f1759d8708e92e9cde98b1432650ebb5dccce7fcbf5d6311bfba1"
+        - cell "12005"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/517e747d6180d328687b0b474f1f035e286dc7d9f7a242e5f1aec2426b6c6e34
+      - row "packages/ai-core/tsconfig.json a283d71bea137ceb0fb3400ac19a1410ef046160da686bd4fc37530b445d64a7 177 Download":
+        - cell "packages/ai-core/tsconfig.json"
+        - cell "a283d71bea137ceb0fb3400ac19a1410ef046160da686bd4fc37530b445d64a7"
+        - cell "177"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/da8fc2e94c196a23b5072fa206a1c8434d9b1c73d56f7c9ca6a21e9865a311e7
+      - row "packages/backend-host/dist/http.d.ts 8a5e6c23c077fd47a748807f13e2ddf14bbe809e8a620dd1f89f9c033b742f38 1033 Download":
+        - cell "packages/backend-host/dist/http.d.ts"
+        - cell "8a5e6c23c077fd47a748807f13e2ddf14bbe809e8a620dd1f89f9c033b742f38"
+        - cell "1033"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/341a7249d952ec637d5fd67510cb0915e037cec597de7c9a4d64ccfeb9bc1e34
+      - row "packages/backend-host/dist/http.js a2d21cd6d9949d7620bba888151bc502403ba4c4be576105895e380cada2ead8 10211 Download":
+        - cell "packages/backend-host/dist/http.js"
+        - cell "a2d21cd6d9949d7620bba888151bc502403ba4c4be576105895e380cada2ead8"
+        - cell "10211"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/b14258e13f36589d33970f84b46a23acf1294d8d7a9095a072100332634e4ab1
+      - row "packages/backend-host/dist/http.js.map e9b97fdffb378fb2f0b2a7055e5e47cda105718d4327f414a0c2bed8fec65af7 10247 Download":
+        - cell "packages/backend-host/dist/http.js.map"
+        - cell "e9b97fdffb378fb2f0b2a7055e5e47cda105718d4327f414a0c2bed8fec65af7"
+        - cell "10247"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/430a3894ac04bf6ffb80f02e89760fd69d1f85454413a2cd57ca6936557ee9c4
+      - row "packages/backend-host/dist/index.d.ts 77d4a5846a7317632377c7d0bc064fc3acf125bdad16288c5ffce918e996d410 2863 Download":
+        - cell "packages/backend-host/dist/index.d.ts"
+        - cell "77d4a5846a7317632377c7d0bc064fc3acf125bdad16288c5ffce918e996d410"
+        - cell "2863"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/687e967fb65a0dd85021797bce3e2aa5ca5ea8fbeb98f275b9a112117e32344d
+      - row "packages/backend-host/dist/index.js 314a5967097cf95b1939395075d69998965ae74a8d5de6c9de601d9c74c6a2d9 6201 Download":
+        - cell "packages/backend-host/dist/index.js"
+        - cell "314a5967097cf95b1939395075d69998965ae74a8d5de6c9de601d9c74c6a2d9"
+        - cell "6201"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/7c624fbcdb7d0b2866f474d86c1d886a6d9bbd3962cce242fc641be217bee85d
+      - row "packages/backend-host/dist/index.js.map 152760649ccae5e16e192036c747b817f88d3bef71f9c4eed10ae30179cc3175 6991 Download":
+        - cell "packages/backend-host/dist/index.js.map"
+        - cell "152760649ccae5e16e192036c747b817f88d3bef71f9c4eed10ae30179cc3175"
+        - cell "6991"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/143f247129ab85f89d0cd82db153d1835d428bf1dead738e48e3540ed8d28403
+      - row "packages/backend-host/package.json 86c0f02c63e6a47ff65dddc805ce4abfb47be75a245e7d653645a41413ddd434 483 Download":
+        - cell "packages/backend-host/package.json"
+        - cell "86c0f02c63e6a47ff65dddc805ce4abfb47be75a245e7d653645a41413ddd434"
+        - cell "483"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/23c5b24129c731dd23327cd546cef160a1e7952a0b9dcaa35b76038928e2716d
+      - row "packages/backend-host/src/http.ts 068f320aec5321fcd55e1002a251fd13f7d2ad4456f817bc13615d33268bb3f0 11191 Download":
+        - cell "packages/backend-host/src/http.ts"
+        - cell "068f320aec5321fcd55e1002a251fd13f7d2ad4456f817bc13615d33268bb3f0"
+        - cell "11191"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/b724b0f4bee25bdf4a7e36fef048c734b8f0c24a12f2132b156f7ae07399a759
+      - row "packages/backend-host/src/index.ts 114611c9a6580d20c5e81a958c365f40f79b55ca7232bc492c5a27e8a8d53875 7274 Download":
+        - cell "packages/backend-host/src/index.ts"
+        - cell "114611c9a6580d20c5e81a958c365f40f79b55ca7232bc492c5a27e8a8d53875"
+        - cell "7274"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/764e44787f6ab3fc3e05cab0c463cc4bc252b19fe071035a444e8065e7e79171
+      - row "packages/backend-host/tsconfig.json c40d7e42d4d28fa0c812ed1d1a18594c5d1883ef64bd141fea592e5cbe707122 329 Download":
+        - cell "packages/backend-host/tsconfig.json"
+        - cell "c40d7e42d4d28fa0c812ed1d1a18594c5d1883ef64bd141fea592e5cbe707122"
+        - cell "329"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/1c24a63f15dbd7b5634a75abe87acfd0e376d1577c00521d9b610c8b01b52a0f
+      - row "packages/composition/dist/index.d.ts d01f9d0fecc79482bb9b251e8c7b4fdf66ac802100f7e42614a28aba28bf7bc9 960 Download":
+        - cell "packages/composition/dist/index.d.ts"
+        - cell "d01f9d0fecc79482bb9b251e8c7b4fdf66ac802100f7e42614a28aba28bf7bc9"
+        - cell "960"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/c56dd06cfc1ca807872ac85afadaa4b83f957cef7da9f3a15bd9d0e294f7923a
+      - row "packages/composition/dist/index.js 3a0c690dc6fbc51dc1d1038e084b6975060ee86d621fb93ad9461e49f6f1005a 6978 Download":
+        - cell "packages/composition/dist/index.js"
+        - cell "3a0c690dc6fbc51dc1d1038e084b6975060ee86d621fb93ad9461e49f6f1005a"
+        - cell "6978"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/fdfc1934dfd94c4e49c4ab4f3c917691534364bb0b1d4d109247622798102460
+      - row "packages/composition/dist/index.js.map 0b673dab12517d710b131369379ce2b51fc34bf880a896b800851e844eada413 8649 Download":
+        - cell "packages/composition/dist/index.js.map"
+        - cell "0b673dab12517d710b131369379ce2b51fc34bf880a896b800851e844eada413"
+        - cell "8649"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/26e5fdf947822a2586d326dbb6ef4c6703b20c25dc99420f4bc1d95ba09b87af
+      - row "packages/composition/dist/integrity.d.ts 2262238e6b412b3da76fcbfe2f60f4e7a1872b8639cc617cde3cd457b34511b6 1787 Download":
+        - cell "packages/composition/dist/integrity.d.ts"
+        - cell "2262238e6b412b3da76fcbfe2f60f4e7a1872b8639cc617cde3cd457b34511b6"
+        - cell "1787"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/89ec84b6360cf9de890934a8ab64ce72ff207b0bead51f2c35b6df1da97c9554
+      - row "packages/composition/dist/integrity.js 5ab35bcd6d8bf6285d59b4a9265e52bfd8f2a3716fff0f3ce6975d5b512fbfe1 19562 Download":
+        - cell "packages/composition/dist/integrity.js"
+        - cell "5ab35bcd6d8bf6285d59b4a9265e52bfd8f2a3716fff0f3ce6975d5b512fbfe1"
+        - cell "19562"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/037ea956908b5bd70452dbfea0ed8d45939cc80d5f403cb700a5fc33651bc73a
+      - row "packages/composition/dist/integrity.js.map ca061481e0af5b6b978e7956b5424b2dc0ab3a92f03e42b37cfccd2884d049aa 19119 Download":
+        - cell "packages/composition/dist/integrity.js.map"
+        - cell "ca061481e0af5b6b978e7956b5424b2dc0ab3a92f03e42b37cfccd2884d049aa"
+        - cell "19119"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/53edfb21e778d6cb70836662203df30692428bb4827101b06a1bddc087ede4ec
+      - row "packages/composition/dist/snapshot-access.d.ts 07b9157c153677bbb543614f251953ca712fa405cd661373ad03a35d181dbcd6 1232 Download":
+        - cell "packages/composition/dist/snapshot-access.d.ts"
+        - cell "07b9157c153677bbb543614f251953ca712fa405cd661373ad03a35d181dbcd6"
+        - cell "1232"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/db618fca7bf5b0ae2b0d8ea91b769d33cc6da287b5debc6e2683da097815f681
+      - row "packages/composition/dist/snapshot-access.js 947aba74249c387c1f7986352a52a8593079d33ad338fcab6b227f35cce4399d 12004 Download":
+        - cell "packages/composition/dist/snapshot-access.js"
+        - cell "947aba74249c387c1f7986352a52a8593079d33ad338fcab6b227f35cce4399d"
+        - cell "12004"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/5604e156c2679447b7949cddb05bd60c82040e958e30eb1c554c4892e7b2489f
+      - row "packages/composition/dist/snapshot-access.js.map a6727d5edd38b418aa244ccc1938ca79a5ee88e2b7959edeba1ac102ba393d82 11817 Download":
+        - cell "packages/composition/dist/snapshot-access.js.map"
+        - cell "a6727d5edd38b418aa244ccc1938ca79a5ee88e2b7959edeba1ac102ba393d82"
+        - cell "11817"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/ce123102329a33ad9315052dcf7e113828a1c618614453cb67e19a70cb57cbe4
+      - row "packages/composition/dist/studio.d.ts c5bbf677f1477012854bb59db35a6a492772ac8dd02896da46f23394dc032abd 3272 Download":
+        - cell "packages/composition/dist/studio.d.ts"
+        - cell "c5bbf677f1477012854bb59db35a6a492772ac8dd02896da46f23394dc032abd"
+        - cell "3272"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/26cf017a8555224aa53e1dcec1aba788cb26b7ebf7933f98adb1aa23b628c0ad
+      - row "packages/composition/dist/studio.js 8c1ffe021f4041f83be9a5a104aefbad93ceca930cafee6edb154c958fa3306d 10241 Download":
+        - cell "packages/composition/dist/studio.js"
+        - cell "8c1ffe021f4041f83be9a5a104aefbad93ceca930cafee6edb154c958fa3306d"
+        - cell "10241"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/bd3706f7e15f1148b9500846a18e2e33ef25baa8cc7e241b161d14275ba8e8e4
+      - row "packages/composition/dist/studio.js.map c176dbf4b3e53863664ee0adc62f88d2d96af7b54bee1171570b1e6a708fc93e 11090 Download":
+        - cell "packages/composition/dist/studio.js.map"
+        - cell "c176dbf4b3e53863664ee0adc62f88d2d96af7b54bee1171570b1e6a708fc93e"
+        - cell "11090"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/0cd55e1f07de55b4719ff471da20cd3f58978fbe2b1e359d7e17c89e7a6e02a5
+      - row "packages/composition/dist/workspace-closure.d.ts 190945b8bc7832f71a798648528ac2b26942e2397ade55205a2639b2e99c5b87 640 Download":
+        - cell "packages/composition/dist/workspace-closure.d.ts"
+        - cell "190945b8bc7832f71a798648528ac2b26942e2397ade55205a2639b2e99c5b87"
+        - cell "640"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/4157159ce2e74660ed2f4d569d010c4b60163dd8f29972b19eb67f2957f94b9c
+      - row "packages/composition/dist/workspace-closure.js 36d43a7f333103647bcf5dd4eab607ae8c9f0b88feb30d6f3ad793b682bdc078 4801 Download":
+        - cell "packages/composition/dist/workspace-closure.js"
+        - cell "36d43a7f333103647bcf5dd4eab607ae8c9f0b88feb30d6f3ad793b682bdc078"
+        - cell "4801"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/efe125c5dc8f6dffdccc6239486a62db2f572efe6bed5306fed390ba134f74df
+      - row "packages/composition/dist/workspace-closure.js.map 4dfbcdf3c2afaab4477834c66dd4a2b49db0dbc48f93af8f65c505c9e46a37c0 4914 Download":
+        - cell "packages/composition/dist/workspace-closure.js.map"
+        - cell "4dfbcdf3c2afaab4477834c66dd4a2b49db0dbc48f93af8f65c505c9e46a37c0"
+        - cell "4914"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/ac90a7b98f978ddda9d6c1eb6f6ec88c7ab023b3a14e3e86a2a59e635b140070
+      - row "packages/composition/package.json dfcddc24509a7d3699b6c4c04a06df1e092ec0011ade976fa68946be71c5c9bb 442 Download":
+        - cell "packages/composition/package.json"
+        - cell "dfcddc24509a7d3699b6c4c04a06df1e092ec0011ade976fa68946be71c5c9bb"
+        - cell "442"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/3dba74714bdf7b5878803efebc6c3205e195b4632349d1a8316bdb2b94d6e72f
+      - row "packages/composition/src/index.ts 50f99424b38e315a9558055f4aea8e4537a7f13ffb672e678bc5d10ba3ae41a5 7405 Download":
+        - cell "packages/composition/src/index.ts"
+        - cell "50f99424b38e315a9558055f4aea8e4537a7f13ffb672e678bc5d10ba3ae41a5"
+        - cell "7405"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/225ae647ccd18f0b2fdf3dfa5d6fb177fcaca7a2d20ed988f2b649ed294cbb7d
+      - row "packages/composition/src/integrity.ts 793fe843fe513aaeac1e673976a23a935336d9abccc07c018803e536931232b3 20722 Download":
+        - cell "packages/composition/src/integrity.ts"
+        - cell "793fe843fe513aaeac1e673976a23a935336d9abccc07c018803e536931232b3"
+        - cell "20722"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/145ce815aefe68ddac59f954a5649f4bf5d419e5706c8a2594532f8f2404a0dd
+      - row "packages/composition/src/snapshot-access.ts 97fa166ba41bbb814d87dd72882f7d3716856ad12e316b67083a33c78cc76dd3 11901 Download":
+        - cell "packages/composition/src/snapshot-access.ts"
+        - cell "97fa166ba41bbb814d87dd72882f7d3716856ad12e316b67083a33c78cc76dd3"
+        - cell "11901"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/110bcb2c06f0670eabf7ad3017b9ce4dbfe9fee793d9de4bc696e6b38ca2f13c
+      - row "packages/composition/src/studio.ts e0d317bdbc16ee0f202e598f91220fcc749a3387401a2ea65856afbf9bf8697b 11746 Download":
+        - cell "packages/composition/src/studio.ts"
+        - cell "e0d317bdbc16ee0f202e598f91220fcc749a3387401a2ea65856afbf9bf8697b"
+        - cell "11746"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/bc7cfc10ebef5df6476083ffc5f58dfbd10b84390d0ab5ab792e4b259ec6f67c
+      - row "packages/composition/src/workspace-closure.ts f8c736c93e5ed7c8324ad9a9f45a5ad0f5104921544eaf626f596f8bef4dd73d 5172 Download":
+        - cell "packages/composition/src/workspace-closure.ts"
+        - cell "f8c736c93e5ed7c8324ad9a9f45a5ad0f5104921544eaf626f596f8bef4dd73d"
+        - cell "5172"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/d3276b844a84676677afd01845207282901b0188ad596aa609e9841e13cbde5e
+      - row "packages/composition/tsconfig.json 8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1 273 Download":
+        - cell "packages/composition/tsconfig.json"
+        - cell "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1"
+        - cell "273"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/c352618932715ae1b6c44dbda85425a5221ce0492e1681c98913b14a4c0bf1f8
+      - row "packages/connections/dist/index.d.ts 8b172b360f59b2494a2d937d1b1e6a0ebec1b5cdaecb9abbf5e63a87d693ab0c 1431 Download":
+        - cell "packages/connections/dist/index.d.ts"
+        - cell "8b172b360f59b2494a2d937d1b1e6a0ebec1b5cdaecb9abbf5e63a87d693ab0c"
+        - cell "1431"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/43c4048c443b13c4cfb7689c77c9869d7d60d44062ebc2085b712ccb4d2637af
+      - row "packages/connections/dist/index.js 9d649b4198bc790161c135ac121039fce1eeaefa89c8aa17208c9d08bf18a6c6 9598 Download":
+        - cell "packages/connections/dist/index.js"
+        - cell "9d649b4198bc790161c135ac121039fce1eeaefa89c8aa17208c9d08bf18a6c6"
+        - cell "9598"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/2dd04ef2aefd53cdd33aab1bfc281544a1364de040eee1a58b5c70592a65c348
+      - row "packages/connections/dist/index.js.map 914b42743d884353623c93560145d811e54a2fce542d73f500a4103fe82b3b6f 9886 Download":
+        - cell "packages/connections/dist/index.js.map"
+        - cell "914b42743d884353623c93560145d811e54a2fce542d73f500a4103fe82b3b6f"
+        - cell "9886"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/f638ec573d35fb6c362c6526b2fef09e0ad91fe1ca9807354fd6e1e361985df5
+      - row "packages/connections/package.json 4878d00d155649f22c5c83def1b4ab95835fcad20ef43073844fc645ed0213ca 442 Download":
+        - cell "packages/connections/package.json"
+        - cell "4878d00d155649f22c5c83def1b4ab95835fcad20ef43073844fc645ed0213ca"
+        - cell "442"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/5fff385586336622d5d6ff83905b76ca34ca47c795957bc1fb30a1b51e6eb120
+      - row "packages/connections/src/index.ts 9b7225de0920bcc782e741d43f247c44b1922ff8bb303936ba4afeb0f2369911 10926 Download":
+        - cell "packages/connections/src/index.ts"
+        - cell "9b7225de0920bcc782e741d43f247c44b1922ff8bb303936ba4afeb0f2369911"
+        - cell "10926"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/10e11cb109dc33a073e38a118c5942c049269b2fe85f6f54fba86af69f7e6066
+      - row "packages/connections/tsconfig.json 8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1 273 Download":
+        - cell "packages/connections/tsconfig.json"
+        - cell "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1"
+        - cell "273"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/c22c01020914513a9e12b92aa3ee1c1be57f952de2bb799fd8ce72b10ddb995b
+      - row "packages/contracts/dist/index.d.ts 153a23f51680223c847c9344aa890132683a4a64310fae1fd7929e761a803603 6674 Download":
+        - cell "packages/contracts/dist/index.d.ts"
+        - cell "153a23f51680223c847c9344aa890132683a4a64310fae1fd7929e761a803603"
+        - cell "6674"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/f2a21d6c9dfa4e2ac8865129d687933e4689309fbc7b41c770eda58e900f14a7
+      - row "packages/contracts/dist/index.js cb30002c1664a374216bbb3212e0eb1f173cd29c827f786c9faae6943ed0fe1e 1927 Download":
+        - cell "packages/contracts/dist/index.js"
+        - cell "cb30002c1664a374216bbb3212e0eb1f173cd29c827f786c9faae6943ed0fe1e"
+        - cell "1927"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/b55b2f9923d5e213e508c435be715143e2b8e8706d7b10ad039ab6a6639d99b2
+      - row "packages/contracts/dist/index.js.map 1de5e61b5ecbc05cbd2841c291ab8124851c4a3960fa1a7b8e7dd31a84ed0cdc 2190 Download":
+        - cell "packages/contracts/dist/index.js.map"
+        - cell "1de5e61b5ecbc05cbd2841c291ab8124851c4a3960fa1a7b8e7dd31a84ed0cdc"
+        - cell "2190"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/f00ec796f874361d2fe3e35a78070c76c8a8b6fc356792f8ef1400ac15037627
+      - row "packages/contracts/package.json 190b192652234b5c1875c3014eb72001e6a6ae77bd28c69c10829b52d5e59ebe 400 Download":
+        - cell "packages/contracts/package.json"
+        - cell "190b192652234b5c1875c3014eb72001e6a6ae77bd28c69c10829b52d5e59ebe"
+        - cell "400"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/ec45182e475b1cfbd44afe08c9042f37919b41b73873a5044f6dd30a7f34dab8
+      - row "packages/contracts/src/index.ts 65344865bf676546c6ee0ab01b1fa4fc2071fb730664b2cd8cca31f26a666792 8051 Download":
+        - cell "packages/contracts/src/index.ts"
+        - cell "65344865bf676546c6ee0ab01b1fa4fc2071fb730664b2cd8cca31f26a666792"
+        - cell "8051"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/16108efb70174ccd30b97ea6fcf8d0a7481b71ae7507ed561789f5696ed17f08
+      - row "packages/contracts/tsconfig.json 3b612bbcc4309a9da4bbff6fc5e2d266f9578f884a8671cc51d00c43a89d3ccf 217 Download":
+        - cell "packages/contracts/tsconfig.json"
+        - cell "3b612bbcc4309a9da4bbff6fc5e2d266f9578f884a8671cc51d00c43a89d3ccf"
+        - cell "217"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/5ef7a26f0a85a86198d7f92d6c28aacc6cdf1ee8acb2020ea578fc267d3c7979
+      - row "packages/local-access/dist/index.d.ts 65bf8134d465288b7a58297dbbd1a50371d6d28bed50ec28b492460c0cb55d0f 1264 Download":
+        - cell "packages/local-access/dist/index.d.ts"
+        - cell "65bf8134d465288b7a58297dbbd1a50371d6d28bed50ec28b492460c0cb55d0f"
+        - cell "1264"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/8fc4082749612ada0c6b16292408775ea5957bf1f7d4bb6e0f4ae6b1333c006d
+      - row "packages/local-access/dist/index.js d2450b73e95c18b8258fa6fb8ee632115fb7025e0bec4eecbd684623b3f2e985 6107 Download":
+        - cell "packages/local-access/dist/index.js"
+        - cell "d2450b73e95c18b8258fa6fb8ee632115fb7025e0bec4eecbd684623b3f2e985"
+        - cell "6107"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/1179fa037329fe56dfee36becf60ba443af85d27441d828c88e42995c88b58c2
+      - row "packages/local-access/dist/index.js.map 535fd62650ebe3bcf549ea08baa0e9017c494f9f1cd7b0e36063b8ac6969f455 5632 Download":
+        - cell "packages/local-access/dist/index.js.map"
+        - cell "535fd62650ebe3bcf549ea08baa0e9017c494f9f1cd7b0e36063b8ac6969f455"
+        - cell "5632"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/cbe825ce8b5e42568cfd2df522fdd541954053485cdd6cff81b016139593179c
+      - row "packages/local-access/package.json 14472fafb8bd74aacc8c2dddfeb0ab9fd6c138b5041b97d0f4983cb607dff8cd 478 Download":
+        - cell "packages/local-access/package.json"
+        - cell "14472fafb8bd74aacc8c2dddfeb0ab9fd6c138b5041b97d0f4983cb607dff8cd"
+        - cell "478"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/6bd256226b50c6cf145b2c09de7e0a83cde8228baa8e0470200711aed0d5517a
+      - row "packages/local-access/src/index.ts fce97413cd3b27c8ae915286d1c10c4aa37168550deffaf77f0e7996b62bac91 7150 Download":
+        - cell "packages/local-access/src/index.ts"
+        - cell "fce97413cd3b27c8ae915286d1c10c4aa37168550deffaf77f0e7996b62bac91"
+        - cell "7150"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/1eb16f03026f81086298262eb7dbf0cbcfbf03a5c2d56d9d26451e3b7f763f3f
+      - row "packages/local-access/tsconfig.json 31dbcfd33d2091b8225ba45bffd0c396c2351db4b754270721461b225f8c05cb 324 Download":
+        - cell "packages/local-access/tsconfig.json"
+        - cell "31dbcfd33d2091b8225ba45bffd0c396c2351db4b754270721461b225f8c05cb"
+        - cell "324"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/b946d04cc6a387e71f52648d0bc4df3108082c84bce8d4c07babe29fd0367640
+      - row "packages/sqlite/dist/index.d.ts 0b5c2ae05b724dfb658e7129e759cdb7a7c063a46fb6f11541226662ef5fd377 1821 Download":
+        - cell "packages/sqlite/dist/index.d.ts"
+        - cell "0b5c2ae05b724dfb658e7129e759cdb7a7c063a46fb6f11541226662ef5fd377"
+        - cell "1821"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/de8ad01ba33cf41d6f1db2d50958f72a5c84ffd11e0d391304ee756a2c0d8a1b
+      - row "packages/sqlite/dist/index.js 313f32645269c518d715bd17e199f85ac816063cdfff13e53f445f88cf8add0e 13228 Download":
+        - cell "packages/sqlite/dist/index.js"
+        - cell "313f32645269c518d715bd17e199f85ac816063cdfff13e53f445f88cf8add0e"
+        - cell "13228"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/aaecebc9eb39b1b9da163f8a0f636d10c18fb9025857285e9dfb1079b8b14a85
+      - row "packages/sqlite/dist/index.js.map c08b26ad307750fbc40d45bb302011347f7b108deafccc27c99c192d27b53b06 11000 Download":
+        - cell "packages/sqlite/dist/index.js.map"
+        - cell "c08b26ad307750fbc40d45bb302011347f7b108deafccc27c99c192d27b53b06"
+        - cell "11000"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/bbab8372c9a33073b4700dbe14fb33255036b2ee5078a32f7258f635fe1eadd5
+      - row "packages/sqlite/package.json 82f370af2a574bfd3d4cadce7b4a2855b1667a475f4d9ba1d48c9b169d1e779e 437 Download":
+        - cell "packages/sqlite/package.json"
+        - cell "82f370af2a574bfd3d4cadce7b4a2855b1667a475f4d9ba1d48c9b169d1e779e"
+        - cell "437"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/c1b1b10fb15939e019bbe885f4fd384f751b4ad755377215ce85304e772a42cb
+      - row "packages/sqlite/src/index.ts 03fb605c558044e72002d3787b7b7b974de3850597fb06852e07883c3d7d1e08 14659 Download":
+        - cell "packages/sqlite/src/index.ts"
+        - cell "03fb605c558044e72002d3787b7b7b974de3850597fb06852e07883c3d7d1e08"
+        - cell "14659"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/80274a9522369616b60467b4f62808006d193a454119961749d6a4331ac09086
+      - row "packages/sqlite/tsconfig.json 8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1 273 Download":
+        - cell "packages/sqlite/tsconfig.json"
+        - cell "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1"
+        - cell "273"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/db54c759325d0ce6a497425d086c5bcbd3c0e6c4960d4db69969879f72879ac0
+      - row "packages/web-shell/dist/dom.d.ts 0163f9132891d0d974ceeb9085001e8abc5475138258223c49eeebe886a552a0 1073 Download":
+        - cell "packages/web-shell/dist/dom.d.ts"
+        - cell "0163f9132891d0d974ceeb9085001e8abc5475138258223c49eeebe886a552a0"
+        - cell "1073"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/e855592d7b6d588255b7619d221ba8ddf4c101960e14cf45e8c493f1095fb863
+      - row "packages/web-shell/dist/dom.js 789d4978a93a7735c5d82337d6c7d58f9f11e91bad3c9c89619f93b29f1b4537 2355 Download":
+        - cell "packages/web-shell/dist/dom.js"
+        - cell "789d4978a93a7735c5d82337d6c7d58f9f11e91bad3c9c89619f93b29f1b4537"
+        - cell "2355"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/096a18c86e5e8ae1807cddd1c2eaedc2bf00df14a24134a928b1460c74b474d8
+      - row "packages/web-shell/dist/dom.js.map 425632146a9f18365e988201de2127b82afa6840e5661d9da89beb989cec0cbd 2981 Download":
+        - cell "packages/web-shell/dist/dom.js.map"
+        - cell "425632146a9f18365e988201de2127b82afa6840e5661d9da89beb989cec0cbd"
+        - cell "2981"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/ab87ccf449fbc8e64e614c559540c17e1b9fd854c08cfea28fe6d587f88a17f2
+      - row "packages/web-shell/dist/index.d.ts fc2d00f720c71e0de917f99b6ad8e8b12f20c3bac4415ea38e654ddd7bd09914 430 Download":
+        - cell "packages/web-shell/dist/index.d.ts"
+        - cell "fc2d00f720c71e0de917f99b6ad8e8b12f20c3bac4415ea38e654ddd7bd09914"
+        - cell "430"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/9fc2062ae3e6067c7c15e39a5f4a08dd0119c696ca57185f964ac37610557192
+      - row "packages/web-shell/dist/index.js 752f34475fdd07d6efc2d3804182150745cd561f41673de1b86ca1d1610f2480 16103 Download":
+        - cell "packages/web-shell/dist/index.js"
+        - cell "752f34475fdd07d6efc2d3804182150745cd561f41673de1b86ca1d1610f2480"
+        - cell "16103"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/36e84e4802b36ee28e2882944f0fa69ecded5d176583cc1f63d4baa1071c467e
+      - row "packages/web-shell/dist/index.js.map 84776e7c8f76d76ad9c67ac79341d6cb81244b9e1a11f721d86d0038a062037f 15759 Download":
+        - cell "packages/web-shell/dist/index.js.map"
+        - cell "84776e7c8f76d76ad9c67ac79341d6cb81244b9e1a11f721d86d0038a062037f"
+        - cell "15759"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/ff35351eda47d42816ea35c45855e7437931b215a647ef19446292702ad01d45
+      - row "packages/web-shell/dist/react-adapter.d.ts de6ce2b14f5e11df7febde050a660bfeb3f7db4aeb99f5b924e57cb246eac081 630 Download":
+        - cell "packages/web-shell/dist/react-adapter.d.ts"
+        - cell "de6ce2b14f5e11df7febde050a660bfeb3f7db4aeb99f5b924e57cb246eac081"
+        - cell "630"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/ac762a9f54e10283a8fdbe47bee699c83ac9f0e7ca6ca4296205cd8faa58af51
+      - row "packages/web-shell/dist/react-adapter.js 872c251edf149ebbeb5c52297bcf9075bf377f4ec78b134c9ecf695c0b520092 783 Download":
+        - cell "packages/web-shell/dist/react-adapter.js"
+        - cell "872c251edf149ebbeb5c52297bcf9075bf377f4ec78b134c9ecf695c0b520092"
+        - cell "783"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/32c6fc1e7190142b0fe6c8f4cc0af3846a6cf17d892d69458acdded4a3776702
+      - row "packages/web-shell/dist/react-adapter.js.map ab7d292898d3ca67df9851eead141c861db76413078304f22b620aaacea3f1a7 823 Download":
+        - cell "packages/web-shell/dist/react-adapter.js.map"
+        - cell "ab7d292898d3ca67df9851eead141c861db76413078304f22b620aaacea3f1a7"
+        - cell "823"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/96da46088db825ca6809a9df09270ecaf7a5e6353e04d8ae22b95b0de941dd5b
+      - row "packages/web-shell/dist/shell.css 1e0b3d3e60031bb59efd26c628265b8c2265a946a6fa6a971934d0983e2aff4f 10538 Download":
+        - cell "packages/web-shell/dist/shell.css"
+        - cell "1e0b3d3e60031bb59efd26c628265b8c2265a946a6fa6a971934d0983e2aff4f"
+        - cell "10538"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/09220a5ed065827f0cb6d2ea6ea3b8645d693bd67ef03311cba08ce2ca9a464f
+      - row "packages/web-shell/package.json b0c24cbb45e2b35d5277504376cadcc25c741f1ae78a0c6df0524fe16134cc81 440 Download":
+        - cell "packages/web-shell/package.json"
+        - cell "b0c24cbb45e2b35d5277504376cadcc25c741f1ae78a0c6df0524fe16134cc81"
+        - cell "440"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/70ccfffa5160bf88c65b911162f7cfe827a3a4a4f59c94ca51a478baead35e38
+      - row "packages/web-shell/src/dom.ts 14dfeecc630f1b229ae487ce209756df91a4610b6a4ad11500ff7af30af50920 2567 Download":
+        - cell "packages/web-shell/src/dom.ts"
+        - cell "14dfeecc630f1b229ae487ce209756df91a4610b6a4ad11500ff7af30af50920"
+        - cell "2567"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/554fd083fa193942778381fee8bfc8ea7b88026f0d11e68148ee9b074f31d826
+      - row "packages/web-shell/src/index.ts 547d2eded7fb7d07316863e40b2759ede64140c410b9412bfbbba1f384bc7a89 17286 Download":
+        - cell "packages/web-shell/src/index.ts"
+        - cell "547d2eded7fb7d07316863e40b2759ede64140c410b9412bfbbba1f384bc7a89"
+        - cell "17286"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/cb1ec99d5df12b0d9e04351ed1fae4a00df5ab6f4be7892b9489bb5ce5467650
+      - row "packages/web-shell/src/react-adapter.ts 65959d9eae79cb3f80c71b1d3ce2910e4206918ed1bda697733195fe8057c315 1312 Download":
+        - cell "packages/web-shell/src/react-adapter.ts"
+        - cell "65959d9eae79cb3f80c71b1d3ce2910e4206918ed1bda697733195fe8057c315"
+        - cell "1312"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/cc38622dc138ee24b1f5829d91111dba1f440430e2c3f351ca62d3667202d6ad
+      - row "packages/web-shell/src/shell.css 1e0b3d3e60031bb59efd26c628265b8c2265a946a6fa6a971934d0983e2aff4f 10538 Download":
+        - cell "packages/web-shell/src/shell.css"
+        - cell "1e0b3d3e60031bb59efd26c628265b8c2265a946a6fa6a971934d0983e2aff4f"
+        - cell "10538"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/450478fbfe6cd8c5797938448e4e31408f4cc0cd5828500cafac483d25c55cfa
+      - row "packages/web-shell/tsconfig.json 8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1 273 Download":
+        - cell "packages/web-shell/tsconfig.json"
+        - cell "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1"
+        - cell "273"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/03f1762c3205b9a1724ebac9aa5389bb6fe3fb8b9c010f011e34c9eca22dfa80
+      - row "packages/worker-host/dist/index.d.ts d75f2ec55ec615d583859cf502859e220120dc07031e33636a3a13ad94b89f74 784 Download":
+        - cell "packages/worker-host/dist/index.d.ts"
+        - cell "d75f2ec55ec615d583859cf502859e220120dc07031e33636a3a13ad94b89f74"
+        - cell "784"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/2528b0603902126410103cc7d86088e9d53b6b07ec66cd3e8919231240ca7557
+      - row "packages/worker-host/dist/index.js 45a437b9bfc87d7e60d8ce68817c002555b5ad7fed2dace784a0f5524d9a5215 3712 Download":
+        - cell "packages/worker-host/dist/index.js"
+        - cell "45a437b9bfc87d7e60d8ce68817c002555b5ad7fed2dace784a0f5524d9a5215"
+        - cell "3712"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/cb56b6f37d70c69bc8b767699762ac3f78afe03fab7dd5910f4aef9fef09adb1
+      - row "packages/worker-host/dist/index.js.map 4df6e6038601ae7eaa71e63020e0d188964873c94c07f0e61a6a0db9b010c3f2 3763 Download":
+        - cell "packages/worker-host/dist/index.js.map"
+        - cell "4df6e6038601ae7eaa71e63020e0d188964873c94c07f0e61a6a0db9b010c3f2"
+        - cell "3763"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/3fecc9ac9b9c8d0d52a086b628a0284cbf0d61c5c63972814bbaa5535ae08775
+      - row "packages/worker-host/package.json 1f3afb329d62a1c72047813e76f1e6530b2170b43e9fb69b5b5d7b70448ccb99 442 Download":
+        - cell "packages/worker-host/package.json"
+        - cell "1f3afb329d62a1c72047813e76f1e6530b2170b43e9fb69b5b5d7b70448ccb99"
+        - cell "442"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/cf9a4e9079bc778cc2a0adfd27c76f2bd72b1ea894ae4384d57407589d0075b6
+      - row "packages/worker-host/src/index.ts ab86d7d5222d05983d63c3820396593ebd9490aef7a3be7c2476da72b38293f8 3911 Download":
+        - cell "packages/worker-host/src/index.ts"
+        - cell "ab86d7d5222d05983d63c3820396593ebd9490aef7a3be7c2476da72b38293f8"
+        - cell "3911"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/38d1998e152e9b92fe4ceeae449130da3a8c39124e1cf8ffde1e296aca4a5353
+      - row "packages/worker-host/tsconfig.json 8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1 273 Download":
+        - cell "packages/worker-host/tsconfig.json"
+        - cell "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1"
+        - cell "273"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/8400a8610a6c45d373c863bdac273aaea1e4bb11152656d81348661a49e73843
+      - row "products/core-ops-1002/product.json 0c18207d5ba08d0960c7f4a11c6e116ea8e532075bb046d094e0c83114c4fff1 722 Download":
+        - cell "products/core-ops-1002/product.json"
+        - cell "0c18207d5ba08d0960c7f4a11c6e116ea8e532075bb046d094e0c83114c4fff1"
+        - cell "722"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/415c37a71d7d64633a27105820f942bea51b9ec1caec2d629eb19206413e1eac
+      - row "profiles/local-developer.json 7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1 1075 Download":
+        - cell "profiles/local-developer.json"
+        - cell "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1"
+        - cell "1075"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/713cafb6425ff0bb93bf8e1716d3882abbb3dfdc4850668196764c4018215596
+      - row "QUADBRIDGE-SNAPSHOT.json f8112658a7f4870069f23ae34a1b554a298637237a772d8d512370cd2a0f09b8 16975 Download":
+        - cell "QUADBRIDGE-SNAPSHOT.json"
+        - cell "f8112658a7f4870069f23ae34a1b554a298637237a772d8d512370cd2a0f09b8"
+        - cell "16975"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/01bfbafc2ffc8910ec9ab3cdc15916382b9b2389b561a5349517652d5ee53949
+      - row "README.md a4859ac1bd58c59da78d739c67d972fa9116dad99d8351a31de5ee766f4b58f3 381 Download":
+        - cell "README.md"
+        - cell "a4859ac1bd58c59da78d739c67d972fa9116dad99d8351a31de5ee766f4b58f3"
+        - cell "381"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/5cc9b07cbd35c341e53e909c407f0c871a6a3f457e2c5fc1a48bcd05ad8c962d
+      - row "solutions/knowledge-to-desk/solution.json 21eab4f7ee5a273df687a805055dd3c35b746ed35a12e94711529a5f8fa2a9ee 2057 Download":
+        - cell "solutions/knowledge-to-desk/solution.json"
+        - cell "21eab4f7ee5a273df687a805055dd3c35b746ed35a12e94711529a5f8fa2a9ee"
+        - cell "2057"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/722456c34fb62a72507f3ade3275037864851dd98544af0c14d22ad03e007442
+      - row "solutions/knowledge-to-desk/wiring.mjs 5c2def96393bb5f02c95d362624fec14637c83513daf8b266ce7ce547656bb9f 4280 Download":
+        - cell "solutions/knowledge-to-desk/wiring.mjs"
+        - cell "5c2def96393bb5f02c95d362624fec14637c83513daf8b266ce7ce547656bb9f"
+        - cell "4280"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/63697205b32603e58969dde3bbb59b88e1758f9588e8cfb019aa40fed15fc67d
+      - row "tools/demo.mjs fd370eb6e9119d04bcb70ea5170df1fac33024b9a0fa49cdebd6b533316e56e1 3889 Download":
+        - cell "tools/demo.mjs"
+        - cell "fd370eb6e9119d04bcb70ea5170df1fac33024b9a0fa49cdebd6b533316e56e1"
+        - cell "3889"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/0e304835f13aacec9e77b0ddfd91456523e226b0dcbda054c9628e9d9870dea4
+      - row "tools/link-workspaces.mjs bef21a5c9e216974017aa425d7e9eb425eeb399ac8e0dab9a91f7477e1fc5a2c 1212 Download":
+        - cell "tools/link-workspaces.mjs"
+        - cell "bef21a5c9e216974017aa425d7e9eb425eeb399ac8e0dab9a91f7477e1fc5a2c"
+        - cell "1212"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/5100ed25a7202a68c25836a958969690ac42a7c67d4cbf924cd271e2b6b67124
+      - row "tools/local-profile.mjs b780e4f6dfbb1048bed4efe5b83e60a959cdc9556c6de63935426d50aa4e4590 3864 Download":
+        - cell "tools/local-profile.mjs"
+        - cell "b780e4f6dfbb1048bed4efe5b83e60a959cdc9556c6de63935426d50aa4e4590"
+        - cell "3864"
+        - cell "Download":
+          - link "Download":
+            - /url: /platform-api/artifacts/f12a6b8fab68a6232da5d2afb32e932084a75d1910b3c9c9a289c64bf0b92ad7/entries/0a61de1eb74f2cea13119a49266f61cb5ec95369f454462f294a9c0731df06d1
+  - heading "Recent registry operations" [level=2]
+  - paragraph: Showing up to 200 of 1 records.
+  - table:
+    - rowgroup:
+      - row "Started Kind State Physical proof Destination Staging Local owner observation Product Last issue":
+        - columnheader "Started"
+        - columnheader "Kind"
+        - columnheader "State"
+        - columnheader "Physical proof"
+        - columnheader "Destination"
+        - columnheader "Staging"
+        - columnheader "Local owner observation"
+        - columnheader "Product"
+        - columnheader "Last issue"
+    - rowgroup:
+      - row "10/1/2026, 5:40:32 PM REGISTER REGISTERED MOVE_OBSERVED verified clean — core-ops-1002@1.0.0 —":
+        - cell "10/1/2026, 5:40:32 PM"
+        - cell "REGISTER"
+        - cell "REGISTERED"
+        - cell "MOVE_OBSERVED"
+        - cell "verified"
+        - cell "clean"
+        - cell "—"
+        - cell "core-ops-1002@1.0.0"
+        - cell "—"
+  - heading "Promoted local releases" [level=2]
+  - generic: Nothing recorded yet.

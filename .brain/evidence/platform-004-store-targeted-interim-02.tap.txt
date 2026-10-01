@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 1 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 4.4242
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 2 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 19.9274
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 3 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 28.962
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 4 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 3.8173
+  type: 'test'
+  ...
+# Subtest: schema 3 artifact publication facts are added without changing older operation values
+ok 5 - schema 3 artifact publication facts are added without changing older operation values
+  ---
+  duration_ms: 127.9909
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 6 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 5.7989
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 7 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 2.5565
+  type: 'test'
+  ...
+# Subtest: managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+ok 8 - managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+  ---
+  duration_ms: 20.7194
+  type: 'test'
+  ...
+# Subtest: schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+ok 9 - schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+  ---
+  duration_ms: 2.5468
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 267.3193

@@ -1,0 +1,142 @@
+{
+  "schema": "brain.evidence-record.v1",
+  "kind": "review",
+  "id": "86484a4f-bbd1-45c7-a620-25cefa16dfd4",
+  "taskId": "PLATFORM-005A-CORE",
+  "contractDigest": "62b56271c4802a4570e6dff06315a1da5915cc2de37081a5b03527ab27a70914",
+  "candidate": {
+    "files": [
+      {
+        "path": "apps/control-plane/src/build-inputs.ts",
+        "sha256": "8536915eda4de98fca5c2ed23a8a83c1752d8eaf681647d26ff20274b85e9c72"
+      },
+      {
+        "path": "apps/control-plane/src/main.ts",
+        "sha256": "4eea7a1c88c1a97c42b7b6737a2d6e0615d2394bc7e3eae9d1ea0bba0ef9ea7a"
+      },
+      {
+        "path": "apps/control-plane/src/operator-server.ts",
+        "sha256": "0d02e1b136d135807461a1fbbcad423b8aaf7e3c691b6d27503eaf625f3b8989"
+      },
+      {
+        "path": "apps/control-plane/src/runtime-manager.ts",
+        "sha256": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b"
+      },
+      {
+        "path": "apps/control-plane/src/runtime-recovery.ts",
+        "sha256": "02f9fdb51c5cbfac1a12d92ae19e861fdc3ee03626a462979b8a31bea90e3f1d"
+      },
+      {
+        "path": "apps/studio-web/src/main.ts",
+        "sha256": "c1eea89928f157dc3178ff9e2d27e4f2deb744d8fad4beb018b7176166a8d902"
+      },
+      {
+        "path": "docs/STATUS.md",
+        "sha256": "cd5ed9853ea4c11d94a9a859b560b83d6cff6dd0d8ec976f6ec3a43e94c6e8fa"
+      },
+      {
+        "path": "docs/STUDIO_INTEGRATION.md",
+        "sha256": "d7c4a023101c7e5dcc96067eb25cbfb0fb37266290a3d65aca8b6ccaaf87abec"
+      },
+      {
+        "path": "IMPLEMENTATION_STATUS_0.3.md",
+        "sha256": "0ee835c626c5f3e18199431387358dc8c4d02213edfe2e12e75cb3a6724c6be4"
+      },
+      {
+        "path": "packages/control-plane/src/index.ts",
+        "sha256": "334e0af1c57dbff03dcc96785c03fc5af98ee8e03939221aaa76ca1290ad44c5"
+      },
+      {
+        "path": "PLATFORM_ARCHITECTURE.md",
+        "sha256": "91c3a71e9f68d426a9fe3396ad5bcc49a846d4c101bb4369867e3f8115fa4180"
+      },
+      {
+        "path": "README.md",
+        "sha256": "900ad12067a90378fc82b47441ca3473c671e6816d923dbc3bc34aa9c2c38eb9"
+      },
+      {
+        "path": "tests/control-plane-artifacts.test.mjs",
+        "sha256": "1cc88fa06ba21b2a76b93a25360c4d32e0705e875ec8064d0443d1d65a003278"
+      },
+      {
+        "path": "tests/control-plane-build-host.test.mjs",
+        "sha256": "c5941bdcc1e28ec70d61bd3c745dcacb304c4c8d84316afad3381650cfecfdf6"
+      },
+      {
+        "path": "tests/control-plane-http.test.mjs",
+        "sha256": "c3a59b4d3ad0e5f91b18c92c0a1af93e4be634b848f3568f28b8ae65e98e58cb"
+      },
+      {
+        "path": "tests/control-plane-main.test.mjs",
+        "sha256": "b278b7117e7535d6380943756366c20a87f527a7965f7c4e9e8d87786e631861"
+      },
+      {
+        "path": "tests/control-plane.test.mjs",
+        "sha256": "3304f9ff64a01a81d6effb71a723136e6cbc711b7ef31a7924f64f46864884f2"
+      },
+      {
+        "path": "tests/managed-runtime-recovery-store.test.mjs",
+        "sha256": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+      },
+      {
+        "path": "tests/managed-runtime-store.test.mjs",
+        "sha256": "2de1db607bf5aa8a93b81b15eaacc152383634466f80501a0884283598222de1"
+      },
+      {
+        "path": "tests/studio-runtime-ui.test.mjs",
+        "sha256": "3fe82fa020cc550be44dd2fc8c4494373eeb1ee4da0fb6e79b6875ca33d20ef7"
+      },
+      {
+        "path": "tools/runtime-recovery-publish.ps1",
+        "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+      },
+      {
+        "path": "tools/runtime-recovery.mjs",
+        "sha256": "8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35"
+      }
+    ],
+    "digest": "0e1661168ae21880af8c4fb2b6498c147e81e66e08ce231a4170b8acff9a3fef"
+  },
+  "recordedAt": "2026-10-01T07:19:18.277Z",
+  "reviewer": "/root/repo_brain_architect",
+  "implementer": "/root/repo_brain_validation",
+  "independence": "independent_reported",
+  "outcome": "ACCEPTED",
+  "scope": "Exact22-path accessible local source review: recovery implementation plus minimal no-host fixture repair. Actual named native1of1 and revised focused fixture1of1 supported; browser/fullsuite observed separately before coordinator acceptance.",
+  "artifacts": [
+    {
+      "sourceRef": ".brain/evidence/platform-005a-final-candidate-02.json",
+      "path": ".brain/workflow/artifacts/86484a4f-bbd1-45c7-a620-25cefa16dfd4/platform-005a-final-candidate-02.json",
+      "sha256": "f1c605001316d74becd52e72bb0b380df401a3bd83dd83ab3baf0384cfaa912b",
+      "bytes": 4493
+    },
+    {
+      "sourceRef": ".brain/evidence/platform-005a-native-journey-01.json",
+      "path": ".brain/workflow/artifacts/86484a4f-bbd1-45c7-a620-25cefa16dfd4/platform-005a-native-journey-01.json",
+      "sha256": "9f9f2aec6ead247d72ea29a98aceb4badbc12ee15a2977b4556a4013cf807508",
+      "bytes": 2436
+    },
+    {
+      "sourceRef": ".brain/evidence/platform-005a-recovery-desk-journey-01.tap.txt",
+      "path": ".brain/workflow/artifacts/86484a4f-bbd1-45c7-a620-25cefa16dfd4/platform-005a-recovery-desk-journey-01.tap.txt",
+      "sha256": "62ec711878340c62b3f35bf09d2840b0c55d86161d2ead9d1dc7efec90056ca9",
+      "bytes": 412
+    },
+    {
+      "sourceRef": ".local/platform-005a-build-host-fixture-fix-focused-01.tap.txt",
+      "path": ".brain/workflow/artifacts/86484a4f-bbd1-45c7-a620-25cefa16dfd4/platform-005a-build-host-fixture-fix-focused-01.tap.txt",
+      "sha256": "e94d869719e133e484d97567d3648984c74f58fd2f93d859f742b4d479e571db",
+      "bytes": 409
+    }
+  ],
+  "provenance": {
+    "reference": "Actual independent Sol agent reviewed exact revised22file hashes and source on2026-10-01; root received source approval and explicit fullsuite/browser limitation.",
+    "kind": "reported"
+  },
+  "limitations": [
+    "Source review does not qualify browser/provider/hosted/production execution.",
+    "Prior failed suite retained, final revised suite and browser pending.",
+    "Ancillary Atlas drift outside22file task candidate is not part of review acceptance."
+  ],
+  "integritySha256": "ac3289fe5ac37b7c1d2bd9338e0e8b830003166ca658c494562f8dbd5b0adc5b"
+}

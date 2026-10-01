@@ -1,0 +1,146 @@
+import { join } from 'node:path';
+import { lstatSync, mkdirSync, realpathSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { ControlPlaneStore } from '@quadbridge/control-plane';
+import { BuildExecutorUnavailable, LocalBuildWorker } from './build-worker.js';
+import { createOperatorServer } from './operator-server.js';
+import { importSourceSnapshot, loadSourceSnapshot } from './source-import.js';
+import { LocalArtifactStore } from './artifact-store.js';
+import { ManagedRuntimeManager } from './runtime-manager.js';
+
+const ROOT = fileURLToPath(new URL('../../../', import.meta.url));
+
+export function observeCloseOutcome<T>(close: Promise<T>): Promise<{ ok: true; value: T } | { ok: false; error: unknown }> {
+  return close.then(value => ({ ok: true as const, value }), error => ({ ok: false as const, error }));
+}
+
+export function installShutdownHandlers(
+  close: () => Promise<unknown>,
+  report: (error: unknown) => void,
+  target: Pick<NodeJS.Process, 'on' | 'removeListener'> = process
+): () => void {
+  let closing = false;
+  const handler = () => {
+    if (closing) return;
+    closing = true;
+    let result: Promise<unknown>;
+    try { result = close(); }
+    catch (error) { report(error); closing = false; return; }
+    void result.catch(report).finally(() => { closing = false; });
+  };
+  target.on('SIGINT', handler);
+  target.on('SIGTERM', handler);
+  return () => {
+    target.removeListener('SIGINT', handler);
+    target.removeListener('SIGTERM', handler);
+  };
+}
+
+function checkDefaultDatabaseParents(root: string, databasePath: string) {
+  const projectRoot = resolve(root);
+  const rootInfo = lstatSync(projectRoot);
+  if (!rootInfo.isDirectory() || rootInfo.isSymbolicLink() || realpathSync(projectRoot).toLowerCase() !== projectRoot.toLowerCase()) throw new Error('Local control-plane project root must be a physical directory');
+  const local = join(projectRoot,'.local');
+  try { lstatSync(local); } catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') mkdirSync(local); else throw error; }
+  const localInfo = lstatSync(local);
+  if (!localInfo.isDirectory() || localInfo.isSymbolicLink() || realpathSync(local).toLowerCase() !== local.toLowerCase()) throw new Error('Local control-plane state directory cannot be a junction or symbolic link');
+  if (resolve(databasePath).toLowerCase() !== join(local,'control-plane.sqlite').toLowerCase()) throw new Error('Default control-plane database path is invalid');
+  for (const path of [databasePath,`${databasePath}-wal`,`${databasePath}-shm`]) {
+    try { const info=lstatSync(path); if(info.isSymbolicLink()||!info.isFile())throw new Error('Local control-plane database path cannot be a link or special file'); }
+    catch(error) { if((error as NodeJS.ErrnoException).code!=='ENOENT')throw error; }
+  }
+}
+
+export async function startControlPlane(options: { root?: string; databasePath?: string; port?: number } = {}) {
+  if (process.env.NODE_ENV === 'production') throw new Error('The local platform operator cannot run in production mode');
+  const root = options.root ?? ROOT;
+  const databasePath = options.databasePath ?? process.env.QB_CONTROL_PLANE_DB ?? join(root, '.local', 'control-plane.sqlite');
+  if (options.databasePath === undefined && process.env.QB_CONTROL_PLANE_DB === undefined) checkDefaultDatabaseParents(root,databasePath);
+  const store = new ControlPlaneStore(databasePath);
+  let worker: LocalBuildWorker | undefined;
+  let artifacts: LocalArtifactStore | undefined;
+  let runtimes: ManagedRuntimeManager | undefined;
+  let operator: Awaited<ReturnType<typeof createOperatorServer>> | undefined;
+  try {
+    const snapshot = loadSourceSnapshot(root);
+    importSourceSnapshot(store, snapshot);
+    artifacts = await LocalArtifactStore.create(root,store);
+    // Runtime startup is independent of optional compiler availability. The
+    // manager remains attached even when its selected native host is unavailable.
+    runtimes = ManagedRuntimeManager.create(root,store,artifacts);
+    try { worker = await LocalBuildWorker.create({root,store,snapshot}); }
+    catch (error) {
+      if (!(error instanceof BuildExecutorUnavailable)) throw error;
+      console.warn('The paired local console is available, but its pinned build executor is unavailable.');
+    }
+    if (worker) await worker.start();
+    const runningOperator = await createOperatorServer({ root, store, snapshot, worker, artifactStore:artifacts, runtimeManager:runtimes, port: options.port ?? Number(process.env.QB_STUDIO_PORT || 4480) });
+    operator = runningOperator;
+    console.log(`Quadbridge Product Studio 0.3: ${runningOperator.url}`);
+    console.log(`Pairing code (local developer access): ${runningOperator.pairingCode}`);
+    console.log(worker
+      ? 'Product plans and builds run locally. Verified exports stay in the local snapshot store; deployment and model-serving executors are not attached.'
+      : 'Product composition and saved versions are available. Build requests are unavailable until the pinned local toolchain is configured; deployment and model-serving executors are not attached.');
+    console.log('Managed application runtimes are local-only and require an exact promoted release; uncertain process ownership retains its slot and data.');
+    let closeFlight:Promise<void>|undefined;
+    let operatorClosed=false,workerClosed=false,artifactsClosed=false,storeClosed=false;
+    return {
+      ...operator,
+      close: () => {
+        if(closeFlight)return closeFlight;
+        const flight=(async()=>{
+          const failures:unknown[]=[];
+          // Calling close synchronously marks the manager as closing and signals
+          // its exact owners before HTTP connections are drained.
+          const runtimeClose=runtimes?.close();
+          // Attach rejection handling before waiting for HTTP connections to drain.
+          const runtimeOutcome=runtimeClose?observeCloseOutcome(runtimeClose):undefined;
+          if(!operatorClosed)try{await runningOperator.close();operatorClosed=true;}catch(error){failures.push(error);}
+          let runtimeSettled=!runtimeClose;
+          if(runtimeOutcome){const outcome=await runtimeOutcome;if(outcome.ok)runtimeSettled=true;else failures.push(outcome.error);}
+          // Late exact-owner reconciliation still needs these stores. Keep them
+          // open whenever the manager cannot prove its owned callbacks settled.
+          if(runtimeSettled){
+            let workerSettled=true;
+            if(!workerClosed&&worker)try{await worker.close();workerClosed=true;}catch(error){workerSettled=false;failures.push(error);}
+            if(workerSettled){
+              let artifactsSettled=true;
+              if(!artifactsClosed&&artifacts)try{await artifacts.close();artifactsClosed=true;}catch(error){artifactsSettled=false;failures.push(error);}
+              if(artifactsSettled&&!storeClosed)try{store.close();storeClosed=true;}catch(error){failures.push(error);}
+            }
+          }
+          if(failures.length===1)throw failures[0];
+          if(failures.length>1)throw new AggregateError(failures,'Control-plane shutdown failed; unresolved runtime dependencies were retained');
+        })();
+        closeFlight=flight;
+        void flight.then(()=>{if(closeFlight===flight)closeFlight=undefined;},()=>{if(closeFlight===flight)closeFlight=undefined;});
+        return flight;
+      }
+    };
+  } catch (error) {
+    const failures: unknown[] = [error];
+    let runtimeSettled=true;
+    try { await runtimes?.close(); } catch (closeError) { runtimeSettled=false; failures.push(closeError); }
+    try { await operator?.close(); } catch (closeError) { failures.push(closeError); }
+    if(runtimeSettled){
+      let workerSettled=true;try { await worker?.close(); } catch (closeError) { workerSettled=false;failures.push(closeError); }
+      let artifactsSettled=workerSettled;if(workerSettled)try { await artifacts?.close(); } catch (closeError) { artifactsSettled=false;failures.push(closeError); }
+      if(artifactsSettled)try { store.close(); } catch (closeError) { failures.push(closeError); }
+    }
+    if (failures.length > 1) throw new AggregateError(failures,'Control-plane startup failed and owned resources did not all close cleanly');
+    throw error;
+  }
+}
+
+if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
+  void startControlPlane().then(operator => {
+    installShutdownHandlers(() => operator.close(), error => {
+      console.error('Unable to close the local control plane cleanly', error);
+      process.exitCode = 1;
+    });
+  }).catch(error => {
+    console.error(error instanceof Error ? error.message : 'Unable to start the local control plane');
+    process.exitCode = 1;
+  });
+}
