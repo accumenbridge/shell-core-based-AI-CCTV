@@ -12,6 +12,19 @@ import { validProductId } from '../packages/composition/dist/studio.js';
 
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const fingerprint=value=>createHash('sha256').update(value).digest('hex');
+const STARTUP_STDERR_LIMIT=4096;
+const STARTUP_ERROR_LIMIT=2048;
+const STARTUP_PUBLIC_ERROR='Application stopped before startup';
+function startupStderrCategory(stderr) {
+    if(/\b(?:EADDRINUSE|address already in use)\b/i.test(stderr))return 'PORT_IN_USE';
+    if(/\b(?:SQLITE_BUSY|database is locked)\b/i.test(stderr))return 'DATABASE_BUSY';
+    if(/\b(?:ERR_MODULE_NOT_FOUND|MODULE_NOT_FOUND|Cannot find module|Cannot find package)\b/i.test(stderr))return 'MODULE_NOT_FOUND';
+    if(/\b(?:ERR_SQLITE_ERROR|SQLITE_CANTOPEN|SQLITE_FULL|SQLITE_IOERR)\b/i.test(stderr))return 'SQLITE_ERROR';
+    return stderr?'UNCLASSIFIED_STDERR':'NO_STDERR';
+}
+function boundedErrorText(value,limit=STARTUP_ERROR_LIMIT) {
+    return Buffer.from(String(value??''),'utf8').subarray(0,limit).toString('utf8');
+}
 export function stopTree(child) {
     if(!child?.pid || child.exitCode!==null) return;
     try {
@@ -69,24 +82,82 @@ export class StudioManager {
         if(!validProductId(productId))throw Error('Invalid product');
         if(this.closed||this.active)throw Error('Wait for the current build');
         if(this.running.has(productId))throw Error('This Studio already owns an instance; stop it before starting another');
-        const state={productId,status:'STARTING',url:null};this.running.set(productId,state);this.staging++;
+        const started=performance.now();
+        const launchDiagnostics={id:randomUUID(),phase:'STAGING_SNAPSHOT',elapsedMs:0,readiness:'NOT_READY',
+            firstSpawnError:null,exitObserved:false,exitCode:null,exitSignal:null,closeObserved:false,closeCode:null,closeSignal:null,
+            stderrBytes:0,stderrCapturedBytes:0,stderrTruncated:false,stderrSha256:createHash('sha256').digest('hex'),stderrCategory:'NO_STDERR',stderrTail:''};
+        const markPhase=phase=>{launchDiagnostics.phase=phase;launchDiagnostics.elapsedMs=Math.max(0,Math.round(performance.now()-started));};
+        const rememberSpawnError=error=>{
+            if(launchDiagnostics.firstSpawnError)return;
+            launchDiagnostics.firstSpawnError={name:boundedErrorText(error?.name||'Error',64),
+                code:boundedErrorText(error?.code??'',64),message:boundedErrorText(error?.message||error)};
+        };
+        const state={productId,status:'STARTING',url:null,launchDiagnostics};this.running.set(productId,state);this.staging++;
         try{
             // Stage already-compiled supplied products without requiring a compiler download.
             let built=this.builds.get(productId);
             if(!built){built=await this.stage(productId);this.builds.set(productId,built);}
+            markPhase('VALIDATE_LOCAL_PLAN');
             if(built.plan.bindings.some(b=>b.mode==='http'))throw Error('CONNECTED_SETUP_REQUIRED: the Studio launcher supports local bindings only. Export this definition and use the reviewed connected local profile with its destination running; no remote credentials are collected by the Studio.');
+            markPhase('RESERVE_LOOPBACK_PORT');
             const port=await new Promise((resolve,reject)=>{const s=createServer();s.on('error',reject);s.listen(0,'127.0.0.1',()=>{const p=s.address().port;s.close(()=>resolve(p));});});
             const data=join(this.stateRoot,'data',productId,built.release.slice(0,16));
-            const child=spawn(process.execPath,[join(built.path,'tools/demo.mjs'),'--product',productId,'--port',String(port),'--data-root',data],{cwd:built.path,env:{...process.env,NODE_ENV:'development'},detached:process.platform!=='win32',stdio:this.launchStdio});
+            markPhase('SPAWN_APPLICATION');
+            const quiet=this.launchStdio==='ignore';
+            let child;
+            try {
+                child=spawn(process.execPath,[join(built.path,'tools/demo.mjs'),'--product',productId,'--port',String(port),'--data-root',data],
+                    {cwd:built.path,env:{...process.env,NODE_ENV:'development'},detached:process.platform!=='win32',
+                        stdio:quiet?['ignore','ignore','pipe']:this.launchStdio});
+            } catch(error) {
+                rememberSpawnError(error);
+                throw error;
+            }
             state.child=child;state.release=built.release;state.url=`http://127.0.0.1:${port}`;state.data=data;
-            state.done=new Promise(resolve=>{child.once('error',e=>{state.status='FAILED';state.error=e.message;resolve();});child.once('exit',code=>{if(state.status!=='STOPPED')state.status=code===0?'STOPPED':'FAILED';resolve();});});
+            let stderrBuffer=Buffer.alloc(0);
+            const stderrHash=createHash('sha256');
+            if(child.stderr)child.stderr.on('data',chunk=>{
+                launchDiagnostics.stderrBytes=Math.min(Number.MAX_SAFE_INTEGER,launchDiagnostics.stderrBytes+chunk.length);
+                stderrHash.update(chunk);
+                stderrBuffer=Buffer.concat([stderrBuffer,chunk]);
+                if(stderrBuffer.length>STARTUP_STDERR_LIMIT) {
+                    stderrBuffer=stderrBuffer.subarray(stderrBuffer.length-STARTUP_STDERR_LIMIT);
+                    launchDiagnostics.stderrTruncated=true;
+                }
+                launchDiagnostics.stderrCapturedBytes=stderrBuffer.length;
+                launchDiagnostics.stderrTail=stderrBuffer.toString('utf8');
+                launchDiagnostics.stderrSha256=stderrHash.copy().digest('hex');
+                launchDiagnostics.stderrCategory=startupStderrCategory(launchDiagnostics.stderrTail);
+            });
+            state.done=new Promise(resolve=>{
+                child.once('error',error=>{rememberSpawnError(error);state.status='FAILED';state.error=STARTUP_PUBLIC_ERROR;resolve();});
+                child.once('exit',(code,signal)=>{
+                    launchDiagnostics.exitObserved=true;launchDiagnostics.exitCode=code;launchDiagnostics.exitSignal=signal;
+                    if(state.status!=='STOPPED')state.status=code===0?'STOPPED':'FAILED';
+                    resolve();
+                });
+                child.once('close',(code,signal)=>{
+                    launchDiagnostics.closeObserved=true;launchDiagnostics.closeCode=code;launchDiagnostics.closeSignal=signal;
+                    launchDiagnostics.elapsedMs=Math.max(0,Math.round(performance.now()-started));
+                    launchDiagnostics.stderrSha256=stderrHash.copy().digest('hex');
+                });
+            });
+            markPhase('WAIT_API_READINESS');
             for(let n=0;n<150;n++){
                 if(this.closed||state.status==='FAILED'||state.status==='STOPPED')throw Error('Application stopped before startup');
-                try {const r=await fetch(`${state.url}/api/health`,{signal:AbortSignal.timeout(500)});if(r.ok&&(await r.json()).api==='READY'){state.status='RUNNING';return this.view(state);}}catch{}
+                try {const r=await fetch(`${state.url}/api/health`,{signal:AbortSignal.timeout(500)});if(r.ok&&(await r.json()).api==='READY'){
+                    state.status='RUNNING';launchDiagnostics.readiness='API_READY';markPhase('API_READY');return this.view(state);}}catch{}
                 await sleep(100);
             }
             throw Error('Application did not become API-ready within 15 seconds');
-        }catch(e){state.status='FAILED';state.error=e.message;stopTree(state.child);throw e;}finally{this.staging--;}
+        }catch(e){
+            launchDiagnostics.elapsedMs=Math.max(0,Math.round(performance.now()-started));
+            if(launchDiagnostics.firstSpawnError) {
+                state.status='FAILED';state.error=STARTUP_PUBLIC_ERROR;stopTree(state.child);
+                throw Error(STARTUP_PUBLIC_ERROR);
+            }
+            state.status='FAILED';state.error=e.message;stopTree(state.child);throw e;
+        }finally{this.staging--;}
     }
     view(s){return {productId:s.productId,status:s.status,url:s.url,release:s.release??null,error:s.error??null,readiness:s.status==='RUNNING'?'API_READY_WORKFLOW_NOT_YET_PROVEN':'NOT_READY',credentials:'Generated credentials are printed in the terminal. Studio never returns service tokens.'};}
     status(){return {products:[...this.running.values()].map(s=>this.view(s)),builds:[...this.builds.values()].map(({productId,release,builtAt})=>({productId,release,builtAt})),jobs:[...this.jobs.keys()].map(id=>this.job(id)),activeJob:this.active};}
