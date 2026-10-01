@@ -150,6 +150,7 @@ async function fixture(t,{binaryAsset=false,productId='service-desk'}={}) {
   const root=join(temp,'checkout'), dbPath=join(temp,'control-plane.sqlite');
   let store,worker,artifacts,operator,runtimes,recovery;
   let expectedUnknownQuarantine;
+  let expectedPublicationUnknown;
   let expectedUnknownObserved=false;
   const externalOwners=new Set();
   t.after(async()=>{
@@ -182,16 +183,33 @@ async function fixture(t,{binaryAsset=false,productId='service-desk'}={}) {
     try { await recovery?.close(); }
     catch(error) { recoverySettled=false;cleanupErrors.push(new Error('Owned private recovery close was not positively observed',{cause:error})); }
     if((runtimeSettled||expectedUnknownObserved)&&recoverySettled) {
+      let registrySettled=true;
       for(const [name,close] of [['worker',()=>worker?.close()],['registry',()=>artifacts?.close()]]) {
         try { await close(); }
-        catch(error) { cleanupErrors.push(new Error(`Owned ${name} close was not positively observed`,{cause:error})); }
+        catch(error) {
+          if(name==='registry')registrySettled=false;
+          cleanupErrors.push(new Error(`Owned ${name} close was not positively observed`,{cause:error}));
+        }
+        if(name==='registry'&&registrySettled&&expectedPublicationUnknown&&artifacts&&store) {
+          const expected=expectedPublicationUnknown;
+          const operation=store.artifactOperations(200).find(row=>row.id===expected.operationId);
+          const slot=store.artifactRegistrySlot();
+          const exactRetainedUnknown=operation?.buildId===expected.buildId&&operation.artifactDigest===expected.artifactDigest&&
+            operation.kind==='REGISTER'&&operation.state==='UNKNOWN'&&operation.physicalState==='UNKNOWN'&&
+            operation.destinationVerified===false&&operation.stagingClean===false&&slot.operationId===expected.operationId;
+          if(exactRetainedUnknown) expected.preserveRoot=true;
+          else { expected.preserveRoot=true;cleanupErrors.push(new Error('The captured registry publication owner did not retain its exact UNKNOWN reservation and staging')); }
+        }
       }
-      try { await store?.close(); }
-      catch(error) { cleanupErrors.push(new Error('Database close failed',{cause:error})); }
+      if(registrySettled||!expectedPublicationUnknown) {
+        try { await store?.close(); }
+        catch(error) { cleanupErrors.push(new Error('Database close failed',{cause:error})); }
+      }
     }
     if(unprovenOwners.length||cleanupErrors.length)
-      throw new Error(`Artifact fixture retained at ${temp}; independent owner proof or owned-resource cleanup failed`,{cause:new AggregateError(cleanupErrors)});
-    if(expectedUnknownQuarantine?.preserveRoot)return;
+      throw new Error(expectedPublicationUnknown?'Registry fixture retained because exact publisher ownership or durable UNKNOWN verification failed':
+        `Artifact fixture retained at ${temp}; independent owner proof or owned-resource cleanup failed`,{cause:new AggregateError(cleanupErrors)});
+    if(expectedUnknownQuarantine?.preserveRoot||expectedPublicationUnknown?.preserveRoot)return;
     try { await rm(temp,{recursive:true,force:true,maxRetries:4,retryDelay:100}); }
     catch(error) { throw new Error(`Artifact fixture cleanup failed at ${temp}`,{cause:error}); }
   });
@@ -233,6 +251,7 @@ async function fixture(t,{binaryAsset=false,productId='service-desk'}={}) {
     get recovery(){return recovery;},set recovery(value){recovery=value;},binaryExpected,
     ownProcess(owner){externalOwners.add(owner);return owner;},
     retainExpectedUnknown(input){expectedUnknownQuarantine=input;},
+    retainExpectedPublicationUnknown(input){expectedPublicationUnknown=input;return expectedPublicationUnknown;},
     async build(key='artifact-real-build') {
       const admitted=await worker.admit(plan.product,plan,`${key}-${randomUUID()}`,actor);
       const final=await waitForBuild(store,admitted.id);
@@ -1148,7 +1167,51 @@ test('a live promoted Service Desk runtime keeps its exact served bytes while th
 test('a promoted Service Desk release runs as an owned local runtime, preserves a request through stop and restart, and leaves exact exit proof', {skip:!WINDOWS}, async t=>{
   const context=await fixture(t);
   const build=await context.build('runtime-service-desk-build');
-  const registration=await context.artifacts.register(build.id,'system:runtime-registry-test',()=>undefined);
+  let registration;
+  try { registration=await context.artifacts.register(build.id,'system:runtime-registry-test',()=>undefined); }
+  catch(error) {
+    const diagnosticDescriptor=error&&typeof error==='object'?Object.getOwnPropertyDescriptor(error,'__qbRegistryPublisherDiagnostics'):undefined;
+    const diagnostics=diagnosticDescriptor?.enumerable===false?diagnosticDescriptor.value:undefined;
+    const evidenceRef=diagnostics?'registry-publisher-unknown':'registry-publisher-unavailable';
+    let retainedIntent;
+    if(diagnostics)retainedIntent=context.retainExpectedPublicationUnknown({preserveRoot:true,operationId:undefined,buildId:build.id,artifactDigest:undefined});
+    const identity=context.store.artifactBuildIdentity(build.id);
+    const slot=context.store.artifactRegistrySlot();
+    const operations=context.store.artifactOperations(200);
+    const operation=operations.find(row=>row.id===slot.operationId)??operations.find(row=>row.buildId===build.id&&row.kind==='REGISTER');
+    let stagePresent=false,payloadFileCount=0,destinationPresent=false;
+    if(operation) {
+      try { await lstat(join(context.artifacts.stagingRoot,operation.id));stagePresent=true; } catch {}
+      try { payloadFileCount=(await readdir(join(context.artifacts.stagingRoot,operation.id,'payload'))).length; } catch {}
+      try { await lstat(join(context.artifacts.objectsRoot,identity.snapshotDigest));destinationPresent=true; } catch {}
+    }
+    if(retainedIntent) {
+      retainedIntent.operationId=operation?.id??slot.operationId;
+      retainedIntent.buildId=build.id;
+      retainedIntent.artifactDigest=identity.snapshotDigest;
+    }
+    if(diagnostics) {
+      const privatePaths=[context.root,context.temp].map(value=>value.toLowerCase());
+      assert.equal(Buffer.byteLength(diagnostics.stderrSummary,'utf8')<=2048,true,'private publisher stderr diagnostics remain bounded');
+      assert.equal(privatePaths.some(value=>diagnostics.stderrSummary.toLowerCase().includes(value)),false,'private fixture paths are redacted from test diagnostics');
+      assert.equal(operation?diagnostics.stderrSummary.includes(operation.id):false,false,'private operation identity is redacted from publisher stderr');
+      const privateRecord=JSON.stringify({schema:1,evidenceRef:operation?`registry-publication:${operation.id}`:evidenceRef,
+        operationId:operation?.id??slot.operationId??null,buildId:build.id,artifactDigest:identity.snapshotDigest,
+        observations:{state:operation?.state??'missing',physicalState:operation?.physicalState??'missing',slotMatches:slot.operationId===operation?.id,
+          stagingRootPresent:stagePresent,payloadFileCount,destinationPresent},publisher:diagnostics});
+      let privateEvidencePresent=false;
+      if(Buffer.byteLength(privateRecord,'utf8')<=4096) {
+        try { await writeFile(join(context.temp,'registry-publisher-diagnostic.json'),`${privateRecord}\n`,{flag:'wx',mode:0o600});privateEvidencePresent=true; }
+        catch { /* retain the uncertain owner even if private evidence capture is unavailable */ }
+      }
+      t.diagnostic(JSON.stringify({evidenceRef:operation?`registry-publication:${operation.id}`:evidenceRef,
+        category:diagnostics.category,elapsedMs:diagnostics.elapsedMs,closeObserved:diagnostics.closeObserved,closeCode:diagnostics.closeCode,
+        closeSignal:diagnostics.closeSignal,stdoutBytes:diagnostics.stdoutBytes,stdoutBytesCapped:diagnostics.stdoutBytesCapped,
+        stdoutSha256:diagnostics.stdoutSha256,stderrBytes:diagnostics.stderrBytes,stderrBytesCapped:diagnostics.stderrBytesCapped,
+        privateEvidencePresent}));
+    }
+    throw error;
+  }
   const digest=registration.digest;
   await context.artifacts.promote(context.product.id,context.product.version,digest,'system:runtime-promoter',()=>undefined);
   await context.worker.close();context.worker=undefined;

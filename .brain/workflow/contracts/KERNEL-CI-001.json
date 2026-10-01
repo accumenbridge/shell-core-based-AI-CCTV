@@ -238,18 +238,20 @@
     },
     {
       "id": "BRAIN-REGRESSION",
-      "description": "Fresh build and complete ordinary npm test exit0 with named skips, final before/after source identity and independent review.",
+      "description": "Complete ordinary npm test must have actual outer exit0, zero failed/cancelled/TODO cases, only individually named and profile-justified skips, unchanged before/after candidate and independent exact review. Skip-bearing coverage is BLOCKED even when the command exits0; observation presence alone never qualifies acceptance.",
       "evidenceScope": "Required full-suite pass rather than prior observation-only acceptance."
     }
   ],
   "requiredRecipeIds": [
     "brain-build",
     "kernel-native",
-    "brain-full-suite",
     "kernel-ci-config"
   ],
   "reviewRequirement": {
     "required": true,
     "independence": "independent_reported"
-  }
+  },
+  "requiredObservationRecipeIds": [
+    "brain-full-suite"
+  ]
 }

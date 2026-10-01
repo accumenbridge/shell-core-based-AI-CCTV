@@ -1,9 +1,9 @@
 # Current workflow checkpoint
 
-Revision: 41  
-Event: 225e7c24-6b26-4ddc-82dc-29330183566b  
-Recorded: 2026-10-01T18:41:13.157Z  
-Reported actor: /root reconciled actual hosted CI failure and narrow OS assertion repair
+Revision: 43  
+Event: cde6600b-4f70-4254-a3ec-b6b66081989c  
+Recorded: 2026-10-01T19:19:07.908Z  
+Reported actor: /root source review and actual independent Sol approval after bounded registry diagnostics/retention correction
 
 This generated view summarizes immutable project-local records. Reported run and review fields are not authenticated proof of execution, reviewer identity, model identity, or external acceptance.
 
@@ -11,12 +11,12 @@ This generated view summarizes immutable project-local records. Reported run and
 
 Task: KERNEL-CI-001
 Status: IMPLEMENTING
-Candidate: 4fad28b97b3400852506f4264d737fc5933b0265d94a1295baa86cb67609b8ed
-Next action: Fresh build and native checks, full local npm test, hosted portable CI, then independent final review.
+Candidate: 7a59ea6fff341710273ae4dbf53e6090fbbf12b61a13474dc665b5b799fcfbcd
+Next action: Fresh build, exact Desk restart journey, native checks, syntax and complete npm test at7a59 frozen candidate; preserve all new UNKNOWN outcomes, no original-cause claim.
 Blockers: none reported
 Run records: none
 Review records: none
-Gates: historical-full-suite=FAILED, hosted-ci=NOT_RUN, historical-brain-maintenance=UNKNOWN
+Gates: local-full-command=FAILED, portable-hosted-command=PASSED, historical-interrupted-owner=UNKNOWN
 
 ## Maintenance work
 

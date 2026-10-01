@@ -1,15 +1,7 @@
 {
   "taskId": "KERNEL-CI-001",
-  "recordedAt": "2026-10-01T18:37:28.276Z",
-  "changes": [
-    {
-      "id": "kernel-ci-admission-test",
-      "path": "tests/runtime-manager-preparation.test.mjs",
-      "before": "5c0b56c328335319d5274efc895c47345351c166e2a255231bbe863f8b9a38c7",
-      "after": "7a0434f5d1aba7f7434a8a16112e6eda53c0db97b6da380ad2f815942d0ab40c",
-      "reason": "Authorized reliability/CI implementation and current documentation reviewed at frozen source; old atlas snapshot and execution candidates retained."
-    }
-  ],
+  "recordedAt": "2026-10-01T19:18:36.059Z",
+  "changes": [],
   "newCandidatePaths": [
     ".github/workflows/kernel-ci.yml",
     ".github/workflows/kernel-native.yml",

@@ -60,3 +60,43 @@ Windows retains the occupied-slot error and every existing no-data/no-execution/
 no-settlement assertion. Preserve the application guard; no bypass, new adapter or
 platform skip. Fresh build and current native/preparation checks precede full suite
 and another actual Ubuntu CI run. Prior failed and interrupted evidence stays intact.
+
+## Recording clarification after actual hosted execution
+
+The original plan and BRAIN-REGRESSION criterion require complete ordinary npm test
+exit0 with named skipped profiles separately unqualified. The Brain strict PASSED
+record schema forbids any skipped count, so the old structured requiredRecipe entry
+could not represent that criterion honestly. Archive the exact old contract in
+.brain/evidence/kernel-ci-001-contract-before-skip-clarification.json. Move only
+brain-full-suite to required observations; retain strict build/native/config passes
+and independent review. Acceptance still requires actual complete exit0, zero
+failed/cancelled/TODO cases, only named profile-justified skips and unchanged source.
+An observation alone never satisfies this gate. Preserve all failed/interrupted
+records. Skip-bearing full/hosted records use BLOCKED coverage with actual exit0
+and all counts, distinct from successful command/job status. Review must enforce
+these requirements. No test filtering, hidden counts, Brain code change or rerun
+solely for this metadata clarification.
+
+## Concrete local core failure: registry publisher proof
+
+Actual complete local invocation (run8e3a80f0-6784-4790-aad9-f1ff8c69b2ad) closed
+exit1:308 tests,306pass,1fail,1EPERMskip. Source4fad was unchanged throughout.
+Case89 failed during its initial artifact registration, before runtime start.
+The fixed publisher closed, but no valid physical result proof was recognized.
+Timeout/overflow were not the taken branches; move outcome remains UNKNOWN.
+The old test teardown may have removed this exact fixture; retention is not proven.
+
+Extend sole Luna scope to apps/control-plane/src/artifact-store.ts runPublisher
+bounded sanitized close/protocol diagnostics and tests/control-plane-artifacts.test.mjs
+retention of a durable registry UNKNOWN test fixture. Sol read-only diagnosed the
+boundary. Capture exit/signal/timing and bounded proof grammar categories, optionally
+private redacted stderr, without changing publication authority, strict proof,
+no-overwrite, retained slot/staging, helper identity, policy or production profile.
+Keep public reason fixed/category-only and private paths/nonces out of public errors.
+No source fix beyond this bounded owner diagnosis without concrete captured cause.
+
+Build changed source, freeze it, then run one exact existing Desk restart journey.
+Record a passing observation without claiming it diagnoses the original lost proof.
+Retain any new uncertain operation and inspect its original evidence; no saved-PID
+control or speculative cleanup. After an evidence-grounded repair or scoped diagnosis,
+run the required ordinary full suite again and preserve every actual outcome.
