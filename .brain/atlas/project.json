@@ -3,7 +3,7 @@
   "projectId": "quadbridge-core-frameworks",
   "title": "Quadbridge Product Studio",
   "planRevision": 16,
-  "updatedAt": "2026-10-01T19:18:36.058Z",
+  "updatedAt": "2026-10-01T19:49:38.663Z",
   "intentBasis": "User authorized the local full architecture program and on 2026-10-01 requested a reusable architecture-first Brain with visual planning, core prioritization and continuous review. Existing source architecture and bounded execution contracts remain authoritative. User 2026-10-01 explicitly created a complete-core actual realtime goal; checkpoint28 selects the continuous local core journey and grounded Brain readiness maintenance. User2026-10-01 ok proceed adopts the next bounded reliability/CI increment after source-grounded verdict review. Preserve local-core completion and unresolved historical startup cause.",
   "vision": {
     "destination": "Build and operate reviewed products through a product-neutral Studio, with exact composition, immutable artifacts, domain ownership and understandable user journeys.",
@@ -299,7 +299,7 @@
       "id": "kernel-ci-task",
       "path": ".brain/tasks/KERNEL-CI-001.md",
       "role": "current authorized finite task",
-      "sha256": "125dfc2f420f7eb07a6a5c58f9b93b05118cca40ae1f6020c9d13172144f5a19"
+      "sha256": "8915764189f6356ad6b4550ec55de02b576d6686db59a209cdb968b846746e7e"
     },
     {
       "id": "kernel-ci-plan",
@@ -364,13 +364,13 @@
     {
       "id": "kernel-ci-registry-owner",
       "path": "apps/control-plane/src/artifact-store.ts",
-      "sha256": "89ec480c529a6b5b83fbaed0daf455226d80ae0b5d9b8a47afcf73e813c7b4e5",
+      "sha256": "d4610c786b9221a3ca1ea569adcd6aa5bb64870efdd1cc280d13e1a68f45b4da",
       "role": "Named owner of actual registry proof failure; bounded diagnostics preserve strict UNKNOWN authority"
     },
     {
       "id": "kernel-ci-registry-journey",
       "path": "tests/control-plane-artifacts.test.mjs",
-      "sha256": "d274ca8cef5efcca5e07a338d245f7517a7869526c074d34bf00c17e6b3bee91",
+      "sha256": "e166e60b0960304d609f600ca10139e26b0b5052b946e0b98a9e6ba3a706c8d1",
       "role": "Existing real Desk journey with explicit preservation of original publication uncertainty"
     }
   ],

@@ -1,0 +1,13 @@
+{
+  "command": "npm.cmd test",
+  "startedUtc": "2026-10-01T19:24:24.570Z",
+  "endedUtc": "2026-10-01T19:34:46.615Z",
+  "exitCode": 1,
+  "signal": null,
+  "candidateBefore": "7a59ea6fff341710273ae4dbf53e6090fbbf12b61a13474dc665b5b799fcfbcd",
+  "candidateAfter": "7a59ea6fff341710273ae4dbf53e6090fbbf12b61a13474dc665b5b799fcfbcd",
+  "candidateUnchanged": true,
+  "node": "v24.19.0",
+  "platform": "win32",
+  "logPath": ".local/kernel-ci-001-full-suite-02.log"
+}

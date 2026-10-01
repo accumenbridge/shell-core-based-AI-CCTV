@@ -152,7 +152,61 @@ async function fixture(t,{binaryAsset=false,productId='service-desk'}={}) {
   let expectedUnknownQuarantine;
   let expectedPublicationUnknown;
   let expectedUnknownObserved=false;
+  const wrappedArtifactStores=new WeakSet();
   const externalOwners=new Set();
+  async function capturePublicationUncertainty(error,buildId,originalArtifactStore) {
+    const descriptor=error&&typeof error==='object'?Object.getOwnPropertyDescriptor(error,'__qbRegistryPublisherDiagnostics'):undefined;
+    const diagnostics=descriptor?.enumerable===false?descriptor.value:undefined;
+    if(!diagnostics)return;
+    const expected={preserveRoot:true,operationId:undefined,buildId,artifactDigest:undefined};
+    expectedPublicationUnknown=expected;
+    let evidenceRef='registry-publication-unknown',privateEvidencePresent=false;
+    try {
+      const identity=store.artifactBuildIdentity(buildId),slot=store.artifactRegistrySlot();
+      const operations=store.artifactOperations(200);
+      const operation=operations.find(row=>row.id===slot.operationId)??operations.find(row=>row.buildId===buildId&&row.kind==='REGISTER');
+      expected.operationId=operation?.id??slot.operationId;
+      expected.artifactDigest=identity.snapshotDigest;
+      if(operation)evidenceRef=`registry-publication:${operation.id}`;
+      let stagePresent=false,payloadFileCount=0,destinationPresent=false;
+      if(operation) {
+        try { await lstat(join(originalArtifactStore.stagingRoot,operation.id));stagePresent=true; } catch {}
+        try { payloadFileCount=(await readdir(join(originalArtifactStore.stagingRoot,operation.id,'payload'))).length; } catch {}
+        try { await lstat(join(originalArtifactStore.objectsRoot,identity.snapshotDigest));destinationPresent=true; } catch {}
+      }
+      const stderrSummary=typeof diagnostics.stderrSummary==='string'?diagnostics.stderrSummary:'';
+      const stderrSummarySafe=Buffer.byteLength(stderrSummary,'utf8')<=2048&&
+        ![root,temp,operation?.id].filter(Boolean).some(value=>stderrSummary.toLowerCase().includes(value.toLowerCase()));
+      const privateRecord=JSON.stringify({schema:1,evidenceRef,operationId:operation?.id??slot.operationId??null,buildId,
+        artifactDigest:identity.snapshotDigest,observations:{state:operation?.state??'missing',physicalState:operation?.physicalState??'missing',
+          slotMatches:slot.operationId===operation?.id,stagingRootPresent:stagePresent,payloadFileCount,destinationPresent},
+        publisher:{...diagnostics,stderrSummary:stderrSummarySafe?stderrSummary:''},stderrSummarySafe});
+      if(stderrSummarySafe&&Buffer.byteLength(privateRecord,'utf8')<=4096) {
+        try { await writeFile(join(temp,'registry-publisher-diagnostic.json'),`${privateRecord}\n`,{flag:'wx',mode:0o600});privateEvidencePresent=true; }
+        catch { /* preserve the uncertain owner even if private evidence capture is unavailable */ }
+      }
+    } catch { /* preserve the original publisher error and the fixture root */ }
+    t.diagnostic(JSON.stringify({evidenceRef,category:diagnostics.category,elapsedMs:diagnostics.elapsedMs,
+      closeObserved:diagnostics.closeObserved,closeCode:diagnostics.closeCode,closeSignal:diagnostics.closeSignal,
+      stdoutBytes:diagnostics.stdoutBytes,stdoutBytesCapped:diagnostics.stdoutBytesCapped,stdoutSha256:diagnostics.stdoutSha256,
+      stderrBytes:diagnostics.stderrBytes,stderrBytesCapped:diagnostics.stderrBytesCapped,privateEvidencePresent}));
+  }
+  function instrumentArtifactStore(value) {
+    if(!value||wrappedArtifactStores.has(value))return value;
+    const originalRegister=value.register.bind(value);
+    value.register=async(...args)=>{
+      try { return await originalRegister(...args); }
+      catch(error) {
+        const descriptor=error&&typeof error==='object'?Object.getOwnPropertyDescriptor(error,'__qbRegistryPublisherDiagnostics'):undefined;
+        if(descriptor?.enumerable===false) {
+          try { await capturePublicationUncertainty(error,args[0],value); } catch { /* never replace the original registration error */ }
+        }
+        throw error;
+      }
+    };
+    wrappedArtifactStores.add(value);
+    return value;
+  }
   t.after(async()=>{
     const cleanupErrors=[];
     for(const owner of externalOwners) {
@@ -235,7 +289,7 @@ async function fixture(t,{binaryAsset=false,productId='service-desk'}={}) {
   const snapshot=loadSourceSnapshot(root);
   store=new ControlPlaneStore(dbPath);
   importSourceSnapshot(store,snapshot);
-  artifacts=await LocalArtifactStore.create(root,store);
+  artifacts=instrumentArtifactStore(await LocalArtifactStore.create(root,store));
   worker=await LocalBuildWorker.create({root,store,snapshot,pollMs:50,leaseMs:30000,timeoutMs:60000});
   await worker.start();
   const productRow=store.products().find(row=>row.id===productId);
@@ -246,7 +300,7 @@ async function fixture(t,{binaryAsset=false,productId='service-desk'}={}) {
     temp,root,dbPath,snapshot,product,plan,
     get store(){return store;},set store(value){store=value;},
     get worker(){return worker;},set worker(value){worker=value;},
-    get artifacts(){return artifacts;},set artifacts(value){artifacts=value;},
+    get artifacts(){return artifacts;},set artifacts(value){artifacts=instrumentArtifactStore(value);},
     get operator(){return operator;},set operator(value){operator=value;},get runtimes(){return runtimes;},set runtimes(value){runtimes=value;},
     get recovery(){return recovery;},set recovery(value){recovery=value;},binaryExpected,
     ownProcess(owner){externalOwners.add(owner);return owner;},
@@ -1167,51 +1221,7 @@ test('a live promoted Service Desk runtime keeps its exact served bytes while th
 test('a promoted Service Desk release runs as an owned local runtime, preserves a request through stop and restart, and leaves exact exit proof', {skip:!WINDOWS}, async t=>{
   const context=await fixture(t);
   const build=await context.build('runtime-service-desk-build');
-  let registration;
-  try { registration=await context.artifacts.register(build.id,'system:runtime-registry-test',()=>undefined); }
-  catch(error) {
-    const diagnosticDescriptor=error&&typeof error==='object'?Object.getOwnPropertyDescriptor(error,'__qbRegistryPublisherDiagnostics'):undefined;
-    const diagnostics=diagnosticDescriptor?.enumerable===false?diagnosticDescriptor.value:undefined;
-    const evidenceRef=diagnostics?'registry-publisher-unknown':'registry-publisher-unavailable';
-    let retainedIntent;
-    if(diagnostics)retainedIntent=context.retainExpectedPublicationUnknown({preserveRoot:true,operationId:undefined,buildId:build.id,artifactDigest:undefined});
-    const identity=context.store.artifactBuildIdentity(build.id);
-    const slot=context.store.artifactRegistrySlot();
-    const operations=context.store.artifactOperations(200);
-    const operation=operations.find(row=>row.id===slot.operationId)??operations.find(row=>row.buildId===build.id&&row.kind==='REGISTER');
-    let stagePresent=false,payloadFileCount=0,destinationPresent=false;
-    if(operation) {
-      try { await lstat(join(context.artifacts.stagingRoot,operation.id));stagePresent=true; } catch {}
-      try { payloadFileCount=(await readdir(join(context.artifacts.stagingRoot,operation.id,'payload'))).length; } catch {}
-      try { await lstat(join(context.artifacts.objectsRoot,identity.snapshotDigest));destinationPresent=true; } catch {}
-    }
-    if(retainedIntent) {
-      retainedIntent.operationId=operation?.id??slot.operationId;
-      retainedIntent.buildId=build.id;
-      retainedIntent.artifactDigest=identity.snapshotDigest;
-    }
-    if(diagnostics) {
-      const privatePaths=[context.root,context.temp].map(value=>value.toLowerCase());
-      assert.equal(Buffer.byteLength(diagnostics.stderrSummary,'utf8')<=2048,true,'private publisher stderr diagnostics remain bounded');
-      assert.equal(privatePaths.some(value=>diagnostics.stderrSummary.toLowerCase().includes(value)),false,'private fixture paths are redacted from test diagnostics');
-      assert.equal(operation?diagnostics.stderrSummary.includes(operation.id):false,false,'private operation identity is redacted from publisher stderr');
-      const privateRecord=JSON.stringify({schema:1,evidenceRef:operation?`registry-publication:${operation.id}`:evidenceRef,
-        operationId:operation?.id??slot.operationId??null,buildId:build.id,artifactDigest:identity.snapshotDigest,
-        observations:{state:operation?.state??'missing',physicalState:operation?.physicalState??'missing',slotMatches:slot.operationId===operation?.id,
-          stagingRootPresent:stagePresent,payloadFileCount,destinationPresent},publisher:diagnostics});
-      let privateEvidencePresent=false;
-      if(Buffer.byteLength(privateRecord,'utf8')<=4096) {
-        try { await writeFile(join(context.temp,'registry-publisher-diagnostic.json'),`${privateRecord}\n`,{flag:'wx',mode:0o600});privateEvidencePresent=true; }
-        catch { /* retain the uncertain owner even if private evidence capture is unavailable */ }
-      }
-      t.diagnostic(JSON.stringify({evidenceRef:operation?`registry-publication:${operation.id}`:evidenceRef,
-        category:diagnostics.category,elapsedMs:diagnostics.elapsedMs,closeObserved:diagnostics.closeObserved,closeCode:diagnostics.closeCode,
-        closeSignal:diagnostics.closeSignal,stdoutBytes:diagnostics.stdoutBytes,stdoutBytesCapped:diagnostics.stdoutBytesCapped,
-        stdoutSha256:diagnostics.stdoutSha256,stderrBytes:diagnostics.stderrBytes,stderrBytesCapped:diagnostics.stderrBytesCapped,
-        privateEvidencePresent}));
-    }
-    throw error;
-  }
+  const registration=await context.artifacts.register(build.id,'system:runtime-registry-test',()=>undefined);
   const digest=registration.digest;
   await context.artifacts.promote(context.product.id,context.product.version,digest,'system:runtime-promoter',()=>undefined);
   await context.worker.close();context.worker=undefined;
@@ -2170,13 +2180,15 @@ test('fixed registry publisher moves into vacant paths and preserves existing em
     if(item.kind==='populated')assert.equal(await readFile(join(destination,'sentinel.txt'),'utf8'),'preserve-me');
     if(item.kind==='file')assert.equal(await readFile(destination,'utf8'),'preserve-me');
   }
-  const registryRoot=join(temp,'vacant'),operationId=randomUUID(),digest=createHash('sha256').update('vacant').digest('hex'),nonce='Z'.repeat(24);
+  const registryRoot=join(temp,'vacant'),operationId=randomUUID(),digest=createHash('sha256').update('vacant').digest('hex'),nonce=Buffer.alloc(24,0xf8).toString('hex');
+  assert.match(nonce,/^[0-9a-f]{48}$/,'publication nonce stays 192-bit and positional-argument safe');
   const source=join(registryRoot,'staging',operationId,'payload'),destination=join(registryRoot,'objects',digest);
   await mkdir(source,{recursive:true});await mkdir(join(registryRoot,'objects'),{recursive:true});
   await writeFile(join(source,'verified.txt'),'complete bytes');
   const result=await runPublisher(host.path,script,registryRoot,operationId,digest,nonce);
   assert.equal(result.code,0, result.stderr);
-  assert.match(result.stdout,new RegExp(`QB_REGISTRY_MOVE:${nonce}:MOVED`));
+  assert.equal(result.signal,null);
+  assert.match(result.stdout,new RegExp(`^QB_REGISTRY_MOVE:${nonce}:MOVED\\r?\\n$`));
   assert.equal(await readFile(join(destination,'verified.txt'),'utf8'),'complete bytes');
 });
 

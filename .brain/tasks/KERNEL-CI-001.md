@@ -100,3 +100,41 @@ Record a passing observation without claiming it diagnoses the original lost pro
 Retain any new uncertain operation and inspect its original evidence; no saved-PID
 control or speculative cleanup. After an evidence-grounded repair or scoped diagnosis,
 run the required ordinary full suite again and preserve every actual outcome.
+
+## Same core owner failure recurred in saved-definition registration
+
+Original full02 closed exit1 at unchanged7a59 source:308/306pass/1fail/1EPERMskip.
+Case83 failed at initial registration while the later Desk case89 passed. Exact-case
+capture was too narrow and lost this owner's private diagnostics. Extend only the
+existing test fixture registration boundary: wrap each bound original store once,
+including reopened stores, capture diagnostic-bearing original register uncertainty,
+preserve immediately, write bounded private evidence, emit summary-free facts,
+and rethrow the same error. Remove case89 duplicate capture. No new tests or helper
+policy/parser changes. This is the same actual core owner, not an optional campaign.
+
+A read-only nonce-argument hypothesis is pending: base64url can begin with a dash
+and is passed positionally to PowerShell -File. After original process close, one
+ordinary-policy controlled argument-binding probe may establish or reject this
+specific invocation defect. Do not infer original lost failure cause or change a
+helper/caller until actual evidence supports the smallest named owner repair.
+
+## Confirmed positional argument defect and exact repair scope
+
+Actual ordinary PS7.6.5 controlled probe (argument-binding-probe.json) matched the
+selected binary and RemoteSigned policy with all higher scopes Undefined. A safe
+positional token reached the script body; a valid dash-leading positional token
+failed exit1 before the body with PARAMETER_NOT_FOUND. Both separate named
+RunnerNonce forms passed, so those callers remain unchanged.
+
+Sol/high finite work order: in artifact-store.ts runPublisher only, change24-byte
+random nonce encoding from base64url to hex. It retains192 bits of entropy and
+produces48 lowercase hex characters accepted by the unchanged helper24–64 and
+transcript16–64 validators. No helper, parser, security policy, timer, protocol or
+other caller change. In the existing fixed publisher vacant-destination case,
+use Buffer.alloc(24,0xf8).toString('hex'), assert48-hex shape and the actual exact
+MOVED proof/exit0/nullsignal plus all file/no-overwrite assertions. No new matrix.
+This repairs a reproduced invocation defect without attributing lost prior tokens.
+
+Build final source, freeze, run existing saved-definition, Desk and fixed-publisher
+journeys, native checks and required ordinary full suite. No test filtering in the
+full suite and no acceptance until its actual exit0 and truthful named coverage.

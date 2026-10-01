@@ -414,7 +414,7 @@ export class LocalArtifactStore {
     physicalDirectory(dirname(destination),false);
     checkPathPhysical(source,this.stagingRoot);
     if(process.platform==='win32'&&resolve(source).slice(0,2).toLowerCase()!==resolve(destination).slice(0,2).toLowerCase())throw new KnownNoPublication('Registry staging and object paths are not on the same volume');
-    const nonce=randomBytes(24).toString('base64url');
+    const nonce=randomBytes(24).toString('hex');
     authorize();
     return await new Promise((resolveResult,rejectResult)=>{
       const startedAt=performance.now();

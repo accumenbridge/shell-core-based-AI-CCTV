@@ -1,0 +1,19 @@
+START_UTC=2026-10-01T19:19:55.9635589+00:00
+TAP version 13
+# Subtest: a promoted Service Desk release runs as an owned local runtime, preserves a request through stop and restart, and leaves exact exit proof
+ok 1 - a promoted Service Desk release runs as an owned local runtime, preserves a request through stop and restart, and leaves exact exit proof
+  ---
+  duration_ms: 49308.3701
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 49423.6067
+EXIT_CODE=0
+END_UTC=2026-10-01T19:20:45.4853931+00:00

@@ -1,0 +1,129 @@
+START_UTC=2026-10-01T19:21:02.1391368+00:00
+TAP version 13
+# Subtest: Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+ok 1 - Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+  ---
+  duration_ms: 30888.3286
+  type: 'test'
+  ...
+# Subtest: worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+ok 2 - worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+  ---
+  duration_ms: 17406.4411
+  type: 'test'
+  ...
+# Subtest: a worker that loses its live lease observes its descendant and preserves the successor attempt workspace
+ok 3 - a worker that loses its live lease observes its descendant and preserves the successor attempt workspace
+  ---
+  duration_ms: 10131.4125
+  type: 'test'
+  ...
+# Subtest: missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+ok 4 - missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+  ---
+  duration_ms: 9141.5834
+  type: 'test'
+  ...
+# Unable to clean private build work EBUSY: resource busy or locked, unlink 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-build-runner-T4Cma1\\source\\.local\\platform-builds\\work\\fef55eda-a537-4f86-ac12-90265a0e4561\\attempt-1-5e26479a-03da-4c51-bfa0-6e03ad52a1d8\\cleanup-held-file.bin'
+# Subtest: Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+ok 5 - Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+  ---
+  duration_ms: 11061.6573
+  type: 'test'
+  ...
+# Subtest: source and pinned compiler drift are rejected before a build is admitted
+ok 6 - source and pinned compiler drift are rejected before a build is admitted
+  ---
+  duration_ms: 4609.9258
+  type: 'test'
+  ...
+# Subtest: source and toolchain drift after admission fail the queued request before export
+ok 7 - source and toolchain drift after admission fail the queued request before export
+  ---
+  duration_ms: 10185.5156
+  type: 'test'
+  ...
+# Subtest: fixed factory output tampering fails before a local snapshot is published
+ok 8 - fixed factory output tampering fails before a local snapshot is published
+  ---
+  duration_ms: 14389.5985
+  type: 'test'
+  ...
+# Subtest: real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+ok 9 - real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+  ---
+  duration_ms: 16100.1699
+  type: 'test'
+  ...
+# Subtest: real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+ok 10 - real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+  ---
+  duration_ms: 11758.1944
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol reports assignment, accepts fragmented nonce-bound controls and proves STOP
+ok 11 - RuntimeProtocol reports assignment, accepts fragmented nonce-bound controls and proves STOP
+  ---
+  duration_ms: 2878.717
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol wrong-nonce and malformed pre-RESUME controls fail closed without execution
+    # Subtest: wrong-nonce RESUME
+    ok 1 - wrong-nonce RESUME
+      ---
+      duration_ms: 1250.9493
+      type: 'test'
+      ...
+    # Subtest: wrong-nonce STOP
+    ok 2 - wrong-nonce STOP
+      ---
+      duration_ms: 1096.2422
+      type: 'test'
+      ...
+    # Subtest: malformed control
+    ok 3 - malformed control
+      ---
+      duration_ms: 1134.1775
+      type: 'test'
+      ...
+    1..3
+ok 12 - RuntimeProtocol wrong-nonce and malformed pre-RESUME controls fail closed without execution
+  ---
+  duration_ms: 3482.0172
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol EOF before RESUME fails closed without executing the supervisor script
+ok 13 - RuntimeProtocol EOF before RESUME fails closed without executing the supervisor script
+  ---
+  duration_ms: 1156.3147
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol duplicate RESUME after the owned descendant starts terminates the whole job
+ok 14 - RuntimeProtocol duplicate RESUME after the owned descendant starts terminates the whole job
+  ---
+  duration_ms: 1953.3298
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol parses coalesced nonce-bound RESUME and STOP controls
+ok 15 - RuntimeProtocol parses coalesced nonce-bound RESUME and STOP controls
+  ---
+  duration_ms: 1049.062
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol owns canonical local-access constructor failure through nonce-bound EMPTY and helper close
+ok 16 - RuntimeProtocol owns canonical local-access constructor failure through nonce-bound EMPTY and helper close
+  ---
+  duration_ms: 1078.9226
+  type: 'test'
+  ...
+1..16
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 148024.4164
+EXIT_CODE=0
+END_UTC=2026-10-01T19:23:30.2644823+00:00

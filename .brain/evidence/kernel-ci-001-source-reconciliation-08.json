@@ -1,0 +1,29 @@
+{
+  "taskId": "KERNEL-CI-001",
+  "recordedAt": "2026-10-01T19:47:24.966Z",
+  "changes": [
+    {
+      "id": "kernel-ci-task",
+      "path": ".brain/tasks/KERNEL-CI-001.md",
+      "before": "aab06b07345f7a2daaf28a5a58a8335b7b52265498a7da707734c931941c9408",
+      "after": "8915764189f6356ad6b4550ec55de02b576d6686db59a209cdb968b846746e7e",
+      "reason": "Authorized reliability/CI implementation and current documentation reviewed at frozen source; old atlas snapshot and execution candidates retained."
+    },
+    {
+      "id": "kernel-ci-registry-journey",
+      "path": "tests/control-plane-artifacts.test.mjs",
+      "before": "d274ca8cef5efcca5e07a338d245f7517a7869526c074d34bf00c17e6b3bee91",
+      "after": "b4b5d78fdc0f56e82b6f236dfaac36fc21e6f3b5fe371faa6dda39eafdfbedb3",
+      "reason": "Authorized reliability/CI implementation and current documentation reviewed at frozen source; old atlas snapshot and execution candidates retained."
+    }
+  ],
+  "newCandidatePaths": [
+    ".github/workflows/kernel-ci.yml",
+    ".github/workflows/kernel-native.yml",
+    "tools/ci-build-host.mjs",
+    "docs/CI.md"
+  ],
+  "limits": [
+    "This source reconciliation records implementation presence, not test/hosted/browser qualification."
+  ]
+}
