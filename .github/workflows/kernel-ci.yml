@@ -1,0 +1,51 @@
+name: Portable kernel CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  portable:
+    name: Ubuntu portable baseline
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Build and run the full suite
+        shell: bash
+        run: |
+          set +e
+          npm test > "$RUNNER_TEMP/kernel-test.log" 2>&1
+          test_status=$?
+          node tools/ci-build-host.mjs summarize "$RUNNER_TEMP/kernel-test.log" portable "$test_status"
+          summary_status=$?
+          if [ "$test_status" -ne 0 ]; then exit "$test_status"; fi
+          exit "$summary_status"
+      - name: Upload selected nonprivate summary
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: kernel-ci-summary
+          path: .local/ci-test-summary.json
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Upload selected test TAP
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: kernel-ci-tap
+          path: ${{ runner.temp }}/kernel-test.tap
+          if-no-files-found: ignore
+          retention-days: 14

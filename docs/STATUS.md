@@ -1,5 +1,20 @@
 # Studio integration 1
 
+## Kernel reliability and CI configuration
+
+The repository's repeatable CI baseline is Node 24.19.0 (`.nvmrc`). `npm test` builds from source and
+runs the complete discovered test-file set serially while preserving concurrency inside each file. The
+native build-worker test reports bounded pre-cleanup attempt, marker and redacted-output facts if its
+owned descendant heartbeat fails to appear. The earlier marker-wait failure remains undiagnosed; serial
+file scheduling and diagnostics do not retroactively establish its cause.
+
+The pinned automatic workflow runs the portable suite on Ubuntu. A separate manually dispatched Windows
+workflow first selects PowerShell 7 and runs the unchanged ordinary `-File` policy preflight; an
+unsupported profile fails visibly as `BLOCKED_HOST_PROFILE` before native tests. It does not override
+policy. Portable summaries mark Windows native CI `NOT_QUALIFIED` and retain named skip counts. Only the
+host/test summaries and test TAP are uploaded; the private build-host profile and executable path are
+not workflow artifacts. Workflow configuration does not itself establish a hosted result. See [CI.md](CI.md).
+
 ## Platform-003 local artifact registry
 
 The paired operator now has an immutable local artifact journey in addition to the Platform-002 build flow: a verified snapshot can be registered by its exact digest, inspected and downloaded as bounded attachment bytes, then promoted once for a product version. Publication uses a private same-volume staging directory and the fixed no-overwrite Windows publisher. A local registry reservation survives operator restart; interrupted or uncertain work remains visible and blocks another physical publication until positively observed original-owner completion. A separate metadata-only adoption can record a completely verified orphan while retaining the older uncertain reservation. Schema-3 migration adds registry facts without rewriting legacy product, build, environment, deployment, AI or audit values. Registry read and promotion remain available when the local compiler host is unavailable.

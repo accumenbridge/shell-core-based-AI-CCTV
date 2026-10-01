@@ -2,9 +2,9 @@
   "schema": "brain.atlas.v1",
   "projectId": "quadbridge-core-frameworks",
   "title": "Quadbridge Product Studio",
-  "planRevision": 14,
-  "updatedAt": "2026-10-01T12:43:35.5095154Z",
-  "intentBasis": "User authorized the local full architecture program and on 2026-10-01 requested a reusable architecture-first Brain with visual planning, core prioritization and continuous review. Existing source architecture and bounded execution contracts remain authoritative. User 2026-10-01 explicitly created a complete-core actual realtime goal; checkpoint28 selects the continuous local core journey and grounded Brain readiness maintenance.",
+  "planRevision": 15,
+  "updatedAt": "2026-10-01T18:23:11.810Z",
+  "intentBasis": "User authorized the local full architecture program and on 2026-10-01 requested a reusable architecture-first Brain with visual planning, core prioritization and continuous review. Existing source architecture and bounded execution contracts remain authoritative. User 2026-10-01 explicitly created a complete-core actual realtime goal; checkpoint28 selects the continuous local core journey and grounded Brain readiness maintenance. User2026-10-01 ok proceed adopts the next bounded reliability/CI increment after source-grounded verdict review. Preserve local-core completion and unresolved historical startup cause.",
   "vision": {
     "destination": "Build and operate reviewed products through a product-neutral Studio, with exact composition, immutable artifacts, domain ownership and understandable user journeys.",
     "users": [
@@ -77,13 +77,13 @@
       "id": "readme",
       "path": "README.md",
       "role": "user journeys",
-      "sha256": "23c5b6449aadac650acfad8d11f99e3871cf780b663fd66cf8129aa11b65a960"
+      "sha256": "e65fa9263bb50cfe863b3c8984998e259a42895a7c7ea8f349421ec4341888c2"
     },
     {
       "id": "status",
       "path": "docs/STATUS.md",
       "role": "historical status",
-      "sha256": "fe3ea0826a48e41cdbaf370fdca5ce541de0a702b62958cd61cb919ab679df82"
+      "sha256": "2736780521c1015a2b232f26f9ea2c5633bb455853360a0b81e738b3cccde133"
     },
     {
       "id": "roadmap",
@@ -294,6 +294,66 @@
       "path": ".brain/evidence/core-delivery-001-final-review-01.json",
       "role": "Independent exact196 source and actual core evidence review; local scope only",
       "sha256": "3a530a98cb42870f9457392865633cda5ff4621cbb96ef0bb36daa1874888376"
+    },
+    {
+      "id": "kernel-ci-task",
+      "path": ".brain/tasks/KERNEL-CI-001.md",
+      "role": "current authorized finite task",
+      "sha256": "c39c3d49988cd0fc7d4d7a9223cff9c56a67a3bd7393c27c3feec3ed6b158dc6"
+    },
+    {
+      "id": "kernel-ci-plan",
+      "path": ".brain/evidence/kernel-ci-001-plan-01.md",
+      "role": "attributed Sol/high source-grounded plan",
+      "sha256": "bcbf4b792ee023d83b5867f604a25edb028f92da3673b095c44115541c1adba7"
+    },
+    {
+      "id": "kernel-ci-package",
+      "path": "package.json",
+      "role": "integration suite scheduling",
+      "sha256": "9a0c4cf053c5903defae69d56a2146c4fd758e21725e39effb7062e9dd12bc03"
+    },
+    {
+      "id": "kernel-ci-node",
+      "path": ".nvmrc",
+      "role": "selected Node qualification profile",
+      "sha256": "7e8a2fa94951112b894a3dbe3d05efef5e9263741fa49125f0a70f40fedab4cc"
+    },
+    {
+      "id": "kernel-ci-build-test",
+      "path": "tests/build-worker-process.test.mjs",
+      "role": "native ownership and startup diagnostics",
+      "sha256": "13257b6564f6782b98de6b8572a1c7f19aa5cbd148e1b09425ee4b97ff7512c5"
+    },
+    {
+      "id": "kernel-ci-protocol-test",
+      "path": "tests/runtime-protocol.test.mjs",
+      "role": "reviewed helper and actual selected-host protocol checks",
+      "sha256": "06a97bdd81427e3f8279240085aa7317294735bd49a343e3ed7f90d1cc9cce66"
+    },
+    {
+      "id": "kernel-ci-workflow",
+      "path": ".github/workflows/kernel-ci.yml",
+      "role": "Current bounded CI implementation; actual hosted execution remains separately reported",
+      "sha256": "0e509b1cdc6d75e3c267aa898a0783dc579ec75466a225cab9731938b2337b38"
+    },
+    {
+      "id": "kernel-ci-native-workflow",
+      "path": ".github/workflows/kernel-native.yml",
+      "role": "Current bounded CI implementation; actual hosted execution remains separately reported",
+      "sha256": "fecef547a3b7bf50e5a8b58de3091bcde9bf200588c15b45d45f0f1bb4bd073f"
+    },
+    {
+      "id": "kernel-ci-host-helper",
+      "path": "tools/ci-build-host.mjs",
+      "role": "Current bounded CI implementation; actual hosted execution remains separately reported",
+      "sha256": "4dbd8df124f54d824b6ea7e453a4c49de3242cd3e2b728bd991d7af5879b6379"
+    },
+    {
+      "id": "kernel-ci-guide",
+      "path": "docs/CI.md",
+      "role": "Current bounded CI implementation; actual hosted execution remains separately reported",
+      "sha256": "59bd64ce2628f0728784806017fb9c63cb9482ff5879269b98103e7c55125a3d"
     }
   ],
   "nodes": [
@@ -1324,6 +1384,120 @@
         "Same-instance restart and private verified absent-owned-root recovery retain data and credentials; original-owner positive closure.",
         "Fresh build and required actual full suite, exact independent review, preserved blocked/unrun scopes."
       ]
+    },
+    {
+      "owner": "Root coordinator with Sol/high planning/review and sole Luna/xhigh implementation",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "User accepted kernel stability and CI as next core increment after local journey qualification.",
+      "dependsOn": [],
+      "sourceRefs": [
+        "kernel-ci-task",
+        "kernel-ci-plan",
+        "architecture",
+        "kernel-ci-package",
+        "kernel-ci-node",
+        "kernel-ci-build-test",
+        "kernel-ci-protocol-test",
+        "kernel-ci-workflow",
+        "kernel-ci-native-workflow",
+        "kernel-ci-host-helper",
+        "kernel-ci-guide"
+      ],
+      "id": "M-KERNEL-CI",
+      "kind": "milestone",
+      "title": "Qualify repeatable kernel checks and configure CI",
+      "summary": "Current bounded stability increment; full-suite success required, hosted execution status separate from configuration.",
+      "links": [
+        "J-KERNEL-CI",
+        "C-KERNEL-CI",
+        "ST-KERNEL-CI"
+      ],
+      "acceptance": [
+        "Actual descendant heartbeat, cancellation, timeout, native protocol and positive cleanup assertions pass with retained limits and owning-state diagnostics.",
+        "Reviewed pinned read-only portable/native CI, run-local host identity, ordinary policy preflight, bounded orchestration and selected nonprivate evidence output.",
+        "Fresh build and complete ordinary npm test exit0 with named skips, final before/after source identity and independent review."
+      ]
+    },
+    {
+      "owner": "Root coordinator with Sol/high planning/review and sole Luna/xhigh implementation",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "User accepted kernel stability and CI as next core increment after local journey qualification.",
+      "dependsOn": [],
+      "sourceRefs": [
+        "kernel-ci-task",
+        "kernel-ci-plan",
+        "architecture",
+        "kernel-ci-package",
+        "kernel-ci-node",
+        "kernel-ci-build-test",
+        "kernel-ci-protocol-test"
+      ],
+      "id": "J-KERNEL-CI",
+      "kind": "journey",
+      "title": "Review a source change through repeatable kernel checks",
+      "summary": "Fresh build, native checks, full suite, exact independent review and scoped CI observations.",
+      "links": [
+        "O-OPERATE",
+        "C-KERNEL-CI"
+      ],
+      "acceptance": [
+        "Observe actual exit and counts for the final exact source; retain named skipped, blocked and unrun gates."
+      ]
+    },
+    {
+      "owner": "Root coordinator with Sol/high planning/review and sole Luna/xhigh implementation",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "User accepted kernel stability and CI as next core increment after local journey qualification.",
+      "dependsOn": [],
+      "sourceRefs": [
+        "kernel-ci-task",
+        "kernel-ci-plan",
+        "architecture",
+        "kernel-ci-package",
+        "kernel-ci-node",
+        "kernel-ci-build-test",
+        "kernel-ci-protocol-test"
+      ],
+      "id": "C-KERNEL-CI",
+      "kind": "contract",
+      "title": "Keep qualification honest and native ownership intact",
+      "summary": "Bounded resource scheduling with all native assertions, ordinary policy and exact run-local binary identities.",
+      "links": [
+        "J-KERNEL-CI"
+      ],
+      "acceptance": [
+        "No startup prerequisite converted to skip, no policy override and no relaxed descendant/CLEAN proof."
+      ]
+    },
+    {
+      "owner": "Root coordinator with Sol/high planning/review and sole Luna/xhigh implementation",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "User accepted kernel stability and CI as next core increment after local journey qualification.",
+      "dependsOn": [],
+      "sourceRefs": [
+        "kernel-ci-task",
+        "kernel-ci-plan",
+        "architecture",
+        "kernel-ci-package",
+        "kernel-ci-node",
+        "kernel-ci-build-test",
+        "kernel-ci-protocol-test"
+      ],
+      "id": "ST-KERNEL-CI",
+      "kind": "story",
+      "title": "Get actionable native failures and repeatable repository checks",
+      "summary": "A developer sees owning-state diagnostics and the same complete suite locally and in supported CI profiles.",
+      "links": [
+        "J-KERNEL-CI",
+        "C-KERNEL-CI"
+      ],
+      "acceptance": [
+        "Ordinary full-suite pass required locally; actual hosted run outcomes reported separately."
+      ]
     }
   ],
   "observations": [
@@ -1591,5 +1765,5 @@
       "status": "proposed"
     }
   ],
-  "focusNodeId": "M-CORE"
+  "focusNodeId": "M-KERNEL-CI"
 }

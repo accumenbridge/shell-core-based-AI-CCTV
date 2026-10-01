@@ -1,0 +1,8 @@
+{
+  "taskId": "KERNEL-CI-001",
+  "recordedAt": "2026-10-01T18:20:08.479Z",
+  "decision": "Retire inactive maintenance pointer; retain immutable BRAIN005 acceptance history and all evidence.",
+  "changedPath": "README.md",
+  "reviewer": "/root/repo_brain_architect",
+  "limitation": "Current kernel review covers current README; no fresh all13 Brain maintenance requalification."
+}
