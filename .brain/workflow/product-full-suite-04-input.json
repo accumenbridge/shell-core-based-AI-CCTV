@@ -1,0 +1,34 @@
+{
+  "schema": "brain.record-input.v1",
+  "kind": "run",
+  "taskId": "VEYVIZ-LOCAL-001",
+  "recipeId": "product-full-suite",
+  "status": "BLOCKED",
+  "exitCode": 0,
+  "environment": {
+    "os": "Windows local",
+    "node": "24.19.0",
+    "powershell": "7.6.5 ordinary RemoteSigned",
+    "profile": "Local admitted MIVIA recording / RF-DETR CPU",
+    "sourceInventory": "f4b10dd232130ca1f83ecaed745470f1f4b69574c3f9df197798e3ea2ce7abb0"
+  },
+  "artifactPaths": [
+    ".local/veyviz-full-suite-04.log"
+  ],
+  "counts": {
+    "tests": 379,
+    "passed": 378,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 1,
+    "todo": 0
+  },
+  "provenance": {
+    "kind": "reported",
+    "reference": "Actual npm test executed after final UI build/freeze; completed exit0. Full TAP retained; inventory verified unchanged after all checks."
+  },
+  "limitations": [
+    "Required file-symlink fixture was denied by Windows with EPERM and skipped as BLOCKED_ENV. Exit0 is not an all-checks pass. No security settings were changed.",
+    "No live-camera, arbitrary upload, native-device, external identity, production-scale or detector-accuracy acceptance."
+  ]
+}

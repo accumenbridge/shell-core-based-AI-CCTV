@@ -1,5 +1,5 @@
 {
-  "name": "quadbridge-product-platform",
+  "name": "veyviz-quadbridge-product",
   "version": "0.2.0",
   "private": true,
   "type": "module",
@@ -27,7 +27,10 @@
     "test:studio-browser": "python tools/studio-browser-test.py",
     "studio:full": "node apps/control-plane/dist/main.js",
     "mobile:assemble": "node tools/mobile/assemble.mjs",
-    "test:platform": "npm run build && node --test tests/ai-core.test.mjs tests/control-plane.test.mjs"
+    "test:platform": "npm run build && node --test tests/ai-core.test.mjs tests/control-plane.test.mjs",
+    "veyviz": "node tools/veyviz-start.mjs",
+    "veyviz:verify": "node tools/veyviz-verify.mjs",
+    "veyviz:e2e": "node tools/veyviz-e2e.mjs"
   },
   "devDependencies": {
     "@types/node": "22.19.7",

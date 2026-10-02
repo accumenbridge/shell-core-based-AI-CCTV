@@ -1,0 +1,292 @@
+{
+  "schema": "brain.evidence-record.v1",
+  "kind": "run",
+  "id": "52bc00a0-b817-42be-ba94-1d207e010248",
+  "taskId": "VEYVIZ-LOCAL-001",
+  "recipeId": "product-full-suite",
+  "contractDigest": "9c06ec198c34834acc86bebd6419edd1dc0bf219411014f10b24a456cc76cae6",
+  "recipeDigest": "4f7f854375ace08ce03eb686158d8e68f71d3e1939eb939870e159c8c6cd4ed5",
+  "candidate": {
+    "files": [
+      {
+        "path": ".brain/tasks/VEYVIZ-LOCAL-001.md",
+        "sha256": "9c242228def4771988de325c372415bbf723d6d3a3d2d94dc801b3772aaa465c"
+      },
+      {
+        "path": ".gitignore",
+        "sha256": "f2889e14ae60205b9bd125bf0619c9c6b6aab37944b2015f0bee794580826fa9"
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "18b5caabd5b440f3a1aa558cabc5091a125f20b7d945a1cf6df7a62e2cca9c90"
+      },
+      {
+        "path": "contracts/veyviz-product-ai/v1/README.md",
+        "sha256": "16d1989749c2351216f8dc88ad2c969eb08dda6b3d2a8b69f8e64dce235ea55a"
+      },
+      {
+        "path": "docs/veyviz/ACCEPTANCE.md",
+        "sha256": "121e97888943b18603369424f5a282fead5c6b95be642c267ad3b4ede6d6e390"
+      },
+      {
+        "path": "docs/veyviz/ARCHITECTURE.md",
+        "sha256": "c71466ed0473d0c08c15b0afca2e155a892941b3965d78fea8228f1f979f1a19"
+      },
+      {
+        "path": "docs/veyviz/PROVENANCE.md",
+        "sha256": "52c8c6a8d73d9934fa060c5169fae29b1f1a3add308c39405ecde29675813195"
+      },
+      {
+        "path": "docs/veyviz/README.md",
+        "sha256": "bf3475b3a04cb1df47db618d0d3a8f1c9dc9ae3208ce610e3428f9fea4f929a6"
+      },
+      {
+        "path": "docs/veyviz/RELEASE_INPUTS.json",
+        "sha256": "67d83d1a6374c971df47ad3443581a4338e8d6275521fdc41a295fdf6fe82ef1"
+      },
+      {
+        "path": "modules/veyviz-analysis/module.json",
+        "sha256": "114f93c7bb3aab82d9ff6d25234e831eb7bac1373d8c1db78e0f9e37f89b850e"
+      },
+      {
+        "path": "modules/veyviz-analysis/package.json",
+        "sha256": "72fa8c06155eae92053d385db0f22ee4a597b51c68b06e5ef39f9bede829271a"
+      },
+      {
+        "path": "modules/veyviz-analysis/src/bridge.ts",
+        "sha256": "fe5726a4db3817ff67996b96d2d1592843e2f52e2690fb381089681e2f3f2ed4"
+      },
+      {
+        "path": "modules/veyviz-analysis/src/index.ts",
+        "sha256": "9f3962df0682713c437ce04af925603cfb6d4b554bb22d1e270b6ce9799ab01d"
+      },
+      {
+        "path": "modules/veyviz-analysis/src/protocol.ts",
+        "sha256": "991fc34c76f7410574412b8a23e1143c74f713530b0baf342d4e455936d7607f"
+      },
+      {
+        "path": "modules/veyviz-analysis/src/styles.css",
+        "sha256": "d6d9a17dc9be8ceb8f3e94802674b260af31602950ddf6b9f0dbc44f05af8287"
+      },
+      {
+        "path": "modules/veyviz-analysis/src/ui.ts",
+        "sha256": "897be0392d5c6fc80fab9ae1aa08909b3a3d60d2328cc38ca688247f8456eec1"
+      },
+      {
+        "path": "modules/veyviz-analysis/tsconfig.json",
+        "sha256": "5e33d675e007731977aaca4be1f0662150089ce062c576581060fba211465723"
+      },
+      {
+        "path": "modules/veyviz-rfdetr/module.json",
+        "sha256": "90a6649d3886a5166e5272297a51adb77af7d6bd6725c42262a7d36fc482628f"
+      },
+      {
+        "path": "modules/veyviz-rfdetr/package.json",
+        "sha256": "0660dc0265c09587b6d005f2194e81058304ec9b5939897f7d662df5656b2db6"
+      },
+      {
+        "path": "modules/veyviz-rfdetr/src/bridge.ts",
+        "sha256": "fe167efd39714f9ffef7858be55abd94b2483fdbe9147826047effeaba98c551"
+      },
+      {
+        "path": "modules/veyviz-rfdetr/src/index.ts",
+        "sha256": "9de8699cf82d1928dd32a3cd625c22acc9cc8b096f27b2c7eb6d1ab5e16d2a24"
+      },
+      {
+        "path": "modules/veyviz-rfdetr/src/protocol.ts",
+        "sha256": "6cad2abf607a65c2583f908dd9270121b2b09c53a801c89b99ed468a3c2a2b5c"
+      },
+      {
+        "path": "modules/veyviz-rfdetr/src/styles.css",
+        "sha256": "0cbd57cc8949bff6f0ba76810c5b54874c7f894d10443cec95ff3f980ba01ccd"
+      },
+      {
+        "path": "modules/veyviz-rfdetr/src/ui.ts",
+        "sha256": "1b527b3eff2c7039e21fd27374bbdb894a20d1ed304cea85b613b29994822ab6"
+      },
+      {
+        "path": "modules/veyviz-rfdetr/tsconfig.json",
+        "sha256": "93e994b1dadab55f841b867a307d483004fef72f8fff2da0e641301513f1696c"
+      },
+      {
+        "path": "modules/veyviz-sources/module.json",
+        "sha256": "b19bb5bcc857047214585feddb143f6cc0b4b09bccc282bf5d00af0ec0ee8e3d"
+      },
+      {
+        "path": "modules/veyviz-sources/package.json",
+        "sha256": "71afd876320112361d146afa93b3ea519142ad1bbfd5ecedf0bcfde80a6760f3"
+      },
+      {
+        "path": "modules/veyviz-sources/src/bridge.ts",
+        "sha256": "188cae72ccc04e178acb162e72ac0e6d2b5bd72857d24e98b68ee75c9dfadd41"
+      },
+      {
+        "path": "modules/veyviz-sources/src/index.ts",
+        "sha256": "87f0aff86fa5b547c4e1748e4c1c3c344d133921449d676d3f35c3267af386da"
+      },
+      {
+        "path": "modules/veyviz-sources/src/protocol.ts",
+        "sha256": "75031f572c1df64c2fb1e9ff69f6528a4950dbd906ae4026c1d23c93d886c8ec"
+      },
+      {
+        "path": "modules/veyviz-sources/src/styles.css",
+        "sha256": "f443e6fb43dbde989c84181001a66da88f752bd676c538e427e52da18f7adcaf"
+      },
+      {
+        "path": "modules/veyviz-sources/src/ui.ts",
+        "sha256": "2fe159cbc9c5678ab68535227c6cd46470570b7837897a0d68ebb617dc42f7d4"
+      },
+      {
+        "path": "modules/veyviz-sources/tsconfig.json",
+        "sha256": "b0d7acd0ffdbbffc94296e9eb4228f85575a5c7dd58d7ab129d28cb24cfebec6"
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "376cf49b54d978b4ffea84dd08f4c01d6ed237f930b8e544dd91d6592626e25f"
+      },
+      {
+        "path": "package.json",
+        "sha256": "c2bd85be60294d4020b2d8d80c9549bda94174068d0ca49e763d358dc8b180f2"
+      },
+      {
+        "path": "products/veyviz-catalog/product.json",
+        "sha256": "9aedf3a31d84a914b5f678bfe04b60146a8f0f06f055c8cec949aad0794e1149"
+      },
+      {
+        "path": "products/veyviz-review/product.json",
+        "sha256": "407f6eb856ae5471766f4a66f803a3dc6dc5324bbbae7faf41d93facb81e340a"
+      },
+      {
+        "path": "README.md",
+        "sha256": "376095f3b0949453a5c077277492ccf402152b078b0153ff14dfbb14b824d3c7"
+      },
+      {
+        "path": "services/veyviz-ai/README.md",
+        "sha256": "5b1b5dd4ea10b006340990d754ee0ed53134952ec7e97a051072360916ce9e6f"
+      },
+      {
+        "path": "services/veyviz-ai/runner.py",
+        "sha256": "0a5200f57d27bdccf75645c6cdd3aaf1f600f83f1e0ac41f30f2017cdffc77fa"
+      },
+      {
+        "path": "services/veyviz-ai/setup.py",
+        "sha256": "4774856354eaebab182a20e1fe81934afffbf760631361a26124b12b3938dd60"
+      },
+      {
+        "path": "services/veyviz-ai/test_runner.py",
+        "sha256": "5f339f79810b0ff3cb2608c8d7971f6e61af9a6a67c67526269d1caed805d11d"
+      },
+      {
+        "path": "solutions/veyviz/solution.json",
+        "sha256": "9fdc9971348916e2312ac8f4cdca1199e8809f6e6de1bec9d80d297e34e11792"
+      },
+      {
+        "path": "solutions/veyviz/ui.json",
+        "sha256": "4997e9bd69dc33f06eaaa4ddc0dbb2633f510890b55450fe7d716f12ebd7e196"
+      },
+      {
+        "path": "solutions/veyviz/wiring.mjs",
+        "sha256": "2e48dc41538c2fb4de4fffbca113b6b0b7ea3cd2896573f9fba40d4367ed8db4"
+      },
+      {
+        "path": "tests/studio-integration.test.mjs",
+        "sha256": "0fb9a4f230aff479f89ef0aa1dc7b144be51fe325f3b1a1b76d35455d24bd617"
+      },
+      {
+        "path": "tests/veyviz-lifecycle.test.mjs",
+        "sha256": "2d8476dc2ff8ddcbf795c6b157b1be06c21844f0ffb9c316152d3c3938af874b"
+      },
+      {
+        "path": "tests/veyviz-product.test.mjs",
+        "sha256": "0bc8b3bd38c06037a4e24ad238f1916f7e94876a2f093b5d9bf5386e29273737"
+      },
+      {
+        "path": "tools/veyviz-e2e.mjs",
+        "sha256": "934f903916995cfe939e84e2d86594d1b8a4f18e1147414dfc817cbcacc6f899"
+      },
+      {
+        "path": "tools/veyviz-inventory.mjs",
+        "sha256": "4f34a448057ff7065b8ced879c9e38396600e6ef96925b29fd4f4404f19b8618"
+      },
+      {
+        "path": "tools/veyviz-runtime.mjs",
+        "sha256": "7bf19c54a83ab16784083762c0c0555281ac44e903403825fa67d99ea12233ca"
+      },
+      {
+        "path": "tools/veyviz-start.mjs",
+        "sha256": "05bcc9a77a290e94228c7fc461547a2ac7142d446efcd46b94e74e9532cb16f7"
+      },
+      {
+        "path": "tools/veyviz-verify.mjs",
+        "sha256": "e99d806e1ee4aca7747f474782b40cd0a26945658e66c9c476acab21ef98aa1d"
+      },
+      {
+        "path": "tsconfig.json",
+        "sha256": "0e829799e71c996bdc31b341ebdfcc3d8d3b8dce90b47bc6466fdfcb90f720ca"
+      },
+      {
+        "path": "vendor/veyviz-ai/PROVENANCE.json",
+        "sha256": "70b5c62652fb8e72e19aa6c9bb44ad7ac7decb72adf7fdec29aa9a6a1749c0c8"
+      }
+    ],
+    "digest": "044c38913891d4384514094499ee495a1feab923ac5775857c8051eab27a0659"
+  },
+  "recordedAt": "2026-10-02T23:01:04.161Z",
+  "command": {
+    "argv": [
+      "npm.cmd",
+      "test"
+    ],
+    "cwd": "."
+  },
+  "environment": {
+    "os": "Windows local",
+    "node": "24.19.0",
+    "powershell": "7.6.5 ordinary RemoteSigned"
+  },
+  "status": "BLOCKED",
+  "exitCode": 0,
+  "counts": {
+    "tests": 379,
+    "passed": 378,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 1,
+    "todo": 0
+  },
+  "artifacts": [
+    {
+      "sourceRef": ".local/veyviz-full-suite-03.log",
+      "path": ".brain/workflow/artifacts/52bc00a0-b817-42be-ba94-1d207e010248/veyviz-full-suite-03.log",
+      "sha256": "6462fc8fe1690f158b53043a2d9cc988f4d54249660d87db5a577f29244b813c",
+      "bytes": 90307
+    },
+    {
+      "sourceRef": ".local/veyviz-full-suite-01.log",
+      "path": ".brain/workflow/artifacts/52bc00a0-b817-42be-ba94-1d207e010248/veyviz-full-suite-01.log",
+      "sha256": "20deb2ecc61597467f321cbbfc5cf4f4787cbd49cfd928f300447c4106fa6112",
+      "bytes": 173467
+    },
+    {
+      "sourceRef": ".local/veyviz-full-suite-02.log",
+      "path": ".brain/workflow/artifacts/52bc00a0-b817-42be-ba94-1d207e010248/veyviz-full-suite-02.log",
+      "sha256": "c550ef124a68ecdfe549cd4961173ae50932fada2999a3a4c456909f8a4e9e69",
+      "bytes": 144629
+    },
+    {
+      "sourceRef": ".local/e2e/a451a078-5989-4874-950d-b1c7386c7e75/e2e-result.json",
+      "path": ".brain/workflow/artifacts/52bc00a0-b817-42be-ba94-1d207e010248/e2e-result.json",
+      "sha256": "af9f205677c8efa5f96603bcad48bc150dcd30b0380727b4cf98895ab86f0ae0",
+      "bytes": 1753
+    }
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "Actual npm test full run 03 exited 0 after 813281ms on unchanged inventory405ca. Earlier failed runs and build-racing E2E preserved as historical diagnostics, not current-candidate failures."
+  },
+  "limitations": [
+    "Windows denied file-symlink fixture creation with EPERM; that test was skipped/BLOCKED_ENV. No policy changes made. Exit0 does not qualify every check.",
+    "Subsequent UI presentation fix will create a new candidate; this record continues to describe405ca only."
+  ],
+  "integritySha256": "85492f0c364125016be33ad76cc0b48ea086bcc5044e4261f248a5518bd96bc7"
+}

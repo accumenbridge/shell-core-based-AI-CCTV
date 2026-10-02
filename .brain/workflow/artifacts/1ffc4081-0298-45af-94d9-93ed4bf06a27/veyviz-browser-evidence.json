@@ -1,0 +1,30 @@
+{
+  "schema": "veyviz.browser-evidence.v1",
+  "status": "PASS",
+  "sourceInventoryDigest": "405ca2e9e6f2df32ca6c6e39fdb88ad286c8abc8208c4f16302913f9244b4b8d",
+  "runtimeFingerprint": "bb427eccfe5efa91981124b76df526b72e797069c29286f27ec49092e01629ec",
+  "url": "http://127.0.0.1:57181",
+  "browser": "Codex in-app Chromium browser, actual UI actions via cua_repl",
+  "checks": [
+    "Admin signs in with isolated fixture credentials.",
+    "Register Verified local recording in tenant alpha; source inventory retains version 1.",
+    "Queue actual RF-DETR CPU analysis; SUCCEEDED with three samples at frame indices 0, 10, 20.",
+    "Open saved result; three actual JPEG frames visibly render; zero model detections and UNKNOWN occupancy remain truthful.",
+    "Mark reviewed; browser reload retains REVIEWED status and saved result.",
+    "Select tenant beta; no sources or analyses from alpha are visible; queue is disabled with no source.",
+    "Viewer signs in with only alpha. Attempted analysis write is denied; shell clears workspace and displays Operation is not permitted in this scope.",
+    "Admin can sign back in and view the unchanged accepted and reviewed result."
+  ],
+  "samples": [
+    {"frameIndex":0,"positionMs":0,"inferenceMs":617.1,"detections":0},
+    {"frameIndex":10,"positionMs":333.3,"inferenceMs":588.8,"detections":0},
+    {"frameIndex":20,"positionMs":666.7,"inferenceMs":574.0,"detections":0}
+  ],
+  "screenshot": ".local/veyviz-browser-reviewed.jpg",
+  "limitations": [
+    "Local fixture profile only; no live camera, upload, production or native-device qualification.",
+    "At the approximately 504px panel width, long technical digests overflow their provenance statistic cards. Core inputs, frames and review controls remain usable. Cosmetic follow-up is deferred.",
+    "Viewer write controls are visible; server denial clears the workspace. Permission-aware presentation is a usability follow-up; denial is verified.",
+    "This is reported observation with an actual screenshot, not cryptographically authenticated browser execution."
+  ]
+}

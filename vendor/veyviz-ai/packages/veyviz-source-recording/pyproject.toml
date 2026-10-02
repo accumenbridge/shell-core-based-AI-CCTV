@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "veyviz-source-recording"
+version = "0.1.0a1"
+description = "Verified local recording snapshots with exact presentation timestamps"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["veyviz-media==0.1.0a1", "veyviz-media-contracts==0.1.0a1", "veyviz-media-transport==0.1.0a1", "veyviz-process-supervision==0.1.0a1", "av==18.0.0", "numpy==2.3.5"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/veyviz_source_recording"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/README.md", "/pyproject.toml"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src/veyviz_source_recording"]
+
+[tool.veyviz.package]
+import-name = "veyviz_source_recording"
+allowed-external-imports = ["veyviz_media", "veyviz_media_contracts", "veyviz_media_transport", "veyviz_process_supervision", "av"]
+allow-dynamic-imports = false
+minimum-statements = 100.0
+minimum-branches = 100.0
+
+[tool.coverage.run]
+branch = true
+source = ["veyviz_source_recording"]
+
+[tool.coverage.report]
+show_missing = true
+precision = 2

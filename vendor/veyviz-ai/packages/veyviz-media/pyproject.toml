@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "veyviz-media"
+version = "0.1.0a1"
+description = "Bounded local frame ownership and completion-based consumer leases"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["veyviz-media-contracts==0.1.0a1"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/veyviz_media"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/README.md", "/PROVENANCE.md", "/pyproject.toml"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src/veyviz_media"]
+
+[tool.veyviz.package]
+import-name = "veyviz_media"
+allowed-external-imports = ["veyviz_media_contracts"]
+allow-dynamic-imports = false
+minimum-statements = 100.0
+minimum-branches = 100.0
+
+[tool.coverage.run]
+branch = true
+source = ["veyviz_media"]
+
+[tool.coverage.report]
+show_missing = true
+precision = 2

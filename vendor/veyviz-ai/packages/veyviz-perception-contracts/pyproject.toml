@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "veyviz-perception-contracts"
+version = "0.1.0a1"
+description = "Person observations with explicit provenance, coverage and missingness"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["veyviz-media-contracts==0.1.0a1"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/veyviz_perception_contracts"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/README.md", "/pyproject.toml"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src/veyviz_perception_contracts"]
+
+[tool.veyviz.package]
+import-name = "veyviz_perception_contracts"
+allowed-external-imports = ["veyviz_media_contracts"]
+allow-dynamic-imports = false
+minimum-statements = 100.0
+minimum-branches = 100.0
+
+[tool.coverage.run]
+branch = true
+source = ["veyviz_perception_contracts"]
+
+[tool.coverage.report]
+show_missing = true
+precision = 2

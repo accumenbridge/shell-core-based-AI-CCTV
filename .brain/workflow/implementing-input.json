@@ -1,0 +1,103 @@
+{
+  "reportedActor": "/root",
+  "platformTask": {
+    "taskId": "VEYVIZ-LOCAL-001",
+    "status": "IMPLEMENTING",
+    "candidate": null,
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Two bounded writers implement product modules and installed Python companion against the frozen protocol. Root integrates launch/profile checks and real end-to-end verification. All delivery gates remain unrun.",
+    "gates": [
+      {
+        "id": "independent-construction",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Fresh product gate; inherited framework evidence does not qualify it."
+        ]
+      },
+      {
+        "id": "real-model",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Fresh product gate; inherited framework evidence does not qualify it."
+        ]
+      },
+      {
+        "id": "authority",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Fresh product gate; inherited framework evidence does not qualify it."
+        ]
+      },
+      {
+        "id": "browser",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Fresh product gate; inherited framework evidence does not qualify it."
+        ]
+      },
+      {
+        "id": "restart-cleanup",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Fresh product gate; inherited framework evidence does not qualify it."
+        ]
+      },
+      {
+        "id": "second-variant",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Fresh product gate; inherited framework evidence does not qualify it."
+        ]
+      },
+      {
+        "id": "full-suite",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Fresh product gate; inherited framework evidence does not qualify it."
+        ]
+      },
+      {
+        "id": "independent-review",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Fresh product gate; inherited framework evidence does not qualify it."
+        ]
+      },
+      {
+        "id": "live-camera",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Fresh product gate; inherited framework evidence does not qualify it."
+        ]
+      },
+      {
+        "id": "native-mobile",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Fresh product gate; inherited framework evidence does not qualify it."
+        ]
+      },
+      {
+        "id": "production",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Fresh product gate; inherited framework evidence does not qualify it."
+        ]
+      }
+    ]
+  },
+  "schema": "brain.checkpoint-input.v1"
+}

@@ -1,0 +1,6 @@
+{
+  "schema": "quadbridge.ui-slots.v1",
+  "bindings": [
+    { "workspaceId": "veyviz.analysis", "slot": "workspace.aside", "contributionId": "veyviz-rfdetr.provenance", "optional": true }
+  ]
+}

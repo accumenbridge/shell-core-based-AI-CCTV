@@ -1,22 +1,22 @@
 # Current workflow checkpoint
 
-Revision: 112  
-Event: f0ce6284-c4cb-4815-9952-b51f9ee8939c  
-Recorded: 2026-10-02T20:15:00.067Z  
-Reported actor: /root actual safe upgrade reconciliation
+Revision: 8  
+Event: 86930660-f1a9-4a46-ac2d-ba84c9af4b15  
+Recorded: 2026-10-02T23:22:38.776Z  
+Reported actor: /root
 
 This generated view summarizes immutable project-local records. Reported run and review fields are not authenticated proof of execution, reviewer identity, model identity, or external acceptance.
 
 ## Mapped platform work
 
-Task: SAFE-UPGRADE-001
-Status: ACCEPTED
-Candidate: 8531a021a0e7c484e402a9132c107e5ce0c2968d7b18467c36adb77e35a0684f
-Next action: Local safe retained-data upgrade accepted after actual fresh complete retry and independent exact review. Publish authorized source and safe evidence commit/push; provider/hosted production target selection remains separate.
-Blockers: none reported
-Run records: 411cfb26-a697-49a9-8a74-6bbf879b18a4, a3c5b48c-9abf-4b32-9c2f-11d98c37d45a, 2167bf80-15c6-4b70-ae1c-738030713669, b9eda63d-7731-44b1-9ca9-f0833027b70f
-Review records: cec250e2-24bd-49ab-ad32-0765ad25b281
-Gates: native-device=BLOCKED, native-identity-api=DEFERRED, historical-uncertain-owner=UNKNOWN, interrupted-mobile-focused-owner=UNKNOWN, full-suite-repair=PASSED, browser-device-specific=NOT_RUN, planning-html-policy=BLOCKED, windows-file-symlink-coverage=BLOCKED, historical-mobile-audit-full-suite=FAILED, prior-mobile-history=REPORTED, current-reliability-full-suite=PASSED, reliability-prerequisite=PASSED, historical-capability-first-full-suite=FAILED, current-capability-full-suite=PASSED, capability-prerequisite=PASSED, family-focused=PASSED, family-browser=PASSED, current-family-full-suite=PASSED, family-prerequisite=PASSED, ui-pre-admission-stylesheet-scope-deviation=REPORTED, ui-slots-focused=PASSED, ui-slots-browser=PASSED, current-ui-full-suite=PASSED, ui-slots-prerequisite=PASSED, entity-brain-build=PASSED, entity-entity-builder-focused=PASSED, entity-entity-builder-browser=PASSED, entity-brain-full-suite=BLOCKED, entity-prerequisite=PASSED, historical-construction-focused-01=FAILED, historical-construction-focused-02=FAILED, historical-construction-focused-03=FAILED, historical-construction-focused-04=FAILED, historical-construction-derivation-build=UNKNOWN, construction-inventory-admission=REPORTED, construction-brain-build=PASSED, construction-construction-focused=PASSED, construction-construction-clean-install=PASSED, construction-construction-browser=PASSED, construction-brain-full-suite=BLOCKED, construction-prerequisite=PASSED, upgrade-old-capture=PASSED, upgrade-owner-supplement-03=REPORTED, safe-upgrade-brain-build=PASSED, safe-upgrade-safe-upgrade-focused=PASSED, safe-upgrade-safe-upgrade-browser=PASSED, safe-upgrade-brain-full-suite=BLOCKED, upgrade-fixture-owner-supplement-04=REPORTED
+Task: VEYVIZ-LOCAL-001
+Status: REVIEW
+Candidate: 9a94057148bc0d3570f5fbc13fd1bf25c4624b7c4dc6336672bee80a19eac829
+Next action: Use the working local fixture product via npm run veyviz. Formal all-checks acceptance awaits the symlink test on an authorized capable host and same-candidate qualifying evidence. Next proposed product increment is owned recording uploads; live CCTV, deployment and third-party plugin distribution remain separate backlog profiles.
+Blockers: Windows denied the required file-symlink fixture (EPERM). Final suite: 378 passed, 0 failed, 1 blocked/skipped. Security controls were preserved.
+Run records: 02e921e5-7354-4e13-94da-90db6087944d, 91cd95e6-ef71-46b6-9d52-ea8eeaebefbf, 2257a43a-b188-40d7-8c62-deb92c67bcd5, 0b96ed68-0e15-4d94-a841-06d165d1541f, 9bef6779-c323-4945-b0a0-10de86151809
+Review records: 3bb56aa2-7012-461b-b8b1-3ada134b2a7f
+Gates: independent-construction=PASSED, real-model=PASSED, authority=PASSED, browser=PASSED, restart-cleanup=PASSED, second-variant=PASSED, full-suite=BLOCKED, independent-review=PASSED, live-camera=DEFERRED, native-mobile=DEFERRED, production=DEFERRED
 
 ## Maintenance work
 

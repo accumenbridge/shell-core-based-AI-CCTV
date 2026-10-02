@@ -1,0 +1,517 @@
+{
+  "capturedAt": "2026-10-02T22:03:05.404386+00:00",
+  "dirty": true,
+  "dirtyTrackedPaths": [
+    " M adapters/inference/onnxruntime/README.md",
+    " M adapters/inference/onnxruntime/src/veyviz_inference_onnxruntime/supervised.py",
+    " M adapters/inference/onnxruntime/tests/test_supervised.py",
+    " M docs/architecture/veyviz-framework/README.md",
+    " M docs/architecture/veyviz-framework/architecture-blueprint.md",
+    " M docs/architecture/veyviz-framework/implementation-map.md",
+    " M docs/architecture/veyviz-framework/implementation-plan.md",
+    " M hosts/local-execution/README.md",
+    " M hosts/local-execution/src/veyviz_local_execution/host.py",
+    " M hosts/local-execution/tests/test_host.py",
+    " M hosts/local-onnx-cpu/tests/test_profile.py"
+  ],
+  "distributions": [
+    {
+      "dependencies": [
+        "numpy==2.3.5"
+      ],
+      "name": "veyviz-execution-contracts",
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-contracts",
+      "version": "0.1.0a1"
+    },
+    {
+      "dependencies": [
+        "veyviz-execution-contracts==0.1.0a1"
+      ],
+      "name": "veyviz-execution-lifecycle",
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-lifecycle",
+      "version": "0.1.0a1"
+    },
+    {
+      "dependencies": [
+        "veyviz-execution-contracts==0.1.0a1",
+        "veyviz-process-supervision==0.1.0a1",
+        "numpy==2.3.5",
+        "onnxruntime==1.23.2"
+      ],
+      "name": "veyviz-inference-onnxruntime",
+      "path": "vendor/veyviz-ai/packages/veyviz-inference-onnxruntime",
+      "version": "0.1.0a1"
+    },
+    {
+      "dependencies": [
+        "veyviz-media-contracts==0.1.0a1"
+      ],
+      "name": "veyviz-media",
+      "path": "vendor/veyviz-ai/packages/veyviz-media",
+      "version": "0.1.0a1"
+    },
+    {
+      "dependencies": [],
+      "name": "veyviz-media-contracts",
+      "path": "vendor/veyviz-ai/packages/veyviz-media-contracts",
+      "version": "0.1.0a1"
+    },
+    {
+      "dependencies": [
+        "veyviz-media==0.1.0a1",
+        "veyviz-media-contracts==0.1.0a1",
+        "veyviz-process-supervision==0.1.0a1"
+      ],
+      "name": "veyviz-media-transport",
+      "path": "vendor/veyviz-ai/packages/veyviz-media-transport",
+      "version": "0.1.0a1"
+    },
+    {
+      "dependencies": [
+        "veyviz-execution-contracts==0.1.0a1",
+        "veyviz-media-contracts==0.1.0a1",
+        "veyviz-perception-contracts==0.1.0a1",
+        "numpy==2.3.5",
+        "opencv-python-headless==5.0.0.93"
+      ],
+      "name": "veyviz-model-rfdetr",
+      "path": "vendor/veyviz-ai/packages/veyviz-model-rfdetr",
+      "version": "0.1.0a1"
+    },
+    {
+      "dependencies": [
+        "veyviz-media-contracts==0.1.0a1"
+      ],
+      "name": "veyviz-perception-contracts",
+      "path": "vendor/veyviz-ai/packages/veyviz-perception-contracts",
+      "version": "0.1.0a1"
+    },
+    {
+      "dependencies": [],
+      "name": "veyviz-process-supervision",
+      "path": "vendor/veyviz-ai/packages/veyviz-process-supervision",
+      "version": "0.1.0a1"
+    },
+    {
+      "dependencies": [
+        "veyviz-media==0.1.0a1",
+        "veyviz-media-contracts==0.1.0a1",
+        "veyviz-media-transport==0.1.0a1",
+        "veyviz-process-supervision==0.1.0a1",
+        "av==18.0.0",
+        "numpy==2.3.5"
+      ],
+      "name": "veyviz-source-recording",
+      "path": "vendor/veyviz-ai/packages/veyviz-source-recording",
+      "version": "0.1.0a1"
+    }
+  ],
+  "files": [
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-contracts/pyproject.toml",
+      "sha256": "b35943c48b3c7d5a9b8106c9fed42aaff9b405c15b5ce0627aeacec01a3d3f9f",
+      "sourcePath": "contracts/execution/pyproject.toml"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-contracts/README.md",
+      "sha256": "f78df2032f378c9b7381b271aa937d85a538c37de6e80a7645d0983c49e36564",
+      "sourcePath": "contracts/execution/README.md"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-contracts/src/veyviz_execution_contracts/__init__.py",
+      "sha256": "99e1458666b8af83b83564e795545ab87c605e50a7380135443ca9e4d7468d38",
+      "sourcePath": "contracts/execution/src/veyviz_execution_contracts/__init__.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-contracts/src/veyviz_execution_contracts/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "contracts/execution/src/veyviz_execution_contracts/py.typed"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-contracts/src/veyviz_execution_contracts/tensors.py",
+      "sha256": "8465aa78a1429ffcf8a170c7c4ac46fd3824e67470a4ddbb72c99af1f2f08585",
+      "sourcePath": "contracts/execution/src/veyviz_execution_contracts/tensors.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-contracts/tests/test_tensors.py",
+      "sha256": "d1ad8eaefb6e4c558c2b4bbda3531842eeb6f2f59500ab01fa7c5f888db1e34f",
+      "sourcePath": "contracts/execution/tests/test_tensors.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-lifecycle/pyproject.toml",
+      "sha256": "61ee095c3de630a29090d330bf0a55707840d24cbd616ba16e12a09939b86c51",
+      "sourcePath": "modules/execution/lifecycle/pyproject.toml"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-lifecycle/README.md",
+      "sha256": "2391a4cba0dc614514fdd01057e3111c326d36c91aee8042197e8d72d1afadb4",
+      "sourcePath": "modules/execution/lifecycle/README.md"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-lifecycle/src/veyviz_execution_lifecycle/__init__.py",
+      "sha256": "f0e88f6e631a57f7867d792cad3a1e53ebeb56b67c72dc8ffbdc13712eeb92b5",
+      "sourcePath": "modules/execution/lifecycle/src/veyviz_execution_lifecycle/__init__.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-lifecycle/src/veyviz_execution_lifecycle/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "modules/execution/lifecycle/src/veyviz_execution_lifecycle/py.typed"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-lifecycle/src/veyviz_execution_lifecycle/slot.py",
+      "sha256": "d6224896468e02fb7636efdf95cbd4b96d3ad950683a3a467e0bc3c751ae3fa7",
+      "sourcePath": "modules/execution/lifecycle/src/veyviz_execution_lifecycle/slot.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-execution-lifecycle/tests/test_slot.py",
+      "sha256": "35c5db691de8b6feb7658717f0af96603fb9cc81d9a2bcc904ef160897a1527a",
+      "sourcePath": "modules/execution/lifecycle/tests/test_slot.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-inference-onnxruntime/pyproject.toml",
+      "sha256": "b7b8c0639eaaa7bf615870fda1148f25619869dabb83b22b5ce28b388a6a19ed",
+      "sourcePath": "adapters/inference/onnxruntime/pyproject.toml"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-inference-onnxruntime/README.md",
+      "sha256": "e55a35f261dc8f122328013b29743bcf9e881a0003f216f14d8916fb5f5db940",
+      "sourcePath": "adapters/inference/onnxruntime/README.md"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-inference-onnxruntime/src/veyviz_inference_onnxruntime/__init__.py",
+      "sha256": "78fc0d836373f70f893688b4273432a330618e5d880e393f0249d581ba7c693e",
+      "sourcePath": "adapters/inference/onnxruntime/src/veyviz_inference_onnxruntime/__init__.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-inference-onnxruntime/src/veyviz_inference_onnxruntime/_tensors.py",
+      "sha256": "8dea9003db8bf62dc15e3868024752a793e16e2fd2e02738f5915dfd2a42d3d7",
+      "sourcePath": "adapters/inference/onnxruntime/src/veyviz_inference_onnxruntime/_tensors.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-inference-onnxruntime/src/veyviz_inference_onnxruntime/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "adapters/inference/onnxruntime/src/veyviz_inference_onnxruntime/py.typed"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-inference-onnxruntime/src/veyviz_inference_onnxruntime/runtime.py",
+      "sha256": "096758cbad7f34d4fd294cd371171357348a4a551fd7cd2c3aeb9919a3b89fdf",
+      "sourcePath": "adapters/inference/onnxruntime/src/veyviz_inference_onnxruntime/runtime.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-inference-onnxruntime/src/veyviz_inference_onnxruntime/supervised.py",
+      "sha256": "434b567550a4afd48d43485bc1434d07dc2794e4055c8a5d3f24c63fa998acd0",
+      "sourcePath": "adapters/inference/onnxruntime/src/veyviz_inference_onnxruntime/supervised.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-inference-onnxruntime/src/veyviz_inference_onnxruntime/worker.py",
+      "sha256": "ad163e4592b905ec0d164b09947aa929ecb58884323fabad7a8f7b9e1974a5dd",
+      "sourcePath": "adapters/inference/onnxruntime/src/veyviz_inference_onnxruntime/worker.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-inference-onnxruntime/tests/test_runtime.py",
+      "sha256": "8b471cea7beea87172792644d5b7e66b3017910b1d79032261479a07c0bd2570",
+      "sourcePath": "adapters/inference/onnxruntime/tests/test_runtime.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-inference-onnxruntime/tests/test_supervised.py",
+      "sha256": "b0cebed32756369f6665b146adadb2d95a31e3115e7dcab7feaf40d4686262d3",
+      "sourcePath": "adapters/inference/onnxruntime/tests/test_supervised.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media/PROVENANCE.md",
+      "sha256": "f3e6f9a94d48027cb9ae0f9dfbfe17bcde8c9f32a05f0e6d9f3e61fd1fa5a4fc",
+      "sourcePath": "modules/media/PROVENANCE.md"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media/pyproject.toml",
+      "sha256": "80680bf1b1e1a881fde696d263945f15d98b43a3ea8cf5ccb86dff3e25f61648",
+      "sourcePath": "modules/media/pyproject.toml"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media/README.md",
+      "sha256": "ba7677781ed30e9bb9173c6cda1f54dfcaf88cd5bc8c2add552e2896e0122f78",
+      "sourcePath": "modules/media/README.md"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media/src/veyviz_media/__init__.py",
+      "sha256": "dcd8fb6953d2ebdc4865c82d8bce7198d2f6ab5209ac36be21527dc5acdcd725",
+      "sourcePath": "modules/media/src/veyviz_media/__init__.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media/src/veyviz_media/buffering.py",
+      "sha256": "1cc5f75ca389b0ddb1ee41e76e983d8094373893c902b476fa4bb91bb049e352",
+      "sourcePath": "modules/media/src/veyviz_media/buffering.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media/src/veyviz_media/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "modules/media/src/veyviz_media/py.typed"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media/src/veyviz_media/sources.py",
+      "sha256": "cfb56b4169132b905d198f6c6e47f6dbf189c6636f47aeeb4dec93a1ac17a69a",
+      "sourcePath": "modules/media/src/veyviz_media/sources.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media/tests/test_buffering.py",
+      "sha256": "297ff272f77051002080ceded5b50dee3864fe24ebe314b086e69076c859f0f9",
+      "sourcePath": "modules/media/tests/test_buffering.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media/tests/test_sources.py",
+      "sha256": "fda02b937401c0f1b4834f0efd0c5698d3bf2e95e533e4f12c6532a637d6df22",
+      "sourcePath": "modules/media/tests/test_sources.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-contracts/pyproject.toml",
+      "sha256": "5c9aec14883bb917e10697fec70e8f0212987091dcd6d5f5efc19e6418de4793",
+      "sourcePath": "contracts/media/pyproject.toml"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-contracts/README.md",
+      "sha256": "885c0de1fe7aee7f19ba0872517614fc21af9db08bf641405dd0454159fe81f4",
+      "sourcePath": "contracts/media/README.md"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-contracts/src/veyviz_media_contracts/__init__.py",
+      "sha256": "a350144ac4b2768e7dbfe5967fe705e02c909882bcffbf82f620b2f6143996a3",
+      "sourcePath": "contracts/media/src/veyviz_media_contracts/__init__.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-contracts/src/veyviz_media_contracts/identity.py",
+      "sha256": "ed50f0006d17b0ffea72827f97230f07e50edcc4178c37a281a459fb5889d7cf",
+      "sourcePath": "contracts/media/src/veyviz_media_contracts/identity.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-contracts/src/veyviz_media_contracts/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "contracts/media/src/veyviz_media_contracts/py.typed"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-contracts/tests/test_identity.py",
+      "sha256": "fa17e980170f265eab633c2a95b2e8b2ede6b293e605b3ff1ef9046de2e443ef",
+      "sourcePath": "contracts/media/tests/test_identity.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-transport/pyproject.toml",
+      "sha256": "37728de9d247a082f26a0b893394685071aa2189f02e61eacb6043ae98595140",
+      "sourcePath": "adapters/media/local_transport/pyproject.toml"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-transport/README.md",
+      "sha256": "ca61db319647dccbd3ebfb59cf25db534126d30ead9af4923d8bde5d64348ed6",
+      "sourcePath": "adapters/media/local_transport/README.md"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-transport/src/veyviz_media_transport/__init__.py",
+      "sha256": "3d7b50a16e8f799572d5e43d92bae8bca0ab7c41e2ec129f507cf56ba17b5d38",
+      "sourcePath": "adapters/media/local_transport/src/veyviz_media_transport/__init__.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-transport/src/veyviz_media_transport/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "adapters/media/local_transport/src/veyviz_media_transport/py.typed"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-transport/src/veyviz_media_transport/receiver.py",
+      "sha256": "c9df9351be6847b53fdbba985c1e39ec6b4df6dd2e613204c4e45fe126fa1ea8",
+      "sourcePath": "adapters/media/local_transport/src/veyviz_media_transport/receiver.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-transport/src/veyviz_media_transport/worker.py",
+      "sha256": "7c39de22c43dedd31e7385a1340bc131aecde508eef099d84575213a218a27e0",
+      "sourcePath": "adapters/media/local_transport/src/veyviz_media_transport/worker.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-transport/tests/test_receiver.py",
+      "sha256": "6d913a17721087397029994a3c52f34261649e18b27d7f4fd92673605bf7507d",
+      "sourcePath": "adapters/media/local_transport/tests/test_receiver.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-media-transport/tests/test_worker.py",
+      "sha256": "047c4992ce97ffa4450db5111aec41ff1db51aacf73a5b34c357abdf6f7da998",
+      "sourcePath": "adapters/media/local_transport/tests/test_worker.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-model-rfdetr/PROVENANCE.md",
+      "sha256": "2bda9785a14c2055947762bfe6dd5bab0dd733d0152d86f59bb7913e1cf11ef9",
+      "sourcePath": "adapters/models/rfdetr/PROVENANCE.md"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-model-rfdetr/pyproject.toml",
+      "sha256": "73070d6241bad9d682e45f4271ecb7892bf01bbb980d6827389b5b764efb133b",
+      "sourcePath": "adapters/models/rfdetr/pyproject.toml"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-model-rfdetr/README.md",
+      "sha256": "1f455992678aadad36ae6eea729deb236279209edae96d07e61ac6ddc4373f3b",
+      "sourcePath": "adapters/models/rfdetr/README.md"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-model-rfdetr/src/veyviz_model_rfdetr/__init__.py",
+      "sha256": "a57b8920d4714da0f75b14e6a65bf1c26b9d43e3ca7f56b79c6858c3787bb0d9",
+      "sourcePath": "adapters/models/rfdetr/src/veyviz_model_rfdetr/__init__.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-model-rfdetr/src/veyviz_model_rfdetr/persons.py",
+      "sha256": "fc2591e015510520419722eae32e6274a91cf16a6256d2acc38c409f8a90ffff",
+      "sourcePath": "adapters/models/rfdetr/src/veyviz_model_rfdetr/persons.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-model-rfdetr/src/veyviz_model_rfdetr/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "adapters/models/rfdetr/src/veyviz_model_rfdetr/py.typed"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-model-rfdetr/tests/test_persons.py",
+      "sha256": "9f5b9992a71ff60ee6027a203ec566f8f6aad8a82b23fc5b2873a1ff4bec6baf",
+      "sourcePath": "adapters/models/rfdetr/tests/test_persons.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-perception-contracts/pyproject.toml",
+      "sha256": "d81a00c7d6c9b6c80a18d8ca58f24a110b05bf327105044b8dfbcae303b76e5d",
+      "sourcePath": "contracts/perception/pyproject.toml"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-perception-contracts/README.md",
+      "sha256": "96586e015328820b724ab750024161b1a07888263ee42c1bca8db842d5fb7af8",
+      "sourcePath": "contracts/perception/README.md"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-perception-contracts/src/veyviz_perception_contracts/__init__.py",
+      "sha256": "d8732cad67532d48f5a33f90c7e2c6ae35e5a4a94e78185980e72d4bbf0f6124",
+      "sourcePath": "contracts/perception/src/veyviz_perception_contracts/__init__.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-perception-contracts/src/veyviz_perception_contracts/persons.py",
+      "sha256": "c060416187c902608c68fd325b5eefb47cad029d8977c9f205d688492b60f44b",
+      "sourcePath": "contracts/perception/src/veyviz_perception_contracts/persons.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-perception-contracts/src/veyviz_perception_contracts/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "contracts/perception/src/veyviz_perception_contracts/py.typed"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-perception-contracts/tests/test_persons.py",
+      "sha256": "92a39c5efd0387a1697af835e861df1b07ee6257a5125953d2a830efb0cb0756",
+      "sourcePath": "contracts/perception/tests/test_persons.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-process-supervision/pyproject.toml",
+      "sha256": "eb9d2d43970985f11c32a7263262ca40c95beae74ad6e48244ec62eed48c8256",
+      "sourcePath": "modules/process_supervision/pyproject.toml"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-process-supervision/README.md",
+      "sha256": "5d78ccc15b8981793ea860c46746c952742bf953a782e18bce6ba6b9670a69f3",
+      "sourcePath": "modules/process_supervision/README.md"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-process-supervision/src/veyviz_process_supervision/__init__.py",
+      "sha256": "1764fe260bac02b6e18aa0452ac5c21c55a8c0c41b1fe695913ab25a719c457f",
+      "sourcePath": "modules/process_supervision/src/veyviz_process_supervision/__init__.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-process-supervision/src/veyviz_process_supervision/errors.py",
+      "sha256": "c20384c505f1b49e469263f917646bd8f6045a55e4a4fd9b950d91dccf1854d0",
+      "sourcePath": "modules/process_supervision/src/veyviz_process_supervision/errors.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-process-supervision/src/veyviz_process_supervision/files.py",
+      "sha256": "623a2d6e451a5a3a3d6b70ee405d3e3362d2910096d1e01b901593fd412be8ac",
+      "sourcePath": "modules/process_supervision/src/veyviz_process_supervision/files.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-process-supervision/src/veyviz_process_supervision/process.py",
+      "sha256": "00288f11bd1dac393ade2ac83d05a96ddf503f9b8e9a5b75bb61fac99405f418",
+      "sourcePath": "modules/process_supervision/src/veyviz_process_supervision/process.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-process-supervision/src/veyviz_process_supervision/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "modules/process_supervision/src/veyviz_process_supervision/py.typed"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-process-supervision/src/veyviz_process_supervision/startup.py",
+      "sha256": "183a3a192fdbc5d6c39919b0a982d89bed075c56d464986c5fa15ed09a961037",
+      "sourcePath": "modules/process_supervision/src/veyviz_process_supervision/startup.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-process-supervision/src/veyviz_process_supervision/wire.py",
+      "sha256": "380dae2b7559abfb63eb8268dd540fa2b8a3f07b7356ee48e640a4645e4784bf",
+      "sourcePath": "modules/process_supervision/src/veyviz_process_supervision/wire.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-process-supervision/tests/test_process.py",
+      "sha256": "fb41a5e55215223e81fde1816c0886e6a1341c9f595ebc98c1ee796afa6722a8",
+      "sourcePath": "modules/process_supervision/tests/test_process.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-process-supervision/tests/test_startup.py",
+      "sha256": "8512bb87a522705852b531a6c7a35ec993fb3f178648e206bfbe307c556f70c0",
+      "sourcePath": "modules/process_supervision/tests/test_startup.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-source-recording/pyproject.toml",
+      "sha256": "35c912c60e9fb461381228fd00fcbf1115ebb54f6f7aa0c5d1d693cb33c33404",
+      "sourcePath": "adapters/sources/recording/pyproject.toml"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-source-recording/README.md",
+      "sha256": "adbb61390f65b1a86901d5c3b589f824765636d96d9a6462b1287ec1bada14f7",
+      "sourcePath": "adapters/sources/recording/README.md"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-source-recording/src/veyviz_source_recording/__init__.py",
+      "sha256": "f237d4a82977d58f97ce04bd700d705aa65b52f181977dff12bf77ad0ccc566d",
+      "sourcePath": "adapters/sources/recording/src/veyviz_source_recording/__init__.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-source-recording/src/veyviz_source_recording/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "adapters/sources/recording/src/veyviz_source_recording/py.typed"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-source-recording/src/veyviz_source_recording/source.py",
+      "sha256": "ec4ef6f2dae7b80ba9626e0ea05602b42d7eeff68ed127dc453c42e11ba4c131",
+      "sourcePath": "adapters/sources/recording/src/veyviz_source_recording/source.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-source-recording/src/veyviz_source_recording/supervised.py",
+      "sha256": "d61ce9133c1d86f140048a594d852b8a6f53ebad9afc3ac040eb555d787a2442",
+      "sourcePath": "adapters/sources/recording/src/veyviz_source_recording/supervised.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-source-recording/src/veyviz_source_recording/worker.py",
+      "sha256": "44b4a20e13baf6713287e26f3da281681dd6bd2f89fd71da047778bc34210b05",
+      "sourcePath": "adapters/sources/recording/src/veyviz_source_recording/worker.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-source-recording/tests/test_recording.py",
+      "sha256": "3b4a56ee92e2e487c428dc8d767f8fcab7e0cae48f6104bd99da0c01871f249d",
+      "sourcePath": "adapters/sources/recording/tests/test_recording.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/packages/veyviz-source-recording/tests/test_supervision.py",
+      "sha256": "aad14fc053afffc1d098653aba60c9f24068e787c6416e5eda0408e8af35986f",
+      "sourcePath": "adapters/sources/recording/tests/test_supervision.py"
+    },
+    {
+      "path": "vendor/veyviz-ai/upstream/models/rfdetr-source.lock.json",
+      "sha256": "3387eb069e4227d6d59f289b90219d79b177cc0bd982792ed923a0f943889835",
+      "sourcePath": "models/rfdetr-source.lock.json"
+    }
+  ],
+  "head": "1f3486acff2f63de4bb47d33ad274eac279007d9",
+  "note": "Exact captured bytes, including selected uncommitted changes, are identified by per-file hashes; HEAD alone is not their identity. Private model/media are excluded from Git source and package wheels.",
+  "rootPackages": [
+    "veyviz-source-recording",
+    "veyviz-model-rfdetr",
+    "veyviz-inference-onnxruntime",
+    "veyviz-execution-lifecycle",
+    "veyviz-media"
+  ],
+  "schema": "veyviz.selected-source.v1",
+  "sourceRoot": "D:\\Veyviz-code\\veyviz-ai-cctv-product-integration-review"
+}

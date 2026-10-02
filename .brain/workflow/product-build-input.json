@@ -1,0 +1,29 @@
+{
+  "schema": "brain.record-input.v1",
+  "kind": "run",
+  "taskId": "VEYVIZ-LOCAL-001",
+  "recipeId": "product-build",
+  "status": "PASSED",
+  "exitCode": 0,
+  "environment": {
+    "os": "Windows local",
+    "node": "24.19.0",
+    "python": "3.13.7 isolated installed wheels",
+    "profile": "mivia-vid0062 / rfdetr-small-cpu-v1 CPU",
+    "sourceInventory": "405ca2e9e6f2df32ca6c6e39fdb88ad286c8abc8208c4f16302913f9244b4b8d"
+  },
+  "artifactPaths": [
+    ".local/veyviz-build-07.log",
+    ".local/veyviz-verify-final.log"
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "Actual root tools and delegated independent export verification in this user-authorized local product build. Browser actions via cua_repl; not an authenticated execution attestation."
+  },
+  "limitations": [
+    "Local fixture profile only; live cameras, uploads, native mobile, external identity and production remain unqualified.",
+    "Private model/media and browser screenshot stay in ignored .local; licensing/redistribution is unqualified.",
+    "Browser provenance-card overflow and viewer write-button presentation are documented cosmetic/usability follow-ups.",
+    "Independent exports contain selected runtime packages/assets; verified Python companion and product lifecycle wrapper are separately supplied from this new product repository."
+  ]
+}

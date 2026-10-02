@@ -53,6 +53,15 @@
       "path": "modules/service-desk"
     },
     {
+      "path": "modules/veyviz-analysis"
+    },
+    {
+      "path": "modules/veyviz-rfdetr"
+    },
+    {
+      "path": "modules/veyviz-sources"
+    },
+    {
       "path": "apps/control-plane"
     },
     {

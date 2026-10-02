@@ -1,56 +1,7 @@
-# Project Brain — active entry point
+# Product Brain entry
 
-This Brain belongs to the independent Quadbridge Product Studio source repository.
-The accepted framework authority is `PLATFORM_ARCHITECTURE.md`; the 0.3 scope and
-limits are described in `IMPLEMENTATION_STATUS_0.3.md` and `docs/STATUS.md`. The
-existing `analysis/` tree is supporting research, not product authority.
+Read project.json and the mapped brief/outcome/acceptance/progress/current task, then AGENTS.md and docs/veyviz/ARCHITECTURE.md. This Brain governs the independent Veyviz local product. Inherited framework records are historical provenance only.
 
-At each session start, read `project.json`, the mapped outcome and progress, and the
-mapped `current_work` task. Follow those actual paths. Read current repository
-instructions and inspect the relevant source before changing code. If a binding or
-claim cannot be verified, record it as unknown or blocked instead of guessing.
+Route through ROUTING.md. Validate atlas and node tools/brain.mjs validate, then run node tools/brain.mjs preflight --json before implementation. A valid plan admits work but proves no product behavior. Root owns shared checkpoint/evidence reconciliation. Workers report actual source and verification; do not race shared records.
 
-The adopted file-backed workflow is documented in `WORKFLOW.md`. When
-`.brain/workflow/current.json` exists, use `npm run brain -- context` to read its
-authoritative checkpoint and `npm run brain -- validate` to check record integrity
-and the generated view. The project map names the canonical readable progress
-file. Legacy `PROGRESS.md` and `checks.json` retain historical records; their
-embedded next-action text is not a second current checkpoint. Reconcile any later
-legacy edits explicitly before publishing a new checkpoint.
-
-Route every request through `ROUTING.md`. Distinguish questions, proposals, directed
-changes, and explicit approvals by meaning. The user has authorized the full local
-platform program. Follow .brain/PLATFORM_ROADMAP.md and the mapped current task, delivering
-coherent increments with truthful evidence.
-
-For authorized code work, complete the smallest coherent behavior in the existing
-owners, run the relevant real checks, repair ordinary in-scope failures, and checkpoint
-the actual candidate, results, blockers, and next action. Do not claim browser,
-production, or roadmap acceptance from source review or mocked tests. Review by
-the implementation agent is self-review; use a separate read-only reviewer when
-independent review is required, and keep that requirement open when unavailable.
-
-Before new or resumed platform implementation, run `node tools/brain.mjs preflight --json`.
-Read its record-integrity and current-task/plan readiness results separately. A
-NOT_READY result requires semantic reconciliation of the governing focus/task/source
-references before admission; never silently repin source to remove a warning.
-Recording actual failures, BLOCKED state, results and reconciliation remains allowed.
-The preflight does not grant authorization or accept delivery; the current contract
-and existing ownership/security rules remain authoritative.
-
-One coordinator owns shared Brain state at a time. After adoption, the root
-coordinator publishes structured checkpoints and task status; workers report evidence
-instead of racing shared records. The generated progress view is derived from the
-current immutable event. The local profiles in `.codex/agents/` provide role
-instructions and model/effort settings only when Codex selects those roles. They do
-not dispatch work, authenticate approval, enforce budgets, or create isolation.
-
-The user's 2026-09-30 full architecture build request supersedes earlier baseline-only
-scope, archived under `.brain/archive/LOCAL-RELIABILITY-001/`. External deployment,
-repositories, credentials, spending and global configuration remain outside scope.
-Budget is unknown; do not invent a numeric limit.
-
-The user's 2026-10-01 request to implement the proposed Brain design authorizes
-BRAIN-001 repository tooling and safe adoption. It does not itself accept the
-platform, expand product scope, or replace the mapped platform task. Historical
-state imported into the workflow remains explicitly reported context.
+The coordinator must freeze all exact implementation/test paths before qualifying product candidates; the initial contract fingerprints governance only. Preserve original repositories and upstream ownership. Local recorded video is the selected first profile; no cloud deployment, camera credentials, paid usage or global configuration is authorized here.

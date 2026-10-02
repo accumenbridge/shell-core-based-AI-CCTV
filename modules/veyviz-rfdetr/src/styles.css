@@ -1,0 +1,8 @@
+.analysis-sample { display: grid; gap: .65rem; }
+.analysis-sample img { display: block; max-width: 100%; height: auto; border-radius: .5rem; }
+.analysis-boxes { display: flex; flex-wrap: wrap; gap: .4rem; }
+.veyviz-provenance { min-width: 0; overflow-wrap: anywhere; }
+.veyviz-provenance-facts { grid-template-columns: minmax(0, 1fr); }
+.veyviz-provenance .stat-card { min-width: 0; }
+.veyviz-provenance .stat-value { min-width: 0; font-size: 1rem; letter-spacing: normal; overflow-wrap: anywhere; }
+.veyviz-provenance > * { min-width: 0; overflow-wrap: anywhere; }

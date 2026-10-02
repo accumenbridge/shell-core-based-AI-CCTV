@@ -1,0 +1,197 @@
+{
+  "id": "veyviz-rfdetr",
+  "version": "0.1.0",
+  "abi": "quadbridge.module.v1",
+  "dependencies": [],
+  "provides": [
+    "veyviz.recorded-analysis.run.v1"
+  ],
+  "requires": [],
+  "permissions": [
+    "veyviz.ai.read"
+  ],
+  "operations": [
+    {
+      "id": "veyviz-rfdetr.ai.readiness",
+      "version": 1,
+      "title": "Read local inference readiness",
+      "description": "Inspect bounded local model and companion integrity provenance without exposing private paths.",
+      "permission": "veyviz.ai.read",
+      "kind": "read",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "READY",
+              "UNAVAILABLE"
+            ]
+          },
+          "profileId": {
+            "type": "string",
+            "enum": [
+              "rfdetr-small-cpu-v1"
+            ]
+          },
+          "fixtureId": {
+            "type": "string",
+            "enum": [
+              "mivia-vid0062"
+            ]
+          },
+          "modelId": {
+            "type": "string",
+            "enum": [
+              "rfdetr-small-cpu-v1"
+            ]
+          },
+          "sourceSha256": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "modelSha256": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "inventorySha256": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "verifiedAt": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 40
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "versions": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 80
+                }
+              },
+              "required": [
+                "name",
+                "version"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "status",
+          "profileId",
+          "fixtureId",
+          "modelId",
+          "sourceSha256",
+          "modelSha256",
+          "inventorySha256",
+          "verifiedAt",
+          "message",
+          "versions"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/api/ai/readiness",
+      "permission": "veyviz.ai.read",
+      "kind": "read"
+    }
+  ],
+  "workspaces": [],
+  "uiContributions": [
+    {
+      "id": "veyviz-rfdetr.provenance",
+      "permission": "veyviz.ai.read",
+      "export": "provenancePanel",
+      "label": "Inference provenance"
+    }
+  ],
+  "schema": {
+    "current": 1,
+    "readMin": 1,
+    "readMax": 1
+  },
+  "background": false,
+  "browserAssets": [
+    "styles.css"
+  ],
+  "studio": {
+    "label": "Veyviz RF-DETR",
+    "summary": "Fixed-profile local CPU inference through a verified Python companion process.",
+    "category": "vision",
+    "layers": [
+      "backend",
+      "ai"
+    ],
+    "ui": {
+      "routes": [],
+      "extensionPoints": [
+        "veyviz.analysis.provenance"
+      ]
+    },
+    "backend": {
+      "services": [
+        {
+          "id": "recorded-analysis",
+          "contract": "veyviz.recorded-analysis.run.v1",
+          "visibility": "product"
+        }
+      ],
+      "jobs": []
+    },
+    "ai": {
+      "pipelines": [
+        {
+          "id": "veyviz-rfdetr.recorded.v1",
+          "label": "RF-DETR small on local CPU",
+          "input": "bounded sampled recording",
+          "output": "typed person detections"
+        }
+      ],
+      "models": [
+        {
+          "capability": "vision.detect",
+          "modality": "vision",
+          "placement": "edge",
+          "accelerator": "cpu"
+        }
+      ]
+    },
+    "data": {
+      "stores": [],
+      "schemas": []
+    },
+    "deployment": {
+      "processes": [
+        {
+          "id": "veyviz-python-runner",
+          "kind": "worker"
+        }
+      ]
+    }
+  }
+}

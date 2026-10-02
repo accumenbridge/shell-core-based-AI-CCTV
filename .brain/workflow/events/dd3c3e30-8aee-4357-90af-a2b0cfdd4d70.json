@@ -1,0 +1,130 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "dd3c3e30-8aee-4357-90af-a2b0cfdd4d70",
+  "revision": 5,
+  "previousEventId": "9ce8c25c-de64-4567-8cf2-72ab6ccba8b3",
+  "reportedActor": "/root",
+  "recordedAt": "2026-10-02T23:01:04.183Z",
+  "platformTask": {
+    "taskId": "VEYVIZ-LOCAL-001",
+    "status": "IMPLEMENTING",
+    "candidate": null,
+    "runIds": [
+      "7495c854-fb6e-4e74-982c-88ff9f471094",
+      "fa84dd14-e6ad-470b-ab52-d2f9a1eb3a8c",
+      "1ffc4081-0298-45af-94d9-93ed4bf06a27",
+      "9604344d-dd07-49c1-83f6-cda4afe0757e",
+      "52bc00a0-b817-42be-ba94-1d207e010248"
+    ],
+    "reviewIds": [],
+    "blockers": [
+      "Full-suite symlink-fixture check is blocked by host EPERM; keep separate from product correctness."
+    ],
+    "nextAction": "Repair verified provenance-card overflow and make viewer write controls permission-aware using the existing scoped bootstrap. Keep server authorization unchanged. Build and verify final UI before freezing the next candidate and fresh final regression.",
+    "gates": [
+      {
+        "id": "independent-construction",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/9604344d-dd07-49c1-83f6-cda4afe0757e.json"
+        ],
+        "limitations": [
+          "Selected local fixture profile only. See immutable evidence limitations."
+        ]
+      },
+      {
+        "id": "real-model",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/fa84dd14-e6ad-470b-ab52-d2f9a1eb3a8c.json"
+        ],
+        "limitations": [
+          "Selected local fixture profile only. See immutable evidence limitations."
+        ]
+      },
+      {
+        "id": "authority",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/1ffc4081-0298-45af-94d9-93ed4bf06a27.json"
+        ],
+        "limitations": [
+          "Selected local fixture profile only. See immutable evidence limitations."
+        ]
+      },
+      {
+        "id": "browser",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/1ffc4081-0298-45af-94d9-93ed4bf06a27.json"
+        ],
+        "limitations": [
+          "Selected local fixture profile only. See immutable evidence limitations."
+        ]
+      },
+      {
+        "id": "restart-cleanup",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/1ffc4081-0298-45af-94d9-93ed4bf06a27.json"
+        ],
+        "limitations": [
+          "Selected local fixture profile only. See immutable evidence limitations."
+        ]
+      },
+      {
+        "id": "second-variant",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/9604344d-dd07-49c1-83f6-cda4afe0757e.json"
+        ],
+        "limitations": [
+          "Selected local fixture profile only. See immutable evidence limitations."
+        ]
+      },
+      {
+        "id": "full-suite",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/52bc00a0-b817-42be-ba94-1d207e010248.json"
+        ],
+        "limitations": [
+          "378 passed,0failed,1host-blocked fixture on previous405ca candidate."
+        ]
+      },
+      {
+        "id": "independent-review",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Fresh product gate; inherited framework evidence does not qualify it."
+        ]
+      },
+      {
+        "id": "live-camera",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "native-mobile",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "production",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "c3dccc7ab62ac7a1203b3390f7cbe8ad9e74903eb1bbf7b3aeed0a993710b31b"
+}

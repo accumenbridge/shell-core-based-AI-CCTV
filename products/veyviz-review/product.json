@@ -1,0 +1,18 @@
+{
+  "id": "veyviz-review",
+  "version": "0.1.0",
+  "platformAbi": "quadbridge.module.v1",
+  "title": "Veyviz Video Review",
+  "description": "Review scoped local recording analyses with visible inference provenance.",
+  "layout": "sidebar",
+  "modules": [
+    { "id": "veyviz-sources", "version": "0.1.0" },
+    { "id": "veyviz-analysis", "version": "0.1.0" },
+    { "id": "veyviz-rfdetr", "version": "0.1.0" }
+  ],
+  "bindings": [
+    { "contract": "veyviz.sources.read.v1", "instanceId": "local-veyviz-sources", "implementation": "veyviz-sources", "scope": "application", "consumer": "veyviz-analysis", "mode": "local" },
+    { "contract": "veyviz.recorded-analysis.run.v1", "instanceId": "local-veyviz-rfdetr", "implementation": "veyviz-rfdetr", "scope": "application", "consumer": "veyviz-analysis", "mode": "local" }
+  ],
+  "wiring": "veyviz"
+}

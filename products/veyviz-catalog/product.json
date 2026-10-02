@@ -1,0 +1,10 @@
+{
+  "id": "veyviz-catalog",
+  "version": "0.1.0",
+  "platformAbi": "quadbridge.module.v1",
+  "title": "Veyviz Recording Catalog",
+  "description": "Tenant-owned source inventory without analysis or inference modules.",
+  "layout": "sidebar",
+  "modules": [{ "id": "veyviz-sources", "version": "0.1.0" }],
+  "bindings": []
+}

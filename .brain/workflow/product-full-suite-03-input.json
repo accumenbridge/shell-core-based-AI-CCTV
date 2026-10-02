@@ -1,0 +1,35 @@
+{
+  "schema": "brain.record-input.v1",
+  "kind": "run",
+  "taskId": "VEYVIZ-LOCAL-001",
+  "recipeId": "product-full-suite",
+  "status": "BLOCKED",
+  "exitCode": 0,
+  "environment": {
+    "os": "Windows local",
+    "node": "24.19.0",
+    "powershell": "7.6.5 ordinary RemoteSigned"
+  },
+  "artifactPaths": [
+    ".local/veyviz-full-suite-03.log",
+    ".local/veyviz-full-suite-01.log",
+    ".local/veyviz-full-suite-02.log",
+    ".local/e2e/a451a078-5989-4874-950d-b1c7386c7e75/e2e-result.json"
+  ],
+  "counts": {
+    "tests": 379,
+    "passed": 378,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 1,
+    "todo": 0
+  },
+  "provenance": {
+    "kind": "reported",
+    "reference": "Actual npm test full run 03 exited 0 after 813281ms on unchanged inventory405ca. Earlier failed runs and build-racing E2E preserved as historical diagnostics, not current-candidate failures."
+  },
+  "limitations": [
+    "Windows denied file-symlink fixture creation with EPERM; that test was skipped/BLOCKED_ENV. No policy changes made. Exit0 does not qualify every check.",
+    "Subsequent UI presentation fix will create a new candidate; this record continues to describe405ca only."
+  ]
+}

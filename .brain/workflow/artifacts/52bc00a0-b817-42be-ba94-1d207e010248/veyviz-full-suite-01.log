@@ -1,0 +1,3259 @@
+npm notice run veyviz-quadbridge-product@0.2.0 test
+npm notice run npm run build && node --test --test-concurrency=1 --test-reporter=tap tests/*.test.mjs
+npm notice run veyviz-quadbridge-product@0.2.0 build
+npm notice run node tools/build.mjs
+Local workspace links prepared. No third-party packages were downloaded.
+Assembled combined: 3 modules, worker=true
+Assembled knowledge: 2 modules, worker=true
+Assembled neutral: 0 modules, worker=false
+Assembled service-desk: 1 modules, worker=false
+Assembled veyviz-catalog: 1 modules, worker=false
+Assembled veyviz-review: 3 modules, worker=true
+Built visual Studio from 6 actual modules and 6 products. Offline mode makes no API calls.
+TAP version 13
+# Subtest: R10: strict independent adapter runs worker with SQLite physically absent
+ok 1 - R10: strict independent adapter runs worker with SQLite physically absent
+  ---
+  duration_ms: 628.6713
+  type: 'test'
+  ...
+# Subtest: AI pipeline validates and compiles into deterministic stages
+ok 2 - AI pipeline validates and compiles into deterministic stages
+  ---
+  duration_ms: 1.5507
+  type: 'test'
+  ...
+# Subtest: AI pipeline rejects cycles
+ok 3 - AI pipeline rejects cycles
+  ---
+  duration_ms: 0.3564
+  type: 'test'
+  ...
+# Subtest: model routing respects capability and placement
+ok 4 - model routing respects capability and placement
+  ---
+  duration_ms: 0.1105
+  type: 'test'
+  ...
+# Subtest: AI runtime validation rejects unknown kinds, coercible fields, unsafe policy values, and non-JSON config
+ok 5 - AI runtime validation rejects unknown kinds, coercible fields, unsafe policy values, and non-JSON config
+  ---
+  duration_ms: 0.9717
+  type: 'test'
+  ...
+# Subtest: lexical question terms discard common question words and remain bounded
+ok 6 - lexical question terms discard common question words and remain bounded
+  ---
+  duration_ms: 0.4454
+  type: 'test'
+  ...
+# Subtest: provider cancellation suppresses the caller but holds one of four slots until actual settlement
+ok 7 - provider cancellation suppresses the caller but holds one of four slots until actual settlement
+  ---
+  duration_ms: 2.7639
+  type: 'test'
+  ...
+# Subtest: explicit-root init and render keep two temporary project atlases independent
+ok 8 - explicit-root init and render keep two temporary project atlases independent
+  ---
+  duration_ms: 795.9514
+  type: 'test'
+  ...
+# Subtest: structural validation reports broken links, cycles, and malformed dependencies without throwing
+ok 9 - structural validation reports broken links, cycles, and malformed dependencies without throwing
+  ---
+  duration_ms: 1.0463
+  type: 'test'
+  ...
+# Subtest: source inspection distinguishes matched pins, drift, and missing pinned files
+ok 10 - source inspection distinguishes matched pins, drift, and missing pinned files
+  ---
+  duration_ms: 10.1817
+  type: 'test'
+  ...
+# Subtest: offline rendering escapes hostile text and gives each observation one canonical anchor
+ok 11 - offline rendering escapes hostile text and gives each observation one canonical anchor
+  ---
+  duration_ms: 1.4365
+  type: 'test'
+  ...
+# Subtest: render refuses to replace an arbitrary existing user file
+ok 12 - render refuses to replace an arbitrary existing user file
+  ---
+  duration_ms: 202.9717
+  type: 'test'
+  ...
+# Subtest: source paths escaping the selected project root are structurally invalid
+ok 13 - source paths escaping the selected project root are structurally invalid
+  ---
+  duration_ms: 3.8571
+  type: 'test'
+  ...
+# Subtest: source inspection marks junction traversal unsafe
+ok 14 - source inspection marks junction traversal unsafe
+  ---
+  duration_ms: 6.8556
+  type: 'test'
+  ...
+# Subtest: source and observation identifiers cannot collide across reference namespaces
+ok 15 - source and observation identifiers cannot collide across reference namespaces
+  ---
+  duration_ms: 0.2562
+  type: 'test'
+  ...
+# Subtest: inspection binds the full profile and checked source set; renderer derives status from checks
+ok 16 - inspection binds the full profile and checked source set; renderer derives status from checks
+  ---
+  duration_ms: 5.8882
+  type: 'test'
+  ...
+# Subtest: planning focus and bounded gaps stay distinct from structure and current-work selection
+ok 17 - planning focus and bounded gaps stay distinct from structure and current-work selection
+  ---
+  duration_ms: 5.1028
+  type: 'test'
+  ...
+# Subtest: renderer requires generated output identity and gives actionable legacy migration error
+ok 18 - renderer requires generated output identity and gives actionable legacy migration error
+  ---
+  duration_ms: 477.8902
+  type: 'test'
+  ...
+# Subtest: default atlas CLI render projects canonical execution beside a different planning focus
+ok 19 - default atlas CLI render projects canonical execution beside a different planning focus
+  ---
+  duration_ms: 121.4945
+  type: 'test'
+  ...
+# Subtest: managed feature edits only its candidate, observes real checks and requires a current review
+ok 20 - managed feature edits only its candidate, observes real checks and requires a current review
+  ---
+  duration_ms: 519.0279
+  type: 'test'
+  ...
+# Subtest: whole proposal validation prevents partial out-of-scope changes
+ok 21 - whole proposal validation prevents partial out-of-scope changes
+  ---
+  duration_ms: 99.8511
+  type: 'test'
+  ...
+# Subtest: source drift, stale decisions and cross-project replay are rejected
+ok 22 - source drift, stale decisions and cross-project replay are rejected
+  ---
+  duration_ms: 81.1392
+  type: 'test'
+  ...
+# Subtest: managed readiness is shared, preserves observation, refuses drift before effects and recovers only after explicit reconciliation
+ok 23 - managed readiness is shared, preserves observation, refuses drift before effects and recovers only after explicit reconciliation
+  ---
+  duration_ms: 213.3177
+  type: 'test'
+  ...
+# Subtest: an accepted focus linked to another task cannot prepare managed work
+ok 24 - an accepted focus linked to another task cannot prepare managed work
+  ---
+  duration_ms: 51.635
+  type: 'test'
+  ...
+# Subtest: pause and direction changes wait for acknowledgement and discard late output
+ok 25 - pause and direction changes wait for acknowledgement and discard late output
+  ---
+  duration_ms: 124.2047
+  type: 'test'
+  ...
+# Subtest: failed actual check is retained and cannot be accepted
+ok 26 - failed actual check is retained and cannot be accepted
+  ---
+  duration_ms: 879.2297
+  type: 'test'
+  ...
+# Subtest: lost agent connection preserves UNKNOWN and never silently redispatches
+ok 27 - lost agent connection preserves UNKNOWN and never silently redispatches
+  ---
+  duration_ms: 131.1491
+  type: 'test'
+  ...
+# Subtest: changed architecture source invalidates review even outside editable inputs
+ok 28 - changed architecture source invalidates review even outside editable inputs
+  ---
+  duration_ms: 519.473
+  type: 'test'
+  ...
+# Subtest: App Server ambiguous turn acknowledgement and protocol loss remain uncertain
+ok 29 - App Server ambiguous turn acknowledgement and protocol loss remain uncertain
+  ---
+  duration_ms: 0.7038
+  type: 'test'
+  ...
+# Subtest: proposal adapter interrupts unknown item types instead of authorizing future tools
+ok 30 - proposal adapter interrupts unknown item types instead of authorizing future tools
+  ---
+  duration_ms: 0.1923
+  type: 'test'
+  ...
+# Subtest: live console refreshes project state and rejects unauthorized, stale and foreign-origin decisions
+ok 31 - live console refreshes project state and rejects unauthorized, stale and foreign-origin decisions
+  ---
+  duration_ms: 194.0604
+  type: 'test'
+  ...
+# Subtest: bootstrap checkpoint, sourceTaskRef mapping, focused context, and project adoption preserve imported scope
+ok 32 - bootstrap checkpoint, sourceTaskRef mapping, focused context, and project adoption preserve imported scope
+  ---
+  duration_ms: 396.4881
+  type: 'test'
+  ...
+# Subtest: preflight grounds new platform implementation in focus, prerequisite sources and the canonical task while leaving failures recordable
+ok 33 - preflight grounds new platform implementation in focus, prerequisite sources and the canonical task while leaving failures recordable
+  ---
+  duration_ms: 971.2186
+  type: 'test'
+  ...
+# Subtest: required records, copied evidence, independent review, and observation-only blocked suite gate control acceptance
+ok 34 - required records, copied evidence, independent review, and observation-only blocked suite gate control acceptance
+  ---
+  duration_ms: 1409.7276
+  type: 'test'
+  ...
+# Subtest: stale candidate evidence and stale scoped source cannot qualify after a source edit
+ok 35 - stale candidate evidence and stale scoped source cannot qualify after a source edit
+  ---
+  duration_ms: 756.107
+  type: 'test'
+  ...
+# Subtest: recipe definition changes invalidate otherwise passing record qualification
+ok 36 - recipe definition changes invalidate otherwise passing record qualification
+  ---
+  duration_ms: 752.866
+  type: 'test'
+  ...
+# Subtest: expected revision and the non-expiring participating-writer lock reject conflicting publication
+ok 37 - expected revision and the non-expiring participating-writer lock reject conflicting publication
+  ---
+  duration_ms: 362.7036
+  type: 'test'
+  ...
+# Subtest: stale generated view is detected and repaired from the current pointer
+ok 38 - stale generated view is detected and repaired from the current pointer
+  ---
+  duration_ms: 497.0027
+  type: 'test'
+  ...
+# Subtest: orphan event material is reported but does not block a later same-revision publication
+ok 39 - orphan event material is reported but does not block a later same-revision publication
+  ---
+  duration_ms: 547.8506
+  type: 'test'
+  ...
+# Subtest: self-review, wrong-task evidence references, and imported acceptance are rejected
+ok 40 - self-review, wrong-task evidence references, and imported acceptance are rejected
+  ---
+  duration_ms: 1244.1245
+  type: 'test'
+  ...
+# Subtest: path traversal and junction source paths fail closed
+ok 41 - path traversal and junction source paths fail closed
+  ---
+  duration_ms: 322.9408
+  type: 'test'
+  ...
+# Subtest: a historical accepted task remains readable after source, contract, and recipe evolution
+ok 42 - a historical accepted task remains readable after source, contract, and recipe evolution
+  ---
+  duration_ms: 1037.4442
+  type: 'test'
+  ...
+# Subtest: READY future files remain a plan; bound missing files cannot qualify
+ok 43 - READY future files remain a plan; bound missing files cannot qualify
+  ---
+  duration_ms: 716.6988
+  type: 'test'
+  ...
+# Subtest: planned files do not bypass parent type or path confinement
+ok 44 - planned files do not bypass parent type or path confinement
+  ---
+  duration_ms: 310.991
+  type: 'test'
+  ...
+# Subtest: unselected failures veto positives until same-scope evidenced resolution
+ok 45 - unselected failures veto positives until same-scope evidenced resolution
+  ---
+  duration_ms: 1861.3937
+  type: 'test'
+  ...
+# Subtest: Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+not ok 46 - Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+  ---
+  duration_ms: 19.6774
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:114:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:35:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:115:19)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+not ok 47 - worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+  ---
+  duration_ms: 10.7798
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:140:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:35:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:141:19)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a worker that loses its live lease observes its descendant and preserves the successor attempt workspace
+not ok 48 - a worker that loses its live lease observes its descendant and preserves the successor attempt workspace
+  ---
+  duration_ms: 9.6937
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:166:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:35:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:167:19)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+not ok 49 - missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+  ---
+  duration_ms: 9.7136
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:192:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:35:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:194:19)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+not ok 50 - Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+  ---
+  duration_ms: 9.2056
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:205:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:35:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:206:19)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: source and pinned compiler drift are rejected before a build is admitted
+not ok 51 - source and pinned compiler drift are rejected before a build is admitted
+  ---
+  duration_ms: 9.3541
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:237:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:35:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:238:19)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: source and toolchain drift after admission fail the queued request before export
+not ok 52 - source and toolchain drift after admission fail the queued request before export
+  ---
+  duration_ms: 9.3841
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:260:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:35:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:261:22)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: fixed factory output tampering fails before a local snapshot is published
+not ok 53 - fixed factory output tampering fails before a local snapshot is published
+  ---
+  duration_ms: 10.0171
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:284:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:35:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:287:19)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+not ok 54 - real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+  ---
+  duration_ms: 8.927
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:296:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:35:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:297:19)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+not ok 55 - real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+  ---
+  duration_ms: 10.0494
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:326:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:35:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:327:19)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Knowledge create operation and HTTP route share one SQLite command, then indexed search/get stay tenant-scoped
+ok 56 - Knowledge create operation and HTTP route share one SQLite command, then indexed search/get stay tenant-scoped
+  ---
+  duration_ms: 117.1411
+  type: 'test'
+  ...
+# Subtest: ApplicationHost reconciles the original session and cancellation around an awaited operation
+ok 57 - ApplicationHost reconciles the original session and cancellation around an awaited operation
+  ---
+  duration_ms: 1.1577
+  type: 'test'
+  ...
+# Subtest: resolve neutral with only its selected capabilities
+ok 58 - resolve neutral with only its selected capabilities
+  ---
+  duration_ms: 1.0066
+  type: 'test'
+  ...
+# Subtest: resolve service-desk with only its selected capabilities
+ok 59 - resolve service-desk with only its selected capabilities
+  ---
+  duration_ms: 0.5271
+  type: 'test'
+  ...
+# Subtest: resolve knowledge with only its selected capabilities
+ok 60 - resolve knowledge with only its selected capabilities
+  ---
+  duration_ms: 7.6918
+  type: 'test'
+  ...
+# Subtest: resolve combined with only its selected capabilities
+ok 61 - resolve combined with only its selected capabilities
+  ---
+  duration_ms: 0.6096
+  type: 'test'
+  ...
+# Subtest: resolution order is deterministic
+ok 62 - resolution order is deterministic
+  ---
+  duration_ms: 1.4147
+  type: 'test'
+  ...
+# Subtest: unknown module fails closed
+ok 63 - unknown module fails closed
+  ---
+  duration_ms: 0.5046
+  type: 'test'
+  ...
+# Subtest: unsupported ABI fails
+ok 64 - unsupported ABI fails
+  ---
+  duration_ms: 0.2056
+  type: 'test'
+  ...
+# Subtest: exact version mismatch fails
+ok 65 - exact version mismatch fails
+  ---
+  duration_ms: 0.1924
+  type: 'test'
+  ...
+# Subtest: required dependency must be selected
+ok 66 - required dependency must be selected
+  ---
+  duration_ms: 0.2172
+  type: 'test'
+  ...
+# Subtest: dependency cycle rejected
+ok 67 - dependency cycle rejected
+  ---
+  duration_ms: 0.4695
+  type: 'test'
+  ...
+# Subtest: optional absent dependency is valid
+ok 68 - optional absent dependency is valid
+  ---
+  duration_ms: 0.3679
+  type: 'test'
+  ...
+# Subtest: duplicate public route rejected
+ok 69 - duplicate public route rejected
+  ---
+  duration_ms: 0.3293
+  type: 'test'
+  ...
+# Subtest: route permission must be owned
+ok 70 - route permission must be owned
+  ---
+  duration_ms: 0.3197
+  type: 'test'
+  ...
+# Subtest: required public port cannot be left unbound
+ok 71 - required public port cannot be left unbound
+  ---
+  duration_ms: 0.7267
+  type: 'test'
+  ...
+# Subtest: ambiguous consumer bindings rejected
+ok 72 - ambiguous consumer bindings rejected
+  ---
+  duration_ms: 0.4134
+  type: 'test'
+  ...
+# Subtest: same instance ID cannot imply different implementations
+ok 73 - same instance ID cannot imply different implementations
+  ---
+  duration_ms: 0.4191
+  type: 'test'
+  ...
+# Subtest: bindings do not supply a missing local provider
+ok 74 - bindings do not supply a missing local provider
+  ---
+  duration_ms: 0.198
+  type: 'test'
+  ...
+# Subtest: application and module instance scopes are different
+ok 75 - application and module instance scopes are different
+  ---
+  duration_ms: 0.1594
+  type: 'test'
+  ...
+# Subtest: request instances are isolated and require a context
+ok 76 - request instances are isolated and require a context
+  ---
+  duration_ms: 0.1121
+  type: 'test'
+  ...
+# Subtest: removal blocked by retained records or dependents
+ok 77 - removal blocked by retained records or dependents
+  ---
+  duration_ms: 0.4972
+  type: 'test'
+  ...
+# Subtest: canonical JSON is stable, rejecting undefined and nonfinite numbers
+ok 78 - canonical JSON is stable, rejecting undefined and nonfinite numbers
+  ---
+  duration_ms: 0.0983
+  type: 'test'
+  ...
+# Subtest: input contracts reject unknown fields and invalid identifiers
+ok 79 - input contracts reject unknown fields and invalid identifiers
+  ---
+  duration_ms: 0.1803
+  type: 'test'
+  ...
+# Subtest: modules cannot shadow host-owned authentication routes
+ok 80 - modules cannot shadow host-owned authentication routes
+  ---
+  duration_ms: 0.3156
+  type: 'test'
+  ...
+# Subtest: selected composition determines the exact local package dependency closure
+ok 81 - selected composition determines the exact local package dependency closure
+  ---
+  duration_ms: 1.9845
+  type: 'test'
+  ...
+# Subtest: operation declarations are module-owned, permission-owned and globally unique by exact version
+ok 82 - operation declarations are module-owned, permission-owned and globally unique by exact version
+  ---
+  duration_ms: 1.0784
+  type: 'test'
+  ...
+# Subtest: source-directory identity is shared and stays within the 2–48 character envelope
+ok 83 - source-directory identity is shared and stays within the 2–48 character envelope
+  ---
+  duration_ms: 0.5305
+  type: 'test'
+  ...
+# Subtest: workspace identity scan rejects duplicate names and checks availability without linking
+ok 84 - workspace identity scan rejects duplicate names and checks availability without linking
+  ---
+  duration_ms: 13.588
+  type: 'test'
+  ...
+# Subtest: workspace linker is idempotent for its exact link and refuses a different existing owner
+ok 85 - workspace linker is idempotent for its exact link and refuses a different existing owner
+  ---
+  duration_ms: 379.029
+  type: 'test'
+  ...
+# Subtest: canonical module preflight rejects the host session route before generation can write
+ok 86 - canonical module preflight rejects the host session route before generation can write
+  ---
+  duration_ms: 0.6809
+  type: 'test'
+  ...
+# Subtest: both source generators reject package and host-route conflicts before destination creation
+ok 87 - both source generators reject package and host-route conflicts before destination creation
+  ---
+  duration_ms: 5770.1508
+  type: 'test'
+  ...
+# Subtest: the canonical local-access seed transaction rolls back earlier principals and grants after a later invalid seed
+ok 88 - the canonical local-access seed transaction rolls back earlier principals and grants after a later invalid seed
+  ---
+  duration_ms: 40.3355
+  type: 'test'
+  ...
+# Subtest: native-owned canonical seed commit before COMPLETE is retained and refuses reseeding
+not ok 89 - native-owned canonical seed commit before COMPLETE is retained and refuses reseeding
+  ---
+  duration_ms: 12.929
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:49:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:50:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: an owned process close releases SQLite after the canonical local-access constructor faults
+ok 90 - an owned process close releases SQLite after the canonical local-access constructor faults
+  ---
+  duration_ms: 84.243
+  type: 'test'
+  ...
+# Subtest: complete saved definition is the exact immutable plan admitted to a real local build
+not ok 91 - complete saved definition is the exact immutable plan admitted to a real local build
+  ---
+  duration_ms: 10.765
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:327:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:328:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+not ok 92 - real CP2 snapshot registers, reopens, retrieves exact attachment bytes, and promotes one immutable local release
+  ---
+  duration_ms: 10.7555
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:649:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:650:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a positively stopped promoted runtime with a missing completion marker is quarantined for repair without reseeding or dispatch
+not ok 93 - a positively stopped promoted runtime with a missing completion marker is quarantined for repair without reseeding or dispatch
+  ---
+  duration_ms: 9.5933
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:969:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:970:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a typed non-repair identity mismatch on a stopped runtime stays PREPARATION_FAILED
+not ok 94 - a typed non-repair identity mismatch on a stopped runtime stays PREPARATION_FAILED
+  ---
+  duration_ms: 9.6776
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:1022:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:1023:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a promoted Service Desk runtime runs from its frozen artifact after checkout and compiler inputs are removed
+not ok 95 - a promoted Service Desk runtime runs from its frozen artifact after checkout and compiler inputs are removed
+  ---
+  duration_ms: 9.2831
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:1051:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:1052:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a live promoted Service Desk runtime keeps its exact served bytes while the private checkout builds a new snapshot
+not ok 96 - a live promoted Service Desk runtime keeps its exact served bytes while the private checkout builds a new snapshot
+  ---
+  duration_ms: 9.0901
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:1140:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:1141:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a promoted Service Desk release runs as an owned local runtime, preserves a request through stop and restart, and leaves exact exit proof
+not ok 97 - a promoted Service Desk release runs as an owned local runtime, preserves a request through stop and restart, and leaves exact exit proof
+  ---
+  duration_ms: 9.8685
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:1229:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:1230:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a stopped Desk backup captures committed WAL data and restores the exact absent runtime instance
+not ok 98 - a stopped Desk backup captures committed WAL data and restores the exact absent runtime instance
+  ---
+  duration_ms: 9.4712
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:1654:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:1655:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: main retains dependencies after shutdown audit rollback and retries the same proven owner without inventing STOP
+not ok 99 - main retains dependencies after shutdown audit rollback and retries the same proven owner without inventing STOP
+  ---
+  duration_ms: 8.611
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:1773:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:1774:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a promoted Combined release indexes a real document and settles a required worker exit with exact tree proof
+not ok 100 - a promoted Combined release indexes a real document and settles a required worker exit with exact tree proof
+  ---
+  duration_ms: 9.135
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:1838:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:1839:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: BLOCKED_ENV: bounded snapshot verification rejects a file symlink when the host permits fixture creation
+not ok 101 - BLOCKED_ENV: bounded snapshot verification rejects a file symlink when the host permits fixture creation
+  ---
+  duration_ms: 8.9517
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:1933:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:1934:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: native staging-file lock retains uncertain cleanup after an observed registry move
+not ok 102 - native staging-file lock retains uncertain cleanup after an observed registry move
+  ---
+  duration_ms: 8.9198
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:1957:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:1962:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: separate Node owners serialize physical publication, retain interrupted ownership, and recheck session after a real SQLite lock
+not ok 103 - separate Node owners serialize physical publication, retain interrupted ownership, and recheck session after a real SQLite lock
+  ---
+  duration_ms: 8.8528
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:2005:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:270:9)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:2006:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+not ok 104 - fixed registry publisher moves into vacant paths and preserves existing empty directories, populated directories, and files
+  ---
+  duration_ms: 1.1159
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-artifacts.test.mjs:2166:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open 'D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\platform-build-host.json'"
+  code: 'ENOENT'
+  stack: |-
+    async open (node:internal/fs/promises:697:25)
+    async readFile (node:internal/fs/promises:1348:14)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-artifacts.test.mjs:2169:25)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: registry publisher proof parsing rejects ambiguous, mismatched, and oversized output
+ok 105 - registry publisher proof parsing rejects ambiguous, mismatched, and oversized output
+  ---
+  duration_ms: 0.3833
+  type: 'test'
+  ...
+# Subtest: paired console starts with no private build-host profile and reports build requests unavailable
+not ok 106 - paired console starts with no private build-host profile and reports build requests unavailable
+  ---
+  duration_ms: 16.9065
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-build-host.test.mjs:18:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-build-host.test.mjs:27:11)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: reviewed mobile build inputs are copied and contribute to the source fingerprint
+not ok 107 - reviewed mobile build inputs are copied and contribute to the source fingerprint
+  ---
+  duration_ms: 10.2214
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-build-host.test.mjs:85:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    copiedBuildSource (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-build-host.test.mjs:14:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-build-host.test.mjs:86:22)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: unknown siblings beside the exact mobile build inputs remain rejected
+not ok 108 - unknown siblings beside the exact mobile build inputs remain rejected
+  ---
+  duration_ms: 8.7123
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-build-host.test.mjs:105:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    copiedBuildSource (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-build-host.test.mjs:14:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-build-host.test.mjs:107:26)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: private toolchain copy matches its digest and a test-owned native binary drift changes it
+not ok 109 - private toolchain copy matches its digest and a test-owned native binary drift changes it
+  ---
+  duration_ms: 9.0688
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-build-host.test.mjs:115:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    copiedBuildSource (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-build-host.test.mjs:14:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-build-host.test.mjs:116:22)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: private toolchain rejects native package version mismatch and binary override
+not ok 110 - private toolchain rejects native package version mismatch and binary override
+  ---
+  duration_ms: 8.8331
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-build-host.test.mjs:127:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    copiedBuildSource (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-build-host.test.mjs:14:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-build-host.test.mjs:128:22)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+ok 111 - two stores fence actors and stale claims, reclaim at most twice, and retain expired cancellation as UNKNOWN
+  ---
+  duration_ms: 30.994
+  type: 'test'
+  ...
+# Subtest: cleanup failure records UNKNOWN and cannot publish a clean cancellation
+ok 112 - cleanup failure records UNKNOWN and cannot publish a clean cancellation
+  ---
+  duration_ms: 13.2754
+  type: 'test'
+  ...
+# Subtest: build request keys are idempotent for the same actor/input and conflict on changed input
+ok 113 - build request keys are idempotent for the same actor/input and conflict on changed input
+  ---
+  duration_ms: 11.7722
+  type: 'test'
+  ...
+# Subtest: terminal publication binds the claim to its persisted frozen product, version and input digests
+ok 114 - terminal publication binds the claim to its persisted frozen product, version and input digests
+  ---
+  duration_ms: 13.31
+  type: 'test'
+  ...
+# Subtest: terminal publication rechecks lease time after waiting for another SQLite writer
+ok 115 - terminal publication rechecks lease time after waiting for another SQLite writer
+  ---
+  duration_ms: 1770.7472
+  type: 'test'
+  ...
+# Subtest: public health and static entry are narrow while state and audit require pairing and exact Host
+not ok 116 - public health and static entry are narrow while state and audit require pairing and exact Host
+  ---
+  duration_ms: 29.3964
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:77:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:78:21)
+  ...
+# Subtest: pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+not ok 117 - pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+  ---
+  duration_ms: 19.9793
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:99:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:100:21)
+  ...
+# Subtest: paired family derivation is source-authoritative and immutable provenance follows only the exact saved version
+not ok 118 - paired family derivation is source-authoritative and immutable provenance follows only the exact saved version
+  ---
+  duration_ms: 16.278
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:129:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:130:19)
+  ...
+# Subtest: managed runtime API exposes fixed authenticated routes and exact confirmed request envelopes
+not ok 119 - managed runtime API exposes fixed authenticated routes and exact confirmed request envelopes
+  ---
+  duration_ms: 16.9235
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:185:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:195:19)
+  ...
+# Subtest: private recovery routes require confirmation and never expose operation ownership secrets
+not ok 120 - private recovery routes require confirmation and never expose operation ownership secrets
+  ---
+  duration_ms: 23.3825
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:223:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:233:19)
+  ...
+# Subtest: managed runtime HTTP errors use fixed non-path messages
+not ok 121 - managed runtime HTTP errors use fixed non-path messages
+  ---
+  duration_ms: 17.3013
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:253:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:256:19)
+  ...
+# Subtest: pairing attempts are bounded and expire their rate window
+not ok 122 - pairing attempts are bounded and expire their rate window
+  ---
+  duration_ms: 16.999
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:262:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:264:21)
+  ...
+# Subtest: authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+not ok 123 - authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+  ---
+  duration_ms: 16.8915
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:272:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:273:21)
+  ...
+# Subtest: AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+not ok 124 - AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+  ---
+  duration_ms: 15.9994
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:297:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:298:21)
+  ...
+# Subtest: build requests fail closed without an executor and deployment requests enforce immutable references
+not ok 125 - build requests fail closed without an executor and deployment requests enforce immutable references
+  ---
+  duration_ms: 15.8072
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:321:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:322:21)
+  ...
+# Subtest: overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+not ok 126 - overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+  ---
+  duration_ms: 15.726
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:364:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:365:21)
+  ...
+# Subtest: a body is rejected if its exact authenticated session expires while the stream is pending
+not ok 127 - a body is rejected if its exact authenticated session expires while the stream is pending
+  ---
+  duration_ms: 15.646
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:383:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:389:21)
+  ...
+# Subtest: a body is rejected if that session logs out before streaming completes
+not ok 128 - a body is rejected if that session logs out before streaming completes
+  ---
+  duration_ms: 15.8385
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:413:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:418:21)
+  ...
+# Subtest: canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+not ok 129 - canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+  ---
+  duration_ms: 15.2967
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:443:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:456:15)
+  ...
+# Subtest: complete ProductDefinition keeps custom reviewed bindings through exact read-only preview, immutable save and build
+not ok 130 - complete ProductDefinition keeps custom reviewed bindings through exact read-only preview, immutable save and build
+  ---
+  duration_ms: 15.1105
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:508:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:515:13)
+  ...
+# Subtest: logout during awaited worker admission rejects the original request before queue mutation
+not ok 131 - logout during awaited worker admission rejects the original request before queue mutation
+  ---
+  duration_ms: 15.9131
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:560:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:569:13)
+  ...
+# Subtest: logout during awaited result inspection returns 401 and accepted work remains independent of the session
+not ok 132 - logout during awaited result inspection returns 401 and accepted work remains independent of the session
+  ---
+  duration_ms: 15.5774
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\control-plane-http.test.mjs:584:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    begin (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:26:26)
+    start (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:29:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/control-plane-http.test.mjs:591:13)
+  ...
+# Subtest: runtime close rejection is observed before a delayed HTTP drain settles
+ok 133 - runtime close rejection is observed before a delayed HTTP drain settles
+  ---
+  duration_ms: 1.684
+  type: 'test'
+  ...
+# Subtest: a failed signal shutdown can retry the same close owner on a later signal
+ok 134 - a failed signal shutdown can retry the same close owner on a later signal
+  ---
+  duration_ms: 0.8524
+  type: 'test'
+  ...
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 135 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 5.2381
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 136 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 146.1936
+  type: 'test'
+  ...
+# Subtest: family provenance is atomic, exact-version and immutable with the product version
+ok 137 - family provenance is atomic, exact-version and immutable with the product version
+  ---
+  duration_ms: 3.4062
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 138 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 31.6782
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 139 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 3.6217
+  type: 'test'
+  ...
+# Subtest: schema 3 artifact publication facts are added without changing older operation values
+ok 140 - schema 3 artifact publication facts are added without changing older operation values
+  ---
+  duration_ms: 20.2037
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 141 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 2.2496
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 142 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 2.1086
+  type: 'test'
+  ...
+# Subtest: domain creation and exact retry return one persisted record
+ok 143 - domain creation and exact retry return one persisted record
+  ---
+  duration_ms: 74.4648
+  type: 'test'
+  ...
+# Subtest: same command with different input conflicts
+ok 144 - same command with different input conflicts
+  ---
+  duration_ms: 62.1435
+  type: 'test'
+  ...
+# Subtest: receipts survive runtime restart
+ok 145 - receipts survive runtime restart
+  ---
+  duration_ms: 64.2947
+  type: 'test'
+  ...
+# Subtest: tenants cannot read or close each other records
+ok 146 - tenants cannot read or close each other records
+  ---
+  duration_ms: 59.152
+  type: 'test'
+  ...
+# Subtest: read-only principal cannot mutate
+ok 147 - read-only principal cannot mutate
+  ---
+  duration_ms: 60.279
+  type: 'test'
+  ...
+# Subtest: optimistic concurrency rejects stale transitions
+ok 148 - optimistic concurrency rejects stale transitions
+  ---
+  duration_ms: 64.6302
+  type: 'test'
+  ...
+# Subtest: module read-only preserves historical queries and denies commands
+ok 149 - module read-only preserves historical queries and denies commands
+  ---
+  duration_ms: 62.5131
+  type: 'test'
+  ...
+# Subtest: revocation prevents reading the cached command receipt
+ok 150 - revocation prevents reading the cached command receipt
+  ---
+  duration_ms: 63.1843
+  type: 'test'
+  ...
+# Subtest: business write and enqueue roll back together
+ok 151 - business write and enqueue roll back together
+  ---
+  duration_ms: 0.9442
+  type: 'test'
+  ...
+# Subtest: async owner transaction is rejected
+ok 152 - async owner transaction is rejected
+  ---
+  duration_ms: 0.3381
+  type: 'test'
+  ...
+# Subtest: migration edits and schema downgrades fail
+ok 153 - migration edits and schema downgrades fail
+  ---
+  duration_ms: 0.5433
+  type: 'test'
+  ...
+# Subtest: two claimers cannot own the same unexpired attempt
+ok 154 - two claimers cannot own the same unexpired attempt
+  ---
+  duration_ms: 0.8733
+  type: 'test'
+  ...
+# Subtest: expired attempt cannot commit after another worker claims
+ok 155 - expired attempt cannot commit after another worker claims
+  ---
+  duration_ms: 1.0295
+  type: 'test'
+  ...
+# Subtest: running cancellation is a request until the worker settles
+ok 156 - running cancellation is a request until the worker settles
+  ---
+  duration_ms: 0.928
+  type: 'test'
+  ...
+# Subtest: queued cancellation never starts
+ok 157 - queued cancellation never starts
+  ---
+  duration_ms: 0.5754
+  type: 'test'
+  ...
+# Subtest: knowledge indexing is real, durable and scoped
+ok 158 - knowledge indexing is real, durable and scoped
+  ---
+  duration_ms: 223.8848
+  type: 'test'
+  ...
+# Subtest: job submitter revocation blocks execution
+ok 159 - job submitter revocation blocks execution
+  ---
+  duration_ms: 81.9611
+  type: 'test'
+  ...
+# Subtest: module disable pauses queued work without deleting records
+ok 160 - module disable pauses queued work without deleting records
+  ---
+  duration_ms: 82.9862
+  type: 'test'
+  ...
+# Subtest: generated modules build as separate products and keep owner, receipt, UI selection, and field semantics
+not ok 161 - generated modules build as separate products and keep owner, receipt, UI selection, and field semantics
+  ---
+  duration_ms: 8357.7841
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\entity-builder-ui.test.mjs:150:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/entity-builder-ui.test.mjs:173:20)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: entity specifications are closed, bounded inputs with explicit field defaults and types
+ok 162 - entity specifications are closed, bounded inputs with explicit field defaults and types
+  ---
+  duration_ms: 5.5024
+  type: 'test'
+  ...
+# Subtest: generator reserves a new owner, records exact output hashes, and treats inserted labels literally
+ok 163 - generator reserves a new owner, records exact output hashes, and treats inserted labels literally
+  ---
+  duration_ms: 75.2103
+  type: 'test'
+  ...
+# Subtest: exported neutral product starts with all domain directories physically absent
+ok 164 - exported neutral product starts with all domain directories physically absent
+  ---
+  duration_ms: 756.7
+  type: 'test'
+  ...
+# Subtest: exported Service Desk has no knowledge or handoff package and persists a real record
+ok 165 - exported Service Desk has no knowledge or handoff package and persists a real record
+  ---
+  duration_ms: 845.9379
+  type: 'test'
+  ...
+# Subtest: factory export includes the selected Knowledge package closure and actual ai-core dependency
+ok 166 - factory export includes the selected Knowledge package closure and actual ai-core dependency
+  ---
+  duration_ms: 363.8831
+  type: 'test'
+  ...
+# Subtest: independent Knowledge and Combined exports invoke real operations without source or compiler trees
+ok 167 - independent Knowledge and Combined exports invoke real operations without source or compiler trees
+  ---
+  duration_ms: 1987.9641
+  type: 'test'
+  ...
+# Subtest: factory refuses collisions and path traversal
+ok 168 - factory refuses collisions and path traversal
+  ---
+  duration_ms: 723.9776
+  type: 'test'
+  ...
+# Subtest: generated full-stack module builds and runs without editing maintained shell source
+ok 169 - generated full-stack module builds and runs without editing maintained shell source
+  ---
+  duration_ms: 7069.8262
+  type: 'test'
+  ...
+# Subtest: real separate worker process completes a preexisting durable job
+ok 170 - real separate worker process completes a preexisting durable job
+  ---
+  duration_ms: 1148.2169
+  type: 'test'
+  ...
+# Subtest: source-only provider omission is not mistaken for runtime completion
+ok 171 - source-only provider omission is not mistaken for runtime completion
+  ---
+  duration_ms: 51.3521
+  type: 'test'
+  ...
+# Subtest: React bridge cleanup is idempotent (port contract, not a React runtime test)
+ok 172 - React bridge cleanup is idempotent (port contract, not a React runtime test)
+  ---
+  duration_ms: 0.2802
+  type: 'test'
+  ...
+# Subtest: React bridge does not create a root after scope cancellation
+ok 173 - React bridge does not create a root after scope cancellation
+  ---
+  duration_ms: 0.0818
+  type: 'test'
+  ...
+# Subtest: generic framework packages import no reference-domain packages
+ok 174 - generic framework packages import no reference-domain packages
+  ---
+  duration_ms: 5.3038
+  type: 'test'
+  ...
+# Subtest: provider failure closes the started modules in reverse dependency order
+ok 175 - provider failure closes the started modules in reverse dependency order
+  ---
+  duration_ms: 0.3979
+  type: 'test'
+  ...
+# Subtest: R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces
+ok 176 - R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces
+  ---
+  duration_ms: 182.3303
+  type: 'test'
+  ...
+# Subtest: reviewed product mapping is literal in the full build and absent from the Desk-only closure
+ok 177 - reviewed product mapping is literal in the full build and absent from the Desk-only closure
+  ---
+  duration_ms: 1.0825
+  type: 'test'
+  ...
+# Subtest: R05: closure includes static imports, literal lazy chunks and declared asset references
+ok 178 - R05: closure includes static imports, literal lazy chunks and declared asset references
+  ---
+  duration_ms: 20.8933
+  type: 'test'
+  ...
+# Subtest: R05: missing dependency fails the build rather than making a broken release
+ok 179 - R05: missing dependency fails the build rather than making a broken release
+  ---
+  duration_ms: 7.4433
+  type: 'test'
+  ...
+# Subtest: R05: server-only package import fails before being publicly packaged
+ok 180 - R05: server-only package import fails before being publicly packaged
+  ---
+  duration_ms: 7.2069
+  type: 'test'
+  ...
+# Subtest: R05: nonliteral runtime import is not converted into an arbitrary URL
+ok 181 - R05: nonliteral runtime import is not converted into an arbitrary URL
+  ---
+  duration_ms: 6.4489
+  type: 'test'
+  ...
+# Subtest: R05: a relative import cannot escape the selected module
+ok 182 - R05: a relative import cannot escape the selected module
+  ---
+  duration_ms: 6.1151
+  type: 'test'
+  ...
+# Subtest: R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM
+ok 183 - R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM
+  ---
+  duration_ms: 7.4948
+  type: 'test'
+  ...
+# Subtest: mobile preview assets survive an ordinary fixed product export and are served by that snapshot
+ok 184 - mobile preview assets survive an ordinary fixed product export and are served by that snapshot
+  ---
+  duration_ms: 968.6321
+  type: 'test'
+  ...
+# Subtest: mobile rebuild replaces only generated trees and exports the exact compact snapshot inventory
+ok 185 - mobile rebuild replaces only generated trees and exports the exact compact snapshot inventory
+  ---
+  duration_ms: 6751.5825
+  type: 'test'
+  ...
+# Subtest: R07: 100 paused jobs cannot hide an enabled tenant
+ok 186 - R07: 100 paused jobs cannot hide an enabled tenant
+  ---
+  duration_ms: 8.974
+  type: 'test'
+  ...
+# Subtest: R07: bounded per-tenant paging advances beyond 100 ineligible jobs
+ok 187 - R07: bounded per-tenant paging advances beyond 100 ineligible jobs
+  ---
+  duration_ms: 15.6067
+  type: 'test'
+  ...
+# Subtest: R07: persisted tenant cursor progresses beyond sixteen paused partitions
+ok 188 - R07: persisted tenant cursor progresses beyond sixteen paused partitions
+  ---
+  duration_ms: 4.22
+  type: 'test'
+  ...
+# Subtest: R07: one busy tenant cannot monopolize a shared queue
+ok 189 - R07: one busy tenant cannot monopolize a shared queue
+  ---
+  duration_ms: 1.2291
+  type: 'test'
+  ...
+# Subtest: R07: registrations receive round-robin service
+ok 190 - R07: registrations receive round-robin service
+  ---
+  duration_ms: 2.6265
+  type: 'test'
+  ...
+# Subtest: R07: reentrant ticks do not consume simultaneous work accidentally
+ok 191 - R07: reentrant ticks do not consume simultaneous work accidentally
+  ---
+  duration_ms: 1.0405
+  type: 'test'
+  ...
+# Subtest: R09: eager local bindings produce provider-before-consumer construction
+ok 192 - R09: eager local bindings produce provider-before-consumer construction
+  ---
+  duration_ms: 6.6251
+  type: 'test'
+  ...
+# Subtest: R09: binding-only construction cycles are rejected
+ok 193 - R09: binding-only construction cycles are rejected
+  ---
+  duration_ms: 0.3382
+  type: 'test'
+  ...
+# Subtest: R09: remote binding does not import or order an absent provider
+ok 194 - R09: remote binding does not import or order an absent provider
+  ---
+  duration_ms: 0.1494
+  type: 'test'
+  ...
+# Subtest: R03: wrong destination configuration is rejected before any target write
+ok 195 - R03: wrong destination configuration is rejected before any target write
+  ---
+  duration_ms: 99.1539
+  type: 'test'
+  ...
+# Subtest: R03: target rechecks expected identity on POST after a valid preflight
+ok 196 - R03: target rechecks expected identity on POST after a valid preflight
+  ---
+  duration_ms: 72.4421
+  type: 'test'
+  ...
+# Subtest: R04: HTTP 202 accepted job is not a committed resource
+ok 197 - R04: HTTP 202 accepted job is not a committed resource
+  ---
+  duration_ms: 66.7426
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, commandId: 'other' })
+ok 198 - R04: invalid receipt correlation is refused r => ({ ...r, commandId: 'other' })
+  ---
+  duration_ms: 0.3247
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, destination: { ...r.destination, tenantId: 'other' } })
+ok 199 - R04: invalid receipt correlation is refused r => ({ ...r, destination: { ...r.destination, tenantId: 'other' } })
+  ---
+  duration_ms: 0.0676
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, destination: { ...r.destination, instanceId: 'other' } })
+ok 200 - R04: invalid receipt correlation is refused r => ({ ...r, destination: { ...r.destination, instanceId: 'other' } })
+  ---
+  duration_ms: 0.0567
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, contract: 'another.v1' })
+ok 201 - R04: invalid receipt correlation is refused r => ({ ...r, contract: 'another.v1' })
+  ---
+  duration_ms: 0.0465
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, outcome: 'QUEUED' })
+ok 202 - R04: invalid receipt correlation is refused r => ({ ...r, outcome: 'QUEUED' })
+  ---
+  duration_ms: 0.0389
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, resource: { ...r.resource, type: 'job' } })
+ok 203 - R04: invalid receipt correlation is refused r => ({ ...r, resource: { ...r.resource, type: 'job' } })
+  ---
+  duration_ms: 0.0401
+  type: 'test'
+  ...
+# Subtest: R04: invalid receipt correlation is refused r => ({ ...r, resource: { ...r.resource, version: 0 } })
+ok 204 - R04: invalid receipt correlation is refused r => ({ ...r, resource: { ...r.resource, version: 0 } })
+  ---
+  duration_ms: 0.0729
+  type: 'test'
+  ...
+# Subtest: R03/R04: lookup uses the original service receipt without creating another record
+ok 205 - R03/R04: lookup uses the original service receipt without creating another record
+  ---
+  duration_ms: 169.8189
+  type: 'test'
+  ...
+# Subtest: R02: receipt survives revoke after actual destination commit
+ok 206 - R02: receipt survives revoke after actual destination commit
+  ---
+  duration_ms: 273.4416
+  type: 'test'
+  ...
+# Subtest: R02: receipt survives cancel after actual destination commit
+ok 207 - R02: receipt survives cancel after actual destination commit
+  ---
+  duration_ms: 162.7968
+  type: 'test'
+  ...
+# Subtest: R02: receipt survives lease-loss after actual destination commit
+ok 208 - R02: receipt survives lease-loss after actual destination commit
+  ---
+  duration_ms: 165.6863
+  type: 'test'
+  ...
+# Subtest: R02: unknown acceptance survives expiration, restart, and explicit lookup reconciliation
+ok 209 - R02: unknown acceptance survives expiration, restart, and explicit lookup reconciliation
+  ---
+  duration_ms: 185.2481
+  type: 'test'
+  ...
+# Subtest: R02: lost response plus cancellation remains unknown rather than not executed
+ok 210 - R02: lost response plus cancellation remains unknown rather than not executed
+  ---
+  duration_ms: 154.2417
+  type: 'test'
+  ...
+# Subtest: R02: incompatible 202 result remains uncertainty, not false success
+ok 211 - R02: incompatible 202 result remains uncertainty, not false success
+  ---
+  duration_ms: 154.2594
+  type: 'test'
+  ...
+# Subtest: R02: a legacy v1 intent is never silently resent using the v2 protocol
+ok 212 - R02: a legacy v1 intent is never silently resent using the v2 protocol
+  ---
+  duration_ms: 86.7562
+  type: 'test'
+  ...
+# Subtest: R10: neutral worker package has no concrete persistence dependency
+ok 213 - R10: neutral worker package has no concrete persistence dependency
+  ---
+  duration_ms: 0.4408
+  type: 'test'
+  ...
+# Subtest: R03: different destination service principal is refused before dispatch
+ok 214 - R03: different destination service principal is refused before dispatch
+  ---
+  duration_ms: 63.2632
+  type: 'test'
+  ...
+# Subtest: R02/R03: credential-principal rebinding cannot resend an existing uncertain intent
+ok 215 - R02/R03: credential-principal rebinding cannot resend an existing uncertain intent
+  ---
+  duration_ms: 153.4061
+  type: 'test'
+  ...
+# Subtest: R02: actual v1 Handoff database upgrades without replaying legacy pending work
+ok 216 - R02: actual v1 Handoff database upgrades without replaying legacy pending work
+  ---
+  duration_ms: 1.6032
+  type: 'test'
+  ...
+# Subtest: neutral shell serves with zero business routes and no worker dependency
+ok 217 - neutral shell serves with zero business routes and no worker dependency
+  ---
+  duration_ms: 141.744
+  type: 'test'
+  ...
+# Subtest: HTTP command / receipt / query use actual persistent module
+ok 218 - HTTP command / receipt / query use actual persistent module
+  ---
+  duration_ms: 120.4949
+  type: 'test'
+  ...
+# Subtest: HTTP input cannot supply a forged tenant
+ok 219 - HTTP input cannot supply a forged tenant
+  ---
+  duration_ms: 88.4249
+  type: 'test'
+  ...
+# Subtest: tenant selector is not a grant
+ok 220 - tenant selector is not a grant
+  ---
+  duration_ms: 85.0609
+  type: 'test'
+  ...
+# Subtest: cookie mutation requires exact origin
+ok 221 - cookie mutation requires exact origin
+  ---
+  duration_ms: 93.6237
+  type: 'test'
+  ...
+# Subtest: session logout immediately rejects old cookie
+ok 222 - session logout immediately rejects old cookie
+  ---
+  duration_ms: 170.028
+  type: 'test'
+  ...
+# Subtest: service identity cannot use human login or unrelated reads
+ok 223 - service identity cannot use human login or unrelated reads
+  ---
+  duration_ms: 63.7337
+  type: 'test'
+  ...
+# Subtest: HTTP module read-only affects the same public owner
+ok 224 - HTTP module read-only affects the same public owner
+  ---
+  duration_ms: 107.4609
+  type: 'test'
+  ...
+# Subtest: two independently running products use explicit different tenant IDs
+ok 225 - two independently running products use explicit different tenant IDs
+  ---
+  duration_ms: 165.7547
+  type: 'test'
+  ...
+# Subtest: composed product uses public local binding without HTTP
+ok 226 - composed product uses public local binding without HTTP
+  ---
+  duration_ms: 81.8314
+  type: 'test'
+  ...
+# Subtest: destination permission revoked after submission is not reported as assignment
+ok 227 - destination permission revoked after submission is not reported as assignment
+  ---
+  duration_ms: 154.5859
+  type: 'test'
+  ...
+# Subtest: unmapped source tenant is never guessed
+ok 228 - unmapped source tenant is never guessed
+  ---
+  duration_ms: 0.4172
+  type: 'test'
+  ...
+# Subtest: remote timeout retry preserves exact destination command identity
+ok 229 - remote timeout retry preserves exact destination command identity
+  ---
+  duration_ms: 68.3731
+  type: 'test'
+  ...
+# Subtest: unapproved remote plain HTTP destination is refused
+ok 230 - unapproved remote plain HTTP destination is refused
+  ---
+  duration_ms: 0.1994
+  type: 'test'
+  ...
+# Subtest: module dependency policy applies on cross-owner read
+ok 231 - module dependency policy applies on cross-owner read
+  ---
+  duration_ms: 74.9282
+  type: 'test'
+  ...
+# Subtest: Knowledge answer UI sends per-call cancellation and discards late answers after cancel or question edits
+ok 232 - Knowledge answer UI sends per-call cancellation and discards late answers after cancel or question edits
+  ---
+  duration_ms: 3.3383
+  type: 'test'
+  ...
+# Subtest: real Knowledge route answers only from indexed tenant records with exact UTF-16 citations
+ok 233 - real Knowledge route answers only from indexed tenant records with exact UTF-16 citations
+  ---
+  duration_ms: 129.0943
+  type: 'test'
+  ...
+# Subtest: Knowledge keeps document meaning inside its owner and rechecks the original read permission after provider await
+ok 234 - Knowledge keeps document meaning inside its owner and rechecks the original read permission after provider await
+  ---
+  duration_ms: 22.7211
+  type: 'test'
+  ...
+# Subtest: Knowledge rejects provider selections outside its captured excerpt set
+ok 235 - Knowledge rejects provider selections outside its captured excerpt set
+  ---
+  duration_ms: 11.0535
+  type: 'test'
+  ...
+# Subtest: HTTP logout during an awaited Knowledge provider suppresses the original answer response
+ok 236 - HTTP logout during an awaited Knowledge provider suppresses the original answer response
+  ---
+  duration_ms: 143.8133
+  type: 'test'
+  ...
+# Subtest: constructor seeds once atomically and reopening never restores removed identities or grants
+ok 237 - constructor seeds once atomically and reopening never restores removed identities or grants
+  ---
+  duration_ms: 62.2216
+  type: 'test'
+  ...
+# Subtest: createRuntime restart keeps configured identities and grants removed from the bound access owner
+ok 238 - createRuntime restart keeps configured identities and grants removed from the bound access owner
+  ---
+  duration_ms: 217.018
+  type: 'test'
+  ...
+# Subtest: an intentional empty first seed seals the binding and cannot be filled on reopen
+ok 239 - an intentional empty first seed seals the binding and cannot be filled on reopen
+  ---
+  duration_ms: 9.4128
+  type: 'test'
+  ...
+# Subtest: invalid initial seed rolls back binding and principals and leaves an existing owner repair-required
+ok 240 - invalid initial seed rolls back binding and principals and leaves an existing owner repair-required
+  ---
+  duration_ms: 33.4573
+  type: 'test'
+  ...
+# Subtest: concurrent first constructors commit one complete principal seed set
+ok 241 - concurrent first constructors commit one complete principal seed set
+  ---
+  duration_ms: 226.4927
+  type: 'test'
+  ...
+# Subtest: schema 5 adds recovery owners and admission mutually fences the stopped runtime
+ok 242 - schema 5 adds recovery owners and admission mutually fences the stopped runtime
+  ---
+  duration_ms: 10.4845
+  type: 'test'
+  ...
+# Subtest: recovery accepts a positively settled required-role exit without inventing a STOP and clean pre-dispatch settlement preserves native facts
+ok 243 - recovery accepts a positively settled required-role exit without inventing a STOP and clean pre-dispatch settlement preserves native facts
+  ---
+  duration_ms: 4.304
+  type: 'test'
+  ...
+# Subtest: schema 4 migration preserves existing runtime and recovery slots become conservative empties
+not ok 244 - schema 4 migration preserves existing runtime and recovery slots become conservative empties
+  ---
+  duration_ms: 29.1059
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\managed-runtime-recovery-store.test.mjs:126:1'
+  failureType: 'hookFailed'
+  error: "EPERM, Permission denied: \\\\?\\C:\\Users\\Lenovo\\AppData\\Local\\Temp\\q5-mig-TwOPs9 '\\\\?\\C:\\Users\\Lenovo\\AppData\\Local\\Temp\\q5-mig-TwOPs9'"
+  code: 'EPERM'
+  stack: |-
+    rmSync (node:fs:1283:18)
+    TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/managed-runtime-recovery-store.test.mjs:128:75)
+    TestHook.runInAsyncScope (node:async_hooks:227:14)
+    TestHook.run (node:internal/test_runner/test:1382:25)
+    TestHook.run (node:internal/test_runner/test:1726:18)
+    TestHook.run (node:internal/util:581:20)
+    Test.runHook (node:internal/test_runner/test:1269:20)
+    after (node:internal/test_runner/test:1322:20)
+    Test.run (node:internal/test_runner/test:1408:13)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+ok 245 - managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+  ---
+  duration_ms: 26.5789
+  type: 'test'
+  ...
+# Subtest: managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+ok 246 - managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+  ---
+  duration_ms: 5.0094
+  type: 'test'
+  ...
+# Subtest: schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+ok 247 - schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+  ---
+  duration_ms: 3.3389
+  type: 'test'
+  ...
+# Subtest: undispatched cleanup uncertainty cannot use JOB_EXIT and shutdown during STARTING fails the pending start
+ok 248 - undispatched cleanup uncertainty cannot use JOB_EXIT and shutdown during STARTING fails the pending start
+  ---
+  duration_ms: 5.6324
+  type: 'test'
+  ...
+# Subtest: schema 4 additive dispatch migration treats legacy mutable uncertainty labels conservatively
+not ok 249 - schema 4 additive dispatch migration treats legacy mutable uncertainty labels conservatively
+  ---
+  duration_ms: 26.7367
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\managed-runtime-store.test.mjs:246:1'
+  failureType: 'hookFailed'
+  error: "ENOTEMPTY, Directory not empty: \\\\?\\C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qbrt-C758L2 '\\\\?\\C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qbrt-C758L2'"
+  code: 'ENOTEMPTY'
+  stack: |-
+    rmSync (node:fs:1283:18)
+    TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/managed-runtime-store.test.mjs:249:15)
+    TestHook.runInAsyncScope (node:async_hooks:227:14)
+    TestHook.run (node:internal/test_runner/test:1382:25)
+    TestHook.run (node:internal/test_runner/test:1726:18)
+    TestHook.run (node:internal/util:581:20)
+    Test.runHook (node:internal/test_runner/test:1269:20)
+    after (node:internal/test_runner/test:1322:20)
+    Test.run (node:internal/test_runner/test:1408:13)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: mobile packaging derives neutral, Desk and Combined client-only snapshots with exact inventories
+ok 250 - mobile packaging derives neutral, Desk and Combined client-only snapshots with exact inventories
+  ---
+  duration_ms: 331.4832
+  type: 'test'
+  ...
+# Subtest: compact mobile preview assets fit the managed runtime copy path geometry
+ok 251 - compact mobile preview assets fit the managed runtime copy path geometry
+  ---
+  duration_ms: 0.7223
+  type: 'test'
+  ...
+# Subtest: mobile assembler rejects a plan mutation against the frozen release identity
+ok 252 - mobile assembler rejects a plan mutation against the frozen release identity
+  ---
+  duration_ms: 1.0735
+  type: 'test'
+  ...
+# Subtest: mobile bundler rebases nested new-URL assets into its reviewed raw asset tree
+ok 253 - mobile bundler rebases nested new-URL assets into its reviewed raw asset tree
+  ---
+  duration_ms: 14.1748
+  type: 'test'
+  ...
+# Subtest: mobile shell derives tenant, account and workspace navigation from the accepted bootstrap
+ok 254 - mobile shell derives tenant, account and workspace navigation from the accepted bootstrap
+  ---
+  duration_ms: 18.7661
+  type: 'test'
+  ...
+# Subtest: initially hidden mobile page stays suspended until visibility resumes
+ok 255 - initially hidden mobile page stays suspended until visibility resumes
+  ---
+  duration_ms: 0.9793
+  type: 'test'
+  ...
+# Subtest: logout remains fenced across suspend/resume and renders login only after a visible settle
+ok 256 - logout remains fenced across suspend/resume and renders login only after a visible settle
+  ---
+  duration_ms: 1.5579
+  type: 'test'
+  ...
+# Subtest: packaged mobile shell shows deferred connection state without auth or API requests
+ok 257 - packaged mobile shell shows deferred connection state without auth or API requests
+  ---
+  duration_ms: 0.4087
+  type: 'test'
+  ...
+# Subtest: module SDK creates a full vertical-slice manifest
+ok 258 - module SDK creates a full vertical-slice manifest
+  ---
+  duration_ms: 0.8886
+  type: 'test'
+  ...
+# Subtest: module SDK accepts a validated owned operation declaration and rejects unsupported schema keywords
+ok 259 - module SDK accepts a validated owned operation declaration and rejects unsupported schema keywords
+  ---
+  duration_ms: 0.9069
+  type: 'test'
+  ...
+# Subtest: module SDK validates fixed read-only UI contributions against owned permissions
+ok 260 - module SDK validates fixed read-only UI contributions against owned permissions
+  ---
+  duration_ms: 0.6685
+  type: 'test'
+  ...
+# Subtest: Service Operations derives three exact source-grounded business selections through the canonical composer
+ok 261 - Service Operations derives three exact source-grounded business selections through the canonical composer
+  ---
+  duration_ms: 26.2693
+  type: 'test'
+  ...
+# Subtest: family derivation rejects unavailable modules and never silently selects a new default port
+ok 262 - family derivation rejects unavailable modules and never silently selects a new default port
+  ---
+  duration_ms: 6.0833
+  type: 'test'
+  ...
+# Subtest: three family variants build, register, promote and run as exact owned local artifacts
+not ok 263 - three family variants build, register, promote and run as exact owned local artifacts
+  ---
+  duration_ms: 13.7528
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\product-family.test.mjs:84:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/product-family.test.mjs:104:9)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: source paths normalize both separators and exclude operational components exactly
+ok 264 - source paths normalize both separators and exclude operational components exactly
+  ---
+  duration_ms: 0.6755
+  type: 'test'
+  ...
+# Subtest: maintained fingerprint ignores operational records and changes with source
+ok 265 - maintained fingerprint ignores operational records and changes with source
+  ---
+  duration_ms: 13.9976
+  type: 'test'
+  ...
+# Subtest: portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+ok 266 - portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+  ---
+  duration_ms: 43.5128
+  type: 'test'
+  ...
+# Subtest: reviewed source copy detects a maintained input changed while the asynchronous copy is active
+ok 267 - reviewed source copy detects a maintained input changed while the asynchronous copy is active
+  ---
+  duration_ms: 112.0075
+  type: 'test'
+  ...
+# Subtest: reviewed source copy includes fixed family data as inert input and rejects neighboring files
+ok 268 - reviewed source copy includes fixed family data as inert input and rejects neighboring files
+  ---
+  duration_ms: 13.2013
+  type: 'test'
+  ...
+# Subtest: TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+ok 269 - TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+  ---
+  duration_ms: 1.162
+  type: 'test'
+  ...
+# Subtest: TAP verification follows actual Node nested, TODO, and skipped report counts
+ok 270 - TAP verification follows actual Node nested, TODO, and skipped report counts
+  ---
+  duration_ms: 468.3777
+  type: 'test'
+  ...
+# Subtest: TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+ok 271 - TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+  ---
+  duration_ms: 0.3098
+  type: 'test'
+  ...
+# Subtest: TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+ok 272 - TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+  ---
+  duration_ms: 0.1762
+  type: 'test'
+  ...
+# Subtest: build failure reports tests as NOT_RUN and claims only current passing evidence
+ok 273 - build failure reports tests as NOT_RUN and claims only current passing evidence
+  ---
+  duration_ms: 0.9124
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+ok 274 - START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+  ---
+  duration_ms: 223.3799
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+not ok 275 - START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+  ---
+  duration_ms: 6186.091
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\reliability-baseline.test.mjs:275:1'
+  failureType: 'testCodeFailure'
+  error: 'launcher exited before health response (1)'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/reliability-baseline.test.mjs:294:44)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+ok 276 - canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+  ---
+  duration_ms: 6.5934
+  type: 'test'
+  ...
+# Subtest: fresh manager preparation writes only bounded enrollment inputs and rechecks authorization after canonical import
+ok 277 - fresh manager preparation writes only bounded enrollment inputs and rechecks authorization after canonical import
+  ---
+  duration_ms: 16.6469
+  type: 'test'
+  ...
+# Subtest: owned execution cleanup removes only exact copied-workspace junctions and quarantines changed targets
+ok 278 - owned execution cleanup removes only exact copied-workspace junctions and quarantines changed targets
+  ---
+  duration_ms: 30.3056
+  type: 'test'
+  ...
+# Subtest: one-use runtime gate is published without a post-publication lookup that can race its consumer
+ok 279 - one-use runtime gate is published without a post-publication lookup that can race its consumer
+  ---
+  duration_ms: 726.608
+  type: 'test'
+  ...
+# Subtest: original runtime owner can reconcile a late close and retry a rolled-back settlement audit
+ok 280 - original runtime owner can reconcile a late close and retry a rolled-back settlement audit
+  ---
+  duration_ms: 34.6232
+  type: 'test'
+  ...
+# Subtest: public close bounds an unresolved monitor and retries incomplete or rolled-back exact-owner settlement
+ok 281 - public close bounds an unresolved monitor and retries incomplete or rolled-back exact-owner settlement
+  ---
+  duration_ms: 3.2326
+  type: 'test'
+  ...
+# Subtest: terminal capture drains a coalesced startup tail when the event file has no new bytes
+ok 282 - terminal capture drains a coalesced startup tail when the event file has no new bytes
+  ---
+  duration_ms: 7.1796
+  type: 'test'
+  ...
+# Subtest: terminal capture rejects disappearance of an established event channel without erasing native exit proof
+ok 283 - terminal capture rejects disappearance of an established event channel without erasing native exit proof
+  ---
+  duration_ms: 5.9747
+  type: 'test'
+  ...
+# Subtest: late semantic event errors remain separate from a matching native empty and helper-close proof
+ok 284 - late semantic event errors remain separate from a matching native empty and helper-close proof
+  ---
+  duration_ms: 6.7927
+  type: 'test'
+  ...
+# Subtest: runtime start preserves profile and admission rejection without creating unowned execution
+not ok 285 - runtime start preserves profile and admission rejection without creating unowned execution
+  ---
+  duration_ms: 57.5682
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\runtime-manager-preparation.test.mjs:311:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /occupied physical slot fixture/. Input:
+    
+    'RuntimePreparationError: The selected local PowerShell host did not pass its normal File preflight'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'The selected local PowerShell host did not pass its normal File preflight'
+  stack: |-
+    capturedToolchain (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/runtime-manager.js:814:15)
+    ManagedRuntimeManager.startAttempt (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/runtime-manager.js:1216:22)
+    ManagedRuntimeManager.startNew (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/runtime-manager.js:1196:21)
+    ManagedRuntimeManager.start (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/runtime-manager.js:1159:32)
+    TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-manager-preparation.test.mjs:327:34)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-manager-preparation.test.mjs:327:5)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: verified snapshot copy preflights every path and digest before creating its destination
+ok 286 - verified snapshot copy preflights every path and digest before creating its destination
+  ---
+  duration_ms: 4.8078
+  type: 'test'
+  ...
+# Subtest: runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+ok 287 - runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+  ---
+  duration_ms: 166.5028
+  type: 'test'
+  ...
+# Subtest: completed enrollment tolerates only a vanished SQLite sidecar while rejecting vanished owner data
+ok 288 - completed enrollment tolerates only a vanished SQLite sidecar while rejecting vanished owner data
+  ---
+  duration_ms: 139.2942
+  type: 'test'
+  ...
+# Subtest: a failed canonical LocalAccess seed leaves repair-required evidence and never publishes enrollment completion
+ok 289 - a failed canonical LocalAccess seed leaves repair-required evidence and never publishes enrollment completion
+  ---
+  duration_ms: 18.2647
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol reports assignment, accepts fragmented nonce-bound controls and proves STOP
+not ok 290 - RuntimeProtocol reports assignment, accepts fragmented nonce-bound controls and proves STOP
+  ---
+  duration_ms: 0.9527
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\runtime-protocol.test.mjs:293:1'
+  failureType: 'testCodeFailure'
+  error: 'The private local PowerShell build-host profile failed its executable or ordinary policy preflight'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assertWindowsBuildHost (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-host.js:63:15)
+    file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:36:21
+    async startRunner (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:147:19)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:296:15)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: RuntimeProtocol wrong-nonce and malformed pre-RESUME controls fail closed without execution
+    # Subtest: wrong-nonce RESUME
+    not ok 1 - wrong-nonce RESUME
+      ---
+      duration_ms: 0.1016
+      type: 'test'
+      location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\runtime-protocol.test.mjs:320:13'
+      failureType: 'testCodeFailure'
+      error: 'The private local PowerShell build-host profile failed its executable or ordinary policy preflight'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        assertWindowsBuildHost (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-host.js:63:15)
+        file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:36:21
+        async startRunner (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:147:19)
+        async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:296:15)
+        async Test.run (node:internal/test_runner/test:1389:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    # Subtest: wrong-nonce STOP
+    not ok 2 - wrong-nonce STOP
+      ---
+      duration_ms: 0.0678
+      type: 'test'
+      location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\runtime-protocol.test.mjs:320:13'
+      failureType: 'testCodeFailure'
+      error: 'The private local PowerShell build-host profile failed its executable or ordinary policy preflight'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        assertWindowsBuildHost (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-host.js:63:15)
+        file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:36:21
+        async startRunner (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:147:19)
+        async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:296:15)
+        async Test.run (node:internal/test_runner/test:1389:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    # Subtest: malformed control
+    not ok 3 - malformed control
+      ---
+      duration_ms: 0.0703
+      type: 'test'
+      location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\runtime-protocol.test.mjs:320:13'
+      failureType: 'testCodeFailure'
+      error: 'The private local PowerShell build-host profile failed its executable or ordinary policy preflight'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        assertWindowsBuildHost (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-host.js:63:15)
+        file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:36:21
+        async startRunner (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:147:19)
+        async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:296:15)
+        async Test.run (node:internal/test_runner/test:1389:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+      ...
+    1..3
+not ok 291 - RuntimeProtocol wrong-nonce and malformed pre-RESUME controls fail closed without execution
+  ---
+  duration_ms: 0.6399
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\runtime-protocol.test.mjs:312:1'
+  failureType: 'subtestsFailed'
+  error: '3 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: RuntimeProtocol EOF before RESUME fails closed without executing the supervisor script
+not ok 292 - RuntimeProtocol EOF before RESUME fails closed without executing the supervisor script
+  ---
+  duration_ms: 0.0769
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\runtime-protocol.test.mjs:330:1'
+  failureType: 'testCodeFailure'
+  error: 'The private local PowerShell build-host profile failed its executable or ordinary policy preflight'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assertWindowsBuildHost (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-host.js:63:15)
+    file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:36:21
+    async startRunner (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:147:19)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:296:15)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: RuntimeProtocol duplicate RESUME after the owned descendant starts terminates the whole job
+not ok 293 - RuntimeProtocol duplicate RESUME after the owned descendant starts terminates the whole job
+  ---
+  duration_ms: 0.0715
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\runtime-protocol.test.mjs:340:1'
+  failureType: 'testCodeFailure'
+  error: 'The private local PowerShell build-host profile failed its executable or ordinary policy preflight'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assertWindowsBuildHost (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-host.js:63:15)
+    file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:36:21
+    async startRunner (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:147:19)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:296:15)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: RuntimeProtocol parses coalesced nonce-bound RESUME and STOP controls
+not ok 294 - RuntimeProtocol parses coalesced nonce-bound RESUME and STOP controls
+  ---
+  duration_ms: 0.0819
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\runtime-protocol.test.mjs:353:1'
+  failureType: 'testCodeFailure'
+  error: 'The private local PowerShell build-host profile failed its executable or ordinary policy preflight'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assertWindowsBuildHost (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-host.js:63:15)
+    file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:36:21
+    async startRunner (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:147:19)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:296:15)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: RuntimeProtocol owns canonical local-access constructor failure through nonce-bound EMPTY and helper close
+not ok 295 - RuntimeProtocol owns canonical local-access constructor failure through nonce-bound EMPTY and helper close
+  ---
+  duration_ms: 0.1556
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\runtime-protocol.test.mjs:363:1'
+  failureType: 'testCodeFailure'
+  error: 'The private local PowerShell build-host profile failed its executable or ordinary policy preflight'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    assertWindowsBuildHost (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-host.js:63:15)
+    file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:36:21
+    async startRunner (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:147:19)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-protocol.test.mjs:296:15)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: schema 5 backfills immutable runtime generations and backup lineage without relabeling the stopped command
+ok 296 - schema 5 backfills immutable runtime generations and backup lineage without relabeling the stopped command
+  ---
+  duration_ms: 31.748
+  type: 'test'
+  ...
+# Subtest: a confirmed upgrade cuts over only after exact native and publication facts and replays its original identity
+ok 297 - a confirmed upgrade cuts over only after exact native and publication facts and replays its original identity
+  ---
+  duration_ms: 7.046
+  type: 'test'
+  ...
+# Subtest: recovery and upgrade exports pin the exact maintained native helpers
+ok 298 - recovery and upgrade exports pin the exact maintained native helpers
+  ---
+  duration_ms: 6.0603
+  type: 'test'
+  ...
+# Subtest: the upgrade manager keeps read-only history attached when the selected native host is unavailable
+ok 299 - the upgrade manager keeps read-only history attached when the selected native host is unavailable
+  ---
+  duration_ms: 1.8596
+  type: 'test'
+  ...
+# Subtest: plural generation-upgrade routes require pairing and explicit exact-input confirmation
+not ok 300 - plural generation-upgrade routes require pairing and explicit exact-input confirmation
+  ---
+  duration_ms: 20.6075
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\runtime-upgrade.test.mjs:60:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    createOperatorServer (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/operator-server.js:304:20)
+    fixture (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-upgrade.test.mjs:45:22)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/runtime-upgrade.test.mjs:68:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+  ...
+# Subtest: R01: pending tenant change cannot mount or write under obsolete context
+ok 301 - R01: pending tenant change cannot mount or write under obsolete context
+  ---
+  duration_ms: 19.7395
+  type: 'test'
+  ...
+# Subtest: R01: denied replacement retains no old workspace and no old request authority
+ok 302 - R01: denied replacement retains no old workspace and no old request authority
+  ---
+  duration_ms: 1.2917
+  type: 'test'
+  ...
+# Subtest: R01: unchanged periodic bootstrap preserves accepted client scope
+ok 303 - R01: unchanged periodic bootstrap preserves accepted client scope
+  ---
+  duration_ms: 1.0956
+  type: 'test'
+  ...
+# Subtest: R01: late read denial from aborted scope cannot clear the new scope
+ok 304 - R01: late read denial from aborted scope cannot clear the new scope
+  ---
+  duration_ms: 1.7072
+  type: 'test'
+  ...
+# Subtest: R01: late lazy import cannot mount into a replacement scope
+ok 305 - R01: late lazy import cannot mount into a replacement scope
+  ---
+  duration_ms: 0.7933
+  type: 'test'
+  ...
+# Subtest: R08: successful unchanged bootstrap remounts after failed refresh
+ok 306 - R08: successful unchanged bootstrap remounts after failed refresh
+  ---
+  duration_ms: 1.0418
+  type: 'test'
+  ...
+# Subtest: R06: two named workspace exports mount exactly their declarations
+ok 307 - R06: two named workspace exports mount exactly their declarations
+  ---
+  duration_ms: 0.5496
+  type: 'test'
+  ...
+# Subtest: R06: invalid named export undefined never substitutes default
+ok 308 - R06: invalid named export undefined never substitutes default
+  ---
+  duration_ms: 0.6281
+  type: 'test'
+  ...
+# Subtest: R06: invalid named export {} never substitutes default
+ok 309 - R06: invalid named export {} never substitutes default
+  ---
+  duration_ms: 0.3998
+  type: 'test'
+  ...
+# Subtest: R06: invalid named export {"mount":1} never substitutes default
+ok 310 - R06: invalid named export {"mount":1} never substitutes default
+  ---
+  duration_ms: 0.4143
+  type: 'test'
+  ...
+# Subtest: R01: stale workspace notifications cannot overwrite current UI
+ok 311 - R01: stale workspace notifications cannot overwrite current UI
+  ---
+  duration_ms: 1.1553
+  type: 'test'
+  ...
+# Subtest: fixed UI contribution uses its declaring module read API and is disposed with the workspace scope
+ok 312 - fixed UI contribution uses its declaring module read API and is disposed with the workspace scope
+  ---
+  duration_ms: 1.4667
+  type: 'test'
+  ...
+# Subtest: Studio: newly named products receive the reviewed local provider identity
+ok 313 - Studio: newly named products receive the reviewed local provider identity
+  ---
+  duration_ms: 1.442
+  type: 'test'
+  ...
+# Subtest: Studio: neutral product does not receive unrelated service identities
+ok 314 - Studio: neutral product does not receive unrelated service identities
+  ---
+  duration_ms: 0.5018
+  type: 'test'
+  ...
+# Subtest: Studio: local seed cannot request an undeclared permission
+ok 315 - Studio: local seed cannot request an undeclared permission
+  ---
+  duration_ms: 1.0144
+  type: 'test'
+  ...
+# Subtest: Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+ok 316 - Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+  ---
+  duration_ms: 0.4333
+  type: 'test'
+  ...
+# Subtest: Studio: unsupported remote fixture origin is refused
+ok 317 - Studio: unsupported remote fixture origin is refused
+  ---
+  duration_ms: 0.3482
+  type: 'test'
+  ...
+# Subtest: Studio: dependency explanation is source-derived and uses actual versions
+ok 318 - Studio: dependency explanation is source-derived and uses actual versions
+  ---
+  duration_ms: 0.3256
+  type: 'test'
+  ...
+# Subtest: Studio: no guessed provider for an unsupported new required contract
+ok 319 - Studio: no guessed provider for an unsupported new required contract
+  ---
+  duration_ms: 0.1539
+  type: 'test'
+  ...
+# Subtest: Studio: unused or invalid binding selection fails rather than retargeting
+ok 320 - Studio: unused or invalid binding selection fails rather than retargeting
+  ---
+  duration_ms: 0.1534
+  type: 'test'
+  ...
+# Subtest: Studio: import rejects runtime authority, path escape and unknown source wiring
+ok 321 - Studio: import rejects runtime authority, path escape and unknown source wiring
+  ---
+  duration_ms: 0.5738
+  type: 'test'
+  ...
+# Subtest: Studio: browser and CLI use the same compiled resolver
+ok 322 - Studio: browser and CLI use the same compiled resolver
+  ---
+  duration_ms: 8.2176
+  type: 'test'
+  ...
+# Subtest: Studio: browser, product and package source IDs share the exact 2–48 identity predicate
+ok 323 - Studio: browser, product and package source IDs share the exact 2–48 identity predicate
+  ---
+  duration_ms: 2.2392
+  type: 'test'
+  ...
+# Subtest: Runtime: Handoff document picker uses the permitted Knowledge owner query
+ok 324 - Runtime: Handoff document picker uses the permitted Knowledge owner query
+  ---
+  duration_ms: 96.7642
+  type: 'test'
+  ...
+# Subtest: Runtime: missing destination authority is visible before new handoff submission
+ok 325 - Runtime: missing destination authority is visible before new handoff submission
+  ---
+  duration_ms: 82.6732
+  type: 'test'
+  ...
+# Subtest: Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+ok 326 - Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+  ---
+  duration_ms: 5309.1012
+  type: 'test'
+  ...
+# Subtest: Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+not ok 327 - Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+  ---
+  duration_ms: 5800.7797
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\studio-integration.test.mjs:49:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    7 !== 4
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 4
+  actual: 7
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/studio-integration.test.mjs:53:54)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Studio metadata validation accepts maintained source manifests through the module SDK
+not ok 328 - Studio metadata validation accepts maintained source manifests through the module SDK
+  ---
+  duration_ms: 1.956
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\studio-model.test.mjs:17:1'
+  failureType: 'testCodeFailure'
+  error: 'Invalid Studio AI model modality'
+  code: 'INVALID'
+  name: 'PlatformError'
+  stack: |-
+    invalid (file:///D:/Veyviz-code/veyviz-quadbridge-product/packages/studio-model/dist/index.js:4:33)
+    enumeration (file:///D:/Veyviz-code/veyviz-quadbridge-product/packages/studio-model/dist/index.js:34:9)
+    file:///D:/Veyviz-code/veyviz-quadbridge-product/packages/studio-model/dist/index.js:107:13
+    optionalArray (file:///D:/Veyviz-code/veyviz-quadbridge-product/packages/studio-model/dist/index.js:47:9)
+    validateStudioMetadata (file:///D:/Veyviz-code/veyviz-quadbridge-product/packages/studio-model/dist/index.js:104:9)
+    validateStudioModule (file:///D:/Veyviz-code/veyviz-quadbridge-product/packages/studio-model/dist/index.js:166:9)
+    TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/studio-model.test.mjs:20:18)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+  ...
+# Subtest: Studio metadata validation rejects malformed nested shapes, enums, identifiers and numeric bounds
+ok 329 - Studio metadata validation rejects malformed nested shapes, enums, identifiers and numeric bounds
+  ---
+  duration_ms: 1.6149
+  type: 'test'
+  ...
+# Subtest: complete definition round-trip preserves description, exact versions, custom binding identity and wiring
+ok 330 - complete definition round-trip preserves description, exact versions, custom binding identity and wiring
+  ---
+  duration_ms: 2.7008
+  type: 'test'
+  ...
+# Subtest: unsupported definition stays unchanged and returns diagnostics without a preview plan
+ok 331 - unsupported definition stays unchanged and returns diagnostics without a preview plan
+  ---
+  duration_ms: 0.5762
+  type: 'test'
+  ...
+# Subtest: editor helpers are present in the offline browser bundle and remain pure data operations
+ok 332 - editor helpers are present in the offline browser bundle and remain pure data operations
+  ---
+  duration_ms: 9.8572
+  type: 'test'
+  ...
+# Subtest: inspection keeps supported HTTP bindings valid without claiming local launchability
+ok 333 - inspection keeps supported HTTP bindings valid without claiming local launchability
+  ---
+  duration_ms: 0.8648
+  type: 'test'
+  ...
+# Subtest: Products click and genuine hash navigation both render the catalogue while stale navigation stays selected
+ok 334 - Products click and genuine hash navigation both render the catalogue while stale navigation stays selected
+  ---
+  duration_ms: 8.5802
+  type: 'test'
+  ...
+# Subtest: product save uses an unchecked exact-version confirmation and sends only the current preview
+ok 335 - product save uses an unchecked exact-version confirmation and sends only the current preview
+  ---
+  duration_ms: 3.9799
+  type: 'test'
+  ...
+# Subtest: paired family defaults derive through the source catalogue and only an unchanged preview carries its family claim
+ok 336 - paired family defaults derive through the source catalogue and only an unchanged preview carries its family claim
+  ---
+  duration_ms: 4.623
+  type: 'test'
+  ...
+# Subtest: runtime overview consumes the public promoted-release array and offers the exact release
+ok 337 - runtime overview consumes the public promoted-release array and offers the exact release
+  ---
+  duration_ms: 8.8381
+  type: 'test'
+  ...
+# Subtest: runtime UI reports UNKNOWN stop facts and reuses the same request key after an ambiguous start error
+ok 338 - runtime UI reports UNKNOWN stop facts and reuses the same request key after an ambiguous start error
+  ---
+  duration_ms: 4.3715
+  type: 'test'
+  ...
+# Subtest: runtime action success messages require proof in the exact current-attempt DTO
+ok 339 - runtime action success messages require proof in the exact current-attempt DTO
+  ---
+  duration_ms: 4.0807
+  type: 'test'
+  ...
+# Subtest: runtime overview and detail responses cannot restore stale routes, attempts, or application addresses
+ok 340 - runtime overview and detail responses cannot restore stale routes, attempts, or application addresses
+  ---
+  duration_ms: 3.3053
+  type: 'test'
+  ...
+# Subtest: a stale runtime overview failure cannot replace a newer successful refresh
+ok 341 - a stale runtime overview failure cannot replace a newer successful refresh
+  ---
+  duration_ms: 2.0676
+  type: 'test'
+  ...
+# Subtest: runtime confirmations survive same-attempt polling and are scoped away from a successor attempt
+ok 342 - runtime confirmations survive same-attempt polling and are scoped away from a successor attempt
+  ---
+  duration_ms: 1.9835
+  type: 'test'
+  ...
+# Subtest: recovery controls require positive stop proof, verify opaque backups, and confirm backup and absent-root restore
+ok 343 - recovery controls require positive stop proof, verify opaque backups, and confirm backup and absent-root restore
+  ---
+  duration_ms: 16.7813
+  type: 'test'
+  ...
+# Subtest: recovery controls stay hidden when a stopped runtime lacks current positive cleanup facts
+ok 344 - recovery controls stay hidden when a stopped runtime lacks current positive cleanup facts
+  ---
+  duration_ms: 1.8593
+  type: 'test'
+  ...
+# Subtest: upgrade UI requires the exact stopped generation, verified backup, target confirmation, then explicit target restart
+ok 345 - upgrade UI requires the exact stopped generation, verified backup, target confirmation, then explicit target restart
+  ---
+  duration_ms: 4.2328
+  type: 'test'
+  ...
+# Subtest: reviewed UI slots resolve actual module ownership for desk.requests
+ok 346 - reviewed UI slots resolve actual module ownership for desk.requests
+  ---
+  duration_ms: 9.315
+  type: 'test'
+  ...
+# Subtest: optional UI slots explain omission from source workspace ownership and contribution owner
+ok 347 - optional UI slots explain omission from source workspace ownership and contribution owner
+  ---
+  duration_ms: 0.1971
+  type: 'test'
+  ...
+# Subtest: a selected owner must carry the same source-declared contribution
+ok 348 - a selected owner must carry the same source-declared contribution
+  ---
+  duration_ms: 0.4156
+  type: 'test'
+  ...
+# Subtest: the reviewed source closure admits the exact solution UI mapping leaf
+not ok 349 - the reviewed source closure admits the exact solution UI mapping leaf
+  ---
+  duration_ms: 12.588
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\ui-contributions.test.mjs:45:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/ui-contributions.test.mjs:46:25)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: the reviewed UI mapping is copied byte-for-byte and contributes to the source fingerprint
+not ok 350 - the reviewed UI mapping is copied byte-for-byte and contributes to the source fingerprint
+  ---
+  duration_ms: 14.9508
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\ui-contributions.test.mjs:51:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    copyReviewedBuildInputs (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:165:20)
+    TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/ui-contributions.test.mjs:55:9)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: current source import preserves the captured old product identity and is idempotent
+not ok 351 - current source import preserves the captured old product identity and is idempotent
+  ---
+  duration_ms: 12.7379
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\ui-contributions.test.mjs:67:1'
+  failureType: 'testCodeFailure'
+  error: 'Unreviewed or data-bearing tool input is not allowed: tools/veyviz'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    included (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:111:19)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:139:18)
+    visit (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:142:17)
+    reviewedBuildFiles (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:149:5)
+    reviewedBuildFingerprint (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/build-inputs.js:157:24)
+    loadSourceSnapshot (file:///D:/Veyviz-code/veyviz-quadbridge-product/apps/control-plane/dist/source-import.js:35:31)
+    TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/ui-contributions.test.mjs:77:21)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+  ...
+# Subtest: Veyviz refuses a modified enrollment plan before creating identities or data
+ok 352 - Veyviz refuses a modified enrollment plan before creating identities or data
+  ---
+  duration_ms: 11.7577
+  type: 'test'
+  ...
+# Subtest: Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart
+ok 353 - Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart
+  ---
+  duration_ms: 459.6481
+  type: 'test'
+  ...
+# Subtest: Veyviz operation SDK runs real owned operations with declared output schemas
+ok 354 - Veyviz operation SDK runs real owned operations with declared output schemas
+  ---
+  duration_ms: 95.3717
+  type: 'test'
+  ...
+# Subtest: analysis receipt replays unchanged client command after source rename; changed body conflicts
+ok 355 - analysis receipt replays unchanged client command after source rename; changed body conflicts
+  ---
+  duration_ms: 80.3484
+  type: 'test'
+  ...
+# Subtest: source version changed during inference prevents durable Product acceptance
+ok 356 - source version changed during inference prevents durable Product acceptance
+  ---
+  duration_ms: 76.5327
+  type: 'test'
+  ...
+# Subtest: analysis authority revoked after preparation is synchronously denied at owner commit
+ok 357 - analysis authority revoked after preparation is synchronously denied at owner commit
+  ---
+  duration_ms: 74.6643
+  type: 'test'
+  ...
+# Subtest: cancellation during inference fences an otherwise successful result
+ok 358 - cancellation during inference fences an otherwise successful result
+  ---
+  duration_ms: 78.5164
+  type: 'test'
+  ...
+# Subtest: accepted result and review survive owner restart and stay tenant-scoped
+ok 359 - accepted result and review survive owner restart and stay tenant-scoped
+  ---
+  duration_ms: 84.6181
+  type: 'test'
+  ...
+# Subtest: strict AI proposal validator permits optional thumbnail but rejects altered identity, shape and cleanup
+ok 360 - strict AI proposal validator permits optional thumbnail but rejects altered identity, shape and cleanup
+  ---
+  duration_ms: 1.5148
+  type: 'test'
+  ...
+# Subtest: Visual: all eight input combinations use the canonical resolver
+ok 361 - Visual: all eight input combinations use the canonical resolver
+  ---
+  duration_ms: 6.5459
+  type: 'test'
+  ...
+# Subtest: Visual: reviewed Handoff wiring selects current local providers
+ok 362 - Visual: reviewed Handoff wiring selects current local providers
+  ---
+  duration_ms: 0.9065
+  type: 'test'
+  ...
+# Subtest: Visual: operation-bearing source catalogue uses the fixed shared schema validator
+ok 363 - Visual: operation-bearing source catalogue uses the fixed shared schema validator
+  ---
+  duration_ms: 2.3453
+  type: 'test'
+  ...
+# Subtest: Visual: neutral product has no domain, bindings or solution
+ok 364 - Visual: neutral product has no domain, bindings or solution
+  ---
+  duration_ms: 0.1329
+  type: 'test'
+  ...
+# Subtest: Visual: invalid and unknown selections fail visibly
+ok 365 - Visual: invalid and unknown selections fail visibly
+  ---
+  duration_ms: 0.17
+  type: 'test'
+  ...
+# Subtest: Visual: standalone preview sends no network calls and includes no external scripts
+ok 366 - Visual: standalone preview sends no network calls and includes no external scripts
+  ---
+  duration_ms: 6.2832
+  type: 'test'
+  ...
+# Subtest: Visual: offline composer exposes complete import, edit, canonical preview and download controls
+ok 367 - Visual: offline composer exposes complete import, edit, canonical preview and download controls
+  ---
+  duration_ms: 2.1552
+  type: 'test'
+  ...
+# Subtest: Visual: a newer definition import invalidates preview immediately and wins out-of-order file reads
+ok 368 - Visual: a newer definition import invalidates preview immediately and wins out-of-order file reads
+  ---
+  duration_ms: 4.3822
+  type: 'test'
+  ...
+# Subtest: Visual: documentation, responsive rules and source build retained
+ok 369 - Visual: documentation, responsive rules and source build retained
+  ---
+  duration_ms: 1.8346
+  type: 'test'
+  ...
+# Subtest: Visual: runtime counters remain explicitly scoped
+ok 370 - Visual: runtime counters remain explicitly scoped
+  ---
+  duration_ms: 0.8798
+  type: 'test'
+  ...
+# Subtest: Visual: all eight views render through controlled document ports
+ok 371 - Visual: all eight views render through controlled document ports
+  ---
+  duration_ms: 11.6278
+  type: 'test'
+  ...
+# Subtest: Visual: offline family builder uses loaded defaults and canonical derivation without network access
+ok 372 - Visual: offline family builder uses loaded defaults and canonical derivation without network access
+  ---
+  duration_ms: 4.9548
+  type: 'test'
+  ...
+# Subtest: workspace export closure follows selected Knowledge package manifests and actual ai-core version
+ok 373 - workspace export closure follows selected Knowledge package manifests and actual ai-core version
+  ---
+  duration_ms: 9.4704
+  type: 'test'
+  ...
+# Subtest: workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+ok 374 - workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+  ---
+  duration_ms: 2.1414
+  type: 'test'
+  ...
+1..374
+# tests 377
+# suites 0
+# pass 309
+# fail 68
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 93864.6817

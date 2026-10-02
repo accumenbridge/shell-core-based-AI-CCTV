@@ -1,0 +1,64 @@
+{
+  "id": "veyviz-sources",
+  "version": "0.1.0",
+  "abi": "quadbridge.module.v1",
+  "dependencies": [],
+  "provides": ["veyviz.sources.read.v1"],
+  "requires": [],
+  "permissions": ["veyviz.sources.read", "veyviz.sources.write"],
+  "operations": [
+    {
+      "id": "veyviz-sources.sources.list", "version": 1, "title": "List video sources",
+      "description": "List authorized source registrations for the current tenant.",
+      "permission": "veyviz.sources.read", "kind": "read",
+      "inputSchema": { "type": "object", "properties": {}, "additionalProperties": false },
+      "outputSchema": {
+        "type": "object", "properties": {
+          "items": { "type": "array", "maxItems": 100, "items": {
+            "type": "object", "properties": {
+              "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+              "name": { "type": "string", "minLength": 1, "maxLength": 160 },
+              "fixtureId": { "type": "string", "enum": ["mivia-vid0062"] },
+              "version": { "type": "integer", "minimum": 1 },
+              "created": { "type": "integer", "minimum": 0 }
+            }, "required": ["id", "name", "fixtureId", "version", "created"], "additionalProperties": false
+          } }
+        }, "required": ["items"], "additionalProperties": false
+      }
+    },
+    {
+      "id": "veyviz-sources.sources.register", "version": 1, "title": "Register a recorded fixture",
+      "description": "Register the single reviewed local recording fixture by opaque identifier.",
+      "permission": "veyviz.sources.write", "kind": "write",
+      "inputSchema": { "type": "object", "properties": {
+        "fixtureId": { "type": "string", "enum": ["mivia-vid0062"] },
+        "name": { "type": "string", "minLength": 1, "maxLength": 160 }
+      }, "required": ["fixtureId", "name"], "additionalProperties": false },
+      "outputSchema": { "type": "object", "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "fixtureId": { "type": "string", "enum": ["mivia-vid0062"] },
+        "version": { "type": "integer", "minimum": 1 },
+        "created": { "type": "integer", "minimum": 0 }
+      }, "required": ["id", "name", "fixtureId", "version", "created"], "additionalProperties": false }
+    }
+  ],
+  "routes": [
+    { "method": "GET", "path": "/api/sources", "permission": "veyviz.sources.read", "kind": "read" },
+    { "method": "POST", "path": "/api/sources", "permission": "veyviz.sources.write", "kind": "write" },
+    { "method": "POST", "path": "/api/sources/rename", "permission": "veyviz.sources.write", "kind": "write" }
+  ],
+  "workspaces": [{ "id": "veyviz.sources", "label": "Recordings", "path": "/recordings", "permission": "veyviz.sources.read", "export": "workspace" }],
+  "uiContributions": [],
+  "schema": { "current": 1, "readMin": 1, "readMax": 1 },
+  "background": false,
+  "browserAssets": ["styles.css"],
+  "studio": {
+    "label": "Veyviz sources", "summary": "Tenant-owned registrations for reviewed local recordings.", "category": "video", "layers": ["ui", "backend", "data"],
+    "ui": { "routes": [{ "path": "/recordings", "workspace": "veyviz.sources", "label": "Recordings", "nav": "Recordings" }], "extensionPoints": [] },
+    "backend": { "services": [{ "id": "source-reader", "contract": "veyviz.sources.read.v1", "visibility": "product" }], "jobs": [] },
+    "ai": { "pipelines": [], "models": [] },
+    "data": { "stores": [{ "id": "veyviz-sources", "kind": "relational", "ownership": "module" }], "schemas": [{ "id": "veyviz-sources", "version": 1 }] },
+    "deployment": { "processes": [{ "id": "veyviz-product-api", "kind": "http" }] }
+  }
+}

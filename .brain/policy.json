@@ -1,36 +1,15 @@
 {
   "schema": "brain.workflow-policy.v1",
   "status": "bound_conventions_not_enforced",
-  "implementation_authorization_ref": "User instruction 2026-09-30: start building the full architecture based works; phased local implementation.",
+  "implementation_authorization_ref": "User request 2026-10-03: analyze latest worker/framework/Veyviz state and build an independent new full-stack modular, plugin-capable product using Quadbridge; original repositories remain preserved. Root adopts local recorded-video scope and proposed new target.",
   "defaults": {
-    "one_active_writer": true,
-    "unknown_outcome_requires_resolution": true,
+    "one_active_writer": false,
     "preserve_existing_owner_records": true,
-    "optional_improvements": "route_into_authorized_program_contract",
-    "same_failure_limit_before_diagnosis": 2
+    "unknown_outcome_requires_resolution": true
   },
   "budget": {
     "approved_budget_ref": null,
-    "include_brain_worker_review_tools": true,
-    "unknown_usage": "record_unknown_not_zero",
-    "renamed_task_resets_budget": false,
-    "verification_reserve": "No numeric budget was supplied. Track observable usage and preserve actual task/session limits; this JSON does not enforce them."
+    "unknown_usage": "record_unknown_not_zero"
   },
-  "routing": {
-    "direct": "Known reversible change inside the current task contract: relevant actual checks and existing required review.",
-    "integrated": "Cross-owner behavior: bounded contract, preserve interfaces, test lifecycle/integration, and report real health evidence.",
-    "sensitive": "Local owner changes require bounded contract and recovery checks. External repositories, credentials, spending, global configuration and deployment remain outside current authorization.",
-    "investigate": "Unresolved fact: bounded read-only investigation or authorized experiment tied to a named acceptance question."
-  },
-  "requires_applicable_approval": [
-    "changed customer outcome",
-    "changed acceptance meaning",
-    "new data access",
-    "destructive operation",
-    "credential change",
-    "external action",
-    "significant spend",
-    "deployment or release"
-  ],
-  "note": "These are coordinator conventions, not authenticated approval, a lock, sandbox, hard budget, test runner, or enforcement mechanism. Existing source instructions and tool controls prevail."
+  "note": "Root-authorized two disjoint implementation writers after frozen protocol; root alone owns shared state. No automatic dispatch, authenticated evidence, filesystem isolation or bug-free guarantee."
 }

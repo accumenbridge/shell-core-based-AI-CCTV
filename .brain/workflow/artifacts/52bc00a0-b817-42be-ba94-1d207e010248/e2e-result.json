@@ -1,0 +1,54 @@
+{
+  "schema": "veyviz.e2e-evidence.v1",
+  "runId": "a451a078-5989-4874-950d-b1c7386c7e75",
+  "startedAt": "2026-10-02T22:46:09.941Z",
+  "checks": [
+    {
+      "name": "actual authenticated HTTP runtime",
+      "status": "PASS"
+    },
+    {
+      "name": "durable source registration and idempotency conflict",
+      "status": "PASS"
+    },
+    {
+      "name": "tenant, viewer write and forged-scope denials",
+      "status": "PASS"
+    },
+    {
+      "name": "actual three-frame RF-DETR result adopted with original identity and native cleanup",
+      "status": "PASS",
+      "analysisId": "600e453e-a363-4de8-8dfe-409d00d5b84c",
+      "modelSha256": "0e0817f4cafa479ccba17662a142092932b0b10c98947e7cf60f3badd0f5c219",
+      "sourceSha256": "ea6b48e57c343027b169ee1357e6e85ea3b8d179ba70058c294d1b1ec8db2805",
+      "samples": [
+        {
+          "frameIndex": 0,
+          "positionMs": 0,
+          "inferenceMs": 583.2498,
+          "detections": 0
+        },
+        {
+          "frameIndex": 10,
+          "positionMs": 333.3333333333333,
+          "inferenceMs": 571.904,
+          "detections": 0
+        },
+        {
+          "frameIndex": 20,
+          "positionMs": 666.6666666666666,
+          "inferenceMs": 573.9135,
+          "detections": 0
+        }
+      ]
+    },
+    {
+      "name": "scoped saved-result access and human review",
+      "status": "PASS"
+    }
+  ],
+  "status": "FAIL",
+  "fingerprint": "a73eeaa184840db48606ed39029bdc95ec10f995eb8bed4ca027d6a623919d9a",
+  "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'bb427eccfe5efa91981124b76df526b72e797069c29286f27ec49092e01629ec'\n- 'a73eeaa184840db48606ed39029bdc95ec10f995eb8bed4ca027d6a623919d9a'\n",
+  "completedAt": "2026-10-02T22:46:26.398Z"
+}

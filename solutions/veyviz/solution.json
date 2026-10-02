@@ -1,0 +1,28 @@
+{
+  "id": "veyviz",
+  "version": "0.1.0",
+  "semantics": "Product-owned recorded analysis calls authorized source metadata and a verified local RF-DETR companion through fixed public ports. No shared domain database.",
+  "studio": {
+    "consumer": "veyviz-analysis",
+    "label": "Veyviz recorded analysis",
+    "ports": [
+      {
+        "contract": "veyviz.sources.read.v1",
+        "choices": [{
+          "id": "local",
+          "label": "Recordings in this product",
+          "binding": { "instanceId": "local-veyviz-sources", "implementation": "veyviz-sources", "scope": "application", "mode": "local" }
+        }]
+      },
+      {
+        "contract": "veyviz.recorded-analysis.run.v1",
+        "choices": [{
+          "id": "local",
+          "label": "Verified local RF-DETR CPU companion",
+          "binding": { "instanceId": "local-veyviz-rfdetr", "implementation": "veyviz-rfdetr", "scope": "application", "mode": "local" },
+          "prerequisites": ["Requires the separately installed, digest-verified local recording/model profile. Product selection does not install assets or grant permissions."]
+        }]
+      }
+    ]
+  }
+}

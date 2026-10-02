@@ -650,6 +650,882 @@
           ]
         }
       }
+    },
+    {
+      "id": "veyviz-analysis",
+      "version": "0.1.0",
+      "abi": "quadbridge.module.v1",
+      "dependencies": [
+        {
+          "id": "veyviz-sources",
+          "version": "0.1.0"
+        }
+      ],
+      "provides": [],
+      "requires": [
+        "veyviz.sources.read.v1",
+        "veyviz.recorded-analysis.run.v1"
+      ],
+      "permissions": [
+        "veyviz.analysis.read",
+        "veyviz.analysis.write"
+      ],
+      "operations": [
+        {
+          "id": "veyviz-analysis.analysis.list",
+          "version": 1,
+          "title": "List analyses",
+          "description": "List analysis jobs and accepted-result summaries for the current tenant.",
+          "permission": "veyviz.analysis.read",
+          "kind": "read",
+          "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "outputSchema": {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "maxItems": 25,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "sourceId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "sourceVersion": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "jobState": {
+                      "type": "string",
+                      "enum": [
+                        "QUEUED",
+                        "RUNNING",
+                        "CANCEL_REQUESTED",
+                        "CANCELLED",
+                        "SUCCEEDED",
+                        "FAILED"
+                      ]
+                    },
+                    "reviewState": {
+                      "type": "string",
+                      "enum": [
+                        "OPEN",
+                        "REVIEWED",
+                        "DISMISSED"
+                      ]
+                    },
+                    "created": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "sampleCount": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 6
+                    },
+                    "detectionCount": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 600
+                    },
+                    "coverage": {
+                      "type": "string",
+                      "enum": [
+                        "UNCOMMISSIONED_RECORDING",
+                        "UNKNOWN"
+                      ]
+                    },
+                    "occupancy": {
+                      "type": "string",
+                      "enum": [
+                        "UNKNOWN"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "jobId",
+                    "sourceId",
+                    "sourceVersion",
+                    "jobState",
+                    "reviewState",
+                    "created",
+                    "sampleCount",
+                    "detectionCount",
+                    "coverage",
+                    "occupancy"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "items"
+            ],
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "veyviz-analysis.analysis.submit",
+          "version": 1,
+          "title": "Submit recorded analysis",
+          "description": "Queue bounded local RF-DETR analysis for an authorized registered source.",
+          "permission": "veyviz.analysis.write",
+          "kind": "write",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "sourceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "frameCount": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 6
+              },
+              "sampleStride": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 30
+              }
+            },
+            "required": [
+              "sourceId",
+              "frameCount",
+              "sampleStride"
+            ],
+            "additionalProperties": false
+          },
+          "outputSchema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "jobId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "QUEUED"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "jobId",
+              "state"
+            ],
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "veyviz-analysis.analysis.cancel",
+          "version": 1,
+          "title": "Cancel analysis",
+          "description": "Request cancellation and report the durable job state for an owned analysis.",
+          "permission": "veyviz.analysis.write",
+          "kind": "write",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "analysisId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "analysisId"
+            ],
+            "additionalProperties": false
+          },
+          "outputSchema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "jobState": {
+                "type": "string",
+                "enum": [
+                  "QUEUED",
+                  "RUNNING",
+                  "CANCEL_REQUESTED",
+                  "CANCELLED",
+                  "SUCCEEDED",
+                  "FAILED"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "jobState"
+            ],
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "veyviz-analysis.analysis.review",
+          "version": 1,
+          "title": "Record result review",
+          "description": "Record a human review state for an already accepted analysis result.",
+          "permission": "veyviz.analysis.write",
+          "kind": "write",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "analysisId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "REVIEWED",
+                  "DISMISSED"
+                ]
+              }
+            },
+            "required": [
+              "analysisId",
+              "decision"
+            ],
+            "additionalProperties": false
+          },
+          "outputSchema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "REVIEWED",
+                  "DISMISSED"
+                ]
+              },
+              "reviewedAt": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "decision",
+              "reviewedAt"
+            ],
+            "additionalProperties": false
+          }
+        }
+      ],
+      "routes": [
+        {
+          "method": "GET",
+          "path": "/api/analysis/sources",
+          "permission": "veyviz.analysis.read",
+          "kind": "read"
+        },
+        {
+          "method": "GET",
+          "path": "/api/analysis/readiness",
+          "permission": "veyviz.analysis.read",
+          "kind": "read"
+        },
+        {
+          "method": "GET",
+          "path": "/api/analysis",
+          "permission": "veyviz.analysis.read",
+          "kind": "read"
+        },
+        {
+          "method": "POST",
+          "path": "/api/analysis",
+          "permission": "veyviz.analysis.write",
+          "kind": "write"
+        },
+        {
+          "method": "GET",
+          "path": "/api/analysis/result",
+          "permission": "veyviz.analysis.read",
+          "kind": "read"
+        },
+        {
+          "method": "POST",
+          "path": "/api/analysis/cancel",
+          "permission": "veyviz.analysis.write",
+          "kind": "write"
+        },
+        {
+          "method": "POST",
+          "path": "/api/analysis/review",
+          "permission": "veyviz.analysis.write",
+          "kind": "write"
+        }
+      ],
+      "workspaces": [
+        {
+          "id": "veyviz.analysis",
+          "label": "Video analysis",
+          "path": "/analysis",
+          "permission": "veyviz.analysis.read",
+          "export": "workspace"
+        }
+      ],
+      "uiContributions": [],
+      "schema": {
+        "current": 1,
+        "readMin": 1,
+        "readMax": 1
+      },
+      "background": true,
+      "browserAssets": [
+        "styles.css"
+      ],
+      "studio": {
+        "label": "Veyviz analysis",
+        "summary": "Durable scoped local video-analysis requests and reviewed results.",
+        "category": "video",
+        "layers": [
+          "ui",
+          "backend",
+          "worker",
+          "data"
+        ],
+        "ui": {
+          "routes": [
+            {
+              "path": "/analysis",
+              "workspace": "veyviz.analysis",
+              "label": "Video analysis",
+              "nav": "Analysis"
+            }
+          ],
+          "extensionPoints": []
+        },
+        "backend": {
+          "services": [],
+          "jobs": [
+            {
+              "kind": "veyviz.analysis.run.v1",
+              "permission": "veyviz.analysis.write"
+            }
+          ]
+        },
+        "ai": {
+          "pipelines": [
+            {
+              "id": "veyviz.rfdetr.recorded.v1",
+              "label": "Bounded recorded video analysis",
+              "input": "registered recording",
+              "output": "typed detections and provenance"
+            }
+          ],
+          "models": [
+            {
+              "capability": "vision.detect",
+              "modality": "vision",
+              "placement": "edge",
+              "accelerator": "cpu"
+            }
+          ]
+        },
+        "data": {
+          "stores": [
+            {
+              "id": "veyviz-analysis",
+              "kind": "relational",
+              "ownership": "module"
+            }
+          ],
+          "schemas": [
+            {
+              "id": "veyviz-analysis",
+              "version": 1
+            }
+          ]
+        },
+        "deployment": {
+          "processes": [
+            {
+              "id": "veyviz-product-api",
+              "kind": "http"
+            },
+            {
+              "id": "veyviz-product-worker",
+              "kind": "worker"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "veyviz-rfdetr",
+      "version": "0.1.0",
+      "abi": "quadbridge.module.v1",
+      "dependencies": [],
+      "provides": [
+        "veyviz.recorded-analysis.run.v1"
+      ],
+      "requires": [],
+      "permissions": [
+        "veyviz.ai.read"
+      ],
+      "operations": [
+        {
+          "id": "veyviz-rfdetr.ai.readiness",
+          "version": 1,
+          "title": "Read local inference readiness",
+          "description": "Inspect bounded local model and companion integrity provenance without exposing private paths.",
+          "permission": "veyviz.ai.read",
+          "kind": "read",
+          "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "outputSchema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "READY",
+                  "UNAVAILABLE"
+                ]
+              },
+              "profileId": {
+                "type": "string",
+                "enum": [
+                  "rfdetr-small-cpu-v1"
+                ]
+              },
+              "fixtureId": {
+                "type": "string",
+                "enum": [
+                  "mivia-vid0062"
+                ]
+              },
+              "modelId": {
+                "type": "string",
+                "enum": [
+                  "rfdetr-small-cpu-v1"
+                ]
+              },
+              "sourceSha256": {
+                "type": "string",
+                "maxLength": 64
+              },
+              "modelSha256": {
+                "type": "string",
+                "maxLength": 64
+              },
+              "inventorySha256": {
+                "type": "string",
+                "maxLength": 64
+              },
+              "verifiedAt": {
+                "type": "string",
+                "minLength": 0,
+                "maxLength": 40
+              },
+              "message": {
+                "type": "string",
+                "maxLength": 200
+              },
+              "versions": {
+                "type": "array",
+                "maxItems": 50,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "version": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 80
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "version"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "status",
+              "profileId",
+              "fixtureId",
+              "modelId",
+              "sourceSha256",
+              "modelSha256",
+              "inventorySha256",
+              "verifiedAt",
+              "message",
+              "versions"
+            ],
+            "additionalProperties": false
+          }
+        }
+      ],
+      "routes": [
+        {
+          "method": "GET",
+          "path": "/api/ai/readiness",
+          "permission": "veyviz.ai.read",
+          "kind": "read"
+        }
+      ],
+      "workspaces": [],
+      "uiContributions": [
+        {
+          "id": "veyviz-rfdetr.provenance",
+          "permission": "veyviz.ai.read",
+          "export": "provenancePanel",
+          "label": "Inference provenance"
+        }
+      ],
+      "schema": {
+        "current": 1,
+        "readMin": 1,
+        "readMax": 1
+      },
+      "background": false,
+      "browserAssets": [
+        "styles.css"
+      ],
+      "studio": {
+        "label": "Veyviz RF-DETR",
+        "summary": "Fixed-profile local CPU inference through a verified Python companion process.",
+        "category": "vision",
+        "layers": [
+          "backend",
+          "ai"
+        ],
+        "ui": {
+          "routes": [],
+          "extensionPoints": [
+            "veyviz.analysis.provenance"
+          ]
+        },
+        "backend": {
+          "services": [
+            {
+              "id": "recorded-analysis",
+              "contract": "veyviz.recorded-analysis.run.v1",
+              "visibility": "product"
+            }
+          ],
+          "jobs": []
+        },
+        "ai": {
+          "pipelines": [
+            {
+              "id": "veyviz-rfdetr.recorded.v1",
+              "label": "RF-DETR small on local CPU",
+              "input": "bounded sampled recording",
+              "output": "typed person detections"
+            }
+          ],
+          "models": [
+            {
+              "capability": "vision.detect",
+              "modality": "vision",
+              "placement": "edge",
+              "accelerator": "cpu"
+            }
+          ]
+        },
+        "data": {
+          "stores": [],
+          "schemas": []
+        },
+        "deployment": {
+          "processes": [
+            {
+              "id": "veyviz-python-runner",
+              "kind": "worker"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "veyviz-sources",
+      "version": "0.1.0",
+      "abi": "quadbridge.module.v1",
+      "dependencies": [],
+      "provides": [
+        "veyviz.sources.read.v1"
+      ],
+      "requires": [],
+      "permissions": [
+        "veyviz.sources.read",
+        "veyviz.sources.write"
+      ],
+      "operations": [
+        {
+          "id": "veyviz-sources.sources.list",
+          "version": 1,
+          "title": "List video sources",
+          "description": "List authorized source registrations for the current tenant.",
+          "permission": "veyviz.sources.read",
+          "kind": "read",
+          "inputSchema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "outputSchema": {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "maxItems": 100,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 160
+                    },
+                    "fixtureId": {
+                      "type": "string",
+                      "enum": [
+                        "mivia-vid0062"
+                      ]
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "created": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "fixtureId",
+                    "version",
+                    "created"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "items"
+            ],
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "veyviz-sources.sources.register",
+          "version": 1,
+          "title": "Register a recorded fixture",
+          "description": "Register the single reviewed local recording fixture by opaque identifier.",
+          "permission": "veyviz.sources.write",
+          "kind": "write",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "fixtureId": {
+                "type": "string",
+                "enum": [
+                  "mivia-vid0062"
+                ]
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160
+              }
+            },
+            "required": [
+              "fixtureId",
+              "name"
+            ],
+            "additionalProperties": false
+          },
+          "outputSchema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160
+              },
+              "fixtureId": {
+                "type": "string",
+                "enum": [
+                  "mivia-vid0062"
+                ]
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "created": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "fixtureId",
+              "version",
+              "created"
+            ],
+            "additionalProperties": false
+          }
+        }
+      ],
+      "routes": [
+        {
+          "method": "GET",
+          "path": "/api/sources",
+          "permission": "veyviz.sources.read",
+          "kind": "read"
+        },
+        {
+          "method": "POST",
+          "path": "/api/sources",
+          "permission": "veyviz.sources.write",
+          "kind": "write"
+        },
+        {
+          "method": "POST",
+          "path": "/api/sources/rename",
+          "permission": "veyviz.sources.write",
+          "kind": "write"
+        }
+      ],
+      "workspaces": [
+        {
+          "id": "veyviz.sources",
+          "label": "Recordings",
+          "path": "/recordings",
+          "permission": "veyviz.sources.read",
+          "export": "workspace"
+        }
+      ],
+      "uiContributions": [],
+      "schema": {
+        "current": 1,
+        "readMin": 1,
+        "readMax": 1
+      },
+      "background": false,
+      "browserAssets": [
+        "styles.css"
+      ],
+      "studio": {
+        "label": "Veyviz sources",
+        "summary": "Tenant-owned registrations for reviewed local recordings.",
+        "category": "video",
+        "layers": [
+          "ui",
+          "backend",
+          "data"
+        ],
+        "ui": {
+          "routes": [
+            {
+              "path": "/recordings",
+              "workspace": "veyviz.sources",
+              "label": "Recordings",
+              "nav": "Recordings"
+            }
+          ],
+          "extensionPoints": []
+        },
+        "backend": {
+          "services": [
+            {
+              "id": "source-reader",
+              "contract": "veyviz.sources.read.v1",
+              "visibility": "product"
+            }
+          ],
+          "jobs": []
+        },
+        "ai": {
+          "pipelines": [],
+          "models": []
+        },
+        "data": {
+          "stores": [
+            {
+              "id": "veyviz-sources",
+              "kind": "relational",
+              "ownership": "module"
+            }
+          ],
+          "schemas": [
+            {
+              "id": "veyviz-sources",
+              "version": 1
+            }
+          ]
+        },
+        "deployment": {
+          "processes": [
+            {
+              "id": "veyviz-product-api",
+              "kind": "http"
+            }
+          ]
+        }
+      }
     }
   ],
   "products": [
@@ -755,6 +1631,62 @@
         }
       ],
       "bindings": []
+    },
+    {
+      "id": "veyviz-catalog",
+      "version": "0.1.0",
+      "platformAbi": "quadbridge.module.v1",
+      "title": "Veyviz Recording Catalog",
+      "description": "Tenant-owned source inventory without analysis or inference modules.",
+      "layout": "sidebar",
+      "modules": [
+        {
+          "id": "veyviz-sources",
+          "version": "0.1.0"
+        }
+      ],
+      "bindings": []
+    },
+    {
+      "id": "veyviz-review",
+      "version": "0.1.0",
+      "platformAbi": "quadbridge.module.v1",
+      "title": "Veyviz Video Review",
+      "description": "Review scoped local recording analyses with visible inference provenance.",
+      "layout": "sidebar",
+      "modules": [
+        {
+          "id": "veyviz-sources",
+          "version": "0.1.0"
+        },
+        {
+          "id": "veyviz-analysis",
+          "version": "0.1.0"
+        },
+        {
+          "id": "veyviz-rfdetr",
+          "version": "0.1.0"
+        }
+      ],
+      "bindings": [
+        {
+          "contract": "veyviz.sources.read.v1",
+          "instanceId": "local-veyviz-sources",
+          "implementation": "veyviz-sources",
+          "scope": "application",
+          "consumer": "veyviz-analysis",
+          "mode": "local"
+        },
+        {
+          "contract": "veyviz.recorded-analysis.run.v1",
+          "instanceId": "local-veyviz-rfdetr",
+          "implementation": "veyviz-rfdetr",
+          "scope": "application",
+          "consumer": "veyviz-analysis",
+          "mode": "local"
+        }
+      ],
+      "wiring": "veyviz"
     }
   ],
   "solutions": [
@@ -817,6 +1749,50 @@
                 },
                 "prerequisites": [
                   "Requires an explicitly configured destination, tenant mapping and authorized service identity. The Studio does not provision another product automatically."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "veyviz",
+      "version": "0.1.0",
+      "semantics": "Product-owned recorded analysis calls authorized source metadata and a verified local RF-DETR companion through fixed public ports. No shared domain database.",
+      "studio": {
+        "consumer": "veyviz-analysis",
+        "label": "Veyviz recorded analysis",
+        "ports": [
+          {
+            "contract": "veyviz.sources.read.v1",
+            "choices": [
+              {
+                "id": "local",
+                "label": "Recordings in this product",
+                "binding": {
+                  "instanceId": "local-veyviz-sources",
+                  "implementation": "veyviz-sources",
+                  "scope": "application",
+                  "mode": "local"
+                }
+              }
+            ]
+          },
+          {
+            "contract": "veyviz.recorded-analysis.run.v1",
+            "choices": [
+              {
+                "id": "local",
+                "label": "Verified local RF-DETR CPU companion",
+                "binding": {
+                  "instanceId": "local-veyviz-rfdetr",
+                  "implementation": "veyviz-rfdetr",
+                  "scope": "application",
+                  "mode": "local"
+                },
+                "prerequisites": [
+                  "Requires the separately installed, digest-verified local recording/model profile. Product selection does not install assets or grant permissions."
                 ]
               }
             ]
@@ -2432,6 +3408,1226 @@
           "desk.receipts.read"
         ],
         "requiresWorker": false
+      }
+    },
+    "veyviz-catalog": {
+      "valid": true,
+      "plan": {
+        "product": {
+          "id": "veyviz-catalog",
+          "version": "0.1.0",
+          "platformAbi": "quadbridge.module.v1",
+          "title": "Veyviz Recording Catalog",
+          "description": "Tenant-owned source inventory without analysis or inference modules.",
+          "layout": "sidebar",
+          "modules": [
+            {
+              "id": "veyviz-sources",
+              "version": "0.1.0"
+            }
+          ],
+          "bindings": []
+        },
+        "modules": [
+          {
+            "id": "veyviz-sources",
+            "version": "0.1.0",
+            "abi": "quadbridge.module.v1",
+            "dependencies": [],
+            "provides": [
+              "veyviz.sources.read.v1"
+            ],
+            "requires": [],
+            "permissions": [
+              "veyviz.sources.read",
+              "veyviz.sources.write"
+            ],
+            "operations": [
+              {
+                "id": "veyviz-sources.sources.list",
+                "version": 1,
+                "title": "List video sources",
+                "description": "List authorized source registrations for the current tenant.",
+                "permission": "veyviz.sources.read",
+                "kind": "read",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "maxItems": 100,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 160
+                          },
+                          "fixtureId": {
+                            "type": "string",
+                            "enum": [
+                              "mivia-vid0062"
+                            ]
+                          },
+                          "version": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "created": {
+                            "type": "integer",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "fixtureId",
+                          "version",
+                          "created"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "items"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "id": "veyviz-sources.sources.register",
+                "version": 1,
+                "title": "Register a recorded fixture",
+                "description": "Register the single reviewed local recording fixture by opaque identifier.",
+                "permission": "veyviz.sources.write",
+                "kind": "write",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "fixtureId": {
+                      "type": "string",
+                      "enum": [
+                        "mivia-vid0062"
+                      ]
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 160
+                    }
+                  },
+                  "required": [
+                    "fixtureId",
+                    "name"
+                  ],
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 160
+                    },
+                    "fixtureId": {
+                      "type": "string",
+                      "enum": [
+                        "mivia-vid0062"
+                      ]
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "created": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "fixtureId",
+                    "version",
+                    "created"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            ],
+            "routes": [
+              {
+                "method": "GET",
+                "path": "/api/sources",
+                "permission": "veyviz.sources.read",
+                "kind": "read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/sources",
+                "permission": "veyviz.sources.write",
+                "kind": "write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/sources/rename",
+                "permission": "veyviz.sources.write",
+                "kind": "write"
+              }
+            ],
+            "workspaces": [
+              {
+                "id": "veyviz.sources",
+                "label": "Recordings",
+                "path": "/recordings",
+                "permission": "veyviz.sources.read",
+                "export": "workspace"
+              }
+            ],
+            "uiContributions": [],
+            "schema": {
+              "current": 1,
+              "readMin": 1,
+              "readMax": 1
+            },
+            "background": false,
+            "browserAssets": [
+              "styles.css"
+            ],
+            "studio": {
+              "label": "Veyviz sources",
+              "summary": "Tenant-owned registrations for reviewed local recordings.",
+              "category": "video",
+              "layers": [
+                "ui",
+                "backend",
+                "data"
+              ],
+              "ui": {
+                "routes": [
+                  {
+                    "path": "/recordings",
+                    "workspace": "veyviz.sources",
+                    "label": "Recordings",
+                    "nav": "Recordings"
+                  }
+                ],
+                "extensionPoints": []
+              },
+              "backend": {
+                "services": [
+                  {
+                    "id": "source-reader",
+                    "contract": "veyviz.sources.read.v1",
+                    "visibility": "product"
+                  }
+                ],
+                "jobs": []
+              },
+              "ai": {
+                "pipelines": [],
+                "models": []
+              },
+              "data": {
+                "stores": [
+                  {
+                    "id": "veyviz-sources",
+                    "kind": "relational",
+                    "ownership": "module"
+                  }
+                ],
+                "schemas": [
+                  {
+                    "id": "veyviz-sources",
+                    "version": 1
+                  }
+                ]
+              },
+              "deployment": {
+                "processes": [
+                  {
+                    "id": "veyviz-product-api",
+                    "kind": "http"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "bindings": [],
+        "permissions": [
+          "veyviz.sources.read",
+          "veyviz.sources.write"
+        ],
+        "requiresWorker": false
+      }
+    },
+    "veyviz-review": {
+      "valid": true,
+      "plan": {
+        "product": {
+          "id": "veyviz-review",
+          "version": "0.1.0",
+          "platformAbi": "quadbridge.module.v1",
+          "title": "Veyviz Video Review",
+          "description": "Review scoped local recording analyses with visible inference provenance.",
+          "layout": "sidebar",
+          "modules": [
+            {
+              "id": "veyviz-analysis",
+              "version": "0.1.0"
+            },
+            {
+              "id": "veyviz-rfdetr",
+              "version": "0.1.0"
+            },
+            {
+              "id": "veyviz-sources",
+              "version": "0.1.0"
+            }
+          ],
+          "bindings": [
+            {
+              "contract": "veyviz.recorded-analysis.run.v1",
+              "instanceId": "local-veyviz-rfdetr",
+              "implementation": "veyviz-rfdetr",
+              "scope": "application",
+              "consumer": "veyviz-analysis",
+              "mode": "local"
+            },
+            {
+              "contract": "veyviz.sources.read.v1",
+              "instanceId": "local-veyviz-sources",
+              "implementation": "veyviz-sources",
+              "scope": "application",
+              "consumer": "veyviz-analysis",
+              "mode": "local"
+            }
+          ],
+          "wiring": "veyviz"
+        },
+        "modules": [
+          {
+            "id": "veyviz-sources",
+            "version": "0.1.0",
+            "abi": "quadbridge.module.v1",
+            "dependencies": [],
+            "provides": [
+              "veyviz.sources.read.v1"
+            ],
+            "requires": [],
+            "permissions": [
+              "veyviz.sources.read",
+              "veyviz.sources.write"
+            ],
+            "operations": [
+              {
+                "id": "veyviz-sources.sources.list",
+                "version": 1,
+                "title": "List video sources",
+                "description": "List authorized source registrations for the current tenant.",
+                "permission": "veyviz.sources.read",
+                "kind": "read",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "maxItems": 100,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 160
+                          },
+                          "fixtureId": {
+                            "type": "string",
+                            "enum": [
+                              "mivia-vid0062"
+                            ]
+                          },
+                          "version": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "created": {
+                            "type": "integer",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "fixtureId",
+                          "version",
+                          "created"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "items"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "id": "veyviz-sources.sources.register",
+                "version": 1,
+                "title": "Register a recorded fixture",
+                "description": "Register the single reviewed local recording fixture by opaque identifier.",
+                "permission": "veyviz.sources.write",
+                "kind": "write",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "fixtureId": {
+                      "type": "string",
+                      "enum": [
+                        "mivia-vid0062"
+                      ]
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 160
+                    }
+                  },
+                  "required": [
+                    "fixtureId",
+                    "name"
+                  ],
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 160
+                    },
+                    "fixtureId": {
+                      "type": "string",
+                      "enum": [
+                        "mivia-vid0062"
+                      ]
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "created": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "fixtureId",
+                    "version",
+                    "created"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            ],
+            "routes": [
+              {
+                "method": "GET",
+                "path": "/api/sources",
+                "permission": "veyviz.sources.read",
+                "kind": "read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/sources",
+                "permission": "veyviz.sources.write",
+                "kind": "write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/sources/rename",
+                "permission": "veyviz.sources.write",
+                "kind": "write"
+              }
+            ],
+            "workspaces": [
+              {
+                "id": "veyviz.sources",
+                "label": "Recordings",
+                "path": "/recordings",
+                "permission": "veyviz.sources.read",
+                "export": "workspace"
+              }
+            ],
+            "uiContributions": [],
+            "schema": {
+              "current": 1,
+              "readMin": 1,
+              "readMax": 1
+            },
+            "background": false,
+            "browserAssets": [
+              "styles.css"
+            ],
+            "studio": {
+              "label": "Veyviz sources",
+              "summary": "Tenant-owned registrations for reviewed local recordings.",
+              "category": "video",
+              "layers": [
+                "ui",
+                "backend",
+                "data"
+              ],
+              "ui": {
+                "routes": [
+                  {
+                    "path": "/recordings",
+                    "workspace": "veyviz.sources",
+                    "label": "Recordings",
+                    "nav": "Recordings"
+                  }
+                ],
+                "extensionPoints": []
+              },
+              "backend": {
+                "services": [
+                  {
+                    "id": "source-reader",
+                    "contract": "veyviz.sources.read.v1",
+                    "visibility": "product"
+                  }
+                ],
+                "jobs": []
+              },
+              "ai": {
+                "pipelines": [],
+                "models": []
+              },
+              "data": {
+                "stores": [
+                  {
+                    "id": "veyviz-sources",
+                    "kind": "relational",
+                    "ownership": "module"
+                  }
+                ],
+                "schemas": [
+                  {
+                    "id": "veyviz-sources",
+                    "version": 1
+                  }
+                ]
+              },
+              "deployment": {
+                "processes": [
+                  {
+                    "id": "veyviz-product-api",
+                    "kind": "http"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "veyviz-rfdetr",
+            "version": "0.1.0",
+            "abi": "quadbridge.module.v1",
+            "dependencies": [],
+            "provides": [
+              "veyviz.recorded-analysis.run.v1"
+            ],
+            "requires": [],
+            "permissions": [
+              "veyviz.ai.read"
+            ],
+            "operations": [
+              {
+                "id": "veyviz-rfdetr.ai.readiness",
+                "version": 1,
+                "title": "Read local inference readiness",
+                "description": "Inspect bounded local model and companion integrity provenance without exposing private paths.",
+                "permission": "veyviz.ai.read",
+                "kind": "read",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "READY",
+                        "UNAVAILABLE"
+                      ]
+                    },
+                    "profileId": {
+                      "type": "string",
+                      "enum": [
+                        "rfdetr-small-cpu-v1"
+                      ]
+                    },
+                    "fixtureId": {
+                      "type": "string",
+                      "enum": [
+                        "mivia-vid0062"
+                      ]
+                    },
+                    "modelId": {
+                      "type": "string",
+                      "enum": [
+                        "rfdetr-small-cpu-v1"
+                      ]
+                    },
+                    "sourceSha256": {
+                      "type": "string",
+                      "maxLength": 64
+                    },
+                    "modelSha256": {
+                      "type": "string",
+                      "maxLength": 64
+                    },
+                    "inventorySha256": {
+                      "type": "string",
+                      "maxLength": 64
+                    },
+                    "verifiedAt": {
+                      "type": "string",
+                      "minLength": 0,
+                      "maxLength": 40
+                    },
+                    "message": {
+                      "type": "string",
+                      "maxLength": 200
+                    },
+                    "versions": {
+                      "type": "array",
+                      "maxItems": 50,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "version": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 80
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "version"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "profileId",
+                    "fixtureId",
+                    "modelId",
+                    "sourceSha256",
+                    "modelSha256",
+                    "inventorySha256",
+                    "verifiedAt",
+                    "message",
+                    "versions"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            ],
+            "routes": [
+              {
+                "method": "GET",
+                "path": "/api/ai/readiness",
+                "permission": "veyviz.ai.read",
+                "kind": "read"
+              }
+            ],
+            "workspaces": [],
+            "uiContributions": [
+              {
+                "id": "veyviz-rfdetr.provenance",
+                "permission": "veyviz.ai.read",
+                "export": "provenancePanel",
+                "label": "Inference provenance"
+              }
+            ],
+            "schema": {
+              "current": 1,
+              "readMin": 1,
+              "readMax": 1
+            },
+            "background": false,
+            "browserAssets": [
+              "styles.css"
+            ],
+            "studio": {
+              "label": "Veyviz RF-DETR",
+              "summary": "Fixed-profile local CPU inference through a verified Python companion process.",
+              "category": "vision",
+              "layers": [
+                "backend",
+                "ai"
+              ],
+              "ui": {
+                "routes": [],
+                "extensionPoints": [
+                  "veyviz.analysis.provenance"
+                ]
+              },
+              "backend": {
+                "services": [
+                  {
+                    "id": "recorded-analysis",
+                    "contract": "veyviz.recorded-analysis.run.v1",
+                    "visibility": "product"
+                  }
+                ],
+                "jobs": []
+              },
+              "ai": {
+                "pipelines": [
+                  {
+                    "id": "veyviz-rfdetr.recorded.v1",
+                    "label": "RF-DETR small on local CPU",
+                    "input": "bounded sampled recording",
+                    "output": "typed person detections"
+                  }
+                ],
+                "models": [
+                  {
+                    "capability": "vision.detect",
+                    "modality": "vision",
+                    "placement": "edge",
+                    "accelerator": "cpu"
+                  }
+                ]
+              },
+              "data": {
+                "stores": [],
+                "schemas": []
+              },
+              "deployment": {
+                "processes": [
+                  {
+                    "id": "veyviz-python-runner",
+                    "kind": "worker"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "veyviz-analysis",
+            "version": "0.1.0",
+            "abi": "quadbridge.module.v1",
+            "dependencies": [
+              {
+                "id": "veyviz-sources",
+                "version": "0.1.0"
+              }
+            ],
+            "provides": [],
+            "requires": [
+              "veyviz.sources.read.v1",
+              "veyviz.recorded-analysis.run.v1"
+            ],
+            "permissions": [
+              "veyviz.analysis.read",
+              "veyviz.analysis.write"
+            ],
+            "operations": [
+              {
+                "id": "veyviz-analysis.analysis.list",
+                "version": 1,
+                "title": "List analyses",
+                "description": "List analysis jobs and accepted-result summaries for the current tenant.",
+                "permission": "veyviz.analysis.read",
+                "kind": "read",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {},
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "maxItems": 25,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "jobId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "sourceId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "sourceVersion": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "jobState": {
+                            "type": "string",
+                            "enum": [
+                              "QUEUED",
+                              "RUNNING",
+                              "CANCEL_REQUESTED",
+                              "CANCELLED",
+                              "SUCCEEDED",
+                              "FAILED"
+                            ]
+                          },
+                          "reviewState": {
+                            "type": "string",
+                            "enum": [
+                              "OPEN",
+                              "REVIEWED",
+                              "DISMISSED"
+                            ]
+                          },
+                          "created": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "sampleCount": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 6
+                          },
+                          "detectionCount": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 600
+                          },
+                          "coverage": {
+                            "type": "string",
+                            "enum": [
+                              "UNCOMMISSIONED_RECORDING",
+                              "UNKNOWN"
+                            ]
+                          },
+                          "occupancy": {
+                            "type": "string",
+                            "enum": [
+                              "UNKNOWN"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "jobId",
+                          "sourceId",
+                          "sourceVersion",
+                          "jobState",
+                          "reviewState",
+                          "created",
+                          "sampleCount",
+                          "detectionCount",
+                          "coverage",
+                          "occupancy"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "items"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "id": "veyviz-analysis.analysis.submit",
+                "version": 1,
+                "title": "Submit recorded analysis",
+                "description": "Queue bounded local RF-DETR analysis for an authorized registered source.",
+                "permission": "veyviz.analysis.write",
+                "kind": "write",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "sourceId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "frameCount": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 6
+                    },
+                    "sampleStride": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 30
+                    }
+                  },
+                  "required": [
+                    "sourceId",
+                    "frameCount",
+                    "sampleStride"
+                  ],
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "state": {
+                      "type": "string",
+                      "enum": [
+                        "QUEUED"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "jobId",
+                    "state"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "id": "veyviz-analysis.analysis.cancel",
+                "version": 1,
+                "title": "Cancel analysis",
+                "description": "Request cancellation and report the durable job state for an owned analysis.",
+                "permission": "veyviz.analysis.write",
+                "kind": "write",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "analysisId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": [
+                    "analysisId"
+                  ],
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "jobState": {
+                      "type": "string",
+                      "enum": [
+                        "QUEUED",
+                        "RUNNING",
+                        "CANCEL_REQUESTED",
+                        "CANCELLED",
+                        "SUCCEEDED",
+                        "FAILED"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "jobState"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "id": "veyviz-analysis.analysis.review",
+                "version": 1,
+                "title": "Record result review",
+                "description": "Record a human review state for an already accepted analysis result.",
+                "permission": "veyviz.analysis.write",
+                "kind": "write",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "analysisId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "decision": {
+                      "type": "string",
+                      "enum": [
+                        "REVIEWED",
+                        "DISMISSED"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "analysisId",
+                    "decision"
+                  ],
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "decision": {
+                      "type": "string",
+                      "enum": [
+                        "REVIEWED",
+                        "DISMISSED"
+                      ]
+                    },
+                    "reviewedAt": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "decision",
+                    "reviewedAt"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            ],
+            "routes": [
+              {
+                "method": "GET",
+                "path": "/api/analysis/sources",
+                "permission": "veyviz.analysis.read",
+                "kind": "read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/analysis/readiness",
+                "permission": "veyviz.analysis.read",
+                "kind": "read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/analysis",
+                "permission": "veyviz.analysis.read",
+                "kind": "read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/analysis",
+                "permission": "veyviz.analysis.write",
+                "kind": "write"
+              },
+              {
+                "method": "GET",
+                "path": "/api/analysis/result",
+                "permission": "veyviz.analysis.read",
+                "kind": "read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/analysis/cancel",
+                "permission": "veyviz.analysis.write",
+                "kind": "write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/analysis/review",
+                "permission": "veyviz.analysis.write",
+                "kind": "write"
+              }
+            ],
+            "workspaces": [
+              {
+                "id": "veyviz.analysis",
+                "label": "Video analysis",
+                "path": "/analysis",
+                "permission": "veyviz.analysis.read",
+                "export": "workspace"
+              }
+            ],
+            "uiContributions": [],
+            "schema": {
+              "current": 1,
+              "readMin": 1,
+              "readMax": 1
+            },
+            "background": true,
+            "browserAssets": [
+              "styles.css"
+            ],
+            "studio": {
+              "label": "Veyviz analysis",
+              "summary": "Durable scoped local video-analysis requests and reviewed results.",
+              "category": "video",
+              "layers": [
+                "ui",
+                "backend",
+                "worker",
+                "data"
+              ],
+              "ui": {
+                "routes": [
+                  {
+                    "path": "/analysis",
+                    "workspace": "veyviz.analysis",
+                    "label": "Video analysis",
+                    "nav": "Analysis"
+                  }
+                ],
+                "extensionPoints": []
+              },
+              "backend": {
+                "services": [],
+                "jobs": [
+                  {
+                    "kind": "veyviz.analysis.run.v1",
+                    "permission": "veyviz.analysis.write"
+                  }
+                ]
+              },
+              "ai": {
+                "pipelines": [
+                  {
+                    "id": "veyviz.rfdetr.recorded.v1",
+                    "label": "Bounded recorded video analysis",
+                    "input": "registered recording",
+                    "output": "typed detections and provenance"
+                  }
+                ],
+                "models": [
+                  {
+                    "capability": "vision.detect",
+                    "modality": "vision",
+                    "placement": "edge",
+                    "accelerator": "cpu"
+                  }
+                ]
+              },
+              "data": {
+                "stores": [
+                  {
+                    "id": "veyviz-analysis",
+                    "kind": "relational",
+                    "ownership": "module"
+                  }
+                ],
+                "schemas": [
+                  {
+                    "id": "veyviz-analysis",
+                    "version": 1
+                  }
+                ]
+              },
+              "deployment": {
+                "processes": [
+                  {
+                    "id": "veyviz-product-api",
+                    "kind": "http"
+                  },
+                  {
+                    "id": "veyviz-product-worker",
+                    "kind": "worker"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "bindings": [
+          {
+            "contract": "veyviz.recorded-analysis.run.v1",
+            "instanceId": "local-veyviz-rfdetr",
+            "implementation": "veyviz-rfdetr",
+            "scope": "application",
+            "consumer": "veyviz-analysis",
+            "mode": "local"
+          },
+          {
+            "contract": "veyviz.sources.read.v1",
+            "instanceId": "local-veyviz-sources",
+            "implementation": "veyviz-sources",
+            "scope": "application",
+            "consumer": "veyviz-analysis",
+            "mode": "local"
+          }
+        ],
+        "permissions": [
+          "veyviz.ai.read",
+          "veyviz.analysis.read",
+          "veyviz.analysis.write",
+          "veyviz.sources.read",
+          "veyviz.sources.write"
+        ],
+        "requiresWorker": true
       }
     }
   },

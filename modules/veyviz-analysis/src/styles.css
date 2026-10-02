@@ -1,0 +1,7 @@
+.analysis-visual { width: 100%; overflow: hidden; border-radius: .55rem; background: #101411; }
+.analysis-frame { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.analysis-review { display: flex; flex-wrap: wrap; gap: .55rem; align-items: center; margin-top: .8rem; }
+.analysis-review p { flex-basis: 100%; }
+.content:has(> .veyviz-analysis) { min-width: 0; max-width: 100%; }
+.veyviz-analysis { overflow-wrap: anywhere; }
+.veyviz-analysis select { min-width: 0; max-width: 100%; }

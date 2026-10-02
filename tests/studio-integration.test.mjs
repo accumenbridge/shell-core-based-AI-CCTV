@@ -49,8 +49,9 @@ test('Studio server: pairing, exact origin/host, bounded routes and no filesyste
 test('Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt',async t=>{
     const copied=await copyRoot(t),{root,temp}=copied;
     const original=await readFile(join(root,'packages/backend-host/src/index.ts'),'utf8');
+    const initialCatalogue=await readCatalogue(root);
     run(root,'tools/factory.mjs','create-module','checklist');
-    const catalogue=await readCatalogue(root);assert.equal(catalogue.modules.length,4);
+    const catalogue=await readCatalogue(root);assert.equal(catalogue.modules.length,initialCatalogue.modules.length+1);assert.ok(catalogue.modules.some(module=>module.id==='checklist'));
     const result=composeDraft({id:'facility-new',title:'Facility studio acceptance',selected:['checklist','handoff']},catalogue.modules,catalogue.solutions);
     const studio=await createStudio({root,stateRoot:join(temp,'operator'),port:0,quiet:true});copied.registerCleanup(()=>studio.close());const cookie=await pair(studio);
     const saved=await call(studio,cookie,'/products','POST',result.product);assert.equal(saved.status,201);assert.equal((await call(studio,cookie,'/products','POST',result.product)).status,409);
@@ -103,5 +104,5 @@ test('Acceptance: generate module → dynamic Studio → compose new name → bu
     assert.equal((await api('/api/handoffs/options')).connection.state,'BLOCKED','Restart must not restore removed authority/mode');
     assert.equal((await api('/api/handoffs')).items[0].outcome,'DESTINATION_COMMITTED','Existing receipt remains true while new actions are blocked');
     await mkdir(join(ROOT,'evidence'),{recursive:true});
-    await writeFile(join(ROOT,'evidence/studio-journey.json'),JSON.stringify({status:'PASSED_FOR_LOCAL_API_WORKFLOW',at:new Date().toISOString(),fixtureProduct:'facility-new',fixtureModule:'checklist',sourceCatalogueModules:4,maintainedBackendHostUnchanged:true,studioDefinitionSaved:true,studioBuild:'BUILT',instance:'API_READY',generatedModuleRecordsAfterRestart:1,destinationRecordsAfterRestart:1,receipt:handoffs.items[0].acceptance.receipt,pausedDestinationAfterRestart:'BLOCKED',browser:'NOT_PROVEN_BY_THIS_TEST',credentialsIncluded:false},null,2)+'\n');
+    await writeFile(join(ROOT,'evidence/studio-journey.json'),JSON.stringify({status:'PASSED_FOR_LOCAL_API_WORKFLOW',at:new Date().toISOString(),fixtureProduct:'facility-new',fixtureModule:'checklist',sourceCatalogueModules:catalogue.modules.length,maintainedBackendHostUnchanged:true,studioDefinitionSaved:true,studioBuild:'BUILT',instance:'API_READY',generatedModuleRecordsAfterRestart:1,destinationRecordsAfterRestart:1,receipt:handoffs.items[0].acceptance.receipt,pausedDestinationAfterRestart:'BLOCKED',browser:'NOT_PROVEN_BY_THIS_TEST',credentialsIncluded:false},null,2)+'\n');
 });

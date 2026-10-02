@@ -1,7 +1,3 @@
-# Intended outcome
+# Product outcome
 
-Implement a product-neutral platform that composes validated products, builds immutable runnable snapshots, retains and promotes exact artifacts, operates one supported deployment profile, and executes grounded AI and construction workflows through canonical contracts.
-
-Maintained source owns platform semantics. Modules own domain data and migrations; hosts consume fixed reviewed compositions; control-plane operator authority remains distinct from business authority. Declared capabilities become implemented only with execution evidence.
-
-Delivery is phased through .brain/PLATFORM_ROADMAP.md. Accepted PLATFORM-001 provides paired local administration; accepted PLATFORM-002 provides durable local product/build execution and verified exports. PLATFORM-003 provides exact local artifact registration/retrieval/promotion, accepted only for accessible local scope with blocked fixture gates. PLATFORM-004 managed local runtime and PLATFORM-005A private same-instance backup/verify/restore provide accepted local core operation. PLATFORM-006 provides accepted authorized indexed Knowledge excerpts and exact cited local extractive answers. Current PLATFORM-007 completes full construction-definition import/edit/preview/save/export/build. Hosted adapters and provider inference remain later increments until implemented and verified. Passing local checks does not establish whole-platform or production acceptance.
+A user can sign in, select an authorized recording, request analysis, see actual three-sample CPU model results and read retained results after restart. Another product variant reuses the reviewed module closure without host edits. Source and authority owners remain explicit. Product delivery evidence starts empty.

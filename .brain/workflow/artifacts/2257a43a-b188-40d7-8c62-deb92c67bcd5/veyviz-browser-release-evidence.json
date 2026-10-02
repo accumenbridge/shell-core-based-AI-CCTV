@@ -1,0 +1,45 @@
+{
+  "schema": "veyviz.browser-evidence.v1",
+  "status": "PASS",
+  "sourceInventoryDigest": "f4b10dd232130ca1f83ecaed745470f1f4b69574c3f9df197798e3ea2ce7abb0",
+  "runtimeFingerprint": "4d42f448f2f794408db3ec1928cb3955a8f007bcd35da6978f6bd80416d9b339",
+  "url": "http://127.0.0.1:52464",
+  "browser": "Codex in-app Chromium browser, actual UI actions via cua_repl",
+  "checks": [
+    "Admin signs in with isolated fixture credentials.",
+    "Register Local video review in alpha; source inventory retains version 1.",
+    "Queue actual RF-DETR CPU analysis; SUCCEEDED with three samples at frame indices 0, 10, 20.",
+    "Open saved result; three actual JPEG frames visibly render; zero model detections and UNKNOWN occupancy remain truthful.",
+    "Mark reviewed; browser reload retains REVIEWED status and saved result.",
+    "Select tenant beta; no sources or analyses from alpha are visible; queue is disabled with no source.",
+    "Viewer has only alpha; queue and sample inputs are disabled, result review actions absent, and recording register/rename controls absent; read views and explicit read-only notes remain.",
+    "Admin can sign back in and view the unchanged accepted and reviewed result.",
+    "Responsive browser verified at narrow and 1280x900 desktop breakpoint: viewport/scroll widths 502/502 and 1265/1265; no horizontal overflow. Three frame canvases render."
+  ],
+  "samples": [
+    {
+      "frameIndex": 0,
+      "positionMs": 0,
+      "inferenceMs": 610.0,
+      "detections": 0
+    },
+    {
+      "frameIndex": 10,
+      "positionMs": 333.3,
+      "inferenceMs": 594.3,
+      "detections": 0
+    },
+    {
+      "frameIndex": 20,
+      "positionMs": 666.7,
+      "inferenceMs": 563.2,
+      "detections": 0
+    }
+  ],
+  "screenshot": ".local/veyviz-browser-final.jpg",
+  "limitations": [
+    "Local fixture profile only; no live camera, arbitrary upload, production or native-device qualification.",
+    "Server denial is separately verified by current exported HTTP E2E; UI permission snapshot is presentation, not an authority grant.",
+    "Reported tool observation and actual screenshot do not authenticate execution cryptographically."
+  ]
+}

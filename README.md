@@ -1,4 +1,12 @@
-# Quadbridge Product Studio — integration 1
+# Veyviz product on Quadbridge
+
+This is the independent Veyviz product repository. Start with [the product guide](docs/veyviz/README.md), [current product status](docs/veyviz/STATUS.md), and [architecture](docs/veyviz/ARCHITECTURE.md). The framework source is pinned to `3b666e9`; selected Veyviz AI source is captured separately with provenance. The original repositories remain unchanged by this product build.
+
+The selected profile is local recorded-video review. Product verification is recorded separately from the inherited framework history below.
+
+---
+
+# Inherited Quadbridge Product Studio — integration 1
 
 **The same visual design, now connected to a real local product-building workflow.**
 This complete project includes Foundation 0.2 source and compiled output, the dynamic visual Studio,

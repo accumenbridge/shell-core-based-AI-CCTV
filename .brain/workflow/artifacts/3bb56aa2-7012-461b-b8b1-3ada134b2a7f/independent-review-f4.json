@@ -1,0 +1,39 @@
+{
+  "schema": "veyviz.independent-review.v1",
+  "reviewer": "/root/veyviz_integration_map",
+  "sourceInventoryDigest": "f4b10dd232130ca1f83ecaed745470f1f4b69574c3f9df197798e3ea2ce7abb0",
+  "brainCandidate": "9a94057148bc0d3570f5fbc13fd1bf25c4624b7c4dc6336672bee80a19eac829",
+  "runtimeFingerprint": "4d42f448f2f794408db3ec1928cb3955a8f007bcd35da6978f6bd80416d9b339",
+  "sourceReview": "ACCEPTED_FOR_SELECTED_LOCAL_RECORDED_PROFILE",
+  "releaseQualification": "REVIEW_BLOCKED_ENV_REQUIRED_FILE_SYMLINK_FIXTURE",
+  "unresolvedSourceFindings": [],
+  "verification": {
+    "inventory": "MATCHED_334_FILES",
+    "deltaReview": "Four product UI files reviewed. Previous provenance overflow and viewer write-control presentation findings repaired. Compared with prior exported release: compiled backend behavior unchanged; only UI files/web map/generated presentation assets differ.",
+    "python": "10/10 fresh installed tests passed in 14.247s, including actual three-sample CPU inference and native-owner cancellation.",
+    "exportedReviewHttp": "PASS_8_CHECKS; matching runtime fingerprint4d42f448f2f794408db3ec1928cb3955a8f007bcd35da6978f6bd80416d9b339",
+    "exportedCatalog": "PASS_5_CHECKS",
+    "browser": "PASS reported real tool observations; final desktop screenshot independently viewed. Narrow widths502/502 and desktop1265/1265 reported, with three frame canvases and permission-aware viewer presentation.",
+    "companionAndReleaseFiles": "PASS current verification log;61review files and41catalog files",
+    "fullSuite": "COMPLETED: 379 tests; 378 passed; 0 failed; 0 cancelled; 1 skipped; 0 todo; duration 817031.3137ms. Root reports command exit0; final TAP independently inspected. Test101 blocked/skipped because host denied owned file-symlink fixture with EPERM. Final source inventory independently reverified MATCHED334."
+  },
+  "limitations": [
+    "Required file-symlink fixture blocked by Windows EPERM. No security controls were changed. Full release qualification cannot be claimed while that required gate remains blocked.",
+    "Selected local recorded fixture and CPU profile only; no live camera, arbitrary upload, continuous video, production deployment, native-device, throughput or accuracy qualification.",
+    "Independent Node exports use the separately verified digest-bound local AI companion; standalone redistribution of model/media assets is not qualified.",
+    "Browser report is tool-reported observation supported by a screenshot, not cryptographically authenticated execution."
+  ],
+  "evidence": [
+    ".local/veyviz-browser-release-evidence.json",
+    ".local/veyviz-browser-final.jpg",
+    ".local/independent-export-d9af83e63f4f4276be53eb543e67382a/review-e2e-data/e2e-result.json",
+    ".local/independent-export-d9af83e63f4f4276be53eb543e67382a/catalog-export-evidence.json",
+    ".local/veyviz-ai/evidence/python-tests-release.log",
+    ".local/veyviz-verify-release.log",
+    ".local/veyviz-full-suite-04.log",
+    ".local/verified-release-records.json",
+    "docs/veyviz/RELEASE_INPUTS.json"
+  ],
+  "priorFindings": "Previously reported enrollment, lifecycle, protocol, module wiring, idempotency and commit-authority repairs remain accepted; final UI fixes accepted after source and evidence inspection.",
+  "noCandidateFilesEdited": true
+}

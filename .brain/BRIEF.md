@@ -1,7 +1,5 @@
-# Authorized platform program
+# Product brief
 
-The user requested on 2026-09-30: “ok with this start building the full architecture based works”. Build the full Quadbridge architecture in coherent, verified increments from this independent source repository. Earlier baseline-only records are preserved in .brain/archive/LOCAL-RELIABILITY-001/ and completed task/evidence files.
+User request 2026-10-03: analyze latest worker/framework/Veyviz state and build an independent new full-stack modular, plugin-capable product using Quadbridge; original repositories remain preserved. Root adopts local recorded-video scope and proposed new target.
 
-Use gpt-6.1-sol/high for planning, architecture and independent review, and gpt-6-luna/xhigh for implementation and repair. The coordinator dispatches explicitly and owns shared Brain records. Budget is unknown.
-
-The first increment is PLATFORM-001, a safe local control-plane foundation. Follow .brain/PLATFORM_ROADMAP.md and the mapped task. Preserve all source ownership, safety and approval rules. Local code, necessary dependencies and non-destructive migrations are in scope; external repositories, credentials, spending, global configuration and actual external deployment are not authorized.
+Deliver a genuinely usable local video-review/AI-analysis product first, with real scoped source/jobs/results, RF-DETR CPU inference, actual browser use, restart durability and a second extensible composition. Whole production/live/native readiness remains separate advertised-profile verification.

@@ -1,12 +1,12 @@
 {
   "schema": "brain.project-setup.v1",
-  "name": "Quadbridge Product Studio 0.3",
-  "kind": "product-neutral-platform-framework",
+  "name": "Veyviz Quadbridge local video product",
+  "kind": "independent-modular-product",
   "repositories": [
     {
       "id": "main",
       "path": ".",
-      "purpose": "Independent product-neutral source repository; not the Veyviz application repository."
+      "purpose": "Independent Product implementation; originals are preserved references."
     }
   ],
   "canonical": {
@@ -16,15 +16,15 @@
     "strategy": ".brain/STRATEGY.md",
     "decisions": ".brain/DECISIONS.md",
     "progress": ".brain/CURRENT.md",
-    "current_work": ".brain/tasks/SAFE-UPGRADE-001.md"
+    "current_work": ".brain/tasks/VEYVIZ-LOCAL-001.md"
   },
   "execution": {
     "mode": "existing_agent_sessions",
     "automatic_dispatch": false,
-    "maximum_active_writers": 1
+    "maximum_active_writers": 2
   },
   "commands_file": ".brain/workflow/recipes.json",
   "policy_file": ".brain/policy.json",
   "setup_status": "adopted",
-  "note": "The source architecture and implementation status files are canonical product context. Files under analysis/ are supporting research only. Local custom-agent profiles provide model/effort and instructions only when selected; this map is not a dispatcher or approval grant."
+  "note": "Fresh Product evidence only. Root coordinates disjoint writer phases; inherited framework Brain is historical provenance. Plan readiness is not implementation acceptance."
 }

@@ -1,0 +1,130 @@
+{
+  "schema": "brain.task-contract.v1",
+  "taskId": "VEYVIZ-LOCAL-001",
+  "title": "Usable local scoped Veyviz video-analysis product",
+  "authorization": {
+    "kind": "authorized",
+    "reference": "User request 2026-10-03: analyze latest worker/framework/Veyviz state and build an independent new full-stack modular, plugin-capable product using Quadbridge; original repositories remain preserved. Root adopts local recorded-video scope and proposed new target."
+  },
+  "sourceTaskRef": ".brain/tasks/VEYVIZ-LOCAL-001.md",
+  "owners": {
+    "coordinator": "/root",
+    "implementer": "Root-assigned product TS and Python writers after frozen protocol/manifests",
+    "reviewer": "/root/veyviz_integration_map independent read-only reviewer"
+  },
+  "allowedPaths": [
+    ".brain/tasks/VEYVIZ-LOCAL-001.md",
+    ".gitignore",
+    "AGENTS.md",
+    "contracts/veyviz-product-ai/v1/README.md",
+    "docs/veyviz/ACCEPTANCE.md",
+    "docs/veyviz/ARCHITECTURE.md",
+    "docs/veyviz/PROVENANCE.md",
+    "docs/veyviz/README.md",
+    "docs/veyviz/RELEASE_INPUTS.json",
+    "modules/veyviz-analysis/module.json",
+    "modules/veyviz-analysis/package.json",
+    "modules/veyviz-analysis/src/bridge.ts",
+    "modules/veyviz-analysis/src/index.ts",
+    "modules/veyviz-analysis/src/protocol.ts",
+    "modules/veyviz-analysis/src/styles.css",
+    "modules/veyviz-analysis/src/ui.ts",
+    "modules/veyviz-analysis/tsconfig.json",
+    "modules/veyviz-rfdetr/module.json",
+    "modules/veyviz-rfdetr/package.json",
+    "modules/veyviz-rfdetr/src/bridge.ts",
+    "modules/veyviz-rfdetr/src/index.ts",
+    "modules/veyviz-rfdetr/src/protocol.ts",
+    "modules/veyviz-rfdetr/src/styles.css",
+    "modules/veyviz-rfdetr/src/ui.ts",
+    "modules/veyviz-rfdetr/tsconfig.json",
+    "modules/veyviz-sources/module.json",
+    "modules/veyviz-sources/package.json",
+    "modules/veyviz-sources/src/bridge.ts",
+    "modules/veyviz-sources/src/index.ts",
+    "modules/veyviz-sources/src/protocol.ts",
+    "modules/veyviz-sources/src/styles.css",
+    "modules/veyviz-sources/src/ui.ts",
+    "modules/veyviz-sources/tsconfig.json",
+    "package-lock.json",
+    "package.json",
+    "products/veyviz-catalog/product.json",
+    "products/veyviz-review/product.json",
+    "README.md",
+    "services/veyviz-ai/README.md",
+    "services/veyviz-ai/runner.py",
+    "services/veyviz-ai/setup.py",
+    "services/veyviz-ai/test_runner.py",
+    "solutions/veyviz/solution.json",
+    "solutions/veyviz/ui.json",
+    "solutions/veyviz/wiring.mjs",
+    "tests/studio-integration.test.mjs",
+    "tests/veyviz-lifecycle.test.mjs",
+    "tests/veyviz-product.test.mjs",
+    "tools/veyviz-e2e.mjs",
+    "tools/veyviz-inventory.mjs",
+    "tools/veyviz-runtime.mjs",
+    "tools/veyviz-start.mjs",
+    "tools/veyviz-verify.mjs",
+    "tsconfig.json",
+    "vendor/veyviz-ai/PROVENANCE.json"
+  ],
+  "excludedActions": [
+    "Editing maintained packages/apps/framework construction tools",
+    "Changing original Veyviz or CORE source/data",
+    "Cloud deployment, credentials, paid usage or global settings",
+    "Accepting product code from governance-only candidate hashes"
+  ],
+  "prerequisites": [
+    "Root-frozen pipe protocol is adopted; complete exact source/test manifests or verified full release-input inventory must be frozen before qualifying implementation evidence.",
+    "Selected Veyviz source and asset closure captured with hashes before qualification."
+  ],
+  "criteria": [
+    {
+      "id": "CONSTRUCTION",
+      "description": "Clean independent source/dependency construction and correct owner boundaries.",
+      "evidenceScope": "Candidate-specific actual local evidence; no inherited or production acceptance."
+    },
+    {
+      "id": "MODEL",
+      "description": "Real three-sample RF-DETR CPU on exact recording/model bytes.",
+      "evidenceScope": "Candidate-specific actual local evidence; no inherited or production acceptance."
+    },
+    {
+      "id": "AUTHORITY",
+      "description": "Original actor/tenant/site/source/command identity and denied/revoked cases.",
+      "evidenceScope": "Candidate-specific actual local evidence; no inherited or production acceptance."
+    },
+    {
+      "id": "DURABILITY",
+      "description": "Durable typed results, retries, restart and actual native cleanup.",
+      "evidenceScope": "Candidate-specific actual local evidence; no inherited or production acceptance."
+    },
+    {
+      "id": "BROWSER",
+      "description": "Actual authenticated product browser journey.",
+      "evidenceScope": "Candidate-specific actual local evidence; no inherited or production acceptance."
+    },
+    {
+      "id": "EXTENSIBILITY",
+      "description": "Second exact composition and trusted contribution without host edits.",
+      "evidenceScope": "Candidate-specific actual local evidence; no inherited or production acceptance."
+    },
+    {
+      "id": "REGRESSION",
+      "description": "Fresh build, required npm test and installed Python regressions.",
+      "evidenceScope": "Candidate-specific actual local evidence; no inherited or production acceptance."
+    }
+  ],
+  "requiredRecipeIds": [
+    "product-build",
+    "product-full-suite",
+    "product-python",
+    "product-browser",
+    "product-construction"
+  ],
+  "reviewRequirement": {
+    "required": true,
+    "independence": "independent_reported"
+  }
+}

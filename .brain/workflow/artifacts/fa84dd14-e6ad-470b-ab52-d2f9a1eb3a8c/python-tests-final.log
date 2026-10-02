@@ -1,0 +1,15 @@
+test_cancellation_identity_is_required (__main__.ProtocolTests.test_cancellation_identity_is_required) ... ok
+test_control_size_is_bounded (__main__.ProtocolTests.test_control_size_is_bounded) ... ok
+test_duplicate_nonfinite_and_nonobject_denied (__main__.ProtocolTests.test_duplicate_nonfinite_and_nonobject_denied) ... ok
+test_identity_roundtrip (__main__.ProtocolTests.test_identity_roundtrip) ... ok
+test_installed_packages_are_not_original_checkout_imports (__main__.ProtocolTests.test_installed_packages_are_not_original_checkout_imports) ... ok
+test_unknown_and_missing_fields_denied (__main__.ProtocolTests.test_unknown_and_missing_fields_denied) ... ok
+test_cancel_after_native_owners_started (__main__.RealExecutionTests.test_cancel_after_native_owners_started) ... ok
+test_cancel_before_execution (__main__.RealExecutionTests.test_cancel_before_execution) ... ok
+test_invalid_input_has_no_native_work (__main__.RealExecutionTests.test_invalid_input_has_no_native_work) ... ok
+test_real_three_sample_inference_and_cleanup (__main__.RealExecutionTests.test_real_three_sample_inference_and_cleanup) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 15.290s
+
+OK

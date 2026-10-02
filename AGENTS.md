@@ -1,37 +1,16 @@
-# Engineering instructions for this independent source repository
+# Independent Veyviz product engineering
 
-Read README.md, PLATFORM_ARCHITECTURE.md, docs/STATUS.md and the relevant module before changing code. This is the product-neutral platform, not the existing Veyviz repository.
+This repository is the new Veyviz product built on the pinned Quadbridge source foundation. Read docs/veyviz/ARCHITECTURE.md, docs/veyviz/ACCEPTANCE.md, docs/veyviz/PROVENANCE.md and .brain/START_HERE.md before product work. Root README.md, PLATFORM_ARCHITECTURE.md and docs/STATUS.md describe the inherited framework; their historical acceptance is not acceptance of this product.
 
-- Keep `packages/*` free of imports from `modules/*`, `products/*` and `solutions/*`.
-- Keep domain data and migrations in its module. Do not invent a universal domain object or expose another owner's database.
-- Keep product/solution wiring outside maintained hosts. Runtime strings are never executable import URLs.
-- Module declarations are requirements, not grants. Keep actor/product/instance/tenant scope and command identity intact.
-- Never await inside the SQLite transaction callback. External effects require original-identity reconciliation.
-- Build before testing edited source. Do not claim success from a stale dist folder.
-- Run `npm test`; record any skipped/blocked browser, provider or live integration separately.
-- Do not change a user's external repository, credentials, entitlement or deployment from this scaffold.
-- Local developer security controls must not be weakened to claim a production profile.
-- Do not edit exported package copies as a new framework source authority.
+- Maintained packages/*, apps/* and existing framework construction tools remain upstream-owned and unmodified. Report defects to worker1 in CORE-FRAMEWORKS; adopt a reviewed upstream revision explicitly.
+- Product behavior belongs in new owned modules; product wiring belongs in products and solutions. Neutral packages never import domain modules. No arbitrary executable import URLs.
+- Product tenancy/access, source inventory, analysis requests and accepted business records remain Product-owned. Python AI/media packages own machine execution and temporary semantic state. Use scoped authenticated contracts; never cross-read private databases.
+- Keep actor/product/instance/tenant/site/source and original command identity intact. Module declarations are requirements, never grants. Browser input never creates authority. Recheck grants and object scope at each operation and result adoption.
+- Never await inside SQLite transaction callbacks. External effects require durable original-identity reconciliation. Separate delivery, execution and Product acceptance. Cancellation requested is not native cleanup proven.
+- Use only explicit reviewed local recording/model profiles. Real inference may report detections; uncommissioned footage cannot establish true occupancy, absence, coverage or live-camera qualification.
+- Preserve the original Veyviz and CORE-FRAMEWORKS repositories, credentials and user data. No production/cloud mutation, deployment, spending, global configuration or external messaging without applicable authorization.
+- Build source before tests. Run npm test, meaningful installed Python tests and actual end-to-end/browser checks for the edited scope. Keep skipped, blocked, deferred and unrun gates visible; never bypass browser policy.
+- Keep offline planning views read-only; paired Studio operations remain fixed, reviewed and explicitly confirmed. Managed artifacts are frozen snapshots; changed fingerprints never silently reuse data. Never reseed removed identities/grants.
+- Root owns protocol, launchers, root dependency/config changes, integration and shared Brain state. Writers own only their assigned files and must preserve others' edits. Use parallel read-only review; coordinate disjoint writers only after the protocol and finite file manifests are frozen.
 
-## Studio integration constraints
-- `OPEN_PLATFORM.html` is offline; it must not gain filesystem/build privileges.
-- The optional paired loopback Studio exposes only fixed reviewed operations with explicit confirmation.
-- Derive catalogues/plans from source; do not add independent allowed-module or product-name logic.
-- Never reseed removed identities/grants into an existing local store to make a demonstration pass.
-- Managed apps run fixed exported snapshots. Different build fingerprints do not silently reuse data.
-- Record browser policy blocks as blocked, not pass, and never work around them.
-
-## Project Brain entry
-For project work, read `.brain/START_HERE.md` and follow the canonical paths in
-`.brain/project.json`. Refresh the current task and checkpoint before acting, route
-the request through `.brain/ROUTING.md`, and record only actual decisions and results.
-This local workflow does not change the existing safety, ownership, or approval rules.
-
-When `.brain/atlas/project.json` exists, also read `docs/brain/README.md` and the
-atlas profile before preparing project work. Run its documented validation command,
-reconcile relevant source drift and planning gaps, and compare its planning focus
-with the canonical current task. Use the linked outcome, journey, contracts and
-acceptance criteria to prepare the next core increment; defer unrelated optional
-work with a reason. The atlas is a planning snapshot, not an execution checkpoint
-or permission grant. Regenerate its view for project-map reviews after reconciling
-changes; keep actual execution results in the existing evidence workflow.
+Read .brain/project.json and its mapped current task. Route through .brain/ROUTING.md. Read and validate the product atlas, then run node tools/brain.mjs preflight --json before implementation. Root alone publishes checkpoints and expands exact candidate files. Preflight is plan admission, not delivery acceptance. Inherited records in .framework-provenance/brain-at-3b666e9 are historical framework provenance only.
