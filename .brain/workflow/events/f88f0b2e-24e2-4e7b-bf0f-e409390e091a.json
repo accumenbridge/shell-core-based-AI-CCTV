@@ -1,0 +1,50 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "f88f0b2e-24e2-4e7b-bf0f-e409390e091a",
+  "revision": 56,
+  "previousEventId": "f80b8533-b2e5-415e-a6ec-4301c12f0e64",
+  "reportedActor": "/root mobile coordinator after explicit source/Brain handoff",
+  "recordedAt": "2026-10-02T00:16:11.964Z",
+  "platformTask": {
+    "taskId": "MOBILE-001",
+    "status": "READY",
+    "candidate": null,
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Run aligned mobile preflight, dispatch sole Luna writer for reviewed source scope, build and verify real browser-shell/client packaging.",
+    "gates": [
+      {
+        "id": "native-device",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".local/mobile-001/environment.json"
+        ],
+        "limitations": [
+          "No Android SDK/Java/device tools found in inspected locations; Android/iOS native execution unqualified."
+        ]
+      },
+      {
+        "id": "native-identity-api",
+        "status": "DEFERRED",
+        "evidenceRefs": [
+          ".brain/tasks/MOBILE-001.md"
+        ],
+        "limitations": [
+          "User explicitly selected identity/API in later increment."
+        ]
+      },
+      {
+        "id": "historical-uncertain-owner",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/04021fa0-298a-4a26-8523-28a7924d5114.json"
+        ],
+        "limitations": [
+          "Prior interrupted owner close remains unobserved; no speculative fixture cleanup or PID control."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "ad7113c25f1fd49459638b074cbb610c6f98781baaf17370aa335ba16047a562"
+}

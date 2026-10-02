@@ -8,6 +8,9 @@
       "path": "packages/backend-host"
     },
     {
+      "path": "packages/client-core"
+    },
+    {
       "path": "packages/composition"
     },
     {
@@ -21,6 +24,9 @@
     },
     {
       "path": "packages/local-access"
+    },
+    {
+      "path": "packages/mobile-shell"
     },
     {
       "path": "packages/module-sdk"

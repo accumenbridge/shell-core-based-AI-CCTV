@@ -1,0 +1,44 @@
+{
+  "sourceCandidate": "4a001c6a1566fba0629737c7d83d7357777be320b8f466d8a378a5a14a2b5a3b",
+  "outputCandidate": "dedf6e09fd881f1fd800bc667cc850cb921c9df768d5625d25694f56c5f58e12",
+  "source": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\generated\\service-desk\\4a001c6a1566fba06297",
+  "destination": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\native-proof-g7m61v\\app",
+  "steps": [
+    {
+      "command": [
+        "npm",
+        "ci"
+      ],
+      "startedAt": "2026-10-02T02:00:40.370Z",
+      "finishedAt": "2026-10-02T02:00:42.440Z",
+      "exitCode": 0,
+      "signal": null,
+      "log": ".local/mobile-001/compact2-native-ci.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "android:add"
+      ],
+      "startedAt": "2026-10-02T02:00:42.441Z",
+      "finishedAt": "2026-10-02T02:00:47.918Z",
+      "exitCode": 0,
+      "signal": null,
+      "log": ".local/mobile-001/compact2-native-run-android-add.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "android:sync"
+      ],
+      "startedAt": "2026-10-02T02:00:47.918Z",
+      "finishedAt": "2026-10-02T02:00:48.451Z",
+      "exitCode": 0,
+      "signal": null,
+      "log": ".local/mobile-001/compact2-native-run-android-sync.log"
+    }
+  ],
+  "scope": "Pinned dependency installation and Android project generation/sync only. No native compile, emulator, device, signing or native identity/API qualification."
+}

@@ -68,8 +68,7 @@ export async function createRuntime(productId: string, config: RuntimeConfig, ro
     const wiring = wiringLoader ? await wiringLoader() : undefined;
     if (plan.product.wiring && !wiring)
         throw new PlatformError('INCOMPATIBLE', 'Solution is not in this release');
-    const access = new LocalAccess(join(config.dataDirectory, 'access.sqlite'), { productId, instanceId: config.instanceId });
-    access.seed(config.principals);
+    const access = new LocalAccess(join(config.dataDirectory, 'access.sqlite'), { productId, instanceId: config.instanceId }, Date.now, config.principals);
     const modules: ExecutableModule[] = [];
     let host: ApplicationHost;
     const publicService = (contract: string, implementation: string) => {
@@ -108,13 +107,16 @@ export async function createRuntime(productId: string, config: RuntimeConfig, ro
             enabled: (j: Job) => access.mode(j.tenant, m.manifest.id) === 'enabled', authorize: (j: Job) => access.assertModule({ id: j.actor_id, kind: j.actor_kind }, j.tenant, m.manifest.id, j.permission, 'write') })));
     }
     const escape = (s: string) => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
-    async function http(port: number) {
+    async function http(port: number, options: { mobilePreview?: boolean } = {}) {
         verifyFiles(release.web);
         const browserPlan = JSON.parse(readFileSync(join(root, '.artifacts', productId, 'web.json'), 'utf8')) as {
             imports: Record<string, string>;
             files: Record<string, string>;
             styles: string[];
+            mobile?: { entry: string; styles: string[]; files: Record<string, string> };
         };
+        if (options.mobilePreview && (!browserPlan.mobile || !browserPlan.files[browserPlan.mobile.entry] || browserPlan.mobile.styles.some(path => !browserPlan.files[path])))
+            throw new PlatformError('INCOMPATIBLE', 'The selected build does not include the fixed mobile preview');
         return listen({ host, access, port,
             asset(path) {
                 const filename = browserPlan.files[path];
@@ -125,7 +127,12 @@ export async function createRuntime(productId: string, config: RuntimeConfig, ro
                     throw new PlatformError('DENIED', 'Asset outside release root');
                 return { bytes: readFileSync(full), type: ({ css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8', svg: 'image/svg+xml', png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', gif: 'image/gif', json: 'application/json', txt: 'text/plain; charset=utf-8', woff2: 'font/woff2' } as Record<string, string>)[path.split('.').at(-1)!] ?? 'application/octet-stream' };
             },
-            index(nonce) { return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(plan.product.title)}</title>${browserPlan.styles.map(path => `<link rel="stylesheet" href="${escape(path)}">`).join('')}<script type="importmap" nonce="${nonce}">${JSON.stringify({ imports: browserPlan.imports }).replace(/</g, '\\u003c')}</script></head><body><div id="app"></div><script type="module" src="/assets/composition.js"></script></body></html>`; },
+            index(nonce) {
+                const styles = options.mobilePreview ? browserPlan.mobile!.styles : browserPlan.styles;
+                const composition = options.mobilePreview ? browserPlan.mobile!.entry : '/assets/composition.js';
+                const viewport = options.mobilePreview ? 'width=device-width,initial-scale=1,viewport-fit=cover' : 'width=device-width,initial-scale=1';
+                return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="${viewport}"><title>${escape(plan.product.title)}</title>${styles.map(path => `<link rel="stylesheet" href="${escape(path)}">`).join('')}<script type="importmap" nonce="${nonce}">${JSON.stringify({ imports: browserPlan.imports }).replace(/</g, '\\u003c')}</script></head><body><div id="app"></div><script type="module" src="${composition}"></script></body></html>`;
+            },
             log: event => {
                 if (process.env.QB_LOG_REQUESTS === '1')
                     console.log(JSON.stringify(event));

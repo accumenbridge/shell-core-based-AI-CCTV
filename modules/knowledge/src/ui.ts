@@ -1,5 +1,7 @@
 import type { Workspace } from '@quadbridge/contracts';
-import { el, button, field, heading, section, formAction, statistic, emptyState } from '@quadbridge/web-shell/dom';
+import { el, field, heading, section, formAction, statistic, emptyState } from '@quadbridge/web-shell/dom';
+import { mountReferenceSearch } from './ui/reference-search.js';
+export { referenceSearchPanel } from './ui/reference-search.js';
 export const workspace: Workspace = { mount(ctx) {
         ctx.root.append(heading('Knowledge library', 'Save reference text, follow indexing progress and search your tenant’s library.'));
         const stats = el('div', 'stat-grid');
@@ -10,16 +12,9 @@ export const workspace: Workspace = { mount(ctx) {
         upload.append(el('h3', '', 'Add text'));
         const form = el('form'), title = field('Document title', 'title'), body = field('Document text', 'body', true);
         form.append(title.wrap, body.wrap);
-        const toolbar = el('form', 'toolbar'), query = el('input');
-        query.setAttribute('aria-label', 'Search documents');
-        query.placeholder = 'Search indexed text';
-        query.required = true;
-        const search = el('button', 'button secondary', 'Search');
-        search.type = 'submit';
-        toolbar.append(query, search);
-        results.append(toolbar);
-        const matches = el('div'), list = el('div');
-        results.append(matches, list);
+        const list = el('div');
+        const disposeSearch = mountReferenceSearch({ root: results, signal: ctx.signal, api: ctx.api, notice: ctx.notice });
+        results.append(list);
         const answerPanel = section();
         answerPanel.append(el('h3', '', 'Ask from indexed documents'), el('p', 'small muted', 'Local extractive answer · indexed documents only · no model inference'));
         const answerForm = el('form'), question = el('textarea'), ask = el('button', 'button', 'Answer from sources'), cancelAnswer = el('button', 'button secondary', 'Cancel');
@@ -116,36 +111,10 @@ export const workspace: Workspace = { mount(ctx) {
         }
         else
             upload.append(el('p', 'muted', 'Read access only.'));
-        toolbar.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            try {
-                const data = await ctx.api.get(`/api/documents/search?q=${encodeURIComponent(query.value)}`) as {
-                    items: {
-                        title: string;
-                        excerpt: string;
-                    }[];
-                    coverage: string;
-                };
-                if (ctx.signal.aborted)
-                    return;
-                matches.replaceChildren(el('p', 'small muted', 'Search coverage: indexed documents only.'));
-                if (!data.items.length)
-                    matches.append(el('p', 'muted', 'No indexed matches. This is not proof that no matching document exists.'));
-                for (const match of data.items) {
-                    const node = el('article', 'list-item');
-                    node.append(el('h3', '', match.title), el('p', 'muted', match.excerpt));
-                    matches.append(node);
-                }
-            }
-            catch (e) {
-                if (!ctx.signal.aborted)
-                    ctx.notice(e instanceof Error ? e.message : 'Search failed');
-            }
-        }, { signal: ctx.signal });
         const timer = setInterval(() => void refresh().catch(e => {
             if (!ctx.signal.aborted)
                 ctx.notice(e.message);
         }), 2000);
         void refresh().catch(e => ctx.notice(e.message));
-        return () => { clearInterval(timer); answerGeneration++; answerController?.abort(); };
+        return () => { clearInterval(timer); answerGeneration++; answerController?.abort(); disposeSearch(); };
     } };

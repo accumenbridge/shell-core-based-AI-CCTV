@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import { createHash, randomUUID } from 'node:crypto';
 import { DatabaseSync } from 'node:sqlite';
 import { spawn } from 'node:child_process';
+import fs from 'node:fs';
 import { existsSync, lstatSync, mkdtempSync, mkdirSync, readdirSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
+import { syncBuiltinESMExports } from 'node:module';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { canonical } from '@quadbridge/contracts';
@@ -403,6 +405,60 @@ test('runtime enrollment binds the exact owner path, reserves fresh access stora
   finally{checkDb.close();}
   unlinkSync(join(input.dataDirectory,'enrollment-complete.json'));
   assert.throws(()=>completedRuntimeEnrollment({projectRoot:root,dataDirectory:input.dataDirectory,identity:baseIdentity}),/no valid completed enrollment marker/);
+});
+
+test('completed enrollment tolerates only a vanished SQLite sidecar while rejecting vanished owner data',async t=>{
+  const {root}=fixture(t),adapted=await canonicalFixture(root),input=enrollmentInput(root,adapted,adapted.instanceId,adapted.artifactDigest);
+  const baseIdentity={instanceId:input.identity.instanceId,productId:input.identity.productId,version:input.identity.version,
+    artifactDigest:input.identity.artifactDigest,profileDigest:input.identity.profileDigest,adapterDigest:input.identity.adapterDigest};
+  assert.equal(await enrollOrVerifyRuntimeAccess(input),'ENROLLED');
+  const accessPath=join(input.dataDirectory,'access.sqlite');
+  const originalLstat=fs.lstatSync;
+  function disappearOnce(target){
+    let hit=false;
+    fs.lstatSync=function(path,...args){
+      if(!hit&&resolve(String(path))===resolve(target)){
+        hit=true;
+        unlinkSync(target);
+      }
+      return originalLstat.call(this,path,...args);
+    };
+    syncBuiltinESMExports();
+    return ()=>{fs.lstatSync=originalLstat;syncBuiltinESMExports();return hit;};
+  }
+
+  const transientSidecar=join(input.dataDirectory,'access.sqlite-SHM.TMP');
+  writeFileSync(transientSidecar,'transient fixture sidecar',{flag:'wx'});
+  const restoreSidecar=disappearOnce(transientSidecar);
+  try{
+    assert.ok(completedRuntimeEnrollment({projectRoot:root,dataDirectory:input.dataDirectory,identity:baseIdentity}),
+      'the exact uppercase WAL/SHM plus case-insensitive temporary spelling is tolerated only after ENOENT');
+  }finally{assert.equal(restoreSidecar(),true,'the controlled lstat interleaving exercised the sidecar path');}
+
+  const modulesDirectory=join(input.dataDirectory,'modules'),moduleDatabase=join(modulesDirectory,'service-desk.sqlite');
+  mkdirSync(modulesDirectory);writeFileSync(moduleDatabase,'owned module database',{flag:'wx'});
+  const moduleSidecar=join(modulesDirectory,'service-desk.sqlite-WAL.TMP');
+  writeFileSync(moduleSidecar,'transient module sidecar',{flag:'wx'});
+  const restoreModuleSidecar=disappearOnce(moduleSidecar);
+  try{
+    assert.ok(completedRuntimeEnrollment({projectRoot:root,dataDirectory:input.dataDirectory,identity:baseIdentity}),
+      'the modules/<id>.sqlite owner accepts its exact disappearing uppercase sidecar spelling');
+  }finally{assert.equal(restoreModuleSidecar(),true,'the controlled lstat interleaving exercised the module sidecar path');}
+
+  const ordinaryTemporary=join(input.dataDirectory,'access.sqlite.tmp');
+  writeFileSync(ordinaryTemporary,'not a WAL/SHM sibling',{flag:'wx'});
+  const restoreOrdinary=disappearOnce(ordinaryTemporary);
+  try{
+    assert.throws(()=>completedRuntimeEnrollment({projectRoot:root,dataDirectory:input.dataDirectory,identity:baseIdentity}),
+      error=>error?.code==='ENOENT','a standalone access.sqlite.tmp is not a tolerated transient SQLite sidecar');
+  }finally{assert.equal(restoreOrdinary(),true,'the standalone temporary file was removed at lstat');}
+
+  const credentialsPath=join(input.dataDirectory,'credentials.json');
+  const restoreCredentials=disappearOnce(credentialsPath);
+  try{
+    assert.throws(()=>completedRuntimeEnrollment({projectRoot:root,dataDirectory:input.dataDirectory,identity:baseIdentity}),
+      error=>error?.code==='ENOENT','missing stable credential data remains an integrity failure');
+  }finally{assert.equal(restoreCredentials(),true,'the stable credential path was removed at lstat');}
 });
 
 test('a failed canonical LocalAccess seed leaves repair-required evidence and never publishes enrollment completion',async t=>{

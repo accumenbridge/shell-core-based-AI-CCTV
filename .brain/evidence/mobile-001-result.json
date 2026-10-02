@@ -1,0 +1,183 @@
+{
+  "schema": "quadbridge.mobile-increment-result.v1",
+  "task": "MOBILE-001",
+  "observedAt": "2026-10-02T02:30:36.539Z",
+  "candidate": "5b3d2a9e03b3934f01b80ae6bda0c2ba915c77d7b1eae2dae22fcb5dbed2bf4f",
+  "checkpoint": {
+    "revision": 62,
+    "path": ".brain/workflow/events/ec1bcf2b-5098-4d47-a6cb-96d4ab872833.json"
+  },
+  "records": {
+    "mobile-build": {
+      "id": "d5447b55-dbe9-4b97-8f30-c4f21f7eb1f0",
+      "path": ".brain/workflow/runs/d5447b55-dbe9-4b97-8f30-c4f21f7eb1f0.json",
+      "status": "PASSED"
+    },
+    "mobile-focused": {
+      "id": "5b892680-38ae-419c-8c30-c3884de7d038",
+      "path": ".brain/workflow/runs/5b892680-38ae-419c-8c30-c3884de7d038.json",
+      "status": "PASSED"
+    },
+    "mobile-native-scaffold": {
+      "id": "3b08ac18-e5dd-4627-8bcd-e50a713f22e8",
+      "path": ".brain/workflow/runs/3b08ac18-e5dd-4627-8bcd-e50a713f22e8.json",
+      "status": "PASSED"
+    },
+    "mobile-browser": {
+      "id": "ebe16682-f289-406f-9d96-803f13994889",
+      "path": ".brain/workflow/runs/ebe16682-f289-406f-9d96-803f13994889.json",
+      "status": "PASSED"
+    },
+    "mobile-full-suite": {
+      "id": "79be4758-a19c-44e3-aaeb-797efbabceab",
+      "path": ".brain/workflow/runs/79be4758-a19c-44e3-aaeb-797efbabceab.json",
+      "status": "BLOCKED"
+    },
+    "independent-review": {
+      "id": "149accda-10a6-4c24-ac99-ce92a766d839",
+      "path": ".brain/workflow/runs/149accda-10a6-4c24-ac99-ce92a766d839.json",
+      "status": "ACCEPTED"
+    }
+  },
+  "checks": {
+    "freshBuild": "PASSED",
+    "focused": {
+      "tests": 46,
+      "passed": 46,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "fullSuite": {
+      "tests": 322,
+      "passed": 321,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 1,
+      "todo": 0
+    },
+    "browser": "Actual same-origin360CSS Desk create/read, tenant isolation, More navigation, same desktop record and sign-out observed",
+    "nativeScaffold": "Current pinned client artifact dependency installation, Android project generation and sync completed"
+  },
+  "deliverables": [
+    "Reusable mobile DOM shell on shared session/tenant/workspace controller",
+    "Same-origin local product preview with existing identity/security",
+    "Source-derived client-only Neutral, Service Desk and Combined packages",
+    "Pinned Capacitor template and generated Android project"
+  ],
+  "artifacts": {
+    "observedAt": "2026-10-02T02:16:05.572Z",
+    "candidate": "5b3d2a9e03b3934f01b80ae6bda0c2ba915c77d7b1eae2dae22fcb5dbed2bf4f",
+    "results": [
+      {
+        "productId": "neutral",
+        "outputDir": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\generated\\neutral\\1c897dddd200ee324bca",
+        "sourceCandidate": "1c897dddd200ee324bca4e0472c1ceeda61b676f0d7b91891464d3c39f2b54f1",
+        "outputCandidate": "55cf2749a8715961777ca58b2c770e34dcf644274267914bdbeb124a4825f7ac",
+        "reused": false
+      },
+      {
+        "productId": "service-desk",
+        "outputDir": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\generated\\service-desk\\099625f971549522c8b4",
+        "sourceCandidate": "099625f971549522c8b4358df4e57824af05c957861f4ea4dddb91549e553d03",
+        "outputCandidate": "550a8cc6a0d957ae3ec6fd6107a1e5a02a7eeb4bb35045408f558b3c3cc79911",
+        "reused": false
+      },
+      {
+        "productId": "combined",
+        "outputDir": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\generated\\combined\\88d58caaffdfbc66d732",
+        "sourceCandidate": "88d58caaffdfbc66d732f3788ea30a09bc238861b4a9b63cdcbeb1f0b787dbeb",
+        "outputCandidate": "004773332f72fb91d45ada7c42788148eee744fed2e470a963133622be881395",
+        "reused": false
+      }
+    ],
+    "scope": "Current checked client packages; native binary/device/identity not qualified."
+  },
+  "nativeProof": {
+    "sourceCandidate": "099625f971549522c8b4358df4e57824af05c957861f4ea4dddb91549e553d03",
+    "outputCandidate": "550a8cc6a0d957ae3ec6fd6107a1e5a02a7eeb4bb35045408f558b3c3cc79911",
+    "destination": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\native-proof-L4nYMa\\app",
+    "scope": "Pinned dependency installation and Android project generation/sync only. No native compile, emulator, device, signing or native identity/API qualification."
+  },
+  "limitations": [
+    {
+      "id": "native-device",
+      "status": "BLOCKED",
+      "evidenceRefs": [
+        ".local/mobile-001/environment.json"
+      ],
+      "limitations": [
+        "No Android SDK/Java/device tools found in inspected locations; Android/iOS native execution unqualified."
+      ]
+    },
+    {
+      "id": "native-identity-api",
+      "status": "DEFERRED",
+      "evidenceRefs": [
+        ".brain/tasks/MOBILE-001.md"
+      ],
+      "limitations": [
+        "User explicitly selected identity/API in later increment."
+      ]
+    },
+    {
+      "id": "historical-uncertain-owner",
+      "status": "UNKNOWN",
+      "evidenceRefs": [
+        ".brain/workflow/runs/04021fa0-298a-4a26-8523-28a7924d5114.json"
+      ],
+      "limitations": [
+        "Prior interrupted owner close remains unobserved; no speculative fixture cleanup or PID control."
+      ]
+    },
+    {
+      "id": "interrupted-mobile-focused-owner",
+      "status": "UNKNOWN",
+      "evidenceRefs": [
+        ".brain/workflow/runs/70284fca-efe2-4341-ad03-be8ef0f0646d.json"
+      ],
+      "limitations": [
+        "Earlier focused exec27608 was interrupted after EBUSY; original poll had no numeric completion and later Unknown process id. No PID recovery or speculative fixture cleanup."
+      ]
+    },
+    {
+      "id": "browser-device-specific",
+      "status": "NOT_RUN",
+      "evidenceRefs": [
+        ".brain/workflow/runs/ebe16682-f289-406f-9d96-803f13994889.json"
+      ],
+      "limitations": [
+        "Actual browser360CSS journey passed. Physical keyboard/safe-area, assistive technology, Android/iOS device lifecycle and native secure storage were not tested."
+      ]
+    },
+    {
+      "id": "planning-html-policy",
+      "status": "BLOCKED",
+      "evidenceRefs": [
+        ".brain/workflow/runs/ebe16682-f289-406f-9d96-803f13994889.json"
+      ],
+      "limitations": [
+        "Earlier offline planning HTML browser navigation was policy blocked; no workaround or inferred pass. Actual product HTTP preview was independently allowed and observed."
+      ]
+    },
+    {
+      "id": "windows-file-symlink-coverage",
+      "status": "BLOCKED",
+      "evidenceRefs": [
+        ".brain/workflow/runs/79be4758-a19c-44e3-aaeb-797efbabceab.json"
+      ],
+      "limitations": [
+        "The named owned file-symlink fixture was skipped because this host denied fixture creation with EPERM. Complete command exit0 does not qualify that coverage."
+      ]
+    }
+  ],
+  "nextCoreIncrement": "Choose existing identity and HTTPS API profile, then implement bounded native authentication/access adapter and qualify on configured Android SDK/device. iOS and signing/delivery remain later.",
+  "history": [
+    ".brain/workflow/runs/70284fca-efe2-4341-ad03-be8ef0f0646d.json",
+    ".brain/workflow/runs/16878e4f-8954-403b-a531-237dab61231a.json",
+    ".brain/workflow/runs/882caf11-9e6b-4852-af21-bcec3a263910.json",
+    ".brain/workflow/runs/ac68e276-d1e5-446d-9a3a-d26e81122301.json",
+    ".brain/workflow/runs/5ee89756-433a-4bf7-8c9a-fdf0c20f586e.json"
+  ]
+}

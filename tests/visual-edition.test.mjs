@@ -9,10 +9,11 @@ import {resolve} from '../packages/composition/dist/index.js';
 import {readCatalogue,browserCore} from '../tools/studio-catalogue.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url)),read=p=>readFile(new URL(p,new URL('../',import.meta.url)),'utf8');
 const script=await read('visual/studio.js'),data=await readCatalogue(root),core=await browserCore(root),catalog=data.modules;
-function context(extra={}){const ctx=vm.createContext({QB_VISUAL_DATA:data,...extra});new vm.Script(core).runInContext(ctx);new vm.Script(script).runInContext(ctx);return ctx;}
+function context(extra={}){const ctx=vm.createContext({QB_VISUAL_DATA_JSON:JSON.stringify(data),TextEncoder,...extra});new vm.Script('globalThis.QB_VISUAL_DATA=JSON.parse(globalThis.QB_VISUAL_DATA_JSON);delete globalThis.QB_VISUAL_DATA_JSON;').runInContext(ctx);new vm.Script(core).runInContext(ctx);new vm.Script(script).runInContext(ctx);return ctx;}
 const ctx=context(),compose=(...args)=>JSON.parse(JSON.stringify(ctx.QBPreviewModel.compose(...args)));
 test('Visual: all eight input combinations use the canonical resolver',()=>{const ids=['service-desk','knowledge','handoff'];for(let bits=0;bits<8;bits++){const p=compose(`preview-${bits}`,'Preview product',ids.filter((_,i)=>bits&(1<<i)));assert.ok(resolve(p,catalog));assert.equal('permissions' in p,false);assert.equal('tenants' in p,false);}});
 test('Visual: reviewed Handoff wiring selects current local providers',()=>{const p=compose('composed','Composed',['handoff']);assert.deepEqual(p.modules.map(m=>m.id),['handoff','knowledge','service-desk']);assert.equal(p.bindings.length,2);assert.ok(p.bindings.every(b=>b.mode==='local'));assert.equal(p.wiring,'knowledge-to-desk');});
+test('Visual: operation-bearing source catalogue uses the fixed shared schema validator',()=>{const knowledge=vm.runInContext("QB_VISUAL_DATA.modules.find(m=>m.id==='knowledge')",ctx),descriptor=knowledge.operations[0];assert.equal(typeof ctx.QBOperations.validateOperationDescriptor,'function');const safeInput=vm.runInContext("JSON.parse('{\"query\":\"isolation\"}')",ctx),input=ctx.QBOperations.validateOperationValue(safeInput,descriptor.inputSchema,'input');assert.equal(JSON.parse(JSON.stringify(input)).query,'isolation');const extraInput=vm.runInContext("JSON.parse('{\"query\":\"isolation\",\"tenantId\":\"forged\"}')",ctx);assert.throws(()=>ctx.QBOperations.validateOperationValue(extraInput,descriptor.inputSchema,'input'),/field|schema/i);const composed=ctx.QBPreviewModel.compose('operation-preview','Operations',['knowledge']);assert.ok(ctx.QBComposition.resolve(composed,vm.runInContext('QB_VISUAL_DATA.modules',ctx)).modules.some(m=>m.operations?.length===3));const invalid=vm.runInContext('JSON.parse(JSON.stringify(QB_VISUAL_DATA.modules))',ctx);invalid.find(m=>m.id==='knowledge').operations[0].inputSchema.unevaluatedProperties=false;assert.throws(()=>ctx.QBComposition.resolve(composed,invalid),/Unsupported|schema|operation/i);});
 test('Visual: neutral product has no domain, bindings or solution',()=>{const p=compose('neutral-check','Neutral',[]);assert.equal(p.modules.length,0);assert.equal(p.bindings.length,0);assert.equal('wiring'in p,false);});
 test('Visual: invalid and unknown selections fail visibly',()=>{for(const id of ['../outside','UPPER','a/b','1-start',''])assert.throws(()=>compose(id,'T',[]));assert.throws(()=>compose('valid','',[]));assert.throws(()=>compose('valid','T',['made-up-feature']));});
 test('Visual: standalone preview sends no network calls and includes no external scripts',async()=>{const html=await read('OPEN_PLATFORM.html');assert.match(html,/OFFLINE INTERACTIVE PREVIEW/);assert.match(html,/Refresh resets them/);assert.doesNotMatch(html,/<script[^>]*src\s*=/i);context({fetch(){assert.fail('Offline mode must not fetch');}});assert.match(html,/Export product.json/);assert.match(html,/Simulate a lost reply/);});
@@ -21,3 +22,27 @@ test('Visual: a newer definition import invalidates preview immediately and wins
 test('Visual: documentation, responsive rules and source build retained',async()=>{assert.match(await read('DOCUMENTATION.html'),/R01–R10/);assert.match(await read('visual/studio.css'),/@media\(max-width:730px\)/);assert.match(await read('visual/studio.css'),/prefers-reduced-motion/);assert.match(await read('tools/build.mjs'),/build-visual/);});
 test('Visual: runtime counters remain explicitly scoped',async()=>{for(const path of ['service-desk','knowledge','handoff'])assert.match(await read(`modules/${path}/src/ui.ts`),/Current response · current tenant/);});
 test('Visual: all eight views render through controlled document ports',()=>{for(const route of ['overview','composer','modules','desk','knowledge','handoff','architecture','build']){const node={innerHTML:''};context({document:{getElementById:()=>node,addEventListener(){}},window:{addEventListener(){}},location:{hash:`#/${route}`}});assert.match(node.innerHTML,/OFFLINE INTERACTIVE PREVIEW/);assert.match(node.innerHTML,/<h1>/);assert.match(node.innerHTML,/data-action="run"/);assert.ok(node.innerHTML.length>5000,route);}});
+test('Visual: offline family builder uses loaded defaults and canonical derivation without network access',()=>{
+ const fixture=structuredClone(data);
+ fixture.families.push({...structuredClone(fixture.families[0]),id:'library-first',title:'Library-first operations',defaultFeatureIds:['requests','shared-library']});
+ const node={innerHTML:''},listeners={};
+ context({QB_VISUAL_DATA_JSON:JSON.stringify(fixture),document:{getElementById:()=>node,addEventListener:(type,handler)=>(listeners[type]??=[]).push(handler),querySelectorAll:()=>[]},window:{addEventListener(){}},location:{hash:'#/composer'},fetch(){assert.fail('Offline family derivation must not fetch');}});
+ assert.match(node.innerHTML,/<h3>Service Operations<\/h3>/);
+ assert.match(node.innerHTML,/data-family-feature="requests" checked disabled/);
+ assert.match(node.innerHTML,/data-family-feature="shared-library"(?![^>]*checked)/);
+ const fireChange=target=>{for(const handler of listeners.change||[])handler({target});};
+ fireChange({value:'library-first',dataset:{},closest:()=>null,matches:selector=>selector==='[data-family-id]'});
+ assert.match(node.innerHTML,/<h3>Library-first operations<\/h3>/);
+ assert.match(node.innerHTML,/data-family-feature="shared-library" checked/);
+ assert.match(node.innerHTML,/value="Library-first operations"/);
+ const fireClick=action=>{for(const handler of listeners.click||[])handler({target:{closest:()=>({dataset:{action}})}});};
+ fireClick('family-derive');
+ assert.match(node.innerHTML,/my-service-product@1\.0\.0/);
+ assert.match(node.innerHTML,/knowledge@/);
+ assert.match(node.innerHTML,/service-desk@/);
+ assert.doesNotMatch(node.innerHTML,/handoff@/);
+ assert.match(node.innerHTML,/separate worker required/);
+ fireClick('family-load-editor');
+ assert.match(node.innerHTML,/&quot;id&quot;: &quot;my-service-product&quot;/);
+ assert.match(node.innerHTML,/Complete product definition/);
+});

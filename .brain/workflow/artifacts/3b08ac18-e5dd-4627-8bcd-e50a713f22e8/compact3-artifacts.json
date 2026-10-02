@@ -1,0 +1,28 @@
+{
+  "observedAt": "2026-10-02T02:16:05.572Z",
+  "candidate": "5b3d2a9e03b3934f01b80ae6bda0c2ba915c77d7b1eae2dae22fcb5dbed2bf4f",
+  "results": [
+    {
+      "productId": "neutral",
+      "outputDir": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\generated\\neutral\\1c897dddd200ee324bca",
+      "sourceCandidate": "1c897dddd200ee324bca4e0472c1ceeda61b676f0d7b91891464d3c39f2b54f1",
+      "outputCandidate": "55cf2749a8715961777ca58b2c770e34dcf644274267914bdbeb124a4825f7ac",
+      "reused": false
+    },
+    {
+      "productId": "service-desk",
+      "outputDir": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\generated\\service-desk\\099625f971549522c8b4",
+      "sourceCandidate": "099625f971549522c8b4358df4e57824af05c957861f4ea4dddb91549e553d03",
+      "outputCandidate": "550a8cc6a0d957ae3ec6fd6107a1e5a02a7eeb4bb35045408f558b3c3cc79911",
+      "reused": false
+    },
+    {
+      "productId": "combined",
+      "outputDir": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\generated\\combined\\88d58caaffdfbc66d732",
+      "sourceCandidate": "88d58caaffdfbc66d732f3788ea30a09bc238861b4a9b63cdcbeb1f0b787dbeb",
+      "outputCandidate": "004773332f72fb91d45ada7c42788148eee744fed2e470a963133622be881395",
+      "reused": false
+    }
+  ],
+  "scope": "Current checked client packages; native binary/device/identity not qualified."
+}

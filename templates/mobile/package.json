@@ -1,0 +1,23 @@
+{
+  "name": "quadbridge-mobile-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "scripts": {
+    "android:add": "cap add android",
+    "android:sync": "cap sync android",
+    "ios:add": "cap add ios",
+    "ios:sync": "cap sync ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.2",
+    "@capacitor/core": "8.5.2",
+    "@capacitor/ios": "8.5.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.2"
+  }
+}

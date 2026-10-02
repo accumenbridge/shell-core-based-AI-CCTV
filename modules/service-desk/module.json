@@ -1,6 +1,6 @@
 {
   "id": "service-desk",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "abi": "quadbridge.module.v1",
   "dependencies": [],
   "provides": [
@@ -60,6 +60,14 @@
       "path": "/request-overview",
       "permission": "desk.read",
       "export": "overviewWorkspace"
+    }
+  ],
+  "uiContributions": [
+    {
+      "id": "service-desk.recentRequests",
+      "permission": "desk.read",
+      "export": "recentRequestsPanel",
+      "label": "Recent requests"
     }
   ],
   "schema": {

@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import { spawnSync, spawn } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { copyPortableFixture } from './source-copy.mjs';
-import { fixture, PASSWORD, admin } from './helpers.mjs';
+import { fixture, PASSWORD, SERVICE, admin } from './helpers.mjs';
 import { ROOT } from '../apps/runtime/dist/index.js';
 import { ApplicationHost } from '@quadbridge/backend-host';
 import { resolve } from '@quadbridge/composition';
@@ -27,7 +27,7 @@ test('exported neutral product starts with all domain directories physically abs
 });
 test('exported Service Desk has no knowledge or handoff package and persists a real record', async (t) => {
     const temp = await mkdtemp(join(tmpdir(), 'qb-export-')), out = join(temp, 'desk');
-    t.after(() => rm(temp, { recursive: true, force: true }));
+    t.after(() => rm(temp, { recursive: true, force: true, maxRetries: 4, retryDelay: 100 }));
     run(ROOT, 'tools/factory.mjs', 'assemble', 'service-desk', out);
     assert.deepEqual(await readdir(join(out, 'modules')), ['service-desk']);
     run(out, 'tools/link-workspaces.mjs');
@@ -48,8 +48,46 @@ test('factory export includes the selected Knowledge package closure and actual 
     assert.ok(packages.includes('web-shell'));
     const runtime = JSON.parse(await readFile(join(out, 'apps/runtime/package.json'), 'utf8'));
     assert.equal(runtime.dependencies['@quadbridge/ai-core'], '0.3.0');
-    assert.equal(runtime.dependencies['@quadbridge/knowledge'], '0.2.1');
-    assert.equal(runtime.dependencies['@quadbridge/handoff'], '0.2.1');
+    assert.equal(runtime.dependencies['@quadbridge/knowledge'], '0.2.3');
+    assert.equal(runtime.dependencies['@quadbridge/handoff'], '0.2.3');
+});
+test('independent Knowledge and Combined exports invoke real operations without source or compiler trees', async t => {
+    for (const product of ['knowledge', 'combined']) {
+        const temp = await mkdtemp(join(tmpdir(), `qb-operation-export-${product}-`)), out = join(temp, 'export');
+        t.after(() => rm(temp, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 }));
+        run(ROOT, 'tools/factory.mjs', 'assemble', product, out);
+        run(out, 'tools/link-workspaces.mjs');
+        const plan = JSON.parse(await readFile(join(out, '.artifacts', product, 'plan.json'), 'utf8'));
+        const connections = {};
+        for (const binding of plan.bindings) if (binding.contract === 'desk.requests.create.v2') connections[binding.instanceId] = {
+            revision: 'operation-export-v1', mode: binding.mode, destinationProduct: binding.mode === 'local' ? product : 'service-desk',
+            destinationInstance: binding.mode === 'local' ? `operation-${product}` : 'operation-desk', tenantMap: { 'tenant-a': 'tenant-a' },
+            baseUrl: 'http://127.0.0.1:1', serviceToken: SERVICE, serviceActor: 'link'
+        };
+        for (const module of plan.modules) await rm(join(out, 'modules', module.id, 'src'), { recursive: true, force: false });
+        for (const entry of await readdir(join(out, 'packages'), { withFileTypes: true })) if (entry.isDirectory()) {
+            const source = join(out, 'packages', entry.name, 'src');
+            try { await rm(source, { recursive: true, force: false }); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+        }
+        await rm(join(out, 'apps', 'runtime', 'src'), { recursive: true, force: false });
+        assert.equal((await readdir(join(out, 'node_modules'))).includes('typescript'), false, 'the fixed export does not contain a compiler dependency');
+        const { createRuntime } = await import(pathToFileURL(join(out, 'apps/runtime/dist/index.js')).href);
+        const dataDirectory = join(temp, 'private-data');
+        const app = await createRuntime(product, { instanceId: `operation-${product}`, dataDirectory, principals: [{ id: 'admin', password: PASSWORD,
+            grants: [{ tenantId: 'tenant-a', permissions: ['platform.shell.read', ...plan.permissions] }] }], connections });
+        try {
+            const declarations = app.plan.modules.find(module => module.id === 'knowledge').operations;
+            assert.deepEqual(declarations.map(item => item.id).sort(), ['knowledge.documents.create', 'knowledge.documents.get', 'knowledge.documents.search']);
+            const created = await app.host.invokeOperation('knowledge.documents.create', 1, admin, 'tenant-a', { title: `${product} export`, body: 'The exported worker indexes this private record.' }, `export-${product}-create`);
+            const worker = await app.worker();
+            assert.equal(await worker.tick(), true);
+            const found = await app.host.invokeOperation('knowledge.documents.search', 1, admin, 'tenant-a', { query: 'exported worker' });
+            assert.equal(found.items[0].id, created.id);
+            const record = await app.host.invokeOperation('knowledge.documents.get', 1, admin, 'tenant-a', { documentId: created.id });
+            assert.equal(record.state, 'READY');
+            assert.match(record.excerpt, /private record/);
+        } finally { await app.close(); }
+    }
 });
 test('factory refuses collisions and path traversal', () => {
     for (const args of [['create-product', '../escape'], ['create-module', '../escape'], ['create-product', 'neutral'], ['create-module', 'knowledge']]) {

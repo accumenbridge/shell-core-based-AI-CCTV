@@ -1,0 +1,47 @@
+{
+  "kind": "focused",
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/ui-contributions.test.mjs",
+    "tests/shell-regressions.test.mjs",
+    "tests/frontend-assembly.test.mjs",
+    "tests/composition.test.mjs",
+    "tests/module-sdk.test.mjs",
+    "tests/factory-lifecycle.test.mjs",
+    "tests/workspace-closure.test.mjs",
+    "tests/build-worker-process.test.mjs",
+    "tests/control-plane-http.test.mjs"
+  ],
+  "actualProcess": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "--test-reporter=tap",
+    "--test",
+    "--test-concurrency=1",
+    "tests/ui-contributions.test.mjs",
+    "tests/shell-regressions.test.mjs",
+    "tests/frontend-assembly.test.mjs",
+    "tests/composition.test.mjs",
+    "tests/module-sdk.test.mjs",
+    "tests/factory-lifecycle.test.mjs",
+    "tests/workspace-closure.test.mjs",
+    "tests/build-worker-process.test.mjs",
+    "tests/control-plane-http.test.mjs"
+  ],
+  "startedAt": "2026-10-02T09:30:16.887Z",
+  "finishedAt": "2026-10-02T09:33:51.199Z",
+  "exitCode": 1,
+  "signal": null,
+  "candidateBefore": "3d72092f17dbe885b82b6e10e1a3ce984eb3318a20258b91ec3be31ed360e50e",
+  "candidateAfter": "3d72092f17dbe885b82b6e10e1a3ce984eb3318a20258b91ec3be31ed360e50e",
+  "sourceUnchanged": true,
+  "counts": {
+    "tests": 97,
+    "passed": 96,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

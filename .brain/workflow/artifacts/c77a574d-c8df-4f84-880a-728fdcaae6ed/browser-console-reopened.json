@@ -1,0 +1,7 @@
+{
+  "fixtureId": "129c2e42-3246-47dd-9a05-8910c09957f9",
+  "root": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qbfbr-5AILh0",
+  "url": "http://127.0.0.1:54907",
+  "candidate": "0a2749127a73d23009710c3c178f88642ffb503d3eed889c723d7ac33dd13335",
+  "purpose": "Reopen retained positively stopped test fixture to observe actual graceful controller close; does not retroactively qualify first fixture close."
+}

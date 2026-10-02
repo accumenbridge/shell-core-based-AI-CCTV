@@ -3,21 +3,24 @@ import ts from 'typescript';
 import { readFile, stat, realpath } from 'node:fs/promises';
 import { posix, join, relative, resolve, isAbsolute } from 'node:path';
 const ASSET = /\.(css|svg|png|jpe?g|webp|gif|json|txt|woff2)$/i;
-export async function frontendClosure(root, plan) {
+export async function frontendClosure(root, plan, { includeMobile = false } = {}) {
     const files = {}, imports = {
         '@quadbridge/contracts': '/assets/packages/contracts/index.js',
+        '@quadbridge/contracts/ui-contributions': '/assets/packages/contracts/ui-contributions.js',
+        '@quadbridge/client-core': '/assets/packages/client-core/index.js',
         '@quadbridge/web-shell': '/assets/packages/web-shell/index.js',
         '@quadbridge/web-shell/dom': '/assets/packages/web-shell/dom.js',
         '@quadbridge/web-shell/react-adapter': '/assets/packages/web-shell/react-adapter.js'
     }, styles = ['/assets/shell.css'];
     const modules = new Map(plan.modules.map(m => [m.id, m]));
     const absoluteRoot = await realpath(root);
-    const roots = [...['contracts', 'web-shell'].map(p => `packages/${p}/dist`), ...plan.modules.map(m => `modules/${m.id}/dist`)];
+    const roots = [...['contracts', 'client-core', 'web-shell', ...(includeMobile ? ['mobile-shell'] : [])].map(p => `packages/${p}/dist`), ...plan.modules.map(m => `modules/${m.id}/dist`)];
+    if (includeMobile) imports['@quadbridge/mobile-shell'] = '/assets/packages/mobile-shell/index.js';
     function owner(file) { return roots.find(r => file.startsWith(r + '/')); }
     function url(file) { const r = owner(file); if (!r)
         throw Error(`Unselected browser source ${file}`); return '/assets/' + r.replace('/dist', '') + '/' + file.slice(r.length + 1); }
     for (const m of plan.modules)
-        if (m.workspaces.length)
+        if (m.workspaces.length || m.uiContributions?.length)
             imports[`@quadbridge/${m.id}/ui`] = url(`modules/${m.id}/dist/ui.js`);
     const toFile = url => {
         const match = /^\/assets\/(packages|modules)\/([^/]+)\/(.+)$/.exec(url);
@@ -108,8 +111,12 @@ export async function frontendClosure(root, plan) {
     await visit('packages/web-shell/dist/index.js');
     // This supported shell-owned renderer seam is statically selectable, not a React dependency.
     await visit('packages/web-shell/dist/react-adapter.js');
+    if (includeMobile) {
+        await visit('packages/mobile-shell/dist/index.js');
+        await visit('packages/mobile-shell/dist/mobile.css');
+    }
     for (const m of plan.modules) {
-        if (m.workspaces.length)
+        if (m.workspaces.length || m.uiContributions?.length)
             await visit(`modules/${m.id}/dist/ui.js`);
         for (const asset of m.browserAssets ?? []) {
             const file = `modules/${m.id}/dist/${asset}`;
@@ -119,5 +126,7 @@ export async function frontendClosure(root, plan) {
         }
     }
     files['/assets/shell.css'] = 'packages/web-shell/dist/shell.css';
-    return { files, imports, styles };
+    const mobileStyles = includeMobile ? ['/assets/shell.css', '/assets/mobile.css', ...styles.slice(1)] : undefined;
+    if (includeMobile) files['/assets/mobile.css'] = 'packages/mobile-shell/dist/mobile.css';
+    return { files, imports, styles, ...(mobileStyles ? { mobileStyles } : {}) };
 }

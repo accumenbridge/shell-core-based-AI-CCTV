@@ -1,5 +1,6 @@
 import type { Workspace } from '@quadbridge/contracts';
 import { el, button, field, heading, section, formAction, statistic, emptyState } from '@quadbridge/web-shell/dom';
+export { recentRequestsPanel } from './ui/recent-requests.js';
 export const workspace: Workspace = { mount(ctx) {
         ctx.root.append(heading('Service requests', 'Manage requests in your current tenant. Changes are saved by Service Desk.'));
         const stats = el('div', 'stat-grid');

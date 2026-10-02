@@ -1,0 +1,8 @@
+{
+  "fixtureId": "4032c0da-c347-4236-bd24-919e512e06d0",
+  "candidate": "fd404c7993497c2016887f01676574c2f1f3daad4a323f7105a874b99b980e9b",
+  "originalExecSession": 29559,
+  "observedExitCode": 0,
+  "observedAt": "2026-10-02T10:05:03.113Z",
+  "observation": "Root directly observed original write_stdin completion exit0 after nonce STOP and normal server.close; same frozen candidate preserved."
+}

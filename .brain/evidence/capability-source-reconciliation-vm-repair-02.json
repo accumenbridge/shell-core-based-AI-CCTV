@@ -1,0 +1,183 @@
+{
+  "recordedAt": "2026-10-02T06:23:52.852Z",
+  "coordinator": "/root",
+  "scope": "Actual finite operation source inspection, not delivery acceptance",
+  "changes": [
+    {
+      "path": "OPEN_PLATFORM.html",
+      "before": "4bb4bf6410ee6d6b3a4bf4738a00275d5e5c635a3e730f9a78967df4b0b3da25",
+      "after": "546330c513b78abbd09d786544c3c11c1b90aedc29bce29ec226fa39b76255e6",
+      "reason": "Inspected generated offline operation-bearing catalogue and fixed pure core, retaining Mobile metadata and data-only preview without new filesystem/network/build privilege."
+    },
+    {
+      "path": "apps/runtime/package.json",
+      "before": "5f6b26f50da3e23e8623e8cdded3dc292c8fe095487160849ca2f2dd72aaa93c",
+      "after": "fe8d0e022f1fa6c5dd512e9eda6d218760e0eeb415ef5cffe1c1c15fdb36b89f",
+      "reason": "Inspected exact Knowledge/Handoff runtime dependency pins0.2.2; no runtime implementation or selection branch was added."
+    },
+    {
+      "path": "modules/handoff/module.json",
+      "before": "8611a8a506ac03d097ef832c7579ad8d63409f9cfc12b5c728a4be46ecebf4d3",
+      "after": "7be25546531fffa2eb0368c69c65912e0b41083090090236fa7bf17b9aacd2db",
+      "reason": "Inspected Handoff version0.2.2 and exact Knowledge0.2.2 source dependency; public contracts and domain behavior are unchanged."
+    },
+    {
+      "path": "modules/handoff/package.json",
+      "before": "dbf855deb04eddafb0b03d6c4c821c34c08c24f329a6f112ca1c0bafb00917b1",
+      "after": "3bb2c5d8ee46f17c8c1643ddfa15b16d6277a142cb8de574365992389382c762",
+      "reason": "Inspected matching Handoff workspace package version0.2.2, preserving its existing dependency ownership."
+    },
+    {
+      "path": "modules/knowledge/module.json",
+      "before": "3d0fe0f46a5a0428d254ac7415e1e3df1e9b9c1401f90b05210897f51a59ac1e",
+      "after": "3d8aef6f576666d363fa50da8b8ad80778cb359e7d12c076c25073dbe9fca538",
+      "reason": "Inspected matching three Knowledge version1 operation declarations and bounded schemas, permissions and read/write semantics; source module version is coherently0.2.2 with unchanged owner migration schema."
+    },
+    {
+      "path": "modules/knowledge/package.json",
+      "before": "d7ff85466aa78d51af7b091fa8ee70e8494c85835980abe40fcb57b967bb0e3a",
+      "after": "0ab501571e33e7729be435ceb19c27ef4e6b9c9db343f7c4a09103ef80b5af05",
+      "reason": "Inspected current Knowledge workspace package version0.2.2; dependency ownership stays unchanged and no new runtime package is introduced."
+    },
+    {
+      "path": "modules/knowledge/src/index.ts",
+      "before": "52a64e0bc7754e0bcbd0cbc76eba6d5b7c7493d34825b281c7dc07985cfdb15a",
+      "after": "3446c2a41abdcac89b22bb6481c7b48d3b72912636928b2da613e0e320722b34",
+      "reason": "Inspected three fixed descriptor/handler registrations, shared HTTP-operation create/search owner functions, original knowledge.add transaction identity, actual queue insertion, bounded tenant READY search/get projections and preserved read.v1/retrieval/answer/migrations."
+    },
+    {
+      "path": "package-lock.json",
+      "before": "739f3696303ff5ae7c88772e0d8d715896b55b37e1298fbb4cf620b4becd4d1c",
+      "after": "8d03ae11f3550112543bf39b065c636f9c82d2b4cd35108a14bae21abd44fb72",
+      "reason": "Inspected corresponding current workspace/runtime version pins; existing Mobile/esbuild dependency records are retained, with no dependency installation for the operation seam."
+    },
+    {
+      "path": "packages/backend-host/src/index.ts",
+      "before": "114611c9a6580d20c5e81a958c365f40f79b55ca7232bc492c5a27e8a8d53875",
+      "after": "4d3a930b79243a198b75bea90b706686da905f77d9f70ad7e0787f0b2656ddb5",
+      "reason": "Inspected exact selected declaration/handler parity and collision checks, immutable descriptor catalogue, trusted context invocation, required write command ID and original authorization/cancellation reconciliation before and after awaited results/errors."
+    },
+    {
+      "path": "packages/composition/src/index.ts",
+      "before": "50f99424b38e315a9558055f4aea8e4537a7f13ffb672e678bc5d10ba3ae41a5",
+      "after": "b1a7b80113e234fb30bacf962fbb3ec34a9f1e235acdf0df68a653c8c47adae1",
+      "reason": "Inspected shared descriptor validation against owning module/permission declarations and exact operation identity collisions in the existing canonical resolver."
+    },
+    {
+      "path": "packages/contracts/src/index.ts",
+      "before": "65344865bf676546c6ee0ab01b1fa4fc2071fb730664b2cd8cca31f26a666792",
+      "after": "852c500432771ca76f0c6377281588c6a918d5cc57096e8c63684a110302c1ed",
+      "reason": "Inspected additive optional ModuleManifest.operations type and type-only operations reference, keeping the compiled root index free of runtime reexports for the reviewed offline closure."
+    },
+    {
+      "path": "packages/module-sdk/src/index.ts",
+      "before": "ea21e46b8370d5b1f7623a46cb3c5a2825b44daa186f37490cf8ea740a5f1c3a",
+      "after": "1ef11c3b32550b1df3bc9330201d1547dc0af65a1d544a7d9a0851965c66d26a",
+      "reason": "Inspected SDK delegation to the shared operation descriptor validator before existing rich Studio validation; no second schema or grant authority."
+    },
+    {
+      "path": "packages/studio-model/src/index.ts",
+      "before": "dcd949f62a78405a6110f531ff74a9d34d05e8972b2beb0c23e0aab6db5b52d3",
+      "after": "0bb8f45a2324dab5c5cf694ed0e8f8f6e0afdad1c90c0b2a81688b785a55fa72",
+      "reason": "Inspected operations-only addition to the closed root manifest whitelist; the accepted rich metadata validator and all its field checks remain preserved."
+    },
+    {
+      "path": "products/combined/product.json",
+      "before": "fd589ed0f91e06b630884e3bef5fd0312ebdc34a80efc9e8fcb32ce680fde038",
+      "after": "4656211c42e83a00d0b68858d8b075562a6ec2429a9b1111542e99b7c48d5747",
+      "reason": "Inspected Combined product and selected Knowledge/Handoff0.2.2 pins, with existing explicit local bindings and Desk selection preserved."
+    },
+    {
+      "path": "products/knowledge/product.json",
+      "before": "7fb1af22757ff740c9aaf622bef55ab04a77652de7965646fe140c4c0352f12c",
+      "after": "69d7f450b499bf651df3cc453055d13c3da4c0853330357e89ce07ce48ba7247",
+      "reason": "Inspected Knowledge product and selected Knowledge/Handoff0.2.2 pins; existing HTTP Desk binding and wiring remain explicit and unchanged."
+    },
+    {
+      "path": "tests/composition.test.mjs",
+      "before": "1f8eb891b0b8300467d30eeb7e4688451b8784ffda443df9edae277e0e56cecb",
+      "after": "5bf219d3d508e04973b0fbbf64d39c49bfb1dff358831ee8d23adfe8a0a90fdf",
+      "reason": "Read current0.2.2 source dependency/closure expectations and necessary operation namespace/permission/identity collision checks through the canonical resolver."
+    },
+    {
+      "path": "tests/factory-lifecycle.test.mjs",
+      "before": "afb4ca22fe76236932de77797ee3fa14f7296dba9a0329b7cf7d96626d220174",
+      "after": "fa633365340a112b07a4951895dc840bcc437a19920e918008445feca37bba25",
+      "reason": "Read actual independent Knowledge/Combined export startup and operation create/index/search/get with source/compiler trees absent, current workspace pins and preserved legacy factory tests; existing Desk cleanup retry was retained from Mobile baseline."
+    },
+    {
+      "path": "tests/module-sdk.test.mjs",
+      "before": "b3ee0e1d9daf349ddaade1b681e731d84b5e1ff10c139fe1d02b79e6508dca24",
+      "after": "1c4958e8a1f24a0e490f2745224f604262e33372a59063e26f2cedb596751cf6",
+      "reason": "Read shared SDK operation acceptance and necessary unsupported schema/undeclared permission rejection; existing vertical-slice metadata test is retained."
+    },
+    {
+      "path": "tests/studio-integration.test.mjs",
+      "before": "ef8516d93e16b33fe14e9d1a6bf54c811c6a589ee75ceef3b46ad03db9c0cd70",
+      "after": "4bfa1294685e128381eaedd6283d6542672285bb73add51e6e8c33104242758d",
+      "reason": "Inspected minimal two-context TextEncoder browser global and JSON transport parsed inside destination VM for catalogue/solutions/draft; exact shared resolver JSON projection stays asserted. All generator, immutable save/build, real record, Handoff receipt and restart assertions are unchanged; fail-on-fetch guard retained."
+    },
+    {
+      "path": "tests/studio-product-editor.test.mjs",
+      "before": "77218a3a646d9eb4ab5822d10d795da71b3b04c1161b58ed8cb7e25c819cc0d3",
+      "after": "d6438683982453be4cbd9fa93e17926ec7be660ff86115f10eced7b03f7f3068",
+      "reason": "Inspected offline helper fixture product/catalogue/solutions JSON decoding in the browser VM realm; added exact CLI JSON projection comparison while preserving description, version, binding-instance, valid result and no-fetch assertions. Production strict descriptor validator and separate compiled editor handler tests remain unchanged."
+    },
+    {
+      "path": "tests/visual-edition.test.mjs",
+      "before": "1e57b43232eddaf6e714c2bc3723370044d7fbb4920d59a142a6b5ffb9ff5419",
+      "after": "5d42d572dc9c1a82d449256ca5335c29f194f84dc17d869d656611f5d44da93c",
+      "reason": "Read same-realm JSON VM fixtures that match actual offline browser parsing, fixed shared operation validator/resolver checks and preserved no-network/external-script guards; VM checks are not live-browser evidence."
+    },
+    {
+      "path": "tests/workspace-closure.test.mjs",
+      "before": "f6f6d94785e456f719e95035ef73562b472d43a20c379684b63248c9d420a142",
+      "after": "0c4fc48570d42f516436ab13c24f60f3ad8b988ab87e67ff6250b57f8cb02968",
+      "reason": "Read exact Knowledge/Handoff0.2.2 selected closure assertions; prior Mobile/client-core selection and mobile-shell omission assertions remain preserved."
+    },
+    {
+      "path": "tools/studio-catalogue.mjs",
+      "before": "f3f7d4e611978b8b4e096fc96be9d6404c0ed31b25e04bcadd319badc94086cf",
+      "after": "095b3fb198ddd5850dbf4bfbf2bf52e58eaccf8cdb828b9fce191b879b5db775",
+      "reason": "Inspected fixed fourth QBOperations pure compiled wrapper between contracts/composition, explicit validator symbol injection and retained fail-closed unsupported module-format handling; no recursive bundler or alternate resolver."
+    },
+    {
+      "path": "visual/data.json",
+      "before": "4e605e0fa8aab867fcd71d3166715c36d9a5e24cd9c80cbf3a76ed077997b61d",
+      "after": "34540949ddc2e68aecb1738a72c19dcdb233d7336bf0fab5963ee29a52d51415",
+      "reason": "Inspected source-derived current0.2.2 products/modules and their operation metadata; catalogue remains derived rather than an independent allowlist."
+    },
+    {
+      "path": "packages/contracts/src/operations.ts",
+      "before": null,
+      "after": "8666d65dceac6667b18d5cec252beb758106eb296aef8c09e925fa052764e765",
+      "reason": "Inspected shared pure operation descriptor/schema/value validation: closed fields, actual string type, own-key membership, fixed JSON/UTF-8 traversal bounds and immutable copies; no Node/domain imports or grant decisions."
+    },
+    {
+      "path": "tests/capability-operations.test.mjs",
+      "before": null,
+      "after": "18f0427bd79d859213f389978254f0c1bbe643c9b8fabcdf135eb3253cd93e39",
+      "reason": "Read actual HTTP-operation same-command receipt replay, one document/job and real worker indexing/tenant/mode/write-key checks plus deterministic awaited original-session/cancellation/error/output reconciliation; no provider/MCP/browser claims."
+    },
+    {
+      "path": "docs/CAPABILITY_OPERATIONS.md",
+      "before": null,
+      "after": "d1a011219a8c2ae2f92ee8e5e82257c026c1db7b3aa37f923231b0c69f43edfb",
+      "reason": "Read actual supported schema limits, owner permissions/command semantics, trusted seam and compatibility boundaries; no new HTTP/MCP/browser/native/provider/production implementation claim."
+    }
+  ],
+  "updatedAtlasRefs": [
+    {
+      "id": "kernel-startup-journey",
+      "path": "tests/studio-integration.test.mjs",
+      "before": "ef8516d93e16b33fe14e9d1a6bf54c811c6a589ee75ceef3b46ad03db9c0cd70",
+      "after": "4bfa1294685e128381eaedd6283d6542672285bb73add51e6e8c33104242758d",
+      "reason": "Inspected minimal two-context TextEncoder browser global and JSON transport parsed inside destination VM for catalogue/solutions/draft; exact shared resolver JSON projection stays asserted. All generator, immutable save/build, real record, Handoff receipt and restart assertions are unchanged; fail-on-fetch guard retained."
+    }
+  ],
+  "outsideEditBoundaryUnchanged": true,
+  "limitations": [
+    "Historical acceptance candidates/results stay unchanged; source pins describe current inspected planning source.",
+    "No browser/MCP/provider/production qualification from pin reconciliation."
+  ]
+}

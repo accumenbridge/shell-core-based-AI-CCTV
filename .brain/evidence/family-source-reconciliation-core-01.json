@@ -1,0 +1,256 @@
+{
+  "recordedAt": "2026-10-02T08:06:17.947Z",
+  "coordinator": "/root",
+  "scope": "Actual finite family source inspection, not delivery acceptance",
+  "changes": [
+    {
+      "path": "OPEN_PLATFORM.html",
+      "before": "546330c513b78abbd09d786544c3c11c1b90aedc29bce29ec226fa39b76255e6",
+      "after": "1cfc08635b095e12181583748abc71374b6e9c963c93010a0cc59ae911149981",
+      "reason": "Inspected regenerated offline source data and fixed fifth pure family wrapper plus family controls from maintained build; no external scripts or executable import URLs added."
+    },
+    {
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "before": "8821ba961e205a9fc8935a12e226515a3d1c601b3a869233527c46dcebdf020e",
+      "after": "cb5cb5ac95f0e4ea8dfac74847ea26ac3c2c4bae5449302a1a0e2dadaf6c0528",
+      "reason": "Inspected narrowly reviewed families/safe-id/family.json copy and fingerprint inclusion; neighboring files remain refused and family mappings remain data outside hosts."
+    },
+    {
+      "path": "apps/control-plane/src/operator-server.ts",
+      "before": "ac16b51e899fea7cd4119f681c3f2727fc0470e0745eb17111235923f68614cd",
+      "after": "89931273655c17818ac2b0168eb572e286ec14c7d99e8f1edf1541828cae2624",
+      "reason": "Inspected fixed authenticated family derive endpoint, exact optional confirmed save claim independently rederived and compared, source/original-session checks and exact-version provenance DTO; no generic operation execution URL."
+    },
+    {
+      "path": "apps/studio-web/src/main.ts",
+      "before": "66b19078409bdb9ded87d47fdade294ef7659a7e3bd0965473ee97c1656617a0",
+      "after": "952630beae1e6c6e22d8dfc1f2f674ce0370e560278973d1670d01b12c966421",
+      "reason": "Inspected catalogue-driven family/features/defaults, editable identity, canonical derived complete editor and separate reasons, session/navigation/editor fences, invalidation on changes and unchecked exact-version save confirmation."
+    },
+    {
+      "path": "packages/control-plane/src/index.ts",
+      "before": "107bdca35e29b8ac2359e65159c01645167e01acbacb6aba17ed043705dad78f",
+      "after": "2fd5a03c68e128bada529c6a43f8ec5baf444ed4631903eefbf4d62ce4a093be",
+      "reason": "Inspected bounded optional family provenance in existing atomic immutable product/version/audit transaction, synchronous authorization after BEGIN, original retry conflict refusal and exact-version audit accessor; no migration."
+    },
+    {
+      "path": "tests/control-plane-http.test.mjs",
+      "before": "f5faefb1e0b3ba494576fa6172f294387549e41dc97408690b6f7c789650cf10",
+      "after": "946a115c287e26069912ca851e7c20b942fdf30aca59a42f73fd659338810c82",
+      "reason": "Inspected actual paired derive/save/exact-read/replay mismatch refusal and separate manual version with no inherited claim; verifies server authority and audit immutability."
+    },
+    {
+      "path": "tests/control-plane.test.mjs",
+      "before": "3304f9ff64a01a81d6effb71a723136e6cbc711b7ef31a7924f64f46864884f2",
+      "after": "297fe68516e4357b72d0e660ee8f933f047accc3dc5fc83cae252cfac89670f2",
+      "reason": "Inspected exact immutable provenance/retry/conflict/manual next-version audit coverage and repaired total audit assertion to account for actual initialization audit without weakening version audit checks."
+    },
+    {
+      "path": "tests/reliability-baseline.test.mjs",
+      "before": "efa6b8599dfb2229d5e26ce3b0e5dd0aa9fa5bca538e9a3ef2f8f37a0ee730e6",
+      "after": "975466f643465747d5443a3aab1818278a53140c2e4b7601990f9c9a711b6c03",
+      "reason": "Inspected fixed reviewed family-data copy inclusion plus neighboring executable refusal in actual private source-copy test, retaining all reliability baseline checks."
+    },
+    {
+      "path": "tests/studio-product-editor.test.mjs",
+      "before": "d6438683982453be4cbd9fa93e17926ec7be660ff86115f10eced7b03f7f3068",
+      "after": "a373154a9b63e03efbfa85fba3d041c2be8f30ade884d9f214e3e6e075df15d7",
+      "reason": "Inspected paired source defaults and derive/preview/confirmed save intent alongside existing generation/navigation/manual-edit confirmation coverage; corrected consumed confirmation assertions to current rendered absence."
+    },
+    {
+      "path": "tests/visual-edition.test.mjs",
+      "before": "5d42d572dc9c1a82d449256ca5335c29f194f84dc17d869d656611f5d44da93c",
+      "after": "5b99a772bc3debbb6d157195b09b7b4275513d881ddbb94d3c4b069624915b18",
+      "reason": "Inspected controlled offline second source-family defaults and actual same compiled derive/load-editor interaction with network refusal; escaped JSON assertions match safely rendered HTML and are not browser qualification."
+    },
+    {
+      "path": "tools/studio-catalogue.mjs",
+      "before": "095b3fb198ddd5850dbf4bfbf2bf52e58eaccf8cdb828b9fce191b879b5db775",
+      "after": "fa89c06cb27191c9f7c4a6f3f489a4f95e3a9e7f9699a40ecc94352f5f22b8de",
+      "reason": "Inspected optional source family catalogue with physical inert identity validation and fifth compiled QBFamilies browser wrapper over existing canonical composer, preserving independent exports without family directories."
+    },
+    {
+      "path": "visual/data.json",
+      "before": "34540949ddc2e68aecb1738a72c19dcdb233d7336bf0fab5963ee29a52d51415",
+      "after": "ab1a074f0a56bb5b485cfabc9ecc2ae7ca263b87d03b6a8c1fd070da7138e215",
+      "reason": "Inspected regenerated source catalogue carrying reviewed family mapping and current existing module/solution declarations; no separate allowed-owner or product-name list."
+    },
+    {
+      "path": "visual/studio.js",
+      "before": "8ce9a902154e3bada85aa548d74c19e5e3857ded89c3f6ab4564a5a977be66d2",
+      "after": "33cf049a2d50f7625d35bc2164679769fd0c7f50a4a3a361ee999030cb0f2cf8",
+      "reason": "Inspected source-loaded family defaults, pure same-wrapper derive/preview/load/export controls and result invalidation without network/filesystem/build authority; existing complete editor remains available."
+    },
+    {
+      "path": "packages/composition/src/family.ts",
+      "before": null,
+      "after": "07a2576ce9c3ff8e765314b7bfd342cd08ace293c6abf89f94a932ecae5a6c98",
+      "reason": "Inspected pure bounded reviewed family validator and derivation through canonical composeDraft/validateProduct/resolve; explicit reviewed port choices, source versions, immutable caller selection, separate feature and technical explanations."
+    },
+    {
+      "path": "families/service-operations/family.json",
+      "before": null,
+      "after": "9cf0b0db8f1032b8fd1bdb4887b4aecfb5319bd47b5d513085e862135396e4e3",
+      "reason": "Inspected inert three-feature Service Operations mapping: required Requests, Shared library and dependent Document handoff with both reviewed local choices; no grants or version constants."
+    },
+    {
+      "path": "docs/PRODUCT_FAMILIES.md",
+      "before": null,
+      "after": "01185f1137333010336354ba39c529960be635bdf5c33b29249054bff89eb91d",
+      "reason": "Inspected user/developer explanation of three exact source compositions, existing audited provenance and offline versus actual build/runtime states without execution claims."
+    },
+    {
+      "path": "tests/product-family.test.mjs",
+      "before": null,
+      "after": "daa8274aa1b807a83908813d8c2e3abea2dd18d9cd01e58b084d489cf4575356",
+      "reason": "Inspected pure selection cases and sequential real three-version owned artifacts: selected route/asset closure, persisted Desk, actual Knowledge worker, post-stop exact export get, Handoff committed receipt/replay/restart and positive original closure assertions."
+    }
+  ],
+  "updatedAtlasRefs": [
+    {
+      "id": "studio-ui",
+      "path": "apps/studio-web/src/main.ts",
+      "before": "66b19078409bdb9ded87d47fdade294ef7659a7e3bd0965473ee97c1656617a0",
+      "after": "952630beae1e6c6e22d8dfc1f2f674ce0370e560278973d1670d01b12c966421",
+      "reason": "Inspected catalogue-driven family/features/defaults, editable identity, canonical derived complete editor and separate reasons, session/navigation/editor fences, invalidation on changes and unchecked exact-version save confirmation."
+    },
+    {
+      "id": "control-contracts",
+      "path": "packages/control-plane/src/index.ts",
+      "before": "107bdca35e29b8ac2359e65159c01645167e01acbacb6aba17ed043705dad78f",
+      "after": "2fd5a03c68e128bada529c6a43f8ec5baf444ed4631903eefbf4d62ce4a093be",
+      "reason": "Inspected bounded optional family provenance in existing atomic immutable product/version/audit transaction, synchronous authorization after BEGIN, original retry conflict refusal and exact-version audit accessor; no migration."
+    },
+    {
+      "id": "capability-source-18",
+      "path": "tests/visual-edition.test.mjs",
+      "before": "5d42d572dc9c1a82d449256ca5335c29f194f84dc17d869d656611f5d44da93c",
+      "after": "5b99a772bc3debbb6d157195b09b7b4275513d881ddbb94d3c4b069624915b18",
+      "reason": "Inspected controlled offline second source-family defaults and actual same compiled derive/load-editor interaction with network refusal; escaped JSON assertions match safely rendered HTML and are not browser qualification."
+    },
+    {
+      "id": "capability-source-19",
+      "path": "tools/studio-catalogue.mjs",
+      "before": "095b3fb198ddd5850dbf4bfbf2bf52e58eaccf8cdb828b9fce191b879b5db775",
+      "after": "fa89c06cb27191c9f7c4a6f3f489a4f95e3a9e7f9699a40ecc94352f5f22b8de",
+      "reason": "Inspected optional source family catalogue with physical inert identity validation and fifth compiled QBFamilies browser wrapper over existing canonical composer, preserving independent exports without family directories."
+    },
+    {
+      "id": "capability-source-20",
+      "path": "OPEN_PLATFORM.html",
+      "before": "546330c513b78abbd09d786544c3c11c1b90aedc29bce29ec226fa39b76255e6",
+      "after": "1cfc08635b095e12181583748abc71374b6e9c963c93010a0cc59ae911149981",
+      "reason": "Inspected regenerated offline source data and fixed fifth pure family wrapper plus family controls from maintained build; no external scripts or executable import URLs added."
+    },
+    {
+      "id": "capability-source-21",
+      "path": "visual/data.json",
+      "before": "34540949ddc2e68aecb1738a72c19dcdb233d7336bf0fab5963ee29a52d51415",
+      "after": "ab1a074f0a56bb5b485cfabc9ecc2ae7ca263b87d03b6a8c1fd070da7138e215",
+      "reason": "Inspected regenerated source catalogue carrying reviewed family mapping and current existing module/solution declarations; no separate allowed-owner or product-name list."
+    },
+    {
+      "id": "capability-added-tests-studio-product-editor-test-mjs",
+      "path": "tests/studio-product-editor.test.mjs",
+      "before": "d6438683982453be4cbd9fa93e17926ec7be660ff86115f10eced7b03f7f3068",
+      "after": "a373154a9b63e03efbfa85fba3d041c2be8f30ade884d9f214e3e6e075df15d7",
+      "reason": "Inspected paired source defaults and derive/preview/confirmed save intent alongside existing generation/navigation/manual-edit confirmation coverage; corrected consumed confirmation assertions to current rendered absence."
+    },
+    {
+      "id": "family-source-0",
+      "path": "tools/studio-catalogue.mjs",
+      "before": "095b3fb198ddd5850dbf4bfbf2bf52e58eaccf8cdb828b9fce191b879b5db775",
+      "after": "fa89c06cb27191c9f7c4a6f3f489a4f95e3a9e7f9699a40ecc94352f5f22b8de",
+      "reason": "Inspected optional source family catalogue with physical inert identity validation and fifth compiled QBFamilies browser wrapper over existing canonical composer, preserving independent exports without family directories."
+    },
+    {
+      "id": "family-source-1",
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "before": "8821ba961e205a9fc8935a12e226515a3d1c601b3a869233527c46dcebdf020e",
+      "after": "cb5cb5ac95f0e4ea8dfac74847ea26ac3c2c4bae5449302a1a0e2dadaf6c0528",
+      "reason": "Inspected narrowly reviewed families/safe-id/family.json copy and fingerprint inclusion; neighboring files remain refused and family mappings remain data outside hosts."
+    },
+    {
+      "id": "family-source-2",
+      "path": "apps/control-plane/src/operator-server.ts",
+      "before": "ac16b51e899fea7cd4119f681c3f2727fc0470e0745eb17111235923f68614cd",
+      "after": "89931273655c17818ac2b0168eb572e286ec14c7d99e8f1edf1541828cae2624",
+      "reason": "Inspected fixed authenticated family derive endpoint, exact optional confirmed save claim independently rederived and compared, source/original-session checks and exact-version provenance DTO; no generic operation execution URL."
+    },
+    {
+      "id": "family-source-3",
+      "path": "packages/control-plane/src/index.ts",
+      "before": "107bdca35e29b8ac2359e65159c01645167e01acbacb6aba17ed043705dad78f",
+      "after": "2fd5a03c68e128bada529c6a43f8ec5baf444ed4631903eefbf4d62ce4a093be",
+      "reason": "Inspected bounded optional family provenance in existing atomic immutable product/version/audit transaction, synchronous authorization after BEGIN, original retry conflict refusal and exact-version audit accessor; no migration."
+    },
+    {
+      "id": "family-source-4",
+      "path": "apps/studio-web/src/main.ts",
+      "before": "66b19078409bdb9ded87d47fdade294ef7659a7e3bd0965473ee97c1656617a0",
+      "after": "952630beae1e6c6e22d8dfc1f2f674ce0370e560278973d1670d01b12c966421",
+      "reason": "Inspected catalogue-driven family/features/defaults, editable identity, canonical derived complete editor and separate reasons, session/navigation/editor fences, invalidation on changes and unchecked exact-version save confirmation."
+    },
+    {
+      "id": "family-source-5",
+      "path": "visual/studio.js",
+      "before": "8ce9a902154e3bada85aa548d74c19e5e3857ded89c3f6ab4564a5a977be66d2",
+      "after": "33cf049a2d50f7625d35bc2164679769fd0c7f50a4a3a361ee999030cb0f2cf8",
+      "reason": "Inspected source-loaded family defaults, pure same-wrapper derive/preview/load/export controls and result invalidation without network/filesystem/build authority; existing complete editor remains available."
+    },
+    {
+      "id": "family-source-6",
+      "path": "OPEN_PLATFORM.html",
+      "before": "546330c513b78abbd09d786544c3c11c1b90aedc29bce29ec226fa39b76255e6",
+      "after": "1cfc08635b095e12181583748abc71374b6e9c963c93010a0cc59ae911149981",
+      "reason": "Inspected regenerated offline source data and fixed fifth pure family wrapper plus family controls from maintained build; no external scripts or executable import URLs added."
+    },
+    {
+      "id": "family-source-7",
+      "path": "visual/data.json",
+      "before": "34540949ddc2e68aecb1738a72c19dcdb233d7336bf0fab5963ee29a52d51415",
+      "after": "ab1a074f0a56bb5b485cfabc9ecc2ae7ca263b87d03b6a8c1fd070da7138e215",
+      "reason": "Inspected regenerated source catalogue carrying reviewed family mapping and current existing module/solution declarations; no separate allowed-owner or product-name list."
+    },
+    {
+      "id": "family-source-8",
+      "path": "tests/control-plane.test.mjs",
+      "before": "3304f9ff64a01a81d6effb71a723136e6cbc711b7ef31a7924f64f46864884f2",
+      "after": "297fe68516e4357b72d0e660ee8f933f047accc3dc5fc83cae252cfac89670f2",
+      "reason": "Inspected exact immutable provenance/retry/conflict/manual next-version audit coverage and repaired total audit assertion to account for actual initialization audit without weakening version audit checks."
+    },
+    {
+      "id": "family-source-9",
+      "path": "tests/control-plane-http.test.mjs",
+      "before": "f5faefb1e0b3ba494576fa6172f294387549e41dc97408690b6f7c789650cf10",
+      "after": "946a115c287e26069912ca851e7c20b942fdf30aca59a42f73fd659338810c82",
+      "reason": "Inspected actual paired derive/save/exact-read/replay mismatch refusal and separate manual version with no inherited claim; verifies server authority and audit immutability."
+    },
+    {
+      "id": "family-source-10",
+      "path": "tests/studio-product-editor.test.mjs",
+      "before": "d6438683982453be4cbd9fa93e17926ec7be660ff86115f10eced7b03f7f3068",
+      "after": "a373154a9b63e03efbfa85fba3d041c2be8f30ade884d9f214e3e6e075df15d7",
+      "reason": "Inspected paired source defaults and derive/preview/confirmed save intent alongside existing generation/navigation/manual-edit confirmation coverage; corrected consumed confirmation assertions to current rendered absence."
+    },
+    {
+      "id": "family-source-11",
+      "path": "tests/visual-edition.test.mjs",
+      "before": "5d42d572dc9c1a82d449256ca5335c29f194f84dc17d869d656611f5d44da93c",
+      "after": "5b99a772bc3debbb6d157195b09b7b4275513d881ddbb94d3c4b069624915b18",
+      "reason": "Inspected controlled offline second source-family defaults and actual same compiled derive/load-editor interaction with network refusal; escaped JSON assertions match safely rendered HTML and are not browser qualification."
+    },
+    {
+      "id": "family-source-13",
+      "path": "tests/reliability-baseline.test.mjs",
+      "before": "efa6b8599dfb2229d5e26ce3b0e5dd0aa9fa5bca538e9a3ef2f8f37a0ee730e6",
+      "after": "975466f643465747d5443a3aab1818278a53140c2e4b7601990f9c9a711b6c03",
+      "reason": "Inspected fixed reviewed family-data copy inclusion plus neighboring executable refusal in actual private source-copy test, retaining all reliability baseline checks."
+    }
+  ],
+  "outsideEditBoundaryUnchanged": true,
+  "limitations": [
+    "Historical acceptance candidates/results stay unchanged; source pins describe current inspected planning source.",
+    "No browser/MCP/provider/production qualification from pin reconciliation."
+  ]
+}

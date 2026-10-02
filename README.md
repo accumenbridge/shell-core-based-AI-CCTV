@@ -49,6 +49,23 @@ standalone `npm run demo` launcher is a separate legacy path that prints its gen
 The paired Runtime view stores its generated credentials privately under `.local/platform-runtime-data/`
 and does not return them through Studio responses or print them in the terminal.
 
+## Preview and package a product for mobile
+
+The local mobile preview uses the same-origin runtime, login cookie, tenant scope, permissions, and selected workspace UI:
+
+```bash
+npm run build
+npm run demo -- --product service-desk --mobile-preview --port 4350
+```
+
+To generate a client-only Capacitor scaffold from a built product snapshot:
+
+```bash
+npm run mobile:assemble -- --product service-desk
+```
+
+The generated candidate is stored under `.local/mobile-001/generated/`. It uses a local bundled `www` directory and shows **Connection not configured** without contacting a server. Mobile identity/API setup and native build or device qualification are later work. See [`docs/MOBILE_APP_SHELL.md`](docs/MOBILE_APP_SHELL.md) for the exact scope and checks.
+
 ## Register and promote a verified local build
 
 The paired operator can register a successful verified build by its exact snapshot digest, inspect its

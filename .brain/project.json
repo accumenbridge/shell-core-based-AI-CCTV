@@ -16,7 +16,7 @@
     "strategy": ".brain/STRATEGY.md",
     "decisions": ".brain/DECISIONS.md",
     "progress": ".brain/CURRENT.md",
-    "current_work": ".brain/tasks/KERNEL-CI-002.md"
+    "current_work": ".brain/tasks/EXTENSION-001.md"
   },
   "execution": {
     "mode": "existing_agent_sessions",

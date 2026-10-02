@@ -1,0 +1,80 @@
+{
+  "taskId": "FRAMEWORK-RELIABILITY-001",
+  "recordedAt": "2026-10-02T03:56:54.265Z",
+  "changes": [
+    {
+      "id": "studio-contracts",
+      "path": "packages/studio-model/src/index.ts",
+      "before": "757a2d8fd90e99012aabca8828d56c59131f8e317e920b6ff90ec86a3e4d38f2",
+      "after": "dcd949f62a78405a6110f531ff74a9d34d05e8972b2beb0c23e0aab6db5b52d3",
+      "reason": "Named Luna reliability implementation inspected against Sol finite work order. First-binding seed, bounded transient scan and append-only heartbeat preserve owner proof; rich metadata now validates declarations. Presence only, completed tests/review required separately."
+    },
+    {
+      "id": "kernel-ci-protocol-test",
+      "path": "tests/runtime-protocol.test.mjs",
+      "before": "06a97bdd81427e3f8279240085aa7317294735bd49a343e3ed7f90d1cc9cce66",
+      "after": "0e329ed57e26804cb4b4fddc784f211a1ffa7d981324d9cedaf7fd061ad47625",
+      "reason": "Named Luna reliability implementation inspected against Sol finite work order. First-binding seed, bounded transient scan and append-only heartbeat preserve owner proof; rich metadata now validates declarations. Presence only, completed tests/review required separately."
+    },
+    {
+      "id": "kernel-ci-admission-test",
+      "path": "tests/runtime-manager-preparation.test.mjs",
+      "before": "7a0434f5d1aba7f7434a8a16112e6eda53c0db97b6da380ad2f815942d0ab40c",
+      "after": "e53439892dc5649d826126c1954745cd55f8501ba3672307de91ec63e906a4c6",
+      "reason": "Named Luna reliability implementation inspected against Sol finite work order. First-binding seed, bounded transient scan and append-only heartbeat preserve owner proof; rich metadata now validates declarations. Presence only, completed tests/review required separately."
+    },
+    {
+      "id": "framework-reliability-source-0",
+      "path": "apps/control-plane/src/runtime-manager.ts",
+      "before": "013ffb1b3ed312528a2e326ebde8f78a2490b60a3e0359d06abf40e57175ac3b",
+      "after": "99208fc042aa334caf54eca526a09adaf338ab6e6b3d6783a084f9194943067f",
+      "reason": "Named Luna reliability implementation inspected against Sol finite work order. First-binding seed, bounded transient scan and append-only heartbeat preserve owner proof; rich metadata now validates declarations. Presence only, completed tests/review required separately."
+    },
+    {
+      "id": "framework-reliability-source-1",
+      "path": "tests/runtime-manager-preparation.test.mjs",
+      "before": "7a0434f5d1aba7f7434a8a16112e6eda53c0db97b6da380ad2f815942d0ab40c",
+      "after": "e53439892dc5649d826126c1954745cd55f8501ba3672307de91ec63e906a4c6",
+      "reason": "Named Luna reliability implementation inspected against Sol finite work order. First-binding seed, bounded transient scan and append-only heartbeat preserve owner proof; rich metadata now validates declarations. Presence only, completed tests/review required separately."
+    },
+    {
+      "id": "framework-reliability-source-2",
+      "path": "tests/fixtures/runtime-protocol-heartbeat.mjs",
+      "before": "33b21de828c42ab45def79eabc2c87d87bfc4cecf9862686e84e062674f75e0a",
+      "after": "c0127c3e62795702317f29bacfcd5b0f7395d052238924eb002f4eb1951b436c",
+      "reason": "Named Luna reliability implementation inspected against Sol finite work order. First-binding seed, bounded transient scan and append-only heartbeat preserve owner proof; rich metadata now validates declarations. Presence only, completed tests/review required separately."
+    },
+    {
+      "id": "framework-reliability-source-3",
+      "path": "tests/runtime-protocol.test.mjs",
+      "before": "06a97bdd81427e3f8279240085aa7317294735bd49a343e3ed7f90d1cc9cce66",
+      "after": "0e329ed57e26804cb4b4fddc784f211a1ffa7d981324d9cedaf7fd061ad47625",
+      "reason": "Named Luna reliability implementation inspected against Sol finite work order. First-binding seed, bounded transient scan and append-only heartbeat preserve owner proof; rich metadata now validates declarations. Presence only, completed tests/review required separately."
+    },
+    {
+      "id": "framework-reliability-source-4",
+      "path": "packages/local-access/src/index.ts",
+      "before": "fce97413cd3b27c8ae915286d1c10c4aa37168550deffaf77f0e7996b62bac91",
+      "after": "7c4bf32a59012adabc43361ca9be720198cd4f3edef4b05a2556e947ce0f6d0c",
+      "reason": "Named Luna reliability implementation inspected against Sol finite work order. First-binding seed, bounded transient scan and append-only heartbeat preserve owner proof; rich metadata now validates declarations. Presence only, completed tests/review required separately."
+    },
+    {
+      "id": "framework-reliability-source-5",
+      "path": "apps/runtime/src/index.ts",
+      "before": "198f229a67681b94eb1015eaa8f944d28340c5a2acbb04fcaee13149fe43e42d",
+      "after": "e50ab366caa2302be73257ea12500131f29ea5802928fb76c1f026331ad57136",
+      "reason": "Named Luna reliability implementation inspected against Sol finite work order. First-binding seed, bounded transient scan and append-only heartbeat preserve owner proof; rich metadata now validates declarations. Presence only, completed tests/review required separately."
+    },
+    {
+      "id": "framework-reliability-source-6",
+      "path": "packages/studio-model/src/index.ts",
+      "before": "757a2d8fd90e99012aabca8828d56c59131f8e317e920b6ff90ec86a3e4d38f2",
+      "after": "dcd949f62a78405a6110f531ff74a9d34d05e8972b2beb0c23e0aab6db5b52d3",
+      "reason": "Named Luna reliability implementation inspected against Sol finite work order. First-binding seed, bounded transient scan and append-only heartbeat preserve owner proof; rich metadata now validates declarations. Presence only, completed tests/review required separately."
+    }
+  ],
+  "mobileSourceOutsideEditsUnchanged": true,
+  "limitations": [
+    "Source reconciliation is inspected planning state, not final acceptance; actual test records and independent review remain mandatory."
+  ]
+}

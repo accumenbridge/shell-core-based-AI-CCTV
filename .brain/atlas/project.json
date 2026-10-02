@@ -2,9 +2,9 @@
   "schema": "brain.atlas.v1",
   "projectId": "quadbridge-core-frameworks",
   "title": "Quadbridge Product Studio",
-  "planRevision": 18,
-  "updatedAt": "2026-10-01T20:46:18.598Z",
-  "intentBasis": "User authorized the local full architecture program and on 2026-10-01 requested a reusable architecture-first Brain with visual planning, core prioritization and continuous review. Existing source architecture and bounded execution contracts remain authoritative. User 2026-10-01 explicitly created a complete-core actual realtime goal; checkpoint28 selects the continuous local core journey and grounded Brain readiness maintenance. User2026-10-01 ok proceed adopts the next bounded reliability/CI increment after source-grounded verdict review. Preserve local-core completion and unresolved historical startup cause.",
+  "planRevision": 40,
+  "updatedAt": "2026-10-02T10:31:58.507Z",
+  "intentBasis": "User authorized the local full architecture program and on 2026-10-01 requested a reusable architecture-first Brain with visual planning, core prioritization and continuous review. Existing source architecture and bounded execution contracts remain authoritative. User 2026-10-01 explicitly created a complete-core actual realtime goal; checkpoint28 selects the continuous local core journey and grounded Brain readiness maintenance. User2026-10-01 ok proceed adopts the next bounded reliability/CI increment after source-grounded verdict review. Preserve local-core completion and unresolved historical startup cause. User2026-10-02 authorizes the reviewed mobile shell build and explicitly defers identity/API profile selection. MOBILE-001 adopts browser-shell/client packaging only; native acceptance remains open. Continued user local core/plugin architecture request and explicit implementation handoff adopt FRAMEWORK-RELIABILITY-001 from actual revision63 failed audit; MOBILE-001 historical acceptance retained.",
   "vision": {
     "destination": "Build and operate reviewed products through a product-neutral Studio, with exact composition, immutable artifacts, domain ownership and understandable user journeys.",
     "users": [
@@ -77,7 +77,7 @@
       "id": "readme",
       "path": "README.md",
       "role": "user journeys",
-      "sha256": "e65fa9263bb50cfe863b3c8984998e259a42895a7c7ea8f349421ec4341888c2"
+      "sha256": "d641e2e0076e81b8a7fdd298ccf1f8c4a2162d260e07163823c1d0db97948aa0"
     },
     {
       "id": "status",
@@ -131,25 +131,25 @@
       "id": "studio-ui",
       "path": "apps/studio-web/src/main.ts",
       "role": "implemented UI source",
-      "sha256": "66b19078409bdb9ded87d47fdade294ef7659a7e3bd0965473ee97c1656617a0"
+      "sha256": "952630beae1e6c6e22d8dfc1f2f674ce0370e560278973d1670d01b12c966421"
     },
     {
       "id": "contracts",
       "path": "packages/contracts/src/index.ts",
       "role": "public interfaces",
-      "sha256": "65344865bf676546c6ee0ab01b1fa4fc2071fb730664b2cd8cca31f26a666792"
+      "sha256": "f246c861f2ecd5916e072ebdc71b2d116c81f19ebb55e362b120ff3a238b2d0c"
     },
     {
       "id": "control-contracts",
       "path": "packages/control-plane/src/index.ts",
       "role": "control-plane contracts",
-      "sha256": "107bdca35e29b8ac2359e65159c01645167e01acbacb6aba17ed043705dad78f"
+      "sha256": "2fd5a03c68e128bada529c6a43f8ec5baf444ed4631903eefbf4d62ce4a093be"
     },
     {
       "id": "studio-contracts",
       "path": "packages/studio-model/src/index.ts",
       "role": "construction declarations",
-      "sha256": "757a2d8fd90e99012aabca8828d56c59131f8e317e920b6ff90ec86a3e4d38f2"
+      "sha256": "bb73726b2c7e866442ec84592cec4bb06ebb7f94675c337482a781262ccb2e88"
     },
     {
       "id": "cp4-result",
@@ -311,7 +311,7 @@
       "id": "kernel-ci-package",
       "path": "package.json",
       "role": "integration suite scheduling",
-      "sha256": "9a0c4cf053c5903defae69d56a2146c4fd758e21725e39effb7062e9dd12bc03"
+      "sha256": "ed9933b4022a295182887c51a5b4aa05e9d8933c5ca0af4b57b55aee6ec85085"
     },
     {
       "id": "kernel-ci-node",
@@ -323,13 +323,13 @@
       "id": "kernel-ci-build-test",
       "path": "tests/build-worker-process.test.mjs",
       "role": "native ownership and startup diagnostics",
-      "sha256": "13257b6564f6782b98de6b8572a1c7f19aa5cbd148e1b09425ee4b97ff7512c5"
+      "sha256": "90b49197c3ee28f561d6fa43bb910105653f67c1e5ed30d2f26974c250e759e9"
     },
     {
       "id": "kernel-ci-protocol-test",
       "path": "tests/runtime-protocol.test.mjs",
       "role": "reviewed helper and actual selected-host protocol checks",
-      "sha256": "06a97bdd81427e3f8279240085aa7317294735bd49a343e3ed7f90d1cc9cce66"
+      "sha256": "0e329ed57e26804cb4b4fddc784f211a1ffa7d981324d9cedaf7fd061ad47625"
     },
     {
       "id": "kernel-ci-workflow",
@@ -359,7 +359,7 @@
       "id": "kernel-ci-admission-test",
       "path": "tests/runtime-manager-preparation.test.mjs",
       "role": "Actual hosted failure diagnosed; bounded platform/admission refusal test repair",
-      "sha256": "7a0434f5d1aba7f7434a8a16112e6eda53c0db97b6da380ad2f815942d0ab40c"
+      "sha256": "e53439892dc5649d826126c1954745cd55f8501ba3672307de91ec63e906a4c6"
     },
     {
       "id": "kernel-ci-registry-owner",
@@ -370,7 +370,7 @@
     {
       "id": "kernel-ci-registry-journey",
       "path": "tests/control-plane-artifacts.test.mjs",
-      "sha256": "e166e60b0960304d609f600ca10139e26b0b5052b946e0b98a9e6ba3a706c8d1",
+      "sha256": "064f016cb119a1681da6ed4187474a51095e4b1c18bcd43f966f824c6c4128f8",
       "role": "Existing real Desk journey with explicit preservation of original publication uncertainty"
     },
     {
@@ -389,13 +389,823 @@
       "id": "kernel-startup-journey",
       "path": "tests/studio-integration.test.mjs",
       "role": "Actual post-merge generated-product startup failure; bounded owning evidence followup",
-      "sha256": "ef8516d93e16b33fe14e9d1a6bf54c811c6a589ee75ceef3b46ad03db9c0cd70"
+      "sha256": "4bfa1294685e128381eaedd6283d6542672285bb73add51e6e8c33104242758d"
     },
     {
       "id": "kernel-startup-demo",
       "path": "tools/demo.mjs",
       "role": "Captured DATABASE_BUSY plus verified concurrent initialization permits demo-only ordering repair",
-      "sha256": "aad601f0181c56a8958fd0ce0c8d4c243950fc01e1237c08a2135c191e8faa7f"
+      "sha256": "5708ee8f3e3aaec48f34974591a1cae6fae86ea59e5290982eb537d8f1d9e10e"
+    },
+    {
+      "id": "mobile-task",
+      "path": ".brain/tasks/MOBILE-001.md",
+      "role": "current mobile task",
+      "sha256": "772b4e5488c28efb58b74d19927d6c138cb85e7dc1b780a35048be5fd56fc787"
+    },
+    {
+      "id": "mobile-plan",
+      "path": "docs/plans/MOBILE_APP_SHELL_PLAN.md",
+      "role": "mobile architecture and delivery plan",
+      "sha256": "b4bf4b5749f0673ed54cee8fec1c0959e95ac0e95a0f826631405467761b6447"
+    },
+    {
+      "id": "mobile-design",
+      "path": "docs/plans/MOBILE_APP_SHELL_REVIEW.html",
+      "role": "proposed phone design",
+      "sha256": "ac48c857e316cbfa11fba8c248e593283784cc4ab6f3a0391561171bf2cf6cef"
+    },
+    {
+      "id": "mobile-result",
+      "path": ".brain/evidence/mobile-001-result.json",
+      "role": "Actual bounded mobile browser-shell and packaging acceptance with native exclusions",
+      "sha256": "47462b20a98343218af8dad1cdf7e852cf0cb9410e33409374be64e7eff02189"
+    },
+    {
+      "id": "mobile-final-suite",
+      "path": ".brain/workflow/runs/79be4758-a19c-44e3-aaeb-797efbabceab.json",
+      "role": "Actual complete corrected candidate npm test result",
+      "sha256": "09866d4ade7cd530531fb5dad19cb7294a661faef4a0a40b399fbaf804c91da1"
+    },
+    {
+      "id": "mobile-final-browser",
+      "path": ".brain/workflow/runs/ebe16682-f289-406f-9d96-803f13994889.json",
+      "role": "Actual corrected-candidate browser observation with immutable screenshot",
+      "sha256": "36d2df869f7f5281c6c0af1f324bcd594ac708ea313529e45ede59fcef9d875b"
+    },
+    {
+      "id": "mobile-final-review",
+      "path": ".brain/workflow/runs/149accda-10a6-4c24-ac99-ce92a766d839.json",
+      "role": "Independent exact corrected-source review",
+      "sha256": "d50a69d8c29de0605341a4d3580805d3c223f9cc15917ad56627d4903f16739a"
+    },
+    {
+      "id": "mobile-path-failure",
+      "path": ".brain/workflow/runs/882caf11-9e6b-4852-af21-bcec3a263910.json",
+      "role": "Retained prior320-test runtime path failure",
+      "sha256": "687468435ba73a83d281dafa42af741801aa19d06c4fd1eefccdf3f2752509cf"
+    },
+    {
+      "id": "mobile-admission-failure",
+      "path": ".brain/workflow/runs/16878e4f-8954-403b-a531-237dab61231a.json",
+      "role": "Retained prior316-test managed-build admission failure",
+      "sha256": "0ce626c5dbe5a32ce61dad025762f827b4393f9274982353f96f1f79cfbc934a"
+    },
+    {
+      "id": "framework-reliability-task",
+      "path": ".brain/tasks/FRAMEWORK-RELIABILITY-001.md",
+      "role": "Current finite core repair task",
+      "sha256": "de314d0fb8cadea7b91a0d14e0d8c4e2bbfe24f45510b597d2195eb331aea9cf"
+    },
+    {
+      "id": "framework-core-next-plan",
+      "path": ".brain/evidence/framework-next-core-plan.md",
+      "role": "User multi-product fast-builder steering reconciled: reliability, operations, useful family builder before UI/MCP; planning only",
+      "sha256": "10b526409bd551564e65b9340d5a1e1cbd6c15a4e66ae4aca7c2c5fde8365e52"
+    },
+    {
+      "id": "framework-current-audit",
+      "path": ".brain/workflow/runs/2fa1fe7d-8c81-4dfb-bf3c-9becc7bbbdc5.json",
+      "role": "Actual current failed322-test qualification retained",
+      "sha256": "21f1dbf452747b366e8cc7ff29c0f70456af19897d49e1e300aa1af90117ea44"
+    },
+    {
+      "id": "framework-reliability-source-0",
+      "path": "apps/control-plane/src/runtime-manager.ts",
+      "role": "Inspected owner baseline; new candidate after implementation requires semantic reconciliation",
+      "sha256": "99208fc042aa334caf54eca526a09adaf338ab6e6b3d6783a084f9194943067f"
+    },
+    {
+      "id": "framework-reliability-source-1",
+      "path": "tests/runtime-manager-preparation.test.mjs",
+      "role": "Inspected owner baseline; new candidate after implementation requires semantic reconciliation",
+      "sha256": "e53439892dc5649d826126c1954745cd55f8501ba3672307de91ec63e906a4c6"
+    },
+    {
+      "id": "framework-reliability-source-2",
+      "path": "tests/fixtures/runtime-protocol-heartbeat.mjs",
+      "role": "Inspected owner baseline; new candidate after implementation requires semantic reconciliation",
+      "sha256": "c0127c3e62795702317f29bacfcd5b0f7395d052238924eb002f4eb1951b436c"
+    },
+    {
+      "id": "framework-reliability-source-3",
+      "path": "tests/runtime-protocol.test.mjs",
+      "role": "Inspected owner baseline; new candidate after implementation requires semantic reconciliation",
+      "sha256": "0e329ed57e26804cb4b4fddc784f211a1ffa7d981324d9cedaf7fd061ad47625"
+    },
+    {
+      "id": "framework-reliability-source-4",
+      "path": "packages/local-access/src/index.ts",
+      "role": "Inspected owner baseline; new candidate after implementation requires semantic reconciliation",
+      "sha256": "7c4bf32a59012adabc43361ca9be720198cd4f3edef4b05a2556e947ce0f6d0c"
+    },
+    {
+      "id": "framework-reliability-source-5",
+      "path": "apps/runtime/src/index.ts",
+      "role": "Inspected owner baseline; new candidate after implementation requires semantic reconciliation",
+      "sha256": "e50ab366caa2302be73257ea12500131f29ea5802928fb76c1f026331ad57136"
+    },
+    {
+      "id": "framework-reliability-source-6",
+      "path": "packages/studio-model/src/index.ts",
+      "role": "Inspected owner baseline; new candidate after implementation requires semantic reconciliation",
+      "sha256": "bb73726b2c7e866442ec84592cec4bb06ebb7f94675c337482a781262ccb2e88"
+    },
+    {
+      "id": "fast-builder-reviewed-plan",
+      "path": "docs/plans/SPLE_FAST_PRODUCT_BUILDER_PLAN.md",
+      "role": "Read-only reviewed user multi-product planning artifact adopted by root; proposed increments not execution",
+      "sha256": "c5c3bc76040a5d6c9564b26fc150b7135422ee3dc74b7a66a6fd778ceeb78bc3"
+    },
+    {
+      "id": "framework-reliability-result",
+      "path": ".brain/evidence/framework-reliability-result.md",
+      "role": "Actual local core result with blocked coverage preserved",
+      "sha256": "6f66b2b109cd64fff2741afa6ba4c39144fafc633cce75c2e7df5113dcb373c5"
+    },
+    {
+      "id": "framework-reliability-run-0",
+      "path": ".brain/workflow/runs/a85c21b5-eb02-44cd-aca5-bf1e1431cd0d.json",
+      "role": "Exact candidate actual execution record",
+      "sha256": "d8b7401b4cdb926e6d709a773294f32553fbf3fd88eff9e88b63b2a123e23fbb"
+    },
+    {
+      "id": "framework-reliability-run-1",
+      "path": ".brain/workflow/runs/f5d0934d-7d03-41fe-b8f9-962c1faefb42.json",
+      "role": "Exact candidate actual execution record",
+      "sha256": "09eb07befb6116c8de767283c63775e7b069697e1ac6668c116dde26642e4d74"
+    },
+    {
+      "id": "framework-reliability-run-2",
+      "path": ".brain/workflow/runs/44423705-d2ec-42f0-9233-101fe53ad038.json",
+      "role": "Exact candidate actual execution record",
+      "sha256": "9a16bd88b400060469ac108add45217c575a11fa7efd9012e8eaf2d5afa335e4"
+    },
+    {
+      "id": "framework-reliability-review-0",
+      "path": ".brain/workflow/runs/0413199d-27fc-48c9-8e0b-510091bf9ff4.json",
+      "role": "Separate exact-candidate Sol final review",
+      "sha256": "cecdd447137e02bf3dbc55496397e8e067bd85078efc3e2609b19ffbaee3df5d"
+    },
+    {
+      "id": "capability-task",
+      "path": ".brain/tasks/CAPABILITY-001.md",
+      "role": "Current finite operation task",
+      "sha256": "f3b0283030c44de276931fe719f711c4fa9a4c4460b173d6984a4edc5fab3bd9"
+    },
+    {
+      "id": "capability-work-order",
+      "path": ".brain/evidence/capability-approved-work-order.md",
+      "role": "Actual adopted Sol proposal, not execution evidence",
+      "sha256": "5b15d9155c180c20a8c41783d824b58b03a0887f130fd01b32b2985b3601ff9e"
+    },
+    {
+      "id": "capability-source-0",
+      "path": "packages/contracts/src/index.ts",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "f246c861f2ecd5916e072ebdc71b2d116c81f19ebb55e362b120ff3a238b2d0c"
+    },
+    {
+      "id": "capability-source-1",
+      "path": "packages/backend-host/src/index.ts",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "e9cdcd0455fe1ae7af574bee7f9c378d368f983ca0cf7cdb0ed2f870f104c7fa"
+    },
+    {
+      "id": "capability-source-2",
+      "path": "packages/composition/src/index.ts",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "c897ed5639e3a255de83ff96ca37697d7e1ab19c5015e5d137751f841a629276"
+    },
+    {
+      "id": "capability-source-3",
+      "path": "packages/module-sdk/src/index.ts",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "f6f8a68254f695d07fa08b8ba3c2f7e5af5df18f0c8b3f0617e21e16e80d213d"
+    },
+    {
+      "id": "capability-source-4",
+      "path": "packages/studio-model/src/index.ts",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "bb73726b2c7e866442ec84592cec4bb06ebb7f94675c337482a781262ccb2e88"
+    },
+    {
+      "id": "capability-source-5",
+      "path": "modules/knowledge/src/index.ts",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "3446c2a41abdcac89b22bb6481c7b48d3b72912636928b2da613e0e320722b34"
+    },
+    {
+      "id": "capability-source-6",
+      "path": "modules/knowledge/module.json",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "54940b0135e0ab46c4cfe5d92ed4b897355fed536481fbc8f3b1615353e3abaf"
+    },
+    {
+      "id": "capability-source-7",
+      "path": "modules/knowledge/package.json",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "327e28215f63e178dda57e043447eeab4740f778faf143eea58f093658aec283"
+    },
+    {
+      "id": "capability-source-8",
+      "path": "modules/handoff/module.json",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "cced127c2365552d607c3490c67a77dc91b87dfd84aa750b919e7cbd6fc93e06"
+    },
+    {
+      "id": "capability-source-9",
+      "path": "modules/handoff/package.json",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "56ffea0209fe6340cfd73d57f86ef2d917951c6ce4aeb6e0b144abf99e5d6992"
+    },
+    {
+      "id": "capability-source-10",
+      "path": "products/knowledge/product.json",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "e7ee879edce5781d9e5ad0129a0a2e062be5305ba9adf18c0d8f246dfe36b557"
+    },
+    {
+      "id": "capability-source-11",
+      "path": "products/combined/product.json",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "28cd5271f415848dad92eb5a090513ab922c19abd2210cbd89825d9de2fccbae"
+    },
+    {
+      "id": "capability-source-12",
+      "path": "apps/runtime/package.json",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "0f0d90a539c5d741ce80f91dcf0eb686981c8e31df792694becc03ee0cad7fad"
+    },
+    {
+      "id": "capability-source-13",
+      "path": "package-lock.json",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "fe8093fc5cc441763b65e2d58d16ac59fd0cff04e1c536acefe8f515a12f6254"
+    },
+    {
+      "id": "capability-source-14",
+      "path": "tests/composition.test.mjs",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "89ad1f511d608fff58ad4726e2b512d9e55a7ed2e548062a26bdf4ca07555f6d"
+    },
+    {
+      "id": "capability-source-15",
+      "path": "tests/module-sdk.test.mjs",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "30d1a8caaed11c8fddcb35a7d8a259d1a1e1753eadc4e322b0da61788b0397f4"
+    },
+    {
+      "id": "capability-source-16",
+      "path": "tests/factory-lifecycle.test.mjs",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "b6994973c21f023f21cb24d488fa0f3236e0279309d8a34ccc68ae5c7161726f"
+    },
+    {
+      "id": "capability-source-17",
+      "path": "tests/workspace-closure.test.mjs",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "2400c136171877a3662d47d0dd19c2da0cbe529875ca8e54057ad5b53ed6ebee"
+    },
+    {
+      "id": "capability-source-18",
+      "path": "tests/visual-edition.test.mjs",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "5b99a772bc3debbb6d157195b09b7b4275513d881ddbb94d3c4b069624915b18"
+    },
+    {
+      "id": "capability-source-19",
+      "path": "tools/studio-catalogue.mjs",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "9f0dc5198ceee5468fab3dbcfe305e153c25d6862b2ed15e6ea62583a1c809c7"
+    },
+    {
+      "id": "capability-source-20",
+      "path": "OPEN_PLATFORM.html",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "1cc0fd9d14ef493d6d1ca6d0065974120cd5b76a195de00550e6743c855c4d72"
+    },
+    {
+      "id": "capability-source-21",
+      "path": "visual/data.json",
+      "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
+      "sha256": "ba5d707516222fed9d20b8aa89ac0b86ef09bd98ba1a221d75edc515eb2ca7dd"
+    },
+    {
+      "id": "capability-added-packages-contracts-src-operations-ts",
+      "path": "packages/contracts/src/operations.ts",
+      "role": "Inspected shared pure operation descriptor/schema/value validation: closed fields, actual string type, own-key membership, fixed JSON/UTF-8 traversal bounds and immutable copies; no Node/domain imports or grant decisions.",
+      "sha256": "8666d65dceac6667b18d5cec252beb758106eb296aef8c09e925fa052764e765"
+    },
+    {
+      "id": "capability-added-tests-capability-operations-test-mjs",
+      "path": "tests/capability-operations.test.mjs",
+      "role": "Read actual HTTP-operation same-command receipt replay, one document/job and real worker indexing/tenant/mode/write-key checks plus deterministic awaited original-session/cancellation/error/output reconciliation; no provider/MCP/browser claims.",
+      "sha256": "18f0427bd79d859213f389978254f0c1bbe643c9b8fabcdf135eb3253cd93e39"
+    },
+    {
+      "id": "capability-added-docs-capability-operations-md",
+      "path": "docs/CAPABILITY_OPERATIONS.md",
+      "role": "Read actual supported schema limits, owner permissions/command semantics, trusted seam and compatibility boundaries; no new HTTP/MCP/browser/native/provider/production implementation claim.",
+      "sha256": "d1a011219a8c2ae2f92ee8e5e82257c026c1db7b3aa37f923231b0c69f43edfb"
+    },
+    {
+      "id": "capability-vm-amendment-review",
+      "path": ".brain/evidence/capability-vm-amendment-review.md",
+      "role": "Independent Sol finite two-test harness amendment after observed full-suite failures; no delivery acceptance.",
+      "sha256": "391de82d15dc94b46dd4fbfce2193cbf322a40c913bee951b956375aa1d4676c"
+    },
+    {
+      "id": "capability-added-tests-studio-product-editor-test-mjs",
+      "path": "tests/studio-product-editor.test.mjs",
+      "role": "Inspected offline helper fixture product/catalogue/solutions JSON decoding in the browser VM realm; added exact CLI JSON projection comparison while preserving description, version, binding-instance, valid result and no-fetch assertions. Production strict descriptor validator and separate compiled editor handler tests remain unchanged.",
+      "sha256": "a373154a9b63e03efbfa85fba3d041c2be8f30ade884d9f214e3e6e075df15d7"
+    },
+    {
+      "id": "capability-result",
+      "path": ".brain/evidence/capability-result.md",
+      "role": "Actual local operation result with legacy scope and blocked coverage preserved",
+      "sha256": "e110fb01ae597c43f77f0bc30b2141bbc3d77b12d17fec34ca82d136bf78e65b"
+    },
+    {
+      "id": "capability-run-0",
+      "path": ".brain/workflow/runs/e2373db2-35b1-4e0c-8758-a8f1f6111196.json",
+      "role": "Exact candidate actual execution record",
+      "sha256": "fc639b49367babed5bf1e3c64c340e7d5eb57f913da3aa38b45413addc09a8b9"
+    },
+    {
+      "id": "capability-run-1",
+      "path": ".brain/workflow/runs/9c537144-9edf-4eca-8abd-d45898d79824.json",
+      "role": "Exact candidate actual execution record",
+      "sha256": "dddac914527b7833b32379ff467f79d007e3a7fcabd245ef9a20630f6339f011"
+    },
+    {
+      "id": "capability-run-2",
+      "path": ".brain/workflow/runs/5519e88d-4c9f-440f-8f34-75f9ff13004e.json",
+      "role": "Exact candidate actual execution record",
+      "sha256": "46c69b74b3b898c2be71cccb04c816988985c0f18a09be225e2a075756590fdd"
+    },
+    {
+      "id": "capability-review-0",
+      "path": ".brain/workflow/runs/fd67f373-f483-4796-b3ee-b6cb77faf6ac.json",
+      "role": "Separate exact-candidate final Sol review",
+      "sha256": "9ca913d901e6d97570efd665e05ecfcca18952cddfb6305bc71ca4e713a4b99f"
+    },
+    {
+      "id": "family-task",
+      "path": ".brain/tasks/FAMILY-001.md",
+      "role": "Current finite useful family task",
+      "sha256": "db3d1af6493578ba808e1c19752b29c4d5c1453d434264b91c00164f338eb053"
+    },
+    {
+      "id": "family-work-order",
+      "path": ".brain/evidence/family-approved-work-order.md",
+      "role": "Adopted source-grounded Sol proposal, not execution",
+      "sha256": "9c79249cbde8117c1ae943be0db58ef29e61353a89d7b350fdd8f46520507234"
+    },
+    {
+      "id": "family-source-0",
+      "path": "tools/studio-catalogue.mjs",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "9f0dc5198ceee5468fab3dbcfe305e153c25d6862b2ed15e6ea62583a1c809c7"
+    },
+    {
+      "id": "family-source-1",
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "aa43159e1f688abfdbd99ed8c8abe171a251e863f7e77e55a68fc769e8e2a423"
+    },
+    {
+      "id": "family-source-2",
+      "path": "apps/control-plane/src/operator-server.ts",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "89931273655c17818ac2b0168eb572e286ec14c7d99e8f1edf1541828cae2624"
+    },
+    {
+      "id": "family-source-3",
+      "path": "packages/control-plane/src/index.ts",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "2fd5a03c68e128bada529c6a43f8ec5baf444ed4631903eefbf4d62ce4a093be"
+    },
+    {
+      "id": "family-source-4",
+      "path": "apps/studio-web/src/main.ts",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "952630beae1e6c6e22d8dfc1f2f674ce0370e560278973d1670d01b12c966421"
+    },
+    {
+      "id": "family-source-5",
+      "path": "visual/studio.js",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "33cf049a2d50f7625d35bc2164679769fd0c7f50a4a3a361ee999030cb0f2cf8"
+    },
+    {
+      "id": "family-source-6",
+      "path": "OPEN_PLATFORM.html",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "1cc0fd9d14ef493d6d1ca6d0065974120cd5b76a195de00550e6743c855c4d72"
+    },
+    {
+      "id": "family-source-7",
+      "path": "visual/data.json",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "ba5d707516222fed9d20b8aa89ac0b86ef09bd98ba1a221d75edc515eb2ca7dd"
+    },
+    {
+      "id": "family-source-8",
+      "path": "tests/control-plane.test.mjs",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "297fe68516e4357b72d0e660ee8f933f047accc3dc5fc83cae252cfac89670f2"
+    },
+    {
+      "id": "family-source-9",
+      "path": "tests/control-plane-http.test.mjs",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "1aaa3ad32990f0b4d97c1b4ee0d82561c3d4c721868f0b88f2e246fd88f41dc8"
+    },
+    {
+      "id": "family-source-10",
+      "path": "tests/studio-product-editor.test.mjs",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "a373154a9b63e03efbfa85fba3d041c2be8f30ade884d9f214e3e6e075df15d7"
+    },
+    {
+      "id": "family-source-11",
+      "path": "tests/visual-edition.test.mjs",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "5b99a772bc3debbb6d157195b09b7b4275513d881ddbb94d3c4b069624915b18"
+    },
+    {
+      "id": "family-source-12",
+      "path": "tests/factory-lifecycle.test.mjs",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "b6994973c21f023f21cb24d488fa0f3236e0279309d8a34ccc68ae5c7161726f"
+    },
+    {
+      "id": "family-source-13",
+      "path": "tests/reliability-baseline.test.mjs",
+      "role": "Inspected family integration baseline; source changes require semantic reconciliation",
+      "sha256": "975466f643465747d5443a3aab1818278a53140c2e4b7601990f9c9a711b6c03"
+    },
+    {
+      "id": "family-added-packages-composition-src-family-ts",
+      "path": "packages/composition/src/family.ts",
+      "role": "Inspected pure bounded reviewed family validator and derivation through canonical composeDraft/validateProduct/resolve; explicit reviewed port choices, source versions, immutable caller selection, separate feature and technical explanations.",
+      "sha256": "07a2576ce9c3ff8e765314b7bfd342cd08ace293c6abf89f94a932ecae5a6c98"
+    },
+    {
+      "id": "family-added-families-service-operations-family-json",
+      "path": "families/service-operations/family.json",
+      "role": "Inspected inert three-feature Service Operations mapping: required Requests, Shared library and dependent Document handoff with both reviewed local choices; no grants or version constants.",
+      "sha256": "9cf0b0db8f1032b8fd1bdb4887b4aecfb5319bd47b5d513085e862135396e4e3"
+    },
+    {
+      "id": "family-added-docs-product-families-md",
+      "path": "docs/PRODUCT_FAMILIES.md",
+      "role": "Inspected user/developer explanation of three exact source compositions, existing audited provenance and offline versus actual build/runtime states without execution claims.",
+      "sha256": "01185f1137333010336354ba39c529960be635bdf5c33b29249054bff89eb91d"
+    },
+    {
+      "id": "family-added-tests-product-family-test-mjs",
+      "path": "tests/product-family.test.mjs",
+      "role": "Inspected pure selection cases and sequential real three-version owned artifacts: selected route/asset closure, persisted Desk, actual Knowledge worker, post-stop exact export get, Handoff committed receipt/replay/restart and positive original closure assertions.",
+      "sha256": "daa8274aa1b807a83908813d8c2e3abea2dd18d9cd01e58b084d489cf4575356"
+    },
+    {
+      "id": "family-result",
+      "path": ".brain/evidence/family-result.md",
+      "role": "Actual three-variant and ordinary browser family result",
+      "sha256": "40bf00d02319da2ef58f85e33c8424d849422050f1eaee0db8a06fb55db8c7ff"
+    },
+    {
+      "id": "family-run-0",
+      "path": ".brain/workflow/runs/0f4973a1-f63e-4164-92fd-45e963764199.json",
+      "role": "Exact candidate actual evidence",
+      "sha256": "d8ab2e534299997b435662fec71cb3c2e04f528987c77477c6e47f1ecbee536d"
+    },
+    {
+      "id": "family-run-1",
+      "path": ".brain/workflow/runs/c420ee76-596b-444e-83ea-19af8cbbfbe6.json",
+      "role": "Exact candidate actual evidence",
+      "sha256": "af010e878ee0f13e651d043c89ff117853d5f6635f318674f1874dcb05bf4e6c"
+    },
+    {
+      "id": "family-run-2",
+      "path": ".brain/workflow/runs/c77a574d-c8df-4f84-880a-728fdcaae6ed.json",
+      "role": "Exact candidate actual evidence",
+      "sha256": "7e64dac5abdbb9dfed0bd51eedfdec14d79e92e4bcc1a167850555d6584904ac"
+    },
+    {
+      "id": "family-run-3",
+      "path": ".brain/workflow/runs/a7b0f4df-f3b1-4ac3-8de2-27ee2e626683.json",
+      "role": "Exact candidate actual evidence",
+      "sha256": "14a77d880c4a14976dafdf8051c49be001e161e9b515802a28e6f45c712e183a"
+    },
+    {
+      "id": "family-review-0",
+      "path": ".brain/workflow/runs/6def20d2-553a-4e88-9655-d52d83c400f7.json",
+      "role": "Separate exact final Sol review",
+      "sha256": "74550274c045d945ce93712fc5bad67da33553b5c5383abb278fa55937509d7b"
+    },
+    {
+      "id": "ui-slots-task",
+      "path": ".brain/tasks/EXTENSION-001.md",
+      "role": "Current bounded trusted contribution task",
+      "sha256": "70943ba1243f5449d8e7074b2eab47075298257034a82f35638ad561a902f824"
+    },
+    {
+      "id": "ui-slots-work-order",
+      "path": ".brain/evidence/ui-slots-approved-work-order.md",
+      "role": "Reinspected adopted Sol revised37-path proposal, not execution",
+      "sha256": "48da2de3e6d866bb840b1af214e045b016e07660476c3e27d683314272465c41"
+    },
+    {
+      "id": "ui-slots-source-0",
+      "path": "packages/contracts/src/index.ts",
+      "role": "Inspected current source owner baseline",
+      "sha256": "f246c861f2ecd5916e072ebdc71b2d116c81f19ebb55e362b120ff3a238b2d0c"
+    },
+    {
+      "id": "ui-slots-source-1",
+      "path": "packages/backend-host/src/index.ts",
+      "role": "Inspected current source owner baseline",
+      "sha256": "e9cdcd0455fe1ae7af574bee7f9c378d368f983ca0cf7cdb0ed2f870f104c7fa"
+    },
+    {
+      "id": "ui-slots-source-2",
+      "path": "packages/composition/src/index.ts",
+      "role": "Inspected current source owner baseline",
+      "sha256": "c897ed5639e3a255de83ff96ca37697d7e1ab19c5015e5d137751f841a629276"
+    },
+    {
+      "id": "ui-slots-source-3",
+      "path": "packages/module-sdk/src/index.ts",
+      "role": "Inspected current source owner baseline",
+      "sha256": "f6f8a68254f695d07fa08b8ba3c2f7e5af5df18f0c8b3f0617e21e16e80d213d"
+    },
+    {
+      "id": "ui-slots-source-4",
+      "path": "packages/studio-model/src/index.ts",
+      "role": "Inspected current source owner baseline",
+      "sha256": "bb73726b2c7e866442ec84592cec4bb06ebb7f94675c337482a781262ccb2e88"
+    },
+    {
+      "id": "ui-slots-source-5",
+      "path": "packages/web-shell/src/index.ts",
+      "role": "Inspected current source owner baseline",
+      "sha256": "a5fa992459c5acf6429b8bc3169c3355616e1f1fd7d11b13f16780ab318e8848"
+    },
+    {
+      "id": "ui-slots-source-6",
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "role": "Inspected current source owner baseline",
+      "sha256": "aa43159e1f688abfdbd99ed8c8abe171a251e863f7e77e55a68fc769e8e2a423"
+    },
+    {
+      "id": "ui-slots-source-7",
+      "path": "tools/build.mjs",
+      "role": "Inspected current source owner baseline",
+      "sha256": "35b9ccd2b23bf8a7d80eb5c04c732f53fc4d351a309d4f2d1e09724efd5b73c6"
+    },
+    {
+      "id": "ui-slots-source-8",
+      "path": "tools/frontend-closure.mjs",
+      "role": "Inspected current source owner baseline",
+      "sha256": "7f7999cdf60eb80558aa9aaade8e5566c102414be670d370b94db4a4cc8cc45f"
+    },
+    {
+      "id": "ui-slots-source-9",
+      "path": "tools/studio-catalogue.mjs",
+      "role": "Inspected current source owner baseline",
+      "sha256": "9f0dc5198ceee5468fab3dbcfe305e153c25d6862b2ed15e6ea62583a1c809c7"
+    },
+    {
+      "id": "ui-slots-source-10",
+      "path": "modules/knowledge/src/ui.ts",
+      "role": "Inspected current source owner baseline",
+      "sha256": "6cda83eb31f559e2c1f2329e96dc51c40f233225078046f68b39f69c833ac9ab"
+    },
+    {
+      "id": "ui-slots-source-11",
+      "path": "modules/service-desk/src/ui.ts",
+      "role": "Inspected current source owner baseline",
+      "sha256": "26a67fd72c54878a8a16a0a08dd1adcc644798e8fbee0d0a9d5c5146763cf864"
+    },
+    {
+      "id": "ui-slots-source-12",
+      "path": "modules/knowledge/module.json",
+      "role": "Inspected current source owner baseline",
+      "sha256": "54940b0135e0ab46c4cfe5d92ed4b897355fed536481fbc8f3b1615353e3abaf"
+    },
+    {
+      "id": "ui-slots-source-13",
+      "path": "modules/knowledge/package.json",
+      "role": "Inspected current source owner baseline",
+      "sha256": "327e28215f63e178dda57e043447eeab4740f778faf143eea58f093658aec283"
+    },
+    {
+      "id": "ui-slots-source-14",
+      "path": "modules/service-desk/module.json",
+      "role": "Inspected current source owner baseline",
+      "sha256": "6f1cb2e2fde1c008a30fb6cfac14d17b1ecf208a3f5baa66d4b3092542c2578c"
+    },
+    {
+      "id": "ui-slots-source-15",
+      "path": "modules/service-desk/package.json",
+      "role": "Inspected current source owner baseline",
+      "sha256": "aa6bcb33cee0c0a57f98ee3f78728ca67684622a3aa3c4447d23043bb5f20c36"
+    },
+    {
+      "id": "ui-slots-source-16",
+      "path": "modules/handoff/module.json",
+      "role": "Inspected current source owner baseline",
+      "sha256": "cced127c2365552d607c3490c67a77dc91b87dfd84aa750b919e7cbd6fc93e06"
+    },
+    {
+      "id": "ui-slots-source-17",
+      "path": "modules/handoff/package.json",
+      "role": "Inspected current source owner baseline",
+      "sha256": "56ffea0209fe6340cfd73d57f86ef2d917951c6ce4aeb6e0b144abf99e5d6992"
+    },
+    {
+      "id": "ui-slots-source-18",
+      "path": "apps/runtime/package.json",
+      "role": "Inspected current source owner baseline",
+      "sha256": "0f0d90a539c5d741ce80f91dcf0eb686981c8e31df792694becc03ee0cad7fad"
+    },
+    {
+      "id": "ui-slots-source-19",
+      "path": "package-lock.json",
+      "role": "Inspected current source owner baseline",
+      "sha256": "fe8093fc5cc441763b65e2d58d16ac59fd0cff04e1c536acefe8f515a12f6254"
+    },
+    {
+      "id": "ui-slots-source-20",
+      "path": "products/combined/product.json",
+      "role": "Inspected current source owner baseline",
+      "sha256": "28cd5271f415848dad92eb5a090513ab922c19abd2210cbd89825d9de2fccbae"
+    },
+    {
+      "id": "ui-slots-source-21",
+      "path": "products/knowledge/product.json",
+      "role": "Inspected current source owner baseline",
+      "sha256": "e7ee879edce5781d9e5ad0129a0a2e062be5305ba9adf18c0d8f246dfe36b557"
+    },
+    {
+      "id": "ui-slots-source-22",
+      "path": "products/service-desk/product.json",
+      "role": "Inspected current source owner baseline",
+      "sha256": "8e489f4fdd9dc9533bee14813522d319ebc899190d4195726ffcbb7e72f14aa7"
+    },
+    {
+      "id": "ui-slots-source-23",
+      "path": "OPEN_PLATFORM.html",
+      "role": "Inspected current source owner baseline",
+      "sha256": "1cc0fd9d14ef493d6d1ca6d0065974120cd5b76a195de00550e6743c855c4d72"
+    },
+    {
+      "id": "ui-slots-source-24",
+      "path": "visual/data.json",
+      "role": "Inspected current source owner baseline",
+      "sha256": "ba5d707516222fed9d20b8aa89ac0b86ef09bd98ba1a221d75edc515eb2ca7dd"
+    },
+    {
+      "id": "ui-slots-source-25",
+      "path": "tests/shell-regressions.test.mjs",
+      "role": "Inspected current source owner baseline",
+      "sha256": "b44b0af184a8d36c7c2d7019876b1df24504066b188398b79762135d21f768b0"
+    },
+    {
+      "id": "ui-slots-source-26",
+      "path": "tests/frontend-assembly.test.mjs",
+      "role": "Inspected current source owner baseline",
+      "sha256": "a730e8b73404d7d69bedb09744dd304df6e99569312b9d05cd513a0789aae957"
+    },
+    {
+      "id": "ui-slots-source-27",
+      "path": "tests/composition.test.mjs",
+      "role": "Inspected current source owner baseline",
+      "sha256": "89ad1f511d608fff58ad4726e2b512d9e55a7ed2e548062a26bdf4ca07555f6d"
+    },
+    {
+      "id": "ui-slots-source-28",
+      "path": "tests/module-sdk.test.mjs",
+      "role": "Inspected current source owner baseline",
+      "sha256": "30d1a8caaed11c8fddcb35a7d8a259d1a1e1753eadc4e322b0da61788b0397f4"
+    },
+    {
+      "id": "ui-slots-source-29",
+      "path": "tests/factory-lifecycle.test.mjs",
+      "role": "Inspected current source owner baseline",
+      "sha256": "b6994973c21f023f21cb24d488fa0f3236e0279309d8a34ccc68ae5c7161726f"
+    },
+    {
+      "id": "ui-slots-source-30",
+      "path": "tests/workspace-closure.test.mjs",
+      "role": "Inspected current source owner baseline",
+      "sha256": "2400c136171877a3662d47d0dd19c2da0cbe529875ca8e54057ad5b53ed6ebee"
+    },
+    {
+      "id": "ui-slots-version-layout-amendment",
+      "path": ".brain/evidence/ui-slots-version-layout-amendment.md",
+      "role": "Independent finite forward scope/version/layout reconciliation, not delivery",
+      "sha256": "08fd60e090b938c0f55aa45c939921fb04c1e306f15a47f42211d0bfd8b1f3cd"
+    },
+    {
+      "id": "ui-slots-scope-deviation",
+      "path": ".brain/evidence/ui-slots-scope-deviation-01.json",
+      "role": "Actual pre-admission stylesheet scope deviation retained",
+      "sha256": "b55c82f77f29e45e879b87005c7f748d8efb21b204276272ccb4d76f2315997e"
+    },
+    {
+      "id": "ui-slots-live-tests-amendment",
+      "path": ".brain/evidence/ui-slots-live-tests-amendment.md",
+      "role": "Independent two live-source fixture pin amendment; no historical snapshot change or delivery acceptance",
+      "sha256": "7a82701ea56a1a96c1a1aed07dff9d312e9898d71bd9bfa3b4e7fdceff216324"
+    },
+    {
+      "id": "ui-slots-added-packages-contracts-src-ui-contributions-ts",
+      "path": "packages/contracts/src/ui-contributions.ts",
+      "role": "Closed shared descriptor and fixed-slot mapping validation resolves actual declaring module ownership and selected-source omissions.",
+      "sha256": "f194ed9e049adacc6b666f29bd233377307f64fff3324410dd02c65e2fddb112"
+    },
+    {
+      "id": "ui-slots-added-modules-knowledge-src-ui-reference-search-ts",
+      "path": "modules/knowledge/src/ui/reference-search.ts",
+      "role": "Named read-only Knowledge panel searches the existing indexed owner route and renders bounded title/version/excerpt results.",
+      "sha256": "62ca400e6c5a2fb8ed31da013c91610399c97ae4b02434b645497c5798a4ffe2"
+    },
+    {
+      "id": "ui-slots-added-modules-service-desk-src-ui-recent-requests-ts",
+      "path": "modules/service-desk/src/ui/recent-requests.ts",
+      "role": "Owner GET panel renders up to five current-tenant returned request cards and suppresses results after disposal.",
+      "sha256": "cd9637f5099618cab57c4e15c1f72e48687d04c65417f2c2f2db4d69e8988b54"
+    },
+    {
+      "id": "ui-slots-added-solutions-knowledge-to-desk-ui-json",
+      "path": "solutions/knowledge-to-desk/ui.json",
+      "role": "Inert solution-owned mapping supplies the two fixed optional panel placements; no imports or grants are executable from this data.",
+      "sha256": "188f09afb481f735548c6e977a4003a6a5a2a956798433f78f206bfe68874bb5"
+    },
+    {
+      "id": "ui-slots-added-docs-ui-contributions-md",
+      "path": "docs/UI_CONTRIBUTIONS.md",
+      "role": "Documents trusted same-origin fixed slots, owner reads, immutable selected mappings and lifecycle limitations accurately.",
+      "sha256": "690efc40463f037ef7d6c82169b799b692e7586f5b00d239d3e39abbf200d6e5"
+    },
+    {
+      "id": "ui-slots-added-tests-ui-contributions-test-mjs",
+      "path": "tests/ui-contributions.test.mjs",
+      "role": "Core checks exercise actual declaration ownership, omission, physical copy/fingerprint and immutable old-store/current-import coexistence.",
+      "sha256": "8e1b91847cf33cec6c92d7e61d2818c63d1a8032615c6e4174177e1ad0186555"
+    },
+    {
+      "id": "ui-slots-added-packages-web-shell-src-shell-css",
+      "path": "packages/web-shell/src/shell.css",
+      "role": "Forward-admitted fixed aside grid and responsive stacking rules replace unsupported inline style mutation; pre-admission deviation remains recorded.",
+      "sha256": "9f84b581785f17e070e42cd592e54c06c6e109814e31eb37da1c20f61639d54e"
+    },
+    {
+      "id": "ui-slots-result",
+      "path": ".brain/evidence/ui-slots-result.md",
+      "role": "Actual trusted UI result",
+      "sha256": "3edef605c3d0819352b8a8b5ac37353e09eeb45919b8ff04fb9f9231adc9a87d"
+    },
+    {
+      "id": "ui-slots-run-0",
+      "path": ".brain/workflow/runs/33ffda38-af23-425a-b543-a18475a5e611.json",
+      "role": "Actual exact candidate evidence",
+      "sha256": "86b5196e577e57aac8928c9a1b0b03a8c1ba9e980beb9d0c22fdf5632cc9f2b9"
+    },
+    {
+      "id": "ui-slots-run-1",
+      "path": ".brain/workflow/runs/7ac8e1c2-0848-4c83-a5f8-f28cdb605fef.json",
+      "role": "Actual exact candidate evidence",
+      "sha256": "a18070fa8ddca6cc0130cec524bfbe9725b8f255678d24dbbdb50951c08e9422"
+    },
+    {
+      "id": "ui-slots-run-2",
+      "path": ".brain/workflow/runs/6b2a90cc-26e1-4c4a-a4b2-3fafbd0ed0d0.json",
+      "role": "Actual exact candidate evidence",
+      "sha256": "582d89f92354026b776515e5bfad10129d5f858f6771c27d153a4bf0dff7ca23"
+    },
+    {
+      "id": "ui-slots-run-3",
+      "path": ".brain/workflow/runs/a65e83df-9538-4438-95e6-8085004911b2.json",
+      "role": "Actual exact candidate evidence",
+      "sha256": "8c0eddba74edb2ab830d94f92db00fea1fa3d6850c8646dd3c1d50d7a0f29dee"
+    },
+    {
+      "id": "ui-slots-run-4",
+      "path": ".brain/workflow/runs/11e46d74-e0e8-4901-86ab-f7be68763968.json",
+      "role": "Actual exact candidate evidence",
+      "sha256": "a67c57d6fcb769c7281320b214839cd13bad77488845e83d31b96bc2900a4f60"
+    },
+    {
+      "id": "ui-slots-review-0",
+      "path": ".brain/workflow/runs/07d6a399-05de-4097-a5b2-75e465a0d941.json",
+      "role": "Separate exact Sol review",
+      "sha256": "cebc4f7c196a7b695b590448f68adceeddc3fd9e0025da8f8daa8ec9b48cb1d6"
     }
   ],
   "nodes": [
@@ -1554,6 +2364,477 @@
       "acceptance": [
         "Ordinary full-suite pass required locally; actual hosted run outcomes reported separately."
       ]
+    },
+    {
+      "owner": "Root coordinator, Sol planning/review, sole Luna implementation",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "User explicitly requested the reviewed mobile shell; native identity/API is deferred.",
+      "dependsOn": [],
+      "sourceRefs": [
+        "mobile-task",
+        "mobile-plan",
+        "mobile-design",
+        "architecture"
+      ],
+      "id": "O-MOBILE",
+      "kind": "outcome",
+      "title": "Run generated products in a reusable mobile shell",
+      "summary": "Product-owned composition and domain workspaces with mobile presentation and separate client artifacts. Native auth/device acceptance is a later gate.",
+      "links": [
+        "M-MOBILE-001",
+        "J-MOBILE-001"
+      ],
+      "acceptance": [
+        "Actual selected product workspaces run without product logic in the mobile host."
+      ]
+    },
+    {
+      "owner": "Root coordinator, Sol planning/review, sole Luna implementation",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "User explicitly requested the reviewed mobile shell; native identity/API is deferred.",
+      "dependsOn": [],
+      "sourceRefs": [
+        "mobile-task",
+        "mobile-plan",
+        "mobile-design",
+        "architecture"
+      ],
+      "id": "M-MOBILE-001",
+      "kind": "milestone",
+      "title": "Build mobile browser shell and client packaging",
+      "summary": "Shared client/controller, source-derived phone chrome, actual same-origin preview and client-only Capacitor scaffold; no native-device qualification.",
+      "links": [
+        "O-MOBILE",
+        "J-MOBILE-001",
+        "ST-MOBILE-001",
+        "C-MOBILE-001",
+        "S-MOBILE-001"
+      ],
+      "acceptance": [
+        "Shared controller and client fencing preserve desktop behavior and own-module scope. Mobile chrome and suspend/resume/tenant/logout lifecycle run actual static contributions with source-derived navigation.",
+        "Build client-only neutral/Desk/Combined assets from reviewed closure with complete index, lazy/style resolution, exact inventory and isolated pinned native scaffold; packaged unconfigured state makes zero auth/API requests.",
+        "Fresh build before focused tests; actual original complete ordinary npm test close exit0 with zero failed/cancelled/TODO and unchanged candidate. The only permitted skipped coverage is the single named BLOCKED_ENV owned file-symlink fixture denied by this Windows host with EPERM; retain its exact counts and BLOCKED coverage. Independent final review must inspect immutable completed suite evidence and enforce actual exit/counts/source/skip facts before acceptance; observation presence alone is not success.",
+        "Observe actual same-origin mobile Desk create/read and ordinary-view same-record parity with phone layout; record browser policy blocks separately if observation unavailable."
+      ]
+    },
+    {
+      "owner": "Root coordinator, Sol planning/review, sole Luna implementation",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "User explicitly requested the reviewed mobile shell; native identity/API is deferred.",
+      "dependsOn": [],
+      "sourceRefs": [
+        "mobile-task",
+        "mobile-plan",
+        "mobile-design",
+        "architecture"
+      ],
+      "id": "J-MOBILE-001",
+      "kind": "journey",
+      "title": "Use Service Desk through the mobile browser preview",
+      "summary": "Sign in, select tenant, view/create a real request, see the same record in ordinary view and clear scope on logout.",
+      "links": [
+        "S-MOBILE-001",
+        "C-MOBILE-001"
+      ],
+      "acceptance": [
+        "Actual user/session/tenant-scoped record journey or explicitly blocked browser evidence."
+      ]
+    },
+    {
+      "owner": "Root coordinator, Sol planning/review, sole Luna implementation",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "User explicitly requested the reviewed mobile shell; native identity/API is deferred.",
+      "dependsOn": [],
+      "sourceRefs": [
+        "mobile-task",
+        "mobile-plan",
+        "mobile-design",
+        "architecture"
+      ],
+      "id": "ST-MOBILE-001",
+      "kind": "story",
+      "title": "Use selected workspaces on a small screen",
+      "summary": "As a product user I can navigate authorized workspaces and keep tenant identity visible on phone layouts.",
+      "links": [
+        "M-MOBILE-001"
+      ],
+      "acceptance": [
+        "Neutral, Service Desk and Combined derive their workspaces from composition."
+      ]
+    },
+    {
+      "owner": "Root coordinator, Sol planning/review, sole Luna implementation",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "User explicitly requested the reviewed mobile shell; native identity/API is deferred.",
+      "dependsOn": [],
+      "sourceRefs": [
+        "mobile-task",
+        "mobile-plan",
+        "mobile-design",
+        "architecture"
+      ],
+      "id": "C-MOBILE-001",
+      "kind": "contract",
+      "title": "Preserve client scope and fixed selected assets",
+      "summary": "Reuse web session orchestration and own-module API fencing; installed native profile stays unconfigured without adapter. Existing managed builds include the reviewed mobile input and pinned bundler closure without changing access or supervision.",
+      "links": [
+        "M-MOBILE-001"
+      ],
+      "acceptance": [
+        "Zero packaged login/API calls before native configuration; no private/server files in client artifacts."
+      ]
+    },
+    {
+      "owner": "Root coordinator, Sol planning/review, sole Luna implementation",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "User explicitly requested the reviewed mobile shell; native identity/API is deferred.",
+      "dependsOn": [],
+      "sourceRefs": [
+        "mobile-task",
+        "mobile-plan",
+        "mobile-design",
+        "architecture"
+      ],
+      "id": "S-MOBILE-001",
+      "kind": "screen",
+      "title": "Mobile account navigation and workspace surface",
+      "summary": "Product header, tenant/account access, bottom navigation and overflow, lifecycle recovery and real module-owned surface.",
+      "links": [
+        "J-MOBILE-001"
+      ],
+      "acceptance": [
+        "Phone layout actual observation is separate from controlled DOM tests."
+      ]
+    },
+    {
+      "id": "M-FRAMEWORK-RELIABILITY-001",
+      "kind": "milestone",
+      "title": "Repair core enrollment, access, native evidence and rich metadata reliability",
+      "summary": "Repair four observed core defects before executable capability/plugin increments.",
+      "owner": "Root coordination; Sol/high plan/review; sole Luna/xhigh implementation",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Actual failed audit and access/validation reproductions block truthful baseline qualification.",
+      "dependsOn": [],
+      "links": [
+        "J-OPERATE",
+        "C-RUNTIME",
+        "C-COMPOSITION",
+        "ST-FRAMEWORK-RELIABILITY-001"
+      ],
+      "sourceRefs": [
+        "framework-reliability-task",
+        "framework-core-next-plan",
+        "framework-current-audit",
+        "framework-reliability-source-0",
+        "framework-reliability-source-1",
+        "framework-reliability-source-2",
+        "framework-reliability-source-3",
+        "framework-reliability-source-4",
+        "framework-reliability-source-5",
+        "framework-reliability-source-6"
+      ],
+      "acceptance": [
+        "Actual enrollment scan handles only confirmed disappearing transient SQLite entries without weakening physical validation, mandatory enrollment metadata or binding checks.",
+        "Termination-safe heartbeat retains complete observed records and proves no later progress; nonce-bound EMPTY and original helper matching exit/close remain mandatory.",
+        "Atomic first-binding initialization seeds once; deleted identities and revoked grants survive low-level createRuntime restart with original nonempty config. Existing bound empty/legacy stores are not fresh.",
+        "Rich Studio contribution shapes, declared enums, identifiers/capabilities/permissions and numeric bounds validate through one SDK authority; valid source manifests remain compatible.",
+        "Fresh build, required ordinary npm test original close exit0, unchanged frozen candidate, zero failed/cancelled/TODO; only named host-denied EPERM file-symlink skip remains BLOCKED coverage. Independent final review enforces actual evidence."
+      ]
+    },
+    {
+      "id": "ST-FRAMEWORK-RELIABILITY-001",
+      "kind": "story",
+      "title": "Preserve revoked access and qualify actual core runtime",
+      "summary": "Repair four observed core defects before executable capability/plugin increments.",
+      "owner": "Root coordination; Sol/high plan/review; sole Luna/xhigh implementation",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Actual failed audit and access/validation reproductions block truthful baseline qualification.",
+      "dependsOn": [],
+      "links": [
+        "M-FRAMEWORK-RELIABILITY-001",
+        "J-OPERATE"
+      ],
+      "sourceRefs": [
+        "framework-reliability-task",
+        "framework-current-audit"
+      ],
+      "acceptance": [
+        "Actual enrollment scan handles only confirmed disappearing transient SQLite entries without weakening physical validation, mandatory enrollment metadata or binding checks.",
+        "Termination-safe heartbeat retains complete observed records and proves no later progress; nonce-bound EMPTY and original helper matching exit/close remain mandatory.",
+        "Atomic first-binding initialization seeds once; deleted identities and revoked grants survive low-level createRuntime restart with original nonempty config. Existing bound empty/legacy stores are not fresh.",
+        "Rich Studio contribution shapes, declared enums, identifiers/capabilities/permissions and numeric bounds validate through one SDK authority; valid source manifests remain compatible.",
+        "Fresh build, required ordinary npm test original close exit0, unchanged frozen candidate, zero failed/cancelled/TODO; only named host-denied EPERM file-symlink skip remains BLOCKED coverage. Independent final review enforces actual evidence."
+      ]
+    },
+    {
+      "id": "M-CAPABILITY-001",
+      "kind": "milestone",
+      "title": "Executable versioned module-owned Knowledge operations",
+      "summary": "Reusable trusted executable operations for product builder and later adapters.",
+      "owner": "Root; Sol/high Brain; sole Luna/xhigh Brawn",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Useful executable owner contracts precede family and UI generation.",
+      "dependsOn": [
+        "M-FRAMEWORK-RELIABILITY-001"
+      ],
+      "links": [
+        "C-COMPOSITION",
+        "J-OPERATE",
+        "ST-CAPABILITY-001"
+      ],
+      "sourceRefs": [
+        "capability-task",
+        "capability-work-order",
+        "capability-source-0",
+        "capability-source-1",
+        "capability-source-2",
+        "capability-source-3",
+        "capability-source-4",
+        "capability-source-5",
+        "capability-source-6",
+        "capability-source-7",
+        "capability-source-8",
+        "capability-source-9",
+        "capability-source-10",
+        "capability-source-11",
+        "capability-source-12",
+        "capability-source-13",
+        "capability-source-14",
+        "capability-source-15",
+        "capability-source-16",
+        "capability-source-17",
+        "capability-source-18",
+        "capability-source-19",
+        "capability-source-20",
+        "capability-source-21",
+        "capability-added-packages-contracts-src-operations-ts",
+        "capability-added-tests-capability-operations-test-mjs",
+        "capability-added-docs-capability-operations-md",
+        "capability-vm-amendment-review",
+        "capability-added-tests-studio-product-editor-test-mjs"
+      ],
+      "acceptance": [
+        "Three exact versioned Knowledge operations have validated immutable descriptors, selected handler parity and a trusted ApplicationHost catalogue/invocation seam; legacy modules remain compatible.",
+        "Actual SQLite create replays across route and operation as one document/job; actual indexing enables tenant-owned bounded search/get and preserves answer/Handoff public contracts.",
+        "Tenant/grant/mode/schema/write-key checks hold; original session and cancellation suppress awaited late outcomes without inventing rollback of committed writes.",
+        "Independent Knowledge and Combined fixed exports invoke real operations without checkout/compiler dependencies; current version pins and one captured legacy snapshot remain coherent.",
+        "The fixed reviewed pure browser closure validates operation-bearing declarations through the same resolver; offline Studio retains data-only privilege boundaries and source-derived metadata.",
+        "Fresh build and frozen ordinary npm test with observed original close exit0, zero failures/cancellations/TODOs and no unexpected skips; independent exact-candidate final review."
+      ]
+    },
+    {
+      "id": "ST-CAPABILITY-001",
+      "kind": "story",
+      "title": "Invoke real Knowledge operations in two selected products",
+      "summary": "Reusable trusted executable operations for product builder and later adapters.",
+      "owner": "Root; Sol/high Brain; sole Luna/xhigh Brawn",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Useful executable owner contracts precede family and UI generation.",
+      "dependsOn": [
+        "M-FRAMEWORK-RELIABILITY-001"
+      ],
+      "links": [
+        "M-CAPABILITY-001"
+      ],
+      "sourceRefs": [
+        "capability-task",
+        "capability-work-order"
+      ],
+      "acceptance": [
+        "Three exact versioned Knowledge operations have validated immutable descriptors, selected handler parity and a trusted ApplicationHost catalogue/invocation seam; legacy modules remain compatible.",
+        "Actual SQLite create replays across route and operation as one document/job; actual indexing enables tenant-owned bounded search/get and preserves answer/Handoff public contracts.",
+        "Tenant/grant/mode/schema/write-key checks hold; original session and cancellation suppress awaited late outcomes without inventing rollback of committed writes.",
+        "Independent Knowledge and Combined fixed exports invoke real operations without checkout/compiler dependencies; current version pins and one captured legacy snapshot remain coherent.",
+        "The fixed reviewed pure browser closure validates operation-bearing declarations through the same resolver; offline Studio retains data-only privilege boundaries and source-derived metadata.",
+        "Fresh build and frozen ordinary npm test with observed original close exit0, zero failures/cancellations/TODOs and no unexpected skips; independent exact-candidate final review."
+      ]
+    },
+    {
+      "id": "M-FAMILY-001",
+      "kind": "milestone",
+      "title": "Usable three-variant Service Operations product family builder",
+      "summary": "Usable human-feature selection builds three exact local product variants.",
+      "owner": "Root; Sol/high Brain; sole Luna/xhigh Brawn",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Deliver a useful product family before broader generator/MCP/provider work.",
+      "dependsOn": [
+        "M-CAPABILITY-001"
+      ],
+      "links": [
+        "J-OPERATE",
+        "C-COMPOSITION",
+        "ST-FAMILY-001"
+      ],
+      "sourceRefs": [
+        "family-task",
+        "family-work-order",
+        "family-source-0",
+        "family-source-1",
+        "family-source-2",
+        "family-source-3",
+        "family-source-4",
+        "family-source-5",
+        "family-source-6",
+        "family-source-7",
+        "family-source-8",
+        "family-source-9",
+        "family-source-10",
+        "family-source-11",
+        "family-source-12",
+        "family-source-13",
+        "family-added-packages-composition-src-family-ts",
+        "family-added-families-service-operations-family-json",
+        "family-added-docs-product-families-md",
+        "family-added-tests-product-family-test-mjs"
+      ],
+      "acceptance": [
+        "Pure source-grounded business feature derivation produces exact Desk, Desk+Library and full local Handoff definitions through composeDraft/resolve, separate deterministic reasons/provenance and readable unmet-choice diagnostics; inclusion remains separate from modes/grants.",
+        "Server independently rederives optional save claims and atomically preserves exact immutable version provenance in existing owner audit; identical retry retains original claim, conflicting historical provenance refuses, manual changes clear the claim.",
+        "One privately compiled source copy yields three sequential actual immutable artifact/runtime variants: persisted Desk create/read/close; library create/index/search/get with worker but no Handoff/bindings; accepted full Handoff destination receipt and retained restart data.",
+        "Each corresponding selected export/inventory/runtime omits excluded owners, routes and browser assets; family source mapping enters fixed build input identity and no generic factory/runtime branch is introduced.",
+        "Offline feature selection uses the same compiled pure family/composer authority and reviewed source catalogue for preview/download only; paired editor generation/preview/confirmation fences hold.",
+        "Actual ordinary paired browser chooses Service Operations/features, derives/previews/explicitly confirms and saves an immutable version, builds/registers/promotes/starts the full variant and performs real document-to-request Handoff; policy/tool blocks remain blocked and cannot qualify this full flow.",
+        "Fresh build and frozen ordinary npm test with observed original close exit0, zero failure/cancel/TODO and no unexpected skips; exact independent source/evidence review before local family acceptance."
+      ]
+    },
+    {
+      "id": "ST-FAMILY-001",
+      "kind": "story",
+      "title": "Build and operate a selected Service Operations variant",
+      "summary": "Usable human-feature selection builds three exact local product variants.",
+      "owner": "Root; Sol/high Brain; sole Luna/xhigh Brawn",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Deliver a useful product family before broader generator/MCP/provider work.",
+      "dependsOn": [
+        "M-CAPABILITY-001"
+      ],
+      "links": [
+        "M-FAMILY-001"
+      ],
+      "sourceRefs": [
+        "family-task",
+        "family-work-order"
+      ],
+      "acceptance": [
+        "Pure source-grounded business feature derivation produces exact Desk, Desk+Library and full local Handoff definitions through composeDraft/resolve, separate deterministic reasons/provenance and readable unmet-choice diagnostics; inclusion remains separate from modes/grants.",
+        "Server independently rederives optional save claims and atomically preserves exact immutable version provenance in existing owner audit; identical retry retains original claim, conflicting historical provenance refuses, manual changes clear the claim.",
+        "One privately compiled source copy yields three sequential actual immutable artifact/runtime variants: persisted Desk create/read/close; library create/index/search/get with worker but no Handoff/bindings; accepted full Handoff destination receipt and retained restart data.",
+        "Each corresponding selected export/inventory/runtime omits excluded owners, routes and browser assets; family source mapping enters fixed build input identity and no generic factory/runtime branch is introduced.",
+        "Offline feature selection uses the same compiled pure family/composer authority and reviewed source catalogue for preview/download only; paired editor generation/preview/confirmation fences hold.",
+        "Actual ordinary paired browser chooses Service Operations/features, derives/previews/explicitly confirms and saves an immutable version, builds/registers/promotes/starts the full variant and performs real document-to-request Handoff; policy/tool blocks remain blocked and cannot qualify this full flow.",
+        "Fresh build and frozen ordinary npm test with observed original close exit0, zero failure/cancel/TODO and no unexpected skips; exact independent source/evidence review before local family acceptance."
+      ]
+    },
+    {
+      "id": "M-EXTENSION-001",
+      "kind": "milestone",
+      "title": "Trusted reusable workspace UI contributions",
+      "summary": "Selected reviewed owner UI composes useful read panels within another workspace under independent scoped lifecycle.",
+      "owner": "Root; Sol/high Brain; sole Luna/xhigh Brawn",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Next useful reuse seam after verified family; avoid unrelated provider/plugin work.",
+      "dependsOn": [
+        "M-FAMILY-001"
+      ],
+      "links": [
+        "J-OPERATE",
+        "C-COMPOSITION",
+        "ST-EXTENSION-001"
+      ],
+      "sourceRefs": [
+        "ui-slots-task",
+        "ui-slots-work-order",
+        "ui-slots-source-0",
+        "ui-slots-source-1",
+        "ui-slots-source-2",
+        "ui-slots-source-3",
+        "ui-slots-source-4",
+        "ui-slots-source-5",
+        "ui-slots-source-6",
+        "ui-slots-source-7",
+        "ui-slots-source-8",
+        "ui-slots-source-9",
+        "ui-slots-source-10",
+        "ui-slots-source-11",
+        "ui-slots-source-12",
+        "ui-slots-source-13",
+        "ui-slots-source-14",
+        "ui-slots-source-15",
+        "ui-slots-source-16",
+        "ui-slots-source-17",
+        "ui-slots-source-18",
+        "ui-slots-source-19",
+        "ui-slots-source-20",
+        "ui-slots-source-21",
+        "ui-slots-source-22",
+        "ui-slots-source-23",
+        "ui-slots-source-24",
+        "ui-slots-source-25",
+        "ui-slots-source-26",
+        "ui-slots-source-27",
+        "ui-slots-source-28",
+        "ui-slots-source-29",
+        "ui-slots-source-30",
+        "ui-slots-version-layout-amendment",
+        "ui-slots-scope-deviation",
+        "ui-slots-live-tests-amendment",
+        "ui-slots-added-packages-contracts-src-ui-contributions-ts",
+        "ui-slots-added-modules-knowledge-src-ui-reference-search-ts",
+        "ui-slots-added-modules-service-desk-src-ui-recent-requests-ts",
+        "ui-slots-added-solutions-knowledge-to-desk-ui-json",
+        "ui-slots-added-docs-ui-contributions-md",
+        "ui-slots-added-tests-ui-contributions-test-mjs",
+        "ui-slots-added-packages-web-shell-src-shell-css"
+      ],
+      "acceptance": [
+        "One bounded pure trusted UI descriptor/binding validator is reused by SDK/composition/backend/build/catalogue; fixed reviewed solution data and exact named exports preserve owner permission and selected closure.",
+        "Independent slot signals/disposal and original immutable actor/product/instance/tenant scope fence late loader/read/notice across navigation/logout/tenant replacement and isolate mount failure.",
+        "Actual full exported product loads Knowledge reference search beside Desk requests and Desk recent cards below library from real tenant-owned indexed document/request data, viewer reads, other tenant clears and same-artifact restart retains records.",
+        "Independent Desk-only export omits Knowledge contributions/code/assets, whole workspace and no-contribution modules remain compatible; reviewed solution ui.json affects fingerprint and survives canonical source copy.",
+        "Actual ordinary browser on exact promoted full artifact shows indexed document embedded Desk search, library recent cards, tenant replacement, read-only viewer, logout and persistent restart followed by positive native owner stop/close.",
+        "Fresh build before focused tests, frozen ordinary npm test original close0/nullsignal, zero failed/cancel/TODO and no unexpected skips plus independent exact review before local acceptance."
+      ]
+    },
+    {
+      "id": "ST-EXTENSION-001",
+      "kind": "story",
+      "title": "Use indexed references and recent requests without changing workspace",
+      "summary": "Selected reviewed owner UI composes useful read panels within another workspace under independent scoped lifecycle.",
+      "owner": "Root; Sol/high Brain; sole Luna/xhigh Brawn",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Next useful reuse seam after verified family; avoid unrelated provider/plugin work.",
+      "dependsOn": [
+        "M-FAMILY-001"
+      ],
+      "links": [
+        "M-EXTENSION-001"
+      ],
+      "sourceRefs": [
+        "ui-slots-task",
+        "ui-slots-work-order"
+      ],
+      "acceptance": [
+        "One bounded pure trusted UI descriptor/binding validator is reused by SDK/composition/backend/build/catalogue; fixed reviewed solution data and exact named exports preserve owner permission and selected closure.",
+        "Independent slot signals/disposal and original immutable actor/product/instance/tenant scope fence late loader/read/notice across navigation/logout/tenant replacement and isolate mount failure.",
+        "Actual full exported product loads Knowledge reference search beside Desk requests and Desk recent cards below library from real tenant-owned indexed document/request data, viewer reads, other tenant clears and same-artifact restart retains records.",
+        "Independent Desk-only export omits Knowledge contributions/code/assets, whole workspace and no-contribution modules remain compatible; reviewed solution ui.json affects fingerprint and survives canonical source copy.",
+        "Actual ordinary browser on exact promoted full artifact shows indexed document embedded Desk search, library recent cards, tenant replacement, read-only viewer, logout and persistent restart followed by positive native owner stop/close.",
+        "Fresh build before focused tests, frozen ordinary npm test original close0/nullsignal, zero failed/cancel/TODO and no unexpected skips plus independent exact review before local acceptance."
+      ]
     }
   ],
   "observations": [
@@ -1786,6 +3067,111 @@
         "Historical fileimportBLOCKED, externalmodel/hosted/production/crashstressunqualified.",
         "Historical plan13 and all earlier evidence retained; no automated release or dispatch."
       ]
+    },
+    {
+      "id": "OBS-MOBILE-001-RESULT",
+      "nodeId": "M-MOBILE-001",
+      "state": "verified",
+      "summary": "Mobile browser shell and client packaging accepted: fresh build, focused checks and complete npm test with 322 tests, 321 passed, 1 named environment skips, and zero failures, cancellations or TODOs. Actual 360-pixel browser journey and independent final review recorded. Current Android project generation and sync observed; native binary, device and sign-in remain unqualified.",
+      "sourceRefs": [
+        "mobile-result",
+        "mobile-final-suite",
+        "mobile-final-browser",
+        "mobile-final-review"
+      ],
+      "candidate": "5b3d2a9e03b3934f01b80ae6bda0c2ba915c77d7b1eae2dae22fcb5dbed2bf4f",
+      "observedAt": "2026-10-02T02:30:36.539Z",
+      "provenance": "execution-record",
+      "limitations": [
+        "Only local browser-shell/client-packaging acceptance. Physical device, keyboard/safe-area/assistive testing, native SDK binary, native identity/API, signing, iOS and production qualification remain open.",
+        "Earlier failed checks, historical uncertain closure and policy blocks retained. Named skipped test remains unqualified coverage."
+      ]
+    },
+    {
+      "id": "OBS-FRAMEWORK-RELIABILITY-001-RESULT",
+      "nodeId": "M-FRAMEWORK-RELIABILITY-001",
+      "state": "verified",
+      "summary": "Exact local core reliability accepted: build0, focused31/31; full suite330/329pass/0fail/1named blocked skip, original exit0 and unchanged candidate, independent exact review.",
+      "sourceRefs": [
+        "framework-reliability-result",
+        "framework-reliability-run-0",
+        "framework-reliability-run-1",
+        "framework-reliability-run-2",
+        "framework-reliability-review-0"
+      ],
+      "candidate": "d1f24c45fe236f0047032ad3d8331c04245ef0d675c8058ed04910ba559e3624",
+      "observedAt": "2026-10-02T04:07:41.615Z",
+      "provenance": "execution-record",
+      "limitations": [
+        "Named EPERM file-symlink assertion remains blocked; historical failed audit and unknown owner closures preserved.",
+        "Possible fail-closed concurrent first-open availability refusal; arbitrary concurrent initialization success not promised.",
+        "No new browser/native-phone/provider/hosted/production qualification."
+      ]
+    },
+    {
+      "id": "OBS-CAPABILITY-001-RESULT",
+      "nodeId": "M-CAPABILITY-001",
+      "state": "verified",
+      "summary": "Three executable owner operations accepted locally: build0, focused78/78 and full336/335pass/0fail/1named blocked skip with originalexit0 and unchangedcandidate; exact independent review.",
+      "sourceRefs": [
+        "capability-result",
+        "capability-run-0",
+        "capability-run-1",
+        "capability-run-2",
+        "capability-review-0"
+      ],
+      "candidate": "fadac8c43621b45dc4a12faf43b6499e0c1d8e025e2ba27191f0ec3fe038aa8e",
+      "observedAt": "2026-10-02T06:36:45.367Z",
+      "provenance": "execution-record",
+      "limitations": [
+        "Named EPERM file-symlink coverage blocked; historical failures and unknown closures retained.",
+        "Current0.2.2 independent Knowledge/Combined operation exports and captured Desk snapshot isolation only, no old Knowledge operation invocation.",
+        "Offline is compiled VM core; no new live browser/MCP/provider/native-phone/hosted/production proof."
+      ]
+    },
+    {
+      "id": "OBS-FAMILY-001-RESULT",
+      "nodeId": "M-FAMILY-001",
+      "state": "verified",
+      "summary": "Three useful local variants and ordinary Chrome derive-to-Handoff/restart accepted: freshbuild0,focused71/71, full344/343pass/0fail/1namedblocked, originalclose0 unchanged candidate and independent exact review.",
+      "sourceRefs": [
+        "family-result",
+        "family-run-0",
+        "family-run-1",
+        "family-run-2",
+        "family-run-3",
+        "family-review-0"
+      ],
+      "candidate": "0a2749127a73d23009710c3c178f88642ffb503d3eed889c723d7ac33dd13335",
+      "observedAt": "2026-10-02T08:40:50.251Z",
+      "provenance": "execution-record",
+      "limitations": [
+        "Named EPERM fixture coverage blocked; historical failures/unknown owners preserved.",
+        "First console termination exit1 and unqualified graceful close preserved separately from reopened controller close0.",
+        "No native-device/provider/hosted/production qualification."
+      ]
+    },
+    {
+      "id": "OBS-EXTENSION-001-RESULT",
+      "nodeId": "M-EXTENSION-001",
+      "state": "verified",
+      "summary": "Trusted panels ordinary browser scope/restart accepted; build0 focused97/97, original full352/353with1namedblocked coverage, independent exact review.",
+      "sourceRefs": [
+        "ui-slots-result",
+        "ui-slots-run-0",
+        "ui-slots-run-1",
+        "ui-slots-run-2",
+        "ui-slots-run-3",
+        "ui-slots-run-4",
+        "ui-slots-review-0"
+      ],
+      "candidate": "fd404c7993497c2016887f01676574c2f1f3daad4a323f7105a874b99b980e9b",
+      "observedAt": "2026-10-02T10:19:18.207Z",
+      "provenance": "execution-record",
+      "limitations": [
+        "Named EPERM blocked coverage, pre-admission CSS deviation, prior failures/unknown causes retained.",
+        "Trusted local profile; native phone/provider/hosted/production unqualified."
+      ]
     }
   ],
   "retrospectives": [
@@ -1819,7 +3205,21 @@
       "owner": "Project coordinator and UX reviewer",
       "measure": "Record design-related review revisions for comparable milestones; baseline is currently unknown.",
       "status": "proposed"
+    },
+    {
+      "id": "RET-MOBILE-BUILD-INTEGRATION",
+      "problem": "Initial mobile implementation omitted managed private-build admission/toolchain integration; its generated long asset paths then exceeded existing managed runtime bounds.",
+      "evidenceRefs": [
+        "mobile-admission-failure",
+        "mobile-path-failure",
+        "mobile-final-suite"
+      ],
+      "hypothesis": "Including both a private managed build and a promoted runtime path-budget check in the first meaningful integration test may detect packaging compatibility errors earlier.",
+      "action": "For the next client/package increment, include reviewed source admission, private toolchain copying and full runtime destination path geometry in the initial focused contract before the complete suite.",
+      "owner": "Project coordinator and source reviewer",
+      "measure": "At the next packaging change, record whether focused checks find integration failures before the full suite; cycle-time baseline is not measured.",
+      "status": "proposed"
     }
   ],
-  "focusNodeId": "M-KERNEL-CI"
+  "focusNodeId": "M-EXTENSION-001"
 }

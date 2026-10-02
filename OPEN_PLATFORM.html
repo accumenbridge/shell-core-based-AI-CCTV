@@ -22,9 +22,8 @@
 @media(max-width:730px){.btn{min-height:40px}.arch-row{grid-template-columns:repeat(2,minmax(0,1fr))}.choice strong,.form-label{font-size:13px}.subtitle,.help{font-size:12px}}
 
 .definition-editor{margin-top:22px}.definition-editor textarea{display:block;width:100%;min-height:20rem;margin:8px 0 14px;padding:12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:12px/1.5 ui-monospace,Consolas,monospace;resize:vertical}.definition-editor .inline-actions{align-items:end;flex-wrap:wrap}.definition-editor input[type=file]{max-width:220px}.definition-editor .state-list{margin-top:16px}
-</style></head><body><div id="studio"><noscript>Enable JavaScript to use the visual studio. Run npm run studio for the authenticated local builder.</noscript></div><script>globalThis.QB_VISUAL_DATA={"modules":[{"id":"handoff","version":"0.2.1","abi":"quadbridge.module.v1","dependencies":[{"id":"knowledge","version":"0.2.1"}],"provides":[],"requires":["knowledge.document.read.v1","desk.requests.create.v2"],"permissions":["handoff.read","handoff.create","handoff.reconcile"],"routes":[{"method":"GET","path":"/api/handoffs","permission":"handoff.read","kind":"read"},{"method":"POST","path":"/api/handoffs","permission":"handoff.create","kind":"write"},{"method":"POST","path":"/api/handoffs/reconcile","permission":"handoff.reconcile","kind":"write"},{"method":"GET","path":"/api/handoffs/options","permission":"handoff.read","kind":"read"}],"workspaces":[{"id":"handoff.requests","label":"Cross-product handoffs","path":"/handoffs","permission":"handoff.read","export":"workspace"}],"schema":{"current":2,"readMin":2,"readMax":2},"background":true,"studio":{"label":"Handoff","summary":"Cross-product workflow and receipt reconciliation.","category":"integration","layers":["ui","backend","worker","integration","data"],"ui":{"routes":[{"path":"/handoffs","workspace":"handoff.requests","label":"Cross-product handoffs","nav":"Integrations"}]},"backend":{"events":[{"id":"handoff.committed","direction":"publish","schema":"handoff.receipt.v1"}]},"data":{"stores":[{"id":"handoff-records","kind":"relational","ownership":"module"}],"schemas":[{"id":"handoff","version":2}]},"deployment":{"processes":[{"id":"handoff-api","kind":"http"},{"id":"handoff-worker","kind":"worker"}]}}},{"id":"knowledge","version":"0.2.1","abi":"quadbridge.module.v1","dependencies":[],"provides":["knowledge.document.read.v1","knowledge.document.retrieve.v1"],"requires":[],"permissions":["knowledge.read","knowledge.write"],"routes":[{"method":"GET","path":"/api/documents","permission":"knowledge.read","kind":"read"},{"method":"GET","path":"/api/documents/search","permission":"knowledge.read","kind":"read"},{"method":"POST","path":"/api/documents/answer","permission":"knowledge.read","kind":"read"},{"method":"POST","path":"/api/documents","permission":"knowledge.write","kind":"write"},{"method":"POST","path":"/api/documents/cancel-index","permission":"knowledge.write","kind":"write"}],"workspaces":[{"id":"knowledge.library","label":"Knowledge library","path":"/library","permission":"knowledge.read","export":"workspace"}],"schema":{"current":1,"readMin":1,"readMax":1},"background":true,"studio":{"label":"Knowledge","summary":"Document library with local extractive answers grounded in indexed sources.","category":"knowledge","layers":["ui","backend","worker","ai","data"],"ui":{"routes":[{"path":"/library","workspace":"knowledge.library","label":"Knowledge library","nav":"Knowledge"}],"extensionPoints":["knowledge.document.actions"]},"backend":{"services":[{"id":"document-reader","contract":"knowledge.document.read.v1","visibility":"product"},{"id":"document-retriever","contract":"knowledge.document.retrieve.v1","visibility":"product"}],"jobs":[{"kind":"knowledge.index","permission":"knowledge.write"}]},"ai":{"pipelines":[{"id":"knowledge-rag","label":"Knowledge retrieval pipeline","input":"query","output":"grounded-context"},{"id":"knowledge-extractive-answer","label":"Local extractive answer","input":"question","output":"cited-source-excerpts"}],"models":[{"capability":"text.embedding","modality":"embedding","placement":"either","accelerator":"either"},{"capability":"text.generate","modality":"text","placement":"either","accelerator":"either"}]},"data":{"stores":[{"id":"knowledge-records","kind":"relational","ownership":"module"},{"id":"knowledge-vectors","kind":"vector","ownership":"module"}],"schemas":[{"id":"knowledge","version":1}]},"deployment":{"processes":[{"id":"knowledge-api","kind":"http"},{"id":"knowledge-worker","kind":"worker"}]}}},{"id":"service-desk","version":"0.2.0","abi":"quadbridge.module.v1","dependencies":[],"provides":["desk.requests.create.v1","desk.requests.create.v2"],"requires":[],"permissions":["desk.read","desk.create","desk.close","desk.receipts.read"],"routes":[{"method":"GET","path":"/api/requests","permission":"desk.read","kind":"read"},{"method":"POST","path":"/api/requests","permission":"desk.create","kind":"write"},{"method":"POST","path":"/api/requests/close","permission":"desk.close","kind":"write"},{"method":"POST","path":"/api/requests/commit","permission":"desk.create","kind":"write"},{"method":"GET","path":"/api/requests/receipt","permission":"desk.receipts.read","kind":"read"}],"workspaces":[{"id":"desk.requests","label":"Service requests","path":"/requests","permission":"desk.read","export":"workspace"},{"id":"service-desk.overview","label":"Request overview","path":"/request-overview","permission":"desk.read","export":"overviewWorkspace"}],"schema":{"current":1,"readMin":1,"readMax":1},"background":false,"browserAssets":["ui/overview.css"],"studio":{"label":"Service Desk","summary":"Service-request UI and backend capability.","category":"operations","layers":["ui","backend","data"],"ui":{"routes":[{"path":"/requests","workspace":"desk.requests","label":"Service requests","nav":"Operations"},{"path":"/request-overview","workspace":"service-desk.overview","label":"Request overview","nav":"Operations"}]},"backend":{"services":[{"id":"request-writer-v2","contract":"desk.requests.create.v2","visibility":"product"}]},"data":{"stores":[{"id":"service-requests","kind":"relational","ownership":"module"}],"schemas":[{"id":"service-desk","version":1}]},"deployment":{"processes":[{"id":"service-desk-api","kind":"http"}]}}}],"products":[{"id":"combined","version":"0.2.1","platformAbi":"quadbridge.module.v1","title":"Operations + Knowledge","description":"Two domain families composed into one application.","layout":"sidebar","modules":[{"id":"service-desk","version":"0.2.0"},{"id":"knowledge","version":"0.2.1"},{"id":"handoff","version":"0.2.1"}],"bindings":[{"contract":"knowledge.document.read.v1","instanceId":"local-documents","implementation":"knowledge","scope":"application","consumer":"handoff","mode":"local"},{"contract":"desk.requests.create.v2","instanceId":"local-desk","implementation":"service-desk","scope":"application","consumer":"handoff","mode":"local"}],"wiring":"knowledge-to-desk"},{"id":"knowledge","version":"0.2.1","platformAbi":"quadbridge.module.v1","title":"Knowledge Library","description":"Documents, background indexing and connected-product action.","layout":"top","modules":[{"id":"knowledge","version":"0.2.1"},{"id":"handoff","version":"0.2.1"}],"bindings":[{"contract":"knowledge.document.read.v1","instanceId":"local-documents","implementation":"knowledge","scope":"application","consumer":"handoff","mode":"local"},{"contract":"desk.requests.create.v2","instanceId":"connected-desk","implementation":"configured-desk-http","scope":"application","consumer":"handoff","mode":"http"}],"wiring":"knowledge-to-desk"},{"id":"neutral","version":"0.2.0","platformAbi":"quadbridge.module.v1","title":"Neutral shell","description":"A runnable application with no business-domain modules.","layout":"sidebar","modules":[],"bindings":[]},{"id":"service-desk","version":"0.2.0","platformAbi":"quadbridge.module.v1","title":"Service Desk","description":"A small non-AI business product.","layout":"sidebar","modules":[{"id":"service-desk","version":"0.2.0"}],"bindings":[]}],"solutions":[{"id":"knowledge-to-desk","version":"0.2.0","source":"knowledge","destination":"service-desk","contract":"desk.requests.create.v2","mode":"http","tenantMap":{"org-a":"customer-a","org-b":"customer-b"},"credential":"runtime-generated service credential; not embedded in this definition","semantics":"Destination owns requests. Source owns the handoff record and retry identity. No distributed transaction.","studio":{"consumer":"handoff","label":"Knowledge to Service Desk","ports":[{"contract":"knowledge.document.read.v1","choices":[{"id":"local","label":"Knowledge in this application","binding":{"instanceId":"local-documents","implementation":"knowledge","scope":"application","mode":"local"}}]},{"contract":"desk.requests.create.v2","choices":[{"id":"local","label":"Service Desk in this application","binding":{"instanceId":"local-desk","implementation":"service-desk","scope":"application","mode":"local"},"prerequisites":["Uses the reviewed local-developer service identity; no production grants are changed."]},{"id":"connected","label":"A separately running Service Desk","binding":{"instanceId":"connected-desk","implementation":"configured-desk-http","scope":"application","mode":"http"},"prerequisites":["Requires an explicitly configured destination, tenant mapping and authorized service identity. The Studio does not provision another product automatically."]}]}]}}],"packages":[{"id":"ai-core","version":"0.3.0"},{"id":"backend-host","version":"0.2.0"},{"id":"composition","version":"0.2.0"},{"id":"connections","version":"0.2.0"},{"id":"contracts","version":"0.2.0"},{"id":"control-plane","version":"0.3.0"},{"id":"local-access","version":"0.2.0"},{"id":"module-sdk","version":"0.3.0"},{"id":"sqlite","version":"0.2.0"},{"id":"studio-model","version":"0.3.0"},{"id":"web-shell","version":"0.2.0"},{"id":"worker-host","version":"0.2.0"}],"plans":{"combined":{"valid":true,"plan":{"product":{"id":"combined","version":"0.2.1","platformAbi":"quadbridge.module.v1","title":"Operations + Knowledge","description":"Two domain families composed into one application.","layout":"sidebar","modules":[{"id":"handoff","version":"0.2.1"},{"id":"knowledge","version":"0.2.1"},{"id":"service-desk","version":"0.2.0"}],"bindings":[{"contract":"desk.requests.create.v2","instanceId":"local-desk","implementation":"service-desk","scope":"application","consumer":"handoff","mode":"local"},{"contract":"knowledge.document.read.v1","instanceId":"local-documents","implementation":"knowledge","scope":"application","consumer":"handoff","mode":"local"}],"wiring":"knowledge-to-desk"},"modules":[{"id":"knowledge","version":"0.2.1","abi":"quadbridge.module.v1","dependencies":[],"provides":["knowledge.document.read.v1","knowledge.document.retrieve.v1"],"requires":[],"permissions":["knowledge.read","knowledge.write"],"routes":[{"method":"GET","path":"/api/documents","permission":"knowledge.read","kind":"read"},{"method":"GET","path":"/api/documents/search","permission":"knowledge.read","kind":"read"},{"method":"POST","path":"/api/documents/answer","permission":"knowledge.read","kind":"read"},{"method":"POST","path":"/api/documents","permission":"knowledge.write","kind":"write"},{"method":"POST","path":"/api/documents/cancel-index","permission":"knowledge.write","kind":"write"}],"workspaces":[{"id":"knowledge.library","label":"Knowledge library","path":"/library","permission":"knowledge.read","export":"workspace"}],"schema":{"current":1,"readMin":1,"readMax":1},"background":true,"studio":{"label":"Knowledge","summary":"Document library with local extractive answers grounded in indexed sources.","category":"knowledge","layers":["ui","backend","worker","ai","data"],"ui":{"routes":[{"path":"/library","workspace":"knowledge.library","label":"Knowledge library","nav":"Knowledge"}],"extensionPoints":["knowledge.document.actions"]},"backend":{"services":[{"id":"document-reader","contract":"knowledge.document.read.v1","visibility":"product"},{"id":"document-retriever","contract":"knowledge.document.retrieve.v1","visibility":"product"}],"jobs":[{"kind":"knowledge.index","permission":"knowledge.write"}]},"ai":{"pipelines":[{"id":"knowledge-rag","label":"Knowledge retrieval pipeline","input":"query","output":"grounded-context"},{"id":"knowledge-extractive-answer","label":"Local extractive answer","input":"question","output":"cited-source-excerpts"}],"models":[{"capability":"text.embedding","modality":"embedding","placement":"either","accelerator":"either"},{"capability":"text.generate","modality":"text","placement":"either","accelerator":"either"}]},"data":{"stores":[{"id":"knowledge-records","kind":"relational","ownership":"module"},{"id":"knowledge-vectors","kind":"vector","ownership":"module"}],"schemas":[{"id":"knowledge","version":1}]},"deployment":{"processes":[{"id":"knowledge-api","kind":"http"},{"id":"knowledge-worker","kind":"worker"}]}}},{"id":"service-desk","version":"0.2.0","abi":"quadbridge.module.v1","dependencies":[],"provides":["desk.requests.create.v1","desk.requests.create.v2"],"requires":[],"permissions":["desk.read","desk.create","desk.close","desk.receipts.read"],"routes":[{"method":"GET","path":"/api/requests","permission":"desk.read","kind":"read"},{"method":"POST","path":"/api/requests","permission":"desk.create","kind":"write"},{"method":"POST","path":"/api/requests/close","permission":"desk.close","kind":"write"},{"method":"POST","path":"/api/requests/commit","permission":"desk.create","kind":"write"},{"method":"GET","path":"/api/requests/receipt","permission":"desk.receipts.read","kind":"read"}],"workspaces":[{"id":"desk.requests","label":"Service requests","path":"/requests","permission":"desk.read","export":"workspace"},{"id":"service-desk.overview","label":"Request overview","path":"/request-overview","permission":"desk.read","export":"overviewWorkspace"}],"schema":{"current":1,"readMin":1,"readMax":1},"background":false,"browserAssets":["ui/overview.css"],"studio":{"label":"Service Desk","summary":"Service-request UI and backend capability.","category":"operations","layers":["ui","backend","data"],"ui":{"routes":[{"path":"/requests","workspace":"desk.requests","label":"Service requests","nav":"Operations"},{"path":"/request-overview","workspace":"service-desk.overview","label":"Request overview","nav":"Operations"}]},"backend":{"services":[{"id":"request-writer-v2","contract":"desk.requests.create.v2","visibility":"product"}]},"data":{"stores":[{"id":"service-requests","kind":"relational","ownership":"module"}],"schemas":[{"id":"service-desk","version":1}]},"deployment":{"processes":[{"id":"service-desk-api","kind":"http"}]}}},{"id":"handoff","version":"0.2.1","abi":"quadbridge.module.v1","dependencies":[{"id":"knowledge","version":"0.2.1"}],"provides":[],"requires":["knowledge.document.read.v1","desk.requests.create.v2"],"permissions":["handoff.read","handoff.create","handoff.reconcile"],"routes":[{"method":"GET","path":"/api/handoffs","permission":"handoff.read","kind":"read"},{"method":"POST","path":"/api/handoffs","permission":"handoff.create","kind":"write"},{"method":"POST","path":"/api/handoffs/reconcile","permission":"handoff.reconcile","kind":"write"},{"method":"GET","path":"/api/handoffs/options","permission":"handoff.read","kind":"read"}],"workspaces":[{"id":"handoff.requests","label":"Cross-product handoffs","path":"/handoffs","permission":"handoff.read","export":"workspace"}],"schema":{"current":2,"readMin":2,"readMax":2},"background":true,"studio":{"label":"Handoff","summary":"Cross-product workflow and receipt reconciliation.","category":"integration","layers":["ui","backend","worker","integration","data"],"ui":{"routes":[{"path":"/handoffs","workspace":"handoff.requests","label":"Cross-product handoffs","nav":"Integrations"}]},"backend":{"events":[{"id":"handoff.committed","direction":"publish","schema":"handoff.receipt.v1"}]},"data":{"stores":[{"id":"handoff-records","kind":"relational","ownership":"module"}],"schemas":[{"id":"handoff","version":2}]},"deployment":{"processes":[{"id":"handoff-api","kind":"http"},{"id":"handoff-worker","kind":"worker"}]}}}],"bindings":[{"contract":"desk.requests.create.v2","instanceId":"local-desk","implementation":"service-desk","scope":"application","consumer":"handoff","mode":"local"},{"contract":"knowledge.document.read.v1","instanceId":"local-documents","implementation":"knowledge","scope":"application","consumer":"handoff","mode":"local"}],"permissions":["desk.close","desk.create","desk.read","desk.receipts.read","handoff.create","handoff.read","handoff.reconcile","knowledge.read","knowledge.write"],"requiresWorker":true}},"knowledge":{"valid":true,"plan":{"product":{"id":"knowledge","version":"0.2.1","platformAbi":"quadbridge.module.v1","title":"Knowledge Library","description":"Documents, background indexing and connected-product action.","layout":"top","modules":[{"id":"handoff","version":"0.2.1"},{"id":"knowledge","version":"0.2.1"}],"bindings":[{"contract":"desk.requests.create.v2","instanceId":"connected-desk","implementation":"configured-desk-http","scope":"application","consumer":"handoff","mode":"http"},{"contract":"knowledge.document.read.v1","instanceId":"local-documents","implementation":"knowledge","scope":"application","consumer":"handoff","mode":"local"}],"wiring":"knowledge-to-desk"},"modules":[{"id":"knowledge","version":"0.2.1","abi":"quadbridge.module.v1","dependencies":[],"provides":["knowledge.document.read.v1","knowledge.document.retrieve.v1"],"requires":[],"permissions":["knowledge.read","knowledge.write"],"routes":[{"method":"GET","path":"/api/documents","permission":"knowledge.read","kind":"read"},{"method":"GET","path":"/api/documents/search","permission":"knowledge.read","kind":"read"},{"method":"POST","path":"/api/documents/answer","permission":"knowledge.read","kind":"read"},{"method":"POST","path":"/api/documents","permission":"knowledge.write","kind":"write"},{"method":"POST","path":"/api/documents/cancel-index","permission":"knowledge.write","kind":"write"}],"workspaces":[{"id":"knowledge.library","label":"Knowledge library","path":"/library","permission":"knowledge.read","export":"workspace"}],"schema":{"current":1,"readMin":1,"readMax":1},"background":true,"studio":{"label":"Knowledge","summary":"Document library with local extractive answers grounded in indexed sources.","category":"knowledge","layers":["ui","backend","worker","ai","data"],"ui":{"routes":[{"path":"/library","workspace":"knowledge.library","label":"Knowledge library","nav":"Knowledge"}],"extensionPoints":["knowledge.document.actions"]},"backend":{"services":[{"id":"document-reader","contract":"knowledge.document.read.v1","visibility":"product"},{"id":"document-retriever","contract":"knowledge.document.retrieve.v1","visibility":"product"}],"jobs":[{"kind":"knowledge.index","permission":"knowledge.write"}]},"ai":{"pipelines":[{"id":"knowledge-rag","label":"Knowledge retrieval pipeline","input":"query","output":"grounded-context"},{"id":"knowledge-extractive-answer","label":"Local extractive answer","input":"question","output":"cited-source-excerpts"}],"models":[{"capability":"text.embedding","modality":"embedding","placement":"either","accelerator":"either"},{"capability":"text.generate","modality":"text","placement":"either","accelerator":"either"}]},"data":{"stores":[{"id":"knowledge-records","kind":"relational","ownership":"module"},{"id":"knowledge-vectors","kind":"vector","ownership":"module"}],"schemas":[{"id":"knowledge","version":1}]},"deployment":{"processes":[{"id":"knowledge-api","kind":"http"},{"id":"knowledge-worker","kind":"worker"}]}}},{"id":"handoff","version":"0.2.1","abi":"quadbridge.module.v1","dependencies":[{"id":"knowledge","version":"0.2.1"}],"provides":[],"requires":["knowledge.document.read.v1","desk.requests.create.v2"],"permissions":["handoff.read","handoff.create","handoff.reconcile"],"routes":[{"method":"GET","path":"/api/handoffs","permission":"handoff.read","kind":"read"},{"method":"POST","path":"/api/handoffs","permission":"handoff.create","kind":"write"},{"method":"POST","path":"/api/handoffs/reconcile","permission":"handoff.reconcile","kind":"write"},{"method":"GET","path":"/api/handoffs/options","permission":"handoff.read","kind":"read"}],"workspaces":[{"id":"handoff.requests","label":"Cross-product handoffs","path":"/handoffs","permission":"handoff.read","export":"workspace"}],"schema":{"current":2,"readMin":2,"readMax":2},"background":true,"studio":{"label":"Handoff","summary":"Cross-product workflow and receipt reconciliation.","category":"integration","layers":["ui","backend","worker","integration","data"],"ui":{"routes":[{"path":"/handoffs","workspace":"handoff.requests","label":"Cross-product handoffs","nav":"Integrations"}]},"backend":{"events":[{"id":"handoff.committed","direction":"publish","schema":"handoff.receipt.v1"}]},"data":{"stores":[{"id":"handoff-records","kind":"relational","ownership":"module"}],"schemas":[{"id":"handoff","version":2}]},"deployment":{"processes":[{"id":"handoff-api","kind":"http"},{"id":"handoff-worker","kind":"worker"}]}}}],"bindings":[{"contract":"desk.requests.create.v2","instanceId":"connected-desk","implementation":"configured-desk-http","scope":"application","consumer":"handoff","mode":"http"},{"contract":"knowledge.document.read.v1","instanceId":"local-documents","implementation":"knowledge","scope":"application","consumer":"handoff","mode":"local"}],"permissions":["handoff.create","handoff.read","handoff.reconcile","knowledge.read","knowledge.write"],"requiresWorker":true}},"neutral":{"valid":true,"plan":{"product":{"id":"neutral","version":"0.2.0","platformAbi":"quadbridge.module.v1","title":"Neutral shell","description":"A runnable application with no business-domain modules.","layout":"sidebar","modules":[],"bindings":[]},"modules":[],"bindings":[],"permissions":[],"requiresWorker":false}},"service-desk":{"valid":true,"plan":{"product":{"id":"service-desk","version":"0.2.0","platformAbi":"quadbridge.module.v1","title":"Service Desk","description":"A small non-AI business product.","layout":"sidebar","modules":[{"id":"service-desk","version":"0.2.0"}],"bindings":[]},"modules":[{"id":"service-desk","version":"0.2.0","abi":"quadbridge.module.v1","dependencies":[],"provides":["desk.requests.create.v1","desk.requests.create.v2"],"requires":[],"permissions":["desk.read","desk.create","desk.close","desk.receipts.read"],"routes":[{"method":"GET","path":"/api/requests","permission":"desk.read","kind":"read"},{"method":"POST","path":"/api/requests","permission":"desk.create","kind":"write"},{"method":"POST","path":"/api/requests/close","permission":"desk.close","kind":"write"},{"method":"POST","path":"/api/requests/commit","permission":"desk.create","kind":"write"},{"method":"GET","path":"/api/requests/receipt","permission":"desk.receipts.read","kind":"read"}],"workspaces":[{"id":"desk.requests","label":"Service requests","path":"/requests","permission":"desk.read","export":"workspace"},{"id":"service-desk.overview","label":"Request overview","path":"/request-overview","permission":"desk.read","export":"overviewWorkspace"}],"schema":{"current":1,"readMin":1,"readMax":1},"background":false,"browserAssets":["ui/overview.css"],"studio":{"label":"Service Desk","summary":"Service-request UI and backend capability.","category":"operations","layers":["ui","backend","data"],"ui":{"routes":[{"path":"/requests","workspace":"desk.requests","label":"Service requests","nav":"Operations"},{"path":"/request-overview","workspace":"service-desk.overview","label":"Request overview","nav":"Operations"}]},"backend":{"services":[{"id":"request-writer-v2","contract":"desk.requests.create.v2","visibility":"product"}]},"data":{"stores":[{"id":"service-requests","kind":"relational","ownership":"module"}],"schemas":[{"id":"service-desk","version":1}]},"deployment":{"processes":[{"id":"service-desk-api","kind":"http"}]}}}],"bindings":[],"permissions":["desk.close","desk.create","desk.read","desk.receipts.read"],"requiresWorker":false}}},"sourceVersion":"0.2.0","studioVersion":"1.0"};</script><script>globalThis.QBContracts=(()=>{
+</style></head><body><div id="studio"><noscript>Enable JavaScript to use the visual studio. Run npm run studio for the authenticated local builder.</noscript></div><script>globalThis.QB_VISUAL_DATA={"modules":[{"id":"handoff","version":"0.2.3","abi":"quadbridge.module.v1","dependencies":[{"id":"knowledge","version":"0.2.3"}],"provides":[],"requires":["knowledge.document.read.v1","desk.requests.create.v2"],"permissions":["handoff.read","handoff.create","handoff.reconcile"],"routes":[{"method":"GET","path":"/api/handoffs","permission":"handoff.read","kind":"read"},{"method":"POST","path":"/api/handoffs","permission":"handoff.create","kind":"write"},{"method":"POST","path":"/api/handoffs/reconcile","permission":"handoff.reconcile","kind":"write"},{"method":"GET","path":"/api/handoffs/options","permission":"handoff.read","kind":"read"}],"workspaces":[{"id":"handoff.requests","label":"Cross-product handoffs","path":"/handoffs","permission":"handoff.read","export":"workspace"}],"schema":{"current":2,"readMin":2,"readMax":2},"background":true,"studio":{"label":"Handoff","summary":"Cross-product workflow and receipt reconciliation.","category":"integration","layers":["ui","backend","worker","integration","data"],"ui":{"routes":[{"path":"/handoffs","workspace":"handoff.requests","label":"Cross-product handoffs","nav":"Integrations"}]},"backend":{"events":[{"id":"handoff.committed","direction":"publish","schema":"handoff.receipt.v1"}]},"data":{"stores":[{"id":"handoff-records","kind":"relational","ownership":"module"}],"schemas":[{"id":"handoff","version":2}]},"deployment":{"processes":[{"id":"handoff-api","kind":"http"},{"id":"handoff-worker","kind":"worker"}]}}},{"id":"knowledge","version":"0.2.3","abi":"quadbridge.module.v1","dependencies":[],"provides":["knowledge.document.read.v1","knowledge.document.retrieve.v1"],"requires":[],"permissions":["knowledge.read","knowledge.write"],"operations":[{"id":"knowledge.documents.search","version":1,"title":"Search documents","description":"Search the current tenant’s indexed Knowledge documents.","permission":"knowledge.read","kind":"read","inputSchema":{"type":"object","properties":{"query":{"type":"string","minLength":1,"maxLength":200}},"required":["query"],"additionalProperties":false},"outputSchema":{"type":"object","properties":{"items":{"type":"array","maxItems":25,"items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":128},"title":{"type":"string","minLength":1,"maxLength":200},"version":{"type":"integer","minimum":1},"excerpt":{"type":"string","maxLength":512}},"required":["id","title","version","excerpt"],"additionalProperties":false}},"coverage":{"type":"string","enum":["INDEXED_DOCUMENTS_ONLY"]},"query":{"type":"string","minLength":1,"maxLength":200}},"required":["items","coverage"],"additionalProperties":false}},{"id":"knowledge.documents.get","version":1,"title":"Get a document","description":"Read a bounded tenant-owned Knowledge document projection.","permission":"knowledge.read","kind":"read","inputSchema":{"type":"object","properties":{"documentId":{"type":"string","minLength":1,"maxLength":128}},"required":["documentId"],"additionalProperties":false},"outputSchema":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":128},"title":{"type":"string","minLength":1,"maxLength":200},"version":{"type":"integer","minimum":1},"state":{"type":"string","enum":["PENDING","READY"]},"excerpt":{"type":"string","maxLength":4096},"truncated":{"type":"boolean"},"bodyDigest":{"type":"string","pattern":"^[a-f0-9]{64}$"}},"required":["id","title","version","state","excerpt","truncated","bodyDigest"],"additionalProperties":false}},{"id":"knowledge.documents.create","version":1,"title":"Create a document","description":"Create a tenant-owned Knowledge document and enqueue its index job.","permission":"knowledge.write","kind":"write","inputSchema":{"type":"object","properties":{"title":{"type":"string","minLength":1,"maxLength":200},"body":{"type":"string","minLength":1,"maxLength":64000}},"required":["title","body"],"additionalProperties":false},"outputSchema":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":128},"title":{"type":"string","minLength":1,"maxLength":200},"version":{"type":"integer","minimum":1},"state":{"type":"string","enum":["PENDING"]},"jobId":{"type":"string","minLength":1,"maxLength":128}},"required":["id","title","version","state","jobId"],"additionalProperties":false}}],"routes":[{"method":"GET","path":"/api/documents","permission":"knowledge.read","kind":"read"},{"method":"GET","path":"/api/documents/search","permission":"knowledge.read","kind":"read"},{"method":"POST","path":"/api/documents/answer","permission":"knowledge.read","kind":"read"},{"method":"POST","path":"/api/documents","permission":"knowledge.write","kind":"write"},{"method":"POST","path":"/api/documents/cancel-index","permission":"knowledge.write","kind":"write"}],"workspaces":[{"id":"knowledge.library","label":"Knowledge library","path":"/library","permission":"knowledge.read","export":"workspace"}],"uiContributions":[{"id":"knowledge.referenceSearch","permission":"knowledge.read","export":"referenceSearchPanel","label":"Reference search"}],"schema":{"current":1,"readMin":1,"readMax":1},"background":true,"studio":{"label":"Knowledge","summary":"Document library with local extractive answers grounded in indexed sources.","category":"knowledge","layers":["ui","backend","worker","ai","data"],"ui":{"routes":[{"path":"/library","workspace":"knowledge.library","label":"Knowledge library","nav":"Knowledge"}],"extensionPoints":["knowledge.document.actions"]},"backend":{"services":[{"id":"document-reader","contract":"knowledge.document.read.v1","visibility":"product"},{"id":"document-retriever","contract":"knowledge.document.retrieve.v1","visibility":"product"}],"jobs":[{"kind":"knowledge.index","permission":"knowledge.write"}]},"ai":{"pipelines":[{"id":"knowledge-rag","label":"Knowledge retrieval pipeline","input":"query","output":"grounded-context"},{"id":"knowledge-extractive-answer","label":"Local extractive answer","input":"question","output":"cited-source-excerpts"}],"models":[{"capability":"text.embedding","modality":"embedding","placement":"either","accelerator":"either"},{"capability":"text.generate","modality":"text","placement":"either","accelerator":"either"}]},"data":{"stores":[{"id":"knowledge-records","kind":"relational","ownership":"module"},{"id":"knowledge-vectors","kind":"vector","ownership":"module"}],"schemas":[{"id":"knowledge","version":1}]},"deployment":{"processes":[{"id":"knowledge-api","kind":"http"},{"id":"knowledge-worker","kind":"worker"}]}}},{"id":"service-desk","version":"0.2.1","abi":"quadbridge.module.v1","dependencies":[],"provides":["desk.requests.create.v1","desk.requests.create.v2"],"requires":[],"permissions":["desk.read","desk.create","desk.close","desk.receipts.read"],"routes":[{"method":"GET","path":"/api/requests","permission":"desk.read","kind":"read"},{"method":"POST","path":"/api/requests","permission":"desk.create","kind":"write"},{"method":"POST","path":"/api/requests/close","permission":"desk.close","kind":"write"},{"method":"POST","path":"/api/requests/commit","permission":"desk.create","kind":"write"},{"method":"GET","path":"/api/requests/receipt","permission":"desk.receipts.read","kind":"read"}],"workspaces":[{"id":"desk.requests","label":"Service requests","path":"/requests","permission":"desk.read","export":"workspace"},{"id":"service-desk.overview","label":"Request overview","path":"/request-overview","permission":"desk.read","export":"overviewWorkspace"}],"uiContributions":[{"id":"service-desk.recentRequests","permission":"desk.read","export":"recentRequestsPanel","label":"Recent requests"}],"schema":{"current":1,"readMin":1,"readMax":1},"background":false,"browserAssets":["ui/overview.css"],"studio":{"label":"Service Desk","summary":"Service-request UI and backend capability.","category":"operations","layers":["ui","backend","data"],"ui":{"routes":[{"path":"/requests","workspace":"desk.requests","label":"Service requests","nav":"Operations"},{"path":"/request-overview","workspace":"service-desk.overview","label":"Request overview","nav":"Operations"}]},"backend":{"services":[{"id":"request-writer-v2","contract":"desk.requests.create.v2","visibility":"product"}]},"data":{"stores":[{"id":"service-requests","kind":"relational","ownership":"module"}],"schemas":[{"id":"service-desk","version":1}]},"deployment":{"processes":[{"id":"service-desk-api","kind":"http"}]}}}],"products":[{"id":"combined","version":"0.2.3","platformAbi":"quadbridge.module.v1","title":"Operations + Knowledge","description":"Two domain families composed into one application.","layout":"sidebar","modules":[{"id":"service-desk","version":"0.2.1"},{"id":"knowledge","version":"0.2.3"},{"id":"handoff","version":"0.2.3"}],"bindings":[{"contract":"knowledge.document.read.v1","instanceId":"local-documents","implementation":"knowledge","scope":"application","consumer":"handoff","mode":"local"},{"contract":"desk.requests.create.v2","instanceId":"local-desk","implementation":"service-desk","scope":"application","consumer":"handoff","mode":"local"}],"wiring":"knowledge-to-desk"},{"id":"knowledge","version":"0.2.3","platformAbi":"quadbridge.module.v1","title":"Knowledge Library","description":"Documents, background indexing and connected-product action.","layout":"top","modules":[{"id":"knowledge","version":"0.2.3"},{"id":"handoff","version":"0.2.3"}],"bindings":[{"contract":"knowledge.document.read.v1","instanceId":"local-documents","implementation":"knowledge","scope":"application","consumer":"handoff","mode":"local"},{"contract":"desk.requests.create.v2","instanceId":"connected-desk","implementation":"configured-desk-http","scope":"application","consumer":"handoff","mode":"http"}],"wiring":"knowledge-to-desk"},{"id":"neutral","version":"0.2.0","platformAbi":"quadbridge.module.v1","title":"Neutral shell","description":"A runnable application with no business-domain modules.","layout":"sidebar","modules":[],"bindings":[]},{"id":"service-desk","version":"0.2.1","platformAbi":"quadbridge.module.v1","title":"Service Desk","description":"A small non-AI business product.","layout":"sidebar","modules":[{"id":"service-desk","version":"0.2.1"}],"bindings":[]}],"solutions":[{"id":"knowledge-to-desk","version":"0.2.0","source":"knowledge","destination":"service-desk","contract":"desk.requests.create.v2","mode":"http","tenantMap":{"org-a":"customer-a","org-b":"customer-b"},"credential":"runtime-generated service credential; not embedded in this definition","semantics":"Destination owns requests. Source owns the handoff record and retry identity. No distributed transaction.","studio":{"consumer":"handoff","label":"Knowledge to Service Desk","ports":[{"contract":"knowledge.document.read.v1","choices":[{"id":"local","label":"Knowledge in this application","binding":{"instanceId":"local-documents","implementation":"knowledge","scope":"application","mode":"local"}}]},{"contract":"desk.requests.create.v2","choices":[{"id":"local","label":"Service Desk in this application","binding":{"instanceId":"local-desk","implementation":"service-desk","scope":"application","mode":"local"},"prerequisites":["Uses the reviewed local-developer service identity; no production grants are changed."]},{"id":"connected","label":"A separately running Service Desk","binding":{"instanceId":"connected-desk","implementation":"configured-desk-http","scope":"application","mode":"http"},"prerequisites":["Requires an explicitly configured destination, tenant mapping and authorized service identity. The Studio does not provision another product automatically."]}]}]}}],"families":[{"schema":"quadbridge.product-family.v1","id":"service-operations","version":"1.0.0","title":"Service Operations","description":"Start with service requests, then add a shared library and reviewed document handoff when your work needs them.","requiredFeatureIds":["requests"],"defaultFeatureIds":["requests"],"features":[{"id":"requests","label":"Requests","description":"Create, track and close service requests.","moduleIds":["service-desk"]},{"id":"shared-library","label":"Shared library","description":"Add indexed reference documents for the service team.","moduleIds":["knowledge"],"requires":["requests"]},{"id":"document-handoff","label":"Document handoff","description":"Attach a reviewed local knowledge and request handoff to each request.","moduleIds":["handoff"],"requires":["shared-library"],"bindingChoices":{"handoff:knowledge.document.read.v1":"local","handoff:desk.requests.create.v2":"local"}}]}],"packages":[{"id":"ai-core","version":"0.3.0"},{"id":"backend-host","version":"0.2.0"},{"id":"client-core","version":"0.2.0"},{"id":"composition","version":"0.2.0"},{"id":"connections","version":"0.2.0"},{"id":"contracts","version":"0.2.0"},{"id":"control-plane","version":"0.3.0"},{"id":"local-access","version":"0.2.0"},{"id":"mobile-shell","version":"0.2.0"},{"id":"module-sdk","version":"0.3.0"},{"id":"sqlite","version":"0.2.0"},{"id":"studio-model","version":"0.3.0"},{"id":"web-shell","version":"0.2.0"},{"id":"worker-host","version":"0.2.0"}],"plans":{"combined":{"valid":true,"plan":{"product":{"id":"combined","version":"0.2.3","platformAbi":"quadbridge.module.v1","title":"Operations + Knowledge","description":"Two domain families composed into one application.","layout":"sidebar","modules":[{"id":"handoff","version":"0.2.3"},{"id":"knowledge","version":"0.2.3"},{"id":"service-desk","version":"0.2.1"}],"bindings":[{"contract":"desk.requests.create.v2","instanceId":"local-desk","implementation":"service-desk","scope":"application","consumer":"handoff","mode":"local"},{"contract":"knowledge.document.read.v1","instanceId":"local-documents","implementation":"knowledge","scope":"application","consumer":"handoff","mode":"local"}],"wiring":"knowledge-to-desk"},"modules":[{"id":"knowledge","version":"0.2.3","abi":"quadbridge.module.v1","dependencies":[],"provides":["knowledge.document.read.v1","knowledge.document.retrieve.v1"],"requires":[],"permissions":["knowledge.read","knowledge.write"],"operations":[{"id":"knowledge.documents.search","version":1,"title":"Search documents","description":"Search the current tenant’s indexed Knowledge documents.","permission":"knowledge.read","kind":"read","inputSchema":{"type":"object","properties":{"query":{"type":"string","minLength":1,"maxLength":200}},"required":["query"],"additionalProperties":false},"outputSchema":{"type":"object","properties":{"items":{"type":"array","maxItems":25,"items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":128},"title":{"type":"string","minLength":1,"maxLength":200},"version":{"type":"integer","minimum":1},"excerpt":{"type":"string","maxLength":512}},"required":["id","title","version","excerpt"],"additionalProperties":false}},"coverage":{"type":"string","enum":["INDEXED_DOCUMENTS_ONLY"]},"query":{"type":"string","minLength":1,"maxLength":200}},"required":["items","coverage"],"additionalProperties":false}},{"id":"knowledge.documents.get","version":1,"title":"Get a document","description":"Read a bounded tenant-owned Knowledge document projection.","permission":"knowledge.read","kind":"read","inputSchema":{"type":"object","properties":{"documentId":{"type":"string","minLength":1,"maxLength":128}},"required":["documentId"],"additionalProperties":false},"outputSchema":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":128},"title":{"type":"string","minLength":1,"maxLength":200},"version":{"type":"integer","minimum":1},"state":{"type":"string","enum":["PENDING","READY"]},"excerpt":{"type":"string","maxLength":4096},"truncated":{"type":"boolean"},"bodyDigest":{"type":"string","pattern":"^[a-f0-9]{64}$"}},"required":["id","title","version","state","excerpt","truncated","bodyDigest"],"additionalProperties":false}},{"id":"knowledge.documents.create","version":1,"title":"Create a document","description":"Create a tenant-owned Knowledge document and enqueue its index job.","permission":"knowledge.write","kind":"write","inputSchema":{"type":"object","properties":{"title":{"type":"string","minLength":1,"maxLength":200},"body":{"type":"string","minLength":1,"maxLength":64000}},"required":["title","body"],"additionalProperties":false},"outputSchema":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":128},"title":{"type":"string","minLength":1,"maxLength":200},"version":{"type":"integer","minimum":1},"state":{"type":"string","enum":["PENDING"]},"jobId":{"type":"string","minLength":1,"maxLength":128}},"required":["id","title","version","state","jobId"],"additionalProperties":false}}],"routes":[{"method":"GET","path":"/api/documents","permission":"knowledge.read","kind":"read"},{"method":"GET","path":"/api/documents/search","permission":"knowledge.read","kind":"read"},{"method":"POST","path":"/api/documents/answer","permission":"knowledge.read","kind":"read"},{"method":"POST","path":"/api/documents","permission":"knowledge.write","kind":"write"},{"method":"POST","path":"/api/documents/cancel-index","permission":"knowledge.write","kind":"write"}],"workspaces":[{"id":"knowledge.library","label":"Knowledge library","path":"/library","permission":"knowledge.read","export":"workspace"}],"uiContributions":[{"id":"knowledge.referenceSearch","permission":"knowledge.read","export":"referenceSearchPanel","label":"Reference search"}],"schema":{"current":1,"readMin":1,"readMax":1},"background":true,"studio":{"label":"Knowledge","summary":"Document library with local extractive answers grounded in indexed sources.","category":"knowledge","layers":["ui","backend","worker","ai","data"],"ui":{"routes":[{"path":"/library","workspace":"knowledge.library","label":"Knowledge library","nav":"Knowledge"}],"extensionPoints":["knowledge.document.actions"]},"backend":{"services":[{"id":"document-reader","contract":"knowledge.document.read.v1","visibility":"product"},{"id":"document-retriever","contract":"knowledge.document.retrieve.v1","visibility":"product"}],"jobs":[{"kind":"knowledge.index","permission":"knowledge.write"}]},"ai":{"pipelines":[{"id":"knowledge-rag","label":"Knowledge retrieval pipeline","input":"query","output":"grounded-context"},{"id":"knowledge-extractive-answer","label":"Local extractive answer","input":"question","output":"cited-source-excerpts"}],"models":[{"capability":"text.embedding","modality":"embedding","placement":"either","accelerator":"either"},{"capability":"text.generate","modality":"text","placement":"either","accelerator":"either"}]},"data":{"stores":[{"id":"knowledge-records","kind":"relational","ownership":"module"},{"id":"knowledge-vectors","kind":"vector","ownership":"module"}],"schemas":[{"id":"knowledge","version":1}]},"deployment":{"processes":[{"id":"knowledge-api","kind":"http"},{"id":"knowledge-worker","kind":"worker"}]}}},{"id":"service-desk","version":"0.2.1","abi":"quadbridge.module.v1","dependencies":[],"provides":["desk.requests.create.v1","desk.requests.create.v2"],"requires":[],"permissions":["desk.read","desk.create","desk.close","desk.receipts.read"],"routes":[{"method":"GET","path":"/api/requests","permission":"desk.read","kind":"read"},{"method":"POST","path":"/api/requests","permission":"desk.create","kind":"write"},{"method":"POST","path":"/api/requests/close","permission":"desk.close","kind":"write"},{"method":"POST","path":"/api/requests/commit","permission":"desk.create","kind":"write"},{"method":"GET","path":"/api/requests/receipt","permission":"desk.receipts.read","kind":"read"}],"workspaces":[{"id":"desk.requests","label":"Service requests","path":"/requests","permission":"desk.read","export":"workspace"},{"id":"service-desk.overview","label":"Request overview","path":"/request-overview","permission":"desk.read","export":"overviewWorkspace"}],"uiContributions":[{"id":"service-desk.recentRequests","permission":"desk.read","export":"recentRequestsPanel","label":"Recent requests"}],"schema":{"current":1,"readMin":1,"readMax":1},"background":false,"browserAssets":["ui/overview.css"],"studio":{"label":"Service Desk","summary":"Service-request UI and backend capability.","category":"operations","layers":["ui","backend","data"],"ui":{"routes":[{"path":"/requests","workspace":"desk.requests","label":"Service requests","nav":"Operations"},{"path":"/request-overview","workspace":"service-desk.overview","label":"Request overview","nav":"Operations"}]},"backend":{"services":[{"id":"request-writer-v2","contract":"desk.requests.create.v2","visibility":"product"}]},"data":{"stores":[{"id":"service-requests","kind":"relational","ownership":"module"}],"schemas":[{"id":"service-desk","version":1}]},"deployment":{"processes":[{"id":"service-desk-api","kind":"http"}]}}},{"id":"handoff","version":"0.2.3","abi":"quadbridge.module.v1","dependencies":[{"id":"knowledge","version":"0.2.3"}],"provides":[],"requires":["knowledge.document.read.v1","desk.requests.create.v2"],"permissions":["handoff.read","handoff.create","handoff.reconcile"],"routes":[{"method":"GET","path":"/api/handoffs","permission":"handoff.read","kind":"read"},{"method":"POST","path":"/api/handoffs","permission":"handoff.create","kind":"write"},{"method":"POST","path":"/api/handoffs/reconcile","permission":"handoff.reconcile","kind":"write"},{"method":"GET","path":"/api/handoffs/options","permission":"handoff.read","kind":"read"}],"workspaces":[{"id":"handoff.requests","label":"Cross-product handoffs","path":"/handoffs","permission":"handoff.read","export":"workspace"}],"schema":{"current":2,"readMin":2,"readMax":2},"background":true,"studio":{"label":"Handoff","summary":"Cross-product workflow and receipt reconciliation.","category":"integration","layers":["ui","backend","worker","integration","data"],"ui":{"routes":[{"path":"/handoffs","workspace":"handoff.requests","label":"Cross-product handoffs","nav":"Integrations"}]},"backend":{"events":[{"id":"handoff.committed","direction":"publish","schema":"handoff.receipt.v1"}]},"data":{"stores":[{"id":"handoff-records","kind":"relational","ownership":"module"}],"schemas":[{"id":"handoff","version":2}]},"deployment":{"processes":[{"id":"handoff-api","kind":"http"},{"id":"handoff-worker","kind":"worker"}]}}}],"bindings":[{"contract":"desk.requests.create.v2","instanceId":"local-desk","implementation":"service-desk","scope":"application","consumer":"handoff","mode":"local"},{"contract":"knowledge.document.read.v1","instanceId":"local-documents","implementation":"knowledge","scope":"application","consumer":"handoff","mode":"local"}],"permissions":["desk.close","desk.create","desk.read","desk.receipts.read","handoff.create","handoff.read","handoff.reconcile","knowledge.read","knowledge.write"],"requiresWorker":true}},"knowledge":{"valid":true,"plan":{"product":{"id":"knowledge","version":"0.2.3","platformAbi":"quadbridge.module.v1","title":"Knowledge Library","description":"Documents, background indexing and connected-product action.","layout":"top","modules":[{"id":"handoff","version":"0.2.3"},{"id":"knowledge","version":"0.2.3"}],"bindings":[{"contract":"desk.requests.create.v2","instanceId":"connected-desk","implementation":"configured-desk-http","scope":"application","consumer":"handoff","mode":"http"},{"contract":"knowledge.document.read.v1","instanceId":"local-documents","implementation":"knowledge","scope":"application","consumer":"handoff","mode":"local"}],"wiring":"knowledge-to-desk"},"modules":[{"id":"knowledge","version":"0.2.3","abi":"quadbridge.module.v1","dependencies":[],"provides":["knowledge.document.read.v1","knowledge.document.retrieve.v1"],"requires":[],"permissions":["knowledge.read","knowledge.write"],"operations":[{"id":"knowledge.documents.search","version":1,"title":"Search documents","description":"Search the current tenant’s indexed Knowledge documents.","permission":"knowledge.read","kind":"read","inputSchema":{"type":"object","properties":{"query":{"type":"string","minLength":1,"maxLength":200}},"required":["query"],"additionalProperties":false},"outputSchema":{"type":"object","properties":{"items":{"type":"array","maxItems":25,"items":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":128},"title":{"type":"string","minLength":1,"maxLength":200},"version":{"type":"integer","minimum":1},"excerpt":{"type":"string","maxLength":512}},"required":["id","title","version","excerpt"],"additionalProperties":false}},"coverage":{"type":"string","enum":["INDEXED_DOCUMENTS_ONLY"]},"query":{"type":"string","minLength":1,"maxLength":200}},"required":["items","coverage"],"additionalProperties":false}},{"id":"knowledge.documents.get","version":1,"title":"Get a document","description":"Read a bounded tenant-owned Knowledge document projection.","permission":"knowledge.read","kind":"read","inputSchema":{"type":"object","properties":{"documentId":{"type":"string","minLength":1,"maxLength":128}},"required":["documentId"],"additionalProperties":false},"outputSchema":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":128},"title":{"type":"string","minLength":1,"maxLength":200},"version":{"type":"integer","minimum":1},"state":{"type":"string","enum":["PENDING","READY"]},"excerpt":{"type":"string","maxLength":4096},"truncated":{"type":"boolean"},"bodyDigest":{"type":"string","pattern":"^[a-f0-9]{64}$"}},"required":["id","title","version","state","excerpt","truncated","bodyDigest"],"additionalProperties":false}},{"id":"knowledge.documents.create","version":1,"title":"Create a document","description":"Create a tenant-owned Knowledge document and enqueue its index job.","permission":"knowledge.write","kind":"write","inputSchema":{"type":"object","properties":{"title":{"type":"string","minLength":1,"maxLength":200},"body":{"type":"string","minLength":1,"maxLength":64000}},"required":["title","body"],"additionalProperties":false},"outputSchema":{"type":"object","properties":{"id":{"type":"string","minLength":1,"maxLength":128},"title":{"type":"string","minLength":1,"maxLength":200},"version":{"type":"integer","minimum":1},"state":{"type":"string","enum":["PENDING"]},"jobId":{"type":"string","minLength":1,"maxLength":128}},"required":["id","title","version","state","jobId"],"additionalProperties":false}}],"routes":[{"method":"GET","path":"/api/documents","permission":"knowledge.read","kind":"read"},{"method":"GET","path":"/api/documents/search","permission":"knowledge.read","kind":"read"},{"method":"POST","path":"/api/documents/answer","permission":"knowledge.read","kind":"read"},{"method":"POST","path":"/api/documents","permission":"knowledge.write","kind":"write"},{"method":"POST","path":"/api/documents/cancel-index","permission":"knowledge.write","kind":"write"}],"workspaces":[{"id":"knowledge.library","label":"Knowledge library","path":"/library","permission":"knowledge.read","export":"workspace"}],"uiContributions":[{"id":"knowledge.referenceSearch","permission":"knowledge.read","export":"referenceSearchPanel","label":"Reference search"}],"schema":{"current":1,"readMin":1,"readMax":1},"background":true,"studio":{"label":"Knowledge","summary":"Document library with local extractive answers grounded in indexed sources.","category":"knowledge","layers":["ui","backend","worker","ai","data"],"ui":{"routes":[{"path":"/library","workspace":"knowledge.library","label":"Knowledge library","nav":"Knowledge"}],"extensionPoints":["knowledge.document.actions"]},"backend":{"services":[{"id":"document-reader","contract":"knowledge.document.read.v1","visibility":"product"},{"id":"document-retriever","contract":"knowledge.document.retrieve.v1","visibility":"product"}],"jobs":[{"kind":"knowledge.index","permission":"knowledge.write"}]},"ai":{"pipelines":[{"id":"knowledge-rag","label":"Knowledge retrieval pipeline","input":"query","output":"grounded-context"},{"id":"knowledge-extractive-answer","label":"Local extractive answer","input":"question","output":"cited-source-excerpts"}],"models":[{"capability":"text.embedding","modality":"embedding","placement":"either","accelerator":"either"},{"capability":"text.generate","modality":"text","placement":"either","accelerator":"either"}]},"data":{"stores":[{"id":"knowledge-records","kind":"relational","ownership":"module"},{"id":"knowledge-vectors","kind":"vector","ownership":"module"}],"schemas":[{"id":"knowledge","version":1}]},"deployment":{"processes":[{"id":"knowledge-api","kind":"http"},{"id":"knowledge-worker","kind":"worker"}]}}},{"id":"handoff","version":"0.2.3","abi":"quadbridge.module.v1","dependencies":[{"id":"knowledge","version":"0.2.3"}],"provides":[],"requires":["knowledge.document.read.v1","desk.requests.create.v2"],"permissions":["handoff.read","handoff.create","handoff.reconcile"],"routes":[{"method":"GET","path":"/api/handoffs","permission":"handoff.read","kind":"read"},{"method":"POST","path":"/api/handoffs","permission":"handoff.create","kind":"write"},{"method":"POST","path":"/api/handoffs/reconcile","permission":"handoff.reconcile","kind":"write"},{"method":"GET","path":"/api/handoffs/options","permission":"handoff.read","kind":"read"}],"workspaces":[{"id":"handoff.requests","label":"Cross-product handoffs","path":"/handoffs","permission":"handoff.read","export":"workspace"}],"schema":{"current":2,"readMin":2,"readMax":2},"background":true,"studio":{"label":"Handoff","summary":"Cross-product workflow and receipt reconciliation.","category":"integration","layers":["ui","backend","worker","integration","data"],"ui":{"routes":[{"path":"/handoffs","workspace":"handoff.requests","label":"Cross-product handoffs","nav":"Integrations"}]},"backend":{"events":[{"id":"handoff.committed","direction":"publish","schema":"handoff.receipt.v1"}]},"data":{"stores":[{"id":"handoff-records","kind":"relational","ownership":"module"}],"schemas":[{"id":"handoff","version":2}]},"deployment":{"processes":[{"id":"handoff-api","kind":"http"},{"id":"handoff-worker","kind":"worker"}]}}}],"bindings":[{"contract":"desk.requests.create.v2","instanceId":"connected-desk","implementation":"configured-desk-http","scope":"application","consumer":"handoff","mode":"http"},{"contract":"knowledge.document.read.v1","instanceId":"local-documents","implementation":"knowledge","scope":"application","consumer":"handoff","mode":"local"}],"permissions":["handoff.create","handoff.read","handoff.reconcile","knowledge.read","knowledge.write"],"requiresWorker":true}},"neutral":{"valid":true,"plan":{"product":{"id":"neutral","version":"0.2.0","platformAbi":"quadbridge.module.v1","title":"Neutral shell","description":"A runnable application with no business-domain modules.","layout":"sidebar","modules":[],"bindings":[]},"modules":[],"bindings":[],"permissions":[],"requiresWorker":false}},"service-desk":{"valid":true,"plan":{"product":{"id":"service-desk","version":"0.2.1","platformAbi":"quadbridge.module.v1","title":"Service Desk","description":"A small non-AI business product.","layout":"sidebar","modules":[{"id":"service-desk","version":"0.2.1"}],"bindings":[]},"modules":[{"id":"service-desk","version":"0.2.1","abi":"quadbridge.module.v1","dependencies":[],"provides":["desk.requests.create.v1","desk.requests.create.v2"],"requires":[],"permissions":["desk.read","desk.create","desk.close","desk.receipts.read"],"routes":[{"method":"GET","path":"/api/requests","permission":"desk.read","kind":"read"},{"method":"POST","path":"/api/requests","permission":"desk.create","kind":"write"},{"method":"POST","path":"/api/requests/close","permission":"desk.close","kind":"write"},{"method":"POST","path":"/api/requests/commit","permission":"desk.create","kind":"write"},{"method":"GET","path":"/api/requests/receipt","permission":"desk.receipts.read","kind":"read"}],"workspaces":[{"id":"desk.requests","label":"Service requests","path":"/requests","permission":"desk.read","export":"workspace"},{"id":"service-desk.overview","label":"Request overview","path":"/request-overview","permission":"desk.read","export":"overviewWorkspace"}],"uiContributions":[{"id":"service-desk.recentRequests","permission":"desk.read","export":"recentRequestsPanel","label":"Recent requests"}],"schema":{"current":1,"readMin":1,"readMax":1},"background":false,"browserAssets":["ui/overview.css"],"studio":{"label":"Service Desk","summary":"Service-request UI and backend capability.","category":"operations","layers":["ui","backend","data"],"ui":{"routes":[{"path":"/requests","workspace":"desk.requests","label":"Service requests","nav":"Operations"},{"path":"/request-overview","workspace":"service-desk.overview","label":"Request overview","nav":"Operations"}]},"backend":{"services":[{"id":"request-writer-v2","contract":"desk.requests.create.v2","visibility":"product"}]},"data":{"stores":[{"id":"service-requests","kind":"relational","ownership":"module"}],"schemas":[{"id":"service-desk","version":1}]},"deployment":{"processes":[{"id":"service-desk-api","kind":"http"}]}}}],"bindings":[],"permissions":["desk.close","desk.create","desk.read","desk.receipts.read"],"requiresWorker":false}}},"sourceVersion":"0.2.0","studioVersion":"1.0"};</script><script>globalThis.QBContracts=(()=>{
 
-/** Product-neutral public contracts. No Camera, Document, Work or other domain entity. */
 const PLATFORM_ABI = 'quadbridge.module.v1';
 class PlatformError extends Error {
     code;
@@ -70,8 +69,394 @@ function canonical(value) {
 
 return {PLATFORM_ABI,PlatformError,canonical,object};
 })();
+globalThis.QBOperations=(()=>{
+const {PlatformError,canonical}=globalThis.QBContracts;
+
+const OPERATION_LIMITS = Object.freeze({
+    schemaBytes: 16 * 1024,
+    inputBytes: 512 * 1024,
+    outputBytes: 128 * 1024,
+    depth: 8,
+    objectProperties: 32,
+    arrayItems: 1024,
+    nodes: 4096,
+    patternLength: 128
+});
+const schemaKeys = new Set(['type', 'properties', 'required', 'additionalProperties', 'minLength', 'maxLength', 'pattern', 'minimum', 'maximum', 'items', 'maxItems', 'enum']);
+const objectPrototype = Object.prototype;
+function invalid(message) {
+    throw new PlatformError('INVALID', message);
+}
+function isRecord(value) {
+    if (!value || typeof value !== 'object' || Array.isArray(value))
+        return false;
+    const proto = Object.getPrototypeOf(value);
+    return proto === objectPrototype || proto === null;
+}
+function ownRecord(value, label, allowed) {
+    if (!isRecord(value))
+        invalid(`Invalid operation ${label}`);
+    if (Object.keys(value).some(key => !allowed.includes(key)))
+        invalid(`Unsupported operation ${label} field`);
+    return value;
+}
+function boundedText(value, label, max) {
+    if (typeof value !== 'string' || !value.trim() || value.length > max || value.includes('\0'))
+        invalid(`Invalid operation ${label}`);
+    return value.trim();
+}
+function safeJson(value, label, maxBytes) {
+    let nodes = 0;
+    const ancestors = new Set();
+    const inspect = (item, depth) => {
+        nodes++;
+        if (nodes > OPERATION_LIMITS.nodes || depth > OPERATION_LIMITS.depth)
+            invalid(`Operation ${label} is too complex`);
+        if (item === null || typeof item === 'string' || typeof item === 'boolean')
+            return;
+        if (typeof item === 'number' && Number.isFinite(item))
+            return;
+        if (typeof item !== 'object')
+            invalid(`Operation ${label} is not JSON`);
+        if (ancestors.has(item))
+            invalid(`Operation ${label} contains a cycle`);
+        ancestors.add(item);
+        try {
+            if (Array.isArray(item)) {
+                if (item.length > OPERATION_LIMITS.arrayItems)
+                    invalid(`Operation ${label} array is too large`);
+                for (const child of item)
+                    inspect(child, depth + 1);
+            }
+            else {
+                if (!isRecord(item))
+                    invalid(`Operation ${label} must use plain objects`);
+                const keys = Object.keys(item);
+                if (keys.length > OPERATION_LIMITS.objectProperties)
+                    invalid(`Operation ${label} object is too large`);
+                for (const key of keys)
+                    inspect(item[key], depth + 1);
+            }
+        }
+        finally {
+            ancestors.delete(item);
+        }
+    };
+    inspect(value, 0);
+    let text;
+    try {
+        text = JSON.stringify(value);
+    }
+    catch {
+        invalid(`Operation ${label} is not serializable`);
+    }
+    if (text === undefined || new TextEncoder().encode(text).byteLength > maxBytes)
+        invalid(`Operation ${label} exceeds its byte limit`);
+    try {
+        return JSON.parse(text);
+    }
+    catch {
+        return invalid(`Operation ${label} is not serializable`);
+    }
+}
+function assertSchema(schema, depth = 0) {
+    if (depth > OPERATION_LIMITS.depth)
+        invalid('Operation schema is too deep');
+    const fields = ownRecord(schema, 'schema', [...schemaKeys]);
+    if (Object.keys(fields).length === 0)
+        invalid('Operation schema must constrain a value');
+    const type = fields.type;
+    if (typeof type !== 'string' || !['object', 'string', 'integer', 'boolean', 'array'].includes(type))
+        invalid('Unsupported operation schema type');
+    if (fields.enum !== undefined) {
+        if (!Array.isArray(fields.enum) || fields.enum.length === 0 || fields.enum.length > 32)
+            invalid('Invalid operation enum');
+        const values = fields.enum.map(value => canonical(safeJson(value, 'enum value', OPERATION_LIMITS.schemaBytes)));
+        if (new Set(values).size !== values.length)
+            invalid('Duplicate operation enum value');
+    }
+    if (type === 'object') {
+        const properties = fields.properties;
+        if (!isRecord(properties) || Object.keys(properties).length > OPERATION_LIMITS.objectProperties || fields.additionalProperties !== false)
+            invalid('Invalid operation object schema');
+        for (const [key, child] of Object.entries(properties)) {
+            if (!key || key.length > 128 || key.includes('\0'))
+                invalid('Invalid operation property name');
+            assertSchema(child, depth + 1);
+        }
+        if (fields.required !== undefined) {
+            if (!Array.isArray(fields.required) || fields.required.length > Object.keys(properties).length || fields.required.some(item => typeof item !== 'string' || !Object.hasOwn(properties, item)) || new Set(fields.required).size !== fields.required.length)
+                invalid('Invalid operation required list');
+        }
+    }
+    if (type === 'array') {
+        if (fields.items === undefined || !Number.isSafeInteger(fields.maxItems) || fields.maxItems < 0 || fields.maxItems > OPERATION_LIMITS.arrayItems)
+            invalid('Invalid operation array schema');
+        assertSchema(fields.items, depth + 1);
+    }
+    if (type === 'string') {
+        for (const key of ['minLength', 'maxLength']) {
+            const bound = fields[key];
+            if (bound !== undefined && (!Number.isSafeInteger(bound) || bound < 0 || bound > OPERATION_LIMITS.inputBytes))
+                invalid('Invalid operation string bound');
+        }
+        if (fields.minLength !== undefined && fields.maxLength !== undefined && fields.minLength > fields.maxLength)
+            invalid('Invalid operation string bounds');
+        if (fields.pattern !== undefined) {
+            if (typeof fields.pattern !== 'string' || !fields.pattern || fields.pattern.length > OPERATION_LIMITS.patternLength || /[()|]/.test(fields.pattern) || /\\[1-9]/.test(fields.pattern))
+                invalid('Unsupported operation pattern');
+            try {
+                new RegExp(fields.pattern, 'u');
+            }
+            catch {
+                invalid('Invalid operation pattern');
+            }
+        }
+    }
+    if (type === 'integer') {
+        for (const key of ['minimum', 'maximum'])
+            if (fields[key] !== undefined && !Number.isSafeInteger(fields[key]))
+                invalid('Invalid operation integer bound');
+        if (fields.minimum !== undefined && fields.maximum !== undefined && fields.minimum > fields.maximum)
+            invalid('Invalid operation integer bounds');
+    }
+    for (const key of schemaKeys) {
+        const applicable = type === 'object' ? ['type', 'properties', 'required', 'additionalProperties', 'enum']
+            : type === 'array' ? ['type', 'items', 'maxItems', 'enum']
+                : type === 'string' ? ['type', 'minLength', 'maxLength', 'pattern', 'enum']
+                    : type === 'integer' ? ['type', 'minimum', 'maximum', 'enum'] : ['type', 'enum'];
+        if (fields[key] !== undefined && !applicable.includes(key))
+            invalid(`Operation schema keyword ${key} does not apply to ${String(type)}`);
+    }
+    const cloned = safeJson(fields, 'schema', OPERATION_LIMITS.schemaBytes);
+    return deepFreeze(cloned);
+}
+function deepFreeze(value) {
+    if (value && typeof value === 'object' && !Object.isFrozen(value)) {
+        for (const child of Object.values(value))
+            deepFreeze(child);
+        Object.freeze(value);
+    }
+    return value;
+}
+function validateOperationDescriptor(value, moduleId, permissions) {
+    const record = ownRecord(value, 'descriptor', ['id', 'version', 'title', 'description', 'permission', 'kind', 'inputSchema', 'outputSchema']);
+    const operationId = boundedText(record.id, 'id', 160);
+    if (!/^[a-z][a-z0-9-]*(?:\.[a-z][a-z0-9-]*){1,5}$/.test(operationId) || (moduleId && !operationId.startsWith(`${moduleId}.`)))
+        invalid('Invalid or unowned operation id');
+    if (!Number.isSafeInteger(record.version) || record.version < 1 || record.version > 65535)
+        invalid('Invalid operation version');
+    const title = boundedText(record.title, 'title', 120);
+    const description = boundedText(record.description, 'description', 512);
+    const permission = boundedText(record.permission, 'permission', 128);
+    if (!/^[a-z][a-z0-9_.-]{2,127}$/.test(permission) || (permissions && !permissions.includes(permission)))
+        invalid('Undeclared operation permission');
+    if (record.kind !== 'read' && record.kind !== 'write')
+        invalid('Invalid operation kind');
+    const kind = record.kind;
+    const descriptor = {
+        id: operationId,
+        version: record.version,
+        title,
+        description,
+        permission,
+        kind,
+        inputSchema: assertSchema(record.inputSchema),
+        outputSchema: assertSchema(record.outputSchema)
+    };
+    const encoded = JSON.stringify(descriptor);
+    if (new TextEncoder().encode(encoded).byteLength > OPERATION_LIMITS.schemaBytes * 2)
+        invalid('Operation descriptor is too large');
+    return deepFreeze(descriptor);
+}
+function matches(schema, value, depth = 0) {
+    if (depth > OPERATION_LIMITS.depth)
+        return false;
+    const fields = schema;
+    if (Array.isArray(fields.enum) && !fields.enum.some(item => canonical(item) === canonical(value)))
+        return false;
+    switch (fields.type) {
+        case 'object': {
+            if (!isRecord(value))
+                return false;
+            const properties = fields.properties;
+            const keys = Object.keys(value);
+            if (keys.length > OPERATION_LIMITS.objectProperties || keys.some(key => !Object.hasOwn(properties, key)))
+                return false;
+            const required = fields.required;
+            if (required?.some(key => !Object.hasOwn(value, key)))
+                return false;
+            return keys.every(key => matches(properties[key], value[key], depth + 1));
+        }
+        case 'string':
+            return typeof value === 'string' && (fields.minLength === undefined || value.length >= fields.minLength) &&
+                (fields.maxLength === undefined || value.length <= fields.maxLength) &&
+                (fields.pattern === undefined || new RegExp(fields.pattern, 'u').test(value));
+        case 'integer':
+            return typeof value === 'number' && Number.isSafeInteger(value) &&
+                (fields.minimum === undefined || value >= fields.minimum) &&
+                (fields.maximum === undefined || value <= fields.maximum);
+        case 'boolean': return typeof value === 'boolean';
+        case 'array':
+            return Array.isArray(value) && value.length <= fields.maxItems && value.every(item => matches(fields.items, item, depth + 1));
+        default: return false;
+    }
+}
+function validateOperationValue(value, schema, direction) {
+    const maxBytes = direction === 'input' ? OPERATION_LIMITS.inputBytes : OPERATION_LIMITS.outputBytes;
+    const safe = safeJson(value, direction, maxBytes);
+    if (!matches(schema, safe))
+        invalid(`Operation ${direction} does not match its declared schema`);
+    return deepFreeze(safe);
+}
+function sameOperationDescriptor(left, right) {
+    try {
+        return canonical(validateOperationDescriptor(left)) === canonical(validateOperationDescriptor(right));
+    }
+    catch {
+        return false;
+    }
+}
+
+return {OPERATION_LIMITS,validateOperationDescriptor,validateOperationValue,sameOperationDescriptor};
+})();
+globalThis.QBUiContributions=(()=>{
+const {PlatformError}=globalThis.QBContracts;
+
+const UI_CONTRIBUTION_SLOTS = ['workspace.aside', 'workspace.footer'];
+function fail(message) { throw new PlatformError('INVALID', message); }
+const identifier = /^[a-z][a-z0-9.-]{1,127}$/;
+const qualifiedIdentity = /^[a-z][A-Za-z0-9.-]{1,127}$/;
+const permissionName = /^[a-z][a-z0-9_.-]{2,127}$/;
+const exportName = /^[A-Za-z_$][A-Za-z0-9_$]{0,127}$/;
+function closedRecord(value, allowed, label) {
+    if (!value || typeof value !== 'object' || Array.isArray(value) ||
+        (Object.getPrototypeOf(value) !== Object.prototype && Object.getPrototypeOf(value) !== null))
+        fail(`Invalid ${label}`);
+    const record = value;
+    if (Object.keys(record).some(key => !allowed.includes(key)))
+        fail(`Unknown ${label} field`);
+    return record;
+}
+/** Validates the small closed descriptor shape at every source/catalogue/host boundary. */
+function validateUiContributionDescriptors(module) {
+    const entries = module.uiContributions;
+    if (entries === undefined)
+        return Object.freeze([]);
+    if (!Array.isArray(entries) || entries.length > 16 || typeof module.id !== 'string' || !identifier.test(module.id) ||
+        !Array.isArray(module.permissions) || module.permissions.some(permission => typeof permission !== 'string'))
+        fail('Invalid module UI contributions');
+    const ids = new Set(), exports = new Set();
+    const result = [];
+    for (const raw of entries) {
+        const value = closedRecord(raw, ['id', 'permission', 'export', 'label'], 'UI contribution descriptor');
+        const { id, permission, export: exportNameValue, label } = value;
+        if (typeof id !== 'string' || !qualifiedIdentity.test(id) || !id.startsWith(`${module.id}.`) ||
+            typeof permission !== 'string' || !permissionName.test(permission) || !module.permissions.includes(permission) ||
+            typeof exportNameValue !== 'string' || !exportName.test(exportNameValue) || exportNameValue === 'default' ||
+            typeof label !== 'string' || !label.trim() || label.length > 120 || label.includes('\0'))
+            fail('Invalid UI contribution descriptor');
+        if (ids.has(id) || exports.has(exportNameValue))
+            fail('Duplicate UI contribution identity or export');
+        ids.add(id);
+        exports.add(exportNameValue);
+        result.push(Object.freeze({ id, permission, export: exportNameValue, label }));
+    }
+    return Object.freeze(result);
+}
+/** Resolves only the two reviewed slots against selected workspaces and owner declarations. */
+function resolveUiContributionBindings(plan, input, sourceModules = plan.modules) {
+    const mapping = closedRecord(input, ['schema', 'bindings'], 'UI contribution mapping');
+    const entries = mapping.bindings;
+    if (mapping.schema !== 'quadbridge.ui-slots.v1' || !Array.isArray(entries) || entries.length > 32)
+        fail('Invalid UI contribution mapping');
+    const modules = new Map(plan.modules.map(module => [module.id, module]));
+    const sourceById = new Map(sourceModules.map(module => [module.id, module]));
+    if (sourceById.size !== sourceModules.length)
+        fail('Duplicate source module for UI contribution mapping');
+    const workspaces = new Map();
+    for (const module of plan.modules)
+        for (const workspace of module.workspaces) {
+            if (workspaces.has(workspace.id))
+                fail(`Duplicate selected workspace ${workspace.id}`);
+            workspaces.set(workspace.id, module.id);
+        }
+    const sourceWorkspaces = new Map();
+    for (const module of sourceModules)
+        for (const workspace of module.workspaces) {
+            if (sourceWorkspaces.has(workspace.id))
+                fail(`Duplicate source workspace ${workspace.id}`);
+            sourceWorkspaces.set(workspace.id, module.id);
+        }
+    const descriptors = new Map();
+    for (const module of sourceModules)
+        for (const descriptor of validateUiContributionDescriptors(module)) {
+            if (descriptors.has(descriptor.id))
+                fail(`Duplicate source UI contribution ${descriptor.id}`);
+            descriptors.set(descriptor.id, { moduleId: module.id, descriptor });
+        }
+    const identities = new Set(), counts = new Map();
+    const bindings = [], omitted = [];
+    for (const raw of entries) {
+        const value = closedRecord(raw, ['workspaceId', 'slot', 'contributionId', 'optional'], 'UI contribution binding');
+        const { workspaceId, slot, contributionId, optional } = value;
+        if (typeof workspaceId !== 'string' || !identifier.test(workspaceId) ||
+            typeof slot !== 'string' || !UI_CONTRIBUTION_SLOTS.includes(slot) ||
+            typeof contributionId !== 'string' || !qualifiedIdentity.test(contributionId) ||
+            (optional !== undefined && typeof optional !== 'boolean'))
+            fail('Invalid UI contribution binding');
+        const entry = { workspaceId, slot: slot, contributionId };
+        const identity = `${workspaceId}\0${slot}\0${contributionId}`;
+        if (identities.has(identity))
+            fail('Duplicate UI contribution binding');
+        identities.add(identity);
+        const workspaceModuleId = sourceWorkspaces.get(workspaceId);
+        const target = descriptors.get(contributionId);
+        // Ownership comes from the declaring module, never from parsing either id.
+        // Workspace ids are product-neutral and may be namespaced independently of
+        // their owning module (for example service-desk owns `desk.requests`).
+        if (!workspaceModuleId || !target)
+            fail('UI contribution mapping names an unknown source declaration');
+        const contributionOwner = target.moduleId;
+        const workspaceModule = modules.get(workspaceModuleId);
+        const ownerModule = modules.get(contributionOwner);
+        if (!workspaceModule) {
+            if (optional === true) {
+                omitted.push({ ...entry, reason: 'WORKSPACE_MODULE_NOT_SELECTED' });
+                continue;
+            }
+            fail(`UI contribution workspace module ${workspaceModuleId} is not selected`);
+        }
+        if (!ownerModule) {
+            if (optional === true) {
+                omitted.push({ ...entry, reason: 'CONTRIBUTION_MODULE_NOT_SELECTED' });
+                continue;
+            }
+            fail(`UI contribution owner ${contributionOwner} is not selected`);
+        }
+        if (!workspaces.has(workspaceId))
+            fail(`UI contribution workspace ${workspaceId} is not declared by the selected plan`);
+        const selectedDescriptor = validateUiContributionDescriptors(ownerModule).find(item => item.id === contributionId);
+        if (target.moduleId !== contributionOwner || !selectedDescriptor ||
+            selectedDescriptor.permission !== target.descriptor.permission ||
+            selectedDescriptor.export !== target.descriptor.export ||
+            selectedDescriptor.label !== target.descriptor.label)
+            fail(`UI contribution ${contributionId} is not declared by its selected owner`);
+        const count = (counts.get(workspaceId) ?? 0) + 1;
+        if (count > 8)
+            fail(`Too many UI contributions for workspace ${workspaceId}`);
+        counts.set(workspaceId, count);
+        bindings.push(Object.freeze(entry));
+    }
+    return Object.freeze({ bindings: Object.freeze(bindings), omitted: Object.freeze(omitted.map(item => Object.freeze(item))) });
+}
+
+return {UI_CONTRIBUTION_SLOTS,validateUiContributionDescriptors,resolveUiContributionBindings};
+})();
 globalThis.QBComposition=(()=>{
-const {PLATFORM_ABI,PlatformError,canonical}=globalThis.QBContracts;
+const {PLATFORM_ABI,PlatformError,canonical}=globalThis.QBContracts;const {validateOperationDescriptor}=globalThis.QBOperations;const {validateUiContributionDescriptors}=globalThis.QBUiContributions;
+
+
 
 const fail = (s) => { throw new PlatformError('INCOMPATIBLE', s); };
 const unique = (xs, label) => {
@@ -127,10 +512,20 @@ function resolve(product, catalog) {
     for (const key of [...selected.keys()].sort())
         visit(key);
     unique(ordered.flatMap(m => m.routes.map(r => `${r.method} ${r.path}`)), 'route');
+    const operationIds = new Set();
+    for (const module of ordered)
+        for (const operation of module.operations ?? []) {
+            const descriptor = validateOperationDescriptor(operation, module.id, module.permissions);
+            const identity = `${descriptor.id}@${descriptor.version}`;
+            if (operationIds.has(identity))
+                fail(`Duplicate operation ${identity}`);
+            operationIds.add(identity);
+        }
     unique(ordered.flatMap(m => m.workspaces.map(w => w.id)), 'workspace');
     unique(ordered.flatMap(m => m.workspaces.map(w => w.path)), 'workspace path');
     unique(ordered.flatMap(m => m.permissions), 'permission owner');
     for (const m of ordered) {
+        validateUiContributionDescriptors(m);
         for (const r of m.routes) {
             if (['/api/session', '/api/logout', '/api/bootstrap', '/api/health', '/api/modules/mode'].includes(r.path))
                 fail('Route collides with host-owned operation');
@@ -378,6 +773,147 @@ function serializeProductDefinition(value, catalog, solutions) {
 
 return {composeDraft,validateProduct,validProductId,inspectProductDefinition,parseProductDefinition,previewProductDefinition,serializeProductDefinition,STUDIO_PRODUCT_TEXT_LIMIT};
 })();
+globalThis.QBFamilies=(()=>{
+const {resolve}=globalThis.QBComposition;const {composeDraft,validateProduct}=globalThis.QBComposer;
+
+
+function fail(code, message) { throw Object.assign(new Error(message), { code }); }
+const safeId = (value) => typeof value === 'string' && /^[a-z][a-z0-9-]{1,47}$/.test(value);
+function record(value) {
+    return value !== null && typeof value === 'object' && !Array.isArray(value) &&
+        (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null);
+}
+function stringList(value, label, limit) {
+    if (!Array.isArray(value) || value.length > limit || value.some(item => !safeId(item)) || new Set(value).size !== value.length)
+        fail('FAMILY_INVALID', `${label} must be a bounded list of unique IDs.`);
+    return value.slice();
+}
+/** Validate the reviewed family data as bounded inert data before using it. */
+function validateProductFamily(value) {
+    if (!record(value))
+        fail('FAMILY_INVALID', 'Reviewed family data has an invalid bounded shape.');
+    const source = value;
+    const schema = source.schema, id = source.id, version = source.version, title = source.title, description = source.description, rawFeatures = source.features;
+    if (Object.keys(source).some(key => !['schema', 'id', 'version', 'title', 'description', 'requiredFeatureIds', 'defaultFeatureIds', 'features'].includes(key)) ||
+        schema !== 'quadbridge.product-family.v1' || !safeId(id) || typeof version !== 'string' || !/^\d{1,6}\.\d{1,6}\.\d{1,6}$/.test(version) ||
+        typeof title !== 'string' || !title.trim() || title.length > 80 || typeof description !== 'string' || description.length > 1000 ||
+        !Array.isArray(rawFeatures) || rawFeatures.length < 1 || rawFeatures.length > 16)
+        fail('FAMILY_INVALID', 'Reviewed family data has an invalid bounded shape.');
+    const features = [];
+    const ids = new Set();
+    for (const item of rawFeatures) {
+        if (!record(item))
+            fail('FAMILY_INVALID', 'Family features must have unique IDs and bounded text.');
+        const feature = item, id = feature.id, label = feature.label, featureDescription = feature.description;
+        if (Object.keys(feature).some(key => !['id', 'label', 'description', 'moduleIds', 'requires', 'bindingChoices'].includes(key)) ||
+            !safeId(id) || ids.has(id) || typeof label !== 'string' || !label.trim() || label.length > 80 ||
+            typeof featureDescription !== 'string' || featureDescription.length > 500)
+            fail('FAMILY_INVALID', 'Family features must have unique IDs and bounded text.');
+        ids.add(id);
+        const moduleIds = stringList(feature.moduleIds, 'Feature modules', 16);
+        const requires = feature.requires === undefined ? [] : stringList(feature.requires, 'Feature requirements', 16);
+        let bindingChoices;
+        if (feature.bindingChoices !== undefined) {
+            if (!record(feature.bindingChoices) || Object.keys(feature.bindingChoices).length > 16)
+                fail('FAMILY_INVALID', 'Feature binding choices must be a bounded object.');
+            const rawChoices = feature.bindingChoices;
+            bindingChoices = {};
+            for (const [key, choice] of Object.entries(rawChoices)) {
+                if (!/^[a-z][a-z0-9-]{1,47}:[a-z][a-z0-9.-]{0,63}$/.test(key) || !safeId(choice))
+                    fail('FAMILY_INVALID', 'Feature binding choices must use reviewed port and choice IDs.');
+                bindingChoices[key] = choice;
+            }
+        }
+        features.push({ id, label, description: featureDescription, moduleIds, ...(requires.length ? { requires } : {}), ...(bindingChoices ? { bindingChoices } : {}) });
+    }
+    const requiredFeatureIds = stringList(source.requiredFeatureIds, 'Required features', 16);
+    const defaultFeatureIds = stringList(source.defaultFeatureIds, 'Default features', 16);
+    for (const id of [...requiredFeatureIds, ...defaultFeatureIds])
+        if (!ids.has(id))
+            fail('FAMILY_INVALID', `Family references unknown feature ${id}.`);
+    for (const feature of features)
+        for (const id of feature.requires ?? [])
+            if (!ids.has(id))
+                fail('FAMILY_INVALID', `Feature ${feature.id} references unknown prerequisite ${id}.`);
+    return { schema: schema, id: id, version: version, title: title, description: description,
+        requiredFeatureIds, defaultFeatureIds, features };
+}
+/** Derive an ordinary immutable ProductDefinition; module versions and adapters come only from source. */
+function deriveFamily(familyInput, selectionInput, identityInput, catalogue, solutions) {
+    const family = validateProductFamily(familyInput);
+    if (!record(identityInput))
+        fail('FAMILY_INVALID_IDENTITY', 'Provide a valid exact product identity, version and layout.');
+    const identity = identityInput, identityId = identity.id, identityTitle = identity.title, identityVersion = identity.version, identityDescription = identity.description, identityLayout = identity.layout;
+    if (Object.keys(identity).some(key => !['id', 'title', 'version', 'description', 'layout'].includes(key)) ||
+        !safeId(identityId) || typeof identityTitle !== 'string' || !identityTitle.trim() || identityTitle.length > 80 ||
+        typeof identityVersion !== 'string' || !/^\d{1,6}\.\d{1,6}\.\d{1,6}$/.test(identityVersion) ||
+        typeof identityDescription !== 'string' || identityDescription.length > 2000 ||
+        (identityLayout !== 'sidebar' && identityLayout !== 'top'))
+        fail('FAMILY_INVALID_IDENTITY', 'Provide a valid exact product identity, version and layout.');
+    const selection = [...stringList(selectionInput, 'Feature selection', 16)].sort();
+    const featureById = new Map(family.features.map(feature => [feature.id, feature]));
+    for (const id of selection)
+        if (!featureById.has(id))
+            fail('FAMILY_UNKNOWN_FEATURE', `Unknown family feature: ${id}.`);
+    for (const id of family.requiredFeatureIds)
+        if (!selection.includes(id))
+            fail('FAMILY_REQUIREMENT_UNMET', `Select required feature: ${featureById.get(id).label}.`);
+    const selected = new Set(selection);
+    const moduleIds = new Set();
+    const choices = {};
+    const reasons = selection.map(id => {
+        const feature = featureById.get(id);
+        for (const prerequisite of feature.requires ?? [])
+            if (!selected.has(prerequisite))
+                fail('FAMILY_REQUIREMENT_UNMET', `${feature.label} requires ${featureById.get(prerequisite).label}.`);
+        for (const moduleId of feature.moduleIds)
+            moduleIds.add(moduleId);
+        for (const [key, choiceId] of Object.entries(feature.bindingChoices ?? {})) {
+            if (Object.hasOwn(choices, key) && choices[key] !== choiceId)
+                fail('FAMILY_BINDING_UNAVAILABLE', `Selected features require conflicting choices for ${key}.`);
+            choices[key] = choiceId;
+        }
+        return { featureId: id, label: feature.label, reason: feature.description, moduleIds: [...feature.moduleIds].sort() };
+    });
+    const selectedFeatureModules = new Set([...selected].flatMap(id => featureById.get(id).moduleIds));
+    for (const feature of family.features)
+        if (!selected.has(feature.id)) {
+            for (const moduleId of feature.moduleIds)
+                if (!selectedFeatureModules.has(moduleId) && moduleIds.has(moduleId))
+                    fail('FAMILY_IMPLEMENTATION_UNAVAILABLE', `${feature.label} is not selected, so ${moduleId} cannot be included.`);
+        }
+    for (const moduleId of moduleIds)
+        if (!catalogue.some(module => module.id === moduleId))
+            fail('FAMILY_IMPLEMENTATION_UNAVAILABLE', `The reviewed source catalogue does not provide ${moduleId}.`);
+    let composed;
+    try {
+        composed = composeDraft({ id: identityId, title: identityTitle, version: identityVersion,
+            layout: identityLayout, selected: [...moduleIds].sort(), ...(Object.keys(choices).length ? { choices } : {}) }, catalogue, solutions, identityVersion);
+    }
+    catch (error) {
+        fail('FAMILY_BINDING_UNAVAILABLE', error instanceof Error ? error.message.slice(0, 240) : 'The selected family has no reviewed implementation.');
+    }
+    for (const requirement of composed.requirements) {
+        const key = `${requirement.consumer}:${requirement.contract}`;
+        if (!Object.hasOwn(choices, key) || choices[key] !== requirement.choice)
+            fail('FAMILY_BINDING_UNAVAILABLE', `Family data must explicitly select a reviewed choice for ${key}.`);
+    }
+    for (const module of composed.plan.modules)
+        for (const feature of family.features) {
+            if (!selected.has(feature.id) && !selectedFeatureModules.has(module.id) && feature.moduleIds.includes(module.id))
+                fail('FAMILY_IMPLEMENTATION_UNAVAILABLE', `${feature.label} is not selected, so ${module.id} cannot be included.`);
+        }
+    const product = validateProduct({ ...composed.product, description: identityDescription }, catalogue, solutions);
+    const plan = resolve(product, catalogue);
+    const moduleVersions = plan.modules.map(module => ({ id: module.id, version: module.version })).sort((a, b) => a.id.localeCompare(b.id));
+    const bindingChoices = Object.entries(choices).sort(([a], [b]) => a.localeCompare(b)).map(([key, choiceId]) => ({ key, choiceId }));
+    const derivation = { schema: 'quadbridge.family-derivation.v1', familyId: family.id, familyVersion: family.version,
+        selection, moduleVersions, bindingChoices, reasons };
+    return { product, plan, reasons, technicalExplanations: composed.explanation, requirements: composed.requirements, derivation };
+}
+
+return {validateProductFamily,deriveFamily};
+})();
 </script><script>/* Offline visual explorer. Sample data is in-memory only. This is not an admin API. */
 (() => {
 'use strict';
@@ -449,6 +985,9 @@ const state={route:'overview',library:'domains',activeNode:'web-shell',filter:'a
  {id:'REQ-102',title:'Confirm workspace access',details:'Check the requested permissions with the tenant administrator.',state:'OPEN',source:'Direct request'},
  {id:'REQ-103',title:'Update onboarding reference',details:'The approved reference was updated and reviewed.',state:'CLOSED',source:'Direct request'}
  ]};
+const firstFamily=(data.families||[])[0];
+state.familyBuilder={familyId:firstFamily?.id||'',selection:[...(firstFamily?.defaultFeatureIds||[])],id:'my-service-product',title:firstFamily?.title||'My service product',version:'1.0.0',description:'',layout:'sidebar'};
+state.familyResult=null;state.familyError='';
 let toastTimer,flowTimer,lastFocus;
 const root=document.getElementById('studio');
 const navs=[['overview','grid','Overview'],['composer','layers','Product composer'],['modules','box','Module library'],['architecture','network','Architecture'],['build','play','Build & run'],['desk','desk','Service Desk'],['knowledge','book','Knowledge'],['handoff','link','Cross-product']];
@@ -465,11 +1004,12 @@ function home(){
 }
 function builderProduct(){return compose(state.builder.id,state.builder.title,state.builder.selected,state.builder.layout);}
 function setDefinitionText(source){state.definitionGeneration++;state.definitionText=source;state.definitionInspection=null;state.definitionDiagnostics=[];try{if(new TextEncoder().encode(source).length>globalThis.QBComposer.STUDIO_PRODUCT_TEXT_LIMIT)throw Error('Product definition exceeds the 64 KiB limit.');JSON.parse(source);}catch(e){state.definitionDiagnostics=[e.message||'Product definition is not valid JSON.'];}}
+function familyBuilderView(){const family=(data.families||[]).find(item=>item.id===state.familyBuilder.familyId);if(!family)return '';const result=state.familyResult;return `<section class="panel family-builder"><div class="section-title"><h3>${esc(family.title)}</h3><span class="status">Reviewed product family</span></div><p class="help">${esc(family.description)} Offline preview only. Source manifests supply exact module versions; this page cannot save, build or launch.</p><label class="form-label">Family<select class="input" data-family-id>${(data.families||[]).map(item=>`<option value="${esc(item.id)}" ${item.id===family.id?'selected':''}>${esc(item.title)}</option>`).join('')}</select></label><div class="inline-actions"><label class="form-label">Product ID<input class="input" data-family-field="id" value="${esc(state.familyBuilder.id)}" maxlength="48"></label><label class="form-label">Title<input class="input" data-family-field="title" value="${esc(state.familyBuilder.title)}" maxlength="80"></label><label class="form-label">Version<input class="input" data-family-field="version" value="${esc(state.familyBuilder.version)}" maxlength="20"></label><label class="form-label">Description<input class="input" data-family-field="description" value="${esc(state.familyBuilder.description)}" maxlength="2000"></label></div><div class="choice-list">${family.features.map(feature=>`<label class="choice"><input type="checkbox" data-family-feature="${esc(feature.id)}" ${state.familyBuilder.selection.includes(feature.id)?'checked':''} ${family.requiredFeatureIds.includes(feature.id)?'disabled':''}><span><strong>${esc(feature.label)}</strong><small>${esc(feature.description)}</small></span></label>`).join('')}</div><div class="actions">${btn('Preview family composition','family-derive','primary')}${result?btn('Load into complete editor','family-load-editor'):''}${result?btn('Export family definition','family-export'):''}</div>${state.familyError?`<p class="composition-error" role="status">${esc(state.familyError)}</p>`:''}${result?`<div class="family-result"><p>${esc(result.product.id)}@${esc(result.product.version)} · ${result.plan.requiresWorker?'separate worker required':'no worker required'}</p><div class="state-list">${result.product.modules.map(module=>`<div class="state-item">${esc(module.id)}@${esc(module.version)}</div>`).join('')}${result.product.bindings.map(binding=>`<div class="state-item">${esc(binding.contract)} · ${esc(binding.mode)} · ${esc(binding.instanceId)}</div>`).join('')}</div><p class="help">${result.reasons.map(reason=>esc(reason.label)).join(' · ')} · Preview only; not saved or running.</p></div>`:''}</section>`;}
 function definitionEditor(){const saved=(data.products||[]).map((p,i)=>`<option value="${i}">${esc(p.id)}@${esc(p.version)}</option>`).join('');const result=state.definitionInspection,valid=!!result?.valid;const messages=(state.definitionDiagnostics.length?state.definitionDiagnostics:result?.diagnostics||[]).map(x=>`<p class="composition-error">${esc(x)}</p>`).join('');const graph=valid&&result.graph?`<div class="state-list"><strong>Resolved source graph</strong>${result.graph.nodes.map(n=>`<div class="state-item">${esc(n.id)}@${esc(n.version)}${n.external?' · reviewed external adapter':''}</div>`).join('')}${result.graph.edges.map(e=>`<div class="state-item">${esc(e.from)} → ${esc(e.to)} · ${esc(e.label)}${e.instanceId?` · ${esc(e.instanceId)} / ${esc(e.scope)}`:''}</div>`).join('')}</div>`:'';return `<section class="panel definition-editor" aria-labelledby="definition-editor-title"><h3 id="definition-editor-title">Complete product definition</h3><p class="help">The full JSON is authoritative. Import and edit bounded data; preview derives only source-manifest and reviewed-solution choices. This panel never calls the network.</p><div class="inline-actions"><label class="form-label">Load saved definition <select class="input" data-definition-saved><option value="">Choose exact source version</option>${saved}</select></label>${btn('Load','definition-load') }<label class="btn">Import product.json<input type="file" accept="application/json,.json" data-definition-import></label></div><label class="form-label" for="definition-json">ProductDefinition JSON</label><textarea id="definition-json" data-definition-json rows="16" maxlength="65536" spellcheck="false">${esc(state.definitionText)}</textarea>${messages}<div class="actions">${btn('Preview definition','definition-preview','primary')}${btn('Export exact definition','definition-export','',!valid?'disabled':'')}${state.paired?btn('Save exact definition to local source','definition-save-source','',!valid?'disabled':''):''}</div>${graph}<p class="small-muted">Preview is a construction plan, not a launch or deployment.</p></section>`;}
 function composer(){let result,error;try{result=draftResult();}catch(e){error=e.message;}
  const prod=result?.product,needs=prod?.modules.map(m=>m.id)||state.builder.selected;
  const portControls=(result?.requirements||[]).map(r=>{const profile=data.solutions.find(s=>s.studio?.consumer===r.consumer),port=profile.studio.ports.find(p=>p.contract===r.contract);return `<label class="form-label" for="binding-${esc(r.consumer+'-'+port.contract.replace(/\./g,'-'))}">${esc(r.contract)}</label><select class="input" id="binding-${esc(r.consumer+'-'+port.contract.replace(/\./g,'-'))}" data-binding="${esc(r.consumer+':'+r.contract)}">${port.choices.map(c=>`<option value="${esc(c.id)}" ${c.id===r.choice?'selected':''}>${esc(c.label)}</option>`).join('')}</select><p class="help">${r.prerequisites.map(esc).join(' ')}</p>`;}).join('');
- return head('Compose your next product.','Choose source modules and reviewed connections. The same composition resolver runs here and in the build.',btn(`${icon('download',14)} Export product.json`,'export','',error?'disabled':'')+btn(`${icon('play',14)} Save to local source`,'save-source','primary',error?'disabled':''))+`<div class="composer-grid"><section class="panel"><h3>01 / Product identity</h3><label class="form-label" for="product-title">Product name</label><input class="input" id="product-title" data-field="title" value="${esc(state.builder.title)}" maxlength="80"><label class="form-label" for="product-id">Product ID</label><input class="input" id="product-id" data-field="id" value="${esc(state.builder.id)}" maxlength="48"><p class="help">A new source directory, not a customer ID. Existing products are never overwritten.</p><label class="form-label" for="product-layout">Shell layout</label><select class="input" id="product-layout" data-field="layout"><option value="sidebar" ${state.builder.layout==='sidebar'?'selected':''}>Sidebar navigation</option><option value="top" ${state.builder.layout==='top'?'selected':''}>Top navigation</option></select><h3 style="margin-top:26px">02 / Domain modules</h3>${Object.entries(moduleMeta).map(([id,m])=>`<label class="choice"><input type="checkbox" data-module="${esc(id)}" ${needs.includes(id)?'checked':''} ${needs.includes(id)&&!state.builder.selected.includes(id)?'disabled':''}><span class="module-icon">${icon(m.icon,17)}</span><span><strong>${esc(m.title)}</strong><small>${esc(m.tags.join(' · '))} · ${esc(m.version)}</small></span>${needs.includes(id)&&!state.builder.selected.includes(id)?pill('Required','blue'):''}</label>`).join('')}<p class="help">Dependencies are added to the resolved composition. A required provider cannot be silently removed.</p>${portControls?`<h3 style="margin-top:26px">03 / Public connections</h3>${portControls}`:''}${btn('Save preview draft','save-draft','wide')}
+ return familyBuilderView()+head('Compose your next product.','Choose source modules and reviewed connections. The same composition resolver runs here and in the build.',btn(`${icon('download',14)} Export product.json`,'export','',error?'disabled':'')+btn(`${icon('play',14)} Save to local source`,'save-source','primary',error?'disabled':''))+`<div class="composer-grid"><section class="panel"><h3>01 / Product identity</h3><label class="form-label" for="product-title">Product name</label><input class="input" id="product-title" data-field="title" value="${esc(state.builder.title)}" maxlength="80"><label class="form-label" for="product-id">Product ID</label><input class="input" id="product-id" data-field="id" value="${esc(state.builder.id)}" maxlength="48"><p class="help">A new source directory, not a customer ID. Existing products are never overwritten.</p><label class="form-label" for="product-layout">Shell layout</label><select class="input" id="product-layout" data-field="layout"><option value="sidebar" ${state.builder.layout==='sidebar'?'selected':''}>Sidebar navigation</option><option value="top" ${state.builder.layout==='top'?'selected':''}>Top navigation</option></select><h3 style="margin-top:26px">02 / Domain modules</h3>${Object.entries(moduleMeta).map(([id,m])=>`<label class="choice"><input type="checkbox" data-module="${esc(id)}" ${needs.includes(id)?'checked':''} ${needs.includes(id)&&!state.builder.selected.includes(id)?'disabled':''}><span class="module-icon">${icon(m.icon,17)}</span><span><strong>${esc(m.title)}</strong><small>${esc(m.tags.join(' · '))} · ${esc(m.version)}</small></span>${needs.includes(id)&&!state.builder.selected.includes(id)?pill('Required','blue'):''}</label>`).join('')}<p class="help">Dependencies are added to the resolved composition. A required provider cannot be silently removed.</p>${portControls?`<h3 style="margin-top:26px">03 / Public connections</h3>${portControls}`:''}${btn('Save preview draft','save-draft','wide')}
   </section><section><div class="panel"><h3>Resolved composition</h3><p>A validated definition is not a running application.</p><div id="composition-error" class="composition-error" role="status">${error?esc(error):''}</div><div class="builder-surface" style="margin-top:17px"><div class="mini-built-app" ${state.builder.layout==='top'?'style="flex-direction:column"':''}><div class="built-side" ${state.builder.layout==='top'?'style="width:100%;border-right:0;border-bottom:1px solid var(--line)"':''}><strong>${esc(state.builder.title)}</strong>${needs.map(id=>`<span>${esc(moduleMeta[id]?.title||id)}</span>`).join('')||'<span>Neutral shell</span>'}</div><div class="built-content">${pill(error?'Needs attention':'Resolver passed',error?'amber':'green')}<h3>${needs.length?'Your workspaces mount here.':'Start without a domain.'}</h3><p>Identity stays in the shell.<br>Records stay with their domain owners.</p><div class="stack-bars"><span>${result?.plan.modules.reduce((n,m)=>n+m.workspaces.length,0)||0} workspaces</span>${result?.plan.requiresWorker?'<span>Separate worker</span>':''}</div></div></div></div><div class="state-list">${(result?.explanation||[]).map(e=>`<div class="state-item"><strong>${esc(moduleMeta[e.moduleId]?.title||e.moduleId)}</strong><p>${esc(e.reason)}</p></div>`).join('')}</div><div class="diagram-note">${prod?.modules.length||0} modules · ${prod?.bindings.length||0} public bindings · ${globalThis.QB_STUDIO_MODE?'Paired local builder required to save/build/run.':'Offline preview. Export a definition or open the local Studio.'}</div></div><details class="panel" style="margin-top:18px"><summary>Generated product definition starter</summary><pre class="code-panel">${esc(JSON.stringify(prod||{},null,2))}</pre><div class="actions">${btn('Load starter into complete editor','definition-starter')}</div></details></section></div>${definitionEditor()}`;
 }
 function modules(){const domain=state.library==='domains';return head('A library of reusable building blocks.','Select domain features for a product. Keep common mechanisms in the maintained foundation.')+`<div class="section-title"><div class="segmented">${btn('Domain modules','library:domains',domain?'selected':'')}${btn('Foundation packages','library:packages',!domain?'selected':'')}</div><p>${domain?data.modules.length+' registered source modules':data.packages.length+' framework packages'} · no future capability placeholders</p></div><div class="module-grid">${Object.entries(domain?moduleMeta:packageMeta).map(([id,m])=>`<article class="module-card"><div class="module-icon" ${m.tone==='purple'?'style="background:#f2eef8;color:#8c6cb0"':''}>${icon(m.icon,21)}</div><h3>${esc(m.title)}</h3><p>${esc(m.description)}</p><div class="inline-actions">${pill(domain?'Domain-owned':'Framework package',domain?'blue':'green')}${pill(domain?m.version:data.packages.find(p=>p.id===id)?.version||data.sourceVersion)}</div><div class="code-path">${esc(domain?m.path:`packages/${id}/`)}</div><div style="margin-top:15px">${btn(`Inspect ${icon('arrow',13)}`,`inspect:${domain?'module:':''}${id}`,'tiny')}</div></article>`).join('')}</div>`;}
@@ -513,6 +1053,14 @@ function download(name,text,type='application/json'){const url=URL.createObjectU
 function viewRecord(kind,id){const row=(kind==='request'?state.requests:state.docs).find(x=>x.id===id);if(!row)return;openModal(row.title,`${pill('Sample data · in-memory only',kind==='document'?'purple':'blue')}<p style="margin:19px 0;white-space:pre-wrap">${esc(row.details||row.body)}</p><div class="code-path">${esc(row.id)}</div><div class="actions">${kind==='request'&&row.state==='OPEN'?btn('Close sample request',`close-request:${id}`,'primary'):kind==='document'?btn('Explore a cross-product handoff','view-flow','primary'):btn('Close','close')}</div>`);}
 function nextFlow(lost=false){if(state.flowStep===0){state.flowStep=1;state.flowKey=uid('sample-command');}else if(state.flowStep===1){state.flowStep=2;state.flowUncertain=lost;if(!state.flowCommitted){state.flowCommitted=true;state.flowRecord=uid('SAMPLE-REQ');state.requests.unshift({id:state.flowRecord,title:'Review linked knowledge procedure',details:'Created by the visual handoff simulation. This is not a server record.',state:'OPEN',source:'Preview handoff'});}}render();}
 document.addEventListener('click',e=>{const action=e.target.closest('[data-action]')?.dataset.action;if(!action)return;const [key,...args]=action.split(':');const arg=args.join(':');
+ if(key==='family-derive'){
+  const family=(data.families||[]).find(item=>item.id===state.familyBuilder.familyId);
+  try{if(!family)throw Error('Choose a reviewed product family.');state.familyResult=globalThis.QBFamilies.deriveFamily(family,state.familyBuilder.selection,{id:state.familyBuilder.id,title:state.familyBuilder.title,version:state.familyBuilder.version,description:state.familyBuilder.description,layout:state.familyBuilder.layout},data.modules,data.solutions||[]);state.familyError='';}
+  catch(error){state.familyResult=null;state.familyError=error instanceof Error?error.message:'Family composition is unavailable.';}
+  return render();
+ }
+ if(key==='family-load-editor'){if(!state.familyResult)return;setDefinitionText(JSON.stringify(state.familyResult.product,null,2)+'\n');render();return;}
+ if(key==='family-export'){if(!state.familyResult)return;const product=state.familyResult.product;download(`${product.id}.product.json`,JSON.stringify(product,null,2)+'\n');toast('Product definition exported. No application was saved or started.');return;}
  if(key==='product')return productModal(arg);
  if(key==='arch-product'){closeModal();state.archProduct=arg;return go('architecture');}
  if(key==='refresh-studio'){if(!state.paired)return runModal();void refreshStudio().catch(reportError);return;}
@@ -556,6 +1104,8 @@ document.addEventListener('click',e=>{const action=e.target.closest('[data-actio
  if(key==='reset-flow'){state.flowStep=0;state.flowUncertain=false;state.flowCommitted=false;state.flowKey=null;state.flowRecord=null;render();return;}
 });
 document.addEventListener('submit',e=>{if(e.target.id==='pair-studio'){e.preventDefault();const form=new FormData(e.target);void studioApi('/session','POST',{code:String(form.get('code'))}).then(async()=>{state.paired=true;closeModal();await refreshStudio();go('build');}).catch(reportError);return;}if(e.target.id==='sample-request'){e.preventDefault();const form=new FormData(e.target);state.requests.unshift({id:uid('SAMPLE-REQ'),title:String(form.get('title')).trim(),details:String(form.get('details')).trim(),state:'OPEN',source:'Preview form'});closeModal();render();toast('Sample request added to this page.');}if(e.target.id==='sample-document'){e.preventDefault();const form=new FormData(e.target);state.docs.unshift({id:uid('SAMPLE-DOC'),title:String(form.get('title')).trim(),body:String(form.get('body')).trim(),kind:'Sample text',state:'READY'});closeModal();render();toast('Sample text added. No server indexing was performed.');}});
+document.addEventListener('change',e=>{const el=e.target;if(el?.matches?.('[data-family-id]')){const previous=(data.families||[]).find(item=>item.id===state.familyBuilder.familyId);const next=(data.families||[]).find(item=>item.id===el.value);if(!next)return;state.familyBuilder.familyId=next.id;state.familyBuilder.selection=[...(next.defaultFeatureIds||[])];if(state.familyBuilder.title===previous?.title)state.familyBuilder.title=next.title;state.familyResult=null;state.familyError='';return render();}if(el?.matches?.('[data-family-feature]')){state.familyBuilder.selection=[...document.querySelectorAll('.family-builder [data-family-feature]:checked')].map(item=>item.dataset.familyFeature);state.familyResult=null;state.familyError='';return render();}});
+document.addEventListener('input',e=>{const el=e.target;if(!el?.matches?.('[data-family-field]'))return;const field=el.dataset.familyField;if(!['id','title','version','description'].includes(field))return;state.familyBuilder[field]=el.value;state.familyResult=null;state.familyError='';const panel=el.closest('.family-builder');panel?.querySelector('.family-result')?.remove();panel?.querySelector('[data-action="family-load-editor"]')?.remove();panel?.querySelector('[data-action="family-export"]')?.remove();panel?.querySelector('.composition-error[role="status"]')?.remove();});
 document.addEventListener('change',e=>{const el=e.target;if(el.dataset.archProduct!==undefined){state.archProduct=el.value;return render();}if(el.dataset.buildProduct!==undefined){state.buildProduct=el.value;return render();}if(el.dataset.binding){state.builder.choices[el.dataset.binding]=el.value;return render();}if(el.dataset.field){state.builder[el.dataset.field]=el.value;if(el.dataset.field==='layout')render();else updateBuilderText();}if(el.dataset.module){const id=el.dataset.module;const chosen=new Set(state.builder.selected);if(el.checked)chosen.add(id);else chosen.delete(id);state.builder.selected=[...chosen];state.builder.choices={};render();}});
 document.addEventListener('change',e=>{const el=e.target;if(el.matches?.('[data-definition-import]')){const file=el.files?.[0];el.value='';if(!file)return;const generation=++state.definitionGeneration;state.definitionInspection=null;state.definitionDiagnostics=[];render();if(file.size>globalThis.QBComposer.STUDIO_PRODUCT_TEXT_LIMIT){state.definitionDiagnostics=['Product JSON must be at most 64 KiB.'];render();return;}void file.text().then(text=>{if(generation!==state.definitionGeneration)return;setDefinitionText(text);render();}).catch(()=>{if(generation===state.definitionGeneration){state.definitionInspection=null;state.definitionDiagnostics=['The selected product file could not be read.'];render();}});return;}if(el.matches?.('[data-definition-saved]'))state.definitionSavedIndex=el.value;});
 function updateBuilderText(){const title=document.querySelector('.built-side strong');if(title)title.textContent=state.builder.title;let product,error;try{product=builderProduct();}catch(e){error=e.message;}const code=document.querySelector('.composer-grid .code-panel');if(code)code.textContent=error||JSON.stringify(product,null,2);const err=document.getElementById('composition-error');if(err)err.textContent=error||'';for(const button of document.querySelectorAll('[data-action="export"],[data-action="save-source"]'))button.disabled=!!error;}

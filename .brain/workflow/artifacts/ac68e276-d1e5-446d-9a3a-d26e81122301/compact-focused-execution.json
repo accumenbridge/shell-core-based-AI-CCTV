@@ -1,0 +1,30 @@
+{
+  "kind": "focused",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "--test",
+    "--test-concurrency=1",
+    "tests/shell-regressions.test.mjs",
+    "tests/mobile-shell.test.mjs",
+    "tests/mobile-assembly.test.mjs",
+    "tests/frontend-assembly.test.mjs",
+    "tests/workspace-closure.test.mjs",
+    "tests/factory-lifecycle.test.mjs",
+    "tests/control-plane-build-host.test.mjs"
+  ],
+  "startedAt": "2026-10-02T01:58:32.468Z",
+  "finishedAt": "2026-10-02T01:58:56.655Z",
+  "exitCode": 1,
+  "signal": null,
+  "candidateBefore": "ab130eefa5344b4e4684dc6cbbb431abc1f10a310f3ca43d3072089a700e47ba",
+  "candidateAfter": "ab130eefa5344b4e4684dc6cbbb431abc1f10a310f3ca43d3072089a700e47ba",
+  "sourceUnchanged": true,
+  "counts": {
+    "tests": 45,
+    "passed": 44,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

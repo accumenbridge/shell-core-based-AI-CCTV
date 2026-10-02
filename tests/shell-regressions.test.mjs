@@ -139,3 +139,60 @@ test('R01: stale workspace notifications cannot overwrite current UI', () => har
     assert.match(env.root.textContent, /new/);
     assert.doesNotMatch(env.root.textContent, /old secret/);
 }));
+
+test('fixed UI contribution uses its declaring module read API and is disposed with the workspace scope', () => harness(async (env, start) => {
+    const b = boot(), contexts = [], disposed = [];
+    b.permissions.push('knowledge.read');
+    b.modules = [{ id: 'service-desk', version: '0.2.1', mode: 'enabled' }, { id: 'knowledge', version: '0.2.3', mode: 'enabled' }];
+    b.workspaces = [{ id: 'desk.requests', label: 'Service requests', path: '/requests', moduleId: 'service-desk', export: 'workspace' }];
+    b.operations = [
+        { method: 'GET', path: '/api/requests', moduleId: 'service-desk' },
+        { method: 'GET', path: '/api/documents/search', moduleId: 'knowledge' }
+    ];
+    b.uiContributions = [
+        { id: 'knowledge.referenceSearch', permission: 'knowledge.read', export: 'referenceSearchPanel', label: 'Reference search', moduleId: 'knowledge' },
+        { id: 'knowledge.referenceSummary', permission: 'knowledge.read', export: 'referenceSummaryPanel', label: 'Reference summary', moduleId: 'knowledge' }
+    ];
+    const calls = [];
+    globalThis.fetch = async (path, options = {}) => {
+        const tenant = new Headers(options.headers).get('X-QB-Tenant') ?? 'tenant-a';
+        if (path === '/api/bootstrap') return json({ ...b, scope: { ...b.scope, tenantId: tenant } });
+        calls.push({ path, method: options.method ?? 'GET', tenant });
+        return json({ items: [] });
+    };
+    start({
+        uiBindings: [
+            { workspaceId: 'desk.requests', slot: 'workspace.aside', contributionId: 'knowledge.referenceSearch' },
+            { workspaceId: 'desk.requests', slot: 'workspace.aside', contributionId: 'knowledge.referenceSummary' }
+        ],
+        loaders: {
+            'service-desk': async () => ({ workspace: { mount() {} } }),
+            knowledge: async () => ({
+                referenceSearchPanel: { mount(ctx) {
+                    contexts.push(ctx);
+                    ctx.root.append(new Node('reference-search-panel'));
+                    void ctx.api.get('/api/documents/search?q=needle', ctx.signal);
+                    return () => disposed.push(ctx.scope.tenantId);
+                } },
+                referenceSummaryPanel: { mount() { throw new Error('isolated sibling failure'); } }
+            })
+        }
+    });
+    await flush();
+    assert.equal(contexts.length, 1);
+    assert.equal('post' in contexts[0].api, false);
+    assert.deepEqual(calls, [{ path: '/api/documents/search?q=needle', method: 'GET', tenant: 'tenant-a' }]);
+    assert.ok(env.all().some(node => node.className.includes('workspace-contribution-slot') && !node.hidden));
+    assert.ok(env.all().some(node => node.tag === 'reference-search-panel'), 'a failing sibling cannot erase a mounted contribution');
+    assert.ok(env.root.textContent.includes('Reference summary is unavailable.'));
+
+    const prior = contexts[0];
+    const tenant = env.all().find(node => node.tag === 'select');
+    tenant.value = 'tenant-b';
+    tenant.emit('change');
+    await flush();
+    assert.equal(prior.signal.aborted, true);
+    assert.deepEqual(disposed, ['tenant-a']);
+    await assert.rejects(prior.api.get('/api/documents/search?q=late'), error => error.name === 'AbortError');
+    assert.equal(contexts.length, 2);
+}));

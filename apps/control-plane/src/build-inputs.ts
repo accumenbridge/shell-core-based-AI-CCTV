@@ -3,7 +3,7 @@ import { copyFile, lstat, mkdir, readFile, readdir } from 'node:fs/promises';
 import { existsSync, lstatSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 
-const ROOTS = new Set(['apps','modules','packages','products','solutions','tools','profiles','templates','visual']);
+const ROOTS = new Set(['apps','families','modules','packages','products','solutions','tools','profiles','templates','visual']);
 const ROOT_FILES = new Set(['package.json','package-lock.json','tsconfig.base.json']);
 const EXCLUDED = new Set(['.git','.brain','.codex','analysis','artifacts','.artifacts','coverage','dist','evidence','exports','generated','node_modules','reference','test-results','__pycache__','.local']);
 const SECRET = (name: string) => /^\.env(?:\.|$)/i.test(name) || /(?:^|[._-])(private|secret|credential|token)(?:[._-]|$)/i.test(name) || /\.(?:pem|key|p12|pfx|sqlite|db)$/i.test(name);
@@ -41,6 +41,14 @@ function included(relativePath: string, directory: boolean, moduleAssets: Set<st
   if (!ROOTS.has(top)) return false;
   if (!PORTABLE(relativePath)) throw new Error('Non-portable build input path: ' + relativePath);
   if (parts.some(SECRET)) throw new Error('Sensitive or unreviewed build input is not accepted: ' + relativePath);
+  const normalized = relativePath.replaceAll('\\','/');
+  if (normalized === 'packages/mobile-shell/src/mobile.css' && !directory) return true;
+  if (normalized === 'tools/mobile' && directory) return true;
+  if (normalized === 'tools/mobile/assemble.mjs' && !directory) return true;
+  if (normalized.startsWith('tools/mobile/')) throw new Error('Unreviewed mobile build tool input is not allowed: ' + relativePath);
+  if (normalized === 'templates/mobile' && directory) return true;
+  if (!directory && ['templates/mobile/package.json','templates/mobile/package-lock.json','templates/mobile/README.md'].includes(normalized)) return true;
+  if (normalized.startsWith('templates/mobile/')) throw new Error('Unreviewed mobile template input is not allowed: ' + relativePath);
   if (['apps','packages','modules'].includes(top)) {
     if (parts.length === 2) return directory;
     if (parts.length === 3 && !directory && (leaf === 'package.json' || leaf === 'tsconfig.json' || (top === 'modules' && leaf === 'module.json'))) return true;
@@ -54,9 +62,12 @@ function included(relativePath: string, directory: boolean, moduleAssets: Set<st
       if (directory) return true;
       if (parts.length === 4 && STATIC_WEB_FILES.has(leaf)) return true;
     }
+  } else if (top === 'families') {
+    if (parts.length === 2) return directory && /^[a-z][a-z0-9-]{1,47}$/.test(leaf);
+    if (parts.length === 3 && !directory && leaf === 'family.json') return true;
   } else if (top === 'products' || top === 'solutions') {
     if (parts.length === 2) return directory && /^[a-z][a-z0-9-]{1,47}$/.test(leaf);
-    if (parts.length === 3 && !directory && ((top === 'products' && leaf === 'product.json') || (top === 'solutions' && (leaf === 'solution.json' || leaf === 'wiring.mjs')))) return true;
+    if (parts.length === 3 && !directory && ((top === 'products' && leaf === 'product.json') || (top === 'solutions' && (leaf === 'solution.json' || leaf === 'wiring.mjs' || leaf === 'ui.json')))) return true;
   } else if (top === 'tools') {
     if (parts.length === 2 && (leaf === 'registry-publish.ps1' || leaf === 'runtime-recovery-publish.ps1' || leaf === 'runtime-recovery.mjs' || leaf === 'runtime-supervisor.mjs')) return false;
     if (parts.length === 2 && !directory && TOOL_FILES.has(leaf)) return true;
@@ -113,6 +124,8 @@ export async function copyReviewedBuildInputs(root: string,destination: string):
 
 async function completeTreeDigest(root: string): Promise<string> {
   const hash = createHash('sha256');
+  const rootInfo = await lstat(root);
+  if(rootInfo.isSymbolicLink()||!rootInfo.isDirectory())throw new Error(`Private toolchain root is not a regular directory: ${root}`);
   async function visit(dir: string) {
     const entries = await readdir(dir,{withFileTypes:true}); entries.sort((a,b)=>a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
     for (const entry of entries) {
@@ -127,25 +140,19 @@ async function completeTreeDigest(root: string): Promise<string> {
 }
 
 export async function privateToolchainDigest(root: string): Promise<string> {
-  const rootPackage=JSON.parse(await readFile(join(root,'package.json'),'utf8')) as any;
-  const lock=JSON.parse(await readFile(join(root,'package-lock.json'),'utf8')) as any;
-  const names=['typescript','@types/node','undici-types'], hash=createHash('sha256');
+  const packages=await selectPrivateToolchain(root), hash=createHash('sha256');
   const nodeHash=sha(await readFile(process.execPath));
   hash.update(process.version);hash.update('\0');hash.update(nodeHash);
-  for(const name of names){
-    const packagePath=name==='@types/node'?'node_modules/@types/node':`node_modules/${name}`;
-    const installed=JSON.parse(await readFile(join(root,packagePath,'package.json'),'utf8')) as any;
-    const locked=lock.packages?.[packagePath]?.version;
-    const spec=name==='undici-types'?lock.packages?.['node_modules/@types/node']?.dependencies?.['undici-types']:rootPackage.devDependencies?.[name];
-    if(typeof installed.version!=='string'||installed.version!==locked||typeof spec!=='string'||spec.replace(/^[^0-9]*/,'')!==locked)throw new Error(`Installed compiler package ${name} does not match the pinned lockfile`);
-    hash.update(name);hash.update('\0');hash.update(locked);hash.update('\0');hash.update(await completeTreeDigest(join(root,packagePath)));
+  for(const item of packages){
+    hash.update(item.name);hash.update('\0');hash.update(item.version);hash.update('\0');hash.update(await completeTreeDigest(join(root,item.packagePath)));
   }
   return hash.digest('hex');
 }
 
 export async function copyPrivateToolchain(root: string,destination: string): Promise<void> {
-  for(const name of ['typescript','@types/node','undici-types']){
-    const packagePath=name==='@types/node'?'node_modules/@types/node':`node_modules/${name}`;
+  const packages=await selectPrivateToolchain(root);
+  for(const item of packages){
+    const {packagePath}=item;
     const source=join(root,packagePath), target=join(destination,packagePath);
     async function copy(dir: string,out: string){
       const info=await lstat(dir);if(info.isSymbolicLink())throw new Error(`Private toolchain link refused: ${packagePath}`);
@@ -155,4 +162,55 @@ export async function copyPrivateToolchain(root: string,destination: string): Pr
     }
     await copy(source,target);
   }
+}
+
+interface PrivateToolchainPackage { name: string; packagePath: string; version: string; }
+const PINNED_ESBUILD = '0.28.2';
+
+async function readRegularJson(path: string): Promise<any> {
+  const info=await lstat(path);
+  if(info.isSymbolicLink()||!info.isFile())throw new Error(`Pinned toolchain metadata is not a regular file: ${path}`);
+  return JSON.parse(await readFile(path,'utf8'));
+}
+
+async function selectPrivateToolchain(root: string): Promise<PrivateToolchainPackage[]> {
+  if(process.env.ESBUILD_BINARY_PATH)throw new Error('ESBUILD_BINARY_PATH overrides the selected private toolchain');
+  const rootPackage=await readRegularJson(join(root,'package.json'));
+  const lock=await readRegularJson(join(root,'package-lock.json'));
+  const packages: PrivateToolchainPackage[]=[];
+  const compilerNames=['typescript','@types/node','undici-types'];
+  for(const name of compilerNames){
+    const packagePath=name==='@types/node'?'node_modules/@types/node':`node_modules/${name}`;
+    const installed=await readRegularJson(join(root,packagePath,'package.json'));
+    const locked=lock.packages?.[packagePath]?.version;
+    const spec=name==='undici-types'?lock.packages?.['node_modules/@types/node']?.dependencies?.['undici-types']:rootPackage.devDependencies?.[name];
+    if(typeof installed.version!=='string'||installed.version!==locked||typeof spec!=='string'||spec.replace(/^[^0-9]*/,'')!==locked)
+      throw new Error(`Installed compiler package ${name} does not match the pinned lockfile`);
+    packages.push({name,packagePath,version:locked});
+  }
+
+  const esbuildPath='node_modules/esbuild', esbuildName='esbuild';
+  const esbuild=await readRegularJson(join(root,esbuildPath,'package.json'));
+  const lockedEsbuild=lock.packages?.[esbuildPath];
+  if(rootPackage.devDependencies?.[esbuildName]!==PINNED_ESBUILD||lock.packages?.['']?.devDependencies?.[esbuildName]!==PINNED_ESBUILD||
+      esbuild.name!==esbuildName||esbuild.version!==PINNED_ESBUILD||lockedEsbuild?.version!==PINNED_ESBUILD)
+    throw new Error('Installed esbuild does not match the pinned root package specification and lockfile');
+
+  const nativeName=`@esbuild/${process.platform}-${process.arch}`;
+  const optionalVersion=esbuild.optionalDependencies?.[nativeName];
+  const lockedOptional=lockedEsbuild?.optionalDependencies?.[nativeName];
+  const nativePath=`node_modules/${nativeName}`;
+  const lockedNative=lock.packages?.[nativePath];
+  const native=await readRegularJson(join(root,nativePath,'package.json'));
+  if(optionalVersion!==PINNED_ESBUILD||lockedOptional!==PINNED_ESBUILD||lockedNative?.version!==PINNED_ESBUILD||
+      native.name!==nativeName||native.version!==PINNED_ESBUILD||!Array.isArray(native.os)||!native.os.includes(process.platform)||
+      !Array.isArray(native.cpu)||!native.cpu.includes(process.arch))
+    throw new Error(`Installed esbuild native package ${nativeName} does not match the pinned lockfile and current platform`);
+
+  const executable=join(root,nativePath,process.platform==='win32'?'esbuild.exe':'bin/esbuild');
+  const executableInfo=await lstat(executable);
+  if(executableInfo.isSymbolicLink()||!executableInfo.isFile()||(process.platform!=='win32'&&(executableInfo.mode&0o111)===0))
+    throw new Error(`Pinned esbuild native executable is missing or not a regular executable: ${nativeName}`);
+  packages.push({name:esbuildName,packagePath:esbuildPath,version:PINNED_ESBUILD},{name:nativeName,packagePath:nativePath,version:PINNED_ESBUILD});
+  return packages;
 }

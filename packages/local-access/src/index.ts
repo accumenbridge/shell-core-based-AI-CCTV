@@ -14,41 +14,69 @@ export interface PrincipalSeed {
 const digest = (s: string) => createHash('sha256').update(s).digest('hex');
 export class LocalAccess {
     readonly store: SqliteOwner;
-    constructor(path: string, private readonly scope: Omit<Scope, 'tenantId'>, private readonly clock: () => number = Date.now) {
+    private seedAvailable = false;
+    constructor(path: string, private readonly scope: Omit<Scope, 'tenantId'>, private readonly clock: () => number = Date.now,
+        initialPrincipals?: readonly PrincipalSeed[]) {
         this.store = new SqliteOwner(path, 'local-access');
-        this.store.migrate([{ version: 1, sql: `
+        let wasUninitialized: boolean;
+        try {
+            const priorMigrations = this.store.db.prepare('SELECT version FROM _migrations').all();
+            const priorAccessTables = this.store.db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('instance_binding','principals','grants','sessions','module_modes')").all();
+            wasUninitialized = priorMigrations.length === 0 && priorAccessTables.length === 0;
+            this.store.migrate([{ version: 1, sql: `
       CREATE TABLE instance_binding(product TEXT NOT NULL,instance TEXT NOT NULL);
       CREATE TABLE principals(id TEXT PRIMARY KEY, kind TEXT NOT NULL, credential TEXT NOT NULL, salt TEXT NOT NULL, active INTEGER NOT NULL);
       CREATE TABLE grants(principal TEXT NOT NULL, tenant TEXT NOT NULL, permission TEXT NOT NULL, PRIMARY KEY(principal,tenant,permission));
       CREATE TABLE sessions(token_hash TEXT PRIMARY KEY, principal TEXT NOT NULL, expires INTEGER NOT NULL);
       CREATE TABLE module_modes(tenant TEXT NOT NULL,module TEXT NOT NULL,mode TEXT NOT NULL,PRIMARY KEY(tenant,module));
     ` }], { readMin: 1, readMax: 1, current: 1 });
-        this.store.transaction(() => {
-            const row = this.store.db.prepare('SELECT product,instance FROM instance_binding').get() as {
+            let allowSeed = false;
+            this.store.transaction(() => {
+                const rows = this.store.db.prepare('SELECT product,instance FROM instance_binding').all() as {
                 product: string;
                 instance: string;
-            } | undefined;
-            if (row && (row.product !== scope.productId || row.instance !== scope.instanceId))
-                throw new PlatformError('INCOMPATIBLE', 'Data directory is bound to another product instance');
-            if (!row)
-                this.store.db.prepare('INSERT INTO instance_binding VALUES(?,?)').run(scope.productId, scope.instanceId);
-        });
+                }[];
+                if (rows.length > 1)
+                    throw new PlatformError('INCOMPATIBLE', 'Data directory has an ambiguous local identity binding');
+                const row = rows[0];
+                if (row) {
+                    if (row.product !== scope.productId || row.instance !== scope.instanceId)
+                        throw new PlatformError('INCOMPATIBLE', 'Data directory is bound to another product instance');
+                } else {
+                    if (!wasUninitialized)
+                        throw new PlatformError('INCOMPATIBLE', 'Existing local access storage has no identity binding and requires repair');
+                    this.store.db.prepare('INSERT INTO instance_binding VALUES(?,?)').run(scope.productId, scope.instanceId);
+                    if (initialPrincipals !== undefined)
+                        this.insertSeeds(initialPrincipals);
+                    else
+                        allowSeed = true;
+                }
+            });
+            this.seedAvailable = allowSeed;
+        } catch (error) {
+            this.store.close();
+            throw error;
+        }
     }
     seed(seeds: readonly PrincipalSeed[]) {
-        this.store.transaction(() => {
-            for (const p of seeds) {
-                if (this.store.db.prepare('SELECT id FROM principals WHERE id=?').get(p.id))
-                    continue;
-                const service = Boolean(p.serviceToken);
-                if (!service && (!p.password || p.password.length < 12))
-                    throw new PlatformError('INVALID', 'Local password must have at least 12 characters');
-                const salt = randomBytes(16).toString('hex'), credential = service ? digest(p.serviceToken!) : scryptSync(p.password!, salt, 32).toString('hex');
-                this.store.db.prepare('INSERT INTO principals VALUES(?,?,?,?,1)').run(p.id, service ? 'service' : 'user', credential, salt);
-                for (const g of p.grants)
-                    for (const permission of g.permissions)
-                        this.store.db.prepare('INSERT INTO grants VALUES(?,?,?)').run(p.id, g.tenantId, permission);
-            }
-        });
+        if (!this.seedAvailable)
+            throw new PlatformError('INCOMPATIBLE', 'Local access seeding is available only once on a newly initialized owner');
+        this.seedAvailable = false;
+        this.store.transaction(() => this.insertSeeds(seeds));
+    }
+    private insertSeeds(seeds: readonly PrincipalSeed[]) {
+        for (const p of seeds) {
+            if (this.store.db.prepare('SELECT id FROM principals WHERE id=?').get(p.id))
+                continue;
+            const service = Boolean(p.serviceToken);
+            if (!service && (!p.password || p.password.length < 12))
+                throw new PlatformError('INVALID', 'Local password must have at least 12 characters');
+            const salt = randomBytes(16).toString('hex'), credential = service ? digest(p.serviceToken!) : scryptSync(p.password!, salt, 32).toString('hex');
+            this.store.db.prepare('INSERT INTO principals VALUES(?,?,?,?,1)').run(p.id, service ? 'service' : 'user', credential, salt);
+            for (const g of p.grants)
+                for (const permission of g.permissions)
+                    this.store.db.prepare('INSERT INTO grants VALUES(?,?,?)').run(p.id, g.tenantId, permission);
+        }
     }
     login(name: string, password: string): {
         token: string;

@@ -1,0 +1,8 @@
+{
+  "fixtureId": "129c2e42-3246-47dd-9a05-8910c09957f9",
+  "candidate": "0a2749127a73d23009710c3c178f88642ffb503d3eed889c723d7ac33dd13335",
+  "closed": true,
+  "sourceUnchanged": true,
+  "observedAt": "2026-10-02T08:27:46.773Z",
+  "scope": "Actual reopened controller graceful close on retained same fixture; first explicit termination remains exit1."
+}

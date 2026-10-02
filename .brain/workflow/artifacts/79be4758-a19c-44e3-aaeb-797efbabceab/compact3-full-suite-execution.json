@@ -1,0 +1,26 @@
+{
+  "command": [
+    "npm",
+    "test"
+  ],
+  "actualProcess": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+    "test"
+  ],
+  "startedAt": "2026-10-02T02:16:55.730Z",
+  "finishedAt": "2026-10-02T02:27:49.937Z",
+  "exitCode": 0,
+  "signal": null,
+  "candidateBefore": "5b3d2a9e03b3934f01b80ae6bda0c2ba915c77d7b1eae2dae22fcb5dbed2bf4f",
+  "candidateAfter": "5b3d2a9e03b3934f01b80ae6bda0c2ba915c77d7b1eae2dae22fcb5dbed2bf4f",
+  "sourceUnchanged": true,
+  "counts": {
+    "tests": 322,
+    "passed": 321,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 1,
+    "todo": 0
+  }
+}

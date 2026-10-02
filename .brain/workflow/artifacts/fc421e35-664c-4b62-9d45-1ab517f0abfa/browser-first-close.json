@@ -1,0 +1,10 @@
+{
+  "closedAt": "2026-10-02T01:14:34.2379685Z",
+  "processId": 30544,
+  "creationTime": "2026-10-02T01:07:56.6305679Z",
+  "exitCode": -1,
+  "method": "Verified original task-owned Node process terminated after stdin channel was closed; exact listeners, command and creation time matched",
+  "applicationClose": "NOT_OBSERVED",
+  "data": "Retained task-owned fixture",
+  "historicalOwners": "Untouched"
+}

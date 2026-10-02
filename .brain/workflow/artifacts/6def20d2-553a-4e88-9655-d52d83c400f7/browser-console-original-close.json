@@ -1,0 +1,8 @@
+{
+  "fixtureId": "129c2e42-3246-47dd-9a05-8910c09957f9",
+  "originalExecSession": 7797,
+  "observedExitCode": 1,
+  "observedRemainingOutput": "",
+  "observation": "Root directly resumed original exec session after exact task listener termination; original process closed with exit1. Planned stdin shutdown was unavailable because root omitted tty at launch. No graceful server.close result is claimed.",
+  "nativeRuntimeScope": "Both exact runtime attempts already proved STOPPED/EMPTY/helperClosed/executionClean, and build/publication had settled before terminating only the live task-owned console listener. Files retained; no unknown runtime owner inferred or cleaned."
+}

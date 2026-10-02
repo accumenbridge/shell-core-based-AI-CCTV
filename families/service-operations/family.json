@@ -1,0 +1,35 @@
+{
+  "schema": "quadbridge.product-family.v1",
+  "id": "service-operations",
+  "version": "1.0.0",
+  "title": "Service Operations",
+  "description": "Start with service requests, then add a shared library and reviewed document handoff when your work needs them.",
+  "requiredFeatureIds": ["requests"],
+  "defaultFeatureIds": ["requests"],
+  "features": [
+    {
+      "id": "requests",
+      "label": "Requests",
+      "description": "Create, track and close service requests.",
+      "moduleIds": ["service-desk"]
+    },
+    {
+      "id": "shared-library",
+      "label": "Shared library",
+      "description": "Add indexed reference documents for the service team.",
+      "moduleIds": ["knowledge"],
+      "requires": ["requests"]
+    },
+    {
+      "id": "document-handoff",
+      "label": "Document handoff",
+      "description": "Attach a reviewed local knowledge and request handoff to each request.",
+      "moduleIds": ["handoff"],
+      "requires": ["shared-library"],
+      "bindingChoices": {
+        "handoff:knowledge.document.read.v1": "local",
+        "handoff:desk.requests.create.v2": "local"
+      }
+    }
+  ]
+}

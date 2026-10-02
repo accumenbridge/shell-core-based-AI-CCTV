@@ -405,7 +405,13 @@ function assertPhysicalDataTree(root: string,scan:RuntimeCleanupScan={started:pe
       cleanupScanCheck(scan,1);
       const path = join(current.path,name);
       if (path.length >= 240) throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime data path exceeds the supported Windows path bound');
-      const info = lstatSync(path);
+      let info;
+      try { info=lstatSync(path); }
+      catch(error) {
+        if((error as NodeJS.ErrnoException).code==='ENOENT'&&item.isFile()&&!item.isSymbolicLink()&&!item.isDirectory()&&isDisappearingSQLiteSibling(root,current.path,name))continue;
+        throw error;
+      }
+      if(item.isSymbolicLink())throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime data contains a link or reparse point');
       if (info.isSymbolicLink() || realpathSync(path).toLowerCase() !== path.toLowerCase())
         throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Managed runtime data contains a link or reparse point');
       if (info.isDirectory()) {
@@ -415,6 +421,21 @@ function assertPhysicalDataTree(root: string,scan:RuntimeCleanupScan={started:pe
     }}finally{directory.closeSync();}
     cleanupScanCheck(scan);
   }
+}
+
+function isDisappearingSQLiteSibling(root:string,parent:string,name:string):boolean {
+  const relativeParent=relative(resolve(root),resolve(parent)).replace(/\\/g,'/').toLowerCase();
+  const match=/^(.+\.sqlite)-(?:wal|shm)(?:\.tmp)?$/i.exec(name);
+  if(!match)return false;
+  const ownerName=match[1]!;
+  if(relativeParent==='') {
+    if(ownerName.toLowerCase()!=='access.sqlite')return false;
+  } else if(relativeParent==='modules') {
+    if(!/^[a-z][a-z0-9.-]{1,95}\.sqlite$/.test(ownerName.toLowerCase()))return false;
+  } else return false;
+  const ownerPath=join(parent,ownerName);
+  const owner=lstatSync(ownerPath);
+  return owner.isFile()&&!owner.isSymbolicLink()&&realpathSync(ownerPath).toLowerCase()===ownerPath.toLowerCase();
 }
 
 function expectedGrantRows(principals: readonly PrincipalSeed[]) {

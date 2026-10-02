@@ -1,0 +1,98 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "ee5c52b9-d2c4-4598-aac9-e10a1104ca60",
+  "revision": 60,
+  "previousEventId": "8c0193c0-d8a5-40c8-8d04-592b6d7098a2",
+  "reportedActor": "/root mobile coordinator",
+  "recordedAt": "2026-10-02T01:48:01.185Z",
+  "platformTask": {
+    "taskId": "MOBILE-001",
+    "status": "IMPLEMENTING",
+    "candidate": null,
+    "runIds": [
+      "e96b1c9a-84c0-4bcf-acc1-7ac1509fa037",
+      "c8743e63-ac22-4928-941d-fe86b20ae6a9",
+      "8f639529-fad3-4b70-91b1-8b52dd5cd790",
+      "882caf11-9e6b-4852-af21-bcec3a263910"
+    ],
+    "reviewIds": [
+      "5a9c02a4-e969-4266-bafb-32ca3768b247"
+    ],
+    "blockers": [],
+    "nextAction": "Sole writer compacts mobile preview/bundled asset output within existing37path scope and adds reference/path regressions. Root rebuilds, runs complete checks, re-observes browser and rebinds native scaffold proof to new output before acceptance.",
+    "gates": [
+      {
+        "id": "native-device",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".local/mobile-001/environment.json"
+        ],
+        "limitations": [
+          "No Android SDK/Java/device tools found in inspected locations; Android/iOS native execution unqualified."
+        ]
+      },
+      {
+        "id": "native-identity-api",
+        "status": "DEFERRED",
+        "evidenceRefs": [
+          ".brain/tasks/MOBILE-001.md"
+        ],
+        "limitations": [
+          "User explicitly selected identity/API in later increment."
+        ]
+      },
+      {
+        "id": "historical-uncertain-owner",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/04021fa0-298a-4a26-8523-28a7924d5114.json"
+        ],
+        "limitations": [
+          "Prior interrupted owner close remains unobserved; no speculative fixture cleanup or PID control."
+        ]
+      },
+      {
+        "id": "interrupted-mobile-focused-owner",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/70284fca-efe2-4341-ad03-be8ef0f0646d.json"
+        ],
+        "limitations": [
+          "Earlier focused exec27608 was interrupted after EBUSY; original poll had no numeric completion and later Unknown process id. No PID recovery or speculative fixture cleanup."
+        ]
+      },
+      {
+        "id": "full-suite-repair",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/882caf11-9e6b-4852-af21-bcec3a263910.json",
+          ".brain/workflow/runs/16878e4f-8954-403b-a531-237dab61231a.json"
+        ],
+        "limitations": [
+          "Actual72df320/311pass/8fail/1EPERMskip. Managed build admission repaired; promoted runtime copy rejects newly long mobile paths. Root observed original suite exit1, no interruption."
+        ]
+      },
+      {
+        "id": "browser-device-specific",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/8f639529-fad3-4b70-91b1-8b52dd5cd790.json"
+        ],
+        "limitations": [
+          "Actual browser360CSS journey passed. Physical keyboard/safe-area, assistive technology, Android/iOS device lifecycle and native secure storage were not tested."
+        ]
+      },
+      {
+        "id": "planning-html-policy",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/8f639529-fad3-4b70-91b1-8b52dd5cd790.json"
+        ],
+        "limitations": [
+          "Earlier offline planning HTML browser navigation was policy blocked; no workaround or inferred pass. Actual product HTTP preview was independently allowed and observed."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "ae1ff1ac24ae1bcf42387fde4b53570fbf94561fe2e583504144c5c59526f0e4"
+}

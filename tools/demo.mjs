@@ -97,7 +97,9 @@ for (const product of selected) {
         return state;
     };
     try {
-        const web = launch(['--port', String(portFor(product))], 'web-backend');
+        const webFlags = ['--port', String(portFor(product))];
+        if (args.includes('--mobile-preview')) webFlags.push('--mobile-preview');
+        const web = launch(webFlags, 'web-backend');
         await waitForWebReady(web, product, portFor(product));
         if (plan.requiresWorker) {
             if (ending || web.spawnError || web.exitObserved)

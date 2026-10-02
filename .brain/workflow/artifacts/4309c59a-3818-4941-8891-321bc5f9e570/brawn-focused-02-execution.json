@@ -1,0 +1,47 @@
+{
+  "kind": "focused",
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/ui-contributions.test.mjs",
+    "tests/shell-regressions.test.mjs",
+    "tests/frontend-assembly.test.mjs",
+    "tests/composition.test.mjs",
+    "tests/module-sdk.test.mjs",
+    "tests/factory-lifecycle.test.mjs",
+    "tests/workspace-closure.test.mjs",
+    "tests/build-worker-process.test.mjs",
+    "tests/control-plane-http.test.mjs"
+  ],
+  "actualProcess": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "--test-reporter=tap",
+    "--test",
+    "--test-concurrency=1",
+    "tests/ui-contributions.test.mjs",
+    "tests/shell-regressions.test.mjs",
+    "tests/frontend-assembly.test.mjs",
+    "tests/composition.test.mjs",
+    "tests/module-sdk.test.mjs",
+    "tests/factory-lifecycle.test.mjs",
+    "tests/workspace-closure.test.mjs",
+    "tests/build-worker-process.test.mjs",
+    "tests/control-plane-http.test.mjs"
+  ],
+  "startedAt": "2026-10-02T09:34:54.218Z",
+  "finishedAt": "2026-10-02T09:37:43.044Z",
+  "exitCode": 1,
+  "signal": null,
+  "candidateBefore": "54877a6818968a638aa882ca932658ad038ff0c1841966bdf82229c62427e30d",
+  "candidateAfter": "54877a6818968a638aa882ca932658ad038ff0c1841966bdf82229c62427e30d",
+  "sourceUnchanged": true,
+  "counts": {
+    "tests": 97,
+    "passed": 96,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

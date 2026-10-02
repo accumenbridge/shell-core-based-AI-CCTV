@@ -1,0 +1,11 @@
+# Core reliability result
+
+FRAMEWORK-RELIABILITY-001 accepted locally at revision 67, event eb237842-35e0-4d68-a2b0-3401514a0334. Exact 219-file candidate d1f24c45fe236f0047032ad3d8331c04245ef0d675c8058ed04910ba559e3624. Root observed original ordinary npm test child close with numeric exit 0, null signal and unchanged source/contract. Complete suite: 330 tests, 329 passed, 0 failed, 0 cancelled, 1 skipped, 0 TODO. The named Windows EPERM file-symlink fixture remains BLOCKED coverage, not a passed assertion.
+
+Fresh build and meaningful focused tests passed31/31 before this full suite. Actual checks exercised narrow disappearing SQLite sidecars, native complete heartbeat and original helper closure, atomic access initialization, real HTTP createRuntime same-config restart without restoring removed users/grants, and rich declaration validation through the existing SDK authority. Original Mobile source outside the named runtime integration remained unchanged.
+
+Run records: .brain/workflow/runs/a85c21b5-eb02-44cd-aca5-bf1e1431cd0d.json, .brain/workflow/runs/f5d0934d-7d03-41fe-b8f9-962c1faefb42.json, .brain/workflow/runs/44423705-d2ec-42f0-9233-101fe53ad038.json. Independent Sol/high review: .brain/workflow/runs/0413199d-27fc-48c9-8e0b-510091bf9ff4.json. Implementer Luna/xhigh; root observed and recorded commands and reconciled source; reported identities and artifact hashes are inspectable records, not authenticated provenance.
+
+The historical failed Mobile audit2fa1fe7d-8c81-4dfb-bf3c-9becc7bbbdc5 and earlier intermediate/unknown-owner observations remain preserved and do not qualify this candidate. A source-inferred concurrent first-open availability refusal between migration and initial binding is documented: it fails closed and cannot restore deleted authority; the normal managed profile sequences enrollment. No arbitrary concurrent-open success claim.
+
+This acceptance covers local core reliability. No new browser journey, physical phone/native identity, model provider, remote OAuth/HTTPS, hosted or production deployment is qualified. Next authorized increment is the finite CAPABILITY-001 owner operation contract, then independently useful FAMILY-001, trusted UI slots and bounded entity generation; MCP can branch after operations.

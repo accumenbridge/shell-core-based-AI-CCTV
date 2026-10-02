@@ -1,0 +1,31 @@
+{
+  "observedAt": "2026-10-02T02:19:13.215Z",
+  "candidate": "5b3d2a9e03b3934f01b80ae6bda0c2ba915c77d7b1eae2dae22fcb5dbed2bf4f",
+  "status": "PASSED",
+  "screenshot": ".local/mobile-001/mobile-compact3-browser.jpg",
+  "viewport": {
+    "cssWidth": 360,
+    "cssHeight": 800,
+    "documentWidth": 345,
+    "accountRight": 329.37030029296875,
+    "horizontalOverflow": false
+  },
+  "recordId": "369f12fc-c16f-4565-8ded-ca7bc4811916",
+  "observations": [
+    "Signed in through actual compact3 mobile preview UI on task-owned reviewer fixture",
+    "Created Mobile preview verified request in tenant-a",
+    "Tenant-b displayed zero requests; return to tenant-a retained one request",
+    "More selected Request overview; lazy workspace loaded and More collapsed",
+    "Ordinary desktop overview displayed the exact same recordID as mobile",
+    "Mobile Account showed reviewer/mobile-browser-review; Sign out returned login and cleared protected content",
+    "Warn/error browser log list was empty at navigation check",
+    "Reset temporary viewport, saved screenshot, closed both created tabs",
+    "Original fixture session51179 accepted stop and exited0 after listeners/runtime close"
+  ],
+  "provenance": "Root actual cua_repl UI calls on compact3 localhost fixture, with source captured before build and after observation unchanged. Report validation does not reenact browser UI; original fixture process graceful close was observed separately.",
+  "limitations": [
+    "Viewport emulation does not qualify physical phone keyboard, safe-area, assistive technology or native lifecycle.",
+    "Earlier offline planning HTML navigation remains policy blocked; no workaround was attempted. Actual HTTP product preview is a distinct authorized application surface.",
+    "Real native identity/API, device, SDK binary and signing remain deferred/unqualified."
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "bf83b1ef-eb9b-4b59-89d5-7a17d9a95c32",
+  "revision": 75,
+  "previousEventId": "c7844f2a-7b53-4883-a514-0f34518141b4",
+  "reportedActor": "/root finite Sol family plan adoption",
+  "recordedAt": "2026-10-02T06:40:03.535Z",
+  "platformTask": {
+    "taskId": "FAMILY-001",
+    "status": "READY",
+    "candidate": null,
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Run exact atlas/task/source preflight then sole Luna implements finite family work order; fresh build/focused/freeze/full suite, root ordinary browser, independent Sol review.",
+    "gates": [
+      {
+        "id": "native-device",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".local/mobile-001/environment.json"
+        ],
+        "limitations": [
+          "No Android SDK/Java/device tools found in inspected locations; Android/iOS native execution unqualified."
+        ]
+      },
+      {
+        "id": "native-identity-api",
+        "status": "DEFERRED",
+        "evidenceRefs": [
+          ".brain/tasks/MOBILE-001.md"
+        ],
+        "limitations": [
+          "User explicitly selected identity/API in later increment."
+        ]
+      },
+      {
+        "id": "historical-uncertain-owner",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/04021fa0-298a-4a26-8523-28a7924d5114.json"
+        ],
+        "limitations": [
+          "Prior interrupted owner close remains unobserved; no speculative fixture cleanup or PID control."
+        ]
+      },
+      {
+        "id": "interrupted-mobile-focused-owner",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/70284fca-efe2-4341-ad03-be8ef0f0646d.json"
+        ],
+        "limitations": [
+          "Earlier focused exec27608 was interrupted after EBUSY; original poll had no numeric completion and later Unknown process id. No PID recovery or speculative fixture cleanup."
+        ]
+      },
+      {
+        "id": "full-suite-repair",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/79be4758-a19c-44e3-aaeb-797efbabceab.json",
+          ".brain/workflow/runs/16878e4f-8954-403b-a531-237dab61231a.json",
+          ".brain/workflow/runs/882caf11-9e6b-4852-af21-bcec3a263910.json"
+        ],
+        "limitations": [
+          "Final corrected candidate passes the actual complete suite; earlier failed608e and72df runs remain immutable history. Skipped cases remain unqualified coverage."
+        ]
+      },
+      {
+        "id": "browser-device-specific",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/ebe16682-f289-406f-9d96-803f13994889.json"
+        ],
+        "limitations": [
+          "Actual browser360CSS journey passed. Physical keyboard/safe-area, assistive technology, Android/iOS device lifecycle and native secure storage were not tested."
+        ]
+      },
+      {
+        "id": "planning-html-policy",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/ebe16682-f289-406f-9d96-803f13994889.json"
+        ],
+        "limitations": [
+          "Earlier offline planning HTML browser navigation was policy blocked; no workaround or inferred pass. Actual product HTTP preview was independently allowed and observed."
+        ]
+      },
+      {
+        "id": "windows-file-symlink-coverage",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/79be4758-a19c-44e3-aaeb-797efbabceab.json"
+        ],
+        "limitations": [
+          "The named owned file-symlink fixture was skipped because this host denied fixture creation with EPERM. Complete command exit0 does not qualify that coverage."
+        ]
+      },
+      {
+        "id": "historical-mobile-audit-full-suite",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/2fa1fe7d-8c81-4dfb-bf3c-9becc7bbbdc5.json"
+        ],
+        "limitations": [
+          "Fresh audit npm test exit1:322 total/319pass/2fail/1EPERM skip. Historical ACCEPTED status is retained by the terminal-state workflow, not renewed regression acceptance.",
+          "This FAILED gate belongs to the retained pre-repair MOBILE candidate, not current repaired qualification."
+        ]
+      },
+      {
+        "id": "prior-mobile-history",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/workflow/events/6bdcdf38-af72-497d-be06-db222d10dcbe.json"
+        ],
+        "limitations": [
+          "Historical mobile acceptance preserved; latest audit was FAILED and does not qualify new source."
+        ]
+      },
+      {
+        "id": "current-reliability-full-suite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/a85c21b5-eb02-44cd-aca5-bf1e1431cd0d.json",
+          ".brain/workflow/runs/f5d0934d-7d03-41fe-b8f9-962c1faefb42.json",
+          ".brain/workflow/runs/44423705-d2ec-42f0-9233-101fe53ad038.json"
+        ],
+        "limitations": [
+          "Actual original outer npm test exit0; skipped coverage stays separately BLOCKED. Historical audit failure retained; no browser/provider/native-phone/hosted production qualification."
+        ]
+      },
+      {
+        "id": "reliability-prerequisite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/events/eb237842-35e0-4d68-a2b0-3401514a0334.json"
+        ],
+        "limitations": [
+          "Accepted local reliability prerequisite; no external qualification."
+        ]
+      },
+      {
+        "id": "historical-capability-first-full-suite",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/8a1126f9-d48a-4cb6-8f48-bab9b0fd8f52.json"
+        ],
+        "limitations": [
+          "Actual original npm child close exit1/nullsignal, unchanged4ab candidate; focused passes cannot qualify full regression.",
+          "Three missed offline VM integrations in two existing tests; named EPERM fixture remains separately blocked.",
+          "Retained actual FAILED first full run; finite independently approved two-test VM repair qualified only by later amended-contract candidate-specific evidence."
+        ]
+      },
+      {
+        "id": "current-capability-full-suite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/e2373db2-35b1-4e0c-8758-a8f1f6111196.json",
+          ".brain/workflow/runs/9c537144-9edf-4eca-8abd-d45898d79824.json",
+          ".brain/workflow/runs/5519e88d-4c9f-440f-8f34-75f9ff13004e.json"
+        ],
+        "limitations": [
+          "Actual original ordinary npm test close exit0 and no failed/cancelled/TODO; named skipped coverage separately blocked.",
+          "Local owner/host/export/offline composer only; no new live browser, MCP, model provider, native phone, hosted or production qualification."
+        ]
+      },
+      {
+        "id": "capability-prerequisite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/events/c7844f2a-7b53-4883-a514-0f34518141b4.json"
+        ],
+        "limitations": [
+          "Accepted local operation prerequisite; no MCP/provider/production claim."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "4cdffa96fdb65eb2de09a40fc4a8cc474292a4c969227e34c722382381573905"
+}

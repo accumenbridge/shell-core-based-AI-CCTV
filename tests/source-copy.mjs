@@ -1,10 +1,12 @@
 import { cp, lstat, mkdir, mkdtemp, rm, symlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join, relative } from 'node:path';
+import { dirname, join, relative } from 'node:path';
 import { shouldIncludeMaintainedPath } from '../tools/verify-core.mjs';
 
 const dependencies = [
     ['typescript', 'typescript'],
+    ['esbuild', 'esbuild'],
+    [`@esbuild/${process.platform}-${process.arch}`, `@esbuild/${process.platform}-${process.arch}`],
     ['@types/node', '@types/node'],
     ['undici-types', 'undici-types']
 ];
@@ -49,6 +51,7 @@ export async function copyPortableFixture(t, sourceRoot, { prefix = 'qb-source-'
             const target = join(sourceRoot, 'node_modules', targetName);
             const destination = join(root, 'node_modules', name);
             const type = process.platform === 'win32' ? 'junction' : 'dir';
+            await mkdir(dirname(destination), { recursive: true });
             await symlink(target, destination, type);
         }
         if (afterSetup) await afterSetup({ root, temp });

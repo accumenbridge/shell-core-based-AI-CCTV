@@ -26,10 +26,12 @@
     "brain": "node tools/brain.mjs",
     "test:studio-browser": "python tools/studio-browser-test.py",
     "studio:full": "node apps/control-plane/dist/main.js",
+    "mobile:assemble": "node tools/mobile/assemble.mjs",
     "test:platform": "npm run build && node --test tests/ai-core.test.mjs tests/control-plane.test.mjs"
   },
   "devDependencies": {
     "@types/node": "22.19.7",
+    "esbuild": "0.28.2",
     "typescript": "5.8.3"
   }
 }

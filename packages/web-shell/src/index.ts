@@ -1,6 +1,8 @@
 import { PlatformError, type Scope, type Workspace, type WorkspaceContext } from '@quadbridge/contracts';
+import { createScopedWorkspaceApi, requestJson } from '@quadbridge/client-core';
+import { UI_CONTRIBUTION_SLOTS, type UiContribution, type UiContributionBinding, type UiContributionContext, type UiContributionDescriptor, type UiContributionSlot } from '@quadbridge/contracts/ui-contributions';
 import { el, button, field } from './dom.js';
-interface Bootstrap {
+export interface ShellSnapshot {
     scope: Scope;
     actor: {
         id: string;
@@ -33,20 +35,103 @@ interface Bootstrap {
         moduleId: string;
         export: string;
     }[];
+    uiContributions?: (UiContributionDescriptor & { moduleId: string })[];
+}
+interface Bootstrap extends ShellSnapshot {}
+export interface ShellPresentationOptions {
+    root: HTMLElement;
+    snapshot: ShellSnapshot;
+    onTenantChange(tenantId: string): void;
+    onSignOut(): void;
+}
+export interface ShellPresentationElements {
+    content: HTMLElement;
+    noticeArea: HTMLElement;
+    contributionSlots?: Partial<Record<UiContributionSlot, HTMLElement>>;
+    contributionLayout?: HTMLElement;
+}
+export type ShellPresentation = (options: ShellPresentationOptions) => ShellPresentationElements;
+export interface ShellLifecycleHandlers {
+    suspend(): void;
+    resume(): void;
+}
+export interface ShellLifecyclePort {
+    bind(handlers: ShellLifecycleHandlers): () => void;
 }
 export interface ShellOptions {
     root: HTMLElement;
     title: string;
     /** Build-owned module IDs. The export is resolved from the accepted workspace declaration. */
     loaders: Readonly<Record<string, () => Promise<Record<string, unknown>>>>;
+    /** Literal bindings validated from the selected product's reviewed solution source. */
+    uiBindings?: readonly UiContributionBinding[];
+    presentation?: ShellPresentation;
+    lifecycle?: ShellLifecyclePort;
+}
+function renderDesktopPresentation({ root, snapshot: snap, onTenantChange, onSignOut }: ShellPresentationOptions): ShellPresentationElements {
+    const shell = el('div', `shell ${snap.product.layout === 'top' ? 'top-layout' : ''}`), side = el('aside', 'sidebar');
+    const brand = el('div', 'brand-row');
+    brand.append(el('span', 'brand-symbol', 'Q'), el('span', 'brand', 'Quadbridge'));
+    side.append(brand, el('span', 'eyebrow product-eyebrow', 'PRODUCT WORKSPACE'), el('span', 'product-name', snap.product.title), el('p', 'muted small', snap.product.description));
+    const nav = el('nav');
+    nav.setAttribute('aria-label', 'Workspaces');
+    for (const workspace of snap.workspaces) {
+        const link = el('a', 'nav-item', workspace.label);
+        link.setAttribute('data-workspace-path', workspace.path);
+        link.href = `#${workspace.path}`;
+        nav.append(link);
+    }
+    side.append(nav);
+    const meta = el('div', 'sidebar-meta');
+    meta.append(el('span', 'pill', 'LOCAL DEVELOPER PROFILE'), el('p', 'small muted', `${snap.modules.length} selected modules`), el('p', 'small muted break', snap.scope.instanceId));
+    side.append(meta);
+    const main = el('main', 'main'), header = el('header', 'header'), scope = el('label', 'scope-label', 'Tenant'), select = el('select');
+    select.setAttribute('aria-label', 'Tenant');
+    for (const tenant of snap.tenants) {
+        const option = el('option', '', tenant);
+        option.value = tenant;
+        option.selected = tenant === snap.scope.tenantId;
+        select.append(option);
+    }
+    select.addEventListener('change', () => onTenantChange(select.value));
+    scope.append(select);
+    header.append(scope, el('span', 'small muted', snap.actor.id), button('Sign out', onSignOut));
+    const noticeArea = el('div', 'notice');
+    noticeArea.hidden = true;
+    noticeArea.setAttribute('role', 'status');
+    const contributionLayout = el('div', 'workspace-contribution-layout');
+    const content = el('div', 'content');
+    const asideSlot = el('aside', 'content workspace-contribution-slot');
+    asideSlot.hidden = true;
+    contributionLayout.append(content, asideSlot);
+    const footerSlot = el('footer', 'content workspace-contribution-footer');
+    footerSlot.hidden = true;
+    main.append(header, noticeArea, contributionLayout, footerSlot);
+    shell.append(side, main);
+    root.replaceChildren(shell);
+    return { content, noticeArea, contributionLayout, contributionSlots: { 'workspace.aside': asideSlot, 'workspace.footer': footerSlot } };
 }
 /** Maintained shell. Requested scope is never the active workspace's request scope. */
-export function startShell({ root, title, loaders }: ShellOptions) {
+export function startShell({ root, title, loaders, uiBindings = [], presentation = renderDesktopPresentation, lifecycle }: ShellOptions) {
     let bootstrap: Bootstrap | undefined, requestedTenant: string | undefined;
     let generation = 0, active: AbortController | undefined, cleanup: (() => void) | undefined;
+    let contributionSlots: ShellPresentationElements['contributionSlots'], contributionLayout: HTMLElement | undefined;
+    let contributionControllers: AbortController[] = [], contributionCleanups: (() => void)[] = [];
     let bootstrapAbort: AbortController | undefined, refreshEpoch = 0, refreshing = false;
     let content: HTMLElement | undefined, noticeArea: HTMLElement | undefined;
-    let stopped = false, signature = '', sessionKnown = false, needsRender = true;
+    let stopped = false, suspended = false, logoutInProgress = false, loggedOut = false, signature = '', sessionKnown = false, needsRender = true;
+    function clearContributionViews() {
+        for (const controller of contributionControllers.splice(0)) controller.abort();
+        for (const dispose of contributionCleanups.splice(0).reverse()) {
+            try { dispose(); }
+            catch { /* a contribution cannot prevent shell cleanup */ }
+        }
+        for (const slot of Object.values(contributionSlots ?? {})) {
+            slot?.replaceChildren();
+            if (slot) slot.hidden = true;
+        }
+        if (contributionLayout) contributionLayout.className = 'workspace-contribution-layout';
+    }
     function clearView() {
         generation++;
         active?.abort();
@@ -56,6 +141,7 @@ export function startShell({ root, title, loaders }: ShellOptions) {
         }
         catch { /* one provider cannot prevent shell cleanup */ }
         cleanup = undefined;
+        clearContributionViews();
         content?.replaceChildren();
     }
     function invalidateScope() {
@@ -70,25 +156,14 @@ export function startShell({ root, title, loaders }: ShellOptions) {
             noticeArea.hidden = false;
         }
     }
-    async function request(path: string, init: RequestInit = {}, signal?: AbortSignal, tenantId?: string) {
-        if (signal?.aborted)
-            throw new DOMException('Scope closed', 'AbortError');
-        const headers = new Headers(init.headers);
-        if (tenantId)
-            headers.set('X-QB-Tenant', tenantId);
-        const response = await fetch(path, { ...init, headers, credentials: 'same-origin', cache: 'no-store', signal });
-        const data = await response.json();
-        if (signal?.aborted)
-            throw new DOMException('Scope closed', 'AbortError');
-        if (!response.ok)
-            throw new PlatformError(data.error?.code ?? 'UNAVAILABLE', data.error?.message ?? 'Operation unavailable');
-        return data;
-    }
+    const request = (path: string, init: RequestInit = {}, signal?: AbortSignal, tenantId?: string) => requestJson(path, init, signal, tenantId);
     function renderLogin() {
         invalidateScope();
         root.replaceChildren();
         content = undefined;
         noticeArea = undefined;
+        contributionSlots = undefined;
+        contributionLayout = undefined;
         const welcome = el('section', 'login-story');
         const monogram = el('div', 'brand-symbol', 'Q');
         welcome.append(monogram, el('span', 'eyebrow', 'QUADBRIDGE PRODUCT PLATFORM'), el('h2', '', 'One foundation.\nYour next product.'), el('p', 'muted', 'A shared application shell. Your selected modules. Separate business ownership.'));
@@ -123,6 +198,7 @@ export function startShell({ root, title, loaders }: ShellOptions) {
                 if (stopped)
                     return;
                 requestedTenant = undefined;
+                loggedOut = false;
                 sessionKnown = true;
                 await refresh(true);
             }
@@ -155,9 +231,72 @@ export function startShell({ root, title, loaders }: ShellOptions) {
         content.append(el('h2', '', 'Workspace unavailable'), el('p', 'muted', message), button('Retry access', () => void refresh(true)));
         notice('Access could not be confirmed. The previous workspace has been cleared.');
     }
+    async function mountContributions(selected: ShellSnapshot['workspaces'][number], snap: Bootstrap, parent: AbortController, current: () => boolean) {
+        for (const binding of uiBindings) {
+            if (!current()) return;
+            if (binding.workspaceId !== selected.id || !UI_CONTRIBUTION_SLOTS.includes(binding.slot)) continue;
+            const slot = contributionSlots?.[binding.slot];
+            const descriptor = snap.uiContributions?.find(item => item.id === binding.contributionId);
+            if (!slot || !descriptor || !snap.modules.some(module => module.id === descriptor.moduleId) ||
+                !snap.permissions.includes(descriptor.permission)) continue;
+            const loader = Object.hasOwn(loaders, descriptor.moduleId) ? loaders[descriptor.moduleId] : undefined;
+            if (!loader) continue;
+
+            const controller = new AbortController();
+            const abortFromParent = () => controller.abort();
+            parent.signal.addEventListener('abort', abortFromParent, { once: true });
+            contributionControllers.push(controller);
+            const contributionCurrent = () => current() && !controller.signal.aborted;
+            const scoped = createScopedWorkspaceApi({
+                operations: snap.operations,
+                moduleId: descriptor.moduleId,
+                tenantId: snap.scope.tenantId,
+                signal: controller.signal,
+                isCurrent: contributionCurrent,
+                origin: () => location.origin,
+                onAccessFailure: accessFailure,
+                request
+            });
+            const contributionRoot = el('section', 'workspace-contribution-item');
+            slot.append(contributionRoot);
+            slot.hidden = false;
+            if (binding.slot === 'workspace.aside' && contributionLayout)
+                contributionLayout.className = 'workspace-contribution-layout with-aside';
+            try {
+                const loaded = await loader();
+                if (!contributionCurrent()) return;
+                const contribution = loaded && Object.hasOwn(loaded, descriptor.export)
+                    ? loaded[descriptor.export] as UiContribution | undefined : undefined;
+                if (!contribution || typeof contribution.mount !== 'function')
+                    throw new PlatformError('INCOMPATIBLE', `Contribution ${descriptor.id} is unavailable`);
+                const context: UiContributionContext = {
+                    root: contributionRoot,
+                    scope: Object.freeze({ ...snap.scope }),
+                    actor: Object.freeze({ ...snap.actor }),
+                    signal: controller.signal,
+                    locale: 'en',
+                    permissions: Object.freeze([descriptor.permission]),
+                    api: Object.freeze({ get: (path: string, signal?: AbortSignal) => scoped.get(path, signal) }),
+                    notice: message => { if (contributionCurrent()) notice(message); }
+                };
+                const dispose = contribution.mount(context);
+                if (dispose && typeof (dispose as unknown as { then?: unknown }).then === 'function') {
+                    void Promise.resolve(dispose as unknown as Promise<unknown>).catch(() => undefined);
+                    throw new PlatformError('INCOMPATIBLE', 'Contribution mounts must be synchronous');
+                }
+                if (typeof dispose === 'function') contributionCleanups.push(dispose);
+            }
+            catch {
+                if (contributionCurrent()) contributionRoot.replaceChildren(el('p', 'muted', `${descriptor.label} is unavailable.`));
+            }
+            finally {
+                parent.signal.removeEventListener('abort', abortFromParent);
+            }
+        }
+    }
     async function mountSelected() {
         // A hash event during a scope replacement cannot use the obsolete bootstrap.
-        if (!bootstrap || stopped || !content)
+        if (!bootstrap || stopped || suspended || logoutInProgress || !content)
             return;
         clearView();
         const ownGeneration = generation, controller = new AbortController();
@@ -203,39 +342,24 @@ export function startShell({ root, title, loaders }: ShellOptions) {
             if (!provider || typeof provider.mount !== 'function')
                 throw new PlatformError('INCOMPATIBLE', `Workspace export ${selected.export} is unavailable`);
             stage.replaceChildren();
-            const permitted = (method: string, path: string) => {
-                if (!current())
-                    throw new DOMException('Scope closed', 'AbortError');
-                if (!path.startsWith('/api/') || path.startsWith('//'))
-                    throw new PlatformError('DENIED', 'Only declared local operations are exposed');
-                const url = new URL(path, location.origin);
-                if (url.origin !== location.origin || url.hash || !snap.operations.some(r => r.moduleId === selected.moduleId && r.method === method && r.path === url.pathname))
-                    throw new PlatformError('DENIED', 'Operation is not exposed to this contribution');
-            };
-            const scopedRequest = async (method: 'GET' | 'POST', path: string, body?: unknown, commandId?: string, callSignal?: AbortSignal) => {
-                permitted(method, path);
-                if (callSignal?.aborted) throw new DOMException('Request cancelled', 'AbortError');
-                const signal = callSignal ? AbortSignal.any([controller.signal, callSignal]) : controller.signal;
-                try {
-                    const result = await request(path, method === 'GET' ? {} : { method, headers: { 'Content-Type': 'application/json', 'Idempotency-Key': commandId ?? crypto.randomUUID() }, body: JSON.stringify(body) }, signal, snap.scope.tenantId);
-                    if (!current() || callSignal?.aborted)
-                        throw new DOMException('Scope closed', 'AbortError');
-                    return result;
-                }
-                catch (e) {
-                    // A delayed denied response cannot clear a newer scope.
-                    if (current() && e instanceof PlatformError && ['DENIED', 'DISABLED', 'UNAUTHENTICATED'].includes(e.code))
-                        accessFailure(e);
-                    throw e;
-                }
-            };
+            const api = createScopedWorkspaceApi({
+                operations: snap.operations,
+                moduleId: selected.moduleId,
+                tenantId: snap.scope.tenantId,
+                signal: controller.signal,
+                isCurrent: current,
+                origin: () => location.origin,
+                onAccessFailure: accessFailure,
+                request
+            });
             const ctx: WorkspaceContext = {
                 root: stage, scope: Object.freeze({ ...snap.scope }), signal: controller.signal, locale: 'en', permissions: Object.freeze([...snap.permissions]),
                 notice: message => { if (current())
                     notice(message); },
-                api: { get: (path, signal) => scopedRequest('GET', path, undefined, undefined, signal), post: (path, body, key, signal) => scopedRequest('POST', path, body, key, signal) }
+                api
             };
             cleanup = provider.mount(ctx) || undefined;
+            await mountContributions(selected, snap, controller, current);
         }
         catch (e) {
             if (current())
@@ -246,66 +370,48 @@ export function startShell({ root, title, loaders }: ShellOptions) {
         if (!bootstrap)
             return;
         clearView();
-        root.replaceChildren();
         needsRender = false;
         const snap = bootstrap;
-        const shell = el('div', `shell ${snap.product.layout === 'top' ? 'top-layout' : ''}`), side = el('aside', 'sidebar');
-        const brand = el('div', 'brand-row');
-        brand.append(el('span', 'brand-symbol', 'Q'), el('span', 'brand', 'Quadbridge'));
-        side.append(brand, el('span', 'eyebrow product-eyebrow', 'PRODUCT WORKSPACE'), el('span', 'product-name', snap.product.title), el('p', 'muted small', snap.product.description));
-        const nav = el('nav');
-        nav.setAttribute('aria-label', 'Workspaces');
-        for (const w of snap.workspaces) {
-            const a = el('a', 'nav-item', w.label);
-            a.setAttribute('data-workspace-path', w.path);
-            a.href = `#${w.path}`;
-            nav.append(a);
-        }
-        side.append(nav);
-        const meta = el('div', 'sidebar-meta');
-        meta.append(el('span', 'pill', 'LOCAL DEVELOPER PROFILE'), el('p', 'small muted', `${snap.modules.length} selected modules`), el('p', 'small muted break', snap.scope.instanceId));
-        side.append(meta);
-        const main = el('main', 'main'), header = el('header', 'header'), scope = el('label', 'scope-label', 'Tenant'), select = el('select');
-        select.setAttribute('aria-label', 'Tenant');
-        for (const t of snap.tenants) {
-            const o = el('option', '', t);
-            o.value = t;
-            o.selected = t === snap.scope.tenantId;
-            select.append(o);
-        }
-        select.addEventListener('change', () => {
-            if (stopped)
-                return;
-            requestedTenant = select.value;
-            invalidateScope();
-            notice('Loading authorized tenant context…');
-            void refresh(true);
+        const view = presentation({
+            root,
+            snapshot: snap,
+            onTenantChange: tenantId => {
+                if (stopped || !snap.tenants.includes(tenantId)) return;
+                requestedTenant = tenantId;
+                invalidateScope();
+                notice('Loading authorized tenant context…');
+                void refresh(true);
+            },
+            onSignOut: () => {
+                if (logoutInProgress || stopped) return;
+                logoutInProgress = true;
+                loggedOut = false;
+                bootstrapAbort?.abort();
+                refreshEpoch++;
+                sessionKnown = false;
+                invalidateScope();
+                root.replaceChildren(el('p', 'muted', 'Signing out…'));
+                content = undefined;
+                noticeArea = undefined;
+                void request('/api/logout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })
+                    .catch(() => undefined)
+                    .finally(() => {
+                        logoutInProgress = false;
+                        loggedOut = true;
+                        sessionKnown = false;
+                        requestedTenant = undefined;
+                        if (!stopped && !suspended) renderLogin();
+                    });
+            }
         });
-        scope.append(select);
-        header.append(scope, el('span', 'small muted', snap.actor.id), button('Sign out', () => {
-            bootstrapAbort?.abort();
-            refreshEpoch++;
-            sessionKnown = false;
-            invalidateScope();
-            root.replaceChildren(el('p', 'muted', 'Signing out…'));
-            content = undefined;
-            noticeArea = undefined;
-            void request('/api/logout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' }).finally(() => { if (!stopped) {
-                requestedTenant = undefined;
-                renderLogin();
-            } });
-        }));
-        noticeArea = el('div', 'notice');
-        noticeArea.hidden = true;
-        noticeArea.setAttribute('role', 'status');
-        content = el('div', 'content');
-        main.append(header, noticeArea, content);
-        shell.append(side, main);
-        root.append(shell);
+        content = view.content;
+        noticeArea = view.noticeArea;
+        contributionSlots = view.contributionSlots;
+        contributionLayout = view.contributionLayout;
         void mountSelected();
     }
     async function refresh(force = false) {
-        if (stopped || (refreshing && !force))
+        if (stopped || suspended || logoutInProgress || loggedOut || (refreshing && !force))
             return;
         bootstrapAbort?.abort();
         const controller = new AbortController();
@@ -337,10 +443,40 @@ export function startShell({ root, title, loaders }: ShellOptions) {
                 refreshing = false;
         }
     }
-    const hash = () => void mountSelected();
+    const suspend = () => {
+        if (stopped || suspended) return;
+        suspended = true;
+        bootstrapAbort?.abort();
+        refreshEpoch++;
+        sessionKnown = false;
+        invalidateScope();
+        content = undefined;
+        noticeArea = undefined;
+        root.replaceChildren(el('p', 'muted', 'Workspace paused. Reopen the app to check access.'));
+    };
+    const resume = () => {
+        if (stopped || !suspended) return;
+        suspended = false;
+        if (logoutInProgress) {
+            root.replaceChildren(el('p', 'muted', 'Signing out…'));
+            content = undefined;
+            noticeArea = undefined;
+            return;
+        }
+        if (loggedOut) {
+            renderLogin();
+            return;
+        }
+        root.replaceChildren(el('p', 'muted', 'Checking access…'));
+        content = undefined;
+        noticeArea = undefined;
+        void refresh(true);
+    };
+    const unbindLifecycle = lifecycle?.bind({ suspend, resume });
+    const hash = () => { if (!suspended) void mountSelected(); };
     window.addEventListener('hashchange', hash);
     const timer = setInterval(() => { if (sessionKnown)
         void refresh(); }, 15000);
     void refresh();
-    return () => { stopped = true; bootstrapAbort?.abort(); refreshEpoch++; clearInterval(timer); window.removeEventListener('hashchange', hash); invalidateScope(); root.replaceChildren(); };
+    return () => { stopped = true; unbindLifecycle?.(); bootstrapAbort?.abort(); refreshEpoch++; clearInterval(timer); window.removeEventListener('hashchange', hash); invalidateScope(); root.replaceChildren(); };
 }

@@ -1,0 +1,37 @@
+{
+  "observedAt": "2026-10-02T01:37:43.605Z",
+  "candidate": "72df266f5299cace2b31edc939707949ba605d1d40fc031ac4724149af7bddfa",
+  "status": "PASSED",
+  "observer": "/root through actual cua_repl browser UI",
+  "surface": {
+    "observedAt": "2026-10-02T01:33:44.472Z",
+    "mobile": "http://127.0.0.1:63776",
+    "desktop": "http://127.0.0.1:63777",
+    "fixture": "new task-owned local developer Service Desk data",
+    "instance": "mobile-browser-review"
+  },
+  "viewport": {
+    "cssWidth": 360,
+    "cssHeight": 800,
+    "documentWidth": 345,
+    "accountRight": 329.37030029296875,
+    "horizontalOverflow": false
+  },
+  "observations": [
+    "Signed in through actual mobile UI using task-owned local reviewer fixture",
+    "Created Mobile shell final verification in tenant-a",
+    "Tenant-b showed zero requests; tenant-a retained one",
+    "More > Request overview loaded lazy workspace and dismissed menu",
+    "Mobile and ordinary desktop overview displayed the same record ID 93751ec5-4183-4296-af1a-f57f6f4ed6c4",
+    "Account displayed reviewer and mobile-browser-review; Sign out returned login and removed protected content",
+    "Observed browser warn/error list empty at overview check",
+    "Temporary viewport reset; screenshot then saved; both created tabs closed",
+    "Original fixture session79455 accepted stop and exited0 after both listeners and runtime closed"
+  ],
+  "screenshot": ".local/mobile-001/mobile-final-browser.jpg",
+  "limitations": [
+    "Browser viewport emulation does not qualify real phone keyboard, safe areas, assistive technology or native lifecycle.",
+    "Offline planning HTML navigation was previously policy blocked and remains blocked; no workaround was attempted. The tested HTTP product app is a separate authorized surface.",
+    "Report validation checks saved observations and candidate identity, not a second browser execution."
+  ]
+}

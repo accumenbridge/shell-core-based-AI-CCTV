@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { DatabaseSync } from 'node:sqlite';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -79,6 +80,32 @@ test('product and AI versions are idempotent when equal and immutable across sto
     assert.equal(store.product('sample-product').version, '10.0.0');
     assert.equal(store.products()[0].version, '10.0.0');
     assert.deepEqual(new Set(store.productVersions().map(row=>row.version)),new Set(['1.0.0','1.0.1','9.0.0','10.0.0']));
+});
+
+test('family provenance is atomic, exact-version and immutable with the product version', () => {
+    const store = new ControlPlaneStore(':memory:');
+    const derived = product('1.2.3', 'Family example');
+    const familyDerivation = {
+        schema: 'quadbridge.family-derivation.v1', familyId: 'service-operations', familyVersion: '1.0.0',
+        selection: ['requests'], moduleVersions: [{ id: 'service-desk', version: '0.2.0' }], bindingChoices: [], reasons: [],
+        productDigest: 'placeholder', sourceFingerprint: 'a'.repeat(64)
+    };
+    familyDerivation.productDigest = createHash('sha256').update(JSON.stringify({
+        bindings: [], description: '', id: derived.id, layout: 'sidebar', modules: [], platformAbi: 'quadbridge.module.v1', title: derived.title, version: derived.version
+    })).digest('hex');
+    try {
+        store.putProduct(derived, actor, undefined, familyDerivation);
+        const auditCount = store.auditLog(500).length;
+        assert.deepEqual(store.productFamilyDerivation(derived.id, derived.version), familyDerivation);
+        store.putProduct(derived, actor, undefined, familyDerivation);
+        assert.equal(store.auditLog(500).length, auditCount);
+        assert.throws(() => store.putProduct(derived, actor, undefined, { ...familyDerivation, selection: ['requests','shared-library'] }), /different or missing family provenance/);
+        store.putProduct(product('1.2.4', 'Manually edited'), actor);
+        assert.equal(store.productFamilyDerivation(derived.id, '1.2.4'), undefined);
+        assert.deepEqual(store.productFamilyDerivation(derived.id, derived.version), familyDerivation);
+        assert.equal(store.auditLog(500).filter(row => row.action === 'product.version.put').length, auditCount + 1,
+            'the explicit next product version adds its one expected version audit');
+    } finally { store.close(); }
 });
 
 test('legacy audit migration preserves every old value and marks its actor unknown', async t => {

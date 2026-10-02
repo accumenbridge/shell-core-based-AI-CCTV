@@ -119,6 +119,19 @@ test('reviewed source copy detects a maintained input changed while the asynchro
     }finally{clearTimeout(timer);watcher.close();}
 });
 
+test('reviewed source copy includes fixed family data as inert input and rejects neighboring files', async t => {
+    const root=await mkdtemp(join(tmpdir(),'qb-family-copy-source-'));
+    const destination=await mkdtemp(join(tmpdir(),'qb-family-copy-destination-'));
+    t.after(async()=>{await rm(root,{recursive:true,force:true});await rm(destination,{recursive:true,force:true});});
+    const file=join(root,'families','service-operations','family.json');
+    await mkdir(join(root,'families','service-operations'),{recursive:true});
+    await writeFile(file,'{"schema":"quadbridge.product-family.v1","id":"service-operations"}\n');
+    await copyReviewedBuildInputs(root,destination);
+    assert.equal(await readFile(join(destination,'families','service-operations','family.json'),'utf8'),await readFile(file,'utf8'));
+    await writeFile(join(root,'families','service-operations','unexpected.mjs'),'export default true;\n');
+    await assert.rejects(copyReviewedBuildInputs(root,destination),/Unreviewed build input path/);
+});
+
 test('TAP verification accepts explicit terminal summaries with skipped and TODO accounting', () => {
     const output = validTap({ tests: 3, passed: 1, skipped: 1, todo: 1 });
     assert.deepEqual(parseTapReport(output, 1), {

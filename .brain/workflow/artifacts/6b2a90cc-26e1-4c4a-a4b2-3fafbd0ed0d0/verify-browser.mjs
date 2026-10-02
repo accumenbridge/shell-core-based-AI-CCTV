@@ -1,0 +1,24 @@
+import fs from 'node:fs';import {createHash} from 'node:crypto';
+const dir='.local/extension-001',read=p=>JSON.parse(fs.readFileSync(p,'utf8')),frozen=read(`${dir}/frozen.json`),owner=read(`${dir}/browser-01-owner-evidence.json`),browser=read(`${dir}/browser-observations-01.json`),close=read(`${dir}/browser-console-original-close.json`);
+for(const f of frozen.candidate.files)if(createHash('sha256').update(fs.readFileSync(f.path)).digest('hex')!==f.sha256)throw Error('Frozen source changed');
+if(owner.candidate!==frozen.candidate.digest||owner.contractDigest!==frozen.contractDigest||browser.candidate!==owner.candidate||browser.fixtureId!==owner.fixtureId||close.fixtureId!==owner.fixtureId)throw Error('Source/fixture binding mismatch');
+const at=label=>browser.observations.find(i=>i.label===label)?.dom??'';
+const request='Inspect pump seals — panel request',doc='Pump reference — panel test';
+const checks=[
+ ['current source products and family available',at('source-family-catalogue-loaded').includes('combined@0.2.3')&&at('source-family-catalogue-loaded').includes('Reviewed product family')],
+ ['actual reference title/version/excerpt',at('live-indexed-reference-result').includes(`${doc} · v1`)&&at('live-indexed-reference-result').includes('panelneedle: isolate the service pump')],
+ ['real worker and request cards',at('library-return').includes('READY · worker SUCCEEDED')&&at('library-return').includes(request)&&at('library-return').includes('Recent requests')],
+ ['other tenant indexed search empty',at('tenant-b-search-empty').includes('customer-b" [selected]')&&at('tenant-b-search-empty').includes('No indexed matches.')&&!at('tenant-b-search-empty').includes(doc)&&!at('tenant-b-search-empty').includes(request)],
+ ['other tenant cards empty',at('tenant-b-cards-empty').includes('No requests in the current tenant.')&&!at('tenant-b-cards-empty').includes(request)&&!at('tenant-b-cards-empty').includes(doc)],
+ ['viewer reads library without write control',at('viewer-library').includes('generic: viewer')&&at('viewer-library').includes(request)&&at('viewer-library').includes('Read access only.')&&!at('viewer-library').includes('button "Save and index"')],
+ ['viewer reads reference without Desk writes',at('viewer-reference-read-only').includes(`${doc} · v1`)&&!at('viewer-reference-read-only').includes('button "Create request"')&&!at('viewer-reference-read-only').includes('button "Close request"')],
+ ['logout clears both panel types',at('viewer-logout-cleared').includes('textbox "Username"')&&!at('viewer-logout-cleared').includes('Reference search')&&!at('viewer-logout-cleared').includes('Recent requests')],
+ ['restart retains same indexed document and cards',at('restart-retained-library-cards').includes('7948774b-cff6-41d3-9ab9-dc649a2fc70e')&&at('restart-retained-library-cards').includes('READY · worker SUCCEEDED')&&at('restart-retained-library-cards').includes(request)],
+ ['restart embedded search retains version/excerpt',at('restart-retained-reference').includes(`${doc} · v1`)&&at('restart-retained-reference').includes('panelneedle: isolate the service pump')],
+ ['positive final browser stop',at('final-stop-result').includes('STOPPED with an empty process tree and cleaned execution recorded.')],
+ ['two original native attempts positively closed',owner.attempts.length===2&&owner.attempts.every(a=>a.state==='STOPPED'&&a.physicalState==='EMPTY'&&a.emptyObserved===1&&a.helperClosed===1&&a.executionClean===1)],
+ ['exact immutable new product binding',owner.instances[0].productId==='combined'&&owner.instances[0].version==='0.2.3'&&owner.instances[0].artifactDigest===owner.builds[0].snapshotDigest],
+ ['real separate owned stored request and indexed document',owner.requests.length===1&&owner.requests[0].tenant==='customer-a'&&owner.requests[0].title===request&&owner.documents.length===1&&owner.documents[0].id==='7948774b-cff6-41d3-9ab9-dc649a2fc70e'&&owner.documents[0].state==='READY'],
+ ['original graceful console close0 observed',close.observedExitCode===0&&owner.sourceUnchanged]
+];for(const [label,passed] of checks)if(!passed)throw Error(`Captured actual evidence missing: ${label}`);
+const result={kind:'manual-browser-evidence-verification',candidate:frozen.candidate.digest,contractDigest:frozen.contractDigest,fixtureId:owner.fixtureId,sourceUnchanged:true,assertions:checks.map(([label,passed])=>({label,passed})),limitations:['This verifies captured actual Chrome observations and readonly original native records; it is not another browser driver.','Early async views, unavailable heading waits and transient screenshot deadlines were inspected; no duplicate builds/starts or browser policy bypass.','Local trusted profile only; hosted/provider/native-phone/production unqualified.']};fs.writeFileSync(`${dir}/browser-verified-01.json`,JSON.stringify(result,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({verified:checks.length,candidate:frozen.candidate.digest}));

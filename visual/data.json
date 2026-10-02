@@ -2,12 +2,12 @@
   "modules": [
     {
       "id": "handoff",
-      "version": "0.2.1",
+      "version": "0.2.3",
       "abi": "quadbridge.module.v1",
       "dependencies": [
         {
           "id": "knowledge",
-          "version": "0.2.1"
+          "version": "0.2.3"
         }
       ],
       "provides": [],
@@ -122,7 +122,7 @@
     },
     {
       "id": "knowledge",
-      "version": "0.2.1",
+      "version": "0.2.3",
       "abi": "quadbridge.module.v1",
       "dependencies": [],
       "provides": [
@@ -133,6 +133,220 @@
       "permissions": [
         "knowledge.read",
         "knowledge.write"
+      ],
+      "operations": [
+        {
+          "id": "knowledge.documents.search",
+          "version": 1,
+          "title": "Search documents",
+          "description": "Search the current tenant’s indexed Knowledge documents.",
+          "permission": "knowledge.read",
+          "kind": "read",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "outputSchema": {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "maxItems": 25,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "excerpt": {
+                      "type": "string",
+                      "maxLength": 512
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "version",
+                    "excerpt"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "coverage": {
+                "type": "string",
+                "enum": [
+                  "INDEXED_DOCUMENTS_ONLY"
+                ]
+              },
+              "query": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              }
+            },
+            "required": [
+              "items",
+              "coverage"
+            ],
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "knowledge.documents.get",
+          "version": 1,
+          "title": "Get a document",
+          "description": "Read a bounded tenant-owned Knowledge document projection.",
+          "permission": "knowledge.read",
+          "kind": "read",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "documentId"
+            ],
+            "additionalProperties": false
+          },
+          "outputSchema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "PENDING",
+                  "READY"
+                ]
+              },
+              "excerpt": {
+                "type": "string",
+                "maxLength": 4096
+              },
+              "truncated": {
+                "type": "boolean"
+              },
+              "bodyDigest": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "version",
+              "state",
+              "excerpt",
+              "truncated",
+              "bodyDigest"
+            ],
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "knowledge.documents.create",
+          "version": 1,
+          "title": "Create a document",
+          "description": "Create a tenant-owned Knowledge document and enqueue its index job.",
+          "permission": "knowledge.write",
+          "kind": "write",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "body": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64000
+              }
+            },
+            "required": [
+              "title",
+              "body"
+            ],
+            "additionalProperties": false
+          },
+          "outputSchema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "PENDING"
+                ]
+              },
+              "jobId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "version",
+              "state",
+              "jobId"
+            ],
+            "additionalProperties": false
+          }
+        }
       ],
       "routes": [
         {
@@ -173,6 +387,14 @@
           "path": "/library",
           "permission": "knowledge.read",
           "export": "workspace"
+        }
+      ],
+      "uiContributions": [
+        {
+          "id": "knowledge.referenceSearch",
+          "permission": "knowledge.read",
+          "export": "referenceSearchPanel",
+          "label": "Reference search"
         }
       ],
       "schema": {
@@ -291,7 +513,7 @@
     },
     {
       "id": "service-desk",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "abi": "quadbridge.module.v1",
       "dependencies": [],
       "provides": [
@@ -351,6 +573,14 @@
           "path": "/request-overview",
           "permission": "desk.read",
           "export": "overviewWorkspace"
+        }
+      ],
+      "uiContributions": [
+        {
+          "id": "service-desk.recentRequests",
+          "permission": "desk.read",
+          "export": "recentRequestsPanel",
+          "label": "Recent requests"
         }
       ],
       "schema": {
@@ -425,7 +655,7 @@
   "products": [
     {
       "id": "combined",
-      "version": "0.2.1",
+      "version": "0.2.3",
       "platformAbi": "quadbridge.module.v1",
       "title": "Operations + Knowledge",
       "description": "Two domain families composed into one application.",
@@ -433,15 +663,15 @@
       "modules": [
         {
           "id": "service-desk",
-          "version": "0.2.0"
+          "version": "0.2.1"
         },
         {
           "id": "knowledge",
-          "version": "0.2.1"
+          "version": "0.2.3"
         },
         {
           "id": "handoff",
-          "version": "0.2.1"
+          "version": "0.2.3"
         }
       ],
       "bindings": [
@@ -466,7 +696,7 @@
     },
     {
       "id": "knowledge",
-      "version": "0.2.1",
+      "version": "0.2.3",
       "platformAbi": "quadbridge.module.v1",
       "title": "Knowledge Library",
       "description": "Documents, background indexing and connected-product action.",
@@ -474,11 +704,11 @@
       "modules": [
         {
           "id": "knowledge",
-          "version": "0.2.1"
+          "version": "0.2.3"
         },
         {
           "id": "handoff",
-          "version": "0.2.1"
+          "version": "0.2.3"
         }
       ],
       "bindings": [
@@ -513,7 +743,7 @@
     },
     {
       "id": "service-desk",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "platformAbi": "quadbridge.module.v1",
       "title": "Service Desk",
       "description": "A small non-AI business product.",
@@ -521,7 +751,7 @@
       "modules": [
         {
           "id": "service-desk",
-          "version": "0.2.0"
+          "version": "0.2.1"
         }
       ],
       "bindings": []
@@ -595,6 +825,57 @@
       }
     }
   ],
+  "families": [
+    {
+      "schema": "quadbridge.product-family.v1",
+      "id": "service-operations",
+      "version": "1.0.0",
+      "title": "Service Operations",
+      "description": "Start with service requests, then add a shared library and reviewed document handoff when your work needs them.",
+      "requiredFeatureIds": [
+        "requests"
+      ],
+      "defaultFeatureIds": [
+        "requests"
+      ],
+      "features": [
+        {
+          "id": "requests",
+          "label": "Requests",
+          "description": "Create, track and close service requests.",
+          "moduleIds": [
+            "service-desk"
+          ]
+        },
+        {
+          "id": "shared-library",
+          "label": "Shared library",
+          "description": "Add indexed reference documents for the service team.",
+          "moduleIds": [
+            "knowledge"
+          ],
+          "requires": [
+            "requests"
+          ]
+        },
+        {
+          "id": "document-handoff",
+          "label": "Document handoff",
+          "description": "Attach a reviewed local knowledge and request handoff to each request.",
+          "moduleIds": [
+            "handoff"
+          ],
+          "requires": [
+            "shared-library"
+          ],
+          "bindingChoices": {
+            "handoff:knowledge.document.read.v1": "local",
+            "handoff:desk.requests.create.v2": "local"
+          }
+        }
+      ]
+    }
+  ],
   "packages": [
     {
       "id": "ai-core",
@@ -602,6 +883,10 @@
     },
     {
       "id": "backend-host",
+      "version": "0.2.0"
+    },
+    {
+      "id": "client-core",
       "version": "0.2.0"
     },
     {
@@ -622,6 +907,10 @@
     },
     {
       "id": "local-access",
+      "version": "0.2.0"
+    },
+    {
+      "id": "mobile-shell",
       "version": "0.2.0"
     },
     {
@@ -651,7 +940,7 @@
       "plan": {
         "product": {
           "id": "combined",
-          "version": "0.2.1",
+          "version": "0.2.3",
           "platformAbi": "quadbridge.module.v1",
           "title": "Operations + Knowledge",
           "description": "Two domain families composed into one application.",
@@ -659,15 +948,15 @@
           "modules": [
             {
               "id": "handoff",
-              "version": "0.2.1"
+              "version": "0.2.3"
             },
             {
               "id": "knowledge",
-              "version": "0.2.1"
+              "version": "0.2.3"
             },
             {
               "id": "service-desk",
-              "version": "0.2.0"
+              "version": "0.2.1"
             }
           ],
           "bindings": [
@@ -693,7 +982,7 @@
         "modules": [
           {
             "id": "knowledge",
-            "version": "0.2.1",
+            "version": "0.2.3",
             "abi": "quadbridge.module.v1",
             "dependencies": [],
             "provides": [
@@ -704,6 +993,220 @@
             "permissions": [
               "knowledge.read",
               "knowledge.write"
+            ],
+            "operations": [
+              {
+                "id": "knowledge.documents.search",
+                "version": 1,
+                "title": "Search documents",
+                "description": "Search the current tenant’s indexed Knowledge documents.",
+                "permission": "knowledge.read",
+                "kind": "read",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "maxItems": 25,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "title": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 200
+                          },
+                          "version": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "excerpt": {
+                            "type": "string",
+                            "maxLength": 512
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "version",
+                          "excerpt"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "coverage": {
+                      "type": "string",
+                      "enum": [
+                        "INDEXED_DOCUMENTS_ONLY"
+                      ]
+                    },
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "coverage"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "id": "knowledge.documents.get",
+                "version": 1,
+                "title": "Get a document",
+                "description": "Read a bounded tenant-owned Knowledge document projection.",
+                "permission": "knowledge.read",
+                "kind": "read",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "documentId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": [
+                    "documentId"
+                  ],
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "state": {
+                      "type": "string",
+                      "enum": [
+                        "PENDING",
+                        "READY"
+                      ]
+                    },
+                    "excerpt": {
+                      "type": "string",
+                      "maxLength": 4096
+                    },
+                    "truncated": {
+                      "type": "boolean"
+                    },
+                    "bodyDigest": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "version",
+                    "state",
+                    "excerpt",
+                    "truncated",
+                    "bodyDigest"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "id": "knowledge.documents.create",
+                "version": 1,
+                "title": "Create a document",
+                "description": "Create a tenant-owned Knowledge document and enqueue its index job.",
+                "permission": "knowledge.write",
+                "kind": "write",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    },
+                    "body": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 64000
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "body"
+                  ],
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "state": {
+                      "type": "string",
+                      "enum": [
+                        "PENDING"
+                      ]
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "version",
+                    "state",
+                    "jobId"
+                  ],
+                  "additionalProperties": false
+                }
+              }
             ],
             "routes": [
               {
@@ -744,6 +1247,14 @@
                 "path": "/library",
                 "permission": "knowledge.read",
                 "export": "workspace"
+              }
+            ],
+            "uiContributions": [
+              {
+                "id": "knowledge.referenceSearch",
+                "permission": "knowledge.read",
+                "export": "referenceSearchPanel",
+                "label": "Reference search"
               }
             ],
             "schema": {
@@ -862,7 +1373,7 @@
           },
           {
             "id": "service-desk",
-            "version": "0.2.0",
+            "version": "0.2.1",
             "abi": "quadbridge.module.v1",
             "dependencies": [],
             "provides": [
@@ -922,6 +1433,14 @@
                 "path": "/request-overview",
                 "permission": "desk.read",
                 "export": "overviewWorkspace"
+              }
+            ],
+            "uiContributions": [
+              {
+                "id": "service-desk.recentRequests",
+                "permission": "desk.read",
+                "export": "recentRequestsPanel",
+                "label": "Recent requests"
               }
             ],
             "schema": {
@@ -994,12 +1513,12 @@
           },
           {
             "id": "handoff",
-            "version": "0.2.1",
+            "version": "0.2.3",
             "abi": "quadbridge.module.v1",
             "dependencies": [
               {
                 "id": "knowledge",
-                "version": "0.2.1"
+                "version": "0.2.3"
               }
             ],
             "provides": [],
@@ -1150,7 +1669,7 @@
       "plan": {
         "product": {
           "id": "knowledge",
-          "version": "0.2.1",
+          "version": "0.2.3",
           "platformAbi": "quadbridge.module.v1",
           "title": "Knowledge Library",
           "description": "Documents, background indexing and connected-product action.",
@@ -1158,11 +1677,11 @@
           "modules": [
             {
               "id": "handoff",
-              "version": "0.2.1"
+              "version": "0.2.3"
             },
             {
               "id": "knowledge",
-              "version": "0.2.1"
+              "version": "0.2.3"
             }
           ],
           "bindings": [
@@ -1188,7 +1707,7 @@
         "modules": [
           {
             "id": "knowledge",
-            "version": "0.2.1",
+            "version": "0.2.3",
             "abi": "quadbridge.module.v1",
             "dependencies": [],
             "provides": [
@@ -1199,6 +1718,220 @@
             "permissions": [
               "knowledge.read",
               "knowledge.write"
+            ],
+            "operations": [
+              {
+                "id": "knowledge.documents.search",
+                "version": 1,
+                "title": "Search documents",
+                "description": "Search the current tenant’s indexed Knowledge documents.",
+                "permission": "knowledge.read",
+                "kind": "read",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "maxItems": 25,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "title": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 200
+                          },
+                          "version": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "excerpt": {
+                            "type": "string",
+                            "maxLength": 512
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "version",
+                          "excerpt"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "coverage": {
+                      "type": "string",
+                      "enum": [
+                        "INDEXED_DOCUMENTS_ONLY"
+                      ]
+                    },
+                    "query": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "coverage"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "id": "knowledge.documents.get",
+                "version": 1,
+                "title": "Get a document",
+                "description": "Read a bounded tenant-owned Knowledge document projection.",
+                "permission": "knowledge.read",
+                "kind": "read",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "documentId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": [
+                    "documentId"
+                  ],
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "state": {
+                      "type": "string",
+                      "enum": [
+                        "PENDING",
+                        "READY"
+                      ]
+                    },
+                    "excerpt": {
+                      "type": "string",
+                      "maxLength": 4096
+                    },
+                    "truncated": {
+                      "type": "boolean"
+                    },
+                    "bodyDigest": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "version",
+                    "state",
+                    "excerpt",
+                    "truncated",
+                    "bodyDigest"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "id": "knowledge.documents.create",
+                "version": 1,
+                "title": "Create a document",
+                "description": "Create a tenant-owned Knowledge document and enqueue its index job.",
+                "permission": "knowledge.write",
+                "kind": "write",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    },
+                    "body": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 64000
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "body"
+                  ],
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "state": {
+                      "type": "string",
+                      "enum": [
+                        "PENDING"
+                      ]
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "version",
+                    "state",
+                    "jobId"
+                  ],
+                  "additionalProperties": false
+                }
+              }
             ],
             "routes": [
               {
@@ -1239,6 +1972,14 @@
                 "path": "/library",
                 "permission": "knowledge.read",
                 "export": "workspace"
+              }
+            ],
+            "uiContributions": [
+              {
+                "id": "knowledge.referenceSearch",
+                "permission": "knowledge.read",
+                "export": "referenceSearchPanel",
+                "label": "Reference search"
               }
             ],
             "schema": {
@@ -1357,12 +2098,12 @@
           },
           {
             "id": "handoff",
-            "version": "0.2.1",
+            "version": "0.2.3",
             "abi": "quadbridge.module.v1",
             "dependencies": [
               {
                 "id": "knowledge",
-                "version": "0.2.1"
+                "version": "0.2.3"
               }
             ],
             "provides": [],
@@ -1528,7 +2269,7 @@
       "plan": {
         "product": {
           "id": "service-desk",
-          "version": "0.2.0",
+          "version": "0.2.1",
           "platformAbi": "quadbridge.module.v1",
           "title": "Service Desk",
           "description": "A small non-AI business product.",
@@ -1536,7 +2277,7 @@
           "modules": [
             {
               "id": "service-desk",
-              "version": "0.2.0"
+              "version": "0.2.1"
             }
           ],
           "bindings": []
@@ -1544,7 +2285,7 @@
         "modules": [
           {
             "id": "service-desk",
-            "version": "0.2.0",
+            "version": "0.2.1",
             "abi": "quadbridge.module.v1",
             "dependencies": [],
             "provides": [
@@ -1604,6 +2345,14 @@
                 "path": "/request-overview",
                 "permission": "desk.read",
                 "export": "overviewWorkspace"
+              }
+            ],
+            "uiContributions": [
+              {
+                "id": "service-desk.recentRequests",
+                "permission": "desk.read",
+                "export": "recentRequestsPanel",
+                "label": "Recent requests"
               }
             ],
             "schema": {

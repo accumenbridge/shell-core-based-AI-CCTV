@@ -43,7 +43,9 @@ async function fixture(t, { buildScript, runnerScript, sourceEdits = {}, timeout
     const snapshot=loadSourceSnapshot(root);
     store=new ControlPlaneStore(join(temp,'control-plane.sqlite'));
     importSourceSnapshot(store,snapshot);
-    const definition={id:'runner-probe-product',version:'1.0.0',platformAbi:'quadbridge.module.v1',title:'Runner probe product',description:'',layout:'sidebar',modules:[{id:'service-desk',version:'0.2.0'}],bindings:[]};
+    const deskModule=snapshot.modules.find(module=>module.id==='service-desk');
+    assert.ok(deskModule,'the current source snapshot includes Service Desk');
+    const definition={id:'runner-probe-product',version:'1.0.0',platformAbi:'quadbridge.module.v1',title:'Runner probe product',description:'',layout:'sidebar',modules:[{id:'service-desk',version:deskModule.version}],bindings:[]};
     const plan=resolve(definition,snapshot.modules);
     store.putProduct(plan.product,actor);
     const createWorker=async()=>{worker=await LocalBuildWorker.create({root,store,snapshot,pollMs:100,timeoutMs,leaseMs:30000});return worker;};

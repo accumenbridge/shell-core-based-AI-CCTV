@@ -1,0 +1,17 @@
+{
+  "schema": "quadbridge.ui-slots.v1",
+  "bindings": [
+    {
+      "workspaceId": "desk.requests",
+      "slot": "workspace.aside",
+      "contributionId": "knowledge.referenceSearch",
+      "optional": true
+    },
+    {
+      "workspaceId": "knowledge.library",
+      "slot": "workspace.footer",
+      "contributionId": "service-desk.recentRequests",
+      "optional": true
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "observedAt": "2026-10-02T01:16:46.641Z",
+  "candidate": "608e1b33bbb1f4ab6715f07419054731d8a328d04d28c0abd6ab22170331a9ed",
+  "status": "PASSED",
+  "surface": "Actual loopback mobile Service Desk and ordinary desktop product view",
+  "viewport": {
+    "cssWidth": 360,
+    "cssHeight": 800,
+    "documentWidth": 347,
+    "horizontalOverflow": false
+  },
+  "observations": [
+    "Signed in as new task-owned reviewer fixture with tenant-a and tenant-b",
+    "Created Mobile shell verification 0108 in tenant-a through mobile UI",
+    "Tenant-b showed zero requests; returning tenant-a showed the created record",
+    "More opened and selected Request overview; overlay dismissed and lazy workspace loaded",
+    "Mobile and ordinary desktop overview both displayed record d225577a-cd81-4975-87be-0006a404ef66",
+    "Mobile Account showed reviewer and mobile-browser-review instance; Sign out returned to login with protected content removed",
+    "Observed browser error/warn log list empty at overview check"
+  ],
+  "limitations": [
+    "Browser viewport emulation is not physical phone or native keyboard/safe-area/device qualification",
+    "First fixture normal stop stdin was closed; exact current listener owner, command and creation time were verified and its process exit observed after forced termination. Application close callback was not observed. Owned data retained; historical owners untouched.",
+    "A prior offline planning HTML file navigation remains policy blocked; no workaround was attempted. This observation is the actual separately authorized HTTP application."
+  ]
+}

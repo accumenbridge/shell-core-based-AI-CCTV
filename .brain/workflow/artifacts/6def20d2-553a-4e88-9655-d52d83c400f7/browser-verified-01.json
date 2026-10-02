@@ -1,0 +1,74 @@
+{
+  "kind": "manual-browser-evidence-verification",
+  "actualProcess": [
+    "node",
+    ".local/family-001/verify-browser.mjs"
+  ],
+  "candidate": "0a2749127a73d23009710c3c178f88642ffb503d3eed889c723d7ac33dd13335",
+  "contractDigest": "f0381f3076ceacd1cddc32e455f38245ec4978218b43b4dee5898ed54a531768",
+  "fixtureId": "129c2e42-3246-47dd-9a05-8910c09957f9",
+  "assertions": [
+    {
+      "label": "required business diagnostic",
+      "passed": true
+    },
+    {
+      "label": "preview removed on feature change",
+      "passed": true
+    },
+    {
+      "label": "fresh save starts unchecked",
+      "passed": true
+    },
+    {
+      "label": "exact immutable saved with original source provenance",
+      "passed": true
+    },
+    {
+      "label": "actual indexed search body",
+      "passed": true
+    },
+    {
+      "label": "actual destination confirmed",
+      "passed": true
+    },
+    {
+      "label": "same document retained after restart",
+      "passed": true
+    },
+    {
+      "label": "confirmed handoff retained",
+      "passed": true
+    },
+    {
+      "label": "destination source identity retained",
+      "passed": true
+    },
+    {
+      "label": "positive final browser stop",
+      "passed": true
+    },
+    {
+      "label": "original native owners empty/closed/clean",
+      "passed": true
+    },
+    {
+      "label": "immutable artifact binding",
+      "passed": true
+    },
+    {
+      "label": "actual stored family claim",
+      "passed": true
+    },
+    {
+      "label": "original console termination observed separately",
+      "passed": true
+    }
+  ],
+  "sourceUnchanged": true,
+  "limitations": [
+    "Actual Chrome actions are manual agent observations; this separate verification command checks the captured evidence and native original closure, it is not a replacement browser driver.",
+    "Root omitted tty for the fixture console: stdin shutdown unavailable; after actual native EMPTY/closed/clean and settled build/registry, exact live task listener was terminated and original console process exit1 observed. Graceful console close is unqualified; fixture retained.",
+    "Earlier file-import policy block, native phone/provider/hosted/production remain unqualified."
+  ]
+}

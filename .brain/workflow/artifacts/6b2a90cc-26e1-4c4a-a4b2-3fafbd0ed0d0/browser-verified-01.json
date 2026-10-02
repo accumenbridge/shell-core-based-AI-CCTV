@@ -1,0 +1,74 @@
+{
+  "kind": "manual-browser-evidence-verification",
+  "candidate": "fd404c7993497c2016887f01676574c2f1f3daad4a323f7105a874b99b980e9b",
+  "contractDigest": "70eb2bb9895a68b0e80d403d2e63407840811d457345fb44b627d438fda75a47",
+  "fixtureId": "4032c0da-c347-4236-bd24-919e512e06d0",
+  "sourceUnchanged": true,
+  "assertions": [
+    {
+      "label": "current source products and family available",
+      "passed": true
+    },
+    {
+      "label": "actual reference title/version/excerpt",
+      "passed": true
+    },
+    {
+      "label": "real worker and request cards",
+      "passed": true
+    },
+    {
+      "label": "other tenant indexed search empty",
+      "passed": true
+    },
+    {
+      "label": "other tenant cards empty",
+      "passed": true
+    },
+    {
+      "label": "viewer reads library without write control",
+      "passed": true
+    },
+    {
+      "label": "viewer reads reference without Desk writes",
+      "passed": true
+    },
+    {
+      "label": "logout clears both panel types",
+      "passed": true
+    },
+    {
+      "label": "restart retains same indexed document and cards",
+      "passed": true
+    },
+    {
+      "label": "restart embedded search retains version/excerpt",
+      "passed": true
+    },
+    {
+      "label": "positive final browser stop",
+      "passed": true
+    },
+    {
+      "label": "two original native attempts positively closed",
+      "passed": true
+    },
+    {
+      "label": "exact immutable new product binding",
+      "passed": true
+    },
+    {
+      "label": "real separate owned stored request and indexed document",
+      "passed": true
+    },
+    {
+      "label": "original graceful console close0 observed",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "This verifies captured actual Chrome observations and readonly original native records; it is not another browser driver.",
+    "Early async views, unavailable heading waits and transient screenshot deadlines were inspected; no duplicate builds/starts or browser policy bypass.",
+    "Local trusted profile only; hosted/provider/native-phone/production unqualified."
+  ]
+}

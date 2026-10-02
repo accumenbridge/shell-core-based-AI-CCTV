@@ -1,0 +1,276 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "6bdcdf38-af72-497d-be06-db222d10dcbe",
+  "revision": 63,
+  "previousEventId": "ec1bcf2b-5098-4d47-a6cb-96d4ab872833",
+  "reportedActor": "/root read-only project audit; actual failure reconciliation",
+  "recordedAt": "2026-10-02T02:59:39.165Z",
+  "platformTask": {
+    "taskId": "MOBILE-001",
+    "status": "ACCEPTED",
+    "candidate": {
+      "files": [
+        {
+          "path": "apps/control-plane/src/build-inputs.ts",
+          "sha256": "8821ba961e205a9fc8935a12e226515a3d1c601b3a869233527c46dcebdf020e"
+        },
+        {
+          "path": "apps/control-plane/src/build-worker.ts",
+          "sha256": "c1c4589676cb77c51af44ac158545b6bcc5f8462847f84b9c9510494b483bbda"
+        },
+        {
+          "path": "apps/runtime/src/index.ts",
+          "sha256": "198f229a67681b94eb1015eaa8f944d28340c5a2acbb04fcaee13149fe43e42d"
+        },
+        {
+          "path": "apps/runtime/src/main.ts",
+          "sha256": "69e3c13d2505b628bfdf3ceb78e111e8d167b28a9678acc189a4c3cc3497190e"
+        },
+        {
+          "path": "docs/MOBILE_APP_SHELL.md",
+          "sha256": "9884e85180326efb47c52c9c1141690abc1e28268570eeb2cb40fe934440f918"
+        },
+        {
+          "path": "OPEN_PLATFORM.html",
+          "sha256": "4bb4bf6410ee6d6b3a4bf4738a00275d5e5c635a3e730f9a78967df4b0b3da25"
+        },
+        {
+          "path": "package-lock.json",
+          "sha256": "739f3696303ff5ae7c88772e0d8d715896b55b37e1298fbb4cf620b4becd4d1c"
+        },
+        {
+          "path": "package.json",
+          "sha256": "ed9933b4022a295182887c51a5b4aa05e9d8933c5ca0af4b57b55aee6ec85085"
+        },
+        {
+          "path": "packages/client-core/package.json",
+          "sha256": "bd7c591fb7ee0ae0b1bddc0be4e238ff2e129a2f152e3126a20b2ef55bcd4449"
+        },
+        {
+          "path": "packages/client-core/src/index.ts",
+          "sha256": "f2b8521725db0f06934ac59ccb0139cd82eea608805457bc8e33f0122d863c5e"
+        },
+        {
+          "path": "packages/client-core/tsconfig.json",
+          "sha256": "fd02bcd47cfdca9108e67fe0ab461469921502c9f98e1a38bc17abe3396224aa"
+        },
+        {
+          "path": "packages/composition/src/workspace-closure.ts",
+          "sha256": "1745577d88134c57b2bc3248e185be38019134322420f61c456c9bbfface906f"
+        },
+        {
+          "path": "packages/mobile-shell/package.json",
+          "sha256": "0970900f5cbb68fd32cbb6316f46e79a043a51c6e0829101197fd88d4725fba7"
+        },
+        {
+          "path": "packages/mobile-shell/src/index.ts",
+          "sha256": "ea152efa4ab20ca1680a488cbf48f5eab617ec3e8b007e0498944810e8c28873"
+        },
+        {
+          "path": "packages/mobile-shell/src/mobile.css",
+          "sha256": "b4adf39c8628c983ae8e919331a8de698597456de5d8432129b3b8d65289a080"
+        },
+        {
+          "path": "packages/mobile-shell/tsconfig.json",
+          "sha256": "221c154487a5e76b80eaf0a1b4f136850dcd1a2fd96c6ff6414895045a9ece0a"
+        },
+        {
+          "path": "packages/web-shell/package.json",
+          "sha256": "d9ebfd7ece36bd7043d6dd5822c3fe68a89c2b7d1f6bd07a9c72d068703df2dc"
+        },
+        {
+          "path": "packages/web-shell/src/index.ts",
+          "sha256": "db0186cc8ee7f8b192b7df15172e60bd4df95017ef3c88a56129a230ac1a4d0c"
+        },
+        {
+          "path": "packages/web-shell/tsconfig.json",
+          "sha256": "7cd5a474fe91582ca0d2bf76041855dcd977ac22a3a9701a87b0035b5fcf2520"
+        },
+        {
+          "path": "README.md",
+          "sha256": "d641e2e0076e81b8a7fdd298ccf1f8c4a2162d260e07163823c1d0db97948aa0"
+        },
+        {
+          "path": "templates/mobile/package-lock.json",
+          "sha256": "dc7a6e9130bef578c434886e5873a65539a5c4e51ed12c8fc8be69a70a5b58c8"
+        },
+        {
+          "path": "templates/mobile/package.json",
+          "sha256": "5bd02e4bb08475f88ee8ad79fba8d36e16f8f08205487db3594fbc56577ce200"
+        },
+        {
+          "path": "templates/mobile/README.md",
+          "sha256": "fb4a7e341eb8cf73a0eee8b53fe3091975669e89c58c2340138609895414b1c1"
+        },
+        {
+          "path": "tests/control-plane-build-host.test.mjs",
+          "sha256": "0e4830727b4700909fc37ec05e8e7a7d61b0ae9a6c7d07ffcf63b203f95428c5"
+        },
+        {
+          "path": "tests/factory-lifecycle.test.mjs",
+          "sha256": "afb4ca22fe76236932de77797ee3fa14f7296dba9a0329b7cf7d96626d220174"
+        },
+        {
+          "path": "tests/frontend-assembly.test.mjs",
+          "sha256": "61adf736354489759db20439b8c31f2b4fdb7fcf19240b5feb1549ed7ce83bec"
+        },
+        {
+          "path": "tests/mobile-assembly.test.mjs",
+          "sha256": "1d4171e863a900d48b99d99248632d5a667f091cf36e6465e2ad296403995085"
+        },
+        {
+          "path": "tests/mobile-shell.test.mjs",
+          "sha256": "7360062233b0658bfb5329f6b609c82cf5894afc756c0401f03ee7f34e000ede"
+        },
+        {
+          "path": "tests/source-copy.mjs",
+          "sha256": "e88efe311d1f9079e6896959435c8a769e9407681e55fee5d3e6fb4b53e2f59e"
+        },
+        {
+          "path": "tests/support/shell-harness.mjs",
+          "sha256": "7d520464af8a755e824e486927cafadd9793ea27cc96f0001af614e64a690225"
+        },
+        {
+          "path": "tests/workspace-closure.test.mjs",
+          "sha256": "f6f6d94785e456f719e95035ef73562b472d43a20c379684b63248c9d420a142"
+        },
+        {
+          "path": "tools/build.mjs",
+          "sha256": "d08713084bb96166cbd3140285735aba7293c4c69719f3988e6689d79de05b27"
+        },
+        {
+          "path": "tools/demo.mjs",
+          "sha256": "5708ee8f3e3aaec48f34974591a1cae6fae86ea59e5290982eb537d8f1d9e10e"
+        },
+        {
+          "path": "tools/frontend-closure.mjs",
+          "sha256": "e9a264807c8ae6793d71adb1aec1f6cbd282cd6618b35f652cffd60296db5387"
+        },
+        {
+          "path": "tools/mobile/assemble.mjs",
+          "sha256": "85996517abfd5da7138535403b812cde9f3721f108e16ccce3e1626fb3b8694e"
+        },
+        {
+          "path": "tsconfig.json",
+          "sha256": "efa8bde382b466d0985c8e45cb4f897f879a8941eddf6757dcd37b89c9a1f134"
+        },
+        {
+          "path": "visual/data.json",
+          "sha256": "4e605e0fa8aab867fcd71d3166715c36d9a5e24cd9c80cbf3a76ed077997b61d"
+        }
+      ],
+      "digest": "5b3d2a9e03b3934f01b80ae6bda0c2ba915c77d7b1eae2dae22fcb5dbed2bf4f"
+    },
+    "runIds": [
+      "d5447b55-dbe9-4b97-8f30-c4f21f7eb1f0",
+      "5b892680-38ae-419c-8c30-c3884de7d038",
+      "3b08ac18-e5dd-4627-8bcd-e50a713f22e8",
+      "ebe16682-f289-406f-9d96-803f13994889",
+      "79be4758-a19c-44e3-aaeb-797efbabceab",
+      "2fa1fe7d-8c81-4dfb-bf3c-9becc7bbbdc5"
+    ],
+    "reviewIds": [
+      "149accda-10a6-4c24-ac99-ce92a766d839"
+    ],
+    "blockers": [
+      "CURRENT REGRESSION FAILED: runtime enrollment disappearing-entry error and native-protocol empty-heartbeat fixture failure; see audit evidence.",
+      "Two separately reproduced gaps: low-level identity reseeding and incomplete rich metadata validation."
+    ],
+    "nextAction": "Current full-suite qualification FAILED despite historical MOBILE-001 acceptance. Review the recorded audit and scope the next repair increment for actual runtime/validation defects and reliable tests before claiming green status. Native identity/API remains deferred.",
+    "gates": [
+      {
+        "id": "native-device",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".local/mobile-001/environment.json"
+        ],
+        "limitations": [
+          "No Android SDK/Java/device tools found in inspected locations; Android/iOS native execution unqualified."
+        ]
+      },
+      {
+        "id": "native-identity-api",
+        "status": "DEFERRED",
+        "evidenceRefs": [
+          ".brain/tasks/MOBILE-001.md"
+        ],
+        "limitations": [
+          "User explicitly selected identity/API in later increment."
+        ]
+      },
+      {
+        "id": "historical-uncertain-owner",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/04021fa0-298a-4a26-8523-28a7924d5114.json"
+        ],
+        "limitations": [
+          "Prior interrupted owner close remains unobserved; no speculative fixture cleanup or PID control."
+        ]
+      },
+      {
+        "id": "interrupted-mobile-focused-owner",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/70284fca-efe2-4341-ad03-be8ef0f0646d.json"
+        ],
+        "limitations": [
+          "Earlier focused exec27608 was interrupted after EBUSY; original poll had no numeric completion and later Unknown process id. No PID recovery or speculative fixture cleanup."
+        ]
+      },
+      {
+        "id": "full-suite-repair",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/79be4758-a19c-44e3-aaeb-797efbabceab.json",
+          ".brain/workflow/runs/16878e4f-8954-403b-a531-237dab61231a.json",
+          ".brain/workflow/runs/882caf11-9e6b-4852-af21-bcec3a263910.json"
+        ],
+        "limitations": [
+          "Final corrected candidate passes the actual complete suite; earlier failed608e and72df runs remain immutable history. Skipped cases remain unqualified coverage."
+        ]
+      },
+      {
+        "id": "browser-device-specific",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/ebe16682-f289-406f-9d96-803f13994889.json"
+        ],
+        "limitations": [
+          "Actual browser360CSS journey passed. Physical keyboard/safe-area, assistive technology, Android/iOS device lifecycle and native secure storage were not tested."
+        ]
+      },
+      {
+        "id": "planning-html-policy",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/ebe16682-f289-406f-9d96-803f13994889.json"
+        ],
+        "limitations": [
+          "Earlier offline planning HTML browser navigation was policy blocked; no workaround or inferred pass. Actual product HTTP preview was independently allowed and observed."
+        ]
+      },
+      {
+        "id": "windows-file-symlink-coverage",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/79be4758-a19c-44e3-aaeb-797efbabceab.json"
+        ],
+        "limitations": [
+          "The named owned file-symlink fixture was skipped because this host denied fixture creation with EPERM. Complete command exit0 does not qualify that coverage."
+        ]
+      },
+      {
+        "id": "audit-current-full-suite",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/2fa1fe7d-8c81-4dfb-bf3c-9becc7bbbdc5.json"
+        ],
+        "limitations": [
+          "Fresh audit npm test exit1:322 total/319pass/2fail/1EPERM skip. Historical ACCEPTED status is retained by the terminal-state workflow, not renewed regression acceptance."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "93d2480ffdc6a7e5cc13bb5ee2b1b8c3fdb0a9d69f477456a8397c517f2e2487"
+}

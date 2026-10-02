@@ -1,11 +1,19 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { access, cp, mkdtemp, mkdir, rm } from 'node:fs/promises';
+import { access, cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { ROOT } from '../apps/runtime/dist/index.js';
 import { startControlPlane } from '../apps/control-plane/dist/main.js';
-import { copyReviewedBuildInputs } from '../apps/control-plane/dist/build-inputs.js';
+import { copyPrivateToolchain, copyReviewedBuildInputs, privateToolchainDigest, reviewedBuildFiles, reviewedBuildFingerprint } from '../apps/control-plane/dist/build-inputs.js';
+
+async function copiedBuildSource(t) {
+    const temp = await mkdtemp(join(tmpdir(), 'qb-build-inputs-'));
+    t.after(() => rm(temp, { recursive: true, force: true, maxRetries: 4, retryDelay: 100 }));
+    const root = join(temp, 'source');
+    await copyReviewedBuildInputs(ROOT, root);
+    return { temp, root };
+}
 
 test('paired console starts with no private build-host profile and reports build requests unavailable', async t => {
     const temp = await mkdtemp(join(tmpdir(), 'qb-missing-build-host-'));
@@ -70,4 +78,67 @@ test('paired console starts with no private build-host profile and reports build
     assert.equal(denied.status, 503);
     const buildsAfter = await fetch(new URL('/platform-api/builds', origin), { headers: { cookie } }).then(response => response.json());
     assert.deepEqual(buildsAfter, buildsBefore);
+});
+
+test('reviewed mobile build inputs are copied and contribute to the source fingerprint', async t => {
+    const { root } = await copiedBuildSource(t);
+    const required = [
+        'packages/mobile-shell/src/mobile.css',
+        'tools/mobile/assemble.mjs',
+        'templates/mobile/package.json',
+        'templates/mobile/package-lock.json',
+        'templates/mobile/README.md'
+    ];
+    const admitted = new Set(reviewedBuildFiles(ROOT).map(file => file.relativePath));
+    for (const path of required) {
+        assert.ok(admitted.has(path), `${path} is in the reviewed source closure`);
+        assert.equal(await readFile(join(root, ...path.split('/')), 'utf8'), await readFile(join(ROOT, ...path.split('/')), 'utf8'), `${path} is copied byte-for-byte`);
+    }
+    const before = reviewedBuildFingerprint(root);
+    const css = join(root, 'packages/mobile-shell/src/mobile.css');
+    await writeFile(css, `${await readFile(css, 'utf8')}\n/* fixture change */\n`);
+    assert.notEqual(reviewedBuildFingerprint(root), before, 'the admitted mobile stylesheet affects the frozen source fingerprint');
+});
+
+test('unknown siblings beside the exact mobile build inputs remain rejected', async t => {
+    for (const path of ['tools/mobile/unreviewed.mjs', 'templates/mobile/NOTICE.md', 'packages/mobile-shell/src/unreviewed.css']) {
+        const { root } = await copiedBuildSource(t);
+        const fullPath = join(root, ...path.split('/'));
+        await mkdir(join(fullPath, '..'), { recursive: true });
+        await writeFile(fullPath, 'unreviewed fixture input');
+        assert.throws(() => reviewedBuildFiles(root), /Unreviewed|not allowed/u, path);
+    }
+});
+
+test('private toolchain copy matches its digest and a test-owned native binary drift changes it', async t => {
+    const { root } = await copiedBuildSource(t);
+    await copyPrivateToolchain(ROOT, root);
+    const expected = await privateToolchainDigest(ROOT);
+    assert.equal(await privateToolchainDigest(root), expected);
+    const nativeName = `@esbuild/${process.platform}-${process.arch}`;
+    const executable = join(root, 'node_modules', nativeName, ...(process.platform === 'win32' ? ['esbuild.exe'] : ['bin', 'esbuild']));
+    const original = await readFile(executable);
+    await writeFile(executable, Buffer.concat([original, Buffer.from('\n// private fixture drift\n')]));
+    assert.notEqual(await privateToolchainDigest(root), expected);
+});
+
+test('private toolchain rejects native package version mismatch and binary override', async t => {
+    const { root } = await copiedBuildSource(t);
+    await copyPrivateToolchain(ROOT, root);
+    const nativeName = `@esbuild/${process.platform}-${process.arch}`;
+    const packagePath = join(root, 'node_modules', nativeName, 'package.json');
+    const manifest = JSON.parse(await readFile(packagePath, 'utf8'));
+    manifest.version = '0.0.0';
+    await writeFile(packagePath, JSON.stringify(manifest));
+    await assert.rejects(privateToolchainDigest(root), /native package .* pinned lockfile and current platform/u);
+
+    const previous = process.env.ESBUILD_BINARY_PATH;
+    process.env.ESBUILD_BINARY_PATH = join(root, 'unapproved-esbuild');
+    try {
+        await assert.rejects(privateToolchainDigest(ROOT), /ESBUILD_BINARY_PATH overrides/u);
+        await assert.rejects(copyPrivateToolchain(ROOT, join(root, 'override-copy')), /ESBUILD_BINARY_PATH overrides/u);
+    } finally {
+        if (previous === undefined) delete process.env.ESBUILD_BINARY_PATH;
+        else process.env.ESBUILD_BINARY_PATH = previous;
+    }
 });

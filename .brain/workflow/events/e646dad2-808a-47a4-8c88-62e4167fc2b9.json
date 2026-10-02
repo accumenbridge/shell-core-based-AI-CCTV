@@ -1,0 +1,145 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "e646dad2-808a-47a4-8c88-62e4167fc2b9",
+  "revision": 69,
+  "previousEventId": "c7f5c297-74f7-4137-b8f6-a64b862c7484",
+  "reportedActor": "/root after source-grounded finite Sol plan and VALID/READY preflight",
+  "recordedAt": "2026-10-02T05:32:15.810Z",
+  "platformTask": {
+    "taskId": "CAPABILITY-001",
+    "status": "IMPLEMENTING",
+    "candidate": null,
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Sole Luna/xhigh owns finite25-path operation SDK implementation; preserve Mobile/reliability source. Fresh build/focused checks then freeze ordinary full suite and separate Sol review.",
+    "gates": [
+      {
+        "id": "native-device",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".local/mobile-001/environment.json"
+        ],
+        "limitations": [
+          "No Android SDK/Java/device tools found in inspected locations; Android/iOS native execution unqualified."
+        ]
+      },
+      {
+        "id": "native-identity-api",
+        "status": "DEFERRED",
+        "evidenceRefs": [
+          ".brain/tasks/MOBILE-001.md"
+        ],
+        "limitations": [
+          "User explicitly selected identity/API in later increment."
+        ]
+      },
+      {
+        "id": "historical-uncertain-owner",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/04021fa0-298a-4a26-8523-28a7924d5114.json"
+        ],
+        "limitations": [
+          "Prior interrupted owner close remains unobserved; no speculative fixture cleanup or PID control."
+        ]
+      },
+      {
+        "id": "interrupted-mobile-focused-owner",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/70284fca-efe2-4341-ad03-be8ef0f0646d.json"
+        ],
+        "limitations": [
+          "Earlier focused exec27608 was interrupted after EBUSY; original poll had no numeric completion and later Unknown process id. No PID recovery or speculative fixture cleanup."
+        ]
+      },
+      {
+        "id": "full-suite-repair",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/79be4758-a19c-44e3-aaeb-797efbabceab.json",
+          ".brain/workflow/runs/16878e4f-8954-403b-a531-237dab61231a.json",
+          ".brain/workflow/runs/882caf11-9e6b-4852-af21-bcec3a263910.json"
+        ],
+        "limitations": [
+          "Final corrected candidate passes the actual complete suite; earlier failed608e and72df runs remain immutable history. Skipped cases remain unqualified coverage."
+        ]
+      },
+      {
+        "id": "browser-device-specific",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/ebe16682-f289-406f-9d96-803f13994889.json"
+        ],
+        "limitations": [
+          "Actual browser360CSS journey passed. Physical keyboard/safe-area, assistive technology, Android/iOS device lifecycle and native secure storage were not tested."
+        ]
+      },
+      {
+        "id": "planning-html-policy",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/ebe16682-f289-406f-9d96-803f13994889.json"
+        ],
+        "limitations": [
+          "Earlier offline planning HTML browser navigation was policy blocked; no workaround or inferred pass. Actual product HTTP preview was independently allowed and observed."
+        ]
+      },
+      {
+        "id": "windows-file-symlink-coverage",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/79be4758-a19c-44e3-aaeb-797efbabceab.json"
+        ],
+        "limitations": [
+          "The named owned file-symlink fixture was skipped because this host denied fixture creation with EPERM. Complete command exit0 does not qualify that coverage."
+        ]
+      },
+      {
+        "id": "historical-mobile-audit-full-suite",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/2fa1fe7d-8c81-4dfb-bf3c-9becc7bbbdc5.json"
+        ],
+        "limitations": [
+          "Fresh audit npm test exit1:322 total/319pass/2fail/1EPERM skip. Historical ACCEPTED status is retained by the terminal-state workflow, not renewed regression acceptance.",
+          "This FAILED gate belongs to the retained pre-repair MOBILE candidate, not current repaired qualification."
+        ]
+      },
+      {
+        "id": "prior-mobile-history",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/workflow/events/6bdcdf38-af72-497d-be06-db222d10dcbe.json"
+        ],
+        "limitations": [
+          "Historical mobile acceptance preserved; latest audit was FAILED and does not qualify new source."
+        ]
+      },
+      {
+        "id": "current-reliability-full-suite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/a85c21b5-eb02-44cd-aca5-bf1e1431cd0d.json",
+          ".brain/workflow/runs/f5d0934d-7d03-41fe-b8f9-962c1faefb42.json",
+          ".brain/workflow/runs/44423705-d2ec-42f0-9233-101fe53ad038.json"
+        ],
+        "limitations": [
+          "Actual original outer npm test exit0; skipped coverage stays separately BLOCKED. Historical audit failure retained; no browser/provider/native-phone/hosted production qualification."
+        ]
+      },
+      {
+        "id": "reliability-prerequisite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/events/eb237842-35e0-4d68-a2b0-3401514a0334.json"
+        ],
+        "limitations": [
+          "Accepted local reliability prerequisite; no external qualification."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "ce0550f475e9203fee841c3d7e75ab422c4d676e23324a5c19fc470d68fc6187"
+}

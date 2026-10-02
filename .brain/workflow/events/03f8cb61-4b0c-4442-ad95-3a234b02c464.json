@@ -1,0 +1,72 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "03f8cb61-4b0c-4442-ad95-3a234b02c464",
+  "revision": 58,
+  "previousEventId": "4cef9634-c1b9-4c37-9d3e-29b2d019f3e2",
+  "reportedActor": "/root mobile coordinator",
+  "recordedAt": "2026-10-02T01:19:38.377Z",
+  "platformTask": {
+    "taskId": "MOBILE-001",
+    "status": "IMPLEMENTING",
+    "candidate": null,
+    "runIds": [
+      "16878e4f-8954-403b-a531-237dab61231a"
+    ],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Sole writer repairs exact reviewed mobile source and pinned esbuild/native private toolchain integration after failed full suite. Root then rebuilds, reruns checks and obtains final exact review; initial browser and native-scaffold observations remain scoped to prior candidate.",
+    "gates": [
+      {
+        "id": "native-device",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".local/mobile-001/environment.json"
+        ],
+        "limitations": [
+          "No Android SDK/Java/device tools found in inspected locations; Android/iOS native execution unqualified."
+        ]
+      },
+      {
+        "id": "native-identity-api",
+        "status": "DEFERRED",
+        "evidenceRefs": [
+          ".brain/tasks/MOBILE-001.md"
+        ],
+        "limitations": [
+          "User explicitly selected identity/API in later increment."
+        ]
+      },
+      {
+        "id": "historical-uncertain-owner",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/04021fa0-298a-4a26-8523-28a7924d5114.json"
+        ],
+        "limitations": [
+          "Prior interrupted owner close remains unobserved; no speculative fixture cleanup or PID control."
+        ]
+      },
+      {
+        "id": "interrupted-mobile-focused-owner",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/70284fca-efe2-4341-ad03-be8ef0f0646d.json"
+        ],
+        "limitations": [
+          "Earlier focused exec27608 was interrupted after EBUSY; original poll had no numeric completion and later Unknown process id. No PID recovery or speculative fixture cleanup."
+        ]
+      },
+      {
+        "id": "full-suite-repair",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/16878e4f-8954-403b-a531-237dab61231a.json"
+        ],
+        "limitations": [
+          "Prior608e suite316/274pass/42fail: shared reviewed source admission gap.37-path integration amendment now being implemented; no final suite acceptance."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "7db9996ad7922340220c24fe0be9aaa3c5ff088e983deb57ac59198976cd33cf"
+}

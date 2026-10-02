@@ -1,4 +1,6 @@
 import { PLATFORM_ABI, PlatformError, canonical, type Binding, type CompositionPlan, type ModuleManifest, type ProductDefinition } from '@quadbridge/contracts';
+import { validateOperationDescriptor } from '@quadbridge/contracts/operations';
+import { validateUiContributionDescriptors } from '@quadbridge/contracts/ui-contributions';
 const fail = (s: string): never => { throw new PlatformError('INCOMPATIBLE', s); };
 const unique = (xs: string[], label: string) => {
     if (new Set(xs).size !== xs.length)
@@ -53,10 +55,18 @@ export function resolve(product: ProductDefinition, catalog: readonly ModuleMani
     for (const key of [...selected.keys()].sort())
         visit(key);
     unique(ordered.flatMap(m => m.routes.map(r => `${r.method} ${r.path}`)), 'route');
+    const operationIds = new Set<string>();
+    for (const module of ordered) for (const operation of module.operations ?? []) {
+        const descriptor = validateOperationDescriptor(operation, module.id, module.permissions);
+        const identity = `${descriptor.id}@${descriptor.version}`;
+        if (operationIds.has(identity)) fail(`Duplicate operation ${identity}`);
+        operationIds.add(identity);
+    }
     unique(ordered.flatMap(m => m.workspaces.map(w => w.id)), 'workspace');
     unique(ordered.flatMap(m => m.workspaces.map(w => w.path)), 'workspace path');
     unique(ordered.flatMap(m => m.permissions), 'permission owner');
     for (const m of ordered) {
+        validateUiContributionDescriptors(m);
         for (const r of m.routes) {
             if (['/api/session', '/api/logout', '/api/bootstrap', '/api/health', '/api/modules/mode'].includes(r.path))
                 fail('Route collides with host-owned operation');

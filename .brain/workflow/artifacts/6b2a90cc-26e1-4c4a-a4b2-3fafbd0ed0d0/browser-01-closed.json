@@ -1,0 +1,54 @@
+{
+  "fixtureId": "4032c0da-c347-4236-bd24-919e512e06d0",
+  "closed": true,
+  "candidate": "fd404c7993497c2016887f01676574c2f1f3daad4a323f7105a874b99b980e9b",
+  "closedAt": "2026-10-02T10:04:48.714Z",
+  "summary": {
+    "products": [
+      {
+        "id": "combined",
+        "version": "0.2.3"
+      },
+      {
+        "id": "knowledge",
+        "version": "0.2.3"
+      },
+      {
+        "id": "neutral",
+        "version": "0.2.0"
+      },
+      {
+        "id": "service-desk",
+        "version": "0.2.1"
+      }
+    ],
+    "builds": [
+      {
+        "id": "2b0abbdc-d96c-4d53-a82e-54570be3c26a",
+        "productId": "combined",
+        "version": "0.2.3",
+        "state": "SUCCEEDED",
+        "snapshotDigest": "4843716ea072f3fbc3903878c766f997cdb2954f1579cc67d274951af527bb3f"
+      }
+    ],
+    "slot": {
+      "state": "EMPTY",
+      "instanceId": null,
+      "operationId": null
+    },
+    "runtimes": [
+      {
+        "id": "runtime-f59f8d04-71d8-4176-b6f5-50a4d4fa235f",
+        "productId": "combined",
+        "version": "0.2.3",
+        "artifactDigest": "4843716ea072f3fbc3903878c766f997cdb2954f1579cc67d274951af527bb3f",
+        "state": "STOPPED",
+        "attempt": 2,
+        "physicalState": "EMPTY",
+        "emptyObserved": 1,
+        "helperClosed": 1,
+        "executionClean": 1
+      }
+    ]
+  }
+}

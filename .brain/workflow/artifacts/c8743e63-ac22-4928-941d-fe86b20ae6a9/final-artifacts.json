@@ -1,0 +1,29 @@
+{
+  "observedAt": "2026-10-02T01:36:32.226Z",
+  "sourceCandidate": "72df266f5299cace2b31edc939707949ba605d1d40fc031ac4724149af7bddfa",
+  "results": [
+    {
+      "productId": "neutral",
+      "outputDir": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\generated\\neutral\\93c7430d66f5e94bda20",
+      "sourceCandidate": "93c7430d66f5e94bda2036204e34b08bd00455a3058fcd7b2572ae69da7bfce9",
+      "outputCandidate": "8dbabac2ff9d336b709323f00c16280ae31e75cc878c648d98c7e9675e6c1b60",
+      "reused": false
+    },
+    {
+      "productId": "service-desk",
+      "outputDir": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\generated\\service-desk\\d6f7d84c77a8d8c215b7",
+      "sourceCandidate": "d6f7d84c77a8d8c215b7aab7bf6ddcf42323d8324b600970c56f2e1ce2216022",
+      "outputCandidate": "5957e456097547afa397d8182c6a5670845b623d942109cf7dad7f41b5d0ceb4",
+      "reused": true
+    },
+    {
+      "productId": "combined",
+      "outputDir": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\generated\\combined\\601f7d9b789820001105",
+      "sourceCandidate": "601f7d9b7898200011053bcbe41dd3fafba64119469e7f5a6a8f159af4040fec",
+      "outputCandidate": "ad867bd1ded0c5bb95edfea15a67e3cdde71dac8a9c102be70b3d4db397483e2",
+      "reused": false
+    }
+  ],
+  "nativeScaffoldArtifactMatches": true,
+  "nativeScope": "Pinned dependency installation and Android project generation/sync only. No native compile, emulator, device, signing or native identity/API qualification."
+}

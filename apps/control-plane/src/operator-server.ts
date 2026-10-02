@@ -1,12 +1,13 @@
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
-import { randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { createHash, randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
+import { lstatSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { PlatformError } from '@quadbridge/contracts';
+import { canonical, PlatformError } from '@quadbridge/contracts';
 import { ControlPlaneStore, type EnvironmentSpec } from '@quadbridge/control-plane';
 import { type AiPipeline } from '@quadbridge/ai-core';
 import { resolve } from '@quadbridge/composition';
 import { composeDraft, inspectProductDefinition, validateProduct } from '@quadbridge/composition/studio';
+import { deriveFamily, validateProductFamily } from '@quadbridge/composition/family';
 import type { LocalBuildWorker } from './build-worker.js';
 import { importSourceSnapshot, loadSourceSnapshot, storedOverview, type SourceSnapshot } from './source-import.js';
 import { maintainedSourceFingerprint } from './source-import.js';
@@ -124,6 +125,35 @@ function checkedProduct(value: unknown) {
   for(const item of product.bindings) { const binding=exact(item,['contract','instanceId','implementation','scope','consumer','mode']); if(Object.values(binding).some(field=>typeof field!=='string'))throw new HttpFailure(400,'INVALID_INPUT','Binding fields must be text'); }
   return product;
 }
+function checkedFamilyRequest(value: unknown) {
+  const request = exact(value,['familyId','selection','identity']);
+  if (typeof request.familyId !== 'string' || !/^[a-z][a-z0-9-]{1,47}$/.test(request.familyId) ||
+      !Array.isArray(request.selection) || request.selection.length > 16 || request.selection.some(id => typeof id !== 'string'))
+    throw new HttpFailure(400,'INVALID_INPUT','Family selection must use a reviewed family and bounded feature IDs');
+  const identity = exact(request.identity,['id','title','version','description','layout']);
+  if (Object.values(identity).some(value => typeof value !== 'string')) throw new HttpFailure(400,'INVALID_INPUT','Product identity fields must be text');
+  return { familyId:request.familyId, selection:request.selection as string[], identity:identity as any };
+}
+function readReviewedFamily(root: string, familyId: string) {
+  if (!/^[a-z][a-z0-9-]{1,47}$/.test(familyId)) throw new HttpFailure(404,'NOT_FOUND','Reviewed product family not found');
+  const familiesRoot=join(root,'families'), familyRoot=join(familiesRoot,familyId), file=join(familyRoot,'family.json');
+  let rootInfo:ReturnType<typeof lstatSync>,directoryInfo:ReturnType<typeof lstatSync>,fileInfo:ReturnType<typeof lstatSync>;
+  try { rootInfo=lstatSync(familiesRoot);directoryInfo=lstatSync(familyRoot);fileInfo=lstatSync(file); }
+  catch(error) { if((error as NodeJS.ErrnoException)?.code==='ENOENT')throw new HttpFailure(404,'NOT_FOUND','Reviewed product family not found');throw error; }
+  if(rootInfo.isSymbolicLink()||!rootInfo.isDirectory()||directoryInfo.isSymbolicLink()||!directoryInfo.isDirectory()||fileInfo.isSymbolicLink()||!fileInfo.isFile()||fileInfo.size>131072)
+    throw new HttpFailure(409,'SOURCE_INVALID','Reviewed family source is not a bounded regular file');
+  const family=validateProductFamily(JSON.parse(readFileSync(file,'utf8')) as unknown);
+  if(family.id!==familyId)throw new HttpFailure(409,'SOURCE_INVALID','Reviewed family identity does not match its source path');
+  return family;
+}
+function readReviewedFamilies(root: string) {
+  const familiesRoot=join(root,'families');let info:ReturnType<typeof lstatSync>;
+  try { info=lstatSync(familiesRoot); }
+  catch(error) { if((error as NodeJS.ErrnoException)?.code==='ENOENT')return [];throw error; }
+  if(info.isSymbolicLink()||!info.isDirectory())throw new HttpFailure(409,'SOURCE_INVALID','Reviewed family source directory is unavailable');
+  return readdirSync(familiesRoot,{withFileTypes:true}).filter(entry=>entry.isDirectory()).map(entry=>readReviewedFamily(root,entry.name)).sort((a,b)=>a.id.localeCompare(b.id));
+}
+function productDigest(value: unknown) { return createHash('sha256').update(canonical(value)).digest('hex'); }
 async function readJson(req: IncomingMessage): Promise<unknown> {
   if (req.headers['content-type']?.split(';', 1)[0]?.trim().toLowerCase() !== 'application/json')
     throw new HttpFailure(415, 'UNSUPPORTED_MEDIA_TYPE', 'Content-Type must be application/json');
@@ -277,11 +307,18 @@ export async function createOperatorServer(options: ServerOptions): Promise<Oper
         recheckSession(req,sessions,session,now);
         const product=options.store.product(savedProduct[1]!,savedProduct[2]!);
         if(!product)throw new HttpFailure(404,'NOT_FOUND','Saved product version not found');
-        return sendJson(res,200,{product});
+        return sendJson(res,200,{product,familyDerivation:options.store.productFamilyDerivation(savedProduct[1]!,savedProduct[2]!)??null});
       }
       if (method === 'GET' && url.pathname === '/platform-api/overview') return sendJson(res, 200, storedOverview(options.store, snapshot!, Boolean(options.worker),options.artifactStore?.capability,Boolean(options.runtimeManager)));
       if (method === 'GET' && url.pathname === '/platform-api/audit') return sendJson(res, 200, options.store.auditLog(100));
-      if (method === 'GET' && url.pathname === '/platform-api/catalogue') return sendJson(res, 200, { modules: snapshot!.modules, solutions: snapshot!.solutions, products: options.store.products() });
+      if (method === 'GET' && url.pathname === '/platform-api/catalogue') {
+        recheckSession(req,sessions,session,now);
+        if(maintainedSourceFingerprint(options.root)!==snapshot!.sourceFingerprint)throw new HttpFailure(409,'SOURCE_DRIFT','Maintained source changed; restart Studio to reload the catalogue');
+        const families=readReviewedFamilies(options.root);
+        recheckSession(req,sessions,session,now);
+        if(maintainedSourceFingerprint(options.root)!==snapshot!.sourceFingerprint)throw new HttpFailure(409,'SOURCE_DRIFT','Maintained source changed; restart Studio to reload the catalogue');
+        return sendJson(res, 200, { modules: snapshot!.modules, solutions: snapshot!.solutions, families, products: options.store.products() });
+      }
       if (method === 'GET' && url.pathname === '/platform-api/builds') return sendJson(res, 200, options.store.builds());
       if(method==='GET'&&url.pathname==='/platform-api/artifacts'){
         if(!options.artifactStore)throw new HttpFailure(503,'ARTIFACT_REGISTRY_UNAVAILABLE','The local artifact registry is not attached');
@@ -358,6 +395,24 @@ export async function createOperatorServer(options: ServerOptions): Promise<Oper
       }
       options.onProtectedBodyRead?.();
       const body = await readJson(req);
+      if(url.pathname==='/platform-api/products/derive-family'){
+        const request=checkedFamilyRequest(body);
+        recheckSession(req,sessions,session,now);
+        const before=maintainedSourceFingerprint(options.root);
+        if(before!==snapshot!.sourceFingerprint)throw new HttpFailure(409,'SOURCE_DRIFT','Maintained source changed; restart Studio to reload the catalogue');
+        let result;
+        try { result=deriveFamily(readReviewedFamily(options.root,request.familyId),request.selection,request.identity,snapshot!.modules,snapshot!.solutions as any); }
+        catch(error) {
+          if(error instanceof HttpFailure)throw error;
+          const code=error&&typeof error==='object'&&typeof (error as any).code==='string'&&(error as any).code.startsWith('FAMILY_')?(error as any).code:'FAMILY_INVALID';
+          throw new HttpFailure(400,code,error instanceof Error?error.message.slice(0,240):'The selected family could not be derived');
+        }
+        recheckSession(req,sessions,session,now);
+        const after=maintainedSourceFingerprint(options.root);
+        if(after!==snapshot!.sourceFingerprint||after!==before)throw new HttpFailure(409,'SOURCE_DRIFT','Maintained source changed; restart Studio to reload the catalogue');
+        const familyDerivation={...result.derivation,productDigest:productDigest(result.product),sourceFingerprint:after};
+        return sendJson(res,200,{product:result.product,plan:result.plan,reasons:result.reasons,technicalExplanations:result.technicalExplanations,requirements:result.requirements,familyDerivation});
+      }
       if(url.pathname==='/platform-api/products/preview'){
         const request=exact(body,['product']);
         recheckSession(req,sessions,session,now);
@@ -437,14 +492,31 @@ export async function createOperatorServer(options: ServerOptions): Promise<Oper
         return sendJson(res,200,recoveryOperationDto(value));
       }
       if (url.pathname === '/platform-api/products') {
-        const request = exact(body,['confirm','product']);
+        const request = exact(body,['confirm','product'],['derivation']);
         if (request.confirm !== true) throw new HttpFailure(400,'CONFIRMATION_REQUIRED','Explicit confirmation is required');
         recheckSession(req,sessions,session,now);
-        if (maintainedSourceFingerprint(options.root) !== snapshot!.sourceFingerprint) throw new HttpFailure(409,'SOURCE_DRIFT','Maintained source changed; restart Studio to reload the catalogue');
+        const sourceFingerprint=maintainedSourceFingerprint(options.root);
+        if (sourceFingerprint !== snapshot!.sourceFingerprint) throw new HttpFailure(409,'SOURCE_DRIFT','Maintained source changed; restart Studio to reload the catalogue');
         const product = validateProduct(checkedProduct(request.product),snapshot!.modules,snapshot!.solutions as any);
+        let provenance:Record<string,unknown>|undefined;
+        let familyDerivation:unknown;
+        if(request.derivation!==undefined){
+          const derivationRequest=checkedFamilyRequest(request.derivation);
+          let result;
+          try { result=deriveFamily(readReviewedFamily(options.root,derivationRequest.familyId),derivationRequest.selection,derivationRequest.identity,snapshot!.modules,snapshot!.solutions as any); }
+          catch(error) {
+            if(error instanceof HttpFailure)throw error;
+            const code=error&&typeof error==='object'&&typeof (error as any).code==='string'&&(error as any).code.startsWith('FAMILY_')?(error as any).code:'FAMILY_INVALID';
+            throw new HttpFailure(400,code,error instanceof Error?error.message.slice(0,240):'The selected family could not be derived');
+          }
+          if(canonical(product)!==canonical(result.product))throw new HttpFailure(409,'FAMILY_DERIVATION_MISMATCH','The submitted product does not match its server-derived family selection');
+          familyDerivation=result.derivation;
+          provenance={...result.derivation,productDigest:productDigest(product),sourceFingerprint};
+        }
         recheckSession(req,sessions,session,now);
-        const saved = options.store.putProduct(product,actorId,()=>recheckSession(req,sessions,session,now));
-        return sendJson(res,201,{product:saved,status:'SAVED_IMMUTABLE_VERSION'});
+        if(maintainedSourceFingerprint(options.root)!==sourceFingerprint)throw new HttpFailure(409,'SOURCE_DRIFT','Maintained source changed; restart Studio to reload the catalogue');
+        const saved = options.store.putProduct(product,actorId,()=>recheckSession(req,sessions,session,now),provenance);
+        return sendJson(res,201,{product:saved,status:'SAVED_IMMUTABLE_VERSION',familyDerivation:options.store.productFamilyDerivation(saved.id,saved.version)??null});
       }
       if (url.pathname === '/platform-api/builds') {
         const request = exact(body,['confirm','productId','version','requestKey']);

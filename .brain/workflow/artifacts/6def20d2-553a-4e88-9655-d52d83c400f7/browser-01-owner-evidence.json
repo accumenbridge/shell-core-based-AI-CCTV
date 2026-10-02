@@ -1,0 +1,174 @@
+{
+  "fixtureId": "129c2e42-3246-47dd-9a05-8910c09957f9",
+  "candidate": "0a2749127a73d23009710c3c178f88642ffb503d3eed889c723d7ac33dd13335",
+  "contractDigest": "f0381f3076ceacd1cddc32e455f38245ec4978218b43b4dee5898ed54a531768",
+  "sourceFingerprint": "2ac78a21d67db41cd24e835a5d2c7f980379dc1f81a3da9fbc81f1f0d01f6084",
+  "studioSha": "c1fd7cd4bf808788d9b9b7202e11da66c4d516d3e0cfa5a78d208ea725525fbf",
+  "url": "http://127.0.0.1:53260",
+  "root": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qbfbr-5AILh0",
+  "observedAt": "2026-10-02T08:22:55.287Z",
+  "builds": [
+    {
+      "id": "1146bd4b-8cb6-490b-abeb-35dd38b25ce9",
+      "productId": "family-web",
+      "version": "1.0.0",
+      "state": "SUCCEEDED",
+      "snapshotDigest": "1bf56dbb1ae361102ddbd06dccfa4d100fe2a037d8bfc545107f1db7211352ba",
+      "cleanupState": "CLEAN"
+    }
+  ],
+  "slot": {
+    "state": "EMPTY",
+    "instanceId": null,
+    "operationId": null
+  },
+  "instances": [
+    {
+      "id": "runtime-15b92e20-df22-4f44-8872-a468e882be19",
+      "productId": "family-web",
+      "version": "1.0.0",
+      "artifactDigest": "1bf56dbb1ae361102ddbd06dccfa4d100fe2a037d8bfc545107f1db7211352ba",
+      "profileDigest": "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1",
+      "configDigest": "78fb89dbb3102ae630f47605cc2e0d66c97804b7fd9b244a0f9b560d443238de",
+      "state": "STOPPED",
+      "attempt": 2
+    }
+  ],
+  "attempts": [
+    {
+      "id": "21c47a15-8185-4c33-82ec-6b8423149df3",
+      "instanceId": "runtime-15b92e20-df22-4f44-8872-a468e882be19",
+      "attempt": 1,
+      "state": "STOPPED",
+      "physicalState": "EMPTY",
+      "emptyObserved": 1,
+      "helperClosed": 1,
+      "executionClean": 1
+    },
+    {
+      "id": "a6d70b48-8eb3-48a5-9c80-4f946ff93491",
+      "instanceId": "runtime-15b92e20-df22-4f44-8872-a468e882be19",
+      "attempt": 2,
+      "state": "STOPPED",
+      "physicalState": "EMPTY",
+      "emptyObserved": 1,
+      "helperClosed": 1,
+      "executionClean": 1
+    }
+  ],
+  "registrySlot": {
+    "operation_id": null,
+    "reserved_bytes": 0,
+    "reserved_files": 0,
+    "reserved_objects": 0
+  },
+  "product": {
+    "bindings": [
+      {
+        "consumer": "handoff",
+        "contract": "desk.requests.create.v2",
+        "implementation": "service-desk",
+        "instanceId": "local-desk",
+        "mode": "local",
+        "scope": "application"
+      },
+      {
+        "consumer": "handoff",
+        "contract": "knowledge.document.read.v1",
+        "implementation": "knowledge",
+        "instanceId": "local-documents",
+        "mode": "local",
+        "scope": "application"
+      }
+    ],
+    "description": "",
+    "id": "family-web",
+    "layout": "sidebar",
+    "modules": [
+      {
+        "id": "handoff",
+        "version": "0.2.2"
+      },
+      {
+        "id": "knowledge",
+        "version": "0.2.2"
+      },
+      {
+        "id": "service-desk",
+        "version": "0.2.0"
+      }
+    ],
+    "platformAbi": "quadbridge.module.v1",
+    "title": "Service Operations Browser Proof",
+    "version": "1.0.0",
+    "wiring": "knowledge-to-desk"
+  },
+  "familyDerivation": {
+    "bindingChoices": [
+      {
+        "choiceId": "local",
+        "key": "handoff:desk.requests.create.v2"
+      },
+      {
+        "choiceId": "local",
+        "key": "handoff:knowledge.document.read.v1"
+      }
+    ],
+    "familyId": "service-operations",
+    "familyVersion": "1.0.0",
+    "moduleVersions": [
+      {
+        "id": "handoff",
+        "version": "0.2.2"
+      },
+      {
+        "id": "knowledge",
+        "version": "0.2.2"
+      },
+      {
+        "id": "service-desk",
+        "version": "0.2.0"
+      }
+    ],
+    "productDigest": "cd0af24669d44e923e3df35ec43fd0de9475be4d536e5d3134eec4dcd985a753",
+    "reasons": [
+      {
+        "featureId": "document-handoff",
+        "label": "Document handoff",
+        "moduleIds": [
+          "handoff"
+        ],
+        "reason": "Attach a reviewed local knowledge and request handoff to each request."
+      },
+      {
+        "featureId": "requests",
+        "label": "Requests",
+        "moduleIds": [
+          "service-desk"
+        ],
+        "reason": "Create, track and close service requests."
+      },
+      {
+        "featureId": "shared-library",
+        "label": "Shared library",
+        "moduleIds": [
+          "knowledge"
+        ],
+        "reason": "Add indexed reference documents for the service team."
+      }
+    ],
+    "schema": "quadbridge.family-derivation.v1",
+    "selection": [
+      "document-handoff",
+      "requests",
+      "shared-library"
+    ],
+    "sourceFingerprint": "2ac78a21d67db41cd24e835a5d2c7f980379dc1f81a3da9fbc81f1f0d01f6084"
+  },
+  "sourceUnchanged": true,
+  "consoleShutdown": {
+    "plannedStdinUnavailable": true,
+    "gracefulCloseNotObserved": true,
+    "action": "Exact live loopback listener and task script identified after positive native closure; bounded console termination to be observed separately. No fixture deletion."
+  }
+}

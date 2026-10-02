@@ -126,6 +126,62 @@ test('pairing rejects bad input, issues a scoped HttpOnly session, and logout re
     assert.equal((await request(context, '/platform-api/overview', { cookie })).status, 401);
 });
 
+test('paired family derivation is source-authoritative and immutable provenance follows only the exact saved version', async t => {
+    const context=await start(t);
+    const {cookie}=await pair(context);
+    const catalogueResponse=await request(context,'/platform-api/catalogue',{cookie});
+    assert.equal(catalogueResponse.status,200,catalogueResponse.text);
+    const catalogue=body(catalogueResponse);
+    const family=catalogue.families.find(item=>item.id==='service-operations');
+    assert.ok(family,'the paired catalogue reads the reviewed source family');
+    const derivationRequest={familyId:family.id,selection:['requests','shared-library'],identity:{
+        id:'family-http-provenance',title:'Requests and Library',version:'1.2.0',description:'Saved from the reviewed family.',layout:'sidebar'}};
+    const derivedResponse=await request(context,'/platform-api/products/derive-family',{method:'POST',json:derivationRequest,cookie});
+    assert.equal(derivedResponse.status,200,derivedResponse.text);
+    const derived=body(derivedResponse);
+    assert.deepEqual(derived.product.modules.map(item=>item.id).sort(),['knowledge','service-desk']);
+    assert.deepEqual(derived.product.bindings,[]);
+    assert.equal(derived.familyDerivation.familyId,family.id);
+    assert.equal(derived.familyDerivation.familyVersion,family.version);
+    assert.equal(derived.familyDerivation.sourceFingerprint.length,64);
+    assert.equal(derived.familyDerivation.productDigest.length,64);
+
+    const auditBefore=context.store.auditLog(500).length;
+    const mismatch=await request(context,'/platform-api/products',{method:'POST',cookie,json:{confirm:true,
+        product:{...derived.product,title:'Client changed the family result.'},derivation:derivationRequest}});
+    assert.equal(mismatch.status,409,'the server rederives the family instead of trusting a client product claim');
+    assert.equal(context.store.product(derived.product.id,derived.product.version),undefined);
+    assert.equal(context.store.auditLog(500).length,auditBefore);
+
+    const savedResponse=await request(context,'/platform-api/products',{method:'POST',cookie,json:{confirm:true,product:derived.product,derivation:derivationRequest}});
+    assert.equal(savedResponse.status,201,savedResponse.text);
+    const saved=body(savedResponse);
+    assert.deepEqual(saved.product,derived.product);
+    assert.equal(saved.familyDerivation.familyId,family.id);
+    const exactVersion=await request(context,`/platform-api/products/${derived.product.id}/${derived.product.version}`,{cookie});
+    assert.equal(exactVersion.status,200,exactVersion.text);
+    assert.deepEqual(body(exactVersion).familyDerivation,saved.familyDerivation);
+    const auditAfter=context.store.auditLog(500).length;
+    const replay=await request(context,'/platform-api/products',{method:'POST',cookie,json:{confirm:true,product:derived.product,derivation:derivationRequest}});
+    assert.equal(replay.status,201,replay.text);
+    assert.deepEqual(body(replay).familyDerivation,saved.familyDerivation);
+    assert.equal(context.store.auditLog(500).length,auditAfter,'an identical immutable-version retry does not add another provenance audit');
+
+    const retryWithoutClaim=await request(context,'/platform-api/products',{method:'POST',cookie,json:{confirm:true,product:derived.product}});
+    assert.equal(retryWithoutClaim.status,201,retryWithoutClaim.text);
+    assert.deepEqual(body(retryWithoutClaim).familyDerivation,saved.familyDerivation,
+        'an identical version retry returns its stored family claim even when the request omits a new claim');
+    assert.equal(context.store.auditLog(500).length,auditAfter,'returning existing provenance does not create another audit');
+
+    const manual={...derived.product,version:'1.2.1',description:'A manual version has no historical family claim.'};
+    const manualSave=await request(context,'/platform-api/products',{method:'POST',cookie,json:{confirm:true,product:manual}});
+    assert.equal(manualSave.status,201,manualSave.text);
+    assert.equal(body(manualSave).familyDerivation,null);
+    const manualRead=await request(context,`/platform-api/products/${manual.id}/${manual.version}`,{cookie});
+    assert.equal(manualRead.status,200,manualRead.text);
+    assert.equal(body(manualRead).familyDerivation,null,'manual edits do not inherit an earlier version claim');
+});
+
 test('managed runtime API exposes fixed authenticated routes and exact confirmed request envelopes',async t=>{
     const calls=[];
     const instanceId='runtime-123e4567-e89b-42d3-a456-426614174000';
@@ -406,7 +462,7 @@ test('canonical compose preview, immutable save, and idempotent local build admi
     const previewValue = body(preview);
     assert.equal(previewValue.status, 'VALIDATED_DEFINITION_NOT_RUNNING');
     assert.equal(previewValue.product.id, draft.id);
-    assert.deepEqual(previewValue.product.modules, [{ id: 'service-desk', version: '0.2.0' }]);
+    assert.deepEqual(previewValue.product.modules, [{ id: 'service-desk', version: '0.2.1' }]);
     assert.equal(previewValue.plan.product.version, draft.version);
     assert.equal(context.store.product(draft.id, draft.version), undefined);
     assert.equal(context.store.auditLog(500).length, initialAudit);

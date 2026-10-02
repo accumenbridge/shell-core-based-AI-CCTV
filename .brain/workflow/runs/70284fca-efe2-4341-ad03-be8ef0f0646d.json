@@ -1,0 +1,363 @@
+{
+  "schema": "brain.evidence-record.v1",
+  "kind": "run",
+  "id": "70284fca-efe2-4341-ad03-be8ef0f0646d",
+  "taskId": "MOBILE-001",
+  "recipeId": "mobile-focused",
+  "contractDigest": "e97c17697f08d84aa5fdbe8379d20ef52fd6d8584d7254b2104f8a3693e260f5",
+  "recipeDigest": "ca4d84e81425b43fb48a8540bfaff7de7e4d8a5ec971940ed753bc764a7dbfe2",
+  "candidate": {
+    "files": [
+      {
+        "path": "apps/runtime/src/index.ts",
+        "sha256": "198f229a67681b94eb1015eaa8f944d28340c5a2acbb04fcaee13149fe43e42d"
+      },
+      {
+        "path": "apps/runtime/src/main.ts",
+        "sha256": "69e3c13d2505b628bfdf3ceb78e111e8d167b28a9678acc189a4c3cc3497190e"
+      },
+      {
+        "path": "docs/MOBILE_APP_SHELL.md",
+        "sha256": "0ae2079a24f1b45e7430db996111ce41bed015ff288154ee1b7d84b708b287e2"
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "739f3696303ff5ae7c88772e0d8d715896b55b37e1298fbb4cf620b4becd4d1c"
+      },
+      {
+        "path": "package.json",
+        "sha256": "ed9933b4022a295182887c51a5b4aa05e9d8933c5ca0af4b57b55aee6ec85085"
+      },
+      {
+        "path": "packages/client-core/package.json",
+        "sha256": "bd7c591fb7ee0ae0b1bddc0be4e238ff2e129a2f152e3126a20b2ef55bcd4449"
+      },
+      {
+        "path": "packages/client-core/src/index.ts",
+        "sha256": "f2b8521725db0f06934ac59ccb0139cd82eea608805457bc8e33f0122d863c5e"
+      },
+      {
+        "path": "packages/client-core/tsconfig.json",
+        "sha256": "fd02bcd47cfdca9108e67fe0ab461469921502c9f98e1a38bc17abe3396224aa"
+      },
+      {
+        "path": "packages/composition/src/workspace-closure.ts",
+        "sha256": "1745577d88134c57b2bc3248e185be38019134322420f61c456c9bbfface906f"
+      },
+      {
+        "path": "packages/mobile-shell/package.json",
+        "sha256": "0970900f5cbb68fd32cbb6316f46e79a043a51c6e0829101197fd88d4725fba7"
+      },
+      {
+        "path": "packages/mobile-shell/src/index.ts",
+        "sha256": "ea152efa4ab20ca1680a488cbf48f5eab617ec3e8b007e0498944810e8c28873"
+      },
+      {
+        "path": "packages/mobile-shell/src/mobile.css",
+        "sha256": "b4adf39c8628c983ae8e919331a8de698597456de5d8432129b3b8d65289a080"
+      },
+      {
+        "path": "packages/mobile-shell/tsconfig.json",
+        "sha256": "221c154487a5e76b80eaf0a1b4f136850dcd1a2fd96c6ff6414895045a9ece0a"
+      },
+      {
+        "path": "packages/web-shell/package.json",
+        "sha256": "d9ebfd7ece36bd7043d6dd5822c3fe68a89c2b7d1f6bd07a9c72d068703df2dc"
+      },
+      {
+        "path": "packages/web-shell/src/index.ts",
+        "sha256": "db0186cc8ee7f8b192b7df15172e60bd4df95017ef3c88a56129a230ac1a4d0c"
+      },
+      {
+        "path": "packages/web-shell/tsconfig.json",
+        "sha256": "7cd5a474fe91582ca0d2bf76041855dcd977ac22a3a9701a87b0035b5fcf2520"
+      },
+      {
+        "path": "README.md",
+        "sha256": "d641e2e0076e81b8a7fdd298ccf1f8c4a2162d260e07163823c1d0db97948aa0"
+      },
+      {
+        "path": "templates/mobile/package-lock.json",
+        "sha256": "dc7a6e9130bef578c434886e5873a65539a5c4e51ed12c8fc8be69a70a5b58c8"
+      },
+      {
+        "path": "templates/mobile/package.json",
+        "sha256": "5bd02e4bb08475f88ee8ad79fba8d36e16f8f08205487db3594fbc56577ce200"
+      },
+      {
+        "path": "templates/mobile/README.md",
+        "sha256": "fb4a7e341eb8cf73a0eee8b53fe3091975669e89c58c2340138609895414b1c1"
+      },
+      {
+        "path": "tests/frontend-assembly.test.mjs",
+        "sha256": "0e5b315c0e0aa782f0a3a37081a20eb5781ba85b8e0021df4bc5c9ba246452d0"
+      },
+      {
+        "path": "tests/mobile-assembly.test.mjs",
+        "sha256": "ac929639dc220e9bbf6942909cf042f118347aecb259bc0926cae77d723ca885"
+      },
+      {
+        "path": "tests/mobile-shell.test.mjs",
+        "sha256": "7360062233b0658bfb5329f6b609c82cf5894afc756c0401f03ee7f34e000ede"
+      },
+      {
+        "path": "tests/support/shell-harness.mjs",
+        "sha256": "7d520464af8a755e824e486927cafadd9793ea27cc96f0001af614e64a690225"
+      },
+      {
+        "path": "tests/workspace-closure.test.mjs",
+        "sha256": "f6f6d94785e456f719e95035ef73562b472d43a20c379684b63248c9d420a142"
+      },
+      {
+        "path": "tools/build.mjs",
+        "sha256": "e4e85a5c2c137083f45cd7ad3242643c6f21c00a5733169f7b951e47c17a7c47"
+      },
+      {
+        "path": "tools/demo.mjs",
+        "sha256": "5708ee8f3e3aaec48f34974591a1cae6fae86ea59e5290982eb537d8f1d9e10e"
+      },
+      {
+        "path": "tools/frontend-closure.mjs",
+        "sha256": "e9a264807c8ae6793d71adb1aec1f6cbd282cd6618b35f652cffd60296db5387"
+      },
+      {
+        "path": "tools/mobile/assemble.mjs",
+        "sha256": "9cb01075529fdf63fb5e36a52342729e97ac241db3afb3a0c6631d27677f5aa3"
+      },
+      {
+        "path": "tsconfig.json",
+        "sha256": "efa8bde382b466d0985c8e45cb4f897f879a8941eddf6757dcd37b89c9a1f134"
+      }
+    ],
+    "digest": "8680606fbfb2098a5c3a66191f6de15784e90514f68a30748e4b856bf70cd9e3"
+  },
+  "recordedAt": "2026-10-02T01:05:38.211Z",
+  "command": {
+    "argv": [
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/shell-regressions.test.mjs",
+      "tests/mobile-shell.test.mjs",
+      "tests/mobile-assembly.test.mjs",
+      "tests/frontend-assembly.test.mjs",
+      "tests/workspace-closure.test.mjs",
+      "tests/factory-lifecycle.test.mjs"
+    ],
+    "cwd": "."
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "win32",
+    "observer": "/root via exec command9aa70c",
+    "command": "node --test --test-concurrency=1 tests/shell-regressions.test.mjs tests/mobile-shell.test.mjs tests/mobile-assembly.test.mjs tests/frontend-assembly.test.mjs tests/workspace-closure.test.mjs tests/factory-lifecycle.test.mjs"
+  },
+  "status": "FAILED",
+  "exitCode": 1,
+  "counts": {
+    "tests": 39,
+    "passed": 37,
+    "failed": 2,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "artifacts": [
+    {
+      "sourceRef": ".local/mobile-001/root-focused.log",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/root-focused.log",
+      "sha256": "69036c859a743b226b7a7d4b618e585d5e8d62154ee14c810bc9b81e1bef2f59",
+      "bytes": 6124
+    },
+    {
+      "sourceRef": ".local/mobile-001/root-verification-before.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/root-verification-before.json",
+      "sha256": "07885fb9f591829d3d985603a4384360584ca6796b5b3abec2f1c9e544e6507b",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/root-focused-after.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/root-focused-after.json",
+      "sha256": "bb8275c55298a762757e6567cf381e0834c53c1e80f3000a60d8858934818a6d",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/build-after.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/build-after.json",
+      "sha256": "a0401d80645883535ff296dfa90cb23e814c5541f40c9b2cfd0060db0e4f591e",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/build-before.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/build-before.json",
+      "sha256": "82f8e7ecb347660e9b2e188d9be3979442f18fce01fa9bd1e8887cdfd4079301",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/build-closure.log",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/build-closure.log",
+      "sha256": "618b059c9c6438f4a54650c5dbdb9bc7bb293747b78f180319e271b097d5a37c",
+      "bytes": 454
+    },
+    {
+      "sourceRef": ".local/mobile-001/build-final.log",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/build-final.log",
+      "sha256": "618b059c9c6438f4a54650c5dbdb9bc7bb293747b78f180319e271b097d5a37c",
+      "bytes": 454
+    },
+    {
+      "sourceRef": ".local/mobile-001/build-final2.log",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/build-final2.log",
+      "sha256": "618b059c9c6438f4a54650c5dbdb9bc7bb293747b78f180319e271b097d5a37c",
+      "bytes": 454
+    },
+    {
+      "sourceRef": ".local/mobile-001/build-frozen.log",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/build-frozen.log",
+      "sha256": "618b059c9c6438f4a54650c5dbdb9bc7bb293747b78f180319e271b097d5a37c",
+      "bytes": 454
+    },
+    {
+      "sourceRef": ".local/mobile-001/build-retry.log",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/build-retry.log",
+      "sha256": "618b059c9c6438f4a54650c5dbdb9bc7bb293747b78f180319e271b097d5a37c",
+      "bytes": 454
+    },
+    {
+      "sourceRef": ".local/mobile-001/closure-build-after.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/closure-build-after.json",
+      "sha256": "f3eecbbd7d8e52d52f2454295ac6826cd2531eac187d9b11a015517730d7066a",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/closure-build-before.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/closure-build-before.json",
+      "sha256": "8ed44d1a07d8ea6785c01f24dd730dc6c1d12a04e7726407ac2460d22940ca38",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/closure-focused-after.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/closure-focused-after.json",
+      "sha256": "1592eaeac4a43e5122766df3c404885d3e2c6d72033a8e7112209ea4df1265b6",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/closure-focused-before.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/closure-focused-before.json",
+      "sha256": "6fbdb0343490d0bc47769b38b5b767f629fa5e57833dcaf1fd884814c6e0cff8",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/final-build-after.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/final-build-after.json",
+      "sha256": "f58b8d83a7bd76c3641a6c997e776cdd320b0896eeddd662279561b318032de3",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/final-build-before.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/final-build-before.json",
+      "sha256": "d1fc198dfe6b50e7880968c33eecb5166be51f2a00661be1cd77ce156c9eb6c1",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/final-focused-before.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/final-focused-before.json",
+      "sha256": "c47c3a5474380dcc77d1703fab603c3ad7293b9d69a19a91272c1403cf13608a",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/focused-before.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/focused-before.json",
+      "sha256": "9cc81e32aa6d23d5de6dcbc2a6c2c7fd55a492d4507c9016b136d10466a57474",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/focused-closure.log",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/focused-closure.log",
+      "sha256": "a680ffb590baa1bbd539d9dac794106bfa255b49e2002e873b9a47186ecdc3a9",
+      "bytes": 8541
+    },
+    {
+      "sourceRef": ".local/mobile-001/focused-final.log",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/focused-final.log",
+      "sha256": "d853ae61775986f62d919d94412601a407ee84da8ad7078e1c359fdbafd52a05",
+      "bytes": 8508
+    },
+    {
+      "sourceRef": ".local/mobile-001/focused-final2.log",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/focused-final2.log",
+      "sha256": "74e3375de2e2c7483773d357c0534137f5a81e87eb3316dbd9e754658ee21bf2",
+      "bytes": 2189
+    },
+    {
+      "sourceRef": ".local/mobile-001/focused-frozen.log",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/focused-frozen.log",
+      "sha256": "b6a1b10f7edb41b3ffa55a9737c295f0928dc7d6e10f2f986b2f683495e9168c",
+      "bytes": 6498
+    },
+    {
+      "sourceRef": ".local/mobile-001/focused-retry.log",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/focused-retry.log",
+      "sha256": "3aea19c46b9e85c467b6cd93c42d14c73d5cbea00860200fb9e3862968fd9707",
+      "bytes": 10854
+    },
+    {
+      "sourceRef": ".local/mobile-001/frozen-build-after.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/frozen-build-after.json",
+      "sha256": "2e6a4914a09abc5b3cc5b9a86f12261bfe21cb8cf75a319705fc342fdc4b7926",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/frozen-build-before.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/frozen-build-before.json",
+      "sha256": "bcdc4387df3859b118fb7fafebf7466994e3eb4564ca574df017721bcf84d8f6",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/frozen-focused-after.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/frozen-focused-after.json",
+      "sha256": "b0a42baac45d0af2d67902646451657d4586810302973e0ab9d8f255bb33cdff",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/frozen-focused-before.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/frozen-focused-before.json",
+      "sha256": "58613d22a2e0e3fde3a34d7418597e22ed9fe6e437c64bcf434c01f1f7552a13",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/retry-build-after.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/retry-build-after.json",
+      "sha256": "9d7674c034498a5c22fa8618894b9b21a59afbedcd3eaefc5e4de1d23d0e0966",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/retry-build-before.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/retry-build-before.json",
+      "sha256": "7ef141784baedf50b967834013b7c8fbbbc8b3687bec4950b847b479d8a05508",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/retry-focused-after.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/retry-focused-after.json",
+      "sha256": "e42a619991e23bbc14063b26c752c51fa0b4d9d7229b1dc94c55c026d2907990",
+      "bytes": 4742
+    },
+    {
+      "sourceRef": ".local/mobile-001/retry-focused-before.json",
+      "path": ".brain/workflow/artifacts/70284fca-efe2-4341-ad03-be8ef0f0646d/retry-focused-before.json",
+      "sha256": "98076c71f3283afd4587c2f2b53d37c8987778f23fe889008bd484d793a384ca",
+      "bytes": 4742
+    }
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "Root actual exec9aa70c returned exit1; before/after exact candidate match. Earlier worker diagnostic logs are retained as separate historical attempts, not counted in this root run."
+  },
+  "limitations": [
+    "Root failures: copied source fixture lacks esbuild; exported Desk fixture directory removal returned ENOTEMPTY after awaited application close. Exact transient cause is unknown.",
+    "Earlier worker focused attempt with EBUSY was interrupted through original exec session27608; Ctrl+C returned no numeric exit and later original-session poll returned Unknown process id. Completion/owner closure remains UNKNOWN; no PID recovery or speculative fixture cleanup.",
+    "Earlier build/focused artifacts concern their own captured candidates; they do not qualify the root run or subsequent scope amendment. Browser, native and full-suite qualification still pending."
+  ],
+  "integritySha256": "56a2981fd5521c48e7046ad8b1855fa27358d6962835942fd7a9ac3a550a3f0f"
+}

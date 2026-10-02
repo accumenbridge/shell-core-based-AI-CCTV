@@ -483,23 +483,56 @@ export class ControlPlaneStore {
     });
   }
 
-  putProduct(input: ProductDefinition, actorId: string, authorize?: () => unknown) {
+  putProduct(input: ProductDefinition, actorId: string, authorize?: () => unknown, familyDerivation?: unknown) {
     const definition = validateProduct(input);
     const contents = canonical(definition);
     const actor = validateActor(actorId);
+    let familyClaim: Record<string, unknown> | undefined;
+    if (familyDerivation !== undefined) {
+      if (!familyDerivation || typeof familyDerivation !== 'object' || Array.isArray(familyDerivation) ||
+          (Object.getPrototypeOf(familyDerivation) !== Object.prototype && Object.getPrototypeOf(familyDerivation) !== null))
+        throw new PlatformError('INVALID', 'Family provenance must be a plain bounded record');
+      const claim = familyDerivation as Record<string, unknown>;
+      const encoded = canonical(claim);
+      if (encoded.length > 16 * 1024 || claim.schema !== 'quadbridge.family-derivation.v1' ||
+          typeof claim.familyId !== 'string' || !/^[a-z][a-z0-9-]{1,47}$/.test(claim.familyId) ||
+          typeof claim.familyVersion !== 'string' || !/^\d{1,6}\.\d{1,6}\.\d{1,6}$/.test(claim.familyVersion) ||
+          claim.productDigest !== digest(definition) || typeof claim.sourceFingerprint !== 'string' || !/^[a-f0-9]{64}$/.test(claim.sourceFingerprint))
+        throw new PlatformError('INVALID', 'Family provenance does not match this exact product version');
+      familyClaim = JSON.parse(encoded) as Record<string, unknown>;
+    }
     return this.transaction(() => {
       this.authorizeMutation(authorize);
       const existing = this.db.prepare('SELECT definition FROM product_versions WHERE id=? AND version=?').get(definition.id, definition.version) as { definition: string } | undefined;
       if (existing) {
         if (canonical(JSON.parse(existing.definition)) !== contents) throw new PlatformError('CONFLICT', `Product version ${definition.id}@${definition.version} is immutable`);
+        if (familyClaim !== undefined) {
+          const prior = this.productFamilyDerivation(definition.id, definition.version);
+          if (!prior || canonical(prior) !== canonical(familyClaim)) throw new PlatformError('CONFLICT', 'Immutable product version has different or missing family provenance');
+        }
         return definition;
       }
       const now = Date.now();
       this.db.prepare('INSERT INTO products(id,title,created,updated) VALUES(?,?,?,?) ON CONFLICT(id) DO UPDATE SET title=excluded.title,updated=excluded.updated').run(definition.id, definition.title, now, now);
       this.db.prepare('INSERT INTO product_versions(id,version,definition,created) VALUES(?,?,?,?)').run(definition.id, definition.version, contents, now);
-      this.audit('product.version.put', `${definition.id}@${definition.version}`, { digest: digest(definition) }, actor);
+      this.audit('product.version.put', `${definition.id}@${definition.version}`, { digest: digest(definition), ...(familyClaim ? { familyDerivation: familyClaim } : {}) }, actor);
       return definition;
     });
+  }
+  productFamilyDerivation(id: string, version: string): Record<string, unknown> | undefined {
+    const row = this.db.prepare('SELECT definition FROM product_versions WHERE id=? AND version=?').get(id, version) as { definition: string } | undefined;
+    if (!row) return undefined;
+    const definition = JSON.parse(row.definition) as ProductDefinition;
+    const audit = this.db.prepare("SELECT payload FROM audit WHERE action='product.version.put' AND subject=? ORDER BY id DESC LIMIT 1").get(`${id}@${version}`) as { payload: string } | undefined;
+    if (!audit) return undefined;
+    let payload: unknown;
+    try { payload = JSON.parse(audit.payload) as unknown; } catch { return undefined; }
+    if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return undefined;
+    const value = (payload as Record<string, unknown>).familyDerivation;
+    if (value === undefined) return undefined;
+    if (!value || typeof value !== 'object' || Array.isArray(value) || (value as Record<string, unknown>).productDigest !== digest(definition))
+      throw new PlatformError('INVALID', 'Stored family provenance does not match its immutable product version');
+    return JSON.parse(canonical(value)) as Record<string, unknown>;
   }
   products() {
     return this.db.prepare(`SELECT p.id,p.title,p.updated,(SELECT version FROM product_versions v WHERE v.id=p.id ORDER BY created DESC,rowid DESC LIMIT 1) AS version FROM products p ORDER BY p.id`).all();

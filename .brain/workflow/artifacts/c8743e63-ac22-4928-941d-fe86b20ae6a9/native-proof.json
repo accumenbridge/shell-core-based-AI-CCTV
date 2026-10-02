@@ -1,0 +1,44 @@
+{
+  "sourceCandidate": "d6f7d84c77a8d8c215b7aab7bf6ddcf42323d8324b600970c56f2e1ce2216022",
+  "outputCandidate": "5957e456097547afa397d8182c6a5670845b623d942109cf7dad7f41b5d0ceb4",
+  "source": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\generated\\service-desk\\d6f7d84c77a8d8c215b7",
+  "destination": "D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\.local\\mobile-001\\native-proof-G4k9Xr\\app",
+  "steps": [
+    {
+      "command": [
+        "npm",
+        "ci"
+      ],
+      "startedAt": "2026-10-02T01:15:06.884Z",
+      "finishedAt": "2026-10-02T01:15:13.202Z",
+      "exitCode": 0,
+      "signal": null,
+      "log": ".local/mobile-001/native-ci.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "android:add"
+      ],
+      "startedAt": "2026-10-02T01:15:13.204Z",
+      "finishedAt": "2026-10-02T01:15:19.202Z",
+      "exitCode": 0,
+      "signal": null,
+      "log": ".local/mobile-001/native-run-android-add.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "android:sync"
+      ],
+      "startedAt": "2026-10-02T01:15:19.203Z",
+      "finishedAt": "2026-10-02T01:15:19.730Z",
+      "exitCode": 0,
+      "signal": null,
+      "log": ".local/mobile-001/native-run-android-sync.log"
+    }
+  ],
+  "scope": "Pinned dependency installation and Android project generation/sync only. No native compile, emulator, device, signing or native identity/API qualification."
+}

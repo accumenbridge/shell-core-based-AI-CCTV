@@ -1,0 +1,18 @@
+# CAPABILITY-001 amended source/focused independent review
+
+Reviewer /root/repo_brain_architect (Sol/high), implementer /root/repo_brain_validation (Luna/xhigh). APPROVED_REVISED_SOURCE_AND_FOCUSED_SCOPE; final ACCEPTED is not issued while original root-suite-02 remains pending. No build/test/runtime/browser or maintained/shared Brain mutation by reviewer.
+
+Exact revised candidatefadac8c43621b45dc4a12faf43b6499e0c1d8e025e2ba27191f0ec3fe038aa8e, all222 physical files independently matched before and after review. Amended actual contract bytesb9f7a70497e05f0eea644dc388b4e4295ea6fe153b6f94fca046fda9ca239c4f match. Against previous4ab25358 frozen source there are exactly two changes, with all220 other files unchanged:
+
+- tests/studio-integration.test.mjs:4bfa1294685e128381eaedd6283d6542672285bb73add51e6e8c33104242758d.
+- tests/studio-product-editor.test.mjs:d6438683982453be4cbd9fa93e17926ec7be660ff86115f10eced7b03f7f3068.
+
+The diff implements the approved finite VM amendment: standard TextEncoder is supplied to integration browserCore/html contexts; JSON strings are parsed inside each destination VM for catalogue/solutions/draft or complete product fixtures. Temporary string globals are removed in finally. No host Object/prototype injection, validator weakening, operation suppression or new network/filesystem/build privilege occurs. The browser/CLI exact resolver comparison remains, and the editor adds a complete JSON-projected comparison to the CLI serializer/parser while retaining description, custom binding identity, valid status and absent fetch. The real generated module/save/conflict/build/persistent-record/Handoff-receipt/mode/restart and cleanup code is byte-for-byte unchanged by this repair.
+
+Prior finite25-path source review remains applicable because all application/validator/operation/export/offline generated source bytes are unchanged. Owner-backed operation/HTTP receipt replay, actual worker indexing, independent current Knowledge/Combined0.2.2 exports, neutral-host original-authorization/abort reconciliation and compiled offline schema validation keep the previously documented scopes and limitations.
+
+Current amended records independently checked: build e2373db2-35b1-4e0c-8758-a8f1f6111196 PASSED/exit0; expanded focused9c537144-9edf-4eca-8abd-d45898d79824 PASSED/exit0,78/78/zero failure,cancellation,skip,TODO. Both immutable record integrity SHA values and all eight archived artifact hashes/sizes match physical bytes, candidate and amended contract. Execution metadata records actual awaited original child close exit0/nullsignal, build06:23:01.145→06:23:02.755Z, focused06:23:07.261→06:23:39.495Z, equal before/after source. Raw focused terminal counters agree; expanded command includes both new harness owners.
+
+Raw build SHA00af2a7e9e6323044f8f2986b1cb9bc7f72d7b02db3faa4c8eab5260dfb97c83; expanded focused SHA0f0c2a43633d94a311df1cb3dccf7de9c042cb3f93625c172fd894f4d07bac8e. Evidence is saved command-observer metadata, not a reviewer live process-close claim.
+
+Historical full8a1126f9 remains FAILED336/332pass/3fail/1EPERMskip; prior failures/nonqualifying records are not repinned or accepted. Its existing no-operation Desk frozen snapshot and live0.2.0-versus-new0.2.1 cases support finite legacy isolation only, not old Knowledge/Handoff operations. The new ordinary complete suite must still show original close exit0, zero fail/cancel/TODO, only named unavailable coverage and matching unchanged source/contract before final acceptance. This review does not qualify a new real browser, MCP/ChatGPT/iframe adapter, provider inference, phone, hosted/customer deployment or production profile.

@@ -1,6 +1,7 @@
 import { randomUUID, createHash } from 'node:crypto';
 import { SqliteOwner, JobQueue } from '@quadbridge/sqlite';
 import { PlatformError, object, text, id, type ModuleManifest, type RequestContext, type JobHandler } from '@quadbridge/contracts';
+import type { OperationDescriptor, OperationRegistration } from '@quadbridge/contracts/operations';
 import { BoundedProviderExecutor, lexicalTerms, type EvidenceAnswerInput, type EvidenceProvider } from '@quadbridge/ai-core';
 import type { HostedModule } from '@quadbridge/backend-host';
 export interface DocumentRecord {
@@ -40,6 +41,49 @@ export interface KnowledgeModule extends HostedModule {
     queue: JobQueue;
     handlers: JobHandler[];
 }
+
+const operationDescriptors: OperationDescriptor[] = [
+    { id: 'knowledge.documents.search', version: 1, title: 'Search documents', description: 'Search the current tenant’s indexed Knowledge documents.', permission: 'knowledge.read', kind: 'read',
+        inputSchema: { type: 'object', properties: { query: { type: 'string', minLength: 1, maxLength: 200 } }, required: ['query'], additionalProperties: false },
+        outputSchema: { type: 'object', properties: {
+            items: { type: 'array', maxItems: 25, items: { type: 'object', properties: { id: { type: 'string', minLength: 1, maxLength: 128 }, title: { type: 'string', minLength: 1, maxLength: 200 }, version: { type: 'integer', minimum: 1 }, excerpt: { type: 'string', maxLength: 512 } }, required: ['id', 'title', 'version', 'excerpt'], additionalProperties: false } },
+            coverage: { type: 'string', enum: ['INDEXED_DOCUMENTS_ONLY'] }, query: { type: 'string', minLength: 1, maxLength: 200 }
+        }, required: ['items', 'coverage'], additionalProperties: false } },
+    { id: 'knowledge.documents.get', version: 1, title: 'Get a document', description: 'Read a bounded tenant-owned Knowledge document projection.', permission: 'knowledge.read', kind: 'read',
+        inputSchema: { type: 'object', properties: { documentId: { type: 'string', minLength: 1, maxLength: 128 } }, required: ['documentId'], additionalProperties: false },
+        outputSchema: { type: 'object', properties: {
+            id: { type: 'string', minLength: 1, maxLength: 128 }, title: { type: 'string', minLength: 1, maxLength: 200 }, version: { type: 'integer', minimum: 1 },
+            state: { type: 'string', enum: ['PENDING', 'READY'] }, excerpt: { type: 'string', maxLength: 4096 }, truncated: { type: 'boolean' }, bodyDigest: { type: 'string', pattern: '^[a-f0-9]{64}$' }
+        }, required: ['id', 'title', 'version', 'state', 'excerpt', 'truncated', 'bodyDigest'], additionalProperties: false } },
+    { id: 'knowledge.documents.create', version: 1, title: 'Create a document', description: 'Create a tenant-owned Knowledge document and enqueue its index job.', permission: 'knowledge.write', kind: 'write',
+        inputSchema: { type: 'object', properties: { title: { type: 'string', minLength: 1, maxLength: 200 }, body: { type: 'string', minLength: 1, maxLength: 64000 } }, required: ['title', 'body'], additionalProperties: false },
+        outputSchema: { type: 'object', properties: { id: { type: 'string', minLength: 1, maxLength: 128 }, title: { type: 'string', minLength: 1, maxLength: 200 }, version: { type: 'integer', minimum: 1 }, state: { type: 'string', enum: ['PENDING'] }, jobId: { type: 'string', minLength: 1, maxLength: 128 } }, required: ['id', 'title', 'version', 'state', 'jobId'], additionalProperties: false } }
+];
+
+function searchDocuments(store: SqliteOwner, ctx: RequestContext, queryInput: unknown) {
+    ctx.assertAllowed('knowledge.read', 'read');
+    const raw = text(queryInput, 'query', 200);
+    const words = raw.match(/[\p{L}\p{N}]+/gu)?.slice(0, 12);
+    if (!words?.length) return { items: [], coverage: 'INDEXED_DOCUMENTS_ONLY' as const };
+    const query = words.map(w => `"${w.replaceAll('"', '""')}"`).join(' AND ');
+    const rows = store.db.prepare(`SELECT d.id,d.title,d.version,substr(snippet(document_search,3,'','',' … ',24),1,512) AS excerpt
+        FROM document_search JOIN documents d ON d.tenant=document_search.tenant AND d.id=document_search.document_id
+        WHERE document_search MATCH ? AND document_search.tenant=? AND d.state='READY' ORDER BY rank LIMIT 25`).all(query, ctx.tenantId) as unknown as {id:string;title:string;version:number;excerpt:string}[];
+    return { items: rows.map(row => ({ id: row.id, title: row.title, version: row.version, excerpt: row.excerpt.slice(0, 512) })), coverage: 'INDEXED_DOCUMENTS_ONLY' as const, query: raw };
+}
+
+function createDocument(store: SqliteOwner, queue: JobQueue, ctx: RequestContext, input: unknown, commandId?: string) {
+    ctx.assertAllowed('knowledge.write', 'write');
+    const body = object(input, ['title', 'body']);
+    const title = text(body.title, 'title', 200), content = text(body.body, 'body', 64000);
+    return store.command(ctx, 'knowledge.add', commandId, { title, body: content }, 'knowledge.write', () => {
+        const documentId = randomUUID();
+        const job = queue.enqueue(ctx, 'knowledge.index.v1', `index.${documentId}.1`, { documentId, version: 1 }, 'knowledge.write');
+        store.db.prepare('INSERT INTO documents VALUES(?,?,?,?,?,?,?,?)').run(documentId, ctx.tenantId, title, content, 1, 'PENDING', job.id, Date.now());
+        return { id: documentId, title, version: 1, state: 'PENDING', jobId: job.id };
+    });
+}
+
 export function createKnowledge(manifest: ModuleManifest, store: SqliteOwner, options: KnowledgeOptions = {}): KnowledgeModule {
     store.migrate([{ version: 1, sql: `CREATE TABLE documents(id TEXT NOT NULL,tenant TEXT NOT NULL,title TEXT NOT NULL,body TEXT NOT NULL,version INTEGER NOT NULL,state TEXT NOT NULL,job_id TEXT NOT NULL,created INTEGER NOT NULL,PRIMARY KEY(tenant,id)); CREATE VIRTUAL TABLE document_search USING fts5(document_id UNINDEXED,tenant UNINDEXED,title,body);` }], manifest.schema);
     const queue = new JobQueue(store);
@@ -119,6 +163,12 @@ export function createKnowledge(manifest: ModuleManifest, store: SqliteOwner, op
                 throw new PlatformError('NOT_FOUND', 'Document not found');
             return row;
         } };
+    const readProjection = (ctx: RequestContext, documentId: unknown) => {
+        ctx.assertAllowed('knowledge.read', 'read');
+        const record = queries.get(ctx, id(documentId));
+        const excerpt = record.body.slice(0, 4096);
+        return { id: record.id, title: record.title, version: record.version, state: record.state, excerpt, truncated: record.body.length > excerpt.length, bodyDigest: bodyDigest(record.body) };
+    };
     const handlers: JobHandler[] = [{ kind: 'knowledge.index.v1', async prepare(payload, ctx) {
                 const b = object(payload, ['documentId', 'version']);
                 const row = store.db.prepare('SELECT * FROM documents WHERE tenant=? AND id=?').get(ctx.tenantId, id(b.documentId)) as unknown as DocumentRecord | undefined;
@@ -140,22 +190,19 @@ export function createKnowledge(manifest: ModuleManifest, store: SqliteOwner, op
                         return { documentId: row.id, version: row.version, index: 'sqlite-fts5' };
                     } };
             } }];
-    return { manifest, services: { 'knowledge.document.read.v1': queries, 'knowledge.document.retrieve.v1': retrieval }, queue, handlers, routes: [
+    const operations: OperationRegistration[] = [
+        { descriptor: operationDescriptors[0]!, handle(ctx, input) { const body = object(input, ['query']); return searchDocuments(store, ctx, body.query); } },
+        { descriptor: operationDescriptors[1]!, handle(ctx, input) { const body = object(input, ['documentId']); return readProjection(ctx, body.documentId); } },
+        { descriptor: operationDescriptors[2]!, handle(ctx, input, commandId) { return createDocument(store, queue, ctx, input, commandId); } }
+    ];
+    return { manifest, services: { 'knowledge.document.read.v1': queries, 'knowledge.document.retrieve.v1': retrieval }, queue, handlers, operations, routes: [
             { method: 'GET', path: '/api/documents', permission: 'knowledge.read', kind: 'read', handle(ctx) { return { items: (store.db.prepare('SELECT id,title,version,state,job_id,created FROM documents WHERE tenant=? ORDER BY created DESC,id LIMIT 100').all(ctx.tenantId) as unknown as Partial<DocumentRecord>[]).map(d => ({ ...d, indexJob: queue.publicGet(ctx, d.job_id!) })), limit: 100 }; } },
-            { method: 'GET', path: '/api/documents/search', permission: 'knowledge.read', kind: 'read', handle(ctx, _b, q) {
-                    const raw = text(q.get('q'), 'query', 200);
-                    const words = raw.match(/[\p{L}\p{N}]+/gu)?.slice(0, 12);
-                    if (!words?.length)
-                        return { items: [], coverage: 'INDEXED_DOCUMENTS_ONLY' };
-                    const query = words.map(w => `"${w}"`).join(' AND ');
-                    const rows = store.db.prepare(`SELECT document_id AS id,title,snippet(document_search,3,'','', ' … ',24) AS excerpt FROM document_search WHERE document_search MATCH ? AND tenant=? ORDER BY rank LIMIT 25`).all(query, ctx.tenantId);
-                    return { items: rows, coverage: 'INDEXED_DOCUMENTS_ONLY', query: raw };
-                } },
+            { method: 'GET', path: '/api/documents/search', permission: 'knowledge.read', kind: 'read', handle(ctx, _b, q) { return searchDocuments(store, ctx, q.get('q')); } },
             { method: 'POST', path: '/api/documents/answer', permission: 'knowledge.read', kind: 'read', handle(ctx, input) {
                     const b = object(input, ['question']);
                     return retrieval.answer(ctx, text(b.question, 'question', answerBounds.question));
                 } },
-            { method: 'POST', path: '/api/documents', permission: 'knowledge.write', kind: 'write', handle(ctx, input, _q, key) { const b = object(input, ['title', 'body']); const title = text(b.title, 'title', 200), body = text(b.body, 'body', 64000); return store.command(ctx, 'knowledge.add', key, { title, body }, 'knowledge.write', () => { const documentId = randomUUID(); const job = queue.enqueue(ctx, 'knowledge.index.v1', `index.${documentId}.1`, { documentId, version: 1 }, 'knowledge.write'); store.db.prepare('INSERT INTO documents VALUES(?,?,?,?,?,?,?,?)').run(documentId, ctx.tenantId, title, body, 1, 'PENDING', job.id, Date.now()); return { id: documentId, title, version: 1, state: 'PENDING', jobId: job.id }; }); } },
+            { method: 'POST', path: '/api/documents', permission: 'knowledge.write', kind: 'write', handle(ctx, input, _q, key) { return createDocument(store, queue, ctx, input, key); } },
             { method: 'POST', path: '/api/documents/cancel-index', permission: 'knowledge.write', kind: 'write', handle(ctx, input, _q, key) { const b = object(input, ['documentId']); const documentId = id(b.documentId); const record = queries.get(ctx, documentId); return store.command(ctx, 'knowledge.cancel-index', key, { documentId }, 'knowledge.write', () => ({ state: queue.cancel(ctx, record.job_id), jobId: record.job_id })); } }
         ], close: () => store.close() };
 }

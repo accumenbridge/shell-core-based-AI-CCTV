@@ -145,7 +145,7 @@ async function waitForBuild(store,id,timeoutMs=90000) {
   throw new Error(`Build ${id} did not settle before the bounded fixture deadline`);
 }
 
-async function fixture(t,{binaryAsset=false,productId='service-desk'}={}) {
+async function fixture(t,{binaryAsset=false,productId='service-desk',initialDeskProductVersion}={}) {
   const temp=await mkdtemp(join(tmpdir(),'q3-'));
   const root=join(temp,'checkout'), dbPath=join(temp,'control-plane.sqlite');
   let store,worker,artifacts,operator,runtimes,recovery;
@@ -268,6 +268,12 @@ async function fixture(t,{binaryAsset=false,productId='service-desk'}={}) {
     catch(error) { throw new Error(`Artifact fixture cleanup failed at ${temp}`,{cause:error}); }
   });
   await copyReviewedBuildInputs(ROOT,root);
+  if(initialDeskProductVersion!==undefined) {
+    const productPath=join(root,'products','service-desk','product.json');
+    const product=JSON.parse(await readFile(productPath,'utf8'));
+    product.version=initialDeskProductVersion;
+    await writeFile(productPath,`${JSON.stringify(product,null,2)}\n`);
+  }
   await copyPrivateToolchain(ROOT,root);
   let binaryExpected;
   if(binaryAsset) {
@@ -1130,7 +1136,7 @@ test('a promoted Service Desk runtime runs from its frozen artifact after checko
 });
 
 test('a live promoted Service Desk runtime keeps its exact served bytes while the private checkout builds a new snapshot', {skip:!WINDOWS}, async t=>{
-  const context=await fixture(t);
+  const context=await fixture(t,{initialDeskProductVersion:'0.2.0'});
   const firstBuild=await context.build('runtime-live-rebuild-original');
   const registration=await context.artifacts.register(firstBuild.id,'system:runtime-live-rebuild-registry',()=>undefined);
   const digest=registration.digest;

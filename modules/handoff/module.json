@@ -1,11 +1,11 @@
 {
   "id": "handoff",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "abi": "quadbridge.module.v1",
   "dependencies": [
     {
       "id": "knowledge",
-      "version": "0.2.1"
+      "version": "0.2.3"
     }
   ],
   "provides": [],

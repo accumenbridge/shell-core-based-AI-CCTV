@@ -1,5 +1,7 @@
 import { randomUUID } from 'node:crypto';
-import { PlatformError, type Actor, type CompositionPlan, type Mode, type ModuleManifest, type RequestContext, type RouteDefinition } from '@quadbridge/contracts';
+import { PlatformError, id, type Actor, type CompositionPlan, type Json, type Mode, type ModuleManifest, type RequestContext, type RouteDefinition } from '@quadbridge/contracts';
+import { sameOperationDescriptor, validateOperationDescriptor, validateOperationValue, type OperationDescriptor, type OperationRegistration } from '@quadbridge/contracts/operations';
+import { validateUiContributionDescriptors } from '@quadbridge/contracts/ui-contributions';
 export interface AccessPort {
     assertModule(actor: Actor, tenant: string, module: string, permission: string, kind: 'read' | 'write'): void;
     permissions(actor: Actor, tenant: string): string[];
@@ -15,6 +17,7 @@ export interface ModuleEnvironment {
 export interface HostedModule {
     manifest: ModuleManifest;
     routes: RouteDefinition[];
+    operations?: OperationRegistration[];
     services: Readonly<Record<string, unknown>>;
     start?(): Promise<void>;
     close(): void | Promise<void>;
@@ -25,6 +28,7 @@ export class ApplicationHost {
         module: HostedModule;
         route: RouteDefinition;
     }>();
+    private readonly operations = new Map<string, { module: HostedModule; descriptor: OperationDescriptor; handler: OperationRegistration['handle'] }>();
     private started: HostedModule[] = [];
     private state: 'CREATED' | 'READY' | 'DRAINING' | 'STOPPED' = 'CREATED';
     constructor(readonly plan: CompositionPlan, readonly instanceId: string, readonly modules: HostedModule[], readonly access: AccessPort) {
@@ -34,6 +38,7 @@ export class ApplicationHost {
             const declared = plan.modules.find(d => d.id === m.manifest.id);
             if (!declared || declared.version !== m.manifest.version)
                 throw new PlatformError('INCOMPATIBLE', 'Unselected module registration');
+            validateUiContributionDescriptors(declared);
             for (const r of m.routes) {
                 const contract = declared.routes.find(d => d.method === r.method && d.path === r.path);
                 if (!contract || contract.kind !== r.kind || contract.permission !== r.permission)
@@ -47,6 +52,21 @@ export class ApplicationHost {
                 throw new PlatformError('INCOMPATIBLE', 'Declared route lacks implementation');
             if (Object.keys(m.services).some(c => !declared.provides.includes(c)) || declared.provides.some(c => !(c in m.services)))
                 throw new PlatformError('INCOMPATIBLE', 'Provider registration differs from manifest');
+            const declaredOperations = (declared.operations ?? []).map(operation => validateOperationDescriptor(operation, declared.id, declared.permissions));
+            const registeredOperations = m.operations ?? [];
+            if (registeredOperations.length !== declaredOperations.length)
+                throw new PlatformError('INCOMPATIBLE', 'Declared operation handler count differs from registration');
+            for (const registration of registeredOperations) {
+                if (!registration || typeof registration.handle !== 'function')
+                    throw new PlatformError('INCOMPATIBLE', 'Invalid operation handler registration');
+                const descriptor = validateOperationDescriptor(registration.descriptor, declared.id, declared.permissions);
+                const expected = declaredOperations.find(item => item.id === descriptor.id && item.version === descriptor.version);
+                if (!expected || !sameOperationDescriptor(expected, descriptor))
+                    throw new PlatformError('INCOMPATIBLE', 'Operation handler differs from its declaration');
+                const key = `${descriptor.id}@${descriptor.version}`;
+                if (this.operations.has(key)) throw new PlatformError('INCOMPATIBLE', 'Duplicate operation registration');
+                this.operations.set(key, { module: m, descriptor: expected, handler: registration.handle });
+            }
         }
     }
     async start() {
@@ -109,6 +129,49 @@ export class ApplicationHost {
             throw error;
         }
     }
+    operationCatalogue(actor: Actor, tenantId: string, assertOriginalAuth?: () => void): readonly OperationDescriptor[] {
+        if (this.state !== 'READY') throw new PlatformError('UNAVAILABLE', 'Application is not accepting requests');
+        assertOriginalAuth?.();
+        const visible: OperationDescriptor[] = [];
+        for (const { module, descriptor } of this.operations.values()) {
+            const context = this.context(actor, tenantId, module.manifest.id, new AbortController().signal, randomUUID(), assertOriginalAuth);
+            try { context.assertAllowed(descriptor.permission, descriptor.kind); }
+            catch (error) {
+                if (error instanceof PlatformError && (error.code === 'DENIED' || error.code === 'DISABLED')) continue;
+                throw error;
+            }
+            visible.push(descriptor);
+        }
+        return Object.freeze(visible);
+    }
+    async invokeOperation(operationId: string, version: number, actor: Actor, tenantId: string, input: unknown,
+        commandId?: string, signal: AbortSignal = new AbortController().signal, requestId = randomUUID(), assertOriginalAuth?: () => void): Promise<Json> {
+        if (this.state !== 'READY') throw new PlatformError('UNAVAILABLE', 'Application is not accepting requests');
+        if (typeof operationId !== 'string' || !Number.isSafeInteger(version) || version < 1)
+            throw new PlatformError('INVALID', 'Invalid operation identity');
+        const found = this.operations.get(`${operationId}@${version}`);
+        if (!found) throw new PlatformError('NOT_FOUND', 'Operation not found');
+        const { module, descriptor, handler } = found;
+        const requestKey = id(requestId);
+        const context = this.context(actor, tenantId, module.manifest.id, signal, requestKey, assertOriginalAuth);
+        context.assertAllowed(descriptor.permission, descriptor.kind);
+        if (descriptor.kind === 'write') {
+            if (commandId === undefined) throw new PlatformError('INVALID', 'Idempotency-Key is required');
+            id(commandId);
+        } else if (commandId !== undefined) id(commandId);
+        const safeInput = validateOperationValue(input, descriptor.inputSchema, 'input');
+        try {
+            const raw = await handler(context, safeInput, commandId);
+            context.assertAllowed(descriptor.permission, descriptor.kind);
+            const output = validateOperationValue(raw, descriptor.outputSchema, 'output');
+            context.assertAllowed(descriptor.permission, descriptor.kind);
+            return output;
+        } catch (error) {
+            // Match the route boundary: stale sessions, permissions or cancellation suppress late replies.
+            context.assertAllowed(descriptor.permission, descriptor.kind);
+            throw error;
+        }
+    }
     bootstrap(actor: Actor, requestedTenant?: string) {
         const tenants = this.access.tenants(actor);
         const tenantId = requestedTenant ?? tenants[0];
@@ -122,6 +185,7 @@ export class ApplicationHost {
             product: { id: this.plan.product.id, title: this.plan.product.title, description: this.plan.product.description, layout: this.plan.product.layout, version: this.plan.product.version },
             modules: modules.map(m => ({ id: m.id, version: m.version, mode: this.access.mode(tenantId, m.id) })),
             workspaces: modules.flatMap(m => m.workspaces.filter(w => permissions.includes(w.permission)).map(w => ({ ...w, moduleId: m.id }))),
+            uiContributions: modules.flatMap(m => validateUiContributionDescriptors(m).filter(item => permissions.includes(item.permission)).map(item => ({ ...item, moduleId: m.id }))),
             operations: modules.flatMap(m => m.routes.map(r => ({ ...r, moduleId: m.id }))),
             abi: this.plan.product.platformAbi };
     }

@@ -165,6 +165,9 @@ function assertWindowsPathBudget(root: string) {
   const candidates=[
     join(staged,'node_modules','typescript','lib','typescript.js'),
     join(staged,'node_modules','@types','node','stream.d.ts'),
+    process.platform==='win32'
+      ? join(staged,'node_modules','@esbuild',`${process.platform}-${process.arch}`,'esbuild.exe')
+      : join(staged,'node_modules','@esbuild',`${process.platform}-${process.arch}`,'bin','esbuild'),
     join(root,'.local','platform-builds','work',id,`attempt-2-${id}`,'build-output.log'),
     join(snapshot,'modules','a'.repeat(48),'src','ui','overview.css'),
     join(snapshot,'tools','link-workspaces.mjs')

@@ -1,0 +1,694 @@
+{
+  "recordedAt": "2026-10-02T09:44:26.430Z",
+  "coordinator": "/root",
+  "scope": "Actual finite trusted UI source inspection, not delivery acceptance",
+  "changes": [
+    {
+      "path": "OPEN_PLATFORM.html",
+      "before": "1cfc08635b095e12181583748abc71374b6e9c963c93010a0cc59ae911149981",
+      "after": "1cc0fd9d14ef493d6d1ca6d0065974120cd5b76a195de00550e6743c855c4d72",
+      "reason": "Fresh build regenerates offline source catalogue and explicit pure UI validation wrapper; no filesystem or build privilege is added."
+    },
+    {
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "before": "cb5cb5ac95f0e4ea8dfac74847ea26ac3c2c4bae5449302a1a0e2dadaf6c0528",
+      "after": "aa43159e1f688abfdbd99ed8c8abe171a251e863f7e77e55a68fc769e8e2a423",
+      "reason": "Exact solution ui.json leaf participates in existing reviewed physical source copying and fingerprinting with all original guards retained."
+    },
+    {
+      "path": "apps/runtime/package.json",
+      "before": "fe8d0e022f1fa6c5dd512e9eda6d218760e0eeb415ef5cffe1c1c15fdb36b89f",
+      "after": "0f0d90a539c5d741ce80f91dcf0eb686981c8e31df792694becc03ee0cad7fad",
+      "reason": "Runtime source package pins current reviewed reference-module versions; executable selection remains product-owned."
+    },
+    {
+      "path": "modules/handoff/module.json",
+      "before": "7be25546531fffa2eb0368c69c65912e0b41083090090236fa7bf17b9aacd2db",
+      "after": "cced127c2365552d607c3490c67a77dc91b87dfd84aa750b919e7cbd6fc93e06",
+      "reason": "Handoff exact dependency advances with Knowledge0.2.3 and its own source version while existing schema and public contracts remain intact."
+    },
+    {
+      "path": "modules/handoff/package.json",
+      "before": "3bb2c5d8ee46f17c8c1643ddfa15b16d6277a142cb8de574365992389382c762",
+      "after": "56ffea0209fe6340cfd73d57f86ef2d917951c6ce4aeb6e0b144abf99e5d6992",
+      "reason": "Handoff package matches0.2.3 and its selected Knowledge dependency for reproducible exports."
+    },
+    {
+      "path": "modules/knowledge/module.json",
+      "before": "3d8aef6f576666d363fa50da8b8ad80778cb359e7d12c076c25073dbe9fca538",
+      "after": "54940b0135e0ab46c4cfe5d92ed4b897355fed536481fbc8f3b1615353e3abaf",
+      "reason": "Knowledge source identity advances to0.2.3 and declares its existing-read-permission named reference search panel."
+    },
+    {
+      "path": "modules/knowledge/package.json",
+      "before": "0ab501571e33e7729be435ceb19c27ef4e6b9c9db343f7c4a09103ef80b5af05",
+      "after": "327e28215f63e178dda57e043447eeab4740f778faf143eea58f093658aec283",
+      "reason": "Knowledge package version matches the changed manifest identity0.2.3 for ordinary selected dependency closure."
+    },
+    {
+      "path": "modules/knowledge/src/ui.ts",
+      "before": "bbd6d806b3334462fd324a7b0b456c1993b22a224f2d70dd41f3cce421623ba2",
+      "after": "6cda83eb31f559e2c1f2329e96dc51c40f233225078046f68b39f69c833ac9ab",
+      "reason": "Knowledge workspace reuses owned indexed reference search helper and disposes it with the existing view lifetime."
+    },
+    {
+      "path": "modules/service-desk/module.json",
+      "before": "448b03e9a8a8cc94cd65451d22cb2fdb3db9074e7b1df471acc27414e428e698",
+      "after": "6f1cb2e2fde1c008a30fb6cfac14d17b1ecf208a3f5baa66d4b3092542c2578c",
+      "reason": "Service Desk advances to0.2.1 and declares its named recent-request panel under its existing read permission."
+    },
+    {
+      "path": "modules/service-desk/package.json",
+      "before": "1802a2613603271e93d8024bd17ae69db93f2bac4cd4861dd445dc010c8ed1da",
+      "after": "aa6bcb33cee0c0a57f98ee3f78728ca67684622a3aa3c4447d23043bb5f20c36",
+      "reason": "Service Desk package version matches the changed manifest identity0.2.1 without adding dependencies."
+    },
+    {
+      "path": "modules/service-desk/src/ui.ts",
+      "before": "8363b8a32a1114489b5d131518ae25baa14dfcdde5dcd912552b529c5d287ab2",
+      "after": "26a67fd72c54878a8a16a0a08dd1adcc644798e8fbee0d0a9d5c5146763cf864",
+      "reason": "Service Desk UI exports its statically reviewed named recent-request contribution without changing business handlers."
+    },
+    {
+      "path": "package-lock.json",
+      "before": "8d03ae11f3550112543bf39b065c636f9c82d2b4cd35108a14bae21abd44fb72",
+      "after": "fe8093fc5cc441763b65e2d58d16ac59fd0cff04e1c536acefe8f515a12f6254",
+      "reason": "Workspace lock pins the same exact current module/package versions without downloading or introducing a new dependency."
+    },
+    {
+      "path": "packages/backend-host/src/index.ts",
+      "before": "4d3a930b79243a198b75bea90b706686da905f77d9f70ad7e0787f0b2656ddb5",
+      "after": "e9cdcd0455fe1ae7af574bee7f9c378d368f983ca0cf7cdb0ed2f870f104c7fa",
+      "reason": "Backend validates selected UI declarations and returns only permission-authorized owner descriptors in bootstrap."
+    },
+    {
+      "path": "packages/composition/src/index.ts",
+      "before": "b1a7b80113e234fb30bacf962fbb3ec34a9f1e235acdf0df68a653c8c47adae1",
+      "after": "c897ed5639e3a255de83ff96ca37697d7e1ab19c5015e5d137751f841a629276",
+      "reason": "Composition calls the same pure UI declaration validator while preserving deterministic exact-version module selection."
+    },
+    {
+      "path": "packages/contracts/src/index.ts",
+      "before": "852c500432771ca76f0c6377281588c6a918d5cc57096e8c63684a110302c1ed",
+      "after": "f246c861f2ecd5916e072ebdc71b2d116c81f19ebb55e362b120ff3a238b2d0c",
+      "reason": "Module manifests add optional typed UI declarations without granting permissions or importing domain implementations."
+    },
+    {
+      "path": "packages/module-sdk/src/index.ts",
+      "before": "1ef11c3b32550b1df3bc9330201d1547dc0af65a1d544a7d9a0851965c66d26a",
+      "after": "f6f8a68254f695d07fa08b8ba3c2f7e5af5df18f0c8b3f0617e21e16e80d213d",
+      "reason": "Module SDK rejects malformed or unowned UI declarations with the shared validator before producing a manifest."
+    },
+    {
+      "path": "packages/studio-model/src/index.ts",
+      "before": "0bb8f45a2324dab5c5cf694ed0e8f8f6e0afdad1c90c0b2a81688b785a55fa72",
+      "after": "bb73726b2c7e866442ec84592cec4bb06ebb7f94675c337482a781262ccb2e88",
+      "reason": "Studio closed source manifest accepts optional UI contributions while existing composition remains canonical authority."
+    },
+    {
+      "path": "packages/web-shell/src/index.ts",
+      "before": "db0186cc8ee7f8b192b7df15172e60bd4df95017ef3c88a56129a230ac1a4d0c",
+      "after": "a5fa992459c5acf6429b8bc3169c3355616e1f1fd7d11b13f16780ab318e8848",
+      "reason": "Shell intersects fixed build bindings with authorized descriptors, isolated child roots and owner GET clients; clears panels on scope disposal."
+    },
+    {
+      "path": "packages/web-shell/src/shell.css",
+      "before": "1e0b3d3e60031bb59efd26c628265b8c2265a946a6fa6a971934d0983e2aff4f",
+      "after": "9f84b581785f17e070e42cd592e54c06c6e109814e31eb37da1c20f61639d54e",
+      "reason": "Forward-admitted fixed aside grid and responsive stacking rules replace unsupported inline style mutation; pre-admission deviation remains recorded."
+    },
+    {
+      "path": "products/combined/product.json",
+      "before": "4656211c42e83a00d0b68858d8b075562a6ec2429a9b1111542e99b7c48d5747",
+      "after": "28cd5271f415848dad92eb5a090513ab922c19abd2210cbd89825d9de2fccbae",
+      "reason": "Combined immutable product advances to0.2.3 and selects current Desk/Knowledge/Handoff versions with original local bindings."
+    },
+    {
+      "path": "products/knowledge/product.json",
+      "before": "69d7f450b499bf651df3cc453055d13c3da4c0853330357e89ce07ce48ba7247",
+      "after": "e7ee879edce5781d9e5ad0129a0a2e062be5305ba9adf18c0d8f246dfe36b557",
+      "reason": "Knowledge immutable product advances to0.2.3 and selects updated Knowledge/Handoff identities with existing wiring."
+    },
+    {
+      "path": "products/service-desk/product.json",
+      "before": "57ecb4fe254d92df8843f704a7895607b6b7dc6a46c67a3fa4d78652aace2f18",
+      "after": "8e489f4fdd9dc9533bee14813522d319ebc899190d4195726ffcbb7e72f14aa7",
+      "reason": "Desk immutable product advances to0.2.1 rather than reusing an existing immutable definition with changed selected module identity."
+    },
+    {
+      "path": "tests/build-worker-process.test.mjs",
+      "before": "13257b6564f6782b98de6b8572a1c7f19aa5cbd148e1b09425ee4b97ff7512c5",
+      "after": "90b49197c3ee28f561d6fa43bb910105653f67c1e5ed30d2f26974c250e759e9",
+      "reason": "Synthetic runner product derives its explicit selected Desk version from the actual source snapshot while native lifecycle assertions remain intact."
+    },
+    {
+      "path": "tests/composition.test.mjs",
+      "before": "5bf219d3d508e04973b0fbbf64d39c49bfb1dff358831ee8d23adfe8a0a90fdf",
+      "after": "89ad1f511d608fff58ad4726e2b512d9e55a7ed2e548062a26bdf4ca07555f6d",
+      "reason": "Current-source composition dependency and package assertions track reviewed exact versions while retaining mismatch and historical behavior checks."
+    },
+    {
+      "path": "tests/control-plane-artifacts.test.mjs",
+      "before": "e166e60b0960304d609f600ca10139e26b0b5052b946e0b98a9e6ba3a706c8d1",
+      "after": "064f016cb119a1681da6ed4187474a51095e4b1c18bcd43f966f824c6c4128f8",
+      "reason": "Named private live-rebuild fixture initially captures product0.2.0 before new0.2.1 while preserving its exact-byte/native/data assertions."
+    },
+    {
+      "path": "tests/control-plane-http.test.mjs",
+      "before": "946a115c287e26069912ca851e7c20b942fdf30aca59a42f73fd659338810c82",
+      "after": "1aaa3ad32990f0b4d97c1b4ee0d82561c3d4c721868f0b88f2e246fd88f41dc8",
+      "reason": "Live compose-preview expectation selects current reviewed Desk0.2.1; historical saved product identities and authorization assertions remain unchanged."
+    },
+    {
+      "path": "tests/factory-lifecycle.test.mjs",
+      "before": "fa633365340a112b07a4951895dc840bcc437a19920e918008445feca37bba25",
+      "after": "b6994973c21f023f21cb24d488fa0f3236e0279309d8a34ccc68ae5c7161726f",
+      "reason": "Current exported dependency expectations track exact Knowledge/Handoff0.2.3; existing real isolated export operation behavior stays asserted."
+    },
+    {
+      "path": "tests/frontend-assembly.test.mjs",
+      "before": "61adf736354489759db20439b8c31f2b4fdb7fcf19240b5feb1549ed7ce83bec",
+      "after": "a730e8b73404d7d69bedb09744dd304df6e99569312b9d05cd513a0789aae957",
+      "reason": "Compiled/export assertions verify literal full mappings and Desk-only omitted Knowledge assets alongside existing served-asset checks."
+    },
+    {
+      "path": "tests/module-sdk.test.mjs",
+      "before": "1c4958e8a1f24a0e490f2745224f604262e33372a59063e26f2cedb596751cf6",
+      "after": "30d1a8caaed11c8fddcb35a7d8a259d1a1e1753eadc4e322b0da61788b0397f4",
+      "reason": "SDK contribution test accepts the owned named declaration and rejects unowned permissions or invalid exports."
+    },
+    {
+      "path": "tests/shell-regressions.test.mjs",
+      "before": "165399704229b03604e963dfbf66caf1d7a35fd84f501f69a43c833f5a611765",
+      "after": "b44b0af184a8d36c7c2d7019876b1df24504066b188398b79762135d21f768b0",
+      "reason": "Controlled shell regression supplies actual read permission and requested-tenant bootstrap, verifying sibling isolation and scope disposal without harness changes."
+    },
+    {
+      "path": "tests/workspace-closure.test.mjs",
+      "before": "0c4fc48570d42f516436ab13c24f60f3ad8b988ab87e67ff6250b57f8cb02968",
+      "after": "2400c136171877a3662d47d0dd19c2da0cbe529875ca8e54057ad5b53ed6ebee",
+      "reason": "Selected current dependency closure expects Knowledge/Handoff0.2.3 and preserves unselected-owner omission assertions."
+    },
+    {
+      "path": "tools/build.mjs",
+      "before": "d08713084bb96166cbd3140285735aba7293c4c69719f3988e6689d79de05b27",
+      "after": "35b9ccd2b23bf8a7d80eb5c04c732f53fc4d351a309d4f2d1e09724efd5b73c6",
+      "reason": "Build reads bounded physical reviewed solution mapping and writes literal selected uiBindings into the immutable composition entry."
+    },
+    {
+      "path": "tools/frontend-closure.mjs",
+      "before": "e9a264807c8ae6793d71adb1aec1f6cbd282cd6618b35f652cffd60296db5387",
+      "after": "7f7999cdf60eb80558aa9aaade8e5566c102414be670d370b94db4a4cc8cc45f",
+      "reason": "Static UI dependency closure includes the neutral contribution contract and selected contribution-bearing module loaders."
+    },
+    {
+      "path": "tools/studio-catalogue.mjs",
+      "before": "fa89c06cb27191c9f7c4a6f3f489a4f95e3a9e7f9699a40ecc94352f5f22b8de",
+      "after": "9f0dc5198ceee5468fab3dbcfe305e153c25d6862b2ed15e6ea62583a1c809c7",
+      "reason": "Source catalogue validates module contributions and offline wrappers explicitly inject the same pure contribution validator."
+    },
+    {
+      "path": "visual/data.json",
+      "before": "ab1a074f0a56bb5b485cfabc9ecc2ae7ca263b87d03b6a8c1fd070da7138e215",
+      "after": "ba5d707516222fed9d20b8aa89ac0b86ef09bd98ba1a221d75edc515eb2ca7dd",
+      "reason": "Fresh build regenerates descriptive catalogue/plan data from actual current module and immutable product versions."
+    },
+    {
+      "path": "packages/contracts/src/ui-contributions.ts",
+      "before": null,
+      "after": "f194ed9e049adacc6b666f29bd233377307f64fff3324410dd02c65e2fddb112",
+      "reason": "Closed shared descriptor and fixed-slot mapping validation resolves actual declaring module ownership and selected-source omissions."
+    },
+    {
+      "path": "modules/knowledge/src/ui/reference-search.ts",
+      "before": null,
+      "after": "62ca400e6c5a2fb8ed31da013c91610399c97ae4b02434b645497c5798a4ffe2",
+      "reason": "Named read-only Knowledge panel searches the existing indexed owner route and renders bounded title/version/excerpt results."
+    },
+    {
+      "path": "modules/service-desk/src/ui/recent-requests.ts",
+      "before": null,
+      "after": "cd9637f5099618cab57c4e15c1f72e48687d04c65417f2c2f2db4d69e8988b54",
+      "reason": "Owner GET panel renders up to five current-tenant returned request cards and suppresses results after disposal."
+    },
+    {
+      "path": "solutions/knowledge-to-desk/ui.json",
+      "before": null,
+      "after": "188f09afb481f735548c6e977a4003a6a5a2a956798433f78f206bfe68874bb5",
+      "reason": "Inert solution-owned mapping supplies the two fixed optional panel placements; no imports or grants are executable from this data."
+    },
+    {
+      "path": "docs/UI_CONTRIBUTIONS.md",
+      "before": null,
+      "after": "690efc40463f037ef7d6c82169b799b692e7586f5b00d239d3e39abbf200d6e5",
+      "reason": "Documents trusted same-origin fixed slots, owner reads, immutable selected mappings and lifecycle limitations accurately."
+    },
+    {
+      "path": "tests/ui-contributions.test.mjs",
+      "before": null,
+      "after": "8e1b91847cf33cec6c92d7e61d2818c63d1a8032615c6e4174177e1ad0186555",
+      "reason": "Core checks exercise actual declaration ownership, omission, physical copy/fingerprint and immutable old-store/current-import coexistence."
+    }
+  ],
+  "updatedAtlasRefs": [
+    {
+      "id": "contracts",
+      "path": "packages/contracts/src/index.ts",
+      "before": "852c500432771ca76f0c6377281588c6a918d5cc57096e8c63684a110302c1ed",
+      "after": "f246c861f2ecd5916e072ebdc71b2d116c81f19ebb55e362b120ff3a238b2d0c",
+      "reason": "Module manifests add optional typed UI declarations without granting permissions or importing domain implementations."
+    },
+    {
+      "id": "studio-contracts",
+      "path": "packages/studio-model/src/index.ts",
+      "before": "0bb8f45a2324dab5c5cf694ed0e8f8f6e0afdad1c90c0b2a81688b785a55fa72",
+      "after": "bb73726b2c7e866442ec84592cec4bb06ebb7f94675c337482a781262ccb2e88",
+      "reason": "Studio closed source manifest accepts optional UI contributions while existing composition remains canonical authority."
+    },
+    {
+      "id": "kernel-ci-build-test",
+      "path": "tests/build-worker-process.test.mjs",
+      "before": "13257b6564f6782b98de6b8572a1c7f19aa5cbd148e1b09425ee4b97ff7512c5",
+      "after": "90b49197c3ee28f561d6fa43bb910105653f67c1e5ed30d2f26974c250e759e9",
+      "reason": "Synthetic runner product derives its explicit selected Desk version from the actual source snapshot while native lifecycle assertions remain intact."
+    },
+    {
+      "id": "kernel-ci-registry-journey",
+      "path": "tests/control-plane-artifacts.test.mjs",
+      "before": "e166e60b0960304d609f600ca10139e26b0b5052b946e0b98a9e6ba3a706c8d1",
+      "after": "064f016cb119a1681da6ed4187474a51095e4b1c18bcd43f966f824c6c4128f8",
+      "reason": "Named private live-rebuild fixture initially captures product0.2.0 before new0.2.1 while preserving its exact-byte/native/data assertions."
+    },
+    {
+      "id": "framework-reliability-source-6",
+      "path": "packages/studio-model/src/index.ts",
+      "before": "0bb8f45a2324dab5c5cf694ed0e8f8f6e0afdad1c90c0b2a81688b785a55fa72",
+      "after": "bb73726b2c7e866442ec84592cec4bb06ebb7f94675c337482a781262ccb2e88",
+      "reason": "Studio closed source manifest accepts optional UI contributions while existing composition remains canonical authority."
+    },
+    {
+      "id": "capability-source-0",
+      "path": "packages/contracts/src/index.ts",
+      "before": "852c500432771ca76f0c6377281588c6a918d5cc57096e8c63684a110302c1ed",
+      "after": "f246c861f2ecd5916e072ebdc71b2d116c81f19ebb55e362b120ff3a238b2d0c",
+      "reason": "Module manifests add optional typed UI declarations without granting permissions or importing domain implementations."
+    },
+    {
+      "id": "capability-source-1",
+      "path": "packages/backend-host/src/index.ts",
+      "before": "4d3a930b79243a198b75bea90b706686da905f77d9f70ad7e0787f0b2656ddb5",
+      "after": "e9cdcd0455fe1ae7af574bee7f9c378d368f983ca0cf7cdb0ed2f870f104c7fa",
+      "reason": "Backend validates selected UI declarations and returns only permission-authorized owner descriptors in bootstrap."
+    },
+    {
+      "id": "capability-source-2",
+      "path": "packages/composition/src/index.ts",
+      "before": "b1a7b80113e234fb30bacf962fbb3ec34a9f1e235acdf0df68a653c8c47adae1",
+      "after": "c897ed5639e3a255de83ff96ca37697d7e1ab19c5015e5d137751f841a629276",
+      "reason": "Composition calls the same pure UI declaration validator while preserving deterministic exact-version module selection."
+    },
+    {
+      "id": "capability-source-3",
+      "path": "packages/module-sdk/src/index.ts",
+      "before": "1ef11c3b32550b1df3bc9330201d1547dc0af65a1d544a7d9a0851965c66d26a",
+      "after": "f6f8a68254f695d07fa08b8ba3c2f7e5af5df18f0c8b3f0617e21e16e80d213d",
+      "reason": "Module SDK rejects malformed or unowned UI declarations with the shared validator before producing a manifest."
+    },
+    {
+      "id": "capability-source-4",
+      "path": "packages/studio-model/src/index.ts",
+      "before": "0bb8f45a2324dab5c5cf694ed0e8f8f6e0afdad1c90c0b2a81688b785a55fa72",
+      "after": "bb73726b2c7e866442ec84592cec4bb06ebb7f94675c337482a781262ccb2e88",
+      "reason": "Studio closed source manifest accepts optional UI contributions while existing composition remains canonical authority."
+    },
+    {
+      "id": "capability-source-6",
+      "path": "modules/knowledge/module.json",
+      "before": "3d8aef6f576666d363fa50da8b8ad80778cb359e7d12c076c25073dbe9fca538",
+      "after": "54940b0135e0ab46c4cfe5d92ed4b897355fed536481fbc8f3b1615353e3abaf",
+      "reason": "Knowledge source identity advances to0.2.3 and declares its existing-read-permission named reference search panel."
+    },
+    {
+      "id": "capability-source-7",
+      "path": "modules/knowledge/package.json",
+      "before": "0ab501571e33e7729be435ceb19c27ef4e6b9c9db343f7c4a09103ef80b5af05",
+      "after": "327e28215f63e178dda57e043447eeab4740f778faf143eea58f093658aec283",
+      "reason": "Knowledge package version matches the changed manifest identity0.2.3 for ordinary selected dependency closure."
+    },
+    {
+      "id": "capability-source-8",
+      "path": "modules/handoff/module.json",
+      "before": "7be25546531fffa2eb0368c69c65912e0b41083090090236fa7bf17b9aacd2db",
+      "after": "cced127c2365552d607c3490c67a77dc91b87dfd84aa750b919e7cbd6fc93e06",
+      "reason": "Handoff exact dependency advances with Knowledge0.2.3 and its own source version while existing schema and public contracts remain intact."
+    },
+    {
+      "id": "capability-source-9",
+      "path": "modules/handoff/package.json",
+      "before": "3bb2c5d8ee46f17c8c1643ddfa15b16d6277a142cb8de574365992389382c762",
+      "after": "56ffea0209fe6340cfd73d57f86ef2d917951c6ce4aeb6e0b144abf99e5d6992",
+      "reason": "Handoff package matches0.2.3 and its selected Knowledge dependency for reproducible exports."
+    },
+    {
+      "id": "capability-source-10",
+      "path": "products/knowledge/product.json",
+      "before": "69d7f450b499bf651df3cc453055d13c3da4c0853330357e89ce07ce48ba7247",
+      "after": "e7ee879edce5781d9e5ad0129a0a2e062be5305ba9adf18c0d8f246dfe36b557",
+      "reason": "Knowledge immutable product advances to0.2.3 and selects updated Knowledge/Handoff identities with existing wiring."
+    },
+    {
+      "id": "capability-source-11",
+      "path": "products/combined/product.json",
+      "before": "4656211c42e83a00d0b68858d8b075562a6ec2429a9b1111542e99b7c48d5747",
+      "after": "28cd5271f415848dad92eb5a090513ab922c19abd2210cbd89825d9de2fccbae",
+      "reason": "Combined immutable product advances to0.2.3 and selects current Desk/Knowledge/Handoff versions with original local bindings."
+    },
+    {
+      "id": "capability-source-12",
+      "path": "apps/runtime/package.json",
+      "before": "fe8d0e022f1fa6c5dd512e9eda6d218760e0eeb415ef5cffe1c1c15fdb36b89f",
+      "after": "0f0d90a539c5d741ce80f91dcf0eb686981c8e31df792694becc03ee0cad7fad",
+      "reason": "Runtime source package pins current reviewed reference-module versions; executable selection remains product-owned."
+    },
+    {
+      "id": "capability-source-13",
+      "path": "package-lock.json",
+      "before": "8d03ae11f3550112543bf39b065c636f9c82d2b4cd35108a14bae21abd44fb72",
+      "after": "fe8093fc5cc441763b65e2d58d16ac59fd0cff04e1c536acefe8f515a12f6254",
+      "reason": "Workspace lock pins the same exact current module/package versions without downloading or introducing a new dependency."
+    },
+    {
+      "id": "capability-source-14",
+      "path": "tests/composition.test.mjs",
+      "before": "5bf219d3d508e04973b0fbbf64d39c49bfb1dff358831ee8d23adfe8a0a90fdf",
+      "after": "89ad1f511d608fff58ad4726e2b512d9e55a7ed2e548062a26bdf4ca07555f6d",
+      "reason": "Current-source composition dependency and package assertions track reviewed exact versions while retaining mismatch and historical behavior checks."
+    },
+    {
+      "id": "capability-source-15",
+      "path": "tests/module-sdk.test.mjs",
+      "before": "1c4958e8a1f24a0e490f2745224f604262e33372a59063e26f2cedb596751cf6",
+      "after": "30d1a8caaed11c8fddcb35a7d8a259d1a1e1753eadc4e322b0da61788b0397f4",
+      "reason": "SDK contribution test accepts the owned named declaration and rejects unowned permissions or invalid exports."
+    },
+    {
+      "id": "capability-source-16",
+      "path": "tests/factory-lifecycle.test.mjs",
+      "before": "fa633365340a112b07a4951895dc840bcc437a19920e918008445feca37bba25",
+      "after": "b6994973c21f023f21cb24d488fa0f3236e0279309d8a34ccc68ae5c7161726f",
+      "reason": "Current exported dependency expectations track exact Knowledge/Handoff0.2.3; existing real isolated export operation behavior stays asserted."
+    },
+    {
+      "id": "capability-source-17",
+      "path": "tests/workspace-closure.test.mjs",
+      "before": "0c4fc48570d42f516436ab13c24f60f3ad8b988ab87e67ff6250b57f8cb02968",
+      "after": "2400c136171877a3662d47d0dd19c2da0cbe529875ca8e54057ad5b53ed6ebee",
+      "reason": "Selected current dependency closure expects Knowledge/Handoff0.2.3 and preserves unselected-owner omission assertions."
+    },
+    {
+      "id": "capability-source-19",
+      "path": "tools/studio-catalogue.mjs",
+      "before": "fa89c06cb27191c9f7c4a6f3f489a4f95e3a9e7f9699a40ecc94352f5f22b8de",
+      "after": "9f0dc5198ceee5468fab3dbcfe305e153c25d6862b2ed15e6ea62583a1c809c7",
+      "reason": "Source catalogue validates module contributions and offline wrappers explicitly inject the same pure contribution validator."
+    },
+    {
+      "id": "capability-source-20",
+      "path": "OPEN_PLATFORM.html",
+      "before": "1cfc08635b095e12181583748abc71374b6e9c963c93010a0cc59ae911149981",
+      "after": "1cc0fd9d14ef493d6d1ca6d0065974120cd5b76a195de00550e6743c855c4d72",
+      "reason": "Fresh build regenerates offline source catalogue and explicit pure UI validation wrapper; no filesystem or build privilege is added."
+    },
+    {
+      "id": "capability-source-21",
+      "path": "visual/data.json",
+      "before": "ab1a074f0a56bb5b485cfabc9ecc2ae7ca263b87d03b6a8c1fd070da7138e215",
+      "after": "ba5d707516222fed9d20b8aa89ac0b86ef09bd98ba1a221d75edc515eb2ca7dd",
+      "reason": "Fresh build regenerates descriptive catalogue/plan data from actual current module and immutable product versions."
+    },
+    {
+      "id": "family-source-0",
+      "path": "tools/studio-catalogue.mjs",
+      "before": "fa89c06cb27191c9f7c4a6f3f489a4f95e3a9e7f9699a40ecc94352f5f22b8de",
+      "after": "9f0dc5198ceee5468fab3dbcfe305e153c25d6862b2ed15e6ea62583a1c809c7",
+      "reason": "Source catalogue validates module contributions and offline wrappers explicitly inject the same pure contribution validator."
+    },
+    {
+      "id": "family-source-1",
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "before": "cb5cb5ac95f0e4ea8dfac74847ea26ac3c2c4bae5449302a1a0e2dadaf6c0528",
+      "after": "aa43159e1f688abfdbd99ed8c8abe171a251e863f7e77e55a68fc769e8e2a423",
+      "reason": "Exact solution ui.json leaf participates in existing reviewed physical source copying and fingerprinting with all original guards retained."
+    },
+    {
+      "id": "family-source-6",
+      "path": "OPEN_PLATFORM.html",
+      "before": "1cfc08635b095e12181583748abc71374b6e9c963c93010a0cc59ae911149981",
+      "after": "1cc0fd9d14ef493d6d1ca6d0065974120cd5b76a195de00550e6743c855c4d72",
+      "reason": "Fresh build regenerates offline source catalogue and explicit pure UI validation wrapper; no filesystem or build privilege is added."
+    },
+    {
+      "id": "family-source-7",
+      "path": "visual/data.json",
+      "before": "ab1a074f0a56bb5b485cfabc9ecc2ae7ca263b87d03b6a8c1fd070da7138e215",
+      "after": "ba5d707516222fed9d20b8aa89ac0b86ef09bd98ba1a221d75edc515eb2ca7dd",
+      "reason": "Fresh build regenerates descriptive catalogue/plan data from actual current module and immutable product versions."
+    },
+    {
+      "id": "family-source-9",
+      "path": "tests/control-plane-http.test.mjs",
+      "before": "946a115c287e26069912ca851e7c20b942fdf30aca59a42f73fd659338810c82",
+      "after": "1aaa3ad32990f0b4d97c1b4ee0d82561c3d4c721868f0b88f2e246fd88f41dc8",
+      "reason": "Live compose-preview expectation selects current reviewed Desk0.2.1; historical saved product identities and authorization assertions remain unchanged."
+    },
+    {
+      "id": "family-source-12",
+      "path": "tests/factory-lifecycle.test.mjs",
+      "before": "fa633365340a112b07a4951895dc840bcc437a19920e918008445feca37bba25",
+      "after": "b6994973c21f023f21cb24d488fa0f3236e0279309d8a34ccc68ae5c7161726f",
+      "reason": "Current exported dependency expectations track exact Knowledge/Handoff0.2.3; existing real isolated export operation behavior stays asserted."
+    },
+    {
+      "id": "ui-slots-source-0",
+      "path": "packages/contracts/src/index.ts",
+      "before": "852c500432771ca76f0c6377281588c6a918d5cc57096e8c63684a110302c1ed",
+      "after": "f246c861f2ecd5916e072ebdc71b2d116c81f19ebb55e362b120ff3a238b2d0c",
+      "reason": "Module manifests add optional typed UI declarations without granting permissions or importing domain implementations."
+    },
+    {
+      "id": "ui-slots-source-1",
+      "path": "packages/backend-host/src/index.ts",
+      "before": "4d3a930b79243a198b75bea90b706686da905f77d9f70ad7e0787f0b2656ddb5",
+      "after": "e9cdcd0455fe1ae7af574bee7f9c378d368f983ca0cf7cdb0ed2f870f104c7fa",
+      "reason": "Backend validates selected UI declarations and returns only permission-authorized owner descriptors in bootstrap."
+    },
+    {
+      "id": "ui-slots-source-2",
+      "path": "packages/composition/src/index.ts",
+      "before": "b1a7b80113e234fb30bacf962fbb3ec34a9f1e235acdf0df68a653c8c47adae1",
+      "after": "c897ed5639e3a255de83ff96ca37697d7e1ab19c5015e5d137751f841a629276",
+      "reason": "Composition calls the same pure UI declaration validator while preserving deterministic exact-version module selection."
+    },
+    {
+      "id": "ui-slots-source-3",
+      "path": "packages/module-sdk/src/index.ts",
+      "before": "1ef11c3b32550b1df3bc9330201d1547dc0af65a1d544a7d9a0851965c66d26a",
+      "after": "f6f8a68254f695d07fa08b8ba3c2f7e5af5df18f0c8b3f0617e21e16e80d213d",
+      "reason": "Module SDK rejects malformed or unowned UI declarations with the shared validator before producing a manifest."
+    },
+    {
+      "id": "ui-slots-source-4",
+      "path": "packages/studio-model/src/index.ts",
+      "before": "0bb8f45a2324dab5c5cf694ed0e8f8f6e0afdad1c90c0b2a81688b785a55fa72",
+      "after": "bb73726b2c7e866442ec84592cec4bb06ebb7f94675c337482a781262ccb2e88",
+      "reason": "Studio closed source manifest accepts optional UI contributions while existing composition remains canonical authority."
+    },
+    {
+      "id": "ui-slots-source-5",
+      "path": "packages/web-shell/src/index.ts",
+      "before": "db0186cc8ee7f8b192b7df15172e60bd4df95017ef3c88a56129a230ac1a4d0c",
+      "after": "a5fa992459c5acf6429b8bc3169c3355616e1f1fd7d11b13f16780ab318e8848",
+      "reason": "Shell intersects fixed build bindings with authorized descriptors, isolated child roots and owner GET clients; clears panels on scope disposal."
+    },
+    {
+      "id": "ui-slots-source-6",
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "before": "cb5cb5ac95f0e4ea8dfac74847ea26ac3c2c4bae5449302a1a0e2dadaf6c0528",
+      "after": "aa43159e1f688abfdbd99ed8c8abe171a251e863f7e77e55a68fc769e8e2a423",
+      "reason": "Exact solution ui.json leaf participates in existing reviewed physical source copying and fingerprinting with all original guards retained."
+    },
+    {
+      "id": "ui-slots-source-7",
+      "path": "tools/build.mjs",
+      "before": "d08713084bb96166cbd3140285735aba7293c4c69719f3988e6689d79de05b27",
+      "after": "35b9ccd2b23bf8a7d80eb5c04c732f53fc4d351a309d4f2d1e09724efd5b73c6",
+      "reason": "Build reads bounded physical reviewed solution mapping and writes literal selected uiBindings into the immutable composition entry."
+    },
+    {
+      "id": "ui-slots-source-8",
+      "path": "tools/frontend-closure.mjs",
+      "before": "e9a264807c8ae6793d71adb1aec1f6cbd282cd6618b35f652cffd60296db5387",
+      "after": "7f7999cdf60eb80558aa9aaade8e5566c102414be670d370b94db4a4cc8cc45f",
+      "reason": "Static UI dependency closure includes the neutral contribution contract and selected contribution-bearing module loaders."
+    },
+    {
+      "id": "ui-slots-source-9",
+      "path": "tools/studio-catalogue.mjs",
+      "before": "fa89c06cb27191c9f7c4a6f3f489a4f95e3a9e7f9699a40ecc94352f5f22b8de",
+      "after": "9f0dc5198ceee5468fab3dbcfe305e153c25d6862b2ed15e6ea62583a1c809c7",
+      "reason": "Source catalogue validates module contributions and offline wrappers explicitly inject the same pure contribution validator."
+    },
+    {
+      "id": "ui-slots-source-10",
+      "path": "modules/knowledge/src/ui.ts",
+      "before": "bbd6d806b3334462fd324a7b0b456c1993b22a224f2d70dd41f3cce421623ba2",
+      "after": "6cda83eb31f559e2c1f2329e96dc51c40f233225078046f68b39f69c833ac9ab",
+      "reason": "Knowledge workspace reuses owned indexed reference search helper and disposes it with the existing view lifetime."
+    },
+    {
+      "id": "ui-slots-source-11",
+      "path": "modules/service-desk/src/ui.ts",
+      "before": "8363b8a32a1114489b5d131518ae25baa14dfcdde5dcd912552b529c5d287ab2",
+      "after": "26a67fd72c54878a8a16a0a08dd1adcc644798e8fbee0d0a9d5c5146763cf864",
+      "reason": "Service Desk UI exports its statically reviewed named recent-request contribution without changing business handlers."
+    },
+    {
+      "id": "ui-slots-source-12",
+      "path": "modules/knowledge/module.json",
+      "before": "3d8aef6f576666d363fa50da8b8ad80778cb359e7d12c076c25073dbe9fca538",
+      "after": "54940b0135e0ab46c4cfe5d92ed4b897355fed536481fbc8f3b1615353e3abaf",
+      "reason": "Knowledge source identity advances to0.2.3 and declares its existing-read-permission named reference search panel."
+    },
+    {
+      "id": "ui-slots-source-13",
+      "path": "modules/knowledge/package.json",
+      "before": "0ab501571e33e7729be435ceb19c27ef4e6b9c9db343f7c4a09103ef80b5af05",
+      "after": "327e28215f63e178dda57e043447eeab4740f778faf143eea58f093658aec283",
+      "reason": "Knowledge package version matches the changed manifest identity0.2.3 for ordinary selected dependency closure."
+    },
+    {
+      "id": "ui-slots-source-14",
+      "path": "modules/service-desk/module.json",
+      "before": "448b03e9a8a8cc94cd65451d22cb2fdb3db9074e7b1df471acc27414e428e698",
+      "after": "6f1cb2e2fde1c008a30fb6cfac14d17b1ecf208a3f5baa66d4b3092542c2578c",
+      "reason": "Service Desk advances to0.2.1 and declares its named recent-request panel under its existing read permission."
+    },
+    {
+      "id": "ui-slots-source-15",
+      "path": "modules/service-desk/package.json",
+      "before": "1802a2613603271e93d8024bd17ae69db93f2bac4cd4861dd445dc010c8ed1da",
+      "after": "aa6bcb33cee0c0a57f98ee3f78728ca67684622a3aa3c4447d23043bb5f20c36",
+      "reason": "Service Desk package version matches the changed manifest identity0.2.1 without adding dependencies."
+    },
+    {
+      "id": "ui-slots-source-16",
+      "path": "modules/handoff/module.json",
+      "before": "7be25546531fffa2eb0368c69c65912e0b41083090090236fa7bf17b9aacd2db",
+      "after": "cced127c2365552d607c3490c67a77dc91b87dfd84aa750b919e7cbd6fc93e06",
+      "reason": "Handoff exact dependency advances with Knowledge0.2.3 and its own source version while existing schema and public contracts remain intact."
+    },
+    {
+      "id": "ui-slots-source-17",
+      "path": "modules/handoff/package.json",
+      "before": "3bb2c5d8ee46f17c8c1643ddfa15b16d6277a142cb8de574365992389382c762",
+      "after": "56ffea0209fe6340cfd73d57f86ef2d917951c6ce4aeb6e0b144abf99e5d6992",
+      "reason": "Handoff package matches0.2.3 and its selected Knowledge dependency for reproducible exports."
+    },
+    {
+      "id": "ui-slots-source-18",
+      "path": "apps/runtime/package.json",
+      "before": "fe8d0e022f1fa6c5dd512e9eda6d218760e0eeb415ef5cffe1c1c15fdb36b89f",
+      "after": "0f0d90a539c5d741ce80f91dcf0eb686981c8e31df792694becc03ee0cad7fad",
+      "reason": "Runtime source package pins current reviewed reference-module versions; executable selection remains product-owned."
+    },
+    {
+      "id": "ui-slots-source-19",
+      "path": "package-lock.json",
+      "before": "8d03ae11f3550112543bf39b065c636f9c82d2b4cd35108a14bae21abd44fb72",
+      "after": "fe8093fc5cc441763b65e2d58d16ac59fd0cff04e1c536acefe8f515a12f6254",
+      "reason": "Workspace lock pins the same exact current module/package versions without downloading or introducing a new dependency."
+    },
+    {
+      "id": "ui-slots-source-20",
+      "path": "products/combined/product.json",
+      "before": "4656211c42e83a00d0b68858d8b075562a6ec2429a9b1111542e99b7c48d5747",
+      "after": "28cd5271f415848dad92eb5a090513ab922c19abd2210cbd89825d9de2fccbae",
+      "reason": "Combined immutable product advances to0.2.3 and selects current Desk/Knowledge/Handoff versions with original local bindings."
+    },
+    {
+      "id": "ui-slots-source-21",
+      "path": "products/knowledge/product.json",
+      "before": "69d7f450b499bf651df3cc453055d13c3da4c0853330357e89ce07ce48ba7247",
+      "after": "e7ee879edce5781d9e5ad0129a0a2e062be5305ba9adf18c0d8f246dfe36b557",
+      "reason": "Knowledge immutable product advances to0.2.3 and selects updated Knowledge/Handoff identities with existing wiring."
+    },
+    {
+      "id": "ui-slots-source-22",
+      "path": "products/service-desk/product.json",
+      "before": "57ecb4fe254d92df8843f704a7895607b6b7dc6a46c67a3fa4d78652aace2f18",
+      "after": "8e489f4fdd9dc9533bee14813522d319ebc899190d4195726ffcbb7e72f14aa7",
+      "reason": "Desk immutable product advances to0.2.1 rather than reusing an existing immutable definition with changed selected module identity."
+    },
+    {
+      "id": "ui-slots-source-23",
+      "path": "OPEN_PLATFORM.html",
+      "before": "1cfc08635b095e12181583748abc71374b6e9c963c93010a0cc59ae911149981",
+      "after": "1cc0fd9d14ef493d6d1ca6d0065974120cd5b76a195de00550e6743c855c4d72",
+      "reason": "Fresh build regenerates offline source catalogue and explicit pure UI validation wrapper; no filesystem or build privilege is added."
+    },
+    {
+      "id": "ui-slots-source-24",
+      "path": "visual/data.json",
+      "before": "ab1a074f0a56bb5b485cfabc9ecc2ae7ca263b87d03b6a8c1fd070da7138e215",
+      "after": "ba5d707516222fed9d20b8aa89ac0b86ef09bd98ba1a221d75edc515eb2ca7dd",
+      "reason": "Fresh build regenerates descriptive catalogue/plan data from actual current module and immutable product versions."
+    },
+    {
+      "id": "ui-slots-source-25",
+      "path": "tests/shell-regressions.test.mjs",
+      "before": "165399704229b03604e963dfbf66caf1d7a35fd84f501f69a43c833f5a611765",
+      "after": "b44b0af184a8d36c7c2d7019876b1df24504066b188398b79762135d21f768b0",
+      "reason": "Controlled shell regression supplies actual read permission and requested-tenant bootstrap, verifying sibling isolation and scope disposal without harness changes."
+    },
+    {
+      "id": "ui-slots-source-26",
+      "path": "tests/frontend-assembly.test.mjs",
+      "before": "61adf736354489759db20439b8c31f2b4fdb7fcf19240b5feb1549ed7ce83bec",
+      "after": "a730e8b73404d7d69bedb09744dd304df6e99569312b9d05cd513a0789aae957",
+      "reason": "Compiled/export assertions verify literal full mappings and Desk-only omitted Knowledge assets alongside existing served-asset checks."
+    },
+    {
+      "id": "ui-slots-source-27",
+      "path": "tests/composition.test.mjs",
+      "before": "5bf219d3d508e04973b0fbbf64d39c49bfb1dff358831ee8d23adfe8a0a90fdf",
+      "after": "89ad1f511d608fff58ad4726e2b512d9e55a7ed2e548062a26bdf4ca07555f6d",
+      "reason": "Current-source composition dependency and package assertions track reviewed exact versions while retaining mismatch and historical behavior checks."
+    },
+    {
+      "id": "ui-slots-source-28",
+      "path": "tests/module-sdk.test.mjs",
+      "before": "1c4958e8a1f24a0e490f2745224f604262e33372a59063e26f2cedb596751cf6",
+      "after": "30d1a8caaed11c8fddcb35a7d8a259d1a1e1753eadc4e322b0da61788b0397f4",
+      "reason": "SDK contribution test accepts the owned named declaration and rejects unowned permissions or invalid exports."
+    },
+    {
+      "id": "ui-slots-source-29",
+      "path": "tests/factory-lifecycle.test.mjs",
+      "before": "fa633365340a112b07a4951895dc840bcc437a19920e918008445feca37bba25",
+      "after": "b6994973c21f023f21cb24d488fa0f3236e0279309d8a34ccc68ae5c7161726f",
+      "reason": "Current exported dependency expectations track exact Knowledge/Handoff0.2.3; existing real isolated export operation behavior stays asserted."
+    },
+    {
+      "id": "ui-slots-source-30",
+      "path": "tests/workspace-closure.test.mjs",
+      "before": "0c4fc48570d42f516436ab13c24f60f3ad8b988ab87e67ff6250b57f8cb02968",
+      "after": "2400c136171877a3662d47d0dd19c2da0cbe529875ca8e54057ad5b53ed6ebee",
+      "reason": "Selected current dependency closure expects Knowledge/Handoff0.2.3 and preserves unselected-owner omission assertions."
+    }
+  ],
+  "outsideEditBoundaryUnchanged": true,
+  "limitations": [
+    "Historical acceptance candidates/results stay unchanged; source pins describe current inspected planning source.",
+    "No browser/MCP/provider/production qualification from pin reconciliation."
+  ]
+}

@@ -3,6 +3,8 @@ import { resolve } from 'node:path';
 import { createRuntime } from './index.js';
 const args = process.argv.slice(2);
 const value = (key: string, fallback?: string) => { const i = args.indexOf(key); return i >= 0 ? args[i + 1] : fallback; };
+if (args.includes('--mobile-preview') && args.includes('--worker'))
+    throw new Error('--mobile-preview is available only for the web runtime');
 const product = value('--product', 'neutral')!, configPath = value('--config');
 if (!configPath) {
     console.error('A local runtime config is required. Run npm run demo to create fresh local credentials and configs.');
@@ -26,7 +28,7 @@ else {
     const port = Number(value('--port', '4300'));
     if (!Number.isSafeInteger(port) || port < 0 || port > 65535)
         throw new Error('Invalid port');
-    const http = await runtime.http(port);
+    const http = await runtime.http(port, { mobilePreview: args.includes('--mobile-preview') });
     shutdown = async () => { await http.close(); await runtime.close(); };
     console.log(JSON.stringify({ role: 'web-backend', product, instance: config.instanceId, url: http.url, state: 'READY' }));
 }

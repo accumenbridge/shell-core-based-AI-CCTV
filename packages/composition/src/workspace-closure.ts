@@ -16,7 +16,7 @@ export interface RuntimeWorkspaceClosure {
 const PACKAGE_ID = /^[a-z][a-z0-9-]{1,47}$/;
 const EXACT_VERSION = /^\d+\.\d+\.\d+$/;
 const REVIEWED_HOST_ROOTS = ['contracts', 'composition', 'sqlite', 'local-access', 'backend-host', 'web-shell'] as const;
-const REVIEWED_PACKAGES = new Set([...REVIEWED_HOST_ROOTS, 'worker-host', 'connections', 'ai-core']);
+const REVIEWED_PACKAGES = new Set([...REVIEWED_HOST_ROOTS, 'worker-host', 'connections', 'ai-core', 'client-core']);
 
 /** Resolve only packages reachable from the fixed host roots and selected module roots. */
 export function deriveRuntimeWorkspaceClosure(

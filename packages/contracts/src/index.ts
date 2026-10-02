@@ -1,4 +1,5 @@
 /** Product-neutral public contracts. No Camera, Document, Work or other domain entity. */
+import type { OperationDescriptor } from './operations.js';
 export const PLATFORM_ABI = 'quadbridge.module.v1' as const;
 export type Mode = 'enabled' | 'read-only' | 'off';
 export interface Actor {
@@ -84,12 +85,16 @@ export interface ModuleManifest {
         permission: string;
         export: string;
     }[];
+    /** Optional fixed, owner-scoped read-only UI contributions. Declarations are not grants. */
+    uiContributions?: import('./ui-contributions.js').UiContributionDescriptor[];
     schema: {
         current: number;
         readMin: number;
         readMax: number;
     };
     background: boolean;
+    /** Optional fixed executable capabilities contributed by this module. */
+    operations?: OperationDescriptor[];
     /** Relative src assets copied to dist; explicitly public for selected products. */
     browserAssets?: string[];
 }

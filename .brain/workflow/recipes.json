@@ -148,6 +148,203 @@
         "BRAIN-REGRESSION"
       ],
       "evidenceScope": "Portable hosted execution only; does not qualify Windows native/browser/provider/customer production."
+    },
+    {
+      "id": "mobile-build",
+      "argv": [
+        "npm.cmd",
+        "run",
+        "build"
+      ],
+      "cwd": ".",
+      "description": "Fresh maintained-source build.",
+      "criterionIds": [
+        "MOBILE-REGRESSION"
+      ],
+      "evidenceScope": "Fresh maintained-source build."
+    },
+    {
+      "id": "mobile-focused",
+      "argv": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/shell-regressions.test.mjs",
+        "tests/mobile-shell.test.mjs",
+        "tests/mobile-assembly.test.mjs",
+        "tests/frontend-assembly.test.mjs",
+        "tests/workspace-closure.test.mjs",
+        "tests/factory-lifecycle.test.mjs",
+        "tests/control-plane-build-host.test.mjs"
+      ],
+      "cwd": ".",
+      "description": "Compiled shell, assembly, source closure and reviewed managed-build/toolchain checks.",
+      "criterionIds": [
+        "MOBILE-CORE",
+        "MOBILE-ASSEMBLY"
+      ],
+      "evidenceScope": "Compiled shell, assembly, source closure and reviewed managed-build/toolchain checks."
+    },
+    {
+      "id": "mobile-full-suite",
+      "argv": [
+        "npm.cmd",
+        "test"
+      ],
+      "cwd": ".",
+      "description": "Required ordinary full suite; retain all named platform skips.",
+      "criterionIds": [
+        "MOBILE-REGRESSION"
+      ],
+      "evidenceScope": "Required ordinary full suite; retain all named platform skips."
+    },
+    {
+      "id": "mobile-browser",
+      "argv": [
+        "manual-browser-observation"
+      ],
+      "cwd": ".",
+      "description": "Ordinary browser same-origin journey; blocked observation stays blocked.",
+      "criterionIds": [
+        "MOBILE-BROWSER"
+      ],
+      "evidenceScope": "Ordinary browser same-origin journey; blocked observation stays blocked."
+    },
+    {
+      "id": "mobile-native-scaffold",
+      "argv": [
+        "manual-native-scaffold-observation"
+      ],
+      "cwd": ".",
+      "description": "Actual pinned generated-client npm ci, cap add android and cap sync android in a task-owned copy. This optional observation does not run Gradle or a device.",
+      "criterionIds": [
+        "MOBILE-ASSEMBLY"
+      ],
+      "evidenceScope": "Package-specific Android project generation/sync only; no native binary, device, identity/API or signing qualification."
+    },
+    {
+      "id": "framework-reliability-focused",
+      "argv": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/runtime-manager-preparation.test.mjs",
+        "tests/runtime-protocol.test.mjs",
+        "tests/local-access-enrollment.test.mjs",
+        "tests/studio-model.test.mjs",
+        "tests/module-sdk.test.mjs"
+      ],
+      "cwd": ".",
+      "description": "Actual compiled enrollment, native ownership, low-level restart access and rich metadata validation.",
+      "criterionIds": [
+        "RELIABILITY-ENROLLMENT",
+        "RELIABILITY-CLOSURE",
+        "RELIABILITY-ACCESS",
+        "RELIABILITY-METADATA"
+      ],
+      "evidenceScope": "Selected local profile with real owner storage/processes; separately report named platform exclusions."
+    },
+    {
+      "id": "capability-focused",
+      "argv": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/capability-operations.test.mjs",
+        "tests/composition.test.mjs",
+        "tests/module-sdk.test.mjs",
+        "tests/knowledge-answer.test.mjs",
+        "tests/factory-lifecycle.test.mjs",
+        "tests/workspace-closure.test.mjs",
+        "tests/visual-edition.test.mjs",
+        "tests/studio-integration.test.mjs",
+        "tests/studio-product-editor.test.mjs"
+      ],
+      "cwd": ".",
+      "description": "Actual owner operation/worker/authority, independent exports, legacy answer/closure and fixed offline composition checks. Includes both actual Studio offline/generated-module integration owners after the finite VM amendment.",
+      "criterionIds": [
+        "CAPABILITY-DISPATCH",
+        "CAPABILITY-OWNER",
+        "CAPABILITY-AUTHORITY",
+        "CAPABILITY-EXPORT",
+        "CAPABILITY-OFFLINE"
+      ],
+      "evidenceScope": "Local compiled/runtime/export checks only; unavailable external coverage recorded separately."
+    },
+    {
+      "id": "family-core-focused",
+      "argv": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/product-family.test.mjs",
+        "tests/control-plane.test.mjs",
+        "tests/control-plane-http.test.mjs",
+        "tests/studio-product-editor.test.mjs",
+        "tests/visual-edition.test.mjs",
+        "tests/factory-lifecycle.test.mjs",
+        "tests/reliability-baseline.test.mjs"
+      ],
+      "cwd": ".",
+      "description": "Pure derivation, exact audited save, paired editor and three sequential real artifact/runtime variant journeys with selected omission/persistence.",
+      "criterionIds": [
+        "FAMILY-DERIVATION",
+        "FAMILY-PROVENANCE",
+        "FAMILY-CORE-JOURNEY",
+        "FAMILY-OMISSION",
+        "FAMILY-OFFLINE"
+      ],
+      "evidenceScope": "Actual local store/HTTP/immutable native runtime and offline VM scopes; no inferred live browser."
+    },
+    {
+      "id": "family-browser-core",
+      "argv": [
+        "manual-browser-observation"
+      ],
+      "cwd": ".",
+      "description": "Actual ordinary paired family derive/save/build/register/promote/start and document-to-request browser journey.",
+      "criterionIds": [
+        "FAMILY-BROWSER"
+      ],
+      "evidenceScope": "Ordinary actual paired browser with exact source/product/build/artifact/runtime identity; policy/tool blocks stay blocked."
+    },
+    {
+      "id": "ui-slots-focused",
+      "argv": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/ui-contributions.test.mjs",
+        "tests/shell-regressions.test.mjs",
+        "tests/frontend-assembly.test.mjs",
+        "tests/composition.test.mjs",
+        "tests/module-sdk.test.mjs",
+        "tests/factory-lifecycle.test.mjs",
+        "tests/workspace-closure.test.mjs",
+        "tests/build-worker-process.test.mjs",
+        "tests/control-plane-http.test.mjs"
+      ],
+      "cwd": ".",
+      "description": "Trusted contribution parity/scoped lifecycle, actual selected exported owner data and reviewed source-copy/closure proofs. Includes exact current-source process fixture and actual paired composer selection after finite41 version reconciliation.",
+      "criterionIds": [
+        "UI-CONTRACT",
+        "UI-LIFECYCLE",
+        "UI-CORE-JOURNEY",
+        "UI-OMISSION"
+      ],
+      "evidenceScope": "Actual selected compile/export/runtime and controlled DOM lifecycle; browser recorded separately."
+    },
+    {
+      "id": "ui-slots-browser",
+      "argv": [
+        "manual-browser-observation"
+      ],
+      "cwd": ".",
+      "description": "Actual ordinary browser on promoted full artifact embedded Knowledge search and Desk cards with scope/session/restart and original managed closure.",
+      "criterionIds": [
+        "UI-BROWSER"
+      ],
+      "evidenceScope": "Actual browser exact source/runtime identity; no VM substitute or policy bypass."
     }
   ]
 }

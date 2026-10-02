@@ -12,8 +12,8 @@ test('resolution order is deterministic', () => assert.equal(canonical(resolve(p
 test('unknown module fails closed', () => assert.throws(() => resolve({ ...product('neutral'), modules: [{ id: 'not-installed', version: '0.2.0' }] }, catalog), /Unsupported module/));
 test('unsupported ABI fails', () => assert.throws(() => resolve({ ...product('neutral'), platformAbi: 'v99' }, catalog), /ABI/));
 test('exact version mismatch fails', () => assert.throws(() => resolve({ ...product('service-desk'), modules: [{ id: 'service-desk', version: '1.0.0' }] }, catalog), /Unsupported/));
-test('required dependency must be selected', () => assert.throws(() => resolve({ ...product('knowledge'), modules: [{ id: 'handoff', version: '0.2.1' }] }, catalog), /Missing dependency/));
-test('dependency cycle rejected', () => { const c = structuredClone(catalog); c.find(x => x.id === 'knowledge').dependencies = [{ id: 'handoff', version: '0.2.1' }]; assert.throws(() => resolve(product('knowledge'), c), /cycle/); });
+test('required dependency must be selected', () => assert.throws(() => resolve({ ...product('knowledge'), modules: [{ id: 'handoff', version: '0.2.3' }] }, catalog), /Missing dependency/));
+test('dependency cycle rejected', () => { const c = structuredClone(catalog); c.find(x => x.id === 'knowledge').dependencies = [{ id: 'handoff', version: '0.2.3' }]; assert.throws(() => resolve(product('knowledge'), c), /cycle/); });
 test('optional absent dependency is valid', () => { const c = structuredClone(catalog); c.find(x => x.id === 'service-desk').dependencies = [{ id: 'absent', version: '0.2.0', optional: true }]; assert.equal(resolve(product('service-desk'), c).modules.length, 1); });
 test('duplicate public route rejected', () => { const c = structuredClone(catalog); const k = c.find(x => x.id === 'knowledge'); k.routes.push({ method: 'GET', path: '/api/requests', permission: 'knowledge.read', kind: 'read' }); assert.throws(() => resolve(product('combined'), c), /Duplicate route/); });
 test('route permission must be owned', () => { const c = structuredClone(catalog); c.find(x => x.id === 'service-desk').routes[0].permission = 'knowledge.read'; assert.throws(() => resolve(product('service-desk'), c), /Undeclared/); });
@@ -31,6 +31,14 @@ test('selected composition determines the exact local package dependency closure
  const plan=resolve(product('combined'),catalog);
  const closure=deriveRuntimeWorkspaceClosure(plan,path=>JSON.parse(readFileSync(new URL(`../${path}`,import.meta.url),'utf8')));
  assert.equal(closure.dependencies['@quadbridge/ai-core'],'0.3.0');
- assert.equal(closure.dependencies['@quadbridge/knowledge'],'0.2.1');
- assert.equal(closure.dependencies['@quadbridge/handoff'],'0.2.1');
+ assert.equal(closure.dependencies['@quadbridge/knowledge'],'0.2.3');
+ assert.equal(closure.dependencies['@quadbridge/handoff'],'0.2.3');
+});
+test('operation declarations are module-owned, permission-owned and globally unique by exact version', () => {
+ const p=product('knowledge'), bad=structuredClone(catalog); bad.find(x=>x.id==='knowledge').operations[0].permission='desk.read';
+ assert.throws(()=>resolve(p,bad),/permission/i);
+ const duplicate=structuredClone(catalog); duplicate.find(x=>x.id==='knowledge').operations.push(structuredClone(duplicate.find(x=>x.id==='knowledge').operations[0]));
+ assert.throws(()=>resolve(p,duplicate),/Duplicate operation/);
+ const unowned=structuredClone(catalog); unowned.find(x=>x.id==='knowledge').operations[0].id='service-desk.documents.search';
+ assert.throws(()=>resolve(p,unowned),/operation id/i);
 });

@@ -1,0 +1,11 @@
+Captured failure excerpts from original npm test session 18827. This is not the complete TAP transcript.
+not ok 261 - runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+location: tests/runtime-manager-preparation.test.mjs:371:1
+error: ENOENT while lstat of ACCESS.SQLITE-SHM.tmp inside the test-owned runtime data directory
+stack: assertPhysicalDataTree (apps/control-plane/dist/runtime-manager.js:445); completedRuntimeEnrollment (dist/runtime-manager.js:515); TestContext (tests/runtime-manager-preparation.test.mjs:397)
+not ok 266 - RuntimeProtocol duplicate RESUME after the owned descendant starts terminates the whole job
+location: tests/runtime-protocol.test.mjs:308:1
+error: owned descendant heartbeat is present after helper close
+stack: closeAndProve (tests/runtime-protocol.test.mjs:221); TestContext (tests/runtime-protocol.test.mjs:318)
+Named skipped coverage: bounded snapshot verification file-symlink fixture; host denied fixture creation with EPERM.
+

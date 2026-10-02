@@ -1,0 +1,9 @@
+{
+  "recordedAt": "2026-10-02T08:23:21.6510548Z",
+  "gracefulCloseObserved": false,
+  "processId": 6704,
+  "fixtureId": "129c2e42-3246-47dd-9a05-8910c09957f9",
+  "listenerPort": 53260,
+  "action": "Bounded task console termination after verified native empty/closed/clean and build/publication settlement",
+  "commandLine": "\"C:\\Program Files\\nodejs\\node.exe\" .local/family-001/browser-server.mjs"
+}

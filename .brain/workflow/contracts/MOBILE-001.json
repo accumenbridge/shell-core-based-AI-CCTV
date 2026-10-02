@@ -1,0 +1,100 @@
+{
+  "schema": "brain.task-contract.v1",
+  "taskId": "MOBILE-001",
+  "title": "Reusable mobile browser shell and client-only Capacitor packaging",
+  "authorization": {
+    "kind": "authorized",
+    "reference": "User 2026-10-02 ok build this; identity/API profile explicitly deferred by user. Coordinator handoff from worker1-Analyze creation process at checkpoint55."
+  },
+  "sourceTaskRef": ".brain/tasks/MOBILE-001.md",
+  "owners": {
+    "coordinator": "/root mobile chat",
+    "implementer": "/root/mobile_implementation",
+    "reviewer": "/root/mobile_plan_review"
+  },
+  "allowedPaths": [
+    "OPEN_PLATFORM.html",
+    "README.md",
+    "apps/control-plane/src/build-inputs.ts",
+    "apps/control-plane/src/build-worker.ts",
+    "apps/runtime/src/index.ts",
+    "apps/runtime/src/main.ts",
+    "docs/MOBILE_APP_SHELL.md",
+    "package-lock.json",
+    "package.json",
+    "packages/client-core/package.json",
+    "packages/client-core/src/index.ts",
+    "packages/client-core/tsconfig.json",
+    "packages/composition/src/workspace-closure.ts",
+    "packages/mobile-shell/package.json",
+    "packages/mobile-shell/src/index.ts",
+    "packages/mobile-shell/src/mobile.css",
+    "packages/mobile-shell/tsconfig.json",
+    "packages/web-shell/package.json",
+    "packages/web-shell/src/index.ts",
+    "packages/web-shell/tsconfig.json",
+    "templates/mobile/README.md",
+    "templates/mobile/package-lock.json",
+    "templates/mobile/package.json",
+    "tests/control-plane-build-host.test.mjs",
+    "tests/factory-lifecycle.test.mjs",
+    "tests/frontend-assembly.test.mjs",
+    "tests/mobile-assembly.test.mjs",
+    "tests/mobile-shell.test.mjs",
+    "tests/source-copy.mjs",
+    "tests/support/shell-harness.mjs",
+    "tests/workspace-closure.test.mjs",
+    "tools/build.mjs",
+    "tools/demo.mjs",
+    "tools/frontend-closure.mjs",
+    "tools/mobile/assemble.mjs",
+    "tsconfig.json",
+    "visual/data.json"
+  ],
+  "excludedActions": [
+    "No backend HTTP/access policy changes, new external auth/provider setup, global tool installation, native signing/deployment or repository publishing.",
+    "No module business/storage, registry, or control-plane UI/access/lifecycle changes. Only reviewed fixed build-input/toolchain integration in build-inputs.ts and native executable path-budget coverage in build-worker.ts are in scope. No arbitrary imports/URLs or exported-source edits.",
+    "Root exclusively owns shared Brain records; one Luna source writer. Generated tsconfig references follow tools/build.mjs."
+  ],
+  "prerequisites": [
+    "Current source/plan inspected; other coordinator handed ownership and confirmed idle.",
+    "Mapped mobile task/focus and governing references reconciled; run preflight before source writer.",
+    "Native tools not found; native identity/API explicitly deferred.",
+    "2026-10-02 named Sol review approved four-path amendment after actual root39-test run: generated catalogues, pinned esbuild fixture link, and bounded deletion retry only after confirmed fixture runtime close. Earlier failures and interrupted-owner UNKNOWN remain retained.",
+    "2026-10-02 independent Sol review approved managed-build amendment after actual npm test316/274pass/42fail at608e: exact mobile source/template admission, shared pinned esbuild/native selection for hash/copy, binary-override rejection, staged executable path budget, and focused admission/toolchain regressions. No security relaxation."
+  ],
+  "criteria": [
+    {
+      "id": "MOBILE-CORE",
+      "description": "Shared controller and client fencing preserve desktop behavior and own-module scope. Mobile chrome and suspend/resume/tenant/logout lifecycle run actual static contributions with source-derived navigation.",
+      "evidenceScope": "Compiled portable behavioral tests plus exact independent source review."
+    },
+    {
+      "id": "MOBILE-ASSEMBLY",
+      "description": "Build client-only neutral/Desk/Combined assets from reviewed closure with complete index, lazy/style resolution, exact inventory and isolated pinned native scaffold; packaged unconfigured state makes zero auth/API requests.",
+      "evidenceScope": "Actual assembly and artifact inventory tests, no native binary/device claim."
+    },
+    {
+      "id": "MOBILE-REGRESSION",
+      "description": "Fresh build before focused tests; actual original complete ordinary npm test close exit0 with zero failed/cancelled/TODO and unchanged candidate. The only permitted skipped coverage is the single named BLOCKED_ENV owned file-symlink fixture denied by this Windows host with EPERM; retain its exact counts and BLOCKED coverage. Independent final review must inspect immutable completed suite evidence and enforce actual exit/counts/source/skip facts before acceptance; observation presence alone is not success.",
+      "evidenceScope": "Actual local commands and candidate-bound evidence."
+    },
+    {
+      "id": "MOBILE-BROWSER",
+      "description": "Observe actual same-origin mobile Desk create/read and ordinary-view same-record parity with phone layout; record browser policy blocks separately if observation unavailable.",
+      "evidenceScope": "Actual browser observation or explicit blocked scope, not fixture-derived visual acceptance."
+    }
+  ],
+  "requiredRecipeIds": [
+    "mobile-build",
+    "mobile-focused"
+  ],
+  "requiredObservationRecipeIds": [
+    "mobile-full-suite",
+    "mobile-browser"
+  ],
+  "reviewRequirement": {
+    "required": true,
+    "independence": "independent_reported"
+  }
+}

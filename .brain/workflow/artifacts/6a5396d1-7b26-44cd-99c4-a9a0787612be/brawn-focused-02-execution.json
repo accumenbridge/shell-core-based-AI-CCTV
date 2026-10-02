@@ -1,0 +1,43 @@
+{
+  "kind": "focused",
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/product-family.test.mjs",
+    "tests/control-plane.test.mjs",
+    "tests/control-plane-http.test.mjs",
+    "tests/studio-product-editor.test.mjs",
+    "tests/visual-edition.test.mjs",
+    "tests/factory-lifecycle.test.mjs",
+    "tests/reliability-baseline.test.mjs"
+  ],
+  "actualProcess": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "--test-reporter=tap",
+    "--test",
+    "--test-concurrency=1",
+    "tests/product-family.test.mjs",
+    "tests/control-plane.test.mjs",
+    "tests/control-plane-http.test.mjs",
+    "tests/studio-product-editor.test.mjs",
+    "tests/visual-edition.test.mjs",
+    "tests/factory-lifecycle.test.mjs",
+    "tests/reliability-baseline.test.mjs"
+  ],
+  "startedAt": "2026-10-02T07:55:35.319Z",
+  "finishedAt": "2026-10-02T07:56:45.980Z",
+  "exitCode": 1,
+  "signal": null,
+  "candidateBefore": "29fdad22511cb44a0364ad8c7d7ee401db73bc2ae493ad34b618828b04306f7a",
+  "candidateAfter": "29fdad22511cb44a0364ad8c7d7ee401db73bc2ae493ad34b618828b04306f7a",
+  "sourceUnchanged": true,
+  "counts": {
+    "tests": 71,
+    "passed": 70,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { spawn } from 'node:child_process';
-import { existsSync, lstatSync, readFileSync, realpathSync } from 'node:fs';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { closeSync, existsSync, fstatSync, lstatSync, openSync, readFileSync, readSync, realpathSync } from 'node:fs';
+import { appendFile, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { DatabaseSync } from 'node:sqlite';
 import { tmpdir } from 'node:os';
 import { basename, isAbsolute, join, relative, sep } from 'node:path';
@@ -78,12 +78,40 @@ async function safeRemoveOwnedTree(path) {
   await rm(actual, { recursive: true, force: false, maxRetries: 10, retryDelay: 100 });
 }
 
-async function readHeartbeat(path) {
+function readHeartbeat(path) {
+  const maximumBytes = 128 * 1024;
+  let descriptor;
   try {
-    const value = JSON.parse(await readFile(path, 'utf8'));
-    if (Number.isSafeInteger(value.pid) && Number.isSafeInteger(value.beat) && value.beat > 0) return value;
+    descriptor = openSync(path, 'r');
+    const before = fstatSync(descriptor);
+    if (!before.isFile() || before.size > maximumBytes) return undefined;
+    const bytes = Buffer.alloc(maximumBytes + 1);
+    let count = 0;
+    while (count < bytes.length) {
+      const read = readSync(descriptor, bytes, count, bytes.length - count, count);
+      if (!read) break;
+      count += read;
+    }
+    if (count > maximumBytes || fstatSync(descriptor).size > maximumBytes) return undefined;
+    const contents = bytes.toString('utf8', 0, count);
+    const finalNewline = contents.lastIndexOf('\n');
+    if (finalNewline < 0) return undefined;
+    const complete = contents.slice(0, finalNewline);
+    if (!complete) return undefined;
+    const lines = complete.split('\n');
+    if (lines.length > 8192) return undefined;
+    let latest, previousBeat;
+    for (const line of lines) {
+      const value = JSON.parse(line);
+      if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).sort().join(',') !== 'beat,pid' ||
+          !Number.isSafeInteger(value.pid) || value.pid <= 0 || !Number.isSafeInteger(value.beat) || value.beat <= 0 ||
+          (latest && (value.pid !== latest.pid || value.beat <= previousBeat))) return undefined;
+      latest = value;
+      previousBeat = value.beat;
+    }
+    return latest;
   } catch {}
-  return undefined;
+  finally { if (descriptor !== undefined) closeSync(descriptor); }
 }
 
 async function waitForFile(path, label, timeoutMs = 10000) {
@@ -275,6 +303,10 @@ test('RuntimeProtocol reports assignment, accepts fragmented nonce-bound control
   const advanced = await waitForBeatAfter(run.heartbeatPath, first.beat, 'owned heartbeat descendant');
   run.send(`STOP:${run.nonce}\n`);
   await run.closeAndProve(advanced);
+  const complete = readHeartbeat(run.heartbeatPath);
+  assert.ok(complete && complete.beat >= advanced.beat, 'the reader returns the latest complete newline record');
+  await appendFile(run.heartbeatPath, `{"pid":${complete.pid},"beat":`);
+  assert.deepEqual(readHeartbeat(run.heartbeatPath), complete, 'a final partial record does not replace the latest complete heartbeat');
 });
 
 test('RuntimeProtocol wrong-nonce and malformed pre-RESUME controls fail closed without execution', {

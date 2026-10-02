@@ -1,0 +1,39 @@
+{
+  "kind": "focused",
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/runtime-manager-preparation.test.mjs",
+    "tests/runtime-protocol.test.mjs",
+    "tests/local-access-enrollment.test.mjs",
+    "tests/studio-model.test.mjs",
+    "tests/module-sdk.test.mjs"
+  ],
+  "actualProcess": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "--test-reporter=tap",
+    "--test",
+    "--test-concurrency=1",
+    "tests/runtime-manager-preparation.test.mjs",
+    "tests/runtime-protocol.test.mjs",
+    "tests/local-access-enrollment.test.mjs",
+    "tests/studio-model.test.mjs",
+    "tests/module-sdk.test.mjs"
+  ],
+  "startedAt": "2026-10-02T03:48:26.693Z",
+  "finishedAt": "2026-10-02T03:48:41.505Z",
+  "exitCode": 0,
+  "signal": null,
+  "candidateBefore": "4eac86b2fe24aea54803478910589bacc88f07438d9eee765ca74609f38f3a92",
+  "candidateAfter": "4eac86b2fe24aea54803478910589bacc88f07438d9eee765ca74609f38f3a92",
+  "sourceUnchanged": true,
+  "counts": {
+    "tests": 29,
+    "passed": 29,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

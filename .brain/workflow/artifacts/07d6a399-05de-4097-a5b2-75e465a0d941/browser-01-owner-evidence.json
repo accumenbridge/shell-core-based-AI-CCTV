@@ -1,0 +1,132 @@
+{
+  "fixtureId": "4032c0da-c347-4236-bd24-919e512e06d0",
+  "candidate": "fd404c7993497c2016887f01676574c2f1f3daad4a323f7105a874b99b980e9b",
+  "contractDigest": "70eb2bb9895a68b0e80d403d2e63407840811d457345fb44b627d438fda75a47",
+  "sourceFingerprint": "c879b13d7f533a3da51fa3bdd9054122fd016819a2718290336cde8b7c60ec24",
+  "studioSha": "c1fd7cd4bf808788d9b9b7202e11da66c4d516d3e0cfa5a78d208ea725525fbf",
+  "url": "http://127.0.0.1:57970",
+  "observedAt": "2026-10-02T10:05:55.073Z",
+  "builds": [
+    {
+      "id": "2b0abbdc-d96c-4d53-a82e-54570be3c26a",
+      "productId": "combined",
+      "version": "0.2.3",
+      "state": "SUCCEEDED",
+      "snapshotDigest": "4843716ea072f3fbc3903878c766f997cdb2954f1579cc67d274951af527bb3f",
+      "cleanupState": "CLEAN"
+    }
+  ],
+  "slot": {
+    "state": "EMPTY",
+    "instanceId": null,
+    "operationId": null
+  },
+  "instances": [
+    {
+      "id": "runtime-f59f8d04-71d8-4176-b6f5-50a4d4fa235f",
+      "productId": "combined",
+      "version": "0.2.3",
+      "artifactDigest": "4843716ea072f3fbc3903878c766f997cdb2954f1579cc67d274951af527bb3f",
+      "profileDigest": "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1",
+      "configDigest": "8c751e56aa09c0b73d815e4d0751e3ea6761927a161c9735f30394c7afe35f55",
+      "state": "STOPPED",
+      "attempt": 2
+    }
+  ],
+  "attempts": [
+    {
+      "id": "b96f69bb-9e91-48ad-9e26-2fa31fb1b2f2",
+      "instanceId": "runtime-f59f8d04-71d8-4176-b6f5-50a4d4fa235f",
+      "attempt": 1,
+      "state": "STOPPED",
+      "physicalState": "EMPTY",
+      "emptyObserved": 1,
+      "helperClosed": 1,
+      "executionClean": 1
+    },
+    {
+      "id": "5ffabb72-8179-4524-81f1-9d21765a140e",
+      "instanceId": "runtime-f59f8d04-71d8-4176-b6f5-50a4d4fa235f",
+      "attempt": 2,
+      "state": "STOPPED",
+      "physicalState": "EMPTY",
+      "emptyObserved": 1,
+      "helperClosed": 1,
+      "executionClean": 1
+    }
+  ],
+  "registry": {
+    "operation_id": null,
+    "reserved_bytes": 0,
+    "reserved_files": 0,
+    "reserved_objects": 0
+  },
+  "product": {
+    "bindings": [
+      {
+        "consumer": "handoff",
+        "contract": "desk.requests.create.v2",
+        "implementation": "service-desk",
+        "instanceId": "local-desk",
+        "mode": "local",
+        "scope": "application"
+      },
+      {
+        "consumer": "handoff",
+        "contract": "knowledge.document.read.v1",
+        "implementation": "knowledge",
+        "instanceId": "local-documents",
+        "mode": "local",
+        "scope": "application"
+      }
+    ],
+    "description": "Two domain families composed into one application.",
+    "id": "combined",
+    "layout": "sidebar",
+    "modules": [
+      {
+        "id": "handoff",
+        "version": "0.2.3"
+      },
+      {
+        "id": "knowledge",
+        "version": "0.2.3"
+      },
+      {
+        "id": "service-desk",
+        "version": "0.2.1"
+      }
+    ],
+    "platformAbi": "quadbridge.module.v1",
+    "title": "Operations + Knowledge",
+    "version": "0.2.3",
+    "wiring": "knowledge-to-desk"
+  },
+  "sourceUnchanged": true,
+  "consoleOriginalClose": {
+    "fixtureId": "4032c0da-c347-4236-bd24-919e512e06d0",
+    "candidate": "fd404c7993497c2016887f01676574c2f1f3daad4a323f7105a874b99b980e9b",
+    "originalExecSession": 29559,
+    "observedExitCode": 0,
+    "observedAt": "2026-10-02T10:05:03.113Z",
+    "observation": "Root directly observed original write_stdin completion exit0 after nonce STOP and normal server.close; same frozen candidate preserved."
+  },
+  "requests": [
+    {
+      "id": "4bac93f8-be2a-4da2-a9e8-34ea73488ce6",
+      "tenant": "customer-a",
+      "title": "Inspect pump seals — panel request",
+      "state": "OPEN",
+      "version": 1
+    }
+  ],
+  "documents": [
+    {
+      "id": "7948774b-cff6-41d3-9ab9-dc649a2fc70e",
+      "tenant": "customer-a",
+      "title": "Pump reference — panel test",
+      "version": 1,
+      "state": "READY"
+    }
+  ]
+}

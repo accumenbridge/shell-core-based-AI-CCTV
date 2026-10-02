@@ -1,0 +1,129 @@
+{
+  "observedAt": "2026-10-02T01:02:30.574Z",
+  "candidate": {
+    "files": [
+      {
+        "path": "apps/runtime/src/index.ts",
+        "sha256": "198f229a67681b94eb1015eaa8f944d28340c5a2acbb04fcaee13149fe43e42d"
+      },
+      {
+        "path": "apps/runtime/src/main.ts",
+        "sha256": "69e3c13d2505b628bfdf3ceb78e111e8d167b28a9678acc189a4c3cc3497190e"
+      },
+      {
+        "path": "docs/MOBILE_APP_SHELL.md",
+        "sha256": "0ae2079a24f1b45e7430db996111ce41bed015ff288154ee1b7d84b708b287e2"
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "739f3696303ff5ae7c88772e0d8d715896b55b37e1298fbb4cf620b4becd4d1c"
+      },
+      {
+        "path": "package.json",
+        "sha256": "ed9933b4022a295182887c51a5b4aa05e9d8933c5ca0af4b57b55aee6ec85085"
+      },
+      {
+        "path": "packages/client-core/package.json",
+        "sha256": "bd7c591fb7ee0ae0b1bddc0be4e238ff2e129a2f152e3126a20b2ef55bcd4449"
+      },
+      {
+        "path": "packages/client-core/src/index.ts",
+        "sha256": "f2b8521725db0f06934ac59ccb0139cd82eea608805457bc8e33f0122d863c5e"
+      },
+      {
+        "path": "packages/client-core/tsconfig.json",
+        "sha256": "fd02bcd47cfdca9108e67fe0ab461469921502c9f98e1a38bc17abe3396224aa"
+      },
+      {
+        "path": "packages/composition/src/workspace-closure.ts",
+        "sha256": "1745577d88134c57b2bc3248e185be38019134322420f61c456c9bbfface906f"
+      },
+      {
+        "path": "packages/mobile-shell/package.json",
+        "sha256": "0970900f5cbb68fd32cbb6316f46e79a043a51c6e0829101197fd88d4725fba7"
+      },
+      {
+        "path": "packages/mobile-shell/src/index.ts",
+        "sha256": "ea152efa4ab20ca1680a488cbf48f5eab617ec3e8b007e0498944810e8c28873"
+      },
+      {
+        "path": "packages/mobile-shell/src/mobile.css",
+        "sha256": "b4adf39c8628c983ae8e919331a8de698597456de5d8432129b3b8d65289a080"
+      },
+      {
+        "path": "packages/mobile-shell/tsconfig.json",
+        "sha256": "221c154487a5e76b80eaf0a1b4f136850dcd1a2fd96c6ff6414895045a9ece0a"
+      },
+      {
+        "path": "packages/web-shell/package.json",
+        "sha256": "d9ebfd7ece36bd7043d6dd5822c3fe68a89c2b7d1f6bd07a9c72d068703df2dc"
+      },
+      {
+        "path": "packages/web-shell/src/index.ts",
+        "sha256": "db0186cc8ee7f8b192b7df15172e60bd4df95017ef3c88a56129a230ac1a4d0c"
+      },
+      {
+        "path": "packages/web-shell/tsconfig.json",
+        "sha256": "7cd5a474fe91582ca0d2bf76041855dcd977ac22a3a9701a87b0035b5fcf2520"
+      },
+      {
+        "path": "README.md",
+        "sha256": "d641e2e0076e81b8a7fdd298ccf1f8c4a2162d260e07163823c1d0db97948aa0"
+      },
+      {
+        "path": "templates/mobile/package-lock.json",
+        "sha256": "dc7a6e9130bef578c434886e5873a65539a5c4e51ed12c8fc8be69a70a5b58c8"
+      },
+      {
+        "path": "templates/mobile/package.json",
+        "sha256": "5bd02e4bb08475f88ee8ad79fba8d36e16f8f08205487db3594fbc56577ce200"
+      },
+      {
+        "path": "templates/mobile/README.md",
+        "sha256": "fb4a7e341eb8cf73a0eee8b53fe3091975669e89c58c2340138609895414b1c1"
+      },
+      {
+        "path": "tests/frontend-assembly.test.mjs",
+        "sha256": "0e5b315c0e0aa782f0a3a37081a20eb5781ba85b8e0021df4bc5c9ba246452d0"
+      },
+      {
+        "path": "tests/mobile-assembly.test.mjs",
+        "sha256": "ac929639dc220e9bbf6942909cf042f118347aecb259bc0926cae77d723ca885"
+      },
+      {
+        "path": "tests/mobile-shell.test.mjs",
+        "sha256": "7360062233b0658bfb5329f6b609c82cf5894afc756c0401f03ee7f34e000ede"
+      },
+      {
+        "path": "tests/support/shell-harness.mjs",
+        "sha256": "7d520464af8a755e824e486927cafadd9793ea27cc96f0001af614e64a690225"
+      },
+      {
+        "path": "tests/workspace-closure.test.mjs",
+        "sha256": "f6f6d94785e456f719e95035ef73562b472d43a20c379684b63248c9d420a142"
+      },
+      {
+        "path": "tools/build.mjs",
+        "sha256": "e4e85a5c2c137083f45cd7ad3242643c6f21c00a5733169f7b951e47c17a7c47"
+      },
+      {
+        "path": "tools/demo.mjs",
+        "sha256": "5708ee8f3e3aaec48f34974591a1cae6fae86ea59e5290982eb537d8f1d9e10e"
+      },
+      {
+        "path": "tools/frontend-closure.mjs",
+        "sha256": "e9a264807c8ae6793d71adb1aec1f6cbd282cd6618b35f652cffd60296db5387"
+      },
+      {
+        "path": "tools/mobile/assemble.mjs",
+        "sha256": "9cb01075529fdf63fb5e36a52342729e97ac241db3afb3a0c6631d27677f5aa3"
+      },
+      {
+        "path": "tsconfig.json",
+        "sha256": "efa8bde382b466d0985c8e45cb4f897f879a8941eddf6757dcd37b89c9a1f134"
+      }
+    ],
+    "digest": "8680606fbfb2098a5c3a66191f6de15784e90514f68a30748e4b856bf70cd9e3"
+  },
+  "contractDigest": "e97c17697f08d84aa5fdbe8379d20ef52fd6d8584d7254b2104f8a3693e260f5"
+}
