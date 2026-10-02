@@ -69,7 +69,8 @@ function included(relativePath: string, directory: boolean, moduleAssets: Set<st
     if (parts.length === 2) return directory && /^[a-z][a-z0-9-]{1,47}$/.test(leaf);
     if (parts.length === 3 && !directory && ((top === 'products' && leaf === 'product.json') || (top === 'solutions' && (leaf === 'solution.json' || leaf === 'wiring.mjs' || leaf === 'ui.json')))) return true;
   } else if (top === 'tools') {
-    if (parts.length === 2 && (leaf === 'registry-publish.ps1' || leaf === 'runtime-recovery-publish.ps1' || leaf === 'runtime-recovery.mjs' || leaf === 'runtime-supervisor.mjs')) return false;
+    if (parts.length === 2 && (leaf === 'registry-publish.ps1' || leaf === 'runtime-recovery-publish.ps1' || leaf === 'runtime-recovery.mjs' || leaf === 'runtime-supervisor.mjs' ||
+        leaf === 'runtime-upgrade.mjs' || leaf === 'runtime-upgrade-publish.ps1')) return false;
     if (parts.length === 2 && !directory && TOOL_FILES.has(leaf)) return true;
     if (directory || /\.(?:json|csv|env|pem|key|p12|pfx|sqlite|db|log|txt|ps1)$/i.test(leaf)) throw new Error('Unreviewed or data-bearing tool input is not allowed: ' + relativePath);
     return false;

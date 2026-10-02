@@ -7,13 +7,14 @@ import { performance } from 'node:perf_hooks';
 import { canonical, PlatformError } from '@quadbridge/contracts';
 import { ControlPlaneStore, MANAGED_RUNTIME_RECOVERY_LIMITS, type ManagedRuntimeRecoveryIdentity, type ManagedRuntimeRecoveryIntent } from '@quadbridge/control-plane';
 import type { LocalArtifactStore } from './artifact-store.js';
-import { captureManagedRuntimeNativeHost, completedRuntimeEnrollment, runtimeDataDirectory, runtimePlanIdentity } from './runtime-manager.js';
+import { captureManagedRuntimeNativeHost, completedRuntimeEnrollment, runtimeDataDirectory, runtimeModuleDescriptors, runtimePlanIdentity } from './runtime-manager.js';
 
 const HASH=/^[a-f0-9]{64}$/;
 const INSTANCE=/^runtime-[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const MAX_PATH=240, MAX_ENTRIES=16384, MAX_SCAN_MS=2000, MAX_DEPTH=32;
 const sha=(bytes:Uint8Array|string)=>createHash('sha256').update(bytes).digest('hex');
-const recoveryScriptDigest='8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35';
+export const RUNTIME_RECOVERY_TOOL_SHA256='050cd8aaceee85709f9f8e0def5d5256ca00e94af70083aed820a29443f72be4';
+const recoveryScriptDigest=RUNTIME_RECOVERY_TOOL_SHA256;
 const recoveryPublisherDigest='5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5';
 
 export class RuntimeRecoveryError extends Error {
@@ -83,11 +84,8 @@ function validateStopped(store:ControlPlaneStore,instanceId:string):{instance:an
   return {instance,attempt:proof,identity};
 }
 function moduleDescriptors(snapshot:any,plan:any):any[]{
-  return plan.plan.modules.map((module:any)=>{
-    const entry=snapshot.entries.find((row:any)=>row.path===`modules/${module.id}/module.json`);if(!entry)throw new RuntimeRecoveryError('RUNTIME_BACKUP_INVALID','Promoted snapshot is missing a selected module schema');
-    const manifest=parseJson(entry.bytes);if(manifest.id!==module.id||!manifest.schema)throw new RuntimeRecoveryError('RUNTIME_BACKUP_INVALID','Selected promoted module schema is invalid');
-    return {id:module.id,schema:manifest.schema};
-  });
+  try{return runtimeModuleDescriptors(snapshot,plan);}
+  catch{throw new RuntimeRecoveryError('RUNTIME_BACKUP_INVALID','Selected promoted module schemas do not match the verified runtime plan');}
 }
 function parseCanonical(bytes:Buffer):any{const value=parseJson(bytes);if(canonical(value)!==bytes.toString('utf8'))throw new RuntimeRecoveryError('RUNTIME_REPAIR_REQUIRED','Private recovery metadata is not canonical');return value;}
 async function withTimeout<T>(promise:Promise<T>,timeoutMs:number,message:string):Promise<T>{
@@ -116,6 +114,43 @@ export class RuntimeRecoveryManager{
   static create(root:string,store:ControlPlaneStore,artifacts:LocalArtifactStore){return new RuntimeRecoveryManager(resolve(root),store,artifacts);}
   capability(){return {status:this.native&&!this.closing?'ready':'unavailable',profile:'selected-windows-powershell7',limits:MANAGED_RUNTIME_RECOVERY_LIMITS,
     detail:this.native?'Private local runtime backups are attached to the selected native process-owner profile.':this.hostError??'Private local recovery is closing.'};}
+  captureUpgradeNativeHost():NativeHost{return this.assertReady();}
+  upgradeCapacityObservation(){
+    this.assertReady();
+    const base=this.observeCapacity(0),roots=[join(this.root,'.local','platform-runtime-upgrades'),join(this.root,'.local','platform-runtime-upgrade-executions')];
+    let bytes=0,objects=0,entries=0;
+    for(const upgradeRoot of roots){
+      let additional={files:new Map<string,{size:number;dev:number;ino:number}>(),directories:[] as string[],bytes:0,entries:0};
+      try{physicalDirectory(upgradeRoot,false);additional=scanTree(upgradeRoot);}
+      catch(error){if((error as NodeJS.ErrnoException).code!=='ENOENT')throw error;}
+      bytes+=additional.bytes;objects+=additional.directories.filter(path=>dirname(path)===upgradeRoot).length;entries+=additional.entries;
+    }
+    return {backupBytes:base.backupBytes,stagingBytes:base.stagingBytes+bytes,objectCount:base.objectCount+objects,entryCount:base.entryCount+entries};
+  }
+  async verifyBackupForUpgrade(digest:string,identity:ManagedRuntimeRecoveryIdentity,modules:Array<{id:string;schema:Record<string,unknown>}>) {
+    this.assertReady();
+    const metadata=this.store.runtimeRecoveryBackup(digest) as Record<string,any>|undefined;
+    if(!metadata||metadata.instanceId!==identity.instanceId||metadata.productId!==identity.productId||metadata.version!==identity.version||
+       metadata.artifactDigest!==identity.artifactDigest||metadata.originatingActorId!==identity.originatingActorId||metadata.profileDigest!==identity.profileDigest||
+       metadata.configDigest!==identity.configDigest||metadata.adapterDigest!==identity.adapterDigest||metadata.toolchainDigest!==identity.toolchainDigest||
+       metadata.recipeDigest!==identity.recipeDigest||metadata.attemptId!==identity.attemptId||metadata.attempt!==identity.attempt||metadata.commandId!==identity.commandId||
+       metadata.capturedAt>Date.now())throw new PlatformError('CONFLICT','Selected backup does not belong to the exact positively stopped source generation');
+    const loaded=await import(pathToFileURL(join(this.root,'tools','runtime-recovery.mjs')).href) as any;
+    this.assertReady();
+    const verified=loaded.verifyBackupObject(join(this.root,'.local','platform-runtime-backups'),digest,identity,modules);
+    const entries=canonical([...verified.files.entries()].map(([path,bytes]:[string,Buffer])=>({path,digest:sha(bytes),sizeBytes:bytes.length})));
+    if(verified.manifestJson!==metadata.manifest||verified.manifest.identity.attemptId!==metadata.attemptId||verified.manifest.identity.attempt!==metadata.attempt||
+       verified.manifest.identity.commandId!==metadata.commandId||verified.manifest.identity.configDigest!==identity.configDigest||
+       verified.sizeBytes!==metadata.sizeBytes||verified.fileCount!==metadata.fileCount||entries!==metadata.entries)
+      throw new RuntimeRecoveryError('RUNTIME_BACKUP_INVALID','Source backup bytes do not match their complete registered identity');
+    return {metadata,manifest:verified.manifest,manifestJson:verified.manifestJson,files:verified.files,sizeBytes:verified.sizeBytes,fileCount:verified.fileCount};
+  }
+  async inspectUpgradePayload(physicalRoot:string,identity:Record<string,unknown>,enrollmentDigest:string,modules:Array<{id:string;schema:Record<string,unknown>}>,canonicalDataDirectory:string){
+    this.assertReady();
+    const loaded=await import(pathToFileURL(join(this.root,'tools','runtime-recovery.mjs')).href) as any;
+    this.assertReady();
+    return loaded.inspectRuntimeDataDirectory(physicalRoot,identity,enrollmentDigest,modules,canonicalDataDirectory);
+  }
   list(instanceId:string){return {capability:this.capability(),instanceId,backups:this.store.runtimeRecoveryBackups(instanceId),operations:this.store.runtimeRecoveryOperations(instanceId)};}
   operation(operationId:string){return this.store.runtimeRecoveryOperation(operationId);}
   private assertReady(expected=this.native){if(this.closing)throw new RuntimeRecoveryError('RUNTIME_UNAVAILABLE','Private runtime recovery is closing');if(!this.native)throw new RuntimeRecoveryError('RUNTIME_UNAVAILABLE',this.hostError??'The selected local recovery host is unavailable');

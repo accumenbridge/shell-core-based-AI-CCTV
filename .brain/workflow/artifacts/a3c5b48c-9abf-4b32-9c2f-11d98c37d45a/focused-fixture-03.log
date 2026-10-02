@@ -1,0 +1,430 @@
+TAP version 13
+# Subtest: paired console starts with no private build-host profile and reports build requests unavailable
+ok 1 - paired console starts with no private build-host profile and reports build requests unavailable
+  ---
+  duration_ms: 720.9469
+  type: 'test'
+  ...
+# Subtest: reviewed mobile build inputs are copied and contribute to the source fingerprint
+ok 2 - reviewed mobile build inputs are copied and contribute to the source fingerprint
+  ---
+  duration_ms: 571.9986
+  type: 'test'
+  ...
+# Subtest: unknown siblings beside the exact mobile build inputs remain rejected
+ok 3 - unknown siblings beside the exact mobile build inputs remain rejected
+  ---
+  duration_ms: 1459.1861
+  type: 'test'
+  ...
+# Subtest: private toolchain copy matches its digest and a test-owned native binary drift changes it
+ok 4 - private toolchain copy matches its digest and a test-owned native binary drift changes it
+  ---
+  duration_ms: 2682.2255
+  type: 'test'
+  ...
+# Subtest: private toolchain rejects native package version mismatch and binary override
+ok 5 - private toolchain rejects native package version mismatch and binary override
+  ---
+  duration_ms: 881.0425
+  type: 'test'
+  ...
+# Subtest: public health and static entry are narrow while state and audit require pairing and exact Host
+ok 6 - public health and static entry are narrow while state and audit require pairing and exact Host
+  ---
+  duration_ms: 87.6804
+  type: 'test'
+  ...
+# Subtest: pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+ok 7 - pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+  ---
+  duration_ms: 52.0048
+  type: 'test'
+  ...
+# Subtest: paired family derivation is source-authoritative and immutable provenance follows only the exact saved version
+ok 8 - paired family derivation is source-authoritative and immutable provenance follows only the exact saved version
+  ---
+  duration_ms: 190.5325
+  type: 'test'
+  ...
+# Subtest: managed runtime API exposes fixed authenticated routes and exact confirmed request envelopes
+ok 9 - managed runtime API exposes fixed authenticated routes and exact confirmed request envelopes
+  ---
+  duration_ms: 46.1086
+  type: 'test'
+  ...
+# Subtest: private recovery routes require confirmation and never expose operation ownership secrets
+ok 10 - private recovery routes require confirmation and never expose operation ownership secrets
+  ---
+  duration_ms: 41.3514
+  type: 'test'
+  ...
+# Subtest: managed runtime HTTP errors use fixed non-path messages
+ok 11 - managed runtime HTTP errors use fixed non-path messages
+  ---
+  duration_ms: 37.5035
+  type: 'test'
+  ...
+# Subtest: pairing attempts are bounded and expire their rate window
+ok 12 - pairing attempts are bounded and expire their rate window
+  ---
+  duration_ms: 41.4626
+  type: 'test'
+  ...
+# Subtest: authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+ok 13 - authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+  ---
+  duration_ms: 44.3789
+  type: 'test'
+  ...
+# Subtest: AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+ok 14 - AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+  ---
+  duration_ms: 42.7688
+  type: 'test'
+  ...
+# Subtest: build requests fail closed without an executor and deployment requests enforce immutable references
+ok 15 - build requests fail closed without an executor and deployment requests enforce immutable references
+  ---
+  duration_ms: 49.8928
+  type: 'test'
+  ...
+# Subtest: overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+ok 16 - overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+  ---
+  duration_ms: 68.7416
+  type: 'test'
+  ...
+# Subtest: a body is rejected if its exact authenticated session expires while the stream is pending
+ok 17 - a body is rejected if its exact authenticated session expires while the stream is pending
+  ---
+  duration_ms: 36.4015
+  type: 'test'
+  ...
+# Subtest: a body is rejected if that session logs out before streaming completes
+ok 18 - a body is rejected if that session logs out before streaming completes
+  ---
+  duration_ms: 37.2455
+  type: 'test'
+  ...
+# Subtest: canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+ok 19 - canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+  ---
+  duration_ms: 156.9288
+  type: 'test'
+  ...
+# Subtest: complete ProductDefinition keeps custom reviewed bindings through exact read-only preview, immutable save and build
+ok 20 - complete ProductDefinition keeps custom reviewed bindings through exact read-only preview, immutable save and build
+  ---
+  duration_ms: 175.7421
+  type: 'test'
+  ...
+# Subtest: logout during awaited worker admission rejects the original request before queue mutation
+ok 21 - logout during awaited worker admission rejects the original request before queue mutation
+  ---
+  duration_ms: 37.8763
+  type: 'test'
+  ...
+# Subtest: logout during awaited result inspection returns 401 and accepted work remains independent of the session
+ok 22 - logout during awaited result inspection returns 401 and accepted work remains independent of the session
+  ---
+  duration_ms: 39.1918
+  type: 'test'
+  ...
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 23 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 5.158
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 24 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 23.3547
+  type: 'test'
+  ...
+# Subtest: family provenance is atomic, exact-version and immutable with the product version
+ok 25 - family provenance is atomic, exact-version and immutable with the product version
+  ---
+  duration_ms: 3.0022
+  type: 'test'
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 26 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 30.7199
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 27 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 3.5012
+  type: 'test'
+  ...
+# Subtest: schema 3 artifact publication facts are added without changing older operation values
+ok 28 - schema 3 artifact publication facts are added without changing older operation values
+  ---
+  duration_ms: 20.0733
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 29 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 2.1884
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 30 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 2.1352
+  type: 'test'
+  ...
+# Subtest: exported neutral product starts with all domain directories physically absent
+ok 31 - exported neutral product starts with all domain directories physically absent
+  ---
+  duration_ms: 642.0405
+  type: 'test'
+  ...
+# Subtest: exported Service Desk has no knowledge or handoff package and persists a real record
+ok 32 - exported Service Desk has no knowledge or handoff package and persists a real record
+  ---
+  duration_ms: 832.6582
+  type: 'test'
+  ...
+# Subtest: factory export includes the selected Knowledge package closure and actual ai-core dependency
+ok 33 - factory export includes the selected Knowledge package closure and actual ai-core dependency
+  ---
+  duration_ms: 348.6646
+  type: 'test'
+  ...
+# Subtest: independent Knowledge and Combined exports invoke real operations without source or compiler trees
+ok 34 - independent Knowledge and Combined exports invoke real operations without source or compiler trees
+  ---
+  duration_ms: 1428.9063
+  type: 'test'
+  ...
+# Subtest: factory refuses collisions and path traversal
+ok 35 - factory refuses collisions and path traversal
+  ---
+  duration_ms: 554.1451
+  type: 'test'
+  ...
+# Subtest: generated full-stack module builds and runs without editing maintained shell source
+ok 36 - generated full-stack module builds and runs without editing maintained shell source
+  ---
+  duration_ms: 4877.9669
+  type: 'test'
+  ...
+# Subtest: real separate worker process completes a preexisting durable job
+ok 37 - real separate worker process completes a preexisting durable job
+  ---
+  duration_ms: 531.4145
+  type: 'test'
+  ...
+# Subtest: source-only provider omission is not mistaken for runtime completion
+ok 38 - source-only provider omission is not mistaken for runtime completion
+  ---
+  duration_ms: 50.8177
+  type: 'test'
+  ...
+# Subtest: React bridge cleanup is idempotent (port contract, not a React runtime test)
+ok 39 - React bridge cleanup is idempotent (port contract, not a React runtime test)
+  ---
+  duration_ms: 0.4337
+  type: 'test'
+  ...
+# Subtest: React bridge does not create a root after scope cancellation
+ok 40 - React bridge does not create a root after scope cancellation
+  ---
+  duration_ms: 0.0937
+  type: 'test'
+  ...
+# Subtest: generic framework packages import no reference-domain packages
+ok 41 - generic framework packages import no reference-domain packages
+  ---
+  duration_ms: 5.3033
+  type: 'test'
+  ...
+# Subtest: provider failure closes the started modules in reverse dependency order
+ok 42 - provider failure closes the started modules in reverse dependency order
+  ---
+  duration_ms: 0.3747
+  type: 'test'
+  ...
+# Subtest: schema 5 adds recovery owners and admission mutually fences the stopped runtime
+ok 43 - schema 5 adds recovery owners and admission mutually fences the stopped runtime
+  ---
+  duration_ms: 9.8433
+  type: 'test'
+  ...
+# Subtest: recovery accepts a positively settled required-role exit without inventing a STOP and clean pre-dispatch settlement preserves native facts
+ok 44 - recovery accepts a positively settled required-role exit without inventing a STOP and clean pre-dispatch settlement preserves native facts
+  ---
+  duration_ms: 4.2031
+  type: 'test'
+  ...
+# Subtest: schema 4 migration preserves existing runtime and recovery slots become conservative empties
+ok 45 - schema 4 migration preserves existing runtime and recovery slots become conservative empties
+  ---
+  duration_ms: 28.1225
+  type: 'test'
+  ...
+# Subtest: managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+ok 46 - managed runtime schema 4 reserves one exact promoted instance and gates RUNNING/STOPPED on lifecycle facts
+  ---
+  duration_ms: 24.8846
+  type: 'test'
+  ...
+# Subtest: managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+ok 47 - managed runtime admission and stop settlement roll back completely on denied or thenable authorization and audit faults
+  ---
+  duration_ms: 4.6395
+  type: 'test'
+  ...
+# Subtest: schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+ok 48 - schema 4 refuses startup claims without exact promotion and preserves an occupied slot after uncertain process proof
+  ---
+  duration_ms: 2.9637
+  type: 'test'
+  ...
+# Subtest: undispatched cleanup uncertainty cannot use JOB_EXIT and shutdown during STARTING fails the pending start
+ok 49 - undispatched cleanup uncertainty cannot use JOB_EXIT and shutdown during STARTING fails the pending start
+  ---
+  duration_ms: 5.4389
+  type: 'test'
+  ...
+# Subtest: schema 4 additive dispatch migration treats legacy mutable uncertainty labels conservatively
+ok 50 - schema 4 additive dispatch migration treats legacy mutable uncertainty labels conservatively
+  ---
+  duration_ms: 22.6501
+  type: 'test'
+  ...
+# Subtest: schema 5 backfills immutable runtime generations and backup lineage without relabeling the stopped command
+ok 51 - schema 5 backfills immutable runtime generations and backup lineage without relabeling the stopped command
+  ---
+  duration_ms: 30.616
+  type: 'test'
+  ...
+# Subtest: a confirmed upgrade cuts over only after exact native and publication facts and replays its original identity
+ok 52 - a confirmed upgrade cuts over only after exact native and publication facts and replays its original identity
+  ---
+  duration_ms: 6.7327
+  type: 'test'
+  ...
+# Subtest: recovery and upgrade exports pin the exact maintained native helpers
+ok 53 - recovery and upgrade exports pin the exact maintained native helpers
+  ---
+  duration_ms: 3.5546
+  type: 'test'
+  ...
+# Subtest: the upgrade manager keeps read-only history attached when the selected native host is unavailable
+ok 54 - the upgrade manager keeps read-only history attached when the selected native host is unavailable
+  ---
+  duration_ms: 1.7756
+  type: 'test'
+  ...
+# Subtest: plural generation-upgrade routes require pairing and explicit exact-input confirmation
+ok 55 - plural generation-upgrade routes require pairing and explicit exact-input confirmation
+  ---
+  duration_ms: 76.315
+  type: 'test'
+  ...
+# Subtest: runtime overview consumes the public promoted-release array and offers the exact release
+ok 56 - runtime overview consumes the public promoted-release array and offers the exact release
+  ---
+  duration_ms: 7.8129
+  type: 'test'
+  ...
+# Subtest: runtime UI reports UNKNOWN stop facts and reuses the same request key after an ambiguous start error
+ok 57 - runtime UI reports UNKNOWN stop facts and reuses the same request key after an ambiguous start error
+  ---
+  duration_ms: 4.1893
+  type: 'test'
+  ...
+# Subtest: runtime action success messages require proof in the exact current-attempt DTO
+ok 58 - runtime action success messages require proof in the exact current-attempt DTO
+  ---
+  duration_ms: 3.7233
+  type: 'test'
+  ...
+# Subtest: runtime overview and detail responses cannot restore stale routes, attempts, or application addresses
+ok 59 - runtime overview and detail responses cannot restore stale routes, attempts, or application addresses
+  ---
+  duration_ms: 2.7938
+  type: 'test'
+  ...
+# Subtest: a stale runtime overview failure cannot replace a newer successful refresh
+ok 60 - a stale runtime overview failure cannot replace a newer successful refresh
+  ---
+  duration_ms: 1.9056
+  type: 'test'
+  ...
+# Subtest: runtime confirmations survive same-attempt polling and are scoped away from a successor attempt
+ok 61 - runtime confirmations survive same-attempt polling and are scoped away from a successor attempt
+  ---
+  duration_ms: 1.7035
+  type: 'test'
+  ...
+# Subtest: recovery controls require positive stop proof, verify opaque backups, and confirm backup and absent-root restore
+ok 62 - recovery controls require positive stop proof, verify opaque backups, and confirm backup and absent-root restore
+  ---
+  duration_ms: 14.771
+  type: 'test'
+  ...
+# Subtest: recovery controls stay hidden when a stopped runtime lacks current positive cleanup facts
+ok 63 - recovery controls stay hidden when a stopped runtime lacks current positive cleanup facts
+  ---
+  duration_ms: 1.627
+  type: 'test'
+  ...
+# Subtest: upgrade UI requires the exact stopped generation, verified backup, target confirmation, then explicit target restart
+ok 64 - upgrade UI requires the exact stopped generation, verified backup, target confirmation, then explicit target restart
+  ---
+  duration_ms: 3.9699
+  type: 'test'
+  ...
+# Subtest: reviewed UI slots resolve actual module ownership for desk.requests
+ok 65 - reviewed UI slots resolve actual module ownership for desk.requests
+  ---
+  duration_ms: 8.0599
+  type: 'test'
+  ...
+# Subtest: optional UI slots explain omission from source workspace ownership and contribution owner
+ok 66 - optional UI slots explain omission from source workspace ownership and contribution owner
+  ---
+  duration_ms: 0.1508
+  type: 'test'
+  ...
+# Subtest: a selected owner must carry the same source-declared contribution
+ok 67 - a selected owner must carry the same source-declared contribution
+  ---
+  duration_ms: 0.3143
+  type: 'test'
+  ...
+# Subtest: the reviewed source closure admits the exact solution UI mapping leaf
+ok 68 - the reviewed source closure admits the exact solution UI mapping leaf
+  ---
+  duration_ms: 10.5802
+  type: 'test'
+  ...
+# Subtest: the reviewed UI mapping is copied byte-for-byte and contributes to the source fingerprint
+ok 69 - the reviewed UI mapping is copied byte-for-byte and contributes to the source fingerprint
+  ---
+  duration_ms: 520.0965
+  type: 'test'
+  ...
+# Subtest: current source import preserves the captured old product identity and is idempotent
+ok 70 - current source import preserves the captured old product identity and is idempotent
+  ---
+  duration_ms: 29.8094
+  type: 'test'
+  ...
+1..70
+# tests 70
+# suites 0
+# pass 70
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18700.2618

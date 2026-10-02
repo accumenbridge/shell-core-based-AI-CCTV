@@ -191,7 +191,7 @@ test('schema 4 refuses startup claims without exact promotion and preserves an o
     assert.equal(runtime.state, 'UNKNOWN');
     assert.equal(runtime.attempts[0].errorMessage, 'Runtime state is uncertain; native process-tree proof is required');
     assert.equal(store.managedRuntimeSlot().occupied, true);
-    assert.equal(store.db.prepare('PRAGMA user_version').get().user_version, 5);
+    assert.equal(store.db.prepare('PRAGMA user_version').get().user_version, 6);
   } finally { store.close(); }
 });
 

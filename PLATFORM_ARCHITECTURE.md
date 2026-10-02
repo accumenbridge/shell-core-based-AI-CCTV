@@ -169,6 +169,18 @@ absent data root; it preserves existing principal and grant state without reseed
 the restored runtime explicitly. This local recovery path does not provide remote retention, cross-artifact
 migration or production disaster recovery.
 
+The paired Runtime view also supports a single explicit retained-data upgrade to a newer promoted release
+when its resolved profile, selected owners, bindings and permissions remain compatible. Admission binds
+the positively stopped source generation and its verified backup to the exact target artifact. A fixed
+initialization-only target run performs only reviewed owner initialization/migrations in a separately
+derived generation directory; it does not run startup hooks, workers or business requests. The system
+verifies the resulting enrollment and owner inventory before no-replace publication and a final
+original-session cutover. Cutover produces `UPGRADE_READY`: the target is not running and has no invented
+readiness or address. Starting it requires the existing separately confirmed Restart action. Old
+generations and backups remain retained. Missing physical proof retains the operation and its reservation
+as unknown. This is a bounded local same-instance evolution path, not automatic rollout, rollback,
+cross-artifact adoption, or a general migration framework. See [the operator sequence](docs/SAFE_PRODUCT_UPGRADE.md).
+
 ## Bounded Knowledge answers
 
 Knowledge owns tenant filtering, indexed-record selection, excerpt ranges, body digests and citation validation. Its answer route retrieves only `READY` indexed rows, then supplies at most five frozen excerpts totaling 16 KiB to a neutral ai-core provider interface. The current provider deterministically selects source excerpts; Knowledge rereads and verifies each source after the await and constructs the cited output. The user sees **Local extractive answer** and indexed-only coverage, never a model-inference claim. Handoff continues to consume only `knowledge.document.read.v1`.

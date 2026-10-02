@@ -53,14 +53,14 @@ class FakeApp {
 }
 
 async function uiHarness(t, { initial = runtimeInstance(), runtimeReads = [], detailReads = [], startReplies = [], stopReply,
-  recoveryList, backupReply, verifyReply, restoreReply } = {}) {
+  recoveryList, backupReply, verifyReply, restoreReply, upgradeList, upgradeReply, upgradeReleases, restartReply, onUpgrade, onRestart } = {}) {
   const source = (await readFile(mainPath, 'utf8')).replace(/^export \{\};?\s*$/m,'').replace(/^\/\/# sourceMappingURL=.*$/m,'')+
     '\nglobalThis.__runtimeUiDebug=()=>({route,connected,navigationGeneration,runtimeOverviewSequence,runtimeOverview,runtimeLoadError,actionError});';
   const app = new FakeApp();
   const documentListeners = new Map(), windowListeners = new Map(), calls = [];
   let timerCallback;
   const runtime = { capability:{status:'ready',profile:'local',details:'Local managed runtime'},slot:{state:'EMPTY',instanceId:null,reservedBytes:0},instances:[initial] };
-  const releases = [{productId:'service-desk',version:'1.0.0',artifactDigest:initial.artifactDigest}];
+  const releases = upgradeReleases ?? [{productId:'service-desk',version:'1.0.0',artifactDigest:initial.artifactDigest}];
   const overview = { platform:{version:'0.3',mode:'local'},modules:[],products:[],productVersions:[],coverage:[],builds:[],environments:[],deployments:[],aiPipelines:[],audit:[],capabilities:[] };
   const runtimeQueue=[...runtimeReads];
   let detailIndex = 0, runtimeIndex = 0, startIndex = 0;
@@ -81,11 +81,13 @@ async function uiHarness(t, { initial = runtimeInstance(), runtimeReads = [], de
       return next ? response(next) : response({command:{state:'SUCCEEDED'},instance:runtimeInstance({state:'RUNNING'})});
     }
     if (path.endsWith('/stop') && options.method === 'POST') return response(stopReply ?? {command:{state:'UNKNOWN'},instance:runtimeInstance({state:'UNKNOWN',processObservation:'not-observed-in-this-process'})});
-    if (path.endsWith('/restart') && options.method === 'POST') return response({command:{state:'SUCCEEDED'},instance:runtimeInstance({currentAttempt:2})});
+    if (path.endsWith('/restart') && options.method === 'POST') { onRestart?.(options.body?JSON.parse(options.body):undefined,runtime);return response(restartReply ?? {command:{state:'SUCCEEDED'},instance:runtimeInstance({currentAttempt:2})}); }
     if (path.endsWith('/backups') && options.method === 'GET') return response(recoveryList ?? {capability:{status:'ready',detail:'Private local recovery is ready'},instanceId:initial.id,backups:[],operations:[]});
     if (path.endsWith('/backups') && options.method === 'POST') return response(backupReply ?? {id:'recovery-op-1',kind:'BACKUP',state:'SUCCEEDED',physicalState:'CLEAN',errorCode:null});
     if (path.startsWith('/platform-api/runtime-backups/')) return response(verifyReply ?? {digest:'b'.repeat(64),instanceId:initial.id,sizeBytes:1234,fileCount:4,capturedAt:1700000000000,verified:true});
     if (path.endsWith('/restore') && options.method === 'POST') return response(restoreReply ?? {id:'recovery-op-2',kind:'RESTORE',state:'SUCCEEDED',physicalState:'CLEAN',errorCode:null});
+    if (/^\/platform-api\/runtime-instances\/[^/]+\/upgrades$/.test(path) && options.method !== 'POST') return response(upgradeList ?? {instanceId:initial.id,generations:[],operations:[]});
+    if (path.endsWith('/upgrades') && options.method === 'POST') { onUpgrade?.(options.body?JSON.parse(options.body):undefined,runtime,upgradeList);return response(upgradeReply ?? {id:'upgrade-op-1',state:'SUCCEEDED',physicalState:'CLEAN'}); }
     if (path.startsWith('/platform-api/runtime-instances/')) {
       const next = detailReads[detailIndex++];
       return next ? await next.promise : response(runtimeInstance({events:'current events'}));
@@ -101,12 +103,12 @@ async function uiHarness(t, { initial = runtimeInstance(), runtimeReads = [], de
   new vm.Script(source,{filename:'studio-main.js'}).runInContext(context);
   await until(()=>app.innerHTML.includes('Managed local runtime'),'initial runtime dashboard');
   t.after(()=>{ if(timerCallback) timerCallback=undefined; });
-  const dispatch = (selector, dataset = {}, checked = true) => {
+  const dispatch = (selector, dataset = {}, checked = true, values = {}) => {
     const element = {
       dataset,
       closest(name) {
         if (name === selector) return this;
-        if (name === 'article') return {querySelector:() => ({checked})};
+        if (name === 'article') return {querySelector:query=>query.includes('confirm')?{checked}:{value:values.target??''}};
         return null;
       }
     };
@@ -302,4 +304,70 @@ test('recovery controls stay hidden when a stopped runtime lacks current positiv
   await ui.until(()=>ui.app.innerHTML.includes('current events'),'positive detail loaded behind contradictory summary');
   assert.doesNotMatch(ui.app.innerHTML,/Private local recovery|Load backups|Create backup/);
   assert.match(ui.app.innerHTML,/Restart exact runtime/);
+});
+
+test('upgrade UI requires the exact stopped generation, verified backup, target confirmation, then explicit target restart', async t=>{
+  const id='runtime-123e4567-e89b-42d3-a456-426614174000',sourceGenerationId=`generation:${id}:1`,targetGenerationId=`generation:${id}:2`;
+  const sourceDigest='a'.repeat(64),backupDigest='b'.repeat(64),targetDigest='c'.repeat(64),sourceAttemptId='123e4567-e89b-42d3-a456-000000000001';
+  const initial=runtimeInstance({id,productId:'combined',version:'0.2.3',artifactDigest:sourceDigest,state:'STOPPED',processObservation:'positively-stopped',
+    activeGenerationId:sourceGenerationId,attempts:[{id:sourceAttemptId,attempt:1,state:'STOPPED',physicalState:'EMPTY',emptyObserved:true,helperClosed:true,executionClean:true,
+      generation:{generationId:sourceGenerationId,generation:1,productId:'combined',version:'0.2.3',artifactDigest:sourceDigest}}]});
+  const initialSummary={...initial};delete initialSummary.activeGenerationId;delete initialSummary.attempts;
+  const history={instanceId:id,generations:[{id:sourceGenerationId,instanceId:id,generation:1,productId:'combined',version:'0.2.3',artifactDigest:sourceDigest,
+    profileDigest:'1'.repeat(64),configDigest:'2'.repeat(64),adapterDigest:'3'.repeat(64),toolchainDigest:'4'.repeat(64),recipeDigest:'5'.repeat(64),originatingActorId:'operator-source',created:1}],operations:[]};
+  const targetRelease={productId:'combined',version:'0.2.4',artifactDigest:targetDigest};
+  const targetReady={...initial,version:targetRelease.version,artifactDigest:targetDigest,state:'UPGRADE_READY',processObservation:'not-observed-in-this-process',activeGenerationId:targetGenerationId};
+  const targetSummary={...targetReady};delete targetSummary.activeGenerationId;delete targetSummary.attempts;
+  const restartOperationId='123e4567-e89b-42d3-a456-000000000002';
+  const runningTarget={...targetReady,state:'RUNNING',processObservation:'owned-in-this-process',currentAttempt:2,url:'http://127.0.0.1:43210',
+    attempts:[{id:restartOperationId,attempt:2,state:'RUNNING',apiReady:true,workerAttached:true}]};
+  const runningSummary={...runningTarget};delete runningSummary.activeGenerationId;delete runningSummary.attempts;
+  const sourceDetail=deferred(),targetDetail=deferred();
+  const ui=await uiHarness(t,{initial:initialSummary,detailReads:[sourceDetail,targetDetail],upgradeList:history,upgradeReleases:[{productId:'combined',version:'0.2.3',artifactDigest:sourceDigest},targetRelease],
+    recoveryList:{capability:{status:'ready',detail:'Private recovery is ready'},instanceId:id,backups:[{digest:backupDigest,instanceId:id,generationId:sourceGenerationId,
+      attemptId:sourceAttemptId,attempt:1,productId:'combined',version:'0.2.3',artifactDigest:sourceDigest,capturedAt:1700000000000,sizeBytes:2048,fileCount:6}],operations:[]},
+    verifyReply:{digest:backupDigest,instanceId:id,sizeBytes:2048,fileCount:6,capturedAt:1700000000000,verified:true},
+    upgradeReply:{id:'upgrade-op-1',instanceId:id,sourceGenerationId,targetGenerationId,state:'SUCCEEDED',physicalState:'CLEAN',destinationPublished:true,destinationVerified:true,
+      driverEmpty:true,driverClosed:true,publisherResultObserved:true,publisherClosed:true,stagingClean:true},
+    onUpgrade:(_body,runtimeState)=>{runtimeState.instances=[targetSummary];history.generations.push({...history.generations[0],id:targetGenerationId,generation:2,version:'0.2.4',artifactDigest:targetDigest,
+      originatingActorId:'operator-target',sourceGenerationId,upgradeOperationId:'upgrade-op-1',created:2});history.operations.push({id:'upgrade-op-1',instanceId:id,
+      sourceGenerationId,targetGenerationId,sourceAttemptId,sourceAttempt:1,sourceCommandId:'source-command',targetVersion:'0.2.4',targetArtifactDigest:targetDigest,
+      sourceBackupDigest:backupDigest,state:'SUCCEEDED',physicalState:'CLEAN',driverEmpty:true,driverClosed:true,stagingClean:true,publisherResultObserved:true,
+      publisherClosed:true,destinationPublished:true,destinationVerified:true,created:2,updated:3});},
+    restartReply:{operationId:restartOperationId,command:{state:'SUCCEEDED'},instance:runningTarget},onRestart:(_body,runtimeState)=>{runtimeState.instances=[runningSummary];}});
+  await ui.until(()=>ui.app.innerHTML.includes('Immutable generations'),'generation history loaded');
+  ui.dispatch('[data-runtime-detail]',{runtimeDetail:id});
+  await ui.until(()=>ui.calls.some(call=>call.path===`/platform-api/runtime-instances/${id}`),'inspect source generation detail');
+  sourceDetail.resolve(response({...initial,events:'source generation detail'}));
+  await ui.until(()=>ui.app.innerHTML.includes('source generation detail')&&ui.app.innerHTML.includes(`generation ${sourceGenerationId}`),'matched detail proves source generation');
+  ui.dispatch('[data-runtime-backups-load]',{runtimeBackupsLoad:id});
+  await ui.until(()=>ui.calls.some(call=>call.path===`/platform-api/runtime-instances/${id}/backups`&&call.options.method==='GET'),'source-generation backups loaded');
+  await ui.until(()=>ui.app.innerHTML.includes('Backup from attempt 1')&&ui.app.innerHTML.includes(backupDigest),'source backup response rendered');
+  ui.dispatch('[data-runtime-backup-verify]',{runtimeBackupVerify:backupDigest,runtimeInstance:id});
+  await ui.until(()=>ui.calls.some(call=>call.path===`/platform-api/runtime-backups/${backupDigest}`),'source backup verification requested');
+  await ui.until(()=>ui.app.innerHTML.includes('data-runtime-upgrade="'),'verified backup upgrade controls');
+  assert.match(ui.app.innerHTML,/generation:runtime-123e4567-e89b-42d3-a456-426614174000:1/);
+  assert.match(ui.app.innerHTML,/Upgrade this stopped generation 1/);
+  const targetValue=`${targetRelease.version}|${targetRelease.artifactDigest}`;
+  ui.dispatch('[data-runtime-upgrade]',{runtimeUpgrade:id,backupDigest},false,{target:targetValue});
+  assert.equal(ui.calls.filter(call=>call.path.endsWith('/upgrades')&&call.options.method==='POST').length,0,'upgrade is denied until the exact source, verified backup and target are confirmed');
+  ui.dispatch('[data-runtime-upgrade]',{runtimeUpgrade:id,backupDigest},true,{target:targetValue});
+  await ui.until(()=>ui.calls.some(call=>call.path.endsWith('/upgrades')&&call.options.method==='POST'),'confirmed exact-generation upgrade');
+  const upgrade=ui.calls.find(call=>call.path.endsWith('/upgrades')&&call.options.method==='POST');
+  assert.deepEqual(upgrade.body,{confirm:true,targetVersion:'0.2.4',targetArtifactDigest:targetDigest,sourceBackupDigest:backupDigest,requestKey:upgrade.body.requestKey});
+  assert.match(upgrade.body.requestKey,/^runtime:/);
+  await ui.until(()=>ui.app.innerHTML.includes('UPGRADE_READY'),'target cutover summary');
+  ui.dispatch('[data-runtime-detail]',{runtimeDetail:id});
+  await ui.until(()=>ui.calls.filter(call=>call.path===`/platform-api/runtime-instances/${id}`).length===2,'inspect target generation detail');
+  targetDetail.resolve(response({...targetReady,events:'target generation detail'}));
+  await ui.until(()=>ui.app.innerHTML.includes('target generation detail')&&ui.app.innerHTML.includes('Start upgraded generation'),'matched target detail proves restart eligibility');
+  assert.match(ui.app.innerHTML,/target generation is verified and cut over, but has not been started/);
+  assert.doesNotMatch(ui.app.innerHTML,/Open local application/,'upgrade cutover does not invent target readiness or a URL');
+  ui.dispatch('[data-runtime-restart]',{runtimeRestart:id,attempt:'1',artifactDigest:targetDigest},false);
+  assert.equal(ui.calls.filter(call=>call.path.endsWith('/restart')&&call.options.method==='POST').length,0,'target start remains a separate explicit action');
+  ui.dispatch('[data-runtime-restart]',{runtimeRestart:id,attempt:'1',artifactDigest:targetDigest},true);
+  await ui.until(()=>ui.calls.some(call=>call.path.endsWith('/restart')&&call.options.method==='POST'),'explicit target restart');
+  assert.equal(ui.calls.find(call=>call.path.endsWith('/restart')&&call.options.method==='POST').body.confirm,true);
+  await ui.until(()=>ui.app.innerHTML.includes('combined@0.2.4')&&ui.app.innerHTML.includes('RUNNING'),'target runtime state after restart');
+  assert.doesNotMatch(ui.app.innerHTML,/ownerToken|ownerId|requestKey|dataDirectory|executionPath|credentials\.json/i);
 });

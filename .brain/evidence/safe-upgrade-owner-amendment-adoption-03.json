@@ -1,0 +1,36 @@
+{
+  "recordedAt": "2026-10-02T17:43:22.439Z",
+  "coordinator": "/root",
+  "priorCheckpoint": {
+    "schema": "brain.current-pointer.v1",
+    "revision": 102,
+    "eventId": "8d32a81f-cefe-4745-8985-625cfd21908e",
+    "eventSha256": "1abc8c45dbd48bc3d674dbe2baebb7227933d982e3486cfb6399eecee88906fe"
+  },
+  "oldEditOwnerCount": 33,
+  "newEditOwnerCount": 34,
+  "candidateFileCount": 251,
+  "addedExistingOwner": {
+    "path": "tests/ui-contributions.test.mjs",
+    "baselineSha256": "8e1b91847cf33cec6c92d7e61d2818c63d1a8032615c6e4174177e1ad0186555"
+  },
+  "supplement": {
+    "path": ".brain/evidence/safe-upgrade-owner-supplement-03.md",
+    "sha256": "cdd3fa038feea86afcb990588fdffccce79c2a806c8a507bb76f00958e9a2dd6"
+  },
+  "beforeContractDigest": "08973cea26965791cdb34a4aa9df4a39834303d758489b8c2aaa3111149f6ab5",
+  "afterContractDigest": "3dcb39e18df060243ec6b10af6bd27289e30a796c1a82c5d98ecf3b074606716",
+  "beforeTaskDigest": "f9dffa528179979920dcb5e26213d9f3efd37cb1b8ef4174549c3c4b97640dc4",
+  "afterTaskDigest": "759870b030af9f2bf5b946bd6d5ec74e20e45e59ac15e6724e388a44653650dc",
+  "focusedRecipeId": "safe-upgrade-focused",
+  "updatedAtlasTaskRefs": [
+    {
+      "id": "safe-upgrade-task",
+      "before": "f9dffa528179979920dcb5e26213d9f3efd37cb1b8ef4174549c3c4b97640dc4",
+      "after": "759870b030af9f2bf5b946bd6d5ec74e20e45e59ac15e6724e388a44653650dc",
+      "reason": "Actual approved finite existing test-owner amendment; core outcome/acceptance unchanged."
+    }
+  ],
+  "planRevision": 49,
+  "scope": "Routine same-core release assertion amendment before writer edit and any upgrade qualification; no delivery acceptance or retrospective rewriting."
+}

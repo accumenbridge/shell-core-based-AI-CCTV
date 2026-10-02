@@ -1,0 +1,37 @@
+{
+  "phaseId": "7aeadc69-03f0-473d-b656-f987102353a4",
+  "fixtureId": "9d335a66-9702-4246-9362-d52371e0ea87",
+  "candidate": "0c47a3ca0b606db4f9fe24c0a781bc23697eec6e53b8a01670ffce7636ba9074",
+  "contractDigest": "3dcb39e18df060243ec6b10af6bd27289e30a796c1a82c5d98ecf3b074606716",
+  "targetFingerprint": "32465fe0c10b1a85cc62c4eb2892a565a615a724993b876679a35f68a522d4b7",
+  "startedAt": "2026-10-02T19:22:51.104Z",
+  "finishedAt": "2026-10-02T19:22:52.613Z",
+  "exitCode": 0,
+  "signal": null,
+  "helpers": [
+    {
+      "path": "tools/registry-publish.ps1",
+      "sha256": "21193a3fb4ac19b966bc797f980eddc800cf7673485060ab02a09caa9adf3bb9"
+    },
+    {
+      "path": "tools/runtime-supervisor.mjs",
+      "sha256": "e8bee18aed4399433f6a85cf653c78401f2b5cb8576aee8d8a9da61df33e9d52"
+    },
+    {
+      "path": "tools/runtime-recovery.mjs",
+      "sha256": "050cd8aaceee85709f9f8e0def5d5256ca00e94af70083aed820a29443f72be4"
+    },
+    {
+      "path": "tools/runtime-recovery-publish.ps1",
+      "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+    },
+    {
+      "path": "tools/runtime-upgrade.mjs",
+      "sha256": "216c516f525d95c6c17b5c77d7a6d7e578358c3e51fa329d5763fc120d709825"
+    },
+    {
+      "path": "tools/runtime-upgrade-publish.ps1",
+      "sha256": "edfc065d234885678d252e9bd13ebd2bef9814353335671fac662b243cddf57f"
+    }
+  ]
+}

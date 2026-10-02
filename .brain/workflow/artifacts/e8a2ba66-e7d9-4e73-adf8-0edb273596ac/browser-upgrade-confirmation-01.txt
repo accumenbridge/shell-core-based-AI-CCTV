@@ -1,0 +1,115 @@
+- complementary:
+  - text: Quadbridge Product Studio
+  - generic: Paired local operator
+  - navigation:
+    - button "Overview"
+    - button "Products"
+    - button "Modules"
+    - button "Ui"
+    - button "Backend"
+    - button "Ai"
+    - button "Data"
+    - button "Builds"
+    - button "Artifacts"
+    - button "Runtime Instances"
+    - button "Environments"
+    - button "Deployments"
+    - button "Audit"
+    - button "Operations"
+- main:
+  - generic: paired local control plane
+  - heading "Runtime Instances" [level=1]
+  - generic: Stored source records and validated local plans.
+  - generic: v0.3.0
+  - button "Disconnect"
+  - heading "Managed local runtime" [level=2]
+  - generic: local-only
+  - paragraph: Launch rechecks the pinned local process-owner profile; stored runtimes are never recovered by PID.
+  - paragraph: "Physical slot: EMPTY · 0 reserved bytes. UNKNOWN retains the slot and data until its original process owner proves an empty process tree."
+  - paragraph: A fixed local process starts only an exact promoted release. No hosted deployment or provider is attached.
+  - heading "Promoted releases" [level=2]
+  - paragraph: Choose the exact product version; start and restart require confirmation.
+  - article:
+    - heading "combined@0.2.3" [level=3]
+    - generic: Promoted local immutable release
+    - generic: promoted
+    - paragraph: 4f6c25437ddf99bddc6b9f036b4a12192be3ec9fb9c5e590415231ba7bb02cf4
+    - checkbox "Start this exact promoted local release on this machine."
+    - text: Start this exact promoted local release on this machine.
+    - button "Start local runtime"
+  - article:
+    - heading "combined@0.2.4" [level=3]
+    - generic: Promoted local immutable release
+    - generic: promoted
+    - paragraph: 460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59
+    - checkbox "Start this exact promoted local release on this machine."
+    - text: Start this exact promoted local release on this machine.
+    - button "Start local runtime"
+  - heading "Runtime instances" [level=2]
+  - article:
+    - heading "combined@0.2.3" [level=3]
+    - generic: runtime-c2582154-368c-40dd-8bc1-a6a2367e2716 · attempt 1 · generation generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:1
+    - generic: STOPPED
+    - paragraph: Artifact 4f6c25437ddf99bddc6b9f036b4a12192be3ec9fb9c5e590415231ba7bb02cf4
+    - paragraph: Separate worker required · positively-stopped
+    - button "Refresh events and address"
+    - checkbox "Restart this exact stopped instance and release."
+    - text: Restart this exact stopped instance and release.
+    - button "Restart exact runtime"
+    - generic: "{\"at\":1790958793917,\"role\":\"web-backend\",\"type\":\"ROLE_READY\"} {\"at\":1790958793946,\"type\":\"API_READY\"} {\"at\":1790958794072,\"role\":\"worker\",\"type\":\"ROLE_READY\"}"
+    - heading "Immutable generations" [level=4]
+    - list:
+      - listitem: Generation 1 · combined@0.2.3 · 4f6c25437ddf99bddc6b9f036b4a12192be3ec9fb9c5e590415231ba7bb02cf4 · current
+    - paragraph: No upgrade operations are recorded.
+    - heading "Private local recovery" [level=4]
+    - paragraph: Recovery is available only after the current attempt has positive stop and cleanup proof. Backups contain private runtime data and are not downloadable.
+    - button "Load backups"
+    - checkbox "Create a private backup of this exact stopped runtime."
+    - text: Create a private backup of this exact stopped runtime.
+    - button "Create backup"
+    - article:
+      - strong: Backup from attempt 1
+      - generic: c791038c7b7f1eadc5d92842ab72d280fbba20e1d86c904af2f13176340dffae
+      - generic: verified
+      - paragraph: Generation generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:1 · 10 files · 297466 bytes · 10/3/2026, 12:54:34 AM
+      - button "Verify again"
+      - checkbox "Restore these verified bytes into the absent runtime data location."
+      - text: Restore these verified bytes into the absent runtime data location.
+      - button "Restore this backup"
+      - text: Promoted target release
+      - combobox "Promoted target release":
+        - option "combined@0.2.4 · 460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59" [selected]
+      - checkbox "Upgrade this stopped generation 1 using verified backup c791038c7b7f1eadc5d92842ab72d280fbba20e1d86c904af2f13176340dffae to 0.2.4 (460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59)."
+      - text: Upgrade this stopped generation 1 using verified backup c791038c7b7f1eadc5d92842ab72d280fbba20e1d86c904af2f13176340dffae to 0.2.4 (460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59).
+      - button "Upgrade exact stopped generation"
+    - article:
+      - strong: Backup from attempt 1
+      - generic: 20407da414b73820f0793dd15098a266846d9df0efa0285bac3b4b5df67703e7
+      - generic: not verified
+      - paragraph: Generation generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:1 · 10 files · 297466 bytes · 10/2/2026, 10:11:42 PM
+      - button "Verify backup"
+    - heading "Recent recovery operations" [level=4]
+    - table:
+      - rowgroup:
+        - row "Kind State Physical state Destination Staging Issue":
+          - columnheader "Kind"
+          - columnheader "State"
+          - columnheader "Physical state"
+          - columnheader "Destination"
+          - columnheader "Staging"
+          - columnheader "Issue"
+      - rowgroup:
+        - row "BACKUP SUCCEEDED CLEAN verified clean —":
+          - cell "BACKUP"
+          - cell "SUCCEEDED"
+          - cell "CLEAN"
+          - cell "verified"
+          - cell "clean"
+          - cell "—"
+        - row "BACKUP SUCCEEDED CLEAN verified clean —":
+          - cell "BACKUP"
+          - cell "SUCCEEDED"
+          - cell "CLEAN"
+          - cell "verified"
+          - cell "clean"
+          - cell "—"

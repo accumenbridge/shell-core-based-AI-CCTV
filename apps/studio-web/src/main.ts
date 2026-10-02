@@ -12,11 +12,17 @@ type Overview = {
   audit: { id: number; action: string; subject: string; payload: string; at: number; actorId: string | null }[];
   capabilities: Capability[];
 };
-type ManagedRuntimeInstance={id:string;productId:string;version:string;artifactDigest:string;state:string;currentAttempt:number;workerRequired:boolean;
+type RuntimeGeneration={id:string;instanceId:string;generation:number;productId:string;version:string;artifactDigest:string;profileDigest:string;configDigest:string;
+  adapterDigest:string;toolchainDigest:string;recipeDigest:string;originatingActorId:string;sourceGenerationId?:string|null;upgradeOperationId?:string|null;created:number};
+type RuntimeUpgradeOperation={id:string;instanceId:string;sourceGenerationId:string;targetGenerationId?:string|null;sourceAttemptId:string;sourceAttempt:number;sourceCommandId:string;
+  targetVersion:string;targetArtifactDigest:string;sourceBackupDigest:string;state:string;physicalState:string;driverEmpty:boolean;driverClosed:boolean;stagingClean:boolean;
+  publisherResultObserved:boolean;publisherClosed:boolean;destinationPublished:boolean;destinationVerified:boolean;errorCode?:string|null;created:number;updated:number};
+type RuntimeUpgradeList={instanceId:string;generations:RuntimeGeneration[];operations:RuntimeUpgradeOperation[]};
+type ManagedRuntimeInstance={id:string;productId:string;version:string;artifactDigest:string;state:string;currentAttempt:number;activeGenerationId?:string;workerRequired:boolean;
   processObservation:string;url?:string;operationalError?:string;controlWarning?:string;events?:string;attempts?:{id:string;attempt:number;emptyObserved?:boolean;helperClosed?:boolean;executionClean?:boolean}[]};
 type RuntimeRelease={productId:string;version:string;artifactDigest:string;originatingActorId?:string};
 type RuntimeOverview={capability:{status:string;profile:string;details:string};slot:{state:string;instanceId:string|null;reservedBytes:number};instances:ManagedRuntimeInstance[]};
-type RuntimeBackup={digest:string;instanceId:string;attempt:number;productId:string;version:string;artifactDigest:string;capturedAt:number;sizeBytes:number;fileCount:number;creatingActorId?:string};
+type RuntimeBackup={digest:string;instanceId:string;generationId?:string;attemptId?:string;attempt:number;productId:string;version:string;artifactDigest:string;capturedAt:number;sizeBytes:number;fileCount:number;creatingActorId?:string};
 type RuntimeRecoveryOperation={id:string;kind:string;state:string;physicalState:string;created:number;errorCode?:string;backupDigest?:string;destinationVerified?:boolean;stagingClean?:boolean};
 type RuntimeRecoveryList={capability:{status:string;detail:string};instanceId:string;backups:RuntimeBackup[];operations:RuntimeRecoveryOperation[]};
 type RuntimeBackupVerification={digest:string;instanceId:string;sizeBytes:number;fileCount:number;capturedAt:number;verified:boolean};
@@ -69,6 +75,10 @@ const runtimeRequestKeys=new Map<string,string>();
 const runtimeRecoveryLists=new Map<string,RuntimeRecoveryList>();
 const runtimeRecoveryErrors=new Map<string,string>();
 const runtimeBackupVerifications=new Map<string,RuntimeBackupVerification>();
+const runtimeUpgradeLists=new Map<string,{identity:string;value:RuntimeUpgradeList}>();
+const runtimeUpgradeErrors=new Map<string,string>();
+const runtimeUpgradeRequests=new Set<string>();
+const runtimeUpgradeTargets=new Map<string,string>();
 let navigationGeneration=0,runtimeOverviewSequence=0,runtimeDetailSequence=0;
 
 function invalidateProductEditor(){productEditorGeneration++;productEditorRequestSequence++;productPreview=null;productPreviewGeneration=-1;productEditorDiagnostics=[];productEditorBusy=false;familyClaimIntent=null;familyClaimGeneration=-1;familyDerivation=null;savedFamilyDerivation=null;delete productEditorArrayDrafts.modules;delete productEditorArrayDrafts.bindings;}
@@ -103,7 +113,7 @@ function patchProductEditorArray(field:'modules'|'bindings',source:string,target
   catch(error){productEditorArrayDrafts[field]=source;productEditorDiagnostics=[error instanceof Error?error.message:`Invalid ${field} array.`];renderProductEditorKeeping(target);}
 }
 
-function clearRuntimeRecoveryState(){runtimeRecoveryLists.clear();runtimeRecoveryErrors.clear();runtimeBackupVerifications.clear();}
+function clearRuntimeRecoveryState(){runtimeRecoveryLists.clear();runtimeRecoveryErrors.clear();runtimeBackupVerifications.clear();runtimeUpgradeLists.clear();runtimeUpgradeErrors.clear();runtimeUpgradeRequests.clear();runtimeUpgradeTargets.clear();}
 function runtimeHasStoppedProof(instance:ManagedRuntimeInstance):boolean{
   if(instance.state!=='STOPPED'||instance.processObservation!=='positively-stopped')return false;
   let attempts=instance.attempts;
@@ -136,7 +146,33 @@ function runtimeResultMessage(action:'start'|'stop'|'restart',result:any):string
   return `${action[0]!.toUpperCase()}${action.slice(1)} result: command ${commandState}; runtime ${state}. Check the retained runtime facts before trying another action.`;
 }
 function runtimeDetailMatches(detail:ManagedRuntimeInstance| null,instance:any):boolean{
-  return Boolean(detail&&detail.id===instance?.id&&detail.currentAttempt===instance?.currentAttempt&&detail.artifactDigest===instance?.artifactDigest);
+  return Boolean(detail&&detail.id===instance?.id&&detail.currentAttempt===instance?.currentAttempt&&detail.artifactDigest===instance?.artifactDigest&&
+    detail.version===instance?.version&&detail.state===instance?.state);
+}
+function runtimeEvidenceInstance(instance:ManagedRuntimeInstance):ManagedRuntimeInstance{
+  const detail=runtimeDetailMatches(selectedRuntime,instance)?selectedRuntime:null;
+  if(!detail)return instance;
+  return {...instance,
+    ...(instance.activeGenerationId===undefined&&detail.activeGenerationId!==undefined?{activeGenerationId:detail.activeGenerationId}:{}),
+    ...(instance.attempts===undefined&&detail.attempts!==undefined?{attempts:detail.attempts}:{})};
+}
+function runtimeGenerationIdentity(instance:ManagedRuntimeInstance):string{return `${instance.currentAttempt}:${instance.activeGenerationId??''}:${instance.artifactDigest}`;}
+function compareRuntimeVersions(left:string,right:string):number{
+  const a=left.split('.').map(Number),b=right.split('.').map(Number);
+  for(let index=0;index<3;index++){const difference=(a[index]??0)-(b[index]??0);if(difference)return difference;}
+  return 0;
+}
+function runtimeHasUpgradeReadyProof(instance:ManagedRuntimeInstance,history:RuntimeUpgradeList|undefined):boolean{
+  if(instance.state!=='UPGRADE_READY'||!instance.activeGenerationId||!history||history.instanceId!==instance.id)return false;
+  const target=history.generations.find(generation=>generation.id===instance.activeGenerationId);
+  const attempt=instance.attempts?.find(item=>item.attempt===instance.currentAttempt) as any;
+  if(!target||target.productId!==instance.productId||target.version!==instance.version||target.artifactDigest!==instance.artifactDigest||
+    !attempt||attempt.state!=='STOPPED'||attempt.physicalState!=='EMPTY'||attempt.emptyObserved!==true||attempt.helperClosed!==true||attempt.executionClean!==true||
+    !attempt.generation?.generationId||attempt.generation.generationId===target.id)return false;
+  return history.operations.some(operation=>operation.state==='SUCCEEDED'&&operation.physicalState==='CLEAN'&&operation.sourceGenerationId===attempt.generation.generationId&&
+    operation.sourceAttemptId===attempt.id&&operation.sourceAttempt===attempt.attempt&&operation.targetGenerationId===target.id&&operation.destinationPublished===true&&
+    operation.destinationVerified===true&&operation.driverEmpty===true&&operation.driverClosed===true&&operation.stagingClean===true&&
+    operation.publisherResultObserved===true&&operation.publisherClosed===true);
 }
 
 async function api(path:string,method='GET',value?:unknown) {
@@ -152,7 +188,7 @@ async function api(path:string,method='GET',value?:unknown) {
 }
 function syncBuildRefresh() {
   const activeBuilds=Boolean(connected&&route==='builds'&&data?.builds.some(build=>Boolean(build.inputDigest)&&['QUEUED','RUNNING','CANCEL_REQUESTED'].includes(build.state)));
-  const activeRuntimes=Boolean(connected&&route==='runtime-instances'&&runtimeOverview?.instances.some(instance=>!['STOPPED','FAILED','PREPARATION_FAILED','REPAIR_REQUIRED'].includes(instance.state)));
+  const activeRuntimes=Boolean(connected&&route==='runtime-instances'&&runtimeOverview?.instances.some(instance=>!['STOPPED','UPGRADE_READY','FAILED','PREPARATION_FAILED','REPAIR_REQUIRED'].includes(instance.state)));
   const active=activeBuilds||activeRuntimes;
   if (active&&!refreshTimer) {
     const generation=sessionGeneration;
@@ -223,10 +259,15 @@ function runtimeView() {
     return `<article class="card runtime-card"><div class="layer-top"><div><h3>${esc(release.productId)}@${esc(release.version)}</h3><div class="muted">Promoted local immutable release</div></div><span class="status">promoted</span></div><p class="digest">${esc(release.artifactDigest)}</p><label class="confirm"><input type="checkbox" data-runtime-confirmation="${esc(key)}" data-runtime-start-confirm ${busy?'disabled':''}> Start this exact promoted local release on this machine.</label><button class="primary" data-runtime-start data-product="${esc(release.productId)}" data-version="${esc(release.version)}" ${busy?'disabled':''}>${busy?'Starting…':'Start local runtime'}</button></article>`;
   }).join('');
   const runtimeCards=instances.map(instance=>{
+    const evidenceInstance=runtimeEvidenceInstance(instance);
     const actionIdentity=`${instance.id}:${instance.currentAttempt}:${instance.artifactDigest}`;
     const busy=runtimePending.has(`STOP:${actionIdentity}`)||runtimePending.has(`RESTART:${actionIdentity}`);
     const canStop=instance.state==='RUNNING'&&instance.processObservation==='owned-in-this-process';
-    const canRestart=instance.state==='STOPPED'&&instance.processObservation==='positively-stopped';
+    const historyEntry=runtimeUpgradeLists.get(instance.id),history=historyEntry?.identity===runtimeGenerationIdentity(instance)?historyEntry.value:undefined;
+    const currentGeneration=history?.generations.find(generation=>generation.id===evidenceInstance.activeGenerationId&&generation.productId===instance.productId&&
+      generation.version===instance.version&&generation.artifactDigest===instance.artifactDigest);
+    const upgradeReadyRestart=runtimeHasUpgradeReadyProof(evidenceInstance,history);
+    const canRestart=(instance.state==='STOPPED'&&instance.processObservation==='positively-stopped')||upgradeReadyRestart;
     const selected=runtimeDetailMatches(selectedRuntime,instance)?selectedRuntime:null;
     const detail=selected?`<pre class="detail">${esc(selected.events??'(No public runtime events were recorded.)')}</pre>`:'';
     const localUrl=selected?.url??instance.url;
@@ -236,10 +277,23 @@ function runtimeView() {
     const recoveryRows=(recovery?.backups??[]).map(backup=>{
       const verification=runtimeBackupVerifications.get(backup.digest),restoreKey=`RESTORE:${actionIdentity}:${backup.digest}`;
       const restoreBusy=runtimePending.has(restoreKey);
-      return `<article class="card recovery-backup"><div class="layer-top"><div><strong>Backup from attempt ${esc(backup.attempt)}</strong><div class="digest">${esc(backup.digest)}</div></div><span class="status ${verification?.verified?'':'partial'}">${verification?.verified?'verified':'not verified'}</span></div><p class="muted">${esc(backup.fileCount)} files · ${esc(backup.sizeBytes)} bytes · ${esc(new Date(backup.capturedAt).toLocaleString())}</p><div class="actions"><button class="secondary" data-runtime-backup-verify="${esc(backup.digest)}" data-runtime-instance="${esc(instance.id)}">${verification?.verified?'Verify again':'Verify backup'}</button></div>${verification?.verified?`<label class="confirm"><input type="checkbox" data-runtime-confirmation="${esc(restoreKey)}" data-runtime-restore-confirm ${restoreBusy?'disabled':''}> Restore these verified bytes into the absent runtime data location.</label><button class="secondary" data-runtime-restore="${esc(instance.id)}" data-backup-digest="${esc(backup.digest)}" ${restoreBusy?'disabled':''}>${restoreBusy?'Restoring…':'Restore this backup'}</button>`:''}</article>`;
+      const exactVerification=verification?.verified===true&&verification.digest===backup.digest&&verification.instanceId===instance.id;
+      const exactSource=currentGeneration&&backup.instanceId===instance.id&&backup.generationId===currentGeneration.id&&backup.attempt===instance.currentAttempt&&
+        backup.artifactDigest===currentGeneration.artifactDigest&&backup.version===currentGeneration.version;
+      const upgradeTargets=runtimeReleases.filter(release=>release.productId===instance.productId&&compareRuntimeVersions(release.version,instance.version)>0);
+      const targetIdentity=`${instance.id}:${backup.digest}`;
+      const options=upgradeTargets.map(release=>({value:`${release.version}|${release.artifactDigest}`,release}));
+      const selectedValue=options.find(option=>option.value===runtimeUpgradeTargets.get(targetIdentity))?.value??options[0]?.value??'';
+      const selectedTarget=options.find(option=>option.value===selectedValue)?.release;
+      const upgradeKey=`UPGRADE:${actionIdentity}:${backup.digest}:${selectedValue}`;
+      const upgradeBusy=runtimePending.has(upgradeKey);
+      const upgradeControls=canRecover&&exactSource&&exactVerification&&upgradeTargets.length&&selectedTarget?`<div class="upgrade-confirmation"><label>Promoted target release<select class="input" data-runtime-upgrade-target="${esc(targetIdentity)}">${options.map(option=>`<option value="${esc(option.value)}" ${option.value===selectedValue?'selected':''}>${esc(option.release.productId)}@${esc(option.release.version)} · ${esc(option.release.artifactDigest)}</option>`).join('')}</select></label><label class="confirm"><input type="checkbox" data-runtime-confirmation="${esc(upgradeKey)}" data-runtime-upgrade-confirm ${upgradeBusy?'disabled':''}> Upgrade this stopped generation ${esc(currentGeneration.generation)} using verified backup ${esc(backup.digest)} to ${esc(selectedTarget.version)} (${esc(selectedTarget.artifactDigest)}).</label><button class="primary" data-runtime-upgrade="${esc(instance.id)}" data-backup-digest="${esc(backup.digest)}" ${upgradeBusy?'disabled':''}>${upgradeBusy?'Upgrading…':'Upgrade exact stopped generation'}</button></div>`:'';
+      return `<article class="card recovery-backup"><div class="layer-top"><div><strong>Backup from attempt ${esc(backup.attempt)}</strong><div class="digest">${esc(backup.digest)}</div></div><span class="status ${exactVerification?'':'partial'}">${exactVerification?'verified':'not verified'}</span></div><p class="muted">Generation ${esc(backup.generationId??'unknown')} · ${esc(backup.fileCount)} files · ${esc(backup.sizeBytes)} bytes · ${esc(new Date(backup.capturedAt).toLocaleString())}</p><div class="actions"><button class="secondary" data-runtime-backup-verify="${esc(backup.digest)}" data-runtime-instance="${esc(instance.id)}">${exactVerification?'Verify again':'Verify backup'}</button></div>${exactVerification?`<label class="confirm"><input type="checkbox" data-runtime-confirmation="${esc(restoreKey)}" data-runtime-restore-confirm ${restoreBusy?'disabled':''}> Restore these verified bytes into the absent runtime data location.</label><button class="secondary" data-runtime-restore="${esc(instance.id)}" data-backup-digest="${esc(backup.digest)}" ${restoreBusy?'disabled':''}>${restoreBusy?'Restoring…':'Restore this backup'}</button>`:''}${upgradeControls}</article>`;
     }).join('');
     const recoveryPanel=canRecover?`<section class="section runtime-recovery"><h4>Private local recovery</h4><p class="muted">Recovery is available only after the current attempt has positive stop and cleanup proof. Backups contain private runtime data and are not downloadable.</p>${recoveryError?`<div class="error" role="alert">${esc(recoveryError)}</div>`:''}<div class="actions"><button class="secondary" data-runtime-backups-load="${esc(instance.id)}" ${runtimePending.has(`LIST:${actionIdentity}`)?'disabled':''}>${runtimePending.has(`LIST:${actionIdentity}`)?'Loading…':'Load backups'}</button>${recovery?.capability?.status==='ready'?`<label class="confirm"><input type="checkbox" data-runtime-confirmation="BACKUP:${esc(actionIdentity)}" data-runtime-backup-confirm ${recoveryBusy?'disabled':''}> Create a private backup of this exact stopped runtime.</label><button class="secondary" data-runtime-backup-create="${esc(instance.id)}" ${recoveryBusy?'disabled':''}>${recoveryBusy?'Creating…':'Create backup'}</button>`:''}</div>${recovery?.capability?.status&&recovery.capability.status!=='ready'?`<p class="muted">${esc(recovery.capability.detail||'The fixed local recovery profile is unavailable.')}</p>`:''}${recovery?`<div class="build-products">${recoveryRows||'<div class="card empty">No private backups are recorded for this runtime.</div>'}</div><h4>Recent recovery operations</h4>${table(['Kind','State','Physical state','Destination','Staging','Issue'],(recovery.operations??[]).map(operation=>[operation.kind,operation.state,operation.physicalState,operation.destinationVerified?'verified':'unverified',operation.stagingClean?'clean':'not verified clean',operation.errorCode??'—']))}`:''}</section>`:'';
-    return `<article class="card runtime-card"><div class="layer-top"><div><h3>${esc(instance.productId)}@${esc(instance.version)}</h3><div class="muted">${esc(instance.id)} · attempt ${esc(instance.currentAttempt)}</div></div><span class="status ${instance.state==='RUNNING'?'':'partial'}">${esc(instance.state)}</span></div><p class="digest">Artifact ${esc(instance.artifactDigest)}</p><p class="muted">${instance.workerRequired?'Separate worker required':'No separate worker required'} · ${esc(instance.processObservation)}</p>${instance.operationalError?`<p class="error">${esc(instance.operationalError)}</p>`:''}${instance.controlWarning?`<p class="muted">${esc(instance.controlWarning)}</p>`:''}${localUrl&&instance.state==='RUNNING'?`<p><a class="secondary" href="${esc(localUrl)}" target="_blank" rel="noreferrer">Open local application</a></p>`:''}<div class="actions"><button class="secondary" data-runtime-detail="${esc(instance.id)}">${selected?'Refresh events and address':'Inspect runtime'}</button>${canStop?`<label class="confirm"><input type="checkbox" data-runtime-confirmation="STOP:${esc(actionIdentity)}" data-runtime-action-confirm ${busy?'disabled':''}> Stop this exact local runtime and retain its data.</label><button class="secondary" data-runtime-stop="${esc(instance.id)}" data-attempt="${esc(instance.currentAttempt)}" data-artifact-digest="${esc(instance.artifactDigest)}" ${busy?'disabled':''}>${busy?'Stopping…':'Stop runtime'}</button>`:''}${canRestart?`<label class="confirm"><input type="checkbox" data-runtime-confirmation="RESTART:${esc(actionIdentity)}" data-runtime-action-confirm ${busy?'disabled':''}> Restart this same stopped instance and release.</label><button class="primary" data-runtime-restart="${esc(instance.id)}" data-attempt="${esc(instance.currentAttempt)}" data-artifact-digest="${esc(instance.artifactDigest)}" ${busy?'disabled':''}>${busy?'Restarting…':'Restart exact runtime'}</button>`:''}</div>${detail}${recoveryPanel}</article>`;
+      const generationHistory=history?`<section class="section runtime-generations"><h4>Immutable generations</h4><div class="card"><ul>${history.generations.map(generation=>`<li>Generation ${esc(generation.generation)} · ${esc(generation.productId)}@${esc(generation.version)} · ${esc(generation.artifactDigest)} · ${generation.id===evidenceInstance.activeGenerationId?esc(instance.state==='UPGRADE_READY'?'current target, not started':'current'): 'retained'}</li>`).join('')}</ul>${history.operations.length?`<h4>Upgrade history</h4><ul>${history.operations.map(operation=>`<li>${esc(operation.state)} · generation ${esc(operation.sourceGenerationId)} → ${esc(operation.targetGenerationId??operation.targetVersion)} · backup ${esc(operation.sourceBackupDigest)}${operation.errorCode?` · ${esc(operation.errorCode)}`:''}</li>`).join('')}</ul>`:'<p class="muted">No upgrade operations are recorded.</p>'}</div></section>`:runtimeUpgradeErrors.has(instance.id)?`<div class="error" role="alert">Generation history unavailable: ${esc(runtimeUpgradeErrors.get(instance.id))}</div>`:'<p class="muted">Loading immutable generation and upgrade history…</p>';
+    const upgradeReadyNotice=upgradeReadyRestart?'<p class="muted">The target generation is verified and cut over, but has not been started. No target readiness or application address is recorded yet.</p>':'';
+    return `<article class="card runtime-card"><div class="layer-top"><div><h3>${esc(instance.productId)}@${esc(instance.version)}</h3><div class="muted">${esc(instance.id)} · attempt ${esc(instance.currentAttempt)}${evidenceInstance.activeGenerationId?` · generation ${esc(evidenceInstance.activeGenerationId)}`:''}</div></div><span class="status ${instance.state==='RUNNING'?'':'partial'}">${esc(instance.state)}</span></div><p class="digest">Artifact ${esc(instance.artifactDigest)}</p><p class="muted">${instance.workerRequired?'Separate worker required':'No separate worker required'} · ${esc(instance.processObservation)}</p>${upgradeReadyNotice}${instance.operationalError?`<p class="error">${esc(instance.operationalError)}</p>`:''}${instance.controlWarning?`<p class="muted">${esc(instance.controlWarning)}</p>`:''}${localUrl&&instance.state==='RUNNING'?`<p><a class="secondary" href="${esc(localUrl)}" target="_blank" rel="noreferrer">Open local application</a></p>`:''}<div class="actions"><button class="secondary" data-runtime-detail="${esc(instance.id)}">${selected?'Refresh events and address':'Inspect runtime'}</button>${canStop?`<label class="confirm"><input type="checkbox" data-runtime-confirmation="STOP:${esc(actionIdentity)}" data-runtime-action-confirm ${busy?'disabled':''}> Stop this exact local runtime and retain its data.</label><button class="secondary" data-runtime-stop="${esc(instance.id)}" data-attempt="${esc(instance.currentAttempt)}" data-artifact-digest="${esc(instance.artifactDigest)}" ${busy?'disabled':''}>${busy?'Stopping…':'Stop runtime'}</button>`:''}${canRestart?`<label class="confirm"><input type="checkbox" data-runtime-confirmation="RESTART:${esc(actionIdentity)}" data-runtime-action-confirm ${busy?'disabled':''}> Restart this exact ${upgradeReadyRestart?'target generation':'stopped instance'} and release.</label><button class="primary" data-runtime-restart="${esc(instance.id)}" data-attempt="${esc(instance.currentAttempt)}" data-artifact-digest="${esc(instance.artifactDigest)}" ${busy?'disabled':''}>${busy?'Restarting…':upgradeReadyRestart?'Start upgraded generation':'Restart exact runtime'}</button>`:''}</div>${detail}${generationHistory}${recoveryPanel}</article>`;
   }).join('');
   const slot=runtimeOverview.slot??{state:'UNKNOWN',instanceId:null,reservedBytes:0};
   return `${runtimeLoadError?`<div class="error" role="alert">${esc(runtimeLoadError)}</div>`:''}${actionError?`<div class="error" role="alert">${esc(actionError)}</div>`:''}<section class="section"><div class="section-title"><h2>Managed local runtime</h2><span class="status">${esc(runtimeOverview.capability.status)}</span></div><div class="card"><p>${esc(runtimeOverview.capability.details)}</p><p class="muted">Physical slot: ${esc(slot.state)}${slot.instanceId?` · ${esc(slot.instanceId)}`:''} · ${esc(slot.reservedBytes)} reserved bytes. UNKNOWN retains the slot and data until its original process owner proves an empty process tree.</p><p class="muted">A fixed local process starts only an exact promoted release. No hosted deployment or provider is attached.</p></div></section><section class="section"><h2>Promoted releases</h2><p class="muted">Choose the exact product version; start and restart require confirmation.</p><div class="build-products">${releaseCards||'<div class="card empty">No promoted local releases are available.</div>'}</div></section><section class="section"><h2>Runtime instances</h2><div class="build-products">${runtimeCards||'<div class="card empty">No managed local runtime instances have been started.</div>'}</div></section>`;
@@ -329,6 +383,24 @@ async function loadRuntimeOverview() {
   const next=runtime as RuntimeOverview;
   if(selectedRuntime&&!next.instances.some(instance=>runtimeDetailMatches(selectedRuntime,instance)))selectedRuntime=null;
   runtimeOverview=next;runtimeReleases=releases;runtimeLoadError='';render();
+  for(const instance of next.instances)void loadRuntimeUpgradeHistory(instance,generation,navigation);
+}
+async function loadRuntimeUpgradeHistory(instance:ManagedRuntimeInstance,generation:number,navigation:number){
+  const identity=runtimeGenerationIdentity(instance),requestIdentity=`${instance.id}:${identity}`;
+  if(runtimeUpgradeLists.get(instance.id)?.identity===identity||runtimeUpgradeRequests.has(requestIdentity))return;
+  runtimeUpgradeRequests.add(requestIdentity);
+  try{
+    const value=await api(`/platform-api/runtime-instances/${encodeURIComponent(instance.id)}/upgrades`) as RuntimeUpgradeList;
+    const current=runtimeOverview?.instances.find(item=>item.id===instance.id);
+    if(generation!==sessionGeneration||!connected||navigation!==navigationGeneration||route!=='runtime-instances'||!current||
+      runtimeGenerationIdentity(current)!==identity||value.instanceId!==instance.id||!Array.isArray(value.generations)||!Array.isArray(value.operations))return;
+    runtimeUpgradeLists.set(instance.id,{identity,value});runtimeUpgradeErrors.delete(instance.id);render();
+  }catch(error){
+    const current=runtimeOverview?.instances.find(item=>item.id===instance.id);
+    if(generation===sessionGeneration&&connected&&navigation===navigationGeneration&&route==='runtime-instances'&&current&&runtimeGenerationIdentity(current)===identity){
+      runtimeUpgradeErrors.set(instance.id,error instanceof Error?error.message:'Generation history is unavailable');render();
+    }
+  }finally{runtimeUpgradeRequests.delete(requestIdentity);}
 }
 async function loadRuntimeBackups(instance:ManagedRuntimeInstance,actionIdentity:string,generation:number,navigation:number){
   const value=await api(`/platform-api/runtime-instances/${encodeURIComponent(instance.id)}/backups`) as RuntimeRecoveryList;
@@ -416,6 +488,42 @@ document.addEventListener('click', event => {
       await loadRuntimeBackups(instance,identity,generation,navigation);
     }catch(error){if(stillCurrent()){runtimeRecoveryErrors.set(identity,error instanceof Error?error.message:'Private restore failed');render();}}
     finally{if(generation===sessionGeneration){runtimePending.delete(pendingKey);render();}}
+  })();
+  const runtimeUpgrade=target.closest<HTMLElement>('[data-runtime-upgrade]');
+  if(runtimeUpgrade)void(async()=>{
+    const id=runtimeUpgrade.dataset.runtimeUpgrade!,backupDigest=runtimeUpgrade.dataset.backupDigest!,instance=runtimeOverview?.instances.find(item=>item.id===id);
+    const evidenceInstance=instance?runtimeEvidenceInstance(instance):undefined;
+    const historyEntry=runtimeUpgradeLists.get(id),history=instance&&historyEntry?.identity===runtimeGenerationIdentity(instance)?historyEntry.value:undefined;
+    const generation=evidenceInstance?.activeGenerationId?history?.generations.find(item=>item.id===evidenceInstance.activeGenerationId):undefined;
+    const backups=runtimeRecoveryLists.get(`${id}:${instance?.currentAttempt}:${instance?.artifactDigest}`)?.backups??[];
+    const backup=backups.find(item=>item.digest===backupDigest),verification=runtimeBackupVerifications.get(backupDigest);
+    const card=runtimeUpgrade.closest<HTMLElement>('article'),targetSelect=card?.querySelector<HTMLSelectElement>('[data-runtime-upgrade-target]');
+    const selectedValue=targetSelect?.value??'',separator=selectedValue.indexOf('|'),version=separator>0?selectedValue.slice(0,separator):'',artifactDigest=separator>0?selectedValue.slice(separator+1):'';
+    const release=runtimeReleases.find(item=>item.productId===instance?.productId&&item.version===version&&item.artifactDigest===artifactDigest);
+    if(!instance||instance.state!=='STOPPED'||!runtimeHasStoppedProof(instance)||!history||!generation||generation.version!==instance.version||generation.artifactDigest!==instance.artifactDigest||
+      !backup||backup.instanceId!==id||backup.generationId!==generation.id||backup.attempt!==instance.currentAttempt||backup.artifactDigest!==instance.artifactDigest||
+      !verification?.verified||verification.digest!==backupDigest||verification.instanceId!==id||!release||compareRuntimeVersions(release.version,instance.version)<=0){
+      actionError='Upgrade requires the exact current stopped generation, its matching backup, a successful verification, and a newer promoted release.';render();return;
+    }
+    const confirmation=card?.querySelector<HTMLInputElement>('[data-runtime-upgrade-confirm]');
+    if(!confirmation?.checked){actionError=`Confirm upgrade of ${instance.productId}@${instance.version} from generation ${generation.generation}, using verified backup ${backupDigest}, to ${release.version} (${release.artifactDigest}).`;render();return;}
+    const sourceIdentity=`${id}:${instance.currentAttempt}:${instance.artifactDigest}`,requestIntent=`UPGRADE:${sourceIdentity}:${generation.id}:${backupDigest}:${release.version}:${release.artifactDigest}`;
+    const pendingKey=requestIntent;if(runtimePending.has(pendingKey))return;
+    const session=sessionGeneration,navigation=navigationGeneration,requestKey=runtimeRequestKey(requestIntent);
+    const stillCurrent=()=>session===sessionGeneration&&connected&&navigation===navigationGeneration&&route==='runtime-instances'&&
+      runtimeOverview?.instances.some(current=>current.id===id&&current.state==='STOPPED'&&current.currentAttempt===instance.currentAttempt&&
+        runtimeEvidenceInstance(current).activeGenerationId===generation.id&&current.artifactDigest===instance.artifactDigest);
+    confirmation.checked=false;runtimePending.add(pendingKey);actionError='';render();
+    try{
+      const result=await api(`/platform-api/runtime-instances/${encodeURIComponent(id)}/upgrades`,'POST',{confirm:true,targetVersion:release.version,
+        targetArtifactDigest:release.artifactDigest,sourceBackupDigest:backupDigest,requestKey});
+      if(session!==sessionGeneration||!connected)return;
+      runtimeRequestKeys.delete(requestIntent);
+      if(stillCurrent())actionError=`Upgrade operation ${result.state??'recorded'}: ${result.physicalState??'physical state unavailable'}${result.errorCode?` · ${result.errorCode}`:''}.`;
+      runtimeUpgradeLists.delete(id);runtimeUpgradeErrors.delete(id);
+      if(navigation===navigationGeneration&&route==='runtime-instances')await loadRuntimeOverview();
+    }catch(error){if(stillCurrent()){actionError=error instanceof Error?error.message:'Local runtime upgrade did not return a result';render();}}
+    finally{if(session===sessionGeneration){runtimePending.delete(pendingKey);render();}}
   })();
   const inspectArtifact=target.closest<HTMLElement>('[data-inspect-artifact]');
   if(inspectArtifact)void (async()=>{const generation=sessionGeneration;try{const value=await api(`/platform-api/artifacts/${encodeURIComponent(inspectArtifact.dataset.inspectArtifact!)}`);if(generation!==sessionGeneration||!connected)return;selectedArtifact=value;actionError='';render();}catch(error){if(generation===sessionGeneration&&connected){actionError=error instanceof Error?error.message:'Artifact verification failed';render();}}})();
@@ -511,7 +619,7 @@ function captureFamilyDraft(form:HTMLFormElement,target:HTMLElement){
   replacement?.focus();if(replacement instanceof HTMLInputElement&&start!==null&&end!==null)replacement.setSelectionRange(start,end);
 }
 document.addEventListener('input',event=>{const target=event.target as HTMLElement;const familyForm=target.closest<HTMLFormElement>('#family-derive-form');if(familyForm){captureFamilyDraft(familyForm,target);return;}const form=target.closest<HTMLFormElement>('#compose-form');if(form)captureComposeDraft(form);if(target instanceof HTMLTextAreaElement&&target.matches('[data-product-json]'))setProductEditorText(target.value,target);if(target instanceof HTMLTextAreaElement&&target.dataset.productArray)patchProductEditorArray(target.dataset.productArray as 'modules'|'bindings',target.value,target);});
-document.addEventListener('change',event=>{const target=event.target as HTMLElement;const form=target.closest<HTMLFormElement>('#compose-form');if(form)captureComposeDraft(form);if(target instanceof HTMLSelectElement&&target.id==='saved-product-version'){invalidateProductEditor();selectedSavedProduct=target.value;render();return;}if((target instanceof HTMLInputElement||target instanceof HTMLSelectElement)&&target.dataset.productField)patchProductEditorField(target.dataset.productField,target.value,target);});
+document.addEventListener('change',event=>{const target=event.target as HTMLElement;if(target instanceof HTMLSelectElement&&target.dataset.runtimeUpgradeTarget){runtimeUpgradeTargets.set(target.dataset.runtimeUpgradeTarget,target.value);const card=target.closest<HTMLElement>('article');const confirmation=card?.querySelector<HTMLInputElement>('[data-runtime-upgrade-confirm]');if(confirmation)confirmation.checked=false;actionError='';render();return;}const form=target.closest<HTMLFormElement>('#compose-form');if(form)captureComposeDraft(form);if(target instanceof HTMLSelectElement&&target.id==='saved-product-version'){invalidateProductEditor();selectedSavedProduct=target.value;render();return;}if((target instanceof HTMLInputElement||target instanceof HTMLSelectElement)&&target.dataset.productField)patchProductEditorField(target.dataset.productField,target.value,target);});
 document.addEventListener('change',event=>{const target=event.target as HTMLElement;const form=target.closest<HTMLFormElement>('#family-derive-form');if(form)captureFamilyDraft(form,target);});
 document.addEventListener('change',event=>{const target=event.target as HTMLElement;if(!(target instanceof HTMLInputElement)||!target.matches('[data-product-import]'))return;const file=target.files?.[0];if(!file)return;target.value='';invalidateProductEditor();const session=sessionGeneration,generation=productEditorGeneration,sequence=++productEditorRequestSequence;if(file.size>65536){productEditorDiagnostics=['Product JSON must be at most 64 KiB.'];render();return;}void(async()=>{try{const source=await file.text();if(session!==sessionGeneration||generation!==productEditorGeneration||sequence!==productEditorRequestSequence||!connected)return;productEditorBusy=false;setProductEditorText(source);}catch{if(session===sessionGeneration&&generation===productEditorGeneration&&sequence===productEditorRequestSequence){productEditorDiagnostics=['The selected product file could not be read.'];render();}}})();});
 document.addEventListener('submit', event => {

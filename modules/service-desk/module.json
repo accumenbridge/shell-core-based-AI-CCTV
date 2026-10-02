@@ -1,6 +1,6 @@
 {
   "id": "service-desk",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "abi": "quadbridge.module.v1",
   "dependencies": [],
   "provides": [
@@ -71,9 +71,9 @@
     }
   ],
   "schema": {
-    "current": 1,
+    "current": 2,
     "readMin": 1,
-    "readMax": 1
+    "readMax": 2
   },
   "background": false,
   "browserAssets": [
@@ -124,7 +124,7 @@
       "schemas": [
         {
           "id": "service-desk",
-          "version": 1
+          "version": 2
         }
       ]
     },

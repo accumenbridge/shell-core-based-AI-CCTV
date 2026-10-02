@@ -292,6 +292,8 @@ async function fixture(t,{binaryAsset=false,productId='service-desk',initialDesk
   await copyFile(join(ROOT,'tools','runtime-supervisor.mjs'),join(root,'tools','runtime-supervisor.mjs'));
   await copyFile(join(ROOT,'tools','runtime-recovery.mjs'),join(root,'tools','runtime-recovery.mjs'));
   await copyFile(join(ROOT,'tools','runtime-recovery-publish.ps1'),join(root,'tools','runtime-recovery-publish.ps1'));
+  await copyFile(join(ROOT,'tools','runtime-upgrade.mjs'),join(root,'tools','runtime-upgrade.mjs'));
+  await copyFile(join(ROOT,'tools','runtime-upgrade-publish.ps1'),join(root,'tools','runtime-upgrade-publish.ps1'));
   const snapshot=loadSourceSnapshot(root);
   store=new ControlPlaneStore(dbPath);
   importSourceSnapshot(store,snapshot);

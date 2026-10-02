@@ -1,0 +1,190 @@
+{
+  "fixtureId": "9d335a66-9702-4246-9362-d52371e0ea87",
+  "phaseId": "9d2a154f-2f85-4414-a330-523bd4d885c4",
+  "candidate": "0c47a3ca0b606db4f9fe24c0a781bc23697eec6e53b8a01670ffce7636ba9074",
+  "contractDigest": "3dcb39e18df060243ec6b10af6bd27289e30a796c1a82c5d98ecf3b074606716",
+  "instanceId": "runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+  "sourceArtifactDigest": "4f6c25437ddf99bddc6b9f036b4a12192be3ec9fb9c5e590415231ba7bb02cf4",
+  "sourceVersion": "0.2.3",
+  "sourceBackup": {
+    "id": "75b96a62-4fe3-4536-95e9-10a7acd6331e",
+    "kind": "BACKUP",
+    "state": "SUCCEEDED",
+    "physicalState": "CLEAN",
+    "instanceId": "runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+    "generationId": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:1",
+    "attemptId": "edc04f6e-4e07-4f52-9f29-bc8530ef6bad",
+    "attempt": 1,
+    "commandId": "b2607777-50d9-435c-a22a-2f975f71fb1a",
+    "productId": "combined",
+    "version": "0.2.3",
+    "artifactDigest": "4f6c25437ddf99bddc6b9f036b4a12192be3ec9fb9c5e590415231ba7bb02cf4",
+    "originatingActorId": "operator:c96919c0-840d-4539-bbe9-197256fa7aa2",
+    "profileDigest": "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1",
+    "configDigest": "54daffc0962d893b70a231b18fa57f783949a2c7bb026b8ac0f5366239ee3bc4",
+    "adapterDigest": "ff15b95f4a9c0cfa2dd4b50dd1e993937ca8ecaa59b2c3a7b532400d5bb6df08",
+    "toolchainDigest": "d6481e2b7ea008dd04fbb0bfcf2d1cc3741a8a639dcc4edc0c8e73bd9242853d",
+    "recipeDigest": "ff53ead9d28da5b75ad5d9ff1cfd664db80041dfba78984c21d886e67fb6af5d",
+    "backupDigest": "c791038c7b7f1eadc5d92842ab72d280fbba20e1d86c904af2f13176340dffae",
+    "actorId": "operator:d8d03ac5-10d8-416b-8731-8434087f8ea3",
+    "reservedBytes": 2522472,
+    "dispatchBegun": true,
+    "driverEmpty": true,
+    "driverClosed": true,
+    "publisherResultObserved": true,
+    "publisherClosed": true,
+    "destinationPublished": true,
+    "destinationVerified": true,
+    "emptyObserved": true,
+    "helperClosed": true,
+    "stagingClean": true,
+    "capturedAt": 1790969074402,
+    "errorCode": null,
+    "created": 1790969072953,
+    "updated": 1790969075951
+  },
+  "verified": {
+    "digest": "c791038c7b7f1eadc5d92842ab72d280fbba20e1d86c904af2f13176340dffae",
+    "instanceId": "runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+    "sizeBytes": 297466,
+    "fileCount": 10,
+    "capturedAt": 1790969074402,
+    "verified": true
+  },
+  "sourceInventory": {
+    "files": [
+      {
+        "path": "access.sqlite",
+        "sizeBytes": 69632,
+        "sha256": "38f3a0298982f091c4a72d830e28c7b06de8d0d29ba6f77061bf3efaec4a261c"
+      },
+      {
+        "path": "credentials.json",
+        "sizeBytes": 214,
+        "sha256": "132e7b6c39cfe6c98d26e69647e0a820bf1441bbb43415b171cd3449aaaddc2a"
+      },
+      {
+        "path": "enrollment-complete.json",
+        "sizeBytes": 695,
+        "sha256": "b87a22181690b759792d49c16225f977cca423e66cfa9a20a3d7992c6e215c00"
+      },
+      {
+        "path": "enrollment-intent.json",
+        "sizeBytes": 796,
+        "sha256": "3a09460b89ee834d54f95a2d82894e979ff8553552c2215b3fc85022419f5538"
+      },
+      {
+        "path": "enrollment-private.json",
+        "sizeBytes": 1165,
+        "sha256": "f5ca0835b34fe65183f98317b467f8b9d641e98ce1068b8a748b5b0c8a52fd07"
+      },
+      {
+        "path": "modules/handoff.sqlite",
+        "sizeBytes": 86016,
+        "sha256": "75bbb64fa9a15db3b37b51c6b908d6ebb7638d5cd5638ac896899e59cf4af487"
+      },
+      {
+        "path": "modules/knowledge.sqlite",
+        "sizeBytes": 94208,
+        "sha256": "6cfc21d300c373f2b718b0a47e57a5f2ac194681a0e39d06b02aba5c35bb9f59"
+      },
+      {
+        "path": "modules/service-desk.sqlite",
+        "sizeBytes": 40960,
+        "sha256": "7b8ae540255b28fe4b62f2f48d612255dda777421dd2823c80251743d894f83b"
+      },
+      {
+        "path": "runtime-config.json",
+        "sizeBytes": 562,
+        "sha256": "55622db3ef72a6f9e536c513ea51a13c0eda1d23e3e6a2ce7e61bba11622c44f"
+      }
+    ],
+    "digest": "3149733c7eec81df5ff41f6314f9fa06bf3565a6cbee377a23b341026c0bff0d"
+  },
+  "backupInventory": {
+    "files": [
+      {
+        "path": "access.sqlite",
+        "sizeBytes": 69632,
+        "sha256": "ea2cd4975a060159c0747593f425bf404b954ef25a5cf8751418d92b463e0709"
+      },
+      {
+        "path": "credentials.json",
+        "sizeBytes": 214,
+        "sha256": "132e7b6c39cfe6c98d26e69647e0a820bf1441bbb43415b171cd3449aaaddc2a"
+      },
+      {
+        "path": "enrollment-complete.json",
+        "sizeBytes": 695,
+        "sha256": "b87a22181690b759792d49c16225f977cca423e66cfa9a20a3d7992c6e215c00"
+      },
+      {
+        "path": "enrollment-intent.json",
+        "sizeBytes": 796,
+        "sha256": "3a09460b89ee834d54f95a2d82894e979ff8553552c2215b3fc85022419f5538"
+      },
+      {
+        "path": "enrollment-private.json",
+        "sizeBytes": 1165,
+        "sha256": "f5ca0835b34fe65183f98317b467f8b9d641e98ce1068b8a748b5b0c8a52fd07"
+      },
+      {
+        "path": "manifest.json",
+        "sizeBytes": 3218,
+        "sha256": "c791038c7b7f1eadc5d92842ab72d280fbba20e1d86c904af2f13176340dffae"
+      },
+      {
+        "path": "modules/handoff.sqlite",
+        "sizeBytes": 86016,
+        "sha256": "121812dba95eb7e6e566020322b615bbdf5644d467bf26a7394173d367c1ed23"
+      },
+      {
+        "path": "modules/knowledge.sqlite",
+        "sizeBytes": 94208,
+        "sha256": "a1c1afbdc34fbe0be2d579b07b2fcd726d96f57cbc8890f206d593e2ce25cf32"
+      },
+      {
+        "path": "modules/service-desk.sqlite",
+        "sizeBytes": 40960,
+        "sha256": "80b212878f1f1f1575c0aa0c7ee26d8837395104972b29ebf063b7d53bb0bdbe"
+      },
+      {
+        "path": "runtime-config.json",
+        "sizeBytes": 562,
+        "sha256": "55622db3ef72a6f9e536c513ea51a13c0eda1d23e3e6a2ce7e61bba11622c44f"
+      }
+    ],
+    "digest": "dae2af7088793712aea161374ee0b5e45209f70555cb5bb01e25966e303ae976"
+  },
+  "completeSourceOwnerRowsUnchanged": true,
+  "pendingJobDeadline": 1790969666454,
+  "pendingJobDeadlineStillLive": true,
+  "startedAt": "2026-10-02T19:24:32.199Z",
+  "completedAt": "2026-10-02T19:24:36.211Z",
+  "calls": [
+    {
+      "path": "/platform-api/runtime-instances/runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:24:32.238Z"
+    },
+    {
+      "path": "/platform-api/runtime-instances/runtime-c2582154-368c-40dd-8bc1-a6a2367e2716/backups",
+      "method": "POST",
+      "status": 201,
+      "observedAt": "2026-10-02T19:24:35.953Z"
+    },
+    {
+      "path": "/platform-api/runtime-backups/c791038c7b7f1eadc5d92842ab72d280fbba20e1d86c904af2f13176340dffae",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:24:36.169Z"
+    },
+    {
+      "path": "/platform-api/runtime-instances/runtime-c2582154-368c-40dd-8bc1-a6a2367e2716/backups",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:24:36.196Z"
+    }
+  ]
+}

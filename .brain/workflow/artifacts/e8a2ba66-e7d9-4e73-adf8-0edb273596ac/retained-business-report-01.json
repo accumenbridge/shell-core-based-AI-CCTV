@@ -1,0 +1,137 @@
+{
+  "fixtureId": "9d335a66-9702-4246-9362-d52371e0ea87",
+  "candidate": "0c47a3ca0b606db4f9fe24c0a781bc23697eec6e53b8a01670ffce7636ba9074",
+  "contractDigest": "3dcb39e18df060243ec6b10af6bd27289e30a796c1a82c5d98ecf3b074606716",
+  "instanceId": "runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+  "attempt": 2,
+  "startedAt": "2026-10-02T19:26:10.474Z",
+  "completedAt": "2026-10-02T19:26:10.839Z",
+  "retainedActor": {
+    "id": "admin",
+    "kind": "user"
+  },
+  "originalDeskReplay": true,
+  "originalDocumentReplay": true,
+  "originalHandoffReplay": true,
+  "typedReceiptRetained": true,
+  "indexAndCitationRetained": true,
+  "revokedCloseDenied": true,
+  "removedViewerDenied": true,
+  "otherTenantIsolated": true,
+  "readOnlyModeDenied": true,
+  "loggedOut": true,
+  "calls": [
+    {
+      "path": "/api/session",
+      "method": "POST",
+      "tenant": "customer-a",
+      "status": 200,
+      "code": null,
+      "observedAt": "2026-10-02T19:26:10.512Z"
+    },
+    {
+      "path": "/api/requests",
+      "method": "POST",
+      "tenant": "customer-a",
+      "status": 200,
+      "code": null,
+      "observedAt": "2026-10-02T19:26:10.537Z"
+    },
+    {
+      "path": "/api/documents",
+      "method": "POST",
+      "tenant": "customer-a",
+      "status": 200,
+      "code": null,
+      "observedAt": "2026-10-02T19:26:10.556Z"
+    },
+    {
+      "path": "/api/handoffs",
+      "method": "POST",
+      "tenant": "customer-a",
+      "status": 200,
+      "code": null,
+      "observedAt": "2026-10-02T19:26:10.588Z"
+    },
+    {
+      "path": "/api/requests",
+      "method": "GET",
+      "tenant": "customer-a",
+      "status": 200,
+      "code": null,
+      "observedAt": "2026-10-02T19:26:10.608Z"
+    },
+    {
+      "path": "/api/documents",
+      "method": "GET",
+      "tenant": "customer-a",
+      "status": 200,
+      "code": null,
+      "observedAt": "2026-10-02T19:26:10.627Z"
+    },
+    {
+      "path": "/api/handoffs",
+      "method": "GET",
+      "tenant": "customer-a",
+      "status": 200,
+      "code": null,
+      "observedAt": "2026-10-02T19:26:10.650Z"
+    },
+    {
+      "path": "/api/documents/search?q=continuity",
+      "method": "GET",
+      "tenant": "customer-a",
+      "status": 200,
+      "code": null,
+      "observedAt": "2026-10-02T19:26:10.671Z"
+    },
+    {
+      "path": "/api/documents/answer",
+      "method": "POST",
+      "tenant": "customer-a",
+      "status": 200,
+      "code": null,
+      "observedAt": "2026-10-02T19:26:10.698Z"
+    },
+    {
+      "path": "/api/requests/close",
+      "method": "POST",
+      "tenant": "customer-a",
+      "status": 403,
+      "code": "DENIED",
+      "observedAt": "2026-10-02T19:26:10.717Z"
+    },
+    {
+      "path": "/api/requests",
+      "method": "GET",
+      "tenant": "customer-b",
+      "status": 200,
+      "code": null,
+      "observedAt": "2026-10-02T19:26:10.737Z"
+    },
+    {
+      "path": "/api/requests",
+      "method": "POST",
+      "tenant": "customer-b",
+      "status": 409,
+      "code": "DISABLED",
+      "observedAt": "2026-10-02T19:26:10.758Z"
+    },
+    {
+      "path": "/api/logout",
+      "method": "POST",
+      "tenant": "customer-a",
+      "status": 200,
+      "code": null,
+      "observedAt": "2026-10-02T19:26:10.791Z"
+    },
+    {
+      "path": "/api/session",
+      "method": "POST",
+      "tenant": "customer-a",
+      "status": 401,
+      "code": "UNAUTHENTICATED",
+      "observedAt": "2026-10-02T19:26:10.831Z"
+    }
+  ]
+}

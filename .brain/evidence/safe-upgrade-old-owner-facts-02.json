@@ -1,0 +1,163 @@
+{
+  "schema": "quadbridge.safe-upgrade-owner-observation.v1",
+  "fixtureId": "9d335a66-9702-4246-9362-d52371e0ea87",
+  "instanceId": "runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+  "artifactDigest": "4f6c25437ddf99bddc6b9f036b4a12192be3ec9fb9c5e590415231ba7bb02cf4",
+  "sourceInventoryDigest": "30e97b0fe8106f00e3c749444444eb5b9ea666129c1a739b370de18879fa2c84",
+  "sourceMainFilesUnchanged": true,
+  "readOnly": true,
+  "allObserversClosed": true,
+  "ownerFacts": {
+    "access": {
+      "_migrations": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "70037b52ea0f44a73522fb79ae287f2a30abded446897e673aab8ea90c619c71",
+        "history": [
+          {
+            "version": 1,
+            "digest": "cf2d420b4a01ef7062bd511893ea1ff28fe9d4fc2463d92c5849b8bf969cbce4"
+          }
+        ]
+      },
+      "instance_binding": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "59bc24f8284b67cffeacc46fc97a6a4a46b8f153f60703bfbf69c73fbd7ab83d"
+      },
+      "principals": {
+        "totalCount": 2,
+        "observedCount": 2,
+        "digest": "8ffc1962182f7df6ddbbce1f0a86b5fae2d65978a50138d89d6f15221011a2f1"
+      },
+      "grants": {
+        "totalCount": 35,
+        "observedCount": 35,
+        "digest": "6cbff16a41ad7ae80c90582877f1365637a63f8d59ca9f7d178280b3f7a90f54"
+      },
+      "sessions": {
+        "totalCount": 0,
+        "observedCount": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "module_modes": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "ff3c31c2b53742c9fe062663d982de81cdfa57089807756c5733357987765f32"
+      }
+    },
+    "service-desk": {
+      "_migrations": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "af65ab300151199f6d779b9541c31f0a535e02f504120498f6dceb74fdabf0c5",
+        "history": [
+          {
+            "version": 1,
+            "digest": "b901b37d55b0f1ed18e31c0009f1a17bf6bc2099c6bb4bb979bef2208059c9f4"
+          }
+        ]
+      },
+      "_receipts": {
+        "totalCount": 2,
+        "observedCount": 2,
+        "digest": "65ea82eac424285820356f40e6ee10d7f180231bafbf3f86d8f67b1db5235801"
+      },
+      "_audit": {
+        "totalCount": 2,
+        "observedCount": 2,
+        "digest": "971725db5db2189a11e8ae573301d2e0fb43296b7b86f9db2667edff39b978a0"
+      },
+      "requests": {
+        "totalCount": 2,
+        "observedCount": 2,
+        "digest": "7594a3f18b409c6770fe4af9b36c7dbb37b8354dbb02d1dc6133dbd27fa464c4"
+      }
+    },
+    "knowledge": {
+      "_migrations": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "42993417a509b9440ccb0400c61bad43943d3f10c285d544febefd883c2771fc",
+        "history": [
+          {
+            "version": 1,
+            "digest": "b89df29e8dedb2f057506526446d3a252a69e8ae587091610cf7dfdcba244e65"
+          }
+        ]
+      },
+      "_receipts": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "529a6aca6c2036416684cc37a9e32d957251fb82f17aa1b0975d4799da3936a1"
+      },
+      "_audit": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "c858bb8c1057080de8a6e89abe6fbeee07b8d92c9727d59eeae8bb6cf5dda628"
+      },
+      "documents": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "744ec9b0779c6b822a7ea75d15f57b273b7e0d4d0112dcd622ee145fc22624c2"
+      },
+      "document_search": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "c9050fa86df6b5c180b89ff0e325024289f0ccca779938f9a3c532622c2db8bf"
+      },
+      "_jobs": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "4e94a74a68e39fb950578bee6a14fd4337c5d58dbf84f35ee45b85c888bf2112"
+      }
+    },
+    "handoff": {
+      "_migrations": {
+        "totalCount": 2,
+        "observedCount": 2,
+        "digest": "18695202628e4d14ea5cd88e5565256f9964e416fa45f97839f29ec0fd384809",
+        "history": [
+          {
+            "version": 1,
+            "digest": "3aab858a6c32798214782e87380625c205ea5776d6a245cde116a16cca5d21d2"
+          },
+          {
+            "version": 2,
+            "digest": "759f09e0681494f213f419221478e4ecccb67bfea7a6cae984efdd9401955027"
+          }
+        ]
+      },
+      "_receipts": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "964eea97420ee89fad777853a37024f70667d08f850a30dc5075cd30c30eb5db"
+      },
+      "_audit": {
+        "totalCount": 2,
+        "observedCount": 2,
+        "digest": "eee19ddd2f264d6addab60645e7bcd06f4413fe824a892a280d0ea9444efef85"
+      },
+      "handoffs": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "ad719922d92b037885513db2011b9ffaa3145abefcc3a915b27f8163e6efd8df"
+      },
+      "handoff_delivery": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "419184dc4f14adf5d7879036ef8469517fb0137646be5835172c676c67304fc1"
+      },
+      "_jobs": {
+        "totalCount": 1,
+        "observedCount": 1,
+        "digest": "08c92638c6f65610ed1a72585ee45e42544792706c532274672963733c4170b3"
+      }
+    }
+  },
+  "removedViewer": true,
+  "revokedAdminDeskClose": true,
+  "activeSessions": 0,
+  "scope": "Complete actual tables in this bounded test fixture, max256rows/table; no universal owner data API.",
+  "priorExcerptClarification": "safe-upgrade-old-capture-01 ownerFacts counts describe at-most25 observed excerpt rows, not total table cardinality. This supplement records actual total35grants and observes all35; no old proof rewritten."
+}

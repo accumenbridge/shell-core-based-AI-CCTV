@@ -462,7 +462,7 @@ test('canonical compose preview, immutable save, and idempotent local build admi
     const previewValue = body(preview);
     assert.equal(previewValue.status, 'VALIDATED_DEFINITION_NOT_RUNNING');
     assert.equal(previewValue.product.id, draft.id);
-    assert.deepEqual(previewValue.product.modules, [{ id: 'service-desk', version: '0.2.1' }]);
+    assert.deepEqual(previewValue.product.modules, [{ id: 'service-desk', version: '0.2.2' }]);
     assert.equal(previewValue.plan.product.version, draft.version);
     assert.equal(context.store.product(draft.id, draft.version), undefined);
     assert.equal(context.store.auditLog(500).length, initialAudit);

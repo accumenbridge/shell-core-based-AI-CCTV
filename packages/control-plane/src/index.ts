@@ -103,7 +103,7 @@ export interface ArtifactBuildIdentity {
   originatingActorId: string;
 }
 
-export type ManagedRuntimeState = 'PREPARING'|'STARTING'|'RUNNING'|'STOP_REQUESTED'|'STOPPED'|'PREPARATION_FAILED'|'UNKNOWN'|'REPAIR_REQUIRED';
+export type ManagedRuntimeState = 'PREPARING'|'STARTING'|'RUNNING'|'STOP_REQUESTED'|'STOPPED'|'UPGRADE_READY'|'PREPARATION_FAILED'|'UNKNOWN'|'REPAIR_REQUIRED';
 export type ManagedRuntimeCommandKind = 'START'|'STOP'|'RESTART';
 export interface ManagedRuntimeStartIntent {
   instanceId: string;
@@ -127,6 +127,10 @@ export interface ManagedRuntimeStartIntent {
 }
 export interface ManagedRuntimeCommandResult {
   command: Record<string,unknown>;
+  /** The generation captured by this immutable command, even after the instance advances. */
+  generation: Record<string,unknown>;
+  /** The command's exact execution attempt; `instance` remains the live current projection. */
+  commandAttempt?: { attempt:number; state:string; generationId:string };
   instance: Record<string,unknown>;
   operationId: string|null;
   ownerToken: string|null;
@@ -171,6 +175,20 @@ export interface ManagedRuntimeRecoveryResult {
   operationId: string;
   ownerToken: string | null;
   reused: boolean;
+}
+export type ManagedRuntimeUpgradeState = 'PREPARING'|'MIGRATING'|'PUBLISHING'|'SUCCEEDED'|'FAILED'|'UNKNOWN';
+export interface ManagedRuntimeUpgradeIntent {
+  operationId:string;ownerId:string;ownerToken:string;actorId:string;requestKey:string;instanceId:string;
+  sourceGenerationId:string;sourceAttemptId:string;sourceAttempt:number;sourceCommandId:string;
+  targetVersion:string;targetArtifactDigest:string;targetProfileDigest:string;targetConfigDigest:string;
+  targetAdapterDigest:string;targetToolchainDigest:string;targetRecipeDigest:string;targetWorkerRequired:boolean;
+  sourceBackupDigest:string;reservedBytes:number;
+}
+export interface ManagedRuntimeUpgradeCapacityObservation {
+  backupBytes:number;stagingBytes:number;objectCount:number;entryCount:number;
+}
+export interface ManagedRuntimeUpgradeResult {
+  operation:Record<string,unknown>;operationId:string;ownerToken:string|null;reused:boolean;
 }
 
 export const MANAGED_RUNTIME_LIMITS = Object.freeze({
@@ -267,7 +285,7 @@ export class ControlPlaneStore {
     this.db = new DatabaseSync(path, { timeout: 1000 });
     try {
       const schemaVersion = Number((this.db.prepare('PRAGMA user_version').get() as { user_version: number }).user_version);
-      if (schemaVersion > 5) throw new Error(`Unsupported control-plane schema version ${schemaVersion}`);
+      if (schemaVersion > 6) throw new Error(`Unsupported control-plane schema version ${schemaVersion}`);
       this.db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON;');
       this.db.exec('BEGIN IMMEDIATE');
       try {
@@ -350,14 +368,14 @@ export class ControlPlaneStore {
         toolchain_digest TEXT NOT NULL, recipe_digest TEXT NOT NULL, originating_actor_id TEXT NOT NULL,
         start_actor_id TEXT NOT NULL, state TEXT NOT NULL, worker_required INTEGER NOT NULL DEFAULT 0,
         preparation_complete INTEGER NOT NULL DEFAULT 1,
-        current_attempt INTEGER NOT NULL DEFAULT 0,
+        current_attempt INTEGER NOT NULL DEFAULT 0, active_generation_id TEXT,
         created INTEGER NOT NULL, updated INTEGER NOT NULL
       );
       CREATE INDEX IF NOT EXISTS runtime_instances_order ON runtime_instances(created DESC,id);
       CREATE TABLE IF NOT EXISTS runtime_commands(
         id TEXT PRIMARY KEY, instance_id TEXT NOT NULL REFERENCES runtime_instances(id), kind TEXT NOT NULL,
         actor_id TEXT NOT NULL, request_key TEXT NOT NULL, payload_digest TEXT NOT NULL, payload_json TEXT NOT NULL,
-        state TEXT NOT NULL, result_json TEXT, created INTEGER NOT NULL, updated INTEGER NOT NULL,
+        state TEXT NOT NULL, result_json TEXT, generation_id TEXT, created INTEGER NOT NULL, updated INTEGER NOT NULL,
         UNIQUE(actor_id,request_key)
       );
       CREATE INDEX IF NOT EXISTS runtime_commands_instance ON runtime_commands(instance_id,created,id);
@@ -365,6 +383,7 @@ export class ControlPlaneStore {
         id TEXT PRIMARY KEY, instance_id TEXT NOT NULL REFERENCES runtime_instances(id), attempt_no INTEGER NOT NULL,
         command_id TEXT NOT NULL REFERENCES runtime_commands(id), owner_id TEXT NOT NULL, owner_token TEXT NOT NULL,
         state TEXT NOT NULL, physical_state TEXT NOT NULL, dispatch_begun INTEGER NOT NULL DEFAULT 0,
+        generation_id TEXT,
         enrollment_authorized INTEGER NOT NULL DEFAULT 0, launch_authorized INTEGER NOT NULL DEFAULT 0, worker_required INTEGER NOT NULL,
         api_ready INTEGER NOT NULL DEFAULT 0, worker_attached INTEGER NOT NULL DEFAULT 0,
         port INTEGER, stop_command_id TEXT, stop_actor_id TEXT,
@@ -389,6 +408,7 @@ export class ControlPlaneStore {
       CREATE TABLE IF NOT EXISTS runtime_recovery_operations(
         id TEXT PRIMARY KEY, kind TEXT NOT NULL, state TEXT NOT NULL, physical_state TEXT NOT NULL,
         instance_id TEXT NOT NULL REFERENCES runtime_instances(id), attempt_id TEXT NOT NULL REFERENCES runtime_attempts(id),
+        generation_id TEXT,
         attempt_no INTEGER NOT NULL, command_id TEXT NOT NULL REFERENCES runtime_commands(id),
         product_id TEXT NOT NULL, version TEXT NOT NULL, artifact_digest TEXT NOT NULL, originating_actor_id TEXT NOT NULL,
         profile_digest TEXT NOT NULL, config_digest TEXT NOT NULL, adapter_digest TEXT NOT NULL,
@@ -407,6 +427,7 @@ export class ControlPlaneStore {
       CREATE TABLE IF NOT EXISTS runtime_backups(
         digest TEXT PRIMARY KEY, instance_id TEXT NOT NULL REFERENCES runtime_instances(id),
         attempt_id TEXT NOT NULL REFERENCES runtime_attempts(id), attempt_no INTEGER NOT NULL,
+        generation_id TEXT,
         command_id TEXT NOT NULL REFERENCES runtime_commands(id), product_id TEXT NOT NULL, version TEXT NOT NULL,
         artifact_digest TEXT NOT NULL, originating_actor_id TEXT NOT NULL, profile_digest TEXT NOT NULL,
         config_digest TEXT NOT NULL, adapter_digest TEXT NOT NULL, toolchain_digest TEXT NOT NULL,
@@ -431,16 +452,76 @@ export class ControlPlaneStore {
       if (!artifactColumns.some(column => column.name === 'snapshot_digest')) this.db.exec("ALTER TABLE artifacts ADD COLUMN snapshot_digest TEXT NOT NULL DEFAULT ''");
       const runtimeInstanceColumns = this.db.prepare('PRAGMA table_info(runtime_instances)').all() as { name: string }[];
       if (!runtimeInstanceColumns.some(column => column.name === 'preparation_complete')) this.db.exec('ALTER TABLE runtime_instances ADD COLUMN preparation_complete INTEGER NOT NULL DEFAULT 1');
+      if (!runtimeInstanceColumns.some(column => column.name === 'active_generation_id')) this.db.exec('ALTER TABLE runtime_instances ADD COLUMN active_generation_id TEXT');
       const runtimeAttemptColumns = this.db.prepare('PRAGMA table_info(runtime_attempts)').all() as { name: string }[];
+      const runtimeCommandColumns = this.db.prepare('PRAGMA table_info(runtime_commands)').all() as { name: string }[];
+      if (!runtimeCommandColumns.some(column => column.name === 'generation_id')) this.db.exec('ALTER TABLE runtime_commands ADD COLUMN generation_id TEXT');
+      if (!runtimeAttemptColumns.some(column => column.name === 'generation_id')) this.db.exec('ALTER TABLE runtime_attempts ADD COLUMN generation_id TEXT');
       if (!runtimeAttemptColumns.some(column => column.name === 'dispatch_begun')) {
         this.db.exec('ALTER TABLE runtime_attempts ADD COLUMN dispatch_begun INTEGER NOT NULL DEFAULT 0');
         this.db.exec("UPDATE runtime_attempts SET dispatch_begun=1 WHERE state<>'PREPARING' OR physical_state<>'NOT_DISPATCHED'");
       }
       if (!runtimeAttemptColumns.some(column => column.name === 'enrollment_authorized')) this.db.exec('ALTER TABLE runtime_attempts ADD COLUMN enrollment_authorized INTEGER NOT NULL DEFAULT 0');
       if (!runtimeAttemptColumns.some(column => column.name === 'launch_authorized')) this.db.exec('ALTER TABLE runtime_attempts ADD COLUMN launch_authorized INTEGER NOT NULL DEFAULT 0');
+      const recoveryGenerationColumns = this.db.prepare('PRAGMA table_info(runtime_recovery_operations)').all() as { name: string }[];
+      if (!recoveryGenerationColumns.some(column => column.name === 'generation_id')) this.db.exec('ALTER TABLE runtime_recovery_operations ADD COLUMN generation_id TEXT');
+      const backupGenerationColumns = this.db.prepare('PRAGMA table_info(runtime_backups)').all() as { name: string }[];
+      if (!backupGenerationColumns.some(column => column.name === 'generation_id')) this.db.exec('ALTER TABLE runtime_backups ADD COLUMN generation_id TEXT');
+      this.db.exec(`
+        CREATE TABLE IF NOT EXISTS runtime_generations(
+          id TEXT PRIMARY KEY, instance_id TEXT NOT NULL REFERENCES runtime_instances(id), generation_no INTEGER NOT NULL,
+          product_id TEXT NOT NULL, version TEXT NOT NULL, artifact_digest TEXT NOT NULL, profile_digest TEXT NOT NULL,
+          config_digest TEXT NOT NULL, adapter_digest TEXT NOT NULL, toolchain_digest TEXT NOT NULL, recipe_digest TEXT NOT NULL,
+          originating_actor_id TEXT NOT NULL, source_generation_id TEXT, upgrade_operation_id TEXT, created INTEGER NOT NULL,
+          UNIQUE(instance_id,generation_no), UNIQUE(instance_id,id)
+        );
+        CREATE INDEX IF NOT EXISTS runtime_generations_instance ON runtime_generations(instance_id,generation_no DESC);
+        CREATE TABLE IF NOT EXISTS runtime_upgrade_slot(
+          singleton INTEGER PRIMARY KEY CHECK(singleton=1), operation_id TEXT, instance_id TEXT, owner_id TEXT, owner_token TEXT,
+          reserved_bytes INTEGER NOT NULL DEFAULT 0, state TEXT NOT NULL DEFAULT 'EMPTY', updated INTEGER NOT NULL
+        );
+        INSERT OR IGNORE INTO runtime_upgrade_slot(singleton,state,updated) VALUES(1,'EMPTY',0);
+        CREATE TABLE IF NOT EXISTS runtime_upgrade_operations(
+          id TEXT PRIMARY KEY, instance_id TEXT NOT NULL REFERENCES runtime_instances(id), source_generation_id TEXT NOT NULL,
+          target_generation_id TEXT, source_attempt_id TEXT NOT NULL REFERENCES runtime_attempts(id), source_attempt_no INTEGER NOT NULL,
+          source_command_id TEXT NOT NULL REFERENCES runtime_commands(id), target_version TEXT NOT NULL, target_artifact_digest TEXT NOT NULL,
+          target_profile_digest TEXT NOT NULL, target_config_digest TEXT, target_adapter_digest TEXT NOT NULL,
+          target_toolchain_digest TEXT NOT NULL, target_recipe_digest TEXT NOT NULL, target_originating_actor_id TEXT NOT NULL,
+          target_worker_required INTEGER NOT NULL DEFAULT 0, backup_digest TEXT NOT NULL,
+          actor_id TEXT NOT NULL, request_key TEXT NOT NULL, payload_digest TEXT NOT NULL, owner_id TEXT NOT NULL, owner_token TEXT NOT NULL,
+          state TEXT NOT NULL, physical_state TEXT NOT NULL, reserved_bytes INTEGER NOT NULL,
+          dispatch_begun INTEGER NOT NULL DEFAULT 0, driver_empty INTEGER NOT NULL DEFAULT 0, driver_closed INTEGER NOT NULL DEFAULT 0,
+          staging_clean INTEGER NOT NULL DEFAULT 0, publisher_result_observed INTEGER NOT NULL DEFAULT 0, publisher_closed INTEGER NOT NULL DEFAULT 0,
+          destination_published INTEGER NOT NULL DEFAULT 0, destination_verified INTEGER NOT NULL DEFAULT 0,
+          error_code TEXT, created INTEGER NOT NULL, updated INTEGER NOT NULL, UNIQUE(actor_id,request_key)
+      );
+      CREATE INDEX IF NOT EXISTS runtime_upgrade_operations_instance ON runtime_upgrade_operations(instance_id,created DESC);
+      `);
+      const upgradeOperationColumns = this.db.prepare('PRAGMA table_info(runtime_upgrade_operations)').all() as { name: string }[];
+      if (!upgradeOperationColumns.some(column => column.name === 'target_originating_actor_id'))
+        this.db.exec("ALTER TABLE runtime_upgrade_operations ADD COLUMN target_originating_actor_id TEXT NOT NULL DEFAULT ''");
+      if (schemaVersion < 6) {
+        this.db.exec(`
+          INSERT OR IGNORE INTO runtime_generations(id,instance_id,generation_no,product_id,version,artifact_digest,profile_digest,config_digest,
+            adapter_digest,toolchain_digest,recipe_digest,originating_actor_id,source_generation_id,upgrade_operation_id,created)
+          SELECT 'generation:'||id||':1',id,1,product_id,version,artifact_digest,profile_digest,config_digest,adapter_digest,toolchain_digest,
+            recipe_digest,originating_actor_id,NULL,NULL,created FROM runtime_instances;
+          UPDATE runtime_instances SET active_generation_id='generation:'||id||':1' WHERE active_generation_id IS NULL;
+          UPDATE runtime_attempts SET generation_id=(SELECT active_generation_id FROM runtime_instances WHERE runtime_instances.id=runtime_attempts.instance_id)
+            WHERE generation_id IS NULL;
+          UPDATE runtime_commands SET generation_id=(SELECT generation_id FROM runtime_attempts WHERE runtime_attempts.command_id=runtime_commands.id LIMIT 1)
+            WHERE generation_id IS NULL AND EXISTS(SELECT 1 FROM runtime_attempts WHERE runtime_attempts.command_id=runtime_commands.id);
+          UPDATE runtime_commands SET generation_id=(SELECT generation_id FROM runtime_attempts WHERE runtime_attempts.stop_command_id=runtime_commands.id LIMIT 1)
+            WHERE generation_id IS NULL AND EXISTS(SELECT 1 FROM runtime_attempts WHERE runtime_attempts.stop_command_id=runtime_commands.id);
+          UPDATE runtime_recovery_operations SET generation_id=(SELECT active_generation_id FROM runtime_instances WHERE runtime_instances.id=runtime_recovery_operations.instance_id)
+            WHERE generation_id IS NULL;
+          UPDATE runtime_backups SET generation_id=(SELECT active_generation_id FROM runtime_instances WHERE runtime_instances.id=runtime_backups.instance_id)
+            WHERE generation_id IS NULL;
+        `);
+      }
       this.db.exec(`INSERT OR IGNORE INTO artifact_registry_state(singleton,operation_id,reserved_bytes,reserved_files,reserved_objects,updated)
         VALUES(1,NULL,0,0,0,0)`);
-      if (schemaVersion < 5) this.db.exec('PRAGMA user_version=5');
+      if (schemaVersion < 6) this.db.exec('PRAGMA user_version=6');
       this.db.exec('COMMIT');
       } catch (error) {
         try { this.db.exec('ROLLBACK'); } catch { /* preserve the migration error */ }
@@ -1130,15 +1211,23 @@ export class ControlPlaneStore {
     return this.db.prepare(`SELECT id,product_id AS productId,version,artifact_digest AS artifactDigest,profile_digest AS profileDigest,
       config_digest AS configDigest,adapter_digest AS adapterDigest,toolchain_digest AS toolchainDigest,recipe_digest AS recipeDigest,
       originating_actor_id AS originatingActorId,start_actor_id AS startActorId,state,worker_required AS workerRequired,
-      preparation_complete AS preparationComplete,current_attempt AS currentAttempt,created,updated FROM runtime_instances WHERE id=?`).get(instanceId) as Record<string,any>|undefined;
+      preparation_complete AS preparationComplete,current_attempt AS currentAttempt,active_generation_id AS activeGenerationId,created,updated FROM runtime_instances WHERE id=?`).get(instanceId) as Record<string,any>|undefined;
   }
   private runtimeCommandRow(commandId:string) {
-    return this.db.prepare(`SELECT id,instance_id AS instanceId,kind,actor_id AS actorId,state,created,updated FROM runtime_commands WHERE id=?`).get(commandId) as Record<string,any>|undefined;
+    return this.db.prepare(`SELECT id,instance_id AS instanceId,kind,actor_id AS actorId,generation_id AS generationId,state,created,updated FROM runtime_commands WHERE id=?`).get(commandId) as Record<string,any>|undefined;
   }
   private runtimeResult(commandId:string,instanceId:string,operationId:string|null,ownerToken:string|null,reused:boolean):ManagedRuntimeCommandResult {
-    const command=this.runtimeCommandRow(commandId),instance=this.runtimeInstanceRow(instanceId);
-    if(!command||!instance)throw new PlatformError('CONFLICT','Managed runtime command identity is incomplete');
-    return {command,instance,operationId,ownerToken,reused};
+    const command=this.runtimeCommandRow(commandId),current=this.runtimeInstanceRow(instanceId);
+    const attempt=this.db.prepare(`SELECT attempt_no AS attempt,state,generation_id AS generationId FROM runtime_attempts
+      WHERE command_id=? OR stop_command_id=? ORDER BY attempt_no DESC LIMIT 1`).get(commandId,commandId) as Record<string,any>|undefined;
+    const generationId=command?.generationId??attempt?.generationId;
+    const generation=generationId?this.db.prepare(`SELECT id AS generationId,generation_no AS generation,product_id AS productId,version,
+      artifact_digest AS artifactDigest,profile_digest AS profileDigest,config_digest AS configDigest,adapter_digest AS adapterDigest,
+      toolchain_digest AS toolchainDigest,recipe_digest AS recipeDigest,originating_actor_id AS originatingActorId
+      FROM runtime_generations WHERE id=? AND instance_id=?`).get(generationId,instanceId) as Record<string,any>|undefined:undefined;
+    if(!command||!current||!generation)throw new PlatformError('CONFLICT','Managed runtime command identity is incomplete');
+    return {command,instance:current,generation,...(attempt?{commandAttempt:{attempt:attempt.attempt,state:attempt.state,generationId:attempt.generationId}}:{}),
+      operationId,ownerToken,reused};
   }
   private validateRuntimeStartIntent(input:ManagedRuntimeStartIntent) {
     const hash=/^[a-f0-9]{64}$/;
@@ -1176,6 +1265,276 @@ export class ControlPlaneStore {
       throw new PlatformError('INVALID','Invalid managed runtime command reference');
     return this.runtimeCommandRow(commandId);
   }
+  private runtimeUpgradeOperationRow(operationId:string):Record<string,any>|undefined {
+    return this.db.prepare(`SELECT id,instance_id AS instanceId,source_generation_id AS sourceGenerationId,target_generation_id AS targetGenerationId,
+      source_attempt_id AS sourceAttemptId,source_attempt_no AS sourceAttempt,source_command_id AS sourceCommandId,target_version AS targetVersion,
+      target_artifact_digest AS targetArtifactDigest,target_profile_digest AS targetProfileDigest,target_config_digest AS targetConfigDigest,
+      target_adapter_digest AS targetAdapterDigest,target_toolchain_digest AS targetToolchainDigest,target_recipe_digest AS targetRecipeDigest,
+      target_originating_actor_id AS targetOriginatingActorId,
+      target_worker_required AS targetWorkerRequired,
+      backup_digest AS sourceBackupDigest,actor_id AS actorId,request_key AS requestKey,state,physical_state AS physicalState,
+      reserved_bytes AS reservedBytes,dispatch_begun AS dispatchBegun,driver_empty AS driverEmpty,driver_closed AS driverClosed,
+      staging_clean AS stagingClean,publisher_result_observed AS publisherResultObserved,publisher_closed AS publisherClosed,
+      destination_published AS destinationPublished,destination_verified AS destinationVerified,error_code AS errorCode,created,updated
+      FROM runtime_upgrade_operations WHERE id=?`).get(operationId) as Record<string,any>|undefined;
+  }
+  private runtimeUpgradeResult(operationId:string,ownerToken:string|null,reused:boolean):ManagedRuntimeUpgradeResult {
+    const operation=this.runtimeUpgradeOperationRow(operationId);
+    if(!operation)throw new PlatformError('CONFLICT','Runtime upgrade operation disappeared');
+    return {operation,operationId,ownerToken,reused};
+  }
+  private validateManagedRuntimeUpgradeIntent(input:ManagedRuntimeUpgradeIntent):void {
+    const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,hash=/^[a-f0-9]{64}$/;
+    if(!input||!uuid.test(input.operationId)||!uuid.test(input.ownerId)||!/^[A-Za-z0-9_-]{32,128}$/.test(input.ownerToken)||
+       !managedRuntimeIdPattern.test(input.instanceId)||!input.sourceGenerationId||input.sourceGenerationId.length>128||!uuid.test(input.sourceAttemptId)||
+       !Number.isSafeInteger(input.sourceAttempt)||input.sourceAttempt<1||!uuid.test(input.sourceCommandId)||
+       typeof input.targetVersion!=='string'||!/^[0-9]{1,6}\.[0-9]{1,6}\.[0-9]{1,6}$/.test(input.targetVersion)||
+       !hash.test(input.targetArtifactDigest)||!hash.test(input.targetProfileDigest)||!hash.test(input.targetConfigDigest)||!hash.test(input.targetAdapterDigest)||
+       !hash.test(input.targetToolchainDigest)||!hash.test(input.targetRecipeDigest)||typeof input.targetWorkerRequired!=='boolean'||!hash.test(input.sourceBackupDigest)||
+       typeof input.requestKey!=='string'||!/^[A-Za-z0-9._:-]{8,128}$/.test(input.requestKey)||
+       !Number.isSafeInteger(input.reservedBytes)||input.reservedBytes<1||input.reservedBytes>MANAGED_RUNTIME_RECOVERY_LIMITS.maxStagingBytes)
+      throw new PlatformError('INVALID','Invalid managed runtime upgrade intent');
+    validateActor(input.actorId);
+  }
+  beginManagedRuntimeUpgrade(input:ManagedRuntimeUpgradeIntent,observeCapacity:()=>ManagedRuntimeUpgradeCapacityObservation,authorize:()=>unknown):ManagedRuntimeUpgradeResult {
+    this.validateManagedRuntimeUpgradeIntent(input);
+    if(typeof observeCapacity!=='function')throw new PlatformError('INVALID','A fresh upgrade capacity observation is required');
+    const actor=validateActor(input.actorId),payload={kind:'UPGRADE',instanceId:input.instanceId,sourceGenerationId:input.sourceGenerationId,
+      sourceBackupDigest:input.sourceBackupDigest,targetVersion:input.targetVersion,targetArtifactDigest:input.targetArtifactDigest};
+    const payloadDigest=digest(payload);
+    return this.transaction(()=>{
+      this.authorizeMutation(authorize);
+      const prior=this.db.prepare('SELECT id,payload_digest AS payloadDigest FROM runtime_upgrade_operations WHERE actor_id=? AND request_key=?').get(actor,input.requestKey) as
+        {id:string;payloadDigest:string}|undefined;
+      if(prior){if(prior.payloadDigest!==payloadDigest)throw new PlatformError('CONFLICT','Upgrade request key is already bound to another immutable operation');
+        return this.runtimeUpgradeResult(prior.id,null,true);}
+      if(this.db.prepare('SELECT id FROM runtime_upgrade_operations WHERE owner_token=?').get(input.ownerToken))
+        throw new PlatformError('CONFLICT','Upgrade owner token cannot be reused');
+      const runtimeSlot=this.db.prepare('SELECT instance_id AS instanceId,operation_id AS operationId,state FROM runtime_physical_slot WHERE singleton=1').get() as any;
+      const recoverySlot=this.db.prepare('SELECT operation_id AS operationId,state FROM runtime_recovery_slot WHERE singleton=1').get() as any;
+      const upgradeSlot=this.db.prepare('SELECT operation_id AS operationId,state FROM runtime_upgrade_slot WHERE singleton=1').get() as any;
+      if(runtimeSlot.instanceId||runtimeSlot.operationId||runtimeSlot.state!=='EMPTY'||recoverySlot.operationId||recoverySlot.state!=='EMPTY'||
+         upgradeSlot.operationId||upgradeSlot.state!=='EMPTY')throw new PlatformError('CONFLICT','Another runtime lifecycle operation owns a non-expiring local slot');
+      const source=this.db.prepare(`SELECT i.id AS instanceId,i.active_generation_id AS generationId,i.product_id AS productId,i.version,i.artifact_digest AS artifactDigest,
+        i.profile_digest AS profileDigest,i.config_digest AS configDigest,i.adapter_digest AS adapterDigest,i.toolchain_digest AS toolchainDigest,
+        i.recipe_digest AS recipeDigest,i.originating_actor_id AS originatingActorId,g.product_id AS generationProductId,g.version AS generationVersion,
+        g.artifact_digest AS generationArtifactDigest,g.profile_digest AS generationProfileDigest,g.config_digest AS generationConfigDigest,
+        g.adapter_digest AS generationAdapterDigest,g.toolchain_digest AS generationToolchainDigest,g.recipe_digest AS generationRecipeDigest,
+        g.originating_actor_id AS generationOriginatingActorId,i.state AS instanceState,i.current_attempt AS currentAttempt,
+        a.id AS attemptId,a.attempt_no AS attempt,a.command_id AS commandId,a.state AS attemptState,a.physical_state AS physicalState,
+        a.dispatch_begun AS dispatchBegun,a.empty_observed AS emptyObserved,a.helper_closed AS helperClosed,a.execution_clean AS executionClean,
+        a.stop_command_id AS stopCommandId,c.state AS commandState,sc.state AS stopCommandState
+        FROM runtime_instances i JOIN runtime_generations g ON g.id=i.active_generation_id AND g.instance_id=i.id
+        JOIN runtime_attempts a ON a.instance_id=i.id AND a.attempt_no=i.current_attempt AND a.generation_id=i.active_generation_id
+        JOIN runtime_commands c ON c.id=a.command_id LEFT JOIN runtime_commands sc ON sc.id=a.stop_command_id WHERE i.id=?`).get(input.instanceId) as Record<string,any>|undefined;
+      if(!source||source.instanceState!=='STOPPED'||source.attemptState!=='STOPPED'||source.physicalState!=='EMPTY'||source.dispatchBegun!==1||
+         source.emptyObserved!==1||source.helperClosed!==1||source.executionClean!==1||source.commandState!=='SUCCEEDED'||
+         source.stopCommandId!==null&&source.stopCommandState!=='SUCCEEDED'||source.generationId!==input.sourceGenerationId||
+         source.generationProductId!==source.productId||source.generationVersion!==source.version||source.generationArtifactDigest!==source.artifactDigest||
+         source.generationProfileDigest!==source.profileDigest||source.generationConfigDigest!==source.configDigest||source.generationAdapterDigest!==source.adapterDigest||
+         source.generationToolchainDigest!==source.toolchainDigest||source.generationRecipeDigest!==source.recipeDigest||source.generationOriginatingActorId!==source.originatingActorId||
+         source.attemptId!==input.sourceAttemptId||source.attempt!==input.sourceAttempt||source.commandId!==input.sourceCommandId)
+        throw new PlatformError('CONFLICT','Upgrade requires the exact current positively stopped runtime generation');
+      const target=this.db.prepare(`SELECT r.artifact_digest AS artifactDigest,a.product_id AS productId,a.version,a.snapshot_digest AS snapshotDigest,
+        a.originating_actor_id AS originatingActorId
+        FROM artifact_releases r JOIN artifacts a ON a.digest=r.artifact_digest WHERE r.product_id=? AND r.version=?`).get(source.productId,input.targetVersion) as any;
+      if(!target||target.artifactDigest!==input.targetArtifactDigest||target.snapshotDigest!==input.targetArtifactDigest||target.version!==input.targetVersion||
+         target.productId!==source.productId||typeof target.originatingActorId!=='string'||!target.originatingActorId)
+        throw new PlatformError('CONFLICT','Target must be the exact promoted immutable artifact');
+      const backup=this.db.prepare(`SELECT digest,instance_id AS instanceId,generation_id AS generationId,product_id AS productId,version,
+        artifact_digest AS artifactDigest,captured_at AS capturedAt,attempt_id AS attemptId,attempt_no AS attempt,command_id AS commandId
+        FROM runtime_backups WHERE digest=?`).get(input.sourceBackupDigest) as any;
+      if(!backup||backup.instanceId!==input.instanceId||backup.generationId!==source.generationId||backup.productId!==source.productId||
+         backup.version!==source.version||backup.artifactDigest!==source.artifactDigest||backup.capturedAt>Date.now()||
+         backup.attemptId!==source.attemptId||backup.attempt!==source.attempt||backup.commandId!==source.commandId)
+        throw new PlatformError('CONFLICT','Source backup is not bound to the exact stopped generation');
+      const capacity=observeCapacity();
+      if(capacity&&typeof (capacity as any).then==='function')throw new PlatformError('INVALID','Upgrade capacity observation must be synchronous');
+      const limits=MANAGED_RUNTIME_RECOVERY_LIMITS;
+      if(!capacity||![capacity.backupBytes,capacity.stagingBytes,capacity.objectCount,capacity.entryCount].every(value=>Number.isSafeInteger(value)&&value>=0)||
+         capacity.entryCount>MANAGED_RUNTIME_LIMITS.maxMetadataEntries||capacity.objectCount>limits.maxObjects||
+         capacity.stagingBytes+input.reservedBytes>limits.maxStagingBytes||capacity.backupBytes+capacity.stagingBytes+input.reservedBytes>limits.maxTotalBytes)
+        throw new PlatformError('CONFLICT','Runtime upgrade material exceeds its fixed local capacity');
+      this.authorizeMutation(authorize);
+      const now=Date.now();
+      this.db.prepare(`INSERT INTO runtime_upgrade_operations(id,instance_id,source_generation_id,source_attempt_id,source_attempt_no,source_command_id,
+        target_version,target_artifact_digest,target_profile_digest,target_config_digest,target_adapter_digest,target_toolchain_digest,target_recipe_digest,
+        target_originating_actor_id,target_worker_required,backup_digest,actor_id,request_key,payload_digest,owner_id,owner_token,state,physical_state,reserved_bytes,created,updated)
+        VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'PREPARING','NOT_DISPATCHED',?,?,?)`).run(input.operationId,input.instanceId,input.sourceGenerationId,
+        input.sourceAttemptId,input.sourceAttempt,input.sourceCommandId,input.targetVersion,input.targetArtifactDigest,input.targetProfileDigest,input.targetConfigDigest,
+        input.targetAdapterDigest,input.targetToolchainDigest,input.targetRecipeDigest,target.originatingActorId,input.targetWorkerRequired?1:0,input.sourceBackupDigest,actor,input.requestKey,payloadDigest,input.ownerId,
+        input.ownerToken,input.reservedBytes,now,now);
+      this.db.prepare(`UPDATE runtime_upgrade_slot SET operation_id=?,instance_id=?,owner_id=?,owner_token=?,reserved_bytes=?,state='PREPARING',updated=?
+        WHERE singleton=1 AND operation_id IS NULL`).run(input.operationId,input.instanceId,input.ownerId,input.ownerToken,input.reservedBytes,now);
+      const reserved=this.db.prepare('SELECT operation_id AS operationId FROM runtime_upgrade_slot WHERE singleton=1').get() as {operationId:string|null};
+      if(reserved.operationId!==input.operationId)throw new PlatformError('CONFLICT','Runtime upgrade reservation did not commit');
+      this.audit('runtime.upgrade.requested',input.instanceId,{operationId:input.operationId,sourceGenerationId:input.sourceGenerationId,
+        targetVersion:input.targetVersion,targetArtifactDigest:input.targetArtifactDigest,sourceBackupDigest:input.sourceBackupDigest},actor);
+      return this.runtimeUpgradeResult(input.operationId,input.ownerToken,false);
+    });
+  }
+  private currentUpgradeOwner(operationId:string,ownerToken:string):Record<string,any>|undefined {
+    const row=this.runtimeUpgradeOperationRow(operationId);
+    if(!row)return undefined;
+    const raw=this.db.prepare(`SELECT *,source_generation_id AS sourceGenerationId,target_generation_id AS targetGenerationId,
+      source_attempt_id AS sourceAttemptId,source_attempt_no AS sourceAttempt,source_command_id AS sourceCommandId,
+      target_version AS targetVersion,target_artifact_digest AS targetArtifactDigest,target_profile_digest AS targetProfileDigest,
+      target_config_digest AS targetConfigDigest,target_adapter_digest AS targetAdapterDigest,target_toolchain_digest AS targetToolchainDigest,
+      target_recipe_digest AS targetRecipeDigest,target_originating_actor_id AS targetOriginatingActorId,
+      target_worker_required AS targetWorkerRequired,backup_digest AS sourceBackupDigest FROM runtime_upgrade_operations WHERE id=?`).get(operationId) as any;
+    const slot=this.db.prepare('SELECT operation_id AS operationId,owner_token AS ownerToken,instance_id AS instanceId,state FROM runtime_upgrade_slot WHERE singleton=1').get() as any;
+    return raw&&raw.owner_token===ownerToken&&slot.operationId===operationId&&slot.ownerToken===ownerToken&&slot.instanceId===raw.instance_id?{...raw,ownerToken}:undefined;
+  }
+  markManagedRuntimeUpgradeDispatch(operationId:string,ownerToken:string,authorize:()=>unknown):Record<string,unknown>{
+    return this.transaction(()=>{this.authorizeMutation(authorize);const row=this.currentUpgradeOwner(operationId,ownerToken);
+      if(!row||row.state!=='PREPARING'||row.dispatch_begun!==0||row.physical_state!=='NOT_DISPATCHED')throw new PlatformError('CONFLICT','Upgrade dispatch lost its original owner fence');
+      const source=this.db.prepare('SELECT state,active_generation_id FROM runtime_instances WHERE id=?').get(row.instance_id) as any;
+      if(!source||source.state!=='STOPPED'||source.active_generation_id!==row.source_generation_id)throw new PlatformError('CONFLICT','Source generation changed before upgrade dispatch');
+      const now=Date.now();this.db.prepare("UPDATE runtime_upgrade_operations SET state='MIGRATING',physical_state='DRIVER_RUNNING',dispatch_begun=1,updated=? WHERE id=? AND owner_token=? AND dispatch_begun=0").run(now,operationId,ownerToken);
+      this.db.prepare("UPDATE runtime_upgrade_slot SET state='MIGRATING',updated=? WHERE singleton=1 AND operation_id=? AND owner_token=?").run(now,operationId,ownerToken);
+      return this.runtimeUpgradeOperationRow(operationId)!;});
+  }
+  recordManagedRuntimeUpgradeDriver(operationId:string,ownerToken:string,proof:{empty:boolean;closed:boolean;stagingClean:boolean}):Record<string,unknown>{
+    if(!proof||typeof proof!=='object'||typeof proof.empty!=='boolean'||typeof proof.closed!=='boolean'||typeof proof.stagingClean!=='boolean')throw new PlatformError('INVALID','Invalid upgrade driver closure facts');
+    return this.transaction(()=>{const row=this.currentUpgradeOwner(operationId,ownerToken);
+      if(!row||!['MIGRATING','UNKNOWN'].includes(row.state)||row.dispatch_begun!==1||row.publisher_result_observed===1||row.publisher_closed===1||row.destination_published===1||row.destination_verified===1)
+        throw new PlatformError('CONFLICT','Upgrade driver result has no current pre-publication owner');
+      if(row.driver_empty===1&&!proof.empty||row.driver_closed===1&&!proof.closed||row.staging_clean===1&&!proof.stagingClean)
+        throw new PlatformError('CONFLICT','Upgrade driver proof cannot retract an observed closure or cleanup fact');
+      const empty=row.driver_empty===1||proof.empty,closed=row.driver_closed===1||proof.closed,stagingClean=row.staging_clean===1||proof.stagingClean;
+      const known=empty&&closed&&stagingClean,now=Date.now();this.db.prepare('UPDATE runtime_upgrade_operations SET driver_empty=?,driver_closed=?,staging_clean=?,physical_state=?,state=?,error_code=?,updated=? WHERE id=? AND owner_token=?')
+        .run(empty?1:0,closed?1:0,stagingClean?1:0,known?'STAGED':'UNKNOWN',known?'MIGRATING':'UNKNOWN',known?null:'UPGRADE_DRIVER_UNVERIFIED',now,operationId,ownerToken);
+      this.db.prepare('UPDATE runtime_upgrade_slot SET state=?,updated=? WHERE singleton=1 AND operation_id=? AND owner_token=?').run(known?'STAGED':'UNKNOWN',now,operationId,ownerToken);
+      return this.runtimeUpgradeOperationRow(operationId)!;});
+  }
+  markManagedRuntimeUpgradePublishing(operationId:string,ownerToken:string,authorize:()=>unknown):Record<string,unknown>{
+    return this.transaction(()=>{this.authorizeMutation(authorize);const row=this.currentUpgradeOwner(operationId,ownerToken);if(!row||row.state!=='MIGRATING'||row.physical_state!=='STAGED'||row.driver_empty!==1||row.driver_closed!==1||row.staging_clean!==1)throw new PlatformError('CONFLICT','Upgrade publication lacks original native closure');
+      const now=Date.now();this.db.prepare("UPDATE runtime_upgrade_operations SET state='PUBLISHING',physical_state='PUBLISHING',updated=? WHERE id=? AND owner_token=?").run(now,operationId,ownerToken);
+      this.db.prepare("UPDATE runtime_upgrade_slot SET state='PUBLISHING',updated=? WHERE singleton=1 AND operation_id=? AND owner_token=?").run(now,operationId,ownerToken);return this.runtimeUpgradeOperationRow(operationId)!;});
+  }
+  recordManagedRuntimeUpgradePublisher(operationId:string,ownerToken:string,proof:{moved:boolean;resultObserved:boolean;closed:boolean}):Record<string,unknown>{
+    if(!proof||typeof proof!=='object'||typeof proof.moved!=='boolean'||typeof proof.resultObserved!=='boolean'||typeof proof.closed!=='boolean')throw new PlatformError('INVALID','Invalid upgrade publisher closure facts');
+    return this.transaction(()=>{const row=this.currentUpgradeOwner(operationId,ownerToken);
+      if(!row||!['PUBLISHING','UNKNOWN'].includes(row.state)||row.dispatch_begun!==1||row.driver_empty!==1||row.driver_closed!==1||row.staging_clean!==1||row.destination_verified===1)
+        throw new PlatformError('CONFLICT','Upgrade publisher result has no current publishable owner');
+      if(row.destination_published===1&&!proof.moved||row.publisher_result_observed===1&&!proof.resultObserved||row.publisher_closed===1&&!proof.closed||
+         row.publisher_result_observed===1&&row.publisher_closed===1&&row.destination_published===0&&proof.moved)
+        throw new PlatformError('CONFLICT','Upgrade publisher proof cannot retract or contradict a completed physical result');
+      const moved=row.destination_published===1||proof.moved,resultObserved=row.publisher_result_observed===1||proof.resultObserved,
+        closed=row.publisher_closed===1||proof.closed,known=resultObserved&&closed,now=Date.now();
+      const physical=moved?(known?'PUBLISHED':row.physical_state):known?'NO_PUBLICATION':'UNKNOWN';
+      const operationState=known?'PUBLISHING':'UNKNOWN';
+      this.db.prepare('UPDATE runtime_upgrade_operations SET publisher_result_observed=?,publisher_closed=?,destination_published=?,physical_state=?,state=?,error_code=?,updated=? WHERE id=? AND owner_token=?')
+        .run(resultObserved?1:0,closed?1:0,moved?1:0,physical,operationState,known?null:'UPGRADE_PUBLICATION_UNVERIFIED',now,operationId,ownerToken);
+      const slotState=row.destination_verified===1?'VERIFIED':moved?(known?'PUBLISHED':'UNKNOWN'):known?'NO_PUBLICATION':'UNKNOWN';
+      this.db.prepare('UPDATE runtime_upgrade_slot SET state=?,updated=? WHERE singleton=1 AND operation_id=? AND owner_token=?').run(slotState,now,operationId,ownerToken);
+      return this.runtimeUpgradeOperationRow(operationId)!;});
+  }
+  recordManagedRuntimeUpgradeVerified(operationId:string,ownerToken:string):Record<string,unknown>{
+    return this.transaction(()=>{const row=this.currentUpgradeOwner(operationId,ownerToken);if(!row||row.state!=='PUBLISHING'||row.physical_state!=='PUBLISHED'||row.destination_published!==1||row.publisher_result_observed!==1||row.publisher_closed!==1||row.driver_empty!==1||row.driver_closed!==1||row.staging_clean!==1)throw new PlatformError('CONFLICT','Upgrade target verification lacks positive publication facts');
+      const now=Date.now();this.db.prepare("UPDATE runtime_upgrade_operations SET destination_verified=1,physical_state='VERIFIED',updated=? WHERE id=? AND owner_token=?").run(now,operationId,ownerToken);
+      this.db.prepare("UPDATE runtime_upgrade_slot SET state='VERIFIED',updated=? WHERE singleton=1 AND operation_id=? AND owner_token=?").run(now,operationId,ownerToken);return this.runtimeUpgradeOperationRow(operationId)!;});
+  }
+  completeManagedRuntimeUpgrade(operationId:string,ownerToken:string,authorize:()=>unknown):Record<string,unknown>{
+    return this.transaction(()=>{this.authorizeMutation(authorize);const row=this.currentUpgradeOwner(operationId,ownerToken);
+      if(!row||row.state!=='PUBLISHING'||row.physical_state!=='VERIFIED'||row.destination_verified!==1||row.destination_published!==1||row.driver_empty!==1||row.driver_closed!==1||row.staging_clean!==1||row.publisher_result_observed!==1||row.publisher_closed!==1)
+        throw new PlatformError('CONFLICT','Upgrade cutover lacks verified original-owner migration and publication facts');
+      const source=this.db.prepare(`SELECT i.*,g.product_id AS generationProductId,g.version AS generationVersion,g.artifact_digest AS generationArtifactDigest,
+        g.profile_digest AS generationProfileDigest,g.config_digest AS generationConfigDigest,g.adapter_digest AS generationAdapterDigest,
+        g.toolchain_digest AS generationToolchainDigest,g.recipe_digest AS generationRecipeDigest,g.originating_actor_id AS generationOriginatingActorId,
+        a.id AS attemptId,a.attempt_no AS attempt,a.command_id AS commandId,a.state AS attemptState,a.physical_state AS physicalState,
+        a.empty_observed AS emptyObserved,a.helper_closed AS helperClosed,a.execution_clean AS executionClean,c.state AS commandState
+        FROM runtime_instances i JOIN runtime_generations g ON g.id=i.active_generation_id AND g.instance_id=i.id
+        JOIN runtime_attempts a ON a.instance_id=i.id AND a.attempt_no=i.current_attempt AND a.generation_id=i.active_generation_id
+        JOIN runtime_commands c ON c.id=a.command_id WHERE i.id=?`).get(row.instance_id) as any;
+      const backup=this.db.prepare('SELECT generation_id AS generationId,instance_id AS instanceId,artifact_digest AS artifactDigest FROM runtime_backups WHERE digest=?').get(row.sourceBackupDigest) as any;
+      if(!source||source.state!=='STOPPED'||source.active_generation_id!==row.source_generation_id||source.attemptId!==row.source_attempt_id||source.attempt!==row.source_attempt_no||
+         source.commandId!==row.source_command_id||source.attemptState!=='STOPPED'||source.physicalState!=='EMPTY'||source.emptyObserved!==1||source.helperClosed!==1||source.executionClean!==1||source.commandState!=='SUCCEEDED'||
+         source.generationProductId!==source.product_id||source.generationVersion!==source.version||source.generationArtifactDigest!==source.artifact_digest||
+         source.generationProfileDigest!==source.profile_digest||source.generationConfigDigest!==source.config_digest||source.generationAdapterDigest!==source.adapter_digest||
+         source.generationToolchainDigest!==source.toolchain_digest||source.generationRecipeDigest!==source.recipe_digest||source.generationOriginatingActorId!==source.originating_actor_id||
+         !backup||backup.instanceId!==row.instance_id||backup.generationId!==row.source_generation_id||backup.artifactDigest!==source.artifact_digest)
+        throw new PlatformError('CONFLICT','Source runtime or verified backup changed before original-session cutover');
+      const targetRelease=this.db.prepare(`SELECT r.artifact_digest AS artifactDigest,a.originating_actor_id AS originatingActorId
+        FROM artifact_releases r JOIN artifacts a ON a.digest=r.artifact_digest WHERE r.product_id=? AND r.version=?`).get(source.product_id,row.target_version) as any;
+      if(!targetRelease||targetRelease.artifactDigest!==row.target_artifact_digest||targetRelease.originatingActorId!==row.target_originating_actor_id)
+        throw new PlatformError('CONFLICT','Target release changed before upgrade cutover');
+      const generationNo=Number(this.db.prepare('SELECT COALESCE(MAX(generation_no),0)+1 AS n FROM runtime_generations WHERE instance_id=?').get(row.instance_id)?.n);
+      const generationId=`generation:${row.instance_id}:${generationNo}`,now=Date.now();
+      const insertedGeneration=this.db.prepare(`INSERT INTO runtime_generations(id,instance_id,generation_no,product_id,version,artifact_digest,profile_digest,config_digest,
+        adapter_digest,toolchain_digest,recipe_digest,originating_actor_id,source_generation_id,upgrade_operation_id,created)
+        VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`).run(generationId,row.instance_id,generationNo,source.product_id,row.target_version,row.target_artifact_digest,
+        row.target_profile_digest,row.target_config_digest,row.target_adapter_digest,row.target_toolchain_digest,row.target_recipe_digest,
+        row.target_originating_actor_id,row.source_generation_id,operationId,now);
+      if(Number(insertedGeneration.changes)!==1)throw new PlatformError('CONFLICT','Target runtime generation was not recorded exactly once');
+      const instanceCutover=this.db.prepare(`UPDATE runtime_instances SET version=?,artifact_digest=?,profile_digest=?,config_digest=?,adapter_digest=?,toolchain_digest=?,recipe_digest=?,
+        originating_actor_id=?,worker_required=?,active_generation_id=?,state='UPGRADE_READY',preparation_complete=1,updated=? WHERE id=? AND active_generation_id=? AND state='STOPPED'`)
+        .run(row.target_version,row.target_artifact_digest,row.target_profile_digest,row.target_config_digest,row.target_adapter_digest,row.target_toolchain_digest,row.target_recipe_digest,
+          row.target_originating_actor_id,row.target_worker_required,generationId,now,row.instance_id,row.source_generation_id);
+      if(Number(instanceCutover.changes)!==1)throw new PlatformError('CONFLICT','Original source instance changed before the target generation cutover');
+      const upgradeCutover=this.db.prepare("UPDATE runtime_upgrade_operations SET state='SUCCEEDED',physical_state='CLEAN',target_generation_id=?,updated=? WHERE id=? AND owner_token=? AND state='PUBLISHING' AND destination_verified=1")
+        .run(generationId,now,operationId,ownerToken);
+      if(Number(upgradeCutover.changes)!==1)throw new PlatformError('CONFLICT','Upgrade owner changed before its durable completion');
+      const released=this.db.prepare("UPDATE runtime_upgrade_slot SET operation_id=NULL,instance_id=NULL,owner_id=NULL,owner_token=NULL,reserved_bytes=0,state='EMPTY',updated=? WHERE singleton=1 AND operation_id=? AND owner_token=? AND state='VERIFIED'")
+        .run(now,operationId,ownerToken);
+      if(Number(released.changes)!==1)throw new PlatformError('CONFLICT','Upgrade slot changed before its exact owner released it');
+      this.audit('runtime.upgrade.completed',row.instance_id,{operationId,sourceGenerationId:row.source_generation_id,targetGenerationId:generationId,
+        sourceBackupDigest:row.sourceBackupDigest,targetVersion:row.target_version,targetArtifactDigest:row.target_artifact_digest},row.actor_id);
+      return this.runtimeUpgradeOperationRow(operationId)!;});
+  }
+  failManagedRuntimeUpgradeCleanly(operationId:string,ownerToken:string,errorCode:string,proof:{stagingClean:boolean}):Record<string,unknown>{
+    if(typeof errorCode!=='string'||!/^[A-Z][A-Z0-9_]{1,63}$/.test(errorCode))throw new PlatformError('INVALID','Invalid upgrade failure code');
+    if(!proof||proof.stagingClean!==true)throw new PlatformError('INVALID','Upgrade failure settlement requires positive owned staging cleanup');
+    return this.transaction(()=>{const row=this.currentUpgradeOwner(operationId,ownerToken);if(!row||row.destination_published===1||row.destination_verified===1)
+      throw new PlatformError('CONFLICT','Upgrade failure settlement cannot retract publication');
+      const undispatched=row.state==='PREPARING'&&row.dispatch_begun===0&&row.physical_state==='NOT_DISPATCHED'&&row.driver_empty===0&&row.driver_closed===0&&
+        row.publisher_result_observed===0&&row.publisher_closed===0;
+      const driverClean=row.dispatch_begun===1&&row.driver_empty===1&&row.driver_closed===1&&
+        (row.state==='MIGRATING'&&row.physical_state==='STAGED'&&row.publisher_result_observed===0&&row.publisher_closed===0||
+         ['PUBLISHING','UNKNOWN'].includes(row.state)&&row.publisher_result_observed===1&&row.publisher_closed===1&&row.physical_state==='NO_PUBLICATION');
+      if(!undispatched&&!driverClean)throw new PlatformError('CONFLICT','Upgrade failure settlement lacks exact owned cleanup and no-publication facts');
+      const now=Date.now(),physicalState=undispatched?'NOT_DISPATCHED_CLEAN':'CLEAN';
+      this.db.prepare("UPDATE runtime_upgrade_operations SET state='FAILED',physical_state=?,staging_clean=1,error_code=?,updated=? WHERE id=? AND owner_token=?")
+        .run(physicalState,errorCode,now,operationId,ownerToken);
+      this.db.prepare("UPDATE runtime_upgrade_slot SET operation_id=NULL,instance_id=NULL,owner_id=NULL,owner_token=NULL,reserved_bytes=0,state='EMPTY',updated=? WHERE singleton=1 AND operation_id=? AND owner_token=?").run(now,operationId,ownerToken);
+      this.audit('runtime.upgrade.failed',row.instance_id,{operationId,errorCode},row.actor_id);return this.runtimeUpgradeOperationRow(operationId)!;});
+  }
+  markManagedRuntimeUpgradeUnknown(operationId:string,ownerToken:string,errorCode:string):Record<string,unknown>{
+    if(typeof errorCode!=='string'||!/^[A-Z][A-Z0-9_]{1,63}$/.test(errorCode))throw new PlatformError('INVALID','Invalid upgrade uncertainty code');
+    return this.transaction(()=>{const row=this.currentUpgradeOwner(operationId,ownerToken);if(!row)throw new PlatformError('CONFLICT','Upgrade uncertainty cannot change a successor owner');
+      const now=Date.now();this.db.prepare("UPDATE runtime_upgrade_operations SET state='UNKNOWN',physical_state='UNKNOWN',error_code=?,updated=? WHERE id=? AND owner_token=?").run(errorCode,now,operationId,ownerToken);
+      this.db.prepare("UPDATE runtime_upgrade_slot SET state='UNKNOWN',updated=? WHERE singleton=1 AND operation_id=? AND owner_token=?").run(now,operationId,ownerToken);
+      this.audit('runtime.upgrade.unknown',row.instance_id,{operationId,errorCode},row.actor_id);return this.runtimeUpgradeOperationRow(operationId)!;});
+  }
+  managedRuntimeUpgrade(operationId:string){return this.runtimeUpgradeOperationRow(operationId);}
+  managedRuntimeUpgradeForRequest(actorId:string,requestKey:string,input:{instanceId:string;targetVersion:string;targetArtifactDigest:string;sourceBackupDigest:string}){
+    const actor=validateActor(actorId);
+    if(typeof requestKey!=='string'||!/^[A-Za-z0-9._:-]{8,128}$/.test(requestKey)||!input||typeof input!=='object'||
+       !managedRuntimeIdPattern.test(input.instanceId)||typeof input.targetVersion!=='string'||!/^[0-9]{1,6}\.[0-9]{1,6}\.[0-9]{1,6}$/.test(input.targetVersion)||
+       !/^[a-f0-9]{64}$/.test(input.targetArtifactDigest)||!/^[a-f0-9]{64}$/.test(input.sourceBackupDigest))
+      throw new PlatformError('INVALID','Invalid managed runtime upgrade replay lookup');
+    const prior=this.db.prepare('SELECT id FROM runtime_upgrade_operations WHERE actor_id=? AND request_key=?').get(actor,requestKey) as {id:string}|undefined;
+    if(!prior)return undefined;
+    const operation=this.runtimeUpgradeOperationRow(prior.id);
+    if(!operation||operation.instanceId!==input.instanceId||operation.targetVersion!==input.targetVersion||
+       operation.targetArtifactDigest!==input.targetArtifactDigest||operation.sourceBackupDigest!==input.sourceBackupDigest)
+      throw new PlatformError('CONFLICT','Upgrade request key is already bound to another immutable operation');
+    if(['PREPARING','MIGRATING','PUBLISHING','UNKNOWN'].includes(operation.state))
+      throw new PlatformError('CONFLICT','The original upgrade owner has not reached a safely replayable terminal result');
+    return operation;
+  }
+  managedRuntimeUpgrades(instanceId:string){
+    if(typeof instanceId!=='string'||!managedRuntimeIdPattern.test(instanceId))throw new PlatformError('INVALID','Invalid managed runtime reference');
+    return this.db.prepare('SELECT id FROM runtime_upgrade_operations WHERE instance_id=? ORDER BY created DESC,id DESC LIMIT 32').all(instanceId)
+      .map((row:any)=>this.runtimeUpgradeOperationRow(row.id)).filter(Boolean);
+  }
+  managedRuntimeGenerations(instanceId:string){
+    if(typeof instanceId!=='string'||!managedRuntimeIdPattern.test(instanceId))throw new PlatformError('INVALID','Invalid managed runtime reference');
+    return this.db.prepare(`SELECT id,instance_id AS instanceId,generation_no AS generation,product_id AS productId,version,artifact_digest AS artifactDigest,
+      profile_digest AS profileDigest,config_digest AS configDigest,adapter_digest AS adapterDigest,toolchain_digest AS toolchainDigest,
+      recipe_digest AS recipeDigest,originating_actor_id AS originatingActorId,source_generation_id AS sourceGenerationId,
+      upgrade_operation_id AS upgradeOperationId,created FROM runtime_generations WHERE instance_id=? ORDER BY generation_no`).all(instanceId);
+  }
   beginManagedRuntimeStart(input:ManagedRuntimeStartIntent,authorize:()=>unknown):ManagedRuntimeCommandResult {
     this.validateRuntimeStartIntent(input);
     const actor=validateActor(input.actorId),origin=validateActor(input.originatingActorId);
@@ -1190,6 +1549,8 @@ export class ControlPlaneStore {
       if(slot.operationId||slot.instanceId||slot.state!=='EMPTY')throw new PlatformError('CONFLICT','Another managed runtime owns the non-expiring local runtime slot');
       const recoverySlot=this.db.prepare('SELECT operation_id AS operationId,state FROM runtime_recovery_slot WHERE singleton=1').get() as {operationId:string|null;state:string};
       if(recoverySlot.operationId||recoverySlot.state!=='EMPTY')throw new PlatformError('CONFLICT','A private runtime recovery operation owns the non-expiring recovery slot');
+      const upgradeSlot=this.db.prepare('SELECT operation_id AS operationId,state FROM runtime_upgrade_slot WHERE singleton=1').get() as {operationId:string|null;state:string};
+      if(upgradeSlot.operationId||upgradeSlot.state!=='EMPTY')throw new PlatformError('CONFLICT','A private runtime upgrade operation owns the non-expiring upgrade slot');
       const release=this.db.prepare(`SELECT r.artifact_digest AS artifactDigest,a.product_id AS productId,a.version,a.snapshot_digest AS snapshotDigest,
         a.originating_actor_id AS originatingActorId FROM artifact_releases r JOIN artifacts a ON a.digest=r.artifact_digest
         WHERE r.product_id=? AND r.version=?`).get(input.productId,input.version) as Record<string,string>|undefined;
@@ -1201,14 +1562,19 @@ export class ControlPlaneStore {
       if(count>=MANAGED_RUNTIME_LIMITS.maxInstances)throw new PlatformError('CONFLICT','Managed runtime instance history is at its fixed capacity');
       const now=Date.now();
       const preparationComplete=input.preparationComplete===false?0:1;
+      const generationId=`generation:${input.instanceId}:1`;
       this.db.prepare(`INSERT INTO runtime_instances(id,product_id,version,artifact_digest,profile_digest,config_digest,adapter_digest,
-        toolchain_digest,recipe_digest,originating_actor_id,start_actor_id,state,worker_required,preparation_complete,current_attempt,created,updated)
-        VALUES(?,?,?,?,?,?,?,?,?,? ,?,'PREPARING',?,?,1,?,?)`).run(input.instanceId,input.productId,input.version,input.artifactDigest,
-          input.profileDigest,input.configDigest,input.adapterDigest,input.toolchainDigest,input.recipeDigest,origin,actor,input.workerRequired?1:0,preparationComplete,now,now);
-      this.db.prepare(`INSERT INTO runtime_commands(id,instance_id,kind,actor_id,request_key,payload_digest,payload_json,state,created,updated)
-        VALUES(?,?,'START',?,?,?,?, 'PREPARING',?,?)`).run(commandId,input.instanceId,actor,input.requestKey,payloadDigest,payloadJson,now,now);
-      this.db.prepare(`INSERT INTO runtime_attempts(id,instance_id,attempt_no,command_id,owner_id,owner_token,state,physical_state,worker_required,created,updated)
-        VALUES(?,?,1,?,?,?,'PREPARING','NOT_DISPATCHED',?,?,?)`).run(attemptId,input.instanceId,commandId,input.ownerId,input.ownerToken,input.workerRequired?1:0,now,now);
+        toolchain_digest,recipe_digest,originating_actor_id,start_actor_id,state,worker_required,preparation_complete,current_attempt,active_generation_id,created,updated)
+        VALUES(?,?,?,?,?,?,?,?,?,? ,?,'PREPARING',?,?,1,?,?,?)`).run(input.instanceId,input.productId,input.version,input.artifactDigest,
+          input.profileDigest,input.configDigest,input.adapterDigest,input.toolchainDigest,input.recipeDigest,origin,actor,input.workerRequired?1:0,preparationComplete,generationId,now,now);
+      this.db.prepare(`INSERT INTO runtime_generations(id,instance_id,generation_no,product_id,version,artifact_digest,profile_digest,config_digest,
+        adapter_digest,toolchain_digest,recipe_digest,originating_actor_id,created) VALUES(?,?,1,?,?,?,?,?,?,?,?,?,?)`)
+        .run(generationId,input.instanceId,input.productId,input.version,input.artifactDigest,input.profileDigest,input.configDigest,input.adapterDigest,input.toolchainDigest,input.recipeDigest,origin,now);
+      this.db.prepare('UPDATE runtime_instances SET active_generation_id=? WHERE id=?').run(generationId,input.instanceId);
+      this.db.prepare(`INSERT INTO runtime_commands(id,instance_id,kind,actor_id,request_key,payload_digest,payload_json,generation_id,state,created,updated)
+        VALUES(?,?,'START',?,?,?,?,?,'PREPARING',?,?)`).run(commandId,input.instanceId,actor,input.requestKey,payloadDigest,payloadJson,generationId,now,now);
+      this.db.prepare(`INSERT INTO runtime_attempts(id,instance_id,attempt_no,command_id,owner_id,owner_token,state,physical_state,generation_id,worker_required,created,updated)
+        VALUES(?,?,1,?,?,?,'PREPARING','NOT_DISPATCHED',?,?,?,?)`).run(attemptId,input.instanceId,commandId,input.ownerId,input.ownerToken,generationId,input.workerRequired?1:0,now,now);
       this.db.prepare(`UPDATE runtime_physical_slot SET instance_id=?,operation_id=?,owner_id=?,owner_token=?,reserved_bytes=?,state='PREPARING',updated=? WHERE singleton=1 AND operation_id IS NULL`)
         .run(input.instanceId,attemptId,input.ownerId,input.ownerToken,input.executionBytes,now);
       const slotAfter=this.db.prepare('SELECT operation_id AS operationId FROM runtime_physical_slot WHERE singleton=1').get() as {operationId:string|null};
@@ -1233,7 +1599,7 @@ export class ControlPlaneStore {
       if(this.db.prepare('SELECT id FROM runtime_attempts WHERE owner_token=?').get(input.ownerToken))throw new PlatformError('CONFLICT','Runtime attempt owner token cannot be reused');
       const instance=this.runtimeInstanceRow(input.instanceId);
       if(!instance)throw new PlatformError('NOT_FOUND','Managed runtime instance not found');
-      if(instance.state!=='STOPPED')throw new PlatformError('CONFLICT','Only a positively stopped exact runtime can restart');
+      if(instance.state!=='STOPPED'&&instance.state!=='UPGRADE_READY')throw new PlatformError('CONFLICT','Only a positively stopped or explicitly upgrade-ready exact runtime can restart');
       if(instance.profileDigest!==input.profileDigest||instance.configDigest!==input.configDigest||instance.adapterDigest!==input.adapterDigest||
           instance.toolchainDigest!==input.toolchainDigest||instance.recipeDigest!==input.recipeDigest)
         throw new PlatformError('CONFLICT','The pinned runtime profile or toolchain changed; this exact instance cannot restart');
@@ -1241,15 +1607,59 @@ export class ControlPlaneStore {
       if(slot.operationId||slot.instanceId||slot.state!=='EMPTY')throw new PlatformError('CONFLICT','Another managed runtime owns the non-expiring local runtime slot');
       const recoverySlot=this.db.prepare('SELECT operation_id AS operationId,state FROM runtime_recovery_slot WHERE singleton=1').get() as {operationId:string|null;state:string};
       if(recoverySlot.operationId||recoverySlot.state!=='EMPTY')throw new PlatformError('CONFLICT','A private runtime recovery operation owns the non-expiring recovery slot');
-      const release=this.db.prepare('SELECT artifact_digest AS artifactDigest FROM artifact_releases WHERE product_id=? AND version=?').get(instance.productId,instance.version) as {artifactDigest:string}|undefined;
-      if(!release||release.artifactDigest!==instance.artifactDigest)throw new PlatformError('CONFLICT','The exact promoted artifact is no longer available');
+      const upgradeSlot=this.db.prepare('SELECT operation_id AS operationId,state FROM runtime_upgrade_slot WHERE singleton=1').get() as {operationId:string|null;state:string};
+      if(upgradeSlot.operationId||upgradeSlot.state!=='EMPTY')throw new PlatformError('CONFLICT','A private runtime upgrade operation owns the non-expiring upgrade slot');
+      const release=this.db.prepare(`SELECT r.artifact_digest AS artifactDigest,a.originating_actor_id AS originatingActorId
+        FROM artifact_releases r JOIN artifacts a ON a.digest=r.artifact_digest WHERE r.product_id=? AND r.version=?`).get(instance.productId,instance.version) as
+        {artifactDigest:string;originatingActorId:string}|undefined;
+      if(!release||release.artifactDigest!==instance.artifactDigest||release.originatingActorId!==instance.originatingActorId)
+        throw new PlatformError('CONFLICT','The exact promoted artifact is no longer available');
+      if(instance.state==='UPGRADE_READY'){
+        const activeGeneration=this.db.prepare(`SELECT id,product_id AS productId,version,artifact_digest AS artifactDigest,profile_digest AS profileDigest,
+          config_digest AS configDigest,adapter_digest AS adapterDigest,toolchain_digest AS toolchainDigest,recipe_digest AS recipeDigest,
+          originating_actor_id AS originatingActorId FROM runtime_generations WHERE id=? AND instance_id=?`).get(instance.activeGenerationId,input.instanceId) as any;
+        const completed=this.db.prepare(`SELECT u.id,u.source_generation_id AS sourceGenerationId,u.source_attempt_id AS sourceAttemptId,
+          u.source_attempt_no AS sourceAttempt,u.source_command_id AS sourceCommandId,u.backup_digest AS backupDigest,
+          a.generation_id AS sourceAttemptGenerationId,a.state AS sourceAttemptState,a.physical_state AS sourcePhysicalState,a.dispatch_begun AS sourceDispatchBegun,
+          a.empty_observed AS sourceEmptyObserved,a.helper_closed AS sourceHelperClosed,a.execution_clean AS sourceExecutionClean,
+          c.state AS sourceCommandState,a.stop_command_id AS sourceStopCommandId,sc.state AS sourceStopCommandState,
+          b.generation_id AS backupGenerationId,b.instance_id AS backupInstanceId,b.artifact_digest AS backupArtifactDigest,
+          sg.artifact_digest AS sourceArtifactDigest
+          FROM runtime_upgrade_operations u JOIN runtime_attempts a ON a.id=u.source_attempt_id
+          JOIN runtime_commands c ON c.id=u.source_command_id LEFT JOIN runtime_commands sc ON sc.id=a.stop_command_id
+          JOIN runtime_backups b ON b.digest=u.backup_digest JOIN runtime_generations sg ON sg.id=u.source_generation_id AND sg.instance_id=u.instance_id
+          WHERE u.instance_id=? AND u.target_generation_id=? AND u.state='SUCCEEDED' AND u.physical_state='CLEAN'
+            AND u.destination_published=1 AND u.destination_verified=1 AND u.driver_empty=1 AND u.driver_closed=1
+            AND u.staging_clean=1 AND u.publisher_result_observed=1 AND u.publisher_closed=1 ORDER BY u.updated DESC LIMIT 1`)
+          .get(input.instanceId,instance.activeGenerationId) as any;
+        if(!activeGeneration||!completed||activeGeneration.productId!==instance.productId||activeGeneration.version!==instance.version||
+           activeGeneration.artifactDigest!==instance.artifactDigest||activeGeneration.profileDigest!==instance.profileDigest||activeGeneration.configDigest!==instance.configDigest||
+           activeGeneration.adapterDigest!==instance.adapterDigest||activeGeneration.toolchainDigest!==instance.toolchainDigest||activeGeneration.recipeDigest!==instance.recipeDigest||
+           activeGeneration.originatingActorId!==instance.originatingActorId||completed.sourceAttemptState!=='STOPPED'||completed.sourcePhysicalState!=='EMPTY'||
+           completed.sourceDispatchBegun!==1||completed.sourceEmptyObserved!==1||completed.sourceHelperClosed!==1||completed.sourceExecutionClean!==1||
+           completed.sourceCommandState!=='SUCCEEDED'||completed.sourceStopCommandId!==null&&completed.sourceStopCommandState!=='SUCCEEDED'||
+           completed.sourceAttemptGenerationId!==completed.sourceGenerationId||completed.backupInstanceId!==input.instanceId||
+           completed.backupGenerationId!==completed.sourceGenerationId||completed.backupArtifactDigest!==completed.sourceArtifactDigest||
+           completed.sourceAttempt!==instance.currentAttempt)
+          throw new PlatformError('CONFLICT','Upgrade-ready runtime does not have a complete immutable target generation');
+      }else{
+        const stopped=this.db.prepare(`SELECT a.id,a.attempt_no AS attempt,a.state,a.physical_state AS physicalState,a.dispatch_begun AS dispatchBegun,
+          a.empty_observed AS emptyObserved,a.helper_closed AS helperClosed,a.execution_clean AS executionClean,c.state AS commandState,
+          a.stop_command_id AS stopCommandId,sc.state AS stopCommandState
+          FROM runtime_attempts a JOIN runtime_commands c ON c.id=a.command_id LEFT JOIN runtime_commands sc ON sc.id=a.stop_command_id
+          WHERE a.instance_id=? AND a.generation_id=? AND a.attempt_no=?`).get(input.instanceId,instance.activeGenerationId,instance.currentAttempt) as any;
+        if(!stopped||stopped.state!=='STOPPED'||stopped.physicalState!=='EMPTY'||stopped.dispatchBegun!==1||stopped.emptyObserved!==1||
+           stopped.helperClosed!==1||stopped.executionClean!==1||stopped.commandState!=='SUCCEEDED'||
+           stopped.stopCommandId!==null&&stopped.stopCommandState!=='SUCCEEDED')
+          throw new PlatformError('CONFLICT','Restart requires the exact current positively stopped generation');
+      }
       const attemptNo=Number(instance.currentAttempt)+1,now=Date.now();
       if(attemptNo>1000)throw new PlatformError('CONFLICT','Runtime attempt history is at its fixed limit');
-      this.db.prepare('INSERT INTO runtime_commands(id,instance_id,kind,actor_id,request_key,payload_digest,payload_json,state,created,updated) VALUES(?,? ,\'RESTART\',?,?,?,?,\'PREPARING\',?,?)')
-        .run(commandId,input.instanceId,actor,input.requestKey,payloadDigest,payloadJson,now,now);
-      this.db.prepare(`INSERT INTO runtime_attempts(id,instance_id,attempt_no,command_id,owner_id,owner_token,state,physical_state,worker_required,created,updated)
-        VALUES(?,?,?,?,?,?,'PREPARING','NOT_DISPATCHED',?,?,?)`).run(attemptId,input.instanceId,attemptNo,commandId,input.ownerId,input.ownerToken,instance.workerRequired?1:0,now,now);
-      this.db.prepare("UPDATE runtime_instances SET state='PREPARING',current_attempt=?,updated=? WHERE id=? AND state='STOPPED'").run(attemptNo,now,input.instanceId);
+      this.db.prepare('INSERT INTO runtime_commands(id,instance_id,kind,actor_id,request_key,payload_digest,payload_json,generation_id,state,created,updated) VALUES(?,? ,\'RESTART\',?,?,?,?,?,\'PREPARING\',?,?)')
+        .run(commandId,input.instanceId,actor,input.requestKey,payloadDigest,payloadJson,instance.activeGenerationId,now,now);
+      this.db.prepare(`INSERT INTO runtime_attempts(id,instance_id,attempt_no,command_id,owner_id,owner_token,state,physical_state,generation_id,worker_required,created,updated)
+        VALUES(?,?,?,?,?,?,'PREPARING','NOT_DISPATCHED',?,?,?,?)`).run(attemptId,input.instanceId,attemptNo,commandId,input.ownerId,input.ownerToken,instance.activeGenerationId,instance.workerRequired?1:0,now,now);
+      this.db.prepare("UPDATE runtime_instances SET state='PREPARING',current_attempt=?,updated=? WHERE id=? AND state IN ('STOPPED','UPGRADE_READY')").run(attemptNo,now,input.instanceId);
       this.db.prepare("UPDATE runtime_physical_slot SET instance_id=?,operation_id=?,owner_id=?,owner_token=?,reserved_bytes=?,state='PREPARING',updated=? WHERE singleton=1 AND operation_id IS NULL")
         .run(input.instanceId,attemptId,input.ownerId,input.ownerToken,input.executionBytes,now);
       const slotAfter=this.db.prepare('SELECT operation_id AS operationId FROM runtime_physical_slot WHERE singleton=1').get() as {operationId:string|null};
@@ -1259,7 +1669,7 @@ export class ControlPlaneStore {
     });
   }
   private recoveryOperationRow(operationId:string):Record<string,any>|undefined {
-    return this.db.prepare(`SELECT id,kind,state,physical_state AS physicalState,instance_id AS instanceId,attempt_id AS attemptId,
+    return this.db.prepare(`SELECT id,kind,state,physical_state AS physicalState,instance_id AS instanceId,generation_id AS generationId,attempt_id AS attemptId,
       attempt_no AS attempt,command_id AS commandId,product_id AS productId,version,artifact_digest AS artifactDigest,
       originating_actor_id AS originatingActorId,profile_digest AS profileDigest,config_digest AS configDigest,
       adapter_digest AS adapterDigest,toolchain_digest AS toolchainDigest,recipe_digest AS recipeDigest,backup_digest AS backupDigest,
@@ -1305,17 +1715,19 @@ export class ControlPlaneStore {
       const runtimeSlot=this.db.prepare('SELECT instance_id AS instanceId,operation_id AS operationId,state FROM runtime_physical_slot WHERE singleton=1').get() as
         {instanceId:string|null;operationId:string|null;state:string};
       if(runtimeSlot.instanceId||runtimeSlot.operationId||runtimeSlot.state!=='EMPTY')throw new PlatformError('CONFLICT','A managed runtime still owns its non-expiring physical slot');
+      const upgradeSlot=this.db.prepare('SELECT operation_id AS operationId,state FROM runtime_upgrade_slot WHERE singleton=1').get() as {operationId:string|null;state:string};
+      if(upgradeSlot.operationId||upgradeSlot.state!=='EMPTY')throw new PlatformError('CONFLICT','A private runtime upgrade operation owns the non-expiring upgrade slot');
       const recoverySlot=this.db.prepare('SELECT operation_id AS operationId,state FROM runtime_recovery_slot WHERE singleton=1').get() as
         {operationId:string|null;state:string};
       if(recoverySlot.operationId||recoverySlot.state!=='EMPTY')throw new PlatformError('CONFLICT','Another recovery operation owns the non-expiring recovery slot');
-      const current=this.db.prepare(`SELECT i.id AS instanceId,i.product_id AS productId,i.version,i.artifact_digest AS artifactDigest,
+      const current=this.db.prepare(`SELECT i.id AS instanceId,i.active_generation_id AS generationId,i.product_id AS productId,i.version,i.artifact_digest AS artifactDigest,
         i.profile_digest AS profileDigest,i.config_digest AS configDigest,i.adapter_digest AS adapterDigest,
         i.toolchain_digest AS toolchainDigest,i.recipe_digest AS recipeDigest,i.originating_actor_id AS originatingActorId,
         i.state AS instanceState,i.current_attempt AS currentAttempt,a.id AS attemptId,a.attempt_no AS attempt,
         a.command_id AS commandId,a.state AS attemptState,a.physical_state AS physicalState,a.dispatch_begun AS dispatchBegun,
         a.empty_observed AS emptyObserved,a.helper_closed AS helperClosed,a.execution_clean AS executionClean,
         a.stop_command_id AS stopCommandId,c.state AS commandState,sc.state AS stopCommandState
-        FROM runtime_instances i JOIN runtime_attempts a ON a.instance_id=i.id AND a.attempt_no=i.current_attempt
+        FROM runtime_instances i JOIN runtime_attempts a ON a.instance_id=i.id AND a.attempt_no=i.current_attempt AND a.generation_id=i.active_generation_id
         JOIN runtime_commands c ON c.id=a.command_id LEFT JOIN runtime_commands sc ON sc.id=a.stop_command_id
         WHERE i.id=?`).get(input.instanceId) as Record<string,any>|undefined;
       if(!current||current.instanceState!=='STOPPED'||current.attemptState!=='STOPPED'||current.physicalState!=='EMPTY'||
@@ -1330,15 +1742,16 @@ export class ControlPlaneStore {
         {artifactDigest:string}|undefined;
       if(!promoted||promoted.artifactDigest!==input.artifactDigest)throw new PlatformError('CONFLICT','The exact promoted artifact is no longer available');
       if(input.kind==='RESTORE'){
-        const backup=this.db.prepare(`SELECT instance_id AS instanceId,artifact_digest AS artifactDigest,product_id AS productId,version,captured_at AS capturedAt,
+        const backup=this.db.prepare(`SELECT instance_id AS instanceId,generation_id AS generationId,artifact_digest AS artifactDigest,product_id AS productId,version,captured_at AS capturedAt,
           originating_actor_id AS originatingActorId,profile_digest AS profileDigest,config_digest AS configDigest,
           adapter_digest AS adapterDigest,toolchain_digest AS toolchainDigest,recipe_digest AS recipeDigest
           FROM runtime_backups WHERE digest=?`).get(input.backupDigest!) as Record<string,any>|undefined;
-        if(!backup||backup.capturedAt>Date.now()||backup.instanceId!==input.instanceId||backup.artifactDigest!==input.artifactDigest||backup.productId!==input.productId||
+        if(!backup||backup.capturedAt>Date.now()||backup.instanceId!==input.instanceId||backup.generationId!==current.generationId||backup.artifactDigest!==input.artifactDigest||backup.productId!==input.productId||
            backup.version!==input.version||backup.originatingActorId!==input.originatingActorId||backup.profileDigest!==input.profileDigest||
            backup.configDigest!==input.configDigest||backup.adapterDigest!==input.adapterDigest||backup.toolchainDigest!==input.toolchainDigest||backup.recipeDigest!==input.recipeDigest)
           throw new PlatformError('CONFLICT','The selected private backup does not belong to this exact runtime identity');
       }
+      if(!current.generationId)throw new PlatformError('CONFLICT','Runtime generation history is incomplete');
       const capacity=observeCapacity() as unknown;
       if(capacity!==null&&(typeof capacity==='object'||typeof capacity==='function')&&typeof (capacity as any).then==='function')
         throw new PlatformError('INVALID','Recovery capacity observation must be synchronous');
@@ -1351,11 +1764,11 @@ export class ControlPlaneStore {
         throw new PlatformError('CONFLICT','Private runtime recovery material exceeds its fixed local capacity');
       this.authorizeMutation(authorize);
       const now=Date.now();
-      this.db.prepare(`INSERT INTO runtime_recovery_operations(id,kind,state,physical_state,instance_id,attempt_id,attempt_no,command_id,
+      this.db.prepare(`INSERT INTO runtime_recovery_operations(id,kind,state,physical_state,instance_id,attempt_id,attempt_no,command_id,generation_id,
         product_id,version,artifact_digest,originating_actor_id,profile_digest,config_digest,adapter_digest,toolchain_digest,recipe_digest,
         backup_digest,actor_id,request_key,payload_digest,owner_id,owner_token,reserved_bytes,created,updated)
-        VALUES(?,?,'PREPARING','NOT_DISPATCHED',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?,?,?)`).run(
-        input.operationId,input.kind,input.instanceId,input.attemptId,input.attempt,input.commandId,input.productId,input.version,input.artifactDigest,
+        VALUES(?,?,'PREPARING','NOT_DISPATCHED',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, ?,?,?)`).run(
+        input.operationId,input.kind,input.instanceId,input.attemptId,input.attempt,input.commandId,current.generationId,input.productId,input.version,input.artifactDigest,
         input.originatingActorId,input.profileDigest,input.configDigest,input.adapterDigest,input.toolchainDigest,input.recipeDigest,input.backupDigest??null,
         actor,input.requestKey,payloadDigest,input.ownerId,input.ownerToken,input.reservedBytes,now,now);
       this.db.prepare(`UPDATE runtime_recovery_slot SET operation_id=?,owner_id=?,owner_token=?,reserved_bytes=?,state='PREPARING',updated=?
@@ -1467,10 +1880,10 @@ export class ControlPlaneStore {
            !Number.isSafeInteger(backup.fileCount)||backup.fileCount<1||backup.fileCount>MANAGED_RUNTIME_RECOVERY_LIMITS.maxFiles||
            Buffer.byteLength(backup.manifest)>MANAGED_RUNTIME_RECOVERY_LIMITS.maxManifestBytes)
           throw new PlatformError('INVALID','Verified backup metadata is outside its fixed bound');
-        this.db.prepare(`INSERT INTO runtime_backups(digest,instance_id,attempt_id,attempt_no,command_id,product_id,version,artifact_digest,
+        this.db.prepare(`INSERT INTO runtime_backups(digest,instance_id,attempt_id,attempt_no,command_id,generation_id,product_id,version,artifact_digest,
           originating_actor_id,profile_digest,config_digest,adapter_digest,toolchain_digest,recipe_digest,captured_at,size_bytes,file_count,
-          manifest_json,entries_json,creating_actor_id,created) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
-          .run(backup.digest,row.instanceId,row.attemptId,row.attempt,row.commandId,row.productId,row.version,row.artifactDigest,row.originatingActorId,
+          manifest_json,entries_json,creating_actor_id,created) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
+          .run(backup.digest,row.instanceId,row.attemptId,row.attempt,row.commandId,row.generationId,row.productId,row.version,row.artifactDigest,row.originatingActorId,
             row.profileDigest,row.configDigest,row.adapterDigest,row.toolchainDigest,row.recipeDigest,backup.capturedAt,backup.sizeBytes,backup.fileCount,
             backup.manifest,backup.entries,row.actorId,Date.now());
       }else if(backup!==undefined)throw new PlatformError('INVALID','Restore completion cannot create backup metadata');
@@ -1557,7 +1970,7 @@ export class ControlPlaneStore {
   }
   runtimeRecoveryBackups(instanceId:string) {
     if(typeof instanceId!=='string'||!managedRuntimeIdPattern.test(instanceId))throw new PlatformError('INVALID','Invalid runtime backup owner');
-    return this.db.prepare(`SELECT digest,instance_id AS instanceId,attempt_id AS attemptId,attempt_no AS attempt,product_id AS productId,
+    return this.db.prepare(`SELECT digest,instance_id AS instanceId,generation_id AS generationId,attempt_id AS attemptId,attempt_no AS attempt,product_id AS productId,
       version,artifact_digest AS artifactDigest,profile_digest AS profileDigest,config_digest AS configDigest,
       adapter_digest AS adapterDigest,toolchain_digest AS toolchainDigest,recipe_digest AS recipeDigest,captured_at AS capturedAt,
       size_bytes AS sizeBytes,file_count AS fileCount,creating_actor_id AS creatingActorId,created
@@ -1565,7 +1978,7 @@ export class ControlPlaneStore {
   }
   runtimeRecoveryBackup(digestValue:string) {
     if(typeof digestValue!=='string'||!/^[a-f0-9]{64}$/.test(digestValue))throw new PlatformError('INVALID','Invalid runtime backup digest');
-    return this.db.prepare(`SELECT digest,instance_id AS instanceId,attempt_id AS attemptId,attempt_no AS attempt,command_id AS commandId,
+    return this.db.prepare(`SELECT digest,instance_id AS instanceId,generation_id AS generationId,attempt_id AS attemptId,attempt_no AS attempt,command_id AS commandId,
       product_id AS productId,version,artifact_digest AS artifactDigest,originating_actor_id AS originatingActorId,
       profile_digest AS profileDigest,config_digest AS configDigest,adapter_digest AS adapterDigest,
       toolchain_digest AS toolchainDigest,recipe_digest AS recipeDigest,captured_at AS capturedAt,size_bytes AS sizeBytes,
@@ -1578,9 +1991,9 @@ export class ControlPlaneStore {
     return {...row,occupied:row.state!=='EMPTY'};
   }
   private runtimeOwnerRow(instanceId:string,operationId:string,ownerToken:string) {
-    return this.db.prepare(`SELECT i.id,i.state,i.current_attempt AS currentAttempt,c.actor_id AS commandActorId,c.state AS commandState,i.worker_required AS workerRequired,
+    return this.db.prepare(`SELECT i.id,i.state,i.current_attempt AS currentAttempt,i.active_generation_id AS generationId,c.actor_id AS commandActorId,c.state AS commandState,i.worker_required AS workerRequired,
       i.preparation_complete AS preparationComplete,
-      a.id AS attemptId,a.command_id AS commandId,a.state AS attemptState,a.physical_state AS physicalState,a.dispatch_begun AS dispatchBegun,
+      a.id AS attemptId,a.command_id AS commandId,a.generation_id AS attemptGenerationId,a.state AS attemptState,a.physical_state AS physicalState,a.dispatch_begun AS dispatchBegun,
       a.enrollment_authorized AS enrollmentAuthorized,a.launch_authorized AS launchAuthorized,a.owner_id AS ownerId,
       a.api_ready AS apiReady,a.worker_attached AS workerAttached,a.empty_observed AS emptyObserved,a.helper_closed AS helperClosed,
       a.execution_clean AS executionClean,a.stop_command_id AS stopCommandId,a.stop_actor_id AS stopActorId,
@@ -1597,11 +2010,19 @@ export class ControlPlaneStore {
       const row=this.runtimeOwnerRow(instanceId,operationId,ownerToken);
       if(!row||row.state!=='PREPARING'||row.attemptState!=='PREPARING'||row.physicalState!=='NOT_DISPATCHED'||row.preparationComplete!==0)
         throw new PlatformError('CONFLICT','The original runtime preparation no longer owns its pending configuration');
-      const current=this.db.prepare(`SELECT config_digest AS configDigest FROM runtime_instances WHERE id=? AND current_attempt=?`).get(instanceId,row.currentAttempt) as {configDigest:string}|undefined;
-      if(!current||current.configDigest!=='0'.repeat(64))throw new PlatformError('CONFLICT','Runtime configuration identity was already completed or changed');
+      const current=this.db.prepare(`SELECT i.config_digest AS configDigest,i.active_generation_id AS generationId,g.config_digest AS generationConfigDigest
+        FROM runtime_instances i JOIN runtime_generations g ON g.id=i.active_generation_id AND g.instance_id=i.id
+        WHERE i.id=? AND i.current_attempt=?`).get(instanceId,row.currentAttempt) as
+        {configDigest:string;generationId:string;generationConfigDigest:string}|undefined;
+      if(!current||current.configDigest!=='0'.repeat(64)||current.generationId!==row.generationId||row.attemptGenerationId!==row.generationId||
+         current.generationConfigDigest!=='0'.repeat(64))
+        throw new PlatformError('CONFLICT','Runtime configuration or active generation identity was already completed or changed');
       const now=Date.now();
-      this.db.prepare('UPDATE runtime_instances SET config_digest=?,preparation_complete=1,updated=? WHERE id=? AND current_attempt=? AND preparation_complete=0 AND state=\'PREPARING\'')
+      const instanceUpdate=this.db.prepare('UPDATE runtime_instances SET config_digest=?,preparation_complete=1,updated=? WHERE id=? AND current_attempt=? AND preparation_complete=0 AND state=\'PREPARING\'')
         .run(configDigest,now,instanceId,row.currentAttempt);
+      const generationUpdate=this.db.prepare('UPDATE runtime_generations SET config_digest=? WHERE id=? AND instance_id=? AND config_digest=?')
+        .run(configDigest,row.generationId,instanceId,'0'.repeat(64));
+      if(instanceUpdate.changes!==1||generationUpdate.changes!==1)throw new PlatformError('CONFLICT','Runtime generation preparation identity changed before it was finalized');
       this.audit('runtime.preparation.completed',instanceId,{attempt:row.currentAttempt,configDigest},row.commandActorId);
       return this.runtimeInstanceRow(instanceId);
     });
@@ -1754,8 +2175,8 @@ export class ControlPlaneStore {
       const row=this.runtimeOwnerRow(input.instanceId,input.operationId,input.ownerToken);
       if(!row||row.operationId!==row.attemptId||row.slotOwnerToken!==input.ownerToken||row.state!=='RUNNING'||row.attemptState!=='RUNNING')throw new PlatformError('CONFLICT','This process does not own a running runtime that can be stopped');
       const now=Date.now();
-      this.db.prepare(`INSERT INTO runtime_commands(id,instance_id,kind,actor_id,request_key,payload_digest,payload_json,state,created,updated)
-        VALUES(?,?,'STOP',?,?,?,?, 'STOP_REQUESTED',?,?)`).run(input.commandId,input.instanceId,actor,input.requestKey,payloadDigest,payloadJson,now,now);
+      this.db.prepare(`INSERT INTO runtime_commands(id,instance_id,kind,actor_id,request_key,payload_digest,payload_json,generation_id,state,created,updated)
+        VALUES(?,?,'STOP',?,?,?,?,?,'STOP_REQUESTED',?,?)`).run(input.commandId,input.instanceId,actor,input.requestKey,payloadDigest,payloadJson,row.generationId,now,now);
       this.db.prepare("UPDATE runtime_instances SET state='STOP_REQUESTED',updated=? WHERE id=? AND current_attempt=? AND state='RUNNING'").run(now,input.instanceId,row.currentAttempt);
       this.db.prepare("UPDATE runtime_attempts SET state='STOP_REQUESTED',stop_command_id=?,stop_actor_id=?,updated=? WHERE id=? AND owner_token=? AND state='RUNNING'").run(input.commandId,actor,now,row.attemptId,input.ownerToken);
       this.db.prepare("UPDATE runtime_physical_slot SET state='STOP_REQUESTED',updated=? WHERE singleton=1 AND operation_id=? AND owner_token=?").run(now,row.attemptId,input.ownerToken);
@@ -1802,29 +2223,53 @@ export class ControlPlaneStore {
   managedRuntime(instanceId:string) {
     if(typeof instanceId!=='string'||!managedRuntimeIdPattern.test(instanceId))throw new PlatformError('INVALID','Invalid managed runtime reference');
     const instance=this.runtimeInstanceRow(instanceId);if(!instance)return undefined;
-    const attempts=this.db.prepare(`SELECT id,attempt_no AS attempt,state,physical_state AS physicalState,dispatch_begun AS dispatchBegun,
+    const attempts=this.db.prepare(`SELECT a.id,a.attempt_no AS attempt,a.generation_id AS generationId,g.generation_no AS generation,
+      g.product_id AS generationProductId,g.version AS generationVersion,g.artifact_digest AS generationArtifactDigest,
+      g.profile_digest AS generationProfileDigest,g.config_digest AS generationConfigDigest,g.adapter_digest AS generationAdapterDigest,
+      g.toolchain_digest AS generationToolchainDigest,g.recipe_digest AS generationRecipeDigest,g.originating_actor_id AS generationOriginatingActorId,
+      a.state,a.physical_state AS physicalState,a.dispatch_begun AS dispatchBegun,
       enrollment_authorized AS enrollmentAuthorized,launch_authorized AS launchAuthorized,worker_required AS workerRequired,
       api_ready AS apiReady,worker_attached AS workerAttached,port,empty_observed AS emptyObserved,helper_closed AS helperClosed,
-      execution_clean AS executionClean,error_code AS errorCode,error_message AS errorMessage,created,updated,finished
-      FROM runtime_attempts WHERE instance_id=? ORDER BY attempt_no DESC LIMIT 16`).all(instanceId) as Record<string,any>[];
-    return {...instance,workerRequired:instance.workerRequired===1,preparationComplete:instance.preparationComplete===1,attempts:attempts.map(row=>({...row,dispatchBegun:row.dispatchBegun===1,
-      enrollmentAuthorized:row.enrollmentAuthorized===1,launchAuthorized:row.launchAuthorized===1,workerRequired:row.workerRequired===1,
-      apiReady:row.apiReady===1,workerAttached:row.workerAttached===1,emptyObserved:row.emptyObserved===1,helperClosed:row.helperClosed===1,executionClean:row.executionClean===1}))};
+      execution_clean AS executionClean,error_code AS errorCode,error_message AS errorMessage,a.created,a.updated,finished
+      FROM runtime_attempts a LEFT JOIN runtime_generations g ON g.id=a.generation_id AND g.instance_id=a.instance_id
+      WHERE a.instance_id=? ORDER BY a.attempt_no DESC LIMIT 16`).all(instanceId) as Record<string,any>[];
+    return {...instance,workerRequired:instance.workerRequired===1,preparationComplete:instance.preparationComplete===1,attempts:attempts.map(row=>{
+      const generation=row.generationId&&row.generation!==null?{generationId:row.generationId,generation:row.generation,productId:row.generationProductId,
+        version:row.generationVersion,artifactDigest:row.generationArtifactDigest,profileDigest:row.generationProfileDigest,configDigest:row.generationConfigDigest,
+        adapterDigest:row.generationAdapterDigest,toolchainDigest:row.generationToolchainDigest,recipeDigest:row.generationRecipeDigest,
+        originatingActorId:row.generationOriginatingActorId}:null;
+      const {generationProductId,generationVersion,generationArtifactDigest,generationProfileDigest,generationConfigDigest,generationAdapterDigest,
+        generationToolchainDigest,generationRecipeDigest,generationOriginatingActorId,...attempt}=row;
+      return {...attempt,generation,dispatchBegun:attempt.dispatchBegun===1,
+        enrollmentAuthorized:attempt.enrollmentAuthorized===1,launchAuthorized:attempt.launchAuthorized===1,workerRequired:attempt.workerRequired===1,
+        apiReady:attempt.apiReady===1,workerAttached:attempt.workerAttached===1,emptyObserved:attempt.emptyObserved===1,
+        helperClosed:attempt.helperClosed===1,executionClean:attempt.executionClean===1};
+    })};
   }
   managedRuntimeAttempt(instanceId:string,operationId:string) {
     if(typeof instanceId!=='string'||!managedRuntimeIdPattern.test(instanceId)||typeof operationId!=='string'||
       !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(operationId))
       throw new PlatformError('INVALID','Invalid managed runtime attempt reference');
-    const row=this.db.prepare(`SELECT a.id AS id,a.instance_id AS instanceId,a.command_id AS commandId,a.attempt_no AS attempt,
+    const row=this.db.prepare(`SELECT a.id AS id,a.instance_id AS instanceId,a.command_id AS commandId,a.attempt_no AS attempt,a.generation_id AS generationId,
+      g.generation_no AS generation,g.product_id AS generationProductId,g.version AS generationVersion,g.artifact_digest AS generationArtifactDigest,
+      g.profile_digest AS generationProfileDigest,g.config_digest AS generationConfigDigest,g.adapter_digest AS generationAdapterDigest,
+      g.toolchain_digest AS generationToolchainDigest,g.recipe_digest AS generationRecipeDigest,g.originating_actor_id AS generationOriginatingActorId,
       a.state AS state,a.physical_state AS physicalState,a.dispatch_begun AS dispatchBegun,a.empty_observed AS emptyObserved,
       a.helper_closed AS helperClosed,a.execution_clean AS executionClean,c.state AS commandState,
       a.stop_command_id AS stopCommandId,sc.state AS stopCommandState
       FROM runtime_attempts a JOIN runtime_instances i ON i.id=a.instance_id JOIN runtime_commands c ON c.id=a.command_id
+      LEFT JOIN runtime_generations g ON g.id=a.generation_id AND g.instance_id=a.instance_id
       LEFT JOIN runtime_commands sc ON sc.id=a.stop_command_id
       WHERE a.id=? AND a.instance_id=?`).get(operationId,instanceId) as Record<string,any>|undefined;
     if(!row)return undefined;
-    return {...row,dispatchBegun:row.dispatchBegun===1,emptyObserved:row.emptyObserved===1,
-      helperClosed:row.helperClosed===1,executionClean:row.executionClean===1};
+    const generation=row.generationId&&row.generation!==null?{generationId:row.generationId,generation:row.generation,productId:row.generationProductId,
+      version:row.generationVersion,artifactDigest:row.generationArtifactDigest,profileDigest:row.generationProfileDigest,configDigest:row.generationConfigDigest,
+      adapterDigest:row.generationAdapterDigest,toolchainDigest:row.generationToolchainDigest,recipeDigest:row.generationRecipeDigest,
+      originatingActorId:row.generationOriginatingActorId}:null;
+    const {generationProductId,generationVersion,generationArtifactDigest,generationProfileDigest,generationConfigDigest,generationAdapterDigest,
+      generationToolchainDigest,generationRecipeDigest,generationOriginatingActorId,...attempt}=row;
+    return {...attempt,generation,dispatchBegun:attempt.dispatchBegun===1,emptyObserved:attempt.emptyObserved===1,
+      helperClosed:attempt.helperClosed===1,executionClean:attempt.executionClean===1};
   }
   managedRuntimeInstances(limit=MANAGED_RUNTIME_LIMITS.maxRecentEvents) {
     if(!Number.isSafeInteger(limit)||limit<1||limit>MANAGED_RUNTIME_LIMITS.maxRecentEvents)throw new PlatformError('INVALID','Invalid runtime history bound');

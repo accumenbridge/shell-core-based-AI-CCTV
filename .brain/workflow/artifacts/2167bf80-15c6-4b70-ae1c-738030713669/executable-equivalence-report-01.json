@@ -1,0 +1,224 @@
+{
+  "schema": "safe-upgrade.executable-equivalence.v1",
+  "startedAt": "2026-10-02T19:57:44.579Z",
+  "finishedAt": "2026-10-02T19:57:44.995Z",
+  "exitCode": 0,
+  "signal": null,
+  "currentCandidate": "8531a021a0e7c484e402a9132c107e5ce0c2968d7b18467c36adb77e35a0684f",
+  "currentContract": "55153a14688de5b2bf8e6c28f527eac7deef10ce1cbbba143a8937d60725116d",
+  "historicalJourney": {
+    "runId": "e8a2ba66-e7d9-4e73-adf8-0edb273596ac",
+    "candidate": "0c47a3ca0b606db4f9fe24c0a781bc23697eec6e53b8a01670ffce7636ba9074",
+    "contractDigest": "3dcb39e18df060243ec6b10af6bd27289e30a796c1a82c5d98ecf3b074606716",
+    "recordSha256": "714199afc002e6afa1c0efb2d0bd5f65160abcdf80d83733bc7a8b221667d133",
+    "artifactCount": 23,
+    "allArtifactHashesMatch": true,
+    "originalConsoleSession": 81251,
+    "originalExitCode": 0,
+    "originalSignal": null
+  },
+  "delta": [
+    {
+      "path": "tests/control-plane-artifacts.test.mjs",
+      "before": "064f016cb119a1681da6ed4187474a51095e4b1c18bcd43f966f824c6c4128f8",
+      "after": "4aaf37cae3f376a8a85aa0b5271e287fd9cd580c861e3235a1db75f7e1ce372c"
+    },
+    {
+      "path": "tests/control-plane-build-host.test.mjs",
+      "before": "0e4830727b4700909fc37ec05e8e7a7d61b0ae9a6c7d07ffcf63b203f95428c5",
+      "after": "b0e370a4ac11aa154f6084c081c5af16b1a00e5a6cf1801f314c34d220f3c031"
+    }
+  ],
+  "applicationModuleProductHelperSourceUnchanged": true,
+  "sourceFingerprint": "32465fe0c10b1a85cc62c4eb2892a565a615a724993b876679a35f68a522d4b7",
+  "reviewedBuildFileCount": 132,
+  "changedTestsExcluded": true,
+  "toolchainDigest": "fd8cfdf9a500754b1ec0e95749734cdb244c12212a18a2bf4d35b290941a81c1",
+  "compiled": {
+    "comparison": "Fresh current built outputs against retained private outputs after the actual journey; no historical pre-run compiled inventory was recorded. TypeScript incremental cache metadata is excluded from emitted-output comparison.",
+    "fileCount": 141,
+    "digest": "e76f972511332d2ebbda538a68d747f893be3ffa49087702a75bac0caf5f0be6",
+    "allBytesEqual": true
+  },
+  "fixedHelpers": [
+    {
+      "path": "tools/registry-publish.ps1",
+      "sha256": "21193a3fb4ac19b966bc797f980eddc800cf7673485060ab02a09caa9adf3bb9"
+    },
+    {
+      "path": "tools/runtime-supervisor.mjs",
+      "sha256": "e8bee18aed4399433f6a85cf653c78401f2b5cb8576aee8d8a9da61df33e9d52"
+    },
+    {
+      "path": "tools/runtime-recovery.mjs",
+      "sha256": "050cd8aaceee85709f9f8e0def5d5256ca00e94af70083aed820a29443f72be4"
+    },
+    {
+      "path": "tools/runtime-recovery-publish.ps1",
+      "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+    },
+    {
+      "path": "tools/runtime-upgrade.mjs",
+      "sha256": "216c516f525d95c6c17b5c77d7a6d7e578358c3e51fa329d5763fc120d709825"
+    },
+    {
+      "path": "tools/runtime-upgrade-publish.ps1",
+      "sha256": "edfc065d234885678d252e9bd13ebd2bef9814353335671fac662b243cddf57f"
+    }
+  ],
+  "targetArtifact": {
+    "digest": "460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59",
+    "entryCount": 188,
+    "inventoryDigest": "8b12e4c85b7f52c73265259c064cadde3e310a05cab01e320df2567aab612f22",
+    "manifestAndRegisteredEntriesMatch": true
+  },
+  "retention": {
+    "finalOwnerFacts": {
+      "access": {
+        "_migrations": {
+          "count": 1,
+          "digest": "70037b52ea0f44a73522fb79ae287f2a30abded446897e673aab8ea90c619c71",
+          "history": [
+            {
+              "version": 1,
+              "digest": "cf2d420b4a01ef7062bd511893ea1ff28fe9d4fc2463d92c5849b8bf969cbce4"
+            }
+          ]
+        },
+        "instance_binding": {
+          "count": 1,
+          "digest": "59bc24f8284b67cffeacc46fc97a6a4a46b8f153f60703bfbf69c73fbd7ab83d"
+        },
+        "principals": {
+          "count": 2,
+          "digest": "8ffc1962182f7df6ddbbce1f0a86b5fae2d65978a50138d89d6f15221011a2f1"
+        },
+        "grants": {
+          "count": 35,
+          "digest": "6cbff16a41ad7ae80c90582877f1365637a63f8d59ca9f7d178280b3f7a90f54"
+        },
+        "sessions": {
+          "count": 0,
+          "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "module_modes": {
+          "count": 1,
+          "digest": "ff3c31c2b53742c9fe062663d982de81cdfa57089807756c5733357987765f32"
+        }
+      },
+      "service-desk": {
+        "_migrations": {
+          "count": 2,
+          "digest": "75efe9f2dbc5dfb717566e486d3ae83d44326d25ea5b05d7cfc01f5bb8b344a2",
+          "history": [
+            {
+              "version": 1,
+              "digest": "b901b37d55b0f1ed18e31c0009f1a17bf6bc2099c6bb4bb979bef2208059c9f4"
+            },
+            {
+              "version": 2,
+              "digest": "2d055326063c364bb47ec0eaf05b02938d373a59c2c9603b883874ed2cbebf43"
+            }
+          ]
+        },
+        "_receipts": {
+          "count": 3,
+          "digest": "9f25d0ce0d22749be07c1122163a109a61fba88989d56602eb3d2d625fd310e6"
+        },
+        "_audit": {
+          "count": 3,
+          "digest": "2392ff5bd86b70be90975731bffc796ceeec33e69757d5c6da0c91ee33d0a189"
+        },
+        "requests": {
+          "count": 3,
+          "digest": "0d3219fcf60a725e83f13227949b2cb054bfd7f5bea09900349df0d2d562b471"
+        }
+      },
+      "knowledge": {
+        "_migrations": {
+          "count": 1,
+          "digest": "42993417a509b9440ccb0400c61bad43943d3f10c285d544febefd883c2771fc",
+          "history": [
+            {
+              "version": 1,
+              "digest": "b89df29e8dedb2f057506526446d3a252a69e8ae587091610cf7dfdcba244e65"
+            }
+          ]
+        },
+        "_receipts": {
+          "count": 2,
+          "digest": "07e6214419127a394560ce348dedeeab8a49f58e1e4b939354c70369d799c721"
+        },
+        "_audit": {
+          "count": 2,
+          "digest": "5acaf74210d5af282ddc48c025045cd39326ae2082660e24b90abfa624034e81"
+        },
+        "documents": {
+          "count": 2,
+          "digest": "534ce985530a68a0ca359343415f986a7b4d0f2b345fe3e7da114f29688dac5c"
+        },
+        "document_search": {
+          "count": 2,
+          "digest": "b7e8291e650447b668af2ccf7a7bc190ebf78f06f50237ed497c8fe3943740dd"
+        },
+        "_jobs": {
+          "count": 2,
+          "digest": "ed03f3d60584fec58eec02c535cd8d5292e24ad228d593be697ac3997a51070d"
+        }
+      },
+      "handoff": {
+        "_migrations": {
+          "count": 2,
+          "digest": "18695202628e4d14ea5cd88e5565256f9964e416fa45f97839f29ec0fd384809",
+          "history": [
+            {
+              "version": 1,
+              "digest": "3aab858a6c32798214782e87380625c205ea5776d6a245cde116a16cca5d21d2"
+            },
+            {
+              "version": 2,
+              "digest": "759f09e0681494f213f419221478e4ecccb67bfea7a6cae984efdd9401955027"
+            }
+          ]
+        },
+        "_receipts": {
+          "count": 1,
+          "digest": "964eea97420ee89fad777853a37024f70667d08f850a30dc5075cd30c30eb5db"
+        },
+        "_audit": {
+          "count": 2,
+          "digest": "eee19ddd2f264d6addab60645e7bcd06f4413fe824a892a280d0ea9444efef85"
+        },
+        "handoffs": {
+          "count": 1,
+          "digest": "ad719922d92b037885513db2011b9ffaa3145abefcc3a915b27f8163e6efd8df"
+        },
+        "handoff_delivery": {
+          "count": 1,
+          "digest": "419184dc4f14adf5d7879036ef8469517fb0137646be5835172c676c67304fc1"
+        },
+        "_jobs": {
+          "count": 1,
+          "digest": "08c92638c6f65610ed1a72585ee45e42544792706c532274672963733c4170b3"
+        }
+      }
+    },
+    "sourceOwnersAndFilesUnchanged": true,
+    "oldExportUnchanged": true,
+    "backupDigests": [
+      "20407da414b73820f0793dd15098a266846d9df0efa0285bac3b4b5df67703e7",
+      "c791038c7b7f1eadc5d92842ab72d280fbba20e1d86c904af2f13176340dffae",
+      "4df198dbafe4993d7238c395e679805dd17209a6e753fcb17a39a68add43090a"
+    ],
+    "targetOracleUnchanged": true,
+    "allSlotsEmpty": true,
+    "originalFinalAttempt": 3
+  },
+  "acceptanceMeaningUnchanged": true,
+  "noSecondBrowserOrNativeExecution": true,
+  "limitations": [
+    "The historical live journey remains attributed to its original candidate and contract; this current attribution proves executable equivalence after only four fixture-copy additions in two test files.",
+    "Retained private compiled bytes are compared now to fresh current outputs; no missing historical compiled snapshot is invented.",
+    "Fresh full-suite retry and independent final review remain required. Hosted/provider/customer production and native-device coverage are unqualified."
+  ]
+}

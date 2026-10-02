@@ -1,0 +1,31 @@
+# Executable-equivalence clearance review 02
+
+Independent reported Sol/high reviewer `/root/repo_brain_architect`. Read-only inspection of the completed report/script, JSON metadata and physical bytes. No observer, browser, native Job, application database, build or test was executed by this reviewer.
+
+**Disposition: CURRENT-CANDIDATE HISTORICAL-JOURNEY ATTRIBUTION CLEAR; FULL_RETRY_PENDING.** This completes the previously pending registered-target inventory equivalence check. It does not create a second live journey or whole-task acceptance.
+
+## Exact binding and independent checks
+
+- Current candidate `8531a021a0e7c484e402a9132c107e5ce0c2968d7b18467c36adb77e35a0684f`, 251 physical hashes match. Contract raw hash `55153a14688de5b2bf8e6c28f527eac7deef10ce1cbbba143a8937d60725116d` matches.
+- Root completed `equivalence-03.mjs` source SHA256 `0c8b721fe6bfc88dcd304a3dc2c8adc2eecc9281208651c80780febb2ad6c76b`; actual root tool chunk63ff0e exit0 is reported by root. Its report SHA256 is `d225e0b950c2ca7fe0a45c453c2b8f5fb9902eb0e4e5654708fb925c9e8d4c32`, interval 2026-10-02T19:57:44.579Z–19:57:44.995Z. The report's exit0/null signal are self-reported observer fields, backed by root's actual outer exit observation; no child runtime close is manufactured by that observer.
+- Historical actual journey remains immutable record `e8a2ba66-e7d9-4e73-adf8-0edb273596ac`, candidate `0c47a3ca0b606db4f9fe24c0a781bc23697eec6e53b8a01670ffce7636ba9074`, old contract `3dcb39e18df060243ec6b10af6bd27289e30a796c1a82c5d98ecf3b074606716`. Original journey/closure and artifact scope remain those reviewed in actual-journey-review01.
+
+Fixture-equivalence-review01 independently proved that deleting only four fixed helper-copy calls across the two tests reconstructs their exact historical source hashes; the other 249 files are identical. Current canonical contract versus its archived pre-supplement bytes changes only `excludedActions` (finite existing-file edit grant); criteria/prerequisites/required recipes remain identical. The focused recipe expands to include the existing missing-profile fixture as separately recorded. An unadopted writer reasons file with stale old contract text is not governing evidence.
+
+The completed observer compares canonical current/private reviewed source fingerprints to actual private build03 metadata: all equal `32465fe0c10b1a85cc62c4eb2892a565a615a724993b876679a35f68a522d4b7`, 132 admitted source files, both changed tests excluded. It also compares actual selected private compiler trees/Node digest (`fd8cfdf9a500754b1ec0e95749734cdb244c12212a18a2bf4d35b290941a81c1`). The inspected method uses the unchanged canonical source/toolchain authority, not an independent module catalogue.
+
+I independently repeated physical emitted-output hashing/comparison, without compilation or application execution: all 141 current apps/modules/packages dist outputs match the retained private actual-journey outputs; digest `e76f972511332d2ebbda538a68d747f893be3ffa49087702a75bac0caf5f0be6` matches. TypeScript `.tsbuildinfo` incremental cache metadata is excluded; its actual drift is not disguised as byte equality and is not executable output. There was no historical pre-journey compiled inventory, so this proves current retained-versus-fresh output equality rather than inventing one.
+
+The six separate fixed operational helpers match their originally recorded source/private digests, as independently checked in review01. Canonical ordinary source fingerprint coverage separately includes the unchanged build Job helper; no native helper or profile bytes changed.
+
+I independently hashed every current registered target physical entry and compared it with the original captured registered `setup.detail.entries`: exact 188 paths/sizes/digests match, inventory digest `8b12e4c85b7f52c73265259c064cadde3e310a05cab01e320df2567aab612f22`. The captured snapshot manifest has 187 payload digest entries; `QUADBRIDGE-SNAPSHOT.json` is the extra registered self-file, whose bytes are covered by the captured registered inventory. All 187 payload digests match the manifest. This is the correct manifest-plus-self relationship; no broad exclusion of unexpected entries is applied.
+
+The observer verifies all 23 historical record-owned artifact bytes/sizes and preserves the actual original console81251 close0/null-signal provenance. It re-observes complete closed target owner rows against the saved target-backup baseline, original source owner rows/files against pending-state baseline, old registered export, all three immutable backup inventories and retained target oracle. Its owner observation uses read-only SQLite handles with finally-close, fixed tables and bounded rows; it does not invoke business operations or touch migration identity/deadline. The report retains access2principals/35grants/0sessions/1mode and final original generation2/attempt3 closure. These repeat the already independently reviewed comparison inputs/method and immutable file checks; no new live state transition is inferred.
+
+## Attribution and limits
+
+The completed report supports a new attributed current-candidate manual evaluation referencing the immutable historical actual browser/native journey, with explicit **noSecondBrowserOrNativeExecution**. Original journey timestamps, actor reports, separate Upgrade/Restart, source/target lineage, original queued job deadline and original positive closure remain historical facts. Neither old record nor old full candidate is repinned to the new test candidate.
+
+Observer attempts01/02 failed on incremental-cache and manifest-self comparison assumptions; they remain preserved source-observer failures and did not execute native/browser/business commands. Historical full record `5f177b12-4e2a-407d-9435-33a29754928a` remains FAILED for the two captured missing-helper fixture failures. Observer success is not a pass of that full run.
+
+Original full02 session35650 is still active at review time. Final acceptance requires its actual complete original close/counts, unchanged candidate/contract, zero failure/cancel/TODO and named EPERM coverage separately blocked, plus final independent binding. Prior capture/launch/oracle failures and screenshot limitations remain; no new provider/hosted/customer-production/native-device/general rollback claim is made.

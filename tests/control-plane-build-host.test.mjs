@@ -28,6 +28,8 @@ test('paired console starts with no private build-host profile and reports build
     await mkdir(join(fixture, 'tools'), { recursive: true });
     await cp(join(ROOT, 'tools/runtime-recovery.mjs'), join(fixture, 'tools/runtime-recovery.mjs'));
     await cp(join(ROOT, 'tools/runtime-recovery-publish.ps1'), join(fixture, 'tools/runtime-recovery-publish.ps1'));
+    await cp(join(ROOT, 'tools/runtime-upgrade.mjs'), join(fixture, 'tools/runtime-upgrade.mjs'));
+    await cp(join(ROOT, 'tools/runtime-upgrade-publish.ps1'), join(fixture, 'tools/runtime-upgrade-publish.ps1'));
     await mkdir(join(fixture, 'apps/studio-web/dist'), { recursive: true });
     await cp(join(ROOT, 'apps/studio-web/dist/main.js'), join(fixture, 'apps/studio-web/dist/main.js'));
     assert.equal(await access(join(fixture, '.local')).then(() => true, () => false), false);

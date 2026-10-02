@@ -144,7 +144,7 @@ test('legacy audit migration preserves every old value and marks its actor unkno
     assert.equal(row.payload, '{not-json');
     assert.equal(row.at, 123);
     assert.equal(row.actorId, null);
-    assert.equal(store.db.prepare('PRAGMA user_version').get().user_version, 5);
+    assert.equal(store.db.prepare('PRAGMA user_version').get().user_version, 6);
     assert.equal(store.productVersions()[0].valid,false,'an invalid legacy definition remains visible but cannot be offered for execution');
     assert.throws(() => store.requestBuild('legacy-product', '1.0.0', actor), /Stored product identity/);
     assert.throws(() => store.requestDeployment('legacy-env', 'legacy-product', '1.0.0', buildId, actor), /Invalid environment kind/);
@@ -173,12 +173,12 @@ test('future database versions are rejected without changing schema metadata', a
     t.after(async () => { try { check?.close(); } finally { try { future?.close(); } finally { await rm(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 }); } } });
     const path = join(dir, 'future.sqlite');
     future = new DatabaseSync(path);
-    future.exec('PRAGMA user_version=6');
+    future.exec('PRAGMA user_version=7');
     future.close();
     future = undefined;
-    assert.throws(() => new ControlPlaneStore(path), /Unsupported control-plane schema version 6/);
+    assert.throws(() => new ControlPlaneStore(path), /Unsupported control-plane schema version 7/);
     check = new DatabaseSync(path);
-    assert.equal(check.prepare('PRAGMA user_version').get().user_version, 6);
+    assert.equal(check.prepare('PRAGMA user_version').get().user_version, 7);
     assert.equal(check.prepare("SELECT COUNT(*) AS count FROM sqlite_master WHERE type='table'").get().count, 0);
     check.close();
     check = undefined;
@@ -203,14 +203,17 @@ test('schema 3 artifact publication facts are added without changing older opera
         'LEGACY_ERROR','preserve this text',10,20);
     const oldProjection='id,kind,state,physical_state,build_id,artifact_digest,snapshot_id,snapshot_ref,product_id,version,input_digest,release_digest,size_bytes,file_count,original_build_actor_id,initiating_actor_id,registering_actor_id,owner_token,staging_ref,host_identity,publisher_digest,error_code,error_message,created,updated';
     const before=store.db.prepare(`SELECT ${oldProjection} FROM artifact_operations WHERE id=?`).get(id);
-    store.db.exec('PRAGMA user_version=3');
+    store.db.exec(`DROP TABLE runtime_upgrade_operations; DROP TABLE runtime_upgrade_slot; DROP TABLE runtime_generations;
+      DROP TABLE runtime_backups; DROP TABLE runtime_recovery_operations; DROP TABLE runtime_recovery_slot;
+      DROP TABLE runtime_attempts; DROP TABLE runtime_commands; DROP TABLE runtime_physical_slot; DROP TABLE runtime_instances;
+      PRAGMA user_version=3`);
     store.close();store=undefined;
     legacy=new DatabaseSync(path);
     legacy.exec('ALTER TABLE artifact_operations DROP COLUMN destination_verified; ALTER TABLE artifact_operations DROP COLUMN staging_clean;');
     legacy.close();legacy=undefined;
 
     store=new ControlPlaneStore(path);
-    assert.equal(store.db.prepare('PRAGMA user_version').get().user_version,5,'additive CP5A recovery migration advances the current schema');
+    assert.equal(store.db.prepare('PRAGMA user_version').get().user_version,6,'additive runtime generation migration advances the current schema');
     assert.deepEqual(store.db.prepare(`SELECT ${oldProjection} FROM artifact_operations WHERE id=?`).get(id),before,'all preexisting operation values survive');
     const facts=store.db.prepare('SELECT destination_verified AS destinationVerified,staging_clean AS stagingClean FROM artifact_operations WHERE id=?').get(id);
     assert.deepEqual({...facts},{destinationVerified:0,stagingClean:0},'new monotonic publication facts default to unverified');

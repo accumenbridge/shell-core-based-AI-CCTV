@@ -1,0 +1,57 @@
+{
+  "phaseId": "7aeadc69-03f0-473d-b656-f987102353a4",
+  "fixtureId": "9d335a66-9702-4246-9362-d52371e0ea87",
+  "closed": true,
+  "closedAt": "2026-10-02T19:30:42.712Z",
+  "candidate": "0c47a3ca0b606db4f9fe24c0a781bc23697eec6e53b8a01670ffce7636ba9074",
+  "sourceUnchanged": true,
+  "oldArtifactUnchanged": true,
+  "oldInitialBackupUnchanged": true,
+  "summary": {
+    "schemaVersion": 6,
+    "slots": [
+      {
+        "table": "runtime_physical_slot",
+        "state": "EMPTY",
+        "reservedBytes": 0,
+        "identityCleared": true
+      },
+      {
+        "table": "runtime_recovery_slot",
+        "state": "EMPTY",
+        "reservedBytes": 0,
+        "identityCleared": true
+      },
+      {
+        "table": "runtime_upgrade_slot",
+        "state": "EMPTY",
+        "reservedBytes": 0,
+        "identityCleared": true
+      }
+    ],
+    "runtimes": [
+      {
+        "id": "runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+        "productId": "combined",
+        "version": "0.2.4",
+        "artifactDigest": "460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59",
+        "state": "STOPPED",
+        "activeGenerationId": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:2",
+        "generation": 2,
+        "generationVersion": "0.2.4",
+        "generationArtifactDigest": "460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59",
+        "attempt": 3,
+        "attemptGenerationId": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:2",
+        "attemptState": "STOPPED",
+        "dispatchBegun": 1,
+        "physicalState": "EMPTY",
+        "emptyObserved": 1,
+        "helperClosed": 1,
+        "executionClean": 1,
+        "stopCommandId": "4b831a36-a149-4025-8fbb-2af8b6c59333",
+        "commandState": "SUCCEEDED",
+        "stopCommandState": "SUCCEEDED"
+      }
+    ]
+  }
+}

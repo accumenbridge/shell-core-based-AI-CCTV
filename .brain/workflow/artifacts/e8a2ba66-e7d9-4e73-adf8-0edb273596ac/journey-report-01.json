@@ -1,0 +1,483 @@
+{
+  "fixtureId": "9d335a66-9702-4246-9362-d52371e0ea87",
+  "candidate": "0c47a3ca0b606db4f9fe24c0a781bc23697eec6e53b8a01670ffce7636ba9074",
+  "contractDigest": "3dcb39e18df060243ec6b10af6bd27289e30a796c1a82c5d98ecf3b074606716",
+  "recordedAt": "2026-10-02T19:33:07.528Z",
+  "instanceId": "runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+  "sourceVersion": "0.2.3",
+  "targetVersion": "0.2.4",
+  "sourceArtifactDigest": "4f6c25437ddf99bddc6b9f036b4a12192be3ec9fb9c5e590415231ba7bb02cf4",
+  "targetArtifactDigest": "460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59",
+  "upgradeOperationId": "9a286dea-69e0-4d4b-a869-2a515504ae7e",
+  "upgradeState": "SUCCEEDED",
+  "generations": [
+    {
+      "id": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:1",
+      "generation": 1,
+      "productId": "combined",
+      "version": "0.2.3",
+      "artifactDigest": "4f6c25437ddf99bddc6b9f036b4a12192be3ec9fb9c5e590415231ba7bb02cf4",
+      "profileDigest": "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1",
+      "configDigest": "54daffc0962d893b70a231b18fa57f783949a2c7bb026b8ac0f5366239ee3bc4",
+      "adapterDigest": "ff15b95f4a9c0cfa2dd4b50dd1e993937ca8ecaa59b2c3a7b532400d5bb6df08",
+      "toolchainDigest": "d6481e2b7ea008dd04fbb0bfcf2d1cc3741a8a639dcc4edc0c8e73bd9242853d",
+      "recipeDigest": "ff53ead9d28da5b75ad5d9ff1cfd664db80041dfba78984c21d886e67fb6af5d",
+      "originatingActorId": "operator:c96919c0-840d-4539-bbe9-197256fa7aa2",
+      "sourceGenerationId": null,
+      "upgradeOperationId": null
+    },
+    {
+      "id": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:2",
+      "generation": 2,
+      "productId": "combined",
+      "version": "0.2.4",
+      "artifactDigest": "460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59",
+      "profileDigest": "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1",
+      "configDigest": "f33e7758c97d68ab2bc630314fabca94f4a1c58eedd24b506a7bf9b0dd685ad1",
+      "adapterDigest": "ff15b95f4a9c0cfa2dd4b50dd1e993937ca8ecaa59b2c3a7b532400d5bb6df08",
+      "toolchainDigest": "d6481e2b7ea008dd04fbb0bfcf2d1cc3741a8a639dcc4edc0c8e73bd9242853d",
+      "recipeDigest": "ff53ead9d28da5b75ad5d9ff1cfd664db80041dfba78984c21d886e67fb6af5d",
+      "originatingActorId": "operator:d8d03ac5-10d8-416b-8731-8434087f8ea3",
+      "sourceGenerationId": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:1",
+      "upgradeOperationId": "9a286dea-69e0-4d4b-a869-2a515504ae7e"
+    }
+  ],
+  "originalOldNativeEnqueue": {
+    "started": true,
+    "readyObserved": true,
+    "closeObserved": true,
+    "exitCode": 0,
+    "signal": null,
+    "markerCode": 0,
+    "helperClosed": true,
+    "emptyObserved": true
+  },
+  "migrationRetention": {
+    "allObservedOwnerRowsPreserved": true,
+    "additiveDeskMigration": 2,
+    "removedViewerRetained": true,
+    "revokedDeskCloseRetained": true,
+    "migrationBusinessSessions": 0,
+    "pendingJobRowsUnchanged": true,
+    "receiptAndAuditRowsUnchanged": true
+  },
+  "pendingCompletion": {
+    "fixtureId": "9d335a66-9702-4246-9362-d52371e0ea87",
+    "candidate": "0c47a3ca0b606db4f9fe24c0a781bc23697eec6e53b8a01670ffce7636ba9074",
+    "contractDigest": "3dcb39e18df060243ec6b10af6bd27289e30a796c1a82c5d98ecf3b074606716",
+    "instanceId": "runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+    "observedAt": "2026-10-02T19:26:10.367Z",
+    "originalSubmissionKeyDigest": "5b0189bf4716cc74111636f0e2f687306725df66ca4190866907c9ebd9f8d74b",
+    "originalPayloadDigest": "2e2a341d5da3127b9ba4eee9d51c975f2ee5bec32dd8722b060e03dd38e6df53",
+    "originalActorId": "admin",
+    "originalActorKind": "user",
+    "tenant": "customer-a",
+    "permission": "knowledge.write",
+    "jobId": "e1f38e80-87ff-4441-aae5-970ed853eb80",
+    "state": "SUCCEEDED",
+    "attempt": 1,
+    "created": 1790969066454,
+    "deadline": 1790969666454,
+    "observedCompletedBeforeDeadline": true,
+    "documentId": "0187db4a-6c1c-4701-a285-bbdb438b2e04",
+    "documentState": "READY",
+    "documentVersion": 1,
+    "bodyDigest": "fa0a614ff2130caf9940ea23cfa7a9a64df772fa66649a7c57f38d426e37ac30",
+    "indexObserved": true,
+    "targetAttempt": 2,
+    "targetGenerationId": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:2",
+    "originalIdentityRetained": true,
+    "scope": "Actual canonical target worker completion, separately confirmed real target restart; read-only observation."
+  },
+  "retainedBusiness": {
+    "fixtureId": "9d335a66-9702-4246-9362-d52371e0ea87",
+    "candidate": "0c47a3ca0b606db4f9fe24c0a781bc23697eec6e53b8a01670ffce7636ba9074",
+    "contractDigest": "3dcb39e18df060243ec6b10af6bd27289e30a796c1a82c5d98ecf3b074606716",
+    "instanceId": "runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+    "attempt": 2,
+    "startedAt": "2026-10-02T19:26:10.474Z",
+    "completedAt": "2026-10-02T19:26:10.839Z",
+    "retainedActor": {
+      "id": "admin",
+      "kind": "user"
+    },
+    "originalDeskReplay": true,
+    "originalDocumentReplay": true,
+    "originalHandoffReplay": true,
+    "typedReceiptRetained": true,
+    "indexAndCitationRetained": true,
+    "revokedCloseDenied": true,
+    "removedViewerDenied": true,
+    "otherTenantIsolated": true,
+    "readOnlyModeDenied": true,
+    "loggedOut": true,
+    "calls": [
+      {
+        "path": "/api/session",
+        "method": "POST",
+        "tenant": "customer-a",
+        "status": 200,
+        "code": null,
+        "observedAt": "2026-10-02T19:26:10.512Z"
+      },
+      {
+        "path": "/api/requests",
+        "method": "POST",
+        "tenant": "customer-a",
+        "status": 200,
+        "code": null,
+        "observedAt": "2026-10-02T19:26:10.537Z"
+      },
+      {
+        "path": "/api/documents",
+        "method": "POST",
+        "tenant": "customer-a",
+        "status": 200,
+        "code": null,
+        "observedAt": "2026-10-02T19:26:10.556Z"
+      },
+      {
+        "path": "/api/handoffs",
+        "method": "POST",
+        "tenant": "customer-a",
+        "status": 200,
+        "code": null,
+        "observedAt": "2026-10-02T19:26:10.588Z"
+      },
+      {
+        "path": "/api/requests",
+        "method": "GET",
+        "tenant": "customer-a",
+        "status": 200,
+        "code": null,
+        "observedAt": "2026-10-02T19:26:10.608Z"
+      },
+      {
+        "path": "/api/documents",
+        "method": "GET",
+        "tenant": "customer-a",
+        "status": 200,
+        "code": null,
+        "observedAt": "2026-10-02T19:26:10.627Z"
+      },
+      {
+        "path": "/api/handoffs",
+        "method": "GET",
+        "tenant": "customer-a",
+        "status": 200,
+        "code": null,
+        "observedAt": "2026-10-02T19:26:10.650Z"
+      },
+      {
+        "path": "/api/documents/search?q=continuity",
+        "method": "GET",
+        "tenant": "customer-a",
+        "status": 200,
+        "code": null,
+        "observedAt": "2026-10-02T19:26:10.671Z"
+      },
+      {
+        "path": "/api/documents/answer",
+        "method": "POST",
+        "tenant": "customer-a",
+        "status": 200,
+        "code": null,
+        "observedAt": "2026-10-02T19:26:10.698Z"
+      },
+      {
+        "path": "/api/requests/close",
+        "method": "POST",
+        "tenant": "customer-a",
+        "status": 403,
+        "code": "DENIED",
+        "observedAt": "2026-10-02T19:26:10.717Z"
+      },
+      {
+        "path": "/api/requests",
+        "method": "GET",
+        "tenant": "customer-b",
+        "status": 200,
+        "code": null,
+        "observedAt": "2026-10-02T19:26:10.737Z"
+      },
+      {
+        "path": "/api/requests",
+        "method": "POST",
+        "tenant": "customer-b",
+        "status": 409,
+        "code": "DISABLED",
+        "observedAt": "2026-10-02T19:26:10.758Z"
+      },
+      {
+        "path": "/api/logout",
+        "method": "POST",
+        "tenant": "customer-a",
+        "status": 200,
+        "code": null,
+        "observedAt": "2026-10-02T19:26:10.791Z"
+      },
+      {
+        "path": "/api/session",
+        "method": "POST",
+        "tenant": "customer-a",
+        "status": 401,
+        "code": "UNAUTHENTICATED",
+        "observedAt": "2026-10-02T19:26:10.831Z"
+      }
+    ]
+  },
+  "targetBackupDigest": "4df198dbafe4993d7238c395e679805dd17209a6e753fcb17a39a68add43090a",
+  "oldBackupRestoreDenial": {
+    "status": 409,
+    "code": "CONFLICT"
+  },
+  "targetRestoreState": "SUCCEEDED",
+  "restoredBrowserRequest": {
+    "id": "3aeb5ef7-2184-491e-ac0b-9f47bd60b178",
+    "version": 1,
+    "originKind": "manual"
+  },
+  "finalOwnerFacts": {
+    "access": {
+      "_migrations": {
+        "count": 1,
+        "digest": "70037b52ea0f44a73522fb79ae287f2a30abded446897e673aab8ea90c619c71",
+        "history": [
+          {
+            "version": 1,
+            "digest": "cf2d420b4a01ef7062bd511893ea1ff28fe9d4fc2463d92c5849b8bf969cbce4"
+          }
+        ]
+      },
+      "instance_binding": {
+        "count": 1,
+        "digest": "59bc24f8284b67cffeacc46fc97a6a4a46b8f153f60703bfbf69c73fbd7ab83d"
+      },
+      "principals": {
+        "count": 2,
+        "digest": "8ffc1962182f7df6ddbbce1f0a86b5fae2d65978a50138d89d6f15221011a2f1"
+      },
+      "grants": {
+        "count": 35,
+        "digest": "6cbff16a41ad7ae80c90582877f1365637a63f8d59ca9f7d178280b3f7a90f54"
+      },
+      "sessions": {
+        "count": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "module_modes": {
+        "count": 1,
+        "digest": "ff3c31c2b53742c9fe062663d982de81cdfa57089807756c5733357987765f32"
+      }
+    },
+    "service-desk": {
+      "_migrations": {
+        "count": 2,
+        "digest": "75efe9f2dbc5dfb717566e486d3ae83d44326d25ea5b05d7cfc01f5bb8b344a2",
+        "history": [
+          {
+            "version": 1,
+            "digest": "b901b37d55b0f1ed18e31c0009f1a17bf6bc2099c6bb4bb979bef2208059c9f4"
+          },
+          {
+            "version": 2,
+            "digest": "2d055326063c364bb47ec0eaf05b02938d373a59c2c9603b883874ed2cbebf43"
+          }
+        ]
+      },
+      "_receipts": {
+        "count": 3,
+        "digest": "9f25d0ce0d22749be07c1122163a109a61fba88989d56602eb3d2d625fd310e6"
+      },
+      "_audit": {
+        "count": 3,
+        "digest": "2392ff5bd86b70be90975731bffc796ceeec33e69757d5c6da0c91ee33d0a189"
+      },
+      "requests": {
+        "count": 3,
+        "digest": "0d3219fcf60a725e83f13227949b2cb054bfd7f5bea09900349df0d2d562b471"
+      }
+    },
+    "knowledge": {
+      "_migrations": {
+        "count": 1,
+        "digest": "42993417a509b9440ccb0400c61bad43943d3f10c285d544febefd883c2771fc",
+        "history": [
+          {
+            "version": 1,
+            "digest": "b89df29e8dedb2f057506526446d3a252a69e8ae587091610cf7dfdcba244e65"
+          }
+        ]
+      },
+      "_receipts": {
+        "count": 2,
+        "digest": "07e6214419127a394560ce348dedeeab8a49f58e1e4b939354c70369d799c721"
+      },
+      "_audit": {
+        "count": 2,
+        "digest": "5acaf74210d5af282ddc48c025045cd39326ae2082660e24b90abfa624034e81"
+      },
+      "documents": {
+        "count": 2,
+        "digest": "534ce985530a68a0ca359343415f986a7b4d0f2b345fe3e7da114f29688dac5c"
+      },
+      "document_search": {
+        "count": 2,
+        "digest": "b7e8291e650447b668af2ccf7a7bc190ebf78f06f50237ed497c8fe3943740dd"
+      },
+      "_jobs": {
+        "count": 2,
+        "digest": "ed03f3d60584fec58eec02c535cd8d5292e24ad228d593be697ac3997a51070d"
+      }
+    },
+    "handoff": {
+      "_migrations": {
+        "count": 2,
+        "digest": "18695202628e4d14ea5cd88e5565256f9964e416fa45f97839f29ec0fd384809",
+        "history": [
+          {
+            "version": 1,
+            "digest": "3aab858a6c32798214782e87380625c205ea5776d6a245cde116a16cca5d21d2"
+          },
+          {
+            "version": 2,
+            "digest": "759f09e0681494f213f419221478e4ecccb67bfea7a6cae984efdd9401955027"
+          }
+        ]
+      },
+      "_receipts": {
+        "count": 1,
+        "digest": "964eea97420ee89fad777853a37024f70667d08f850a30dc5075cd30c30eb5db"
+      },
+      "_audit": {
+        "count": 2,
+        "digest": "eee19ddd2f264d6addab60645e7bcd06f4413fe824a892a280d0ea9444efef85"
+      },
+      "handoffs": {
+        "count": 1,
+        "digest": "ad719922d92b037885513db2011b9ffaa3145abefcc3a915b27f8163e6efd8df"
+      },
+      "handoff_delivery": {
+        "count": 1,
+        "digest": "419184dc4f14adf5d7879036ef8469517fb0137646be5835172c676c67304fc1"
+      },
+      "_jobs": {
+        "count": 1,
+        "digest": "08c92638c6f65610ed1a72585ee45e42544792706c532274672963733c4170b3"
+      }
+    }
+  },
+  "originalSourceOwnersAndFilesUnchanged": true,
+  "oldExportAndAllThreeBackupsUnchanged": true,
+  "targetOracleRetained": true,
+  "finalBusinessSessions": 0,
+  "finalClosure": {
+    "originalConsoleSession": 81251,
+    "originalExitCode": 0,
+    "originalSignal": null,
+    "toolChunk": "a2b675",
+    "phaseId": "7aeadc69-03f0-473d-b656-f987102353a4",
+    "fixtureId": "9d335a66-9702-4246-9362-d52371e0ea87",
+    "closed": true,
+    "closedAt": "2026-10-02T19:30:42.712Z",
+    "candidate": "0c47a3ca0b606db4f9fe24c0a781bc23697eec6e53b8a01670ffce7636ba9074",
+    "sourceUnchanged": true,
+    "oldArtifactUnchanged": true,
+    "oldInitialBackupUnchanged": true,
+    "summary": {
+      "schemaVersion": 6,
+      "slots": [
+        {
+          "table": "runtime_physical_slot",
+          "state": "EMPTY",
+          "reservedBytes": 0,
+          "identityCleared": true
+        },
+        {
+          "table": "runtime_recovery_slot",
+          "state": "EMPTY",
+          "reservedBytes": 0,
+          "identityCleared": true
+        },
+        {
+          "table": "runtime_upgrade_slot",
+          "state": "EMPTY",
+          "reservedBytes": 0,
+          "identityCleared": true
+        }
+      ],
+      "runtimes": [
+        {
+          "id": "runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+          "productId": "combined",
+          "version": "0.2.4",
+          "artifactDigest": "460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59",
+          "state": "STOPPED",
+          "activeGenerationId": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:2",
+          "generation": 2,
+          "generationVersion": "0.2.4",
+          "generationArtifactDigest": "460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59",
+          "attempt": 3,
+          "attemptGenerationId": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:2",
+          "attemptState": "STOPPED",
+          "dispatchBegun": 1,
+          "physicalState": "EMPTY",
+          "emptyObserved": 1,
+          "helperClosed": 1,
+          "executionClean": 1,
+          "stopCommandId": "4b831a36-a149-4025-8fbb-2af8b6c59333",
+          "commandState": "SUCCEEDED",
+          "stopCommandState": "SUCCEEDED"
+        }
+      ]
+    }
+  },
+  "browserArtifacts": [
+    {
+      "path": ".local/safe-upgrade-001/browser-upgrade-confirmation-01.txt",
+      "sha256": "b329b257524743e2f46a6ade9093e31888e9645dfb6e07ab2cd9d4886cd65aba"
+    },
+    {
+      "path": ".local/safe-upgrade-001/browser-upgrade-ready-01.txt",
+      "sha256": "b2b7c13bc8ccc4e14c399a8dd2018faf1b6b21e9c82139e8c556c9870180a1e4"
+    },
+    {
+      "path": ".local/safe-upgrade-001/browser-upgrade-running-01.txt",
+      "sha256": "1320a1b4d9a777b62127260f8941446f35d5d2c5e6399887b56f917c1ff1ad42"
+    },
+    {
+      "path": ".local/safe-upgrade-001/browser-target-write-01.txt",
+      "sha256": "b65b604bde2dab034c9526464c9e04973a062ffc44afe65ea73960d3f525211c"
+    },
+    {
+      "path": ".local/safe-upgrade-001/browser-retained-handoff-01.txt",
+      "sha256": "d929b5c6bd133c77ca4010c645805db07ba381a255c76e377e818aed9874378a"
+    },
+    {
+      "path": ".local/safe-upgrade-001/browser-restored-running-01.txt",
+      "sha256": "d9b1392ae80944b64153e3a69a7b1fcfad55c709eecd7906749dab3bc60095ea"
+    },
+    {
+      "path": ".local/safe-upgrade-001/browser-restored-requests-01.txt",
+      "sha256": "76a3a4982b9421c69c25f33445503b5e68ab2590b7ab2972971d038f9327eba2"
+    },
+    {
+      "path": ".local/safe-upgrade-001/browser-final-stopped-01.txt",
+      "sha256": "df11fe58800db43245f6f3bf1d36d61202002a15267a8c04f7d9fc3acadf04e7"
+    },
+    {
+      "path": ".local/safe-upgrade-001/browser-target-write-01.png",
+      "sha256": "c707d7ce25eeef5207a3d4993750aaf5908afb83e48afcf1108bc8db688eacfe"
+    },
+    {
+      "path": ".local/safe-upgrade-001/browser-restored-requests-01.png",
+      "sha256": "6f56a6c3090b72bbed36c023737e422712ea2b9f809d9868c48a014ffa047cfe"
+    }
+  ],
+  "limits": [
+    "Actual owned local developer Windows fixture and Chrome journey only; no hosted/provider/customer production/native-device qualification.",
+    "Source01 cache failure and source02 malformed-pin rejection remain preserved; this current candidate qualifies only its actual successful later journey.",
+    "Full-page console screenshot timed out; actual early UPGRADE_READY DOM and successful viewport screenshots retained; no browser policy block was observed.",
+    "Later inspected UPGRADE_READY browser result showed current target, not started and separate Start upgraded generation; its complete result was observed through CUA but was not saved into the earlier pre-response DOM file. Final observer attempt01 failed this overly late text expectation (chunk0940f1/exit1); owner/retention checks had passed and are repeated read-only here."
+  ]
+}

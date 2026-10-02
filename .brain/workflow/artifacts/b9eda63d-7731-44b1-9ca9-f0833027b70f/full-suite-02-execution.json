@@ -1,0 +1,24 @@
+{
+  "kind": "suite",
+  "command": [
+    "npm",
+    "test"
+  ],
+  "startedAt": "2026-10-02T19:54:48.584Z",
+  "finishedAt": "2026-10-02T20:07:16.587Z",
+  "exitCode": 0,
+  "signal": null,
+  "candidateBefore": "8531a021a0e7c484e402a9132c107e5ce0c2968d7b18467c36adb77e35a0684f",
+  "candidateAfter": "8531a021a0e7c484e402a9132c107e5ce0c2968d7b18467c36adb77e35a0684f",
+  "contractBefore": "55153a14688de5b2bf8e6c28f527eac7deef10ce1cbbba143a8937d60725116d",
+  "contractAfter": "55153a14688de5b2bf8e6c28f527eac7deef10ce1cbbba143a8937d60725116d",
+  "sourceUnchanged": true,
+  "counts": {
+    "tests": 368,
+    "passed": 367,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 1,
+    "todo": 0
+  }
+}

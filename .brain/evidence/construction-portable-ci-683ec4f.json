@@ -1,0 +1,15 @@
+{
+  "schema": "quadbridge.external-ci-observation.v1",
+  "commit": "683ec4f17d5a459788fd6e819c1e6934fcf08734",
+  "repository": "accumenbridge/shell-frameworks",
+  "workflow": "Portable kernel CI",
+  "runId": 37034475993,
+  "url": "https://github.com/accumenbridge/shell-frameworks/actions/runs/37034475993",
+  "status": "completed",
+  "conclusion": "success",
+  "provenance": "Root actual gh run list exact commit, original exit0, toolChunk ef5548; gh run view exact run original exit0 toolChunk48a39c.",
+  "limitations": [
+    "Exact construction commit portable Ubuntu workflow observation; Windows native CI, upgrade target and production are separate.",
+    "No numeric test counts inferred from workflow conclusion; candidate-specific local construction results remain separately recorded."
+  ]
+}

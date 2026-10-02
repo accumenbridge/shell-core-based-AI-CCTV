@@ -1,6 +1,6 @@
 {
   "id": "service-desk",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "platformAbi": "quadbridge.module.v1",
   "title": "Service Desk",
   "description": "A small non-AI business product.",
@@ -8,7 +8,7 @@
   "modules": [
     {
       "id": "service-desk",
-      "version": "0.2.1"
+      "version": "0.2.2"
     }
   ],
   "bindings": []

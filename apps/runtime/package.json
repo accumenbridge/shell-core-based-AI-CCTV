@@ -12,7 +12,7 @@
     "@quadbridge/worker-host": "0.2.0",
     "@quadbridge/web-shell": "0.2.0",
     "@quadbridge/connections": "0.2.0",
-    "@quadbridge/service-desk": "0.2.1",
+    "@quadbridge/service-desk": "0.2.2",
     "@quadbridge/knowledge": "0.2.3",
     "@quadbridge/handoff": "0.2.3",
     "@quadbridge/ai-core": "0.3.0"

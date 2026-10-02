@@ -9,6 +9,7 @@ import { importSourceSnapshot, loadSourceSnapshot } from './source-import.js';
 import { LocalArtifactStore } from './artifact-store.js';
 import { ManagedRuntimeManager } from './runtime-manager.js';
 import { RuntimeRecoveryManager } from './runtime-recovery.js';
+import { RuntimeUpgradeManager } from './runtime-upgrade.js';
 
 const ROOT = fileURLToPath(new URL('../../../', import.meta.url));
 
@@ -63,6 +64,7 @@ export async function startControlPlane(options: { root?: string; databasePath?:
   let artifacts: LocalArtifactStore | undefined;
   let runtimes: ManagedRuntimeManager | undefined;
   let recovery: RuntimeRecoveryManager | undefined;
+  let upgrades: RuntimeUpgradeManager | undefined;
   let operator: Awaited<ReturnType<typeof createOperatorServer>> | undefined;
   try {
     const snapshot = loadSourceSnapshot(root);
@@ -72,13 +74,15 @@ export async function startControlPlane(options: { root?: string; databasePath?:
     // manager remains attached even when its selected native host is unavailable.
     runtimes = ManagedRuntimeManager.create(root,store,artifacts);
     recovery = RuntimeRecoveryManager.create(root,store,artifacts);
+    upgrades = RuntimeUpgradeManager.create(root,store,artifacts,recovery);
     try { worker = await LocalBuildWorker.create({root,store,snapshot}); }
     catch (error) {
       if (!(error instanceof BuildExecutorUnavailable)) throw error;
       console.warn('The paired local console is available, but its pinned build executor is unavailable.');
     }
     if (worker) await worker.start();
-    const runningOperator = await createOperatorServer({ root, store, snapshot, worker, artifactStore:artifacts, runtimeManager:runtimes, recoveryManager:recovery, port: options.port ?? Number(process.env.QB_STUDIO_PORT || 4480) });
+    const runningOperator = await createOperatorServer({ root, store, snapshot, worker, artifactStore:artifacts, runtimeManager:runtimes, recoveryManager:recovery,
+      upgradeManager:upgrades, port: options.port ?? Number(process.env.QB_STUDIO_PORT || 4480) });
     operator = runningOperator;
     console.log(`Quadbridge Product Studio 0.3: ${runningOperator.url}`);
     console.log(`Pairing code (local developer access): ${runningOperator.pairingCode}`);
@@ -96,18 +100,21 @@ export async function startControlPlane(options: { root?: string; databasePath?:
           const failures:unknown[]=[];
           // Calling close synchronously marks the manager as closing and signals
           // its exact owners before HTTP connections are drained.
+          const upgradeClose=upgrades?.close();
           const runtimeClose=runtimes?.close();
-          const recoveryClose=recovery?.close();
           // Attach rejection handling before waiting for HTTP connections to drain.
+          const upgradeOutcome=upgradeClose?observeCloseOutcome(upgradeClose):undefined;
           const runtimeOutcome=runtimeClose?observeCloseOutcome(runtimeClose):undefined;
-          const recoveryOutcome=recoveryClose?observeCloseOutcome(recoveryClose):undefined;
           if(!operatorClosed)try{await runningOperator.close();operatorClosed=true;}catch(error){failures.push(error);}
           let runtimeSettled=true;
           if(runtimeOutcome){const outcome=await runtimeOutcome;if(!outcome.ok){runtimeSettled=false;failures.push(outcome.error);}}
-          if(recoveryOutcome){const outcome=await recoveryOutcome;if(!outcome.ok){runtimeSettled=false;failures.push(outcome.error);}}
+          let upgradeSettled=true;
+          if(upgradeOutcome){const outcome=await upgradeOutcome;if(!outcome.ok){upgradeSettled=false;failures.push(outcome.error);}}
+          let recoverySettled=true;
+          if(runtimeSettled&&upgradeSettled&&recovery)try{await recovery.close();}catch(error){recoverySettled=false;failures.push(error);}
           // Late exact-owner reconciliation still needs these stores. Keep them
           // open whenever the manager cannot prove its owned callbacks settled.
-          if(runtimeSettled){
+          if(runtimeSettled&&upgradeSettled&&recoverySettled){
             let workerSettled=true;
             if(!workerClosed&&worker)try{await worker.close();workerClosed=true;}catch(error){workerSettled=false;failures.push(error);}
             if(workerSettled){
@@ -126,14 +133,15 @@ export async function startControlPlane(options: { root?: string; databasePath?:
     };
   } catch (error) {
     const failures: unknown[] = [error];
-    const runtimeClose=runtimes?.close(),recoveryClose=recovery?.close();
+    const upgradeClose=upgrades?.close(),runtimeClose=runtimes?.close();
+    const upgradeOutcome=upgradeClose?observeCloseOutcome(upgradeClose):undefined;
     const runtimeOutcome=runtimeClose?observeCloseOutcome(runtimeClose):undefined;
-    const recoveryOutcome=recoveryClose?observeCloseOutcome(recoveryClose):undefined;
     let runtimeSettled=true;
     if(runtimeOutcome){const outcome=await runtimeOutcome;if(!outcome.ok){runtimeSettled=false;failures.push(outcome.error);}}
-    if(recoveryOutcome){const outcome=await recoveryOutcome;if(!outcome.ok){runtimeSettled=false;failures.push(outcome.error);}}
+    let upgradeSettled=true;if(upgradeOutcome){const outcome=await upgradeOutcome;if(!outcome.ok){upgradeSettled=false;failures.push(outcome.error);}}
     try { await operator?.close(); } catch (closeError) { failures.push(closeError); }
-    if(runtimeSettled){
+    let recoverySettled=true;if(runtimeSettled&&upgradeSettled&&recovery)try{await recovery.close();}catch(error){recoverySettled=false;failures.push(error);}
+    if(runtimeSettled&&upgradeSettled&&recoverySettled){
       let workerSettled=true;try { await worker?.close(); } catch (closeError) { workerSettled=false;failures.push(closeError); }
       let artifactsSettled=workerSettled;if(workerSettled)try { await artifacts?.close(); } catch (closeError) { artifactsSettled=false;failures.push(closeError); }
       if(artifactsSettled)try { store.close(); } catch (closeError) { failures.push(closeError); }

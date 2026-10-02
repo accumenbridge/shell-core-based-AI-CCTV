@@ -1,0 +1,69 @@
+- complementary:
+  - text: Quadbridge Product Studio
+  - generic: Paired local operator
+  - navigation:
+    - button "Overview"
+    - button "Products"
+    - button "Modules"
+    - button "Ui"
+    - button "Backend"
+    - button "Ai"
+    - button "Data"
+    - button "Builds"
+    - button "Artifacts"
+    - button "Runtime Instances"
+    - button "Environments"
+    - button "Deployments"
+    - button "Audit"
+    - button "Operations"
+- main:
+  - generic: paired local control plane
+  - heading "Runtime Instances" [level=1]
+  - generic: Stored source records and validated local plans.
+  - generic: v0.3.0
+  - button "Disconnect"
+  - heading "Managed local runtime" [level=2]
+  - generic: local-only
+  - paragraph: Launch rechecks the pinned local process-owner profile; stored runtimes are never recovered by PID.
+  - paragraph: "Physical slot: RUNNING · runtime-c2582154-368c-40dd-8bc1-a6a2367e2716 · 2712829 reserved bytes. UNKNOWN retains the slot and data until its original process owner proves an empty process tree."
+  - paragraph: A fixed local process starts only an exact promoted release. No hosted deployment or provider is attached.
+  - heading "Promoted releases" [level=2]
+  - paragraph: Choose the exact product version; start and restart require confirmation.
+  - article:
+    - heading "combined@0.2.3" [level=3]
+    - generic: Promoted local immutable release
+    - generic: promoted
+    - paragraph: 4f6c25437ddf99bddc6b9f036b4a12192be3ec9fb9c5e590415231ba7bb02cf4
+    - checkbox "Start this exact promoted local release on this machine."
+    - text: Start this exact promoted local release on this machine.
+    - button "Start local runtime"
+  - article:
+    - heading "combined@0.2.4" [level=3]
+    - generic: Promoted local immutable release
+    - generic: promoted
+    - paragraph: 460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59
+    - checkbox "Start this exact promoted local release on this machine."
+    - text: Start this exact promoted local release on this machine.
+    - button "Start local runtime"
+  - heading "Runtime instances" [level=2]
+  - article:
+    - heading "combined@0.2.4" [level=3]
+    - generic: runtime-c2582154-368c-40dd-8bc1-a6a2367e2716 · attempt 3 · generation generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:2
+    - generic: RUNNING
+    - paragraph: Artifact 460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59
+    - paragraph: Separate worker required · owned-in-this-process
+    - paragraph:
+      - link "Open local application":
+        - /url: http://127.0.0.1:62601
+    - button "Refresh events and address"
+    - checkbox "Stop this exact local runtime and retain its data."
+    - text: Stop this exact local runtime and retain its data.
+    - button "Stop runtime"
+    - generic: "{\"at\":1790969336634,\"role\":\"web-backend\",\"type\":\"ROLE_READY\"} {\"at\":1790969336635,\"type\":\"API_READY\"} {\"at\":1790969336758,\"role\":\"worker\",\"type\":\"ROLE_READY\"}"
+    - heading "Immutable generations" [level=4]
+    - list:
+      - listitem: Generation 1 · combined@0.2.3 · 4f6c25437ddf99bddc6b9f036b4a12192be3ec9fb9c5e590415231ba7bb02cf4 · retained
+      - listitem: Generation 2 · combined@0.2.4 · 460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59 · current
+    - heading "Upgrade history" [level=4]
+    - list:
+      - listitem: SUCCEEDED · generation generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:1 → generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:2 · backup c791038c7b7f1eadc5d92842ab72d280fbba20e1d86c904af2f13176340dffae

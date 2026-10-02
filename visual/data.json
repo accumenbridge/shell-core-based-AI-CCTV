@@ -513,7 +513,7 @@
     },
     {
       "id": "service-desk",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "abi": "quadbridge.module.v1",
       "dependencies": [],
       "provides": [
@@ -584,9 +584,9 @@
         }
       ],
       "schema": {
-        "current": 1,
+        "current": 2,
         "readMin": 1,
-        "readMax": 1
+        "readMax": 2
       },
       "background": false,
       "browserAssets": [
@@ -637,7 +637,7 @@
           "schemas": [
             {
               "id": "service-desk",
-              "version": 1
+              "version": 2
             }
           ]
         },
@@ -655,7 +655,7 @@
   "products": [
     {
       "id": "combined",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "platformAbi": "quadbridge.module.v1",
       "title": "Operations + Knowledge",
       "description": "Two domain families composed into one application.",
@@ -663,7 +663,7 @@
       "modules": [
         {
           "id": "service-desk",
-          "version": "0.2.1"
+          "version": "0.2.2"
         },
         {
           "id": "knowledge",
@@ -743,7 +743,7 @@
     },
     {
       "id": "service-desk",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "platformAbi": "quadbridge.module.v1",
       "title": "Service Desk",
       "description": "A small non-AI business product.",
@@ -751,7 +751,7 @@
       "modules": [
         {
           "id": "service-desk",
-          "version": "0.2.1"
+          "version": "0.2.2"
         }
       ],
       "bindings": []
@@ -940,7 +940,7 @@
       "plan": {
         "product": {
           "id": "combined",
-          "version": "0.2.3",
+          "version": "0.2.4",
           "platformAbi": "quadbridge.module.v1",
           "title": "Operations + Knowledge",
           "description": "Two domain families composed into one application.",
@@ -956,7 +956,7 @@
             },
             {
               "id": "service-desk",
-              "version": "0.2.1"
+              "version": "0.2.2"
             }
           ],
           "bindings": [
@@ -1373,7 +1373,7 @@
           },
           {
             "id": "service-desk",
-            "version": "0.2.1",
+            "version": "0.2.2",
             "abi": "quadbridge.module.v1",
             "dependencies": [],
             "provides": [
@@ -1444,9 +1444,9 @@
               }
             ],
             "schema": {
-              "current": 1,
+              "current": 2,
               "readMin": 1,
-              "readMax": 1
+              "readMax": 2
             },
             "background": false,
             "browserAssets": [
@@ -1497,7 +1497,7 @@
                 "schemas": [
                   {
                     "id": "service-desk",
-                    "version": 1
+                    "version": 2
                   }
                 ]
               },
@@ -2269,7 +2269,7 @@
       "plan": {
         "product": {
           "id": "service-desk",
-          "version": "0.2.1",
+          "version": "0.2.2",
           "platformAbi": "quadbridge.module.v1",
           "title": "Service Desk",
           "description": "A small non-AI business product.",
@@ -2277,7 +2277,7 @@
           "modules": [
             {
               "id": "service-desk",
-              "version": "0.2.1"
+              "version": "0.2.2"
             }
           ],
           "bindings": []
@@ -2285,7 +2285,7 @@
         "modules": [
           {
             "id": "service-desk",
-            "version": "0.2.1",
+            "version": "0.2.2",
             "abi": "quadbridge.module.v1",
             "dependencies": [],
             "provides": [
@@ -2356,9 +2356,9 @@
               }
             ],
             "schema": {
-              "current": 1,
+              "current": 2,
               "readMin": 1,
-              "readMax": 1
+              "readMax": 2
             },
             "background": false,
             "browserAssets": [
@@ -2409,7 +2409,7 @@
                 "schemas": [
                   {
                     "id": "service-desk",
-                    "version": 1
+                    "version": 2
                   }
                 ]
               },

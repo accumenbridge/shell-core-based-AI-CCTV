@@ -14,6 +14,7 @@ import { maintainedSourceFingerprint } from './source-import.js';
 import { ArtifactStoreUnavailable, type LocalArtifactStore } from './artifact-store.js';
 import { RuntimePreparationError, type ManagedRuntimeManager } from './runtime-manager.js';
 import { RuntimeRecoveryError, type RuntimeRecoveryManager } from './runtime-recovery.js';
+import { RuntimeUpgradeError, type RuntimeUpgradeManager } from './runtime-upgrade.js';
 
 const COOKIE = 'qb_platform_session';
 const BODY_LIMIT = 64 * 1024;
@@ -34,6 +35,7 @@ type ServerOptions = {
   artifactStore?: LocalArtifactStore;
   runtimeManager?: ManagedRuntimeManager;
   recoveryManager?: RuntimeRecoveryManager;
+  upgradeManager?: RuntimeUpgradeManager;
   snapshot?: SourceSnapshot;
   port?: number;
   pairingCode?: string;
@@ -86,6 +88,18 @@ function recoveryListDto(value:unknown):Record<string,unknown>{
   if(!value||typeof value!=='object'||Array.isArray(value))throw new Error('Recovery list is malformed');
   const row=value as Record<string,unknown>;
   return {...row,operations:Array.isArray(row.operations)?row.operations.map(recoveryOperationDto):[]};
+}
+const upgradeBooleanFields=['targetWorkerRequired','dispatchBegun','driverEmpty','driverClosed','stagingClean','publisherResultObserved','publisherClosed','destinationPublished','destinationVerified'] as const;
+function runtimeUpgradeOperationDto(value:unknown):Record<string,unknown>{
+  if(!value||typeof value!=='object'||Array.isArray(value))throw new Error('Upgrade metadata is malformed');
+  const {ownerToken:_ownerToken,ownerId:_ownerId,requestKey:_requestKey,payloadDigest:_payloadDigest,...safe}=value as Record<string,unknown>;
+  for(const field of upgradeBooleanFields){const fact=safe[field];if(fact===0||fact===1)safe[field]=fact===1;}
+  return safe;
+}
+function runtimeUpgradeListDto(value:unknown):Record<string,unknown>{
+  if(!value||typeof value!=='object'||Array.isArray(value))throw new Error('Upgrade list is malformed');
+  const row=value as Record<string,unknown>;
+  return {...row,operations:Array.isArray(row.operations)?row.operations.map(runtimeUpgradeOperationDto):[]};
 }
 function isObject(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value) && (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null);
@@ -210,6 +224,16 @@ function statusFor(error: unknown): { status: number; code: string; message: str
       RUNTIME_REPAIR_REQUIRED:{status:409,message:'This local runtime needs repair before recovery can proceed.'},
       RUNTIME_BACKUP_INVALID:{status:409,message:'The selected local backup or runtime identity could not be verified.'},
       RUNTIME_RECOVERY_UNKNOWN:{status:503,message:'Recovery ownership is unresolved; its private reservation has been retained.'}
+    };
+    const response=responses[error.code];return {status:response.status,code:error.code,message:response.message};
+  }
+  if(error instanceof RuntimeUpgradeError){
+    const responses:Record<RuntimeUpgradeError['code'],{status:number;message:string}>={
+      RUNTIME_UNAVAILABLE:{status:503,message:'The selected local upgrade profile is unavailable or shutting down.'},
+      RUNTIME_REPAIR_REQUIRED:{status:409,message:'This runtime requires local repair before an upgrade can proceed.'},
+      RUNTIME_SOURCE_INVALID:{status:409,message:'The verified source or target runtime identity changed.'},
+      RUNTIME_BACKUP_INVALID:{status:409,message:'The selected stopped-generation backup could not be verified.'},
+      RUNTIME_UPGRADE_UNKNOWN:{status:503,message:'Upgrade ownership is unresolved; its private reservation and data have been retained.'}
     };
     const response=responses[error.code];return {status:response.status,code:error.code,message:response.message};
   }
@@ -341,6 +365,18 @@ export async function createOperatorServer(options: ServerOptions): Promise<Oper
         if(!value)throw new HttpFailure(404,'NOT_FOUND','Managed runtime instance not found');
         return sendJson(res,200,runtimeRead[2]?{instanceId:value.id,events:value.events}:value);
       }
+      const upgradeList=/^\/platform-api\/runtime-instances\/(runtime-[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})\/upgrades$/i.exec(url.pathname);
+      if(method==='GET'&&upgradeList){
+        if(!options.upgradeManager)throw new HttpFailure(503,'RUNTIME_UPGRADE_UNAVAILABLE','Private local generation upgrades are not attached');
+        const value=runtimeUpgradeListDto(options.upgradeManager.list(upgradeList[1]!));recheckSession(req,sessions,session,now);return sendJson(res,200,value);
+      }
+      const upgradeRead=/^\/platform-api\/runtime-upgrades\/([0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$/i.exec(url.pathname);
+      if(method==='GET'&&upgradeRead){
+        if(!options.upgradeManager)throw new HttpFailure(503,'RUNTIME_UPGRADE_UNAVAILABLE','Private local generation upgrades are not attached');
+        const value=options.upgradeManager.operation(upgradeRead[1]!);recheckSession(req,sessions,session,now);
+        if(!value)throw new HttpFailure(404,'NOT_FOUND','Runtime upgrade operation not found');
+        return sendJson(res,200,runtimeUpgradeOperationDto(value));
+      }
       const backupList=/^\/platform-api\/runtime-instances\/(runtime-[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})\/backups$/i.exec(url.pathname);
       if(method==='GET'&&backupList){
         if(!options.recoveryManager)throw new HttpFailure(503,'RUNTIME_RECOVERY_UNAVAILABLE','Private local recovery is not attached');
@@ -468,6 +504,19 @@ export async function createOperatorServer(options: ServerOptions): Promise<Oper
           ?options.runtimeManager.stop({instanceId:runtimeAction[1]!,requestKey:request.requestKey},actorId,()=>recheckSession(req,sessions,session,now))
           :options.runtimeManager.restart({instanceId:runtimeAction[1]!,requestKey:request.requestKey},actorId,()=>recheckSession(req,sessions,session,now));
         const value=await awaitOriginalSession(operation);return sendJson(res,202,value);
+      }
+      const runtimeUpgrade=/^\/platform-api\/runtime-instances\/(runtime-[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})\/upgrades$/i.exec(url.pathname);
+      if(runtimeUpgrade){
+        const request=exact(body,['confirm','targetVersion','targetArtifactDigest','sourceBackupDigest','requestKey']);
+        if(request.confirm!==true)throw new HttpFailure(400,'CONFIRMATION_REQUIRED','Explicit confirmation of the exact source, backup and promoted target is required');
+        if([request.targetVersion,request.targetArtifactDigest,request.sourceBackupDigest,request.requestKey].some(value=>typeof value!=='string'))
+          throw new HttpFailure(400,'INVALID_INPUT','Upgrade target, source backup and request identity must be text');
+        if(!options.upgradeManager)throw new HttpFailure(503,'RUNTIME_UPGRADE_UNAVAILABLE','Private local generation upgrades are not attached');
+        recheckSession(req,sessions,session,now);
+        const value=await awaitOriginalSession(options.upgradeManager.upgrade({instanceId:runtimeUpgrade[1]!,targetVersion:request.targetVersion as string,
+          targetArtifactDigest:request.targetArtifactDigest as string,sourceBackupDigest:request.sourceBackupDigest as string,requestKey:request.requestKey as string,
+          confirm:request.confirm===true},actorId,()=>recheckSession(req,sessions,session,now)));
+        return sendJson(res,202,runtimeUpgradeOperationDto(value));
       }
       const backupCreate=/^\/platform-api\/runtime-instances\/(runtime-[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})\/backups$/i.exec(url.pathname);
       if(backupCreate){

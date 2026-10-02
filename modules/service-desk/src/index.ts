@@ -22,7 +22,10 @@ export interface ReceiptCommands {
 export const CREATE_RECEIPT_CONTRACT = 'desk.requests.create.v2';
 export function createServiceDesk(manifest: ModuleManifest, store: SqliteOwner): HostedModule {
     // Preserve the exact applied v1 migration and existing human/v1 operation semantics.
-    store.migrate([{ version: 1, sql: `CREATE TABLE requests(id TEXT NOT NULL,tenant TEXT NOT NULL,title TEXT NOT NULL,details TEXT NOT NULL,state TEXT NOT NULL,version INTEGER NOT NULL,source TEXT,created INTEGER NOT NULL,PRIMARY KEY(tenant,id));` }], manifest.schema);
+    store.migrate([
+        { version: 1, sql: `CREATE TABLE requests(id TEXT NOT NULL,tenant TEXT NOT NULL,title TEXT NOT NULL,details TEXT NOT NULL,state TEXT NOT NULL,version INTEGER NOT NULL,source TEXT,created INTEGER NOT NULL,PRIMARY KEY(tenant,id));` },
+        { version: 2, sql: `ALTER TABLE requests ADD COLUMN origin_kind TEXT NOT NULL DEFAULT 'manual'; UPDATE requests SET origin_kind='handoff' WHERE source IS NOT NULL;` }
+    ], manifest.schema);
     function parse(input: unknown) {
         const b = object(input, ['title', 'details', 'source']);
         const title = text(b.title, 'title', 200), details = text(b.details, 'details', 8000);
@@ -35,8 +38,12 @@ export function createServiceDesk(manifest: ModuleManifest, store: SqliteOwner):
     }
     function insert(ctx: RequestContext, input: ReturnType<typeof parse>): RequestRecord {
         const record: RequestRecord = { id: randomUUID(), tenant: ctx.tenantId, title: input.title, details: input.details, state: 'OPEN', version: 1, source: input.source ? JSON.stringify(input.source) : null, created: Date.now() };
-        store.db.prepare('INSERT INTO requests VALUES(?,?,?,?,?,?,?,?)').run(record.id, record.tenant, record.title, record.details, record.state, 1, record.source, record.created);
+        store.db.prepare('INSERT INTO requests(id,tenant,title,details,state,version,source,created,origin_kind) VALUES(?,?,?,?,?,?,?,?,?)')
+            .run(record.id, record.tenant, record.title, record.details, record.state, 1, record.source, record.created, input.source ? 'handoff' : 'manual');
         return record;
+    }
+    function requestRows(tenant: string) {
+        return store.db.prepare('SELECT id,tenant,title,details,state,version,source,created FROM requests WHERE tenant=? ORDER BY created DESC,id DESC LIMIT 100').all(tenant);
     }
     const commands: RequestCommands = { create(ctx, input, key) { const parsed = parse(input); return store.command(ctx, 'desk.create', key, parsed, 'desk.create', () => insert(ctx, parsed)); } };
     const receipts: ReceiptCommands = {
@@ -58,14 +65,14 @@ export function createServiceDesk(manifest: ModuleManifest, store: SqliteOwner):
         }
     };
     return { manifest, services: { 'desk.requests.create.v1': commands, [CREATE_RECEIPT_CONTRACT]: receipts }, routes: [
-            { method: 'GET', path: '/api/requests', permission: 'desk.read', kind: 'read', handle(ctx) { ctx.assertAllowed('desk.read', 'read'); return { items: store.db.prepare('SELECT * FROM requests WHERE tenant=? ORDER BY created DESC,id DESC LIMIT 100').all(ctx.tenantId), limit: 100 }; } },
+            { method: 'GET', path: '/api/requests', permission: 'desk.read', kind: 'read', handle(ctx) { ctx.assertAllowed('desk.read', 'read'); return { items: requestRows(ctx.tenantId), limit: 100 }; } },
             { method: 'POST', path: '/api/requests', permission: 'desk.create', kind: 'write', handle(ctx, b, _q, key) { return commands.create(ctx, b, key!); } },
             { method: 'POST', path: '/api/requests/commit', permission: 'desk.create', kind: 'write', handle(ctx, b, _q, key) { return receipts.create(ctx, b, key!); } },
             { method: 'GET', path: '/api/requests/receipt', permission: 'desk.receipts.read', kind: 'read', handle(ctx, _b, q) { return receipts.lookup(ctx, id(q.get('commandId'))); } },
             { method: 'POST', path: '/api/requests/close', permission: 'desk.close', kind: 'write', handle(ctx, input, _q, key) {
                     const b = object(input, ['id', 'expectedVersion']), recordId = id(b.id), version = integer(b.expectedVersion, 1);
                     return store.command(ctx, 'desk.close', key, { id: recordId, expectedVersion: version }, 'desk.close', () => {
-                        const row = store.db.prepare('SELECT * FROM requests WHERE tenant=? AND id=?').get(ctx.tenantId, recordId) as unknown as RequestRecord | undefined;
+                        const row = store.db.prepare('SELECT id,tenant,title,details,state,version,source,created FROM requests WHERE tenant=? AND id=?').get(ctx.tenantId, recordId) as unknown as RequestRecord | undefined;
                         if (!row)
                             throw new PlatformError('NOT_FOUND', 'Request not found');
                         if (row.version !== version || row.state !== 'OPEN')

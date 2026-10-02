@@ -1,0 +1,12 @@
+{
+  "fixtureId": "9d335a66-9702-4246-9362-d52371e0ea87",
+  "candidate": "1a0163b412a09070fbb2a90a6cdb401d2ce87df20060129077e8b0dbf49fd361",
+  "toolChunk": "7bbaae",
+  "originalExitCode": 1,
+  "originalSignal": null,
+  "targetReadinessPublished": false,
+  "pendingJobEnqueued": false,
+  "cause": "The maintained recovery tool pin has 63 characters; actual reviewed/copied helper has the unchanged 64-character SHA256. Strict identity guard refused canonical console startup.",
+  "correctHelperSha256": "050cd8aaceee85709f9f8e0def5d5256ca00e94af70083aed820a29443f72be4",
+  "nextAction": "Sole Luna writer corrects exact pin and verifies actual maintained helper byte hashes before fresh build/focused/new source freeze."
+}

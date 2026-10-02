@@ -1,0 +1,27 @@
+{
+  "recordedAt": "2026-10-02T19:58:53.079Z",
+  "observers": [
+    {
+      "script": "equivalence-01.mjs",
+      "sha256": "8de010b0b348127503aed1fea94bae3a64e716fee2a248d301455e2af3c00f88",
+      "chunk": "e5afa6",
+      "exitCode": 1,
+      "result": "Comparison included TypeScript incremental cache metadata; backend-host .tsbuildinfo differed. No application effect."
+    },
+    {
+      "script": "equivalence-02.mjs",
+      "sha256": "cbc886716c9f87d0d3d1fc9bae76a90c433f11abc5938d5257d9326b3fe7e83c",
+      "chunk": "9c488d",
+      "exitCode": 1,
+      "result": "All emitted output bytes matched after cache exclusion; observer wrongly expected the snapshot manifest to list its own file hash. No application effect."
+    },
+    {
+      "script": "equivalence-03.mjs",
+      "sha256": "0c8b721fe6bfc88dcd304a3dc2c8adc2eecc9281208651c80780febb2ad6c76b",
+      "chunk": "63ff0e",
+      "exitCode": 0,
+      "result": "Complete reported read-only equivalence checks passed; exact registered manifest plus separately verified self file."
+    }
+  ],
+  "scope": "Read-only attribution observer history; no second native/browser execution."
+}

@@ -1,0 +1,309 @@
+{
+  "fixtureId": "9d335a66-9702-4246-9362-d52371e0ea87",
+  "candidate": "0c47a3ca0b606db4f9fe24c0a781bc23697eec6e53b8a01670ffce7636ba9074",
+  "contractDigest": "3dcb39e18df060243ec6b10af6bd27289e30a796c1a82c5d98ecf3b074606716",
+  "recordedAt": "2026-10-02T19:25:19.965Z",
+  "instanceId": "runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+  "state": "UPGRADE_READY",
+  "operation": {
+    "id": "9a286dea-69e0-4d4b-a869-2a515504ae7e",
+    "instanceId": "runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+    "sourceGenerationId": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:1",
+    "targetGenerationId": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:2",
+    "sourceAttemptId": "edc04f6e-4e07-4f52-9f29-bc8530ef6bad",
+    "sourceAttempt": 1,
+    "sourceCommandId": "b2607777-50d9-435c-a22a-2f975f71fb1a",
+    "targetVersion": "0.2.4",
+    "targetArtifactDigest": "460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59",
+    "targetProfileDigest": "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1",
+    "targetConfigDigest": "f33e7758c97d68ab2bc630314fabca94f4a1c58eedd24b506a7bf9b0dd685ad1",
+    "targetAdapterDigest": "ff15b95f4a9c0cfa2dd4b50dd1e993937ca8ecaa59b2c3a7b532400d5bb6df08",
+    "targetToolchainDigest": "d6481e2b7ea008dd04fbb0bfcf2d1cc3741a8a639dcc4edc0c8e73bd9242853d",
+    "targetRecipeDigest": "ff53ead9d28da5b75ad5d9ff1cfd664db80041dfba78984c21d886e67fb6af5d",
+    "targetOriginatingActorId": "operator:d8d03ac5-10d8-416b-8731-8434087f8ea3",
+    "targetWorkerRequired": true,
+    "sourceBackupDigest": "c791038c7b7f1eadc5d92842ab72d280fbba20e1d86c904af2f13176340dffae",
+    "actorId": "operator:e484d6fc-4cfd-423b-91ae-b8353d43052f",
+    "state": "SUCCEEDED",
+    "physicalState": "CLEAN",
+    "reservedBytes": 3465030,
+    "dispatchBegun": true,
+    "driverEmpty": true,
+    "driverClosed": true,
+    "stagingClean": true,
+    "publisherResultObserved": true,
+    "publisherClosed": true,
+    "destinationPublished": true,
+    "destinationVerified": true,
+    "errorCode": null,
+    "created": 1790969101897,
+    "updated": 1790969111575
+  },
+  "generations": [
+    {
+      "id": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:1",
+      "generation": 1,
+      "productId": "combined",
+      "version": "0.2.3",
+      "artifactDigest": "4f6c25437ddf99bddc6b9f036b4a12192be3ec9fb9c5e590415231ba7bb02cf4",
+      "profileDigest": "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1",
+      "configDigest": "54daffc0962d893b70a231b18fa57f783949a2c7bb026b8ac0f5366239ee3bc4",
+      "adapterDigest": "ff15b95f4a9c0cfa2dd4b50dd1e993937ca8ecaa59b2c3a7b532400d5bb6df08",
+      "toolchainDigest": "d6481e2b7ea008dd04fbb0bfcf2d1cc3741a8a639dcc4edc0c8e73bd9242853d",
+      "recipeDigest": "ff53ead9d28da5b75ad5d9ff1cfd664db80041dfba78984c21d886e67fb6af5d",
+      "originatingActorId": "operator:c96919c0-840d-4539-bbe9-197256fa7aa2",
+      "sourceGenerationId": null,
+      "upgradeOperationId": null
+    },
+    {
+      "id": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:2",
+      "generation": 2,
+      "productId": "combined",
+      "version": "0.2.4",
+      "artifactDigest": "460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59",
+      "profileDigest": "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1",
+      "configDigest": "f33e7758c97d68ab2bc630314fabca94f4a1c58eedd24b506a7bf9b0dd685ad1",
+      "adapterDigest": "ff15b95f4a9c0cfa2dd4b50dd1e993937ca8ecaa59b2c3a7b532400d5bb6df08",
+      "toolchainDigest": "d6481e2b7ea008dd04fbb0bfcf2d1cc3741a8a639dcc4edc0c8e73bd9242853d",
+      "recipeDigest": "ff53ead9d28da5b75ad5d9ff1cfd664db80041dfba78984c21d886e67fb6af5d",
+      "originatingActorId": "operator:d8d03ac5-10d8-416b-8731-8434087f8ea3",
+      "sourceGenerationId": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:1",
+      "upgradeOperationId": "9a286dea-69e0-4d4b-a869-2a515504ae7e"
+    }
+  ],
+  "attempts": [
+    {
+      "id": "edc04f6e-4e07-4f52-9f29-bc8530ef6bad",
+      "attempt": 1,
+      "generationId": "generation:runtime-c2582154-368c-40dd-8bc1-a6a2367e2716:1",
+      "state": "STOPPED",
+      "physicalState": "EMPTY",
+      "emptyObserved": 1,
+      "helperClosed": 1,
+      "executionClean": 1,
+      "commandId": "b2607777-50d9-435c-a22a-2f975f71fb1a",
+      "stopCommandId": "142c6e17-48fe-4d0d-8b8a-8c725c151a09"
+    }
+  ],
+  "slots": [
+    {
+      "table": "runtime_physical_slot",
+      "state": "EMPTY",
+      "identityCleared": true
+    },
+    {
+      "table": "runtime_recovery_slot",
+      "state": "EMPTY",
+      "identityCleared": true
+    },
+    {
+      "table": "runtime_upgrade_slot",
+      "state": "EMPTY",
+      "identityCleared": true
+    }
+  ],
+  "retention": {
+    "allObservedOwnerRowsPreserved": true,
+    "additiveDeskMigration": 2,
+    "removedViewerRetained": true,
+    "revokedDeskCloseRetained": true,
+    "migrationBusinessSessions": 0,
+    "pendingJobRowsUnchanged": true,
+    "receiptAndAuditRowsUnchanged": true
+  },
+  "sourceDataUnchanged": true,
+  "oldArtifactUnchanged": true,
+  "oldInitialBackupUnchanged": true,
+  "freshSourceBackupUnchanged": true,
+  "targetOwnerFacts": {
+    "access": {
+      "_migrations": {
+        "count": 1,
+        "digest": "70037b52ea0f44a73522fb79ae287f2a30abded446897e673aab8ea90c619c71",
+        "history": [
+          {
+            "version": 1,
+            "digest": "cf2d420b4a01ef7062bd511893ea1ff28fe9d4fc2463d92c5849b8bf969cbce4"
+          }
+        ]
+      },
+      "instance_binding": {
+        "count": 1,
+        "digest": "59bc24f8284b67cffeacc46fc97a6a4a46b8f153f60703bfbf69c73fbd7ab83d"
+      },
+      "principals": {
+        "count": 2,
+        "digest": "8ffc1962182f7df6ddbbce1f0a86b5fae2d65978a50138d89d6f15221011a2f1"
+      },
+      "grants": {
+        "count": 35,
+        "digest": "6cbff16a41ad7ae80c90582877f1365637a63f8d59ca9f7d178280b3f7a90f54"
+      },
+      "sessions": {
+        "count": 0,
+        "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "module_modes": {
+        "count": 1,
+        "digest": "ff3c31c2b53742c9fe062663d982de81cdfa57089807756c5733357987765f32"
+      }
+    },
+    "service-desk": {
+      "_migrations": {
+        "count": 2,
+        "digest": "75efe9f2dbc5dfb717566e486d3ae83d44326d25ea5b05d7cfc01f5bb8b344a2",
+        "history": [
+          {
+            "version": 1,
+            "digest": "b901b37d55b0f1ed18e31c0009f1a17bf6bc2099c6bb4bb979bef2208059c9f4"
+          },
+          {
+            "version": 2,
+            "digest": "2d055326063c364bb47ec0eaf05b02938d373a59c2c9603b883874ed2cbebf43"
+          }
+        ]
+      },
+      "_receipts": {
+        "count": 2,
+        "digest": "65ea82eac424285820356f40e6ee10d7f180231bafbf3f86d8f67b1db5235801"
+      },
+      "_audit": {
+        "count": 2,
+        "digest": "971725db5db2189a11e8ae573301d2e0fb43296b7b86f9db2667edff39b978a0"
+      },
+      "requests": {
+        "count": 2,
+        "digest": "c6c2fe3bd119da76b7316c215525493192af3bd7ab4439181ea430c2ac3a1c4c"
+      }
+    },
+    "knowledge": {
+      "_migrations": {
+        "count": 1,
+        "digest": "42993417a509b9440ccb0400c61bad43943d3f10c285d544febefd883c2771fc",
+        "history": [
+          {
+            "version": 1,
+            "digest": "b89df29e8dedb2f057506526446d3a252a69e8ae587091610cf7dfdcba244e65"
+          }
+        ]
+      },
+      "_receipts": {
+        "count": 2,
+        "digest": "07e6214419127a394560ce348dedeeab8a49f58e1e4b939354c70369d799c721"
+      },
+      "_audit": {
+        "count": 2,
+        "digest": "5acaf74210d5af282ddc48c025045cd39326ae2082660e24b90abfa624034e81"
+      },
+      "documents": {
+        "count": 2,
+        "digest": "89b1a1479e01ae07d4629b817ea91961ff4d10c5c90b7d1ddf52e130db9144ca"
+      },
+      "document_search": {
+        "count": 1,
+        "digest": "c9050fa86df6b5c180b89ff0e325024289f0ccca779938f9a3c532622c2db8bf"
+      },
+      "_jobs": {
+        "count": 2,
+        "digest": "deeaf92df2be36c3b2287d302511a5992d1a9cef462522cbbc106c70d87acaa4"
+      }
+    },
+    "handoff": {
+      "_migrations": {
+        "count": 2,
+        "digest": "18695202628e4d14ea5cd88e5565256f9964e416fa45f97839f29ec0fd384809",
+        "history": [
+          {
+            "version": 1,
+            "digest": "3aab858a6c32798214782e87380625c205ea5776d6a245cde116a16cca5d21d2"
+          },
+          {
+            "version": 2,
+            "digest": "759f09e0681494f213f419221478e4ecccb67bfea7a6cae984efdd9401955027"
+          }
+        ]
+      },
+      "_receipts": {
+        "count": 1,
+        "digest": "964eea97420ee89fad777853a37024f70667d08f850a30dc5075cd30c30eb5db"
+      },
+      "_audit": {
+        "count": 2,
+        "digest": "eee19ddd2f264d6addab60645e7bcd06f4413fe824a892a280d0ea9444efef85"
+      },
+      "handoffs": {
+        "count": 1,
+        "digest": "ad719922d92b037885513db2011b9ffaa3145abefcc3a915b27f8163e6efd8df"
+      },
+      "handoff_delivery": {
+        "count": 1,
+        "digest": "419184dc4f14adf5d7879036ef8469517fb0137646be5835172c676c67304fc1"
+      },
+      "_jobs": {
+        "count": 1,
+        "digest": "08c92638c6f65610ed1a72585ee45e42544792706c532274672963733c4170b3"
+      }
+    }
+  },
+  "targetInventory": {
+    "files": [
+      {
+        "path": "access.sqlite",
+        "sizeBytes": 69632,
+        "sha256": "ded1d2b73e5e870a269dd2b8fcc80780fb3f12ecc0f1bba4ce6e26e90c815c60"
+      },
+      {
+        "path": "credentials.json",
+        "sizeBytes": 214,
+        "sha256": "132e7b6c39cfe6c98d26e69647e0a820bf1441bbb43415b171cd3449aaaddc2a"
+      },
+      {
+        "path": "enrollment-complete.json",
+        "sizeBytes": 695,
+        "sha256": "4f4e3462427e08324c585b8801582f4739acf20b0c647bb9969211ceaa625009"
+      },
+      {
+        "path": "enrollment-intent.json",
+        "sizeBytes": 796,
+        "sha256": "14b865ce45b57c7b2a88681a5f64e9dfafbdda4d00c4aa687a9eb614eea7a48a"
+      },
+      {
+        "path": "enrollment-private.json",
+        "sizeBytes": 1165,
+        "sha256": "f5ca0835b34fe65183f98317b467f8b9d641e98ce1068b8a748b5b0c8a52fd07"
+      },
+      {
+        "path": "modules/handoff.sqlite",
+        "sizeBytes": 86016,
+        "sha256": "cffa39cc96002cc0beaed98b9c874759314b9611aa872e24dbc34a7f3fcb1d91"
+      },
+      {
+        "path": "modules/knowledge.sqlite",
+        "sizeBytes": 94208,
+        "sha256": "da31bcf085b0cce7a93a228e558453f8b0d3d790ad973f748f4ef6c3c503836a"
+      },
+      {
+        "path": "modules/service-desk.sqlite",
+        "sizeBytes": 40960,
+        "sha256": "9805753e5680b9432c3c548fc03f596cf1ca0f06ebbcf744473796b8b379a19e"
+      },
+      {
+        "path": "runtime-config.json",
+        "sizeBytes": 562,
+        "sha256": "273e2af19774b7cd17aa401c7be233ba607858c9b85b398450e42383c59991e7"
+      }
+    ],
+    "digest": "af3802aa69870f4ef84f4d6f99120baae740892f56eaae068cf36031f1e5062e"
+  },
+  "businessDispatchObserved": false,
+  "calls": [
+    {
+      "path": "/platform-api/runtime-instances/runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+      "status": 200
+    },
+    {
+      "path": "/platform-api/runtime-instances/runtime-c2582154-368c-40dd-8bc1-a6a2367e2716/upgrades",
+      "status": 200
+    }
+  ]
+}

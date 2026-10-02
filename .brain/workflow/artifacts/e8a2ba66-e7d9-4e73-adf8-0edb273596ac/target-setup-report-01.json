@@ -1,0 +1,328 @@
+{
+  "fixtureId": "9d335a66-9702-4246-9362-d52371e0ea87",
+  "phaseId": "7aeadc69-03f0-473d-b656-f987102353a4",
+  "candidate": "0c47a3ca0b606db4f9fe24c0a781bc23697eec6e53b8a01670ffce7636ba9074",
+  "contractDigest": "3dcb39e18df060243ec6b10af6bd27289e30a796c1a82c5d98ecf3b074606716",
+  "startedAt": "2026-10-02T19:23:05.327Z",
+  "completedAt": "2026-10-02T19:23:23.595Z",
+  "productId": "combined",
+  "sourceVersion": "0.2.3",
+  "targetVersion": "0.2.4",
+  "instanceId": "runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+  "sourceArtifactDigest": "4f6c25437ddf99bddc6b9f036b4a12192be3ec9fb9c5e590415231ba7bb02cf4",
+  "targetArtifactDigest": "460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59",
+  "targetBuildId": "f0c6042e-af78-4e31-a763-3edbf95047e0",
+  "targetBuildState": "SUCCEEDED",
+  "registrationStatus": "REGISTERED_VERIFIED_LOCAL_ARTIFACT",
+  "exactPromotionObserved": true,
+  "sourceProjectionRetained": true,
+  "currentSourceAttempt": 1,
+  "calls": [
+    {
+      "path": "/platform-api/session",
+      "method": "POST",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:05.364Z"
+    },
+    {
+      "path": "/platform-api/runtime-instances/runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:05.390Z"
+    },
+    {
+      "path": "/platform-api/products/combined/0.2.4",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:05.418Z"
+    },
+    {
+      "path": "/platform-api/builds",
+      "method": "POST",
+      "status": 202,
+      "observedAt": "2026-10-02T19:23:06.079Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:06.112Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:06.396Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:07.839Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:08.128Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:08.418Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:08.696Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:08.970Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:09.243Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:09.530Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:09.822Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:10.106Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:10.390Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:10.661Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:11.274Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:11.558Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:11.846Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:12.133Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:12.414Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:12.712Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:12.992Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:13.267Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:13.552Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:13.850Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:14.132Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:14.413Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:14.695Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:14.971Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:15.258Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:15.532Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:15.819Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:16.096Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:16.382Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:16.661Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:17.623Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:17.913Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:18.193Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:18.479Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:18.760Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:19.899Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:20.179Z"
+    },
+    {
+      "path": "/platform-api/builds/f0c6042e-af78-4e31-a763-3edbf95047e0/result",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:20.310Z"
+    },
+    {
+      "path": "/platform-api/artifacts/register",
+      "method": "POST",
+      "status": 201,
+      "observedAt": "2026-10-02T19:23:22.913Z"
+    },
+    {
+      "path": "/platform-api/artifacts/460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:23.125Z"
+    },
+    {
+      "path": "/platform-api/artifacts/460fbc8459884cc9c451a002690f1d0020daebaefbff8557ce590e7fc903ac59/manifest",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:23.326Z"
+    },
+    {
+      "path": "/platform-api/releases",
+      "method": "POST",
+      "status": 201,
+      "observedAt": "2026-10-02T19:23:23.542Z"
+    },
+    {
+      "path": "/platform-api/releases",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:23.561Z"
+    },
+    {
+      "path": "/platform-api/runtime-instances/runtime-c2582154-368c-40dd-8bc1-a6a2367e2716",
+      "method": "GET",
+      "status": 200,
+      "observedAt": "2026-10-02T19:23:23.586Z"
+    }
+  ]
+}

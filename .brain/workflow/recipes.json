@@ -437,6 +437,47 @@
         "BRAIN-REGRESSION"
       ],
       "evidenceScope": "Original local export/HTTP and owner-close/temp-cleanup execution; root cause remains unknown without reproducible evidence."
+    },
+    {
+      "id": "safe-upgrade-focused",
+      "argv": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/runtime-upgrade-store.test.mjs",
+        "tests/runtime-upgrade.test.mjs",
+        "tests/control-plane.test.mjs",
+        "tests/managed-runtime-store.test.mjs",
+        "tests/managed-runtime-recovery-store.test.mjs",
+        "tests/control-plane-http.test.mjs",
+        "tests/studio-runtime-ui.test.mjs",
+        "tests/factory-lifecycle.test.mjs",
+        "tests/ui-contributions.test.mjs",
+        "tests/control-plane-build-host.test.mjs"
+      ],
+      "cwd": ".",
+      "description": "Meaningful generation/history/admission, initialization/migration/failure, pairedHTTP/UI and unchanged default-runtime checks after freshbuild.",
+      "criterionIds": [
+        "UPGRADE-GENERATIONS",
+        "UPGRADE-INITIALIZATION",
+        "UPGRADE-SAFETY",
+        "BRAIN-REGRESSION"
+      ],
+      "evidenceScope": "Actual bounded store/components and native case if provided; root retained browser/native journey separately."
+    },
+    {
+      "id": "safe-upgrade-browser",
+      "argv": [
+        "manual-browser-observation"
+      ],
+      "cwd": ".",
+      "description": "One actual captured existing Combined upgrade→explicit Restart→retained workflow→target stopped recovery with exact original closures.",
+      "criterionIds": [
+        "UPGRADE-JOURNEY",
+        "UPGRADE-BROWSER",
+        "UPGRADE-SAFETY"
+      ],
+      "evidenceScope": "Ordinary paired Chrome, canonical old/target owner facts and original native/publication/console closure; no simulated substitute."
     }
   ]
 }

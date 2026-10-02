@@ -1,0 +1,12 @@
+{
+  "fixtureId": "9d335a66-9702-4246-9362-d52371e0ea87",
+  "candidate": "1a0163b412a09070fbb2a90a6cdb401d2ce87df20060129077e8b0dbf49fd361",
+  "toolChunk": "092236",
+  "originalExitCode": 1,
+  "originalSignal": null,
+  "targetPrivateBuildExitCode": 0,
+  "targetReadinessPublished": false,
+  "pendingJobEnqueued": false,
+  "cause": "Original root harness imported old fixture build-inputs before private rebuild; Node module cache reused that old compiled implementation during new startControlPlane. Product source unchanged.",
+  "nextAction": "Fresh-process server02 verifies original successful private build fingerprint/helpers and original retained inventories before canonical startup."
+}

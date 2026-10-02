@@ -1,0 +1,35 @@
+{
+  "kind": "focused",
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/runtime-upgrade-store.test.mjs",
+    "tests/runtime-upgrade.test.mjs",
+    "tests/control-plane.test.mjs",
+    "tests/managed-runtime-store.test.mjs",
+    "tests/managed-runtime-recovery-store.test.mjs",
+    "tests/control-plane-http.test.mjs",
+    "tests/studio-runtime-ui.test.mjs",
+    "tests/factory-lifecycle.test.mjs",
+    "tests/ui-contributions.test.mjs",
+    "tests/control-plane-build-host.test.mjs"
+  ],
+  "startedAt": "2026-10-02T19:46:44.693Z",
+  "finishedAt": "2026-10-02T19:47:04.159Z",
+  "exitCode": 0,
+  "signal": null,
+  "candidateBefore": "8531a021a0e7c484e402a9132c107e5ce0c2968d7b18467c36adb77e35a0684f",
+  "candidateAfter": "8531a021a0e7c484e402a9132c107e5ce0c2968d7b18467c36adb77e35a0684f",
+  "contractBefore": "55153a14688de5b2bf8e6c28f527eac7deef10ce1cbbba143a8937d60725116d",
+  "contractAfter": "55153a14688de5b2bf8e6c28f527eac7deef10ce1cbbba143a8937d60725116d",
+  "sourceUnchanged": true,
+  "counts": {
+    "tests": 70,
+    "passed": 70,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

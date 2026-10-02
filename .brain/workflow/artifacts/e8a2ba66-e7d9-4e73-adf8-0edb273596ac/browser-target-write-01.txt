@@ -1,0 +1,62 @@
+- complementary:
+  - generic: Q
+  - generic: Quadbridge
+  - generic: PRODUCT WORKSPACE
+  - generic: Operations + Knowledge
+  - paragraph: Two domain families composed into one application.
+  - navigation "Workspaces":
+    - link "Knowledge library":
+      - /url: "#/library"
+    - link "Service requests":
+      - /url: "#/requests"
+    - link "Request overview":
+      - /url: "#/request-overview"
+    - link "Cross-product handoffs":
+      - /url: "#/handoffs"
+  - generic: LOCAL DEVELOPER PROFILE
+  - paragraph: 3 selected modules
+  - paragraph: runtime-c2582154-368c-40dd-8bc1-a6a2367e2716
+- main:
+  - text: Tenant
+  - combobox "Tenant":
+    - option "customer-a" [selected]
+    - option "customer-b"
+  - generic: admin
+  - button "Sign out"
+  - heading "Service requests" [level=2]
+  - paragraph: Manage requests in your current tenant. Changes are saved by Service Desk.
+  - generic: Loaded requests
+  - strong: "3"
+  - generic: Current response · current tenant
+  - generic: Open in this list
+  - strong: "3"
+  - generic: Ready for review
+  - generic: Closed in this list
+  - strong: "0"
+  - generic: Owner-confirmed state
+  - heading "Create a request" [level=3]
+  - generic: Title
+  - textbox "Title"
+  - generic: Details
+  - textbox "Details"
+  - button "Create request"
+  - heading "Requests" [level=3]
+  - button "Refresh"
+  - article:
+    - generic: OPEN · revision 1
+    - heading "Created after retained-data upgrade" [level=3]
+    - paragraph: Core browser write on generation two, retained through target backup and restore.
+  - article:
+    - generic: OPEN · revision 1
+    - heading "Upgrade continuity knowledge" [level=3]
+    - paragraph: Carry the original continuity evidence into Service Desk.
+    - paragraph: "Linked source: {\"productId\":\"combined\",\"instanceId\":\"runtime-c2582154-368c-40dd-8bc1-a6a2367e2716\",\"resourceType\":\"knowledge.document\",\"resourceId\":\"cc8e72bc-8409-4e86-887b-302e2839d73c\",\"version\":1}"
+  - article:
+    - generic: OPEN · revision 1
+    - heading "Retained upgrade request" [level=3]
+    - paragraph: This original record and command identity must survive the owner migration.
+  - complementary:
+    - heading "Reference search" [level=3]
+    - textbox "Search documents":
+      - /placeholder: Search indexed text
+    - button "Search"

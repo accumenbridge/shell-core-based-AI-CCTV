@@ -141,7 +141,7 @@ function parseCanonicalJson(bytes, label) {
   if (canonical(value) !== bytes.toString('utf8')) throw new Error(`noncanonical-${label}`);
   return value;
 }
-function validateEnrollment(dataDirectory, identity, expectedEnrollmentDigest) {
+function validateEnrollment(dataDirectory, identity, expectedEnrollmentDigest, canonicalDataDirectory = dataDirectory) {
   const files = new Map();
   for (const name of PRIVATE_FILES) files.set(name, readBounded(join(dataDirectory, name), MAX_MANIFEST_BYTES));
   const intent = parseCanonicalJson(files.get('enrollment-intent.json'), 'intent');
@@ -153,9 +153,9 @@ function validateEnrollment(dataDirectory, identity, expectedEnrollmentDigest) {
   if (intent.schema !== 'quadbridge.managed-runtime-enrollment.v1' || intent.state !== 'INTENT' || !Array.isArray(seeds) ||
       intent.instanceId !== identity.instanceId || intent.productId !== identity.productId || intent.version !== identity.version ||
       intent.artifactDigest !== identity.artifactDigest || intent.profileDigest !== identity.profileDigest || intent.configDigest !== identity.configDigest ||
-      intent.adapterDigest !== identity.adapterDigest || intent.dataDirectory !== dataDirectory || !HASH.test(intent.seedDigest) ||
+      intent.adapterDigest !== identity.adapterDigest || intent.dataDirectory !== canonicalDataDirectory || !HASH.test(intent.seedDigest) ||
       sha256(canonical(seeds)) !== intent.seedDigest || sha256(canonical(intent)) !== expectedEnrollmentDigest ||
-      config.instanceId !== identity.instanceId || config.dataDirectory !== dataDirectory || !Array.isArray(config.principals) || config.principals.length !== 0 ||
+      config.instanceId !== identity.instanceId || config.dataDirectory !== canonicalDataDirectory || !Array.isArray(config.principals) || config.principals.length !== 0 ||
       sha256(canonical({ config, seedDigest: intent.seedDigest, profileDigest: identity.profileDigest })) !== identity.configDigest ||
       completion.schema !== 'quadbridge.managed-runtime-enrollment.v1' || completion.state !== 'COMPLETE' ||
       completion.intentDigest !== expectedEnrollmentDigest || completion.instanceId !== identity.instanceId ||
@@ -174,7 +174,7 @@ function schemaEnvelope(value,owner) {
     throw new Error('database-schema-envelope-invalid');
   return {id:owner,schema:{current:schema.current,readMin:schema.readMin,readMax:schema.readMax}};
 }
-function inspectDatabase(path, expectedOwner, identity, capturedAt, kind, schema) {
+function inspectDatabase(path, expectedOwner, identity, capturedAt, kind, schema, includeAccessState=false) {
   const info = lstatSync(path);
   if (!info.isFile() || info.isSymbolicLink() || info.size < 1 || info.size > MAX_DATABASE_BYTES || realpathSync(path).toLowerCase() !== path.toLowerCase())
     throw new Error('database-size-or-path-limit');
@@ -198,6 +198,17 @@ function inspectDatabase(path, expectedOwner, identity, capturedAt, kind, schema
         throw new Error('access-instance-binding-mismatch');
       const unexpired = Number(db.prepare('SELECT COUNT(*) AS count FROM sessions WHERE expires>?').get(capturedAt).count);
       if (unexpired !== 0) throw new Error('active-session-prevents-backup');
+      const accessStateDigest=includeAccessState?sha256(Buffer.from(canonical({
+        binding,
+        migrations,
+        userVersion:Number(db.prepare('PRAGMA user_version').get().user_version),
+        schema:db.prepare("SELECT type,name,tbl_name,sql FROM sqlite_master WHERE name NOT LIKE 'sqlite_%' ORDER BY type,name").all(),
+        principals:db.prepare('SELECT id,kind,credential,salt,active FROM principals ORDER BY id').all(),
+        grants:db.prepare('SELECT principal,tenant,permission FROM grants ORDER BY principal,tenant,permission').all(),
+        sessions:db.prepare('SELECT token_hash,principal,expires FROM sessions ORDER BY token_hash').all(),
+        modes:db.prepare('SELECT tenant,module,mode FROM module_modes ORDER BY tenant,module').all()
+      }))):undefined;
+      return { owner: expectedOwner, schema:envelope.schema, generation:migrations.at(-1).version, migrations, ...(accessStateDigest?{accessStateDigest}:{}) };
     }
     return { owner: expectedOwner, schema:envelope.schema, generation:migrations.at(-1).version, migrations };
   } finally { db.close(); }
@@ -305,6 +316,70 @@ export function verifyRestoredDataDirectory(dataDirectory,manifest,expectedIdent
       throw new Error('restored-database-migration-mismatch');
   }
   return {sizeBytes:manifest.files.reduce((sum,row)=>sum+row.sizeBytes,0),fileCount:manifest.files.length};
+}
+
+/** Normalizes only a newly owned, closed migration payload before read-only verification. */
+export function normalizeRuntimeDataDirectory(physicalRoot,expectedModules=[]) {
+  assertPhysicalChain(physicalRoot);
+  if(!Array.isArray(expectedModules)||expectedModules.length>MAX_FILES-2)throw new Error('upgrade-target-module-set-invalid');
+  const schemas=new Map(expectedModules.map(item=>[item?.id,schemaEnvelope(item,item?.id)]));
+  if(schemas.size!==expectedModules.length)throw new Error('upgrade-target-module-set-invalid');
+  const databasePaths=new Set(['access.sqlite',...[...schemas.keys()].map(id=>`modules/${id}.sqlite`)]);
+  const expectedPaths=new Set([...PRIVATE_FILES,...databasePaths]);
+  if(expectedPaths.size+1>MAX_FILES)throw new Error('upgrade-target-file-count-limit');
+  const tree=boundedTree(physicalRoot);
+  if(tree.files.size!==expectedPaths.size||[...tree.files.keys()].some(path=>!expectedPaths.has(path.slice(physicalRoot.length+1).replaceAll('\\','/')))||
+     tree.directories.length!==(schemas.size?1:0)||tree.directories.some(path=>path!==resolve(physicalRoot,'modules')))
+    throw new Error('upgrade-target-file-inventory-mismatch');
+  for(const relativePath of databasePaths)normalizeOwnedBackupDatabase(resolve(physicalRoot,...relativePath.split('/')));
+  const finalTree=boundedTree(physicalRoot);
+  if(finalTree.files.size!==expectedPaths.size||[...finalTree.files.keys()].some(path=>!expectedPaths.has(path.slice(physicalRoot.length+1).replaceAll('\\','/')))||
+     finalTree.directories.length!==(schemas.size?1:0)||finalTree.directories.some(path=>path!==resolve(physicalRoot,'modules')))
+    throw new Error('upgrade-target-final-inventory-mismatch');
+  return {fileCount:finalTree.files.size};
+}
+
+/** Reads a migrated target tree under its physical staging root while checking its final canonical data path. */
+export function inspectRuntimeDataDirectory(physicalRoot,identity,enrollmentDigest,expectedModules=[],canonicalDataDirectory=physicalRoot) {
+  assertPhysicalChain(physicalRoot);
+  const canonicalRoot=resolve(canonicalDataDirectory);
+  if(!INSTANCE.test(identity?.instanceId)||!/^[a-z][a-z0-9-]{1,47}$/.test(identity?.productId)||
+     !/^\d{1,6}\.\d{1,6}\.\d{1,6}$/.test(identity?.version)||!HASH.test(identity?.artifactDigest)||
+     !/^(?:operator:[0-9a-f-]{36}|system:[a-z][a-z0-9-]{1,63})$/i.test(identity?.originatingActorId)||
+     !HASH.test(identity?.profileDigest)||!HASH.test(identity?.configDigest)||!HASH.test(identity?.adapterDigest)||!HASH.test(enrollmentDigest)||
+     !Array.isArray(expectedModules)||expectedModules.length>MAX_FILES-2)
+    throw new Error('upgrade-target-identity-invalid');
+  const enrollment=validateEnrollment(physicalRoot,identity,enrollmentDigest,canonicalRoot);
+  const schemas=new Map(expectedModules.map(item=>[item?.id,schemaEnvelope(item,item?.id)]));
+  if(schemas.size!==expectedModules.length)throw new Error('upgrade-target-module-set-invalid');
+  const databasePaths=new Set(['access.sqlite',...[...schemas.keys()].map(id=>`modules/${id}.sqlite`)]);
+  const expectedPaths=new Set([...PRIVATE_FILES,...databasePaths]);
+  if(expectedPaths.size+1>MAX_FILES)throw new Error('upgrade-target-file-count-limit');
+  const initialTree=boundedTree(physicalRoot);
+  if(initialTree.files.size!==expectedPaths.size||[...initialTree.files.keys()].some(path=>!expectedPaths.has(path.slice(physicalRoot.length+1).replaceAll('\\','/')))||
+     initialTree.directories.length!==(schemas.size?1:0)||initialTree.directories.some(path=>path!==resolve(physicalRoot,'modules')))
+    throw new Error('upgrade-target-file-inventory-mismatch');
+  const capturedAt=Date.now(),databases=[];
+  const rows=[['access.sqlite','local-access','access',{id:'local-access',schema:{current:1,readMin:1,readMax:1}}],
+    ...[...schemas.keys()].map(id=>[`modules/${id}.sqlite`,id,'module',schemas.get(id)])];
+  for(const [relativePath,owner,kind,schema] of rows){
+    const full=resolve(physicalRoot,...relativePath.split('/'));
+    databases.push({path:relativePath,...inspectDatabase(full,owner,identity,capturedAt,kind,schema,relativePath==='access.sqlite')});
+  }
+  const finalTree=boundedTree(physicalRoot);
+  if(finalTree.files.size!==expectedPaths.size||[...finalTree.files.keys()].some(path=>!expectedPaths.has(path.slice(physicalRoot.length+1).replaceAll('\\','/')))||
+     finalTree.directories.length!==(schemas.size?1:0)||finalTree.directories.some(path=>path!==resolve(physicalRoot,'modules')))
+    throw new Error('upgrade-target-final-inventory-mismatch');
+  const files=[];let sizeBytes=0;
+  for(const relativePath of expectedPaths){
+    const full=resolve(physicalRoot,...relativePath.split('/')),bytes=readBounded(full,relativePath.endsWith('.sqlite')?MAX_DATABASE_BYTES:MAX_MANIFEST_BYTES);
+    sizeBytes+=bytes.length;if(sizeBytes>MAX_BACKUP_BYTES)throw new Error('upgrade-target-size-limit');
+    files.push({path:relativePath,sizeBytes:bytes.length,digest:sha256(bytes)});
+  }
+  files.sort((a,b)=>a.path.localeCompare(b.path));
+  const access=databases.find(row=>row.path==='access.sqlite');
+  if(!HASH.test(access?.accessStateDigest))throw new Error('upgrade-access-state-projection-missing');
+  return {identity,enrollmentDigest,seedDigest:enrollment.seedDigest,capturedAt,files,databases,accessStateDigest:access.accessStateDigest,sizeBytes,fileCount:files.length};
 }
 
 async function run() {

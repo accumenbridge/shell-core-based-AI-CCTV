@@ -1,0 +1,37 @@
+{
+  "recordedAt": "2026-10-02T19:45:26.148Z",
+  "coordinator": "/root",
+  "priorCheckpoint": {
+    "schema": "brain.current-pointer.v1",
+    "revision": 108,
+    "eventId": "8afdf01d-57de-40e1-a5fd-7d4532825847",
+    "eventSha256": "8d1d2fac75a23ad9a56518cb982496f7f8440f82273f64a40d2e40d9b9eb1eeb"
+  },
+  "oldEditOwnerCount": 34,
+  "newEditOwnerCount": 35,
+  "candidateFileCount": 251,
+  "addedExistingOwner": {
+    "path": "tests/control-plane-build-host.test.mjs",
+    "baselineSha256": "0e4830727b4700909fc37ec05e8e7a7d61b0ae9a6c7d07ffcf63b203f95428c5"
+  },
+  "supplement": {
+    "path": ".brain/evidence/safe-upgrade-owner-supplement-04.md",
+    "sha256": "2b354f2d737a2c0d9eeac695a151ead44e455425a8f604d4d3e742880c39b58e"
+  },
+  "beforeContractDigest": "3dcb39e18df060243ec6b10af6bd27289e30a796c1a82c5d98ecf3b074606716",
+  "afterContractDigest": "55153a14688de5b2bf8e6c28f527eac7deef10ce1cbbba143a8937d60725116d",
+  "beforeTaskDigest": "759870b030af9f2bf5b946bd6d5ec74e20e45e59ac15e6724e388a44653650dc",
+  "afterTaskDigest": "f6f7f95d2ea834dba79462408a10a0d0a0cb03ffdba47b44f0e2cbc1f8f610dc",
+  "originalFullFailedRecord": "5f177b12-4e2a-407d-9435-33a29754928a",
+  "focusedRecipeId": "safe-upgrade-focused",
+  "updatedAtlasTaskRefs": [
+    {
+      "id": "safe-upgrade-task",
+      "before": "759870b030af9f2bf5b946bd6d5ec74e20e45e59ac15e6724e388a44653650dc",
+      "after": "f6f7f95d2ea834dba79462408a10a0d0a0cb03ffdba47b44f0e2cbc1f8f610dc",
+      "reason": "Exact actual two-fixture failure repair and attributed unchanged-executable journey evaluation; no core permission/security expansion."
+    }
+  ],
+  "planRevision": 52,
+  "scope": "Finite actual fixture repair only; historical runtime journey unchanged, new attributed equivalence evaluation and fresh current checks pending."
+}

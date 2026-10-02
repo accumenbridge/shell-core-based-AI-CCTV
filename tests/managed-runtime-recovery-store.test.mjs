@@ -61,7 +61,7 @@ test('schema 5 adds recovery owners and admission mutually fences the stopped ru
   const store=new ControlPlaneStore(':memory:');
   try {
     const runtime=identity();seedRelease(store,runtime);const commands=positivelyStop(store,runtime);
-    assert.equal(store.db.prepare('PRAGMA user_version').get().user_version,5);
+    assert.equal(store.db.prepare('PRAGMA user_version').get().user_version,6);
     assert.equal(store.managedRuntime(runtime.instanceId).state,'STOPPED');
     assert.deepEqual(store.runtimeRecoverySlot(),{state:'EMPTY',reservedBytes:0,updated:0,occupied:false});
     const op={...runtime,operationId:id(20),ownerId:id(21),ownerToken:'b'.repeat(48),actorId:'system:backup-actor',requestKey:'runtime-backup-key-001',
@@ -129,13 +129,16 @@ test('schema 4 migration preserves existing runtime and recovery slots become co
   store=new ControlPlaneStore(path);
   const runtime=identity();seedRelease(store,runtime);positivelyStop(store,runtime);
   const before=store.db.prepare('SELECT id,state,artifact_digest,profile_digest,config_digest,current_attempt FROM runtime_instances WHERE id=?').get(runtime.instanceId);
-  store.db.exec('DROP TABLE runtime_backups; DROP TABLE runtime_recovery_operations; DROP TABLE runtime_recovery_slot; PRAGMA user_version=4');store.close();store=undefined;
+  store.db.exec(`DROP TABLE runtime_upgrade_operations; DROP TABLE runtime_upgrade_slot; DROP TABLE runtime_generations;
+    DROP TABLE runtime_backups; DROP TABLE runtime_recovery_operations; DROP TABLE runtime_recovery_slot;
+    ALTER TABLE runtime_instances DROP COLUMN active_generation_id; ALTER TABLE runtime_attempts DROP COLUMN generation_id;
+    ALTER TABLE runtime_commands DROP COLUMN generation_id; PRAGMA user_version=4`);store.close();store=undefined;
   observer=new DatabaseSync(path,{readOnly:true});
   assert.deepEqual(observer.prepare('SELECT id,state,artifact_digest,profile_digest,config_digest,current_attempt FROM runtime_instances WHERE id=?').get(runtime.instanceId),before);
   assert.equal(observer.prepare('PRAGMA user_version').get().user_version,4);
   observer.close();observer=undefined;
   store=new ControlPlaneStore(path);
-  assert.equal(store.db.prepare('PRAGMA user_version').get().user_version,5);
+  assert.equal(store.db.prepare('PRAGMA user_version').get().user_version,6);
   assert.deepEqual({...store.db.prepare('SELECT operation_id,owner_id,owner_token,reserved_bytes,state FROM runtime_recovery_slot WHERE singleton=1').get()},
     {operation_id:null,owner_id:null,owner_token:null,reserved_bytes:0,state:'EMPTY'});
   assert.deepEqual(store.db.prepare('SELECT id,state,artifact_digest,profile_digest,config_digest,current_attempt FROM runtime_instances WHERE id=?').get(runtime.instanceId),before);

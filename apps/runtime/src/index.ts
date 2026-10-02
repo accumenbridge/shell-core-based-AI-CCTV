@@ -36,11 +36,14 @@ interface CatalogItem {
         register: (env: ModuleEnvironment) => ExecutableModule;
     }>;
 }
-export async function createRuntime(productId: string, config: RuntimeConfig, root = ROOT) {
+export async function createRuntime(productId: string, config: RuntimeConfig, root = ROOT, options: { initializationOnly?: boolean } = {}) {
     if (process.env.NODE_ENV === 'production')
         throw new PlatformError('INCOMPATIBLE', 'This release implements the local developer profile, not a production deployment profile');
     if (!/^[a-z][a-z0-9-]*$/.test(productId) || !/^[a-z][a-z0-9-]*$/.test(config.instanceId))
         throw new PlatformError('INVALID', 'Invalid product/instance');
+    const initializationOnly = options.initializationOnly === true;
+    if (initializationOnly && (!Array.isArray(config.principals) || config.principals.length !== 0))
+        throw new PlatformError('INVALID', 'Initialization-only runtime construction cannot seed principals');
     const release = JSON.parse(readFileSync(join(root, '.artifacts', productId, 'release.json'), 'utf8')) as {
         planDigest: string;
         backend: Record<string, string>;
@@ -90,24 +93,31 @@ export async function createRuntime(productId: string, config: RuntimeConfig, ro
             modules.push(executable.register({ manifest, dataPath: join(config.dataDirectory, 'modules', `${manifest.id}.sqlite`), bindings: Object.freeze(bindings) }));
         }
         host = new ApplicationHost(plan, config.instanceId, modules, access);
-        await host.start();
+        if (!initializationOnly)
+            await host.start();
     }
     catch (e) {
+        const closeErrors: unknown[] = [];
         for (const m of [...modules].reverse())
             try {
                 await m.close();
-            }
-            catch { }
-        access.close();
+            } catch (error) { closeErrors.push(error); }
+        try { access.close(); } catch (error) { closeErrors.push(error); }
+        if (initializationOnly && closeErrors.length)
+            throw new AggregateError([e, ...closeErrors], 'Initialization-only runtime construction failed and owner cleanup was incomplete');
         throw e;
     }
     async function worker(): Promise<WorkerHost> {
+        if (initializationOnly)
+            throw new PlatformError('UNAVAILABLE', 'Initialization-only runtime cannot start a worker');
         const { WorkerHost } = await import('@quadbridge/worker-host');
         return new WorkerHost(modules.filter(m => m.queue && m.handlers).map(m => ({ moduleId: m.manifest.id, queue: m.queue!, handlers: m.handlers!,
             enabled: (j: Job) => access.mode(j.tenant, m.manifest.id) === 'enabled', authorize: (j: Job) => access.assertModule({ id: j.actor_id, kind: j.actor_kind }, j.tenant, m.manifest.id, j.permission, 'write') })));
     }
     const escape = (s: string) => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
     async function http(port: number, options: { mobilePreview?: boolean } = {}) {
+        if (initializationOnly)
+            throw new PlatformError('UNAVAILABLE', 'Initialization-only runtime cannot expose HTTP');
         verifyFiles(release.web);
         const browserPlan = JSON.parse(readFileSync(join(root, '.artifacts', productId, 'web.json'), 'utf8')) as {
             imports: Record<string, string>;
@@ -139,5 +149,13 @@ export async function createRuntime(productId: string, config: RuntimeConfig, ro
             }
         });
     }
-    return { plan, host, access, modules, worker, http, async close() { await host.stop(); access.close(); } };
+    return { plan, host, access, modules, worker, http, async close() {
+        if (!initializationOnly) { await host.stop(); access.close(); return; }
+        const failures: unknown[] = [];
+        try { await host.stop(); } catch (error) { failures.push(error); }
+        for (const module of [...modules].reverse()) try { await module.close(); } catch (error) { failures.push(error); }
+        try { access.close(); } catch (error) { failures.push(error); }
+        if (failures.length === 1) throw failures[0];
+        if (failures.length > 1) throw new AggregateError(failures, 'Initialization-only runtime owner closure failed');
+    } };
 }

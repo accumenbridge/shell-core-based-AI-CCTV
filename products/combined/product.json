@@ -1,6 +1,6 @@
 {
   "id": "combined",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "platformAbi": "quadbridge.module.v1",
   "title": "Operations + Knowledge",
   "description": "Two domain families composed into one application.",
@@ -8,7 +8,7 @@
   "modules": [
     {
       "id": "service-desk",
-      "version": "0.2.1"
+      "version": "0.2.2"
     },
     {
       "id": "knowledge",

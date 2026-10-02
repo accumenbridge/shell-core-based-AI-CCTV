@@ -14,6 +14,7 @@ import { assertWindowsBuildHost, type WindowsBuildHostProfile } from './build-ho
 import type { LocalArtifactStore } from './artifact-store.js';
 
 const sha256 = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
+export const MANAGED_RUNTIME_ADAPTER_DIGEST=sha256(canonical({recipe:'managed-local-identity-adapter-v1',changes:['config.instanceId','same-product-local-destinationInstance']}));
 const RUNTIME_ID = /^runtime-[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const PRODUCT_ID = /^[a-z][a-z0-9-]{1,47}$/;
 const VERSION = /^\d{1,6}\.\d{1,6}\.\d{1,6}$/;
@@ -254,6 +255,22 @@ export function runtimePlanIdentity(snapshot: BoundedSnapshot, productId: string
       !Array.isArray(profile.defaultTenants) || !Array.isArray(profile.providerSeeds) || !Array.isArray(profile.connections))
     throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted local developer profile is not supported');
   return { productId, version, workerRequired: plan.requiresWorker, plan, profile, profileDigest: sha256(profileBytes) };
+}
+
+/** Resolves schema descriptors only from the exact selected module manifests in a verified snapshot. */
+export function runtimeModuleDescriptors(snapshot: BoundedSnapshot, identity: RuntimePlanIdentity): Array<{id:string;schema:Record<string,unknown>}> {
+  if (!identity || !identity.plan || !Array.isArray(identity.plan.modules))
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The selected runtime plan has no module descriptor list');
+  const seen=new Set<string>();
+  return identity.plan.modules.map((selected:any)=>{
+    if(!selected||typeof selected.id!=='string'||! /^[a-z][a-z0-9-]{1,47}$/.test(selected.id)||seen.has(selected.id))
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The selected runtime plan has an invalid module descriptor identity');
+    seen.add(selected.id);
+    const {value:manifest}=objectAt(snapshot,`modules/${selected.id}/module.json`);
+    if(manifest.id!==selected.id||!manifest.schema||typeof manifest.schema!=='object'||Array.isArray(manifest.schema))
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','A selected runtime module schema does not match its verified manifest');
+    return {id:selected.id,schema:manifest.schema as Record<string,unknown>};
+  });
 }
 
 export async function adaptCanonicalLocalConfiguration(input: {
@@ -757,6 +774,101 @@ export function captureManagedRuntimeNativeHost(root:string):{hostPath:string;no
   const captured=capturedToolchain(resolve(root));
   return {hostPath:captured.host.path,nodePath:captured.nodePath,toolchainDigest:captured.toolchainDigest,buildJobDigest:captured.buildJobDigest};
 }
+
+export interface ManagedRuntimeNativeJobProof {
+  started:boolean;
+  readyObserved:boolean;
+  closeObserved:boolean;
+  exitCode:number|null;
+  signal:NodeJS.Signals|null;
+  markerCode:number|null;
+  helperClosed:boolean;
+  emptyObserved:boolean;
+  errorCode?:'NATIVE_JOB_SPAWN_FAILED'|'NATIVE_JOB_READY_UNVERIFIED'|'NATIVE_JOB_AUTH_REVOKED'|'NATIVE_JOB_CONTROL_FAILED'|
+    'NATIVE_JOB_CLOSE_UNVERIFIED'|'NATIVE_JOB_PROTOCOL_INVALID'|'NATIVE_JOB_PROOF_INVALID';
+}
+
+/** Runs one fixed, digest-bound script through the same kill-on-close PowerShell Job protocol as managed runtimes. */
+export async function runManagedRuntimeOwnedNativeJob(input:{
+  projectRoot:string;operationRoot:string;helperPath:string;scriptPath:string;logPath:string;scriptDigest:string;args:readonly string[];
+  expectedHost:{hostPath:string;nodePath:string;toolchainDigest:string;buildJobDigest:string};
+  timeoutMs:number;authorize:()=>unknown;
+}):Promise<ManagedRuntimeNativeJobProof>{
+  if(!input||typeof input!=='object'||!Array.isArray(input.args)||input.args.length>16||input.args.some(arg=>typeof arg!=='string'||arg.length>2048||/[\0\r\n]/.test(arg))||
+     typeof input.scriptDigest!=='string'||!HEX256.test(input.scriptDigest)||!Number.isSafeInteger(input.timeoutMs)||input.timeoutMs<1||input.timeoutMs>600000||
+     typeof input.authorize!=='function'||!input.expectedHost||!HEX256.test(input.expectedHost.toolchainDigest)||!HEX256.test(input.expectedHost.buildJobDigest))
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The fixed managed native job request is invalid');
+  const project=assertPhysicalRoot(input.projectRoot),local=physicalDirectoryUnder(project,join(project,'.local'),false),operationRoot=resolve(input.operationRoot);
+  assertWithin(local,operationRoot);physicalDirectoryUnder(local,operationRoot,false);
+  const helperPath=assertWithin(operationRoot,input.helperPath),scriptPath=assertWithin(operationRoot,input.scriptPath),logPath=assertWithin(operationRoot,input.logPath);
+  if(helperPath.length>=240||scriptPath.length>=240||logPath.length>=240||optionalLstat(logPath))
+    throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','The fixed native job files exceed their private path or freshness bound');
+  if(fileDigest(helperPath)!==input.expectedHost.buildJobDigest||fileDigest(scriptPath)!==input.scriptDigest)
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','A staged native job input changed before dispatch');
+  let host:ReturnType<typeof captureManagedRuntimeNativeHost>;
+  try{host=captureManagedRuntimeNativeHost(project);}catch{throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The selected native runtime host is unavailable');}
+  if(host.hostPath.toLowerCase()!==input.expectedHost.hostPath.toLowerCase()||host.nodePath.toLowerCase()!==input.expectedHost.nodePath.toLowerCase()||
+      host.toolchainDigest!==input.expectedHost.toolchainDigest||host.buildJobDigest!==input.expectedHost.buildJobDigest)
+    throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The selected native runtime host changed after upgrade admission');
+  assertRuntimeAuthorization(input.authorize);
+  const nonce=randomBytes(24).toString('hex'),argsJson=JSON.stringify(input.args);
+  if(Buffer.byteLength(argsJson)>8192)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Fixed native job arguments exceed their bound');
+  let child:ChildProcess;
+  try{child=spawn(host.hostPath,['-NoLogo','-NoProfile','-NonInteractive','-File',helperPath,'-RunnerNonce',nonce,'-NodeExe',host.nodePath,
+    '-WorkingDirectory',operationRoot,'-ScriptPath',scriptPath,'-ArgumentsJson',argsJson,'-LogPath',logPath,'-RuntimeProtocol'],
+    {cwd:operationRoot,env:privateRuntimeEnvironment(),shell:false,windowsHide:true,stdio:['pipe','pipe','pipe']});}
+  catch{return {started:false,readyObserved:false,closeObserved:false,exitCode:null,signal:null,markerCode:null,helperClosed:false,emptyObserved:false,errorCode:'NATIVE_JOB_SPAWN_FAILED'};}
+  let resolveReady!:()=>void,resolveClose!:(value:{code:number|null;signal:NodeJS.Signals|null})=>void;
+  const ready=new Promise<void>(resolvePromise=>{resolveReady=resolvePromise;});
+  const closed=new Promise<{code:number|null;signal:NodeJS.Signals|null}>(resolvePromise=>{resolveClose=resolvePromise;});
+  let stdout='',stdoutBytes=0,readyObserved=false,markerCode:number|null=null,markerUnknown=false,transcriptInvalid=false,controlFailed=false,spawnFailed=false;
+  child.once('error',()=>{spawnFailed=true;});
+  child.stdout?.on('data',(chunk:Buffer)=>{
+    stdoutBytes+=chunk.length;if(stdoutBytes>4096){transcriptInvalid=true;return;}stdout+=chunk.toString('ascii');
+    for(;;){const at=stdout.indexOf('\n');if(at<0)break;let line=stdout.slice(0,at);stdout=stdout.slice(at+1);if(line.endsWith('\r'))line=line.slice(0,-1);
+      if(line===`QB_READY:${nonce}`){if(readyObserved||markerCode!==null||markerUnknown)transcriptInvalid=true;else{readyObserved=true;resolveReady();}continue;}
+      const exit=new RegExp(`^QB_EXIT:${nonce}:(\\d+):EMPTY$`).exec(line);
+      if(exit){if(markerCode!==null||markerUnknown||readyObserved===false)transcriptInvalid=true;else markerCode=Number(exit[1]);continue;}
+      if(line===`QB_EXIT:${nonce}:UNKNOWN`){if(markerCode!==null||markerUnknown||readyObserved===false)transcriptInvalid=true;else markerUnknown=true;continue;}
+      transcriptInvalid=true;
+    }
+  });
+  child.stderr?.on('data',()=>{});
+  child.stdin?.on('error',()=>{controlFailed=true;});
+  let closeValue:{code:number|null;signal:NodeJS.Signals|null}|undefined;
+  child.once('close',(code,signal)=>{closeValue={code,signal};if(stdout.length)transcriptInvalid=true;resolveClose(closeValue);});
+  const sent=new Set<string>();
+  const send=(verb:'RESUME'|'STOP')=>{
+    const line=`${verb}:${nonce}`;if(sent.has(line)||child.exitCode!==null||child.signalCode!==null||!child.stdin){controlFailed=true;return;}
+    sent.add(line);try{child.stdin.write(`${line}\n`,error=>{if(error)controlFailed=true;});}catch{controlFailed=true;}
+  };
+  const bounded=<T>(promise:Promise<T>,ms:number):Promise<T>=>{
+    let timer:NodeJS.Timeout|undefined;
+    return Promise.race([promise,new Promise<T>((_,reject)=>{timer=setTimeout(()=>reject(new Error('native-timeout')),ms);})])
+      .finally(()=>{if(timer)clearTimeout(timer);});
+  };
+  let errorCode:ManagedRuntimeNativeJobProof['errorCode'];
+  try{
+    await bounded(Promise.race([ready,closed.then(()=>{throw new Error('native-exited-before-ready');})]),Math.min(input.timeoutMs,30000));
+    if(transcriptInvalid||spawnFailed)throw new Error('native-protocol-invalid');
+    try{assertRuntimeAuthorization(input.authorize);}catch{errorCode='NATIVE_JOB_AUTH_REVOKED';throw new Error('native-auth-revoked');}
+    send('RESUME');if(controlFailed)throw new Error('native-control-failed');
+    await bounded(closed,input.timeoutMs);
+  }catch(error){
+    if(!errorCode)errorCode=controlFailed?'NATIVE_JOB_CONTROL_FAILED':!readyObserved?'NATIVE_JOB_READY_UNVERIFIED':
+      !closeValue?'NATIVE_JOB_CLOSE_UNVERIFIED':'NATIVE_JOB_PROTOCOL_INVALID';
+    if(!closeValue&&child.exitCode===null&&child.signalCode===null)send('STOP');
+    if(!closeValue)try{closeValue=await bounded(closed,10000);}catch{errorCode='NATIVE_JOB_CLOSE_UNVERIFIED';}
+  }
+  if(!closeValue){
+    return {started:true,readyObserved,closeObserved:false,exitCode:null,signal:null,markerCode,helperClosed:false,emptyObserved:false,errorCode:errorCode??'NATIVE_JOB_CLOSE_UNVERIFIED'};
+  }
+  const helperClosed=closeValue.code!==null&&closeValue.signal===null&&!spawnFailed;
+  const emptyObserved=helperClosed&&!transcriptInvalid&&!markerUnknown&&markerCode!==null&&markerCode===closeValue.code;
+  if(!emptyObserved&&!errorCode)errorCode=transcriptInvalid||markerUnknown?'NATIVE_JOB_PROTOCOL_INVALID':'NATIVE_JOB_PROOF_INVALID';
+  else if(controlFailed&&!errorCode)errorCode='NATIVE_JOB_CONTROL_FAILED';
+  return {started:true,readyObserved,closeObserved:true,exitCode:closeValue.code,signal:closeValue.signal,markerCode,helperClosed,emptyObserved,...(errorCode?{errorCode}:{})};
+}
 function writePrivateCanonical(path:string,value:unknown,maxBytes=1024*1024):void {
   const bytes=Buffer.from(canonical(value));
   if(bytes.length<1||bytes.length>maxBytes)throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Private runtime metadata exceeds its fixed bound');
@@ -816,6 +928,13 @@ function removeCopiedWorkspaceLinks(operationRoot:string,scan:RuntimeCleanupScan
     cleanupScanCheck(scan);
     if(optionalLstat(link))throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime workspace link cleanup was not observed');
   }
+}
+/** Removes only the exact workspace links created by the fixed upgrade snapshot copier. */
+export function removeRuntimeUpgradeWorkspaceLinks(projectRoot:string,operationRoot:string):void{
+  const project=assertPhysicalRoot(projectRoot),local=physicalDirectoryUnder(project,join(project,'.local'),false),
+    base=physicalDirectoryUnder(local,join(local,'platform-runtime-upgrade-executions'),false),target=assertWithin(base,operationRoot);
+  physicalDirectoryUnder(base,target,false);
+  removeCopiedWorkspaceLinks(target,{started:performance.now(),entries:0});
 }
 function removeOwnedExecution(root:string,path:string):void {
   const base=runtimePrivateRoot(root),target=assertWithin(base,path);
@@ -916,7 +1035,7 @@ export class ManagedRuntimeManager {
     if(prior)return this.commandView(prior,input.instanceId);
     const instance=this.store.managedRuntime(input.instanceId) as Record<string,any>|undefined;
     if(!instance)throw new PlatformError('NOT_FOUND','Managed runtime instance not found');
-    if(instance.state!=='STOPPED')throw new PlatformError('CONFLICT','Only an exact positively stopped runtime can restart');
+    if(instance.state!=='STOPPED'&&instance.state!=='UPGRADE_READY')throw new PlatformError('CONFLICT','Only an exact positively stopped or explicitly upgrade-ready runtime can restart');
     return this.startAttempt({kind:'RESTART',instanceId:input.instanceId,productId:instance.productId,version:instance.version,
       artifactDigest:instance.artifactDigest,requestKey:input.requestKey,actorId,authorize,existing:instance});
   }
@@ -936,7 +1055,7 @@ export class ManagedRuntimeManager {
     const planIdentity=runtimePlanIdentity(verified.snapshot,input.productId,input.version);
     if(input.existing&&input.existing.profileDigest!==planIdentity.profileDigest)
       throw new RuntimePreparationError('RUNTIME_IDENTITY_CHANGED','The stopped runtime profile no longer matches its promoted release');
-    const adapterDigest=sha256(canonical({recipe:'managed-local-identity-adapter-v1',changes:['config.instanceId','same-product-local-destinationInstance']}));
+    const adapterDigest=MANAGED_RUNTIME_ADAPTER_DIGEST;
     const operationId=randomUUID(),ownerId=randomUUID(),ownerToken=randomBytes(32).toString('base64url');
     const dataDirectory=runtimeDataDirectory(this.root,input.instanceId,release.artifactDigest);
     let privateEnrollment:PreparedRuntimeEnrollment|undefined,operationRoot:string|undefined,runner:RuntimeRunner|undefined,dispatched=false,prepared=false,admitted=false;
