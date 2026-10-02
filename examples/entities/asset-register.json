@@ -1,0 +1,19 @@
+{
+  "schema": "quadbridge.entity-spec.v1",
+  "module": {
+    "id": "asset-register",
+    "version": "1.0.0",
+    "label": "Asset Register"
+  },
+  "entity": {
+    "id": "asset",
+    "label": "Asset",
+    "displayField": "assetCode"
+  },
+  "fields": [
+    { "id": "assetCode", "label": "Asset code", "type": "text", "required": true, "minLength": 1, "maxLength": 64 },
+    { "id": "serviceInterval", "label": "Service interval (months)", "type": "integer", "required": true, "default": 12, "minimum": 0, "maximum": 120 },
+    { "id": "active", "label": "Active", "type": "boolean", "required": true, "default": true },
+    { "id": "condition", "label": "Condition", "type": "enum", "required": true, "default": "in-service", "values": ["in-service", "repair", "retired"] }
+  ]
+}

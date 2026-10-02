@@ -1,0 +1,23 @@
+# Entity frozen source and browser review
+
+Reviewer /root/repo_brain_architect, Sol/high. Outcome APPROVED_SOURCE_AND_BROWSER_LOCAL_SCOPE; full task acceptance pending the original completed ordinary suite. No build/test/runtime/browser invoked by this reviewer and no maintained/shared Brain change.
+
+Independent first/last physical verification: all241 frozen paths match candidate f63cf65d2985820ae271c6e01c95f7f6e610db6214652687b99c0b739faa1590, recomputed aggregate matches, current raw contract SHA633b7ae9945481cd61920f980e3954d9c6e70626e10b33866580cad974f92d1e matches. Browser record9c55ce1c-ab27-4ec8-9397-243e1fcec58b unsigned canonical integrity and all24 archived artifact byte counts/SHA256 match. Earlier generator/backend/UI/copy/worker reviews stand for unchanged frozen inspected bytes.
+
+Actual captured ordinary Chrome observations (81 DOM captures), generation/compile command results, registered-artifact inspection and read-only owner data support independent maintenance-assets@1.0.0 (asset-register@1.0.0) and site-inspections@2.1.0 (room-inspection@0.1.0). Normal paired build/register/promote/start paths produced distinct immutable artifacts ea32d2a531e9e6694feb506bacdb5dabe5c0dd0b48bec6affe20069a663d5ade and89258ef599825a61f82ba684f3b4ec11a1292b43b4a2d7450792b8a3cf356adb. Selected registered modules/assets omit the other owner and report compiler absence. Generated source remained unchanged through joint compile and closure.
+
+Both rendered applications exercised mixed-field create/defaults, detail, optimistic edit toversion2, stale edit denial and explicit reload, then same-instance/artifact restart retention. Room viewer DOM shows fields with no writes; tenant change evidence qualifies immediate old-record clearance only, with completed tenant isolation independently supported by focused owner tests. Read-only owner rows retain Asset codePUMP-REALTIME-100/serviceInterval24/active0/conditionrepair and RoomNorth hall live/notesExits cleared and rechecked/score5/passed1/categoryfollow-up, both version2 in customer-a.
+
+Asset backup23212b0684037bc4e68b46bb30190ef279624c965020bc09b02d2addfc224e05 was successfully created/verified at positively stopped attempt2; existing canonical-root restore was denied, the checked test-owned original data was held unchanged while making the target absent, restore succeeded CLEAN, and same instance/artifact attempt3 retained mixed fields. This proves this local absent-target recovery journey, not general data migration or destructive replacement.
+
+Five exact original runtime attempts show STOPPED/EMPTY/emptyObserved1/helperClosed1/executionClean1; runtime and recovery slots are EMPTY and registry reservation is empty. Original owned console exec14525 close0/ENTITY_BROWSER_CLOSED is reported by root's direct original tool observation, with saved nonce-close metadata. The reviewer verified the saved evidence, not a live terminal or authenticated actor identity. Console/generated/frozen source closure facts match. Captured-evidence verifier22/22 is supporting validation of those observations, not a replacement browser driver.
+
+Limitations preserved:
+
+- First backup e7db33e1-1097-4c42-b2f9-5eaac4626a42 remains FAILED/CLEAN with generic RECOVERY_DRIVER_FAILED. One unexpired app session was observed; attributing failure to the driver's active-session rule remains an inference. A normal same-instance restart/logout/positive stop preceded successful backup without source/security/data edits.
+- Asset restored screenshot visibly confirms v2 retained mixed fields. The image named browser-room-retained-fields.png actually shows the Site Inspections login form, so that image does not prove retention. Room restart DOM and read-only owner rows independently support the retained fields. No screenshot rerun was requested.
+- Recorded async capture timing/mismatched waits, blank/stale task-owned browser bindings and initial move-helper parameter-set failure remain historical observations; no policy bypass or duplicate lifecycle proof is inferred. Original stopped data was held/byte checked, not deleted.
+- Trusted loopback developer profile only; no hosted/customer production, provider, MCP, native-phone or untrusted-plugin claim.
+- Ordinary full suite is still active; no exit/count/final acceptance is inferred.
+
+Useful bindings: .local/entity-builder-001/frozen.json; .brain/workflow/runs/9c55ce1c-ab27-4ec8-9397-243e1fcec58b.json; archived browser-observations-01.json, browser-01-owner-evidence.json, browser-generated-source-01.json, browser-console-original-close.json, browser-01-closed.json, browser-recovery-first-failure-01.json and browser-data-move-01.json under that record.

@@ -45,6 +45,17 @@ Knowledge exposes `knowledge.document.retrieve.v1` and `POST /api/documents/answ
 
 Knowledge and Handoff source package/product versions advance together to 0.2.1 while their existing schema generations remain unchanged. Handoff's required document-read contract is unchanged. Factory export and release verification derive exact local package closure from the selected package manifests, so selected Knowledge releases include ai-core 0.3.0 and older snapshots continue to be checked against their captured manifests. Provider, hosted retrieval, production inference and tenant-crossing results remain out of scope.
 
+## Bounded entity source builder
+
+The factory can generate a new module from `quadbridge.entity-spec.v1`. It emits ordinary owner source,
+module metadata, a private table migration, four fixed receipt-aware operations/routes, and a complete
+list/detail/create/edit workspace. The spec supports only bounded text, safe integers, booleans and enums;
+generation is exclusive-create and records hashes for its inputs and outputs. The two maintained examples
+are Asset Register and Room Inspection. Their products are composed and built through the normal
+source-derived catalogue; generator output does not bypass artifact registration, promotion, or runtime
+controls. Existing data is never reseeded, overwritten, or upgraded by this builder. See
+[`ENTITY_BUILDER.md`](ENTITY_BUILDER.md) for the supported profile and deferred domain capabilities.
+
 ## Current local platform construction status
 
 Platform-007 adds a complete ProductDefinition editor to the paired Products view and standalone offline

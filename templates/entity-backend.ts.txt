@@ -1,0 +1,92 @@
+import { randomUUID } from 'node:crypto';
+import { SqliteOwner } from '@quadbridge/sqlite';
+import { PlatformError, object, id, integer, type ModuleManifest, type RequestContext } from '@quadbridge/contracts';
+import { validateOperationValue, type OperationDescriptor, type OperationRegistration } from '@quadbridge/contracts/operations';
+import type { HostedModule } from '@quadbridge/backend-host';
+
+type EntityFields = __FIELD_TYPE__;
+type EntityRecord = { id: string; version: number; fields: EntityFields };
+const descriptors = __DESCRIPTORS__ as [OperationDescriptor, OperationDescriptor, OperationDescriptor, OperationDescriptor];
+const [listDescriptor, getDescriptor, createDescriptor, editDescriptor] = descriptors;
+const table = __TABLE__;
+const displayColumn = '__DISPLAY_COLUMN__';
+
+function invalid(message: string): never { throw new PlatformError('INVALID', message); }
+function normalizeFields(input: unknown): EntityFields {
+  const source = object(input, __FIELD_KEYS__);
+  const fields: Record<string, unknown> = {};
+__NORMALIZE_FIELDS__
+  return fields as EntityFields;
+}
+function entityRecord(idValue: string, version: number, fields: EntityFields): EntityRecord {
+  const values: Record<string, unknown> = {};
+__PROJECT_FIELDS__
+  return { id: idValue, version, fields: values as EntityFields };
+}
+function checked<T>(descriptor: OperationDescriptor, value: unknown): T {
+  return validateOperationValue(value, descriptor.outputSchema, 'output') as T;
+}
+
+export function register(env: import('@quadbridge/backend-host').ModuleEnvironment): HostedModule {
+  const store = new SqliteOwner(env.dataPath, env.manifest.id);
+  try {
+    store.migrate([{ version: 1, sql: __MIGRATION__ }], env.manifest.schema);
+
+    function list(ctx: RequestContext) {
+      ctx.assertAllowed('__READ_PERMISSION__', 'read');
+      const items = store.db.prepare(`SELECT id,version,${displayColumn} AS label FROM ${table} WHERE tenant=? ORDER BY id LIMIT 100`)
+        .all(ctx.tenantId) as unknown as { id: string; version: number; label: string }[];
+      return checked(listDescriptor, { items, limit: 100 });
+    }
+    function get(ctx: RequestContext, input: unknown) {
+      ctx.assertAllowed('__READ_PERMISSION__', 'read');
+      const body = object(input, ['id']);
+      const recordId = id(body.id);
+      const row = store.db.prepare(`SELECT id,version,__SELECT_COLUMNS__ FROM ${table} WHERE tenant=? AND id=?`)
+        .get(ctx.tenantId, recordId) as unknown as Record<string, unknown> | undefined;
+      if (!row) throw new PlatformError('NOT_FOUND', 'Record not found in the current tenant');
+      const record = entityRecord(row.id as string, row.version as number, {
+__ROW_FIELDS__
+      } as EntityFields);
+      return checked(getDescriptor, record);
+    }
+    function create(ctx: RequestContext, input: unknown, commandId?: string) {
+      ctx.assertAllowed('__WRITE_PERMISSION__', 'write');
+      const body = object(input, ['fields']);
+      const fields = normalizeFields(body.fields);
+      return store.command(ctx, createDescriptor.id, commandId, { fields }, '__WRITE_PERMISSION__', () => {
+        const recordId = randomUUID();
+        store.db.prepare(`INSERT INTO ${table} (tenant,id,version,__COLUMN_NAMES__) VALUES(?,?,1,__INSERT_MARKS__)`)
+          .run(ctx.tenantId, recordId,__INSERT_VALUES__);
+        return checked(createDescriptor, entityRecord(recordId, 1, fields));
+      });
+    }
+    function edit(ctx: RequestContext, input: unknown, commandId?: string) {
+      ctx.assertAllowed('__WRITE_PERMISSION__', 'write');
+      const body = object(input, ['id', 'expectedVersion', 'fields']);
+      const recordId = id(body.id), expectedVersion = integer(body.expectedVersion, 1);
+      const fields = normalizeFields(body.fields);
+      return store.command(ctx, editDescriptor.id, commandId, { id: recordId, expectedVersion, fields }, '__WRITE_PERMISSION__', () => {
+        const current = store.db.prepare(`SELECT version FROM ${table} WHERE tenant=? AND id=?`).get(ctx.tenantId, recordId) as { version: number } | undefined;
+        if (!current) throw new PlatformError('NOT_FOUND', 'Record not found in the current tenant');
+        if (current.version !== expectedVersion) throw new PlatformError('CONFLICT', 'Record changed; reload before editing');
+        const result = store.db.prepare(`UPDATE ${table} SET version=version+1,__UPDATE_COLUMNS__ WHERE tenant=? AND id=? AND version=?`)
+          .run(__UPDATE_VALUES__ ctx.tenantId, recordId, expectedVersion);
+        if (Number(result.changes) !== 1) throw new PlatformError('CONFLICT', 'Record changed; reload before editing');
+        return checked(editDescriptor, entityRecord(recordId, expectedVersion + 1, fields));
+      });
+    }
+
+    const handlers = [list, get, create, edit];
+    const operations: OperationRegistration[] = descriptors.map((descriptor, index) => ({ descriptor, handle: handlers[index]! }));
+    return { manifest: env.manifest, services: {}, operations, routes: [
+      { method: 'GET', path: '/api/__MODULE__', permission: '__READ_PERMISSION__', kind: 'read', handle(ctx) { return list(ctx); } },
+      { method: 'GET', path: '/api/__MODULE__/record', permission: '__READ_PERMISSION__', kind: 'read', handle(ctx, _input, query) { return get(ctx, { id: query.get('id') }); } },
+      { method: 'POST', path: '/api/__MODULE__', permission: '__WRITE_PERMISSION__', kind: 'write', handle(ctx, input, _query, key) { return create(ctx, input, key); } },
+      { method: 'POST', path: '/api/__MODULE__/edit', permission: '__WRITE_PERMISSION__', kind: 'write', handle(ctx, input, _query, key) { return edit(ctx, input, key); } }
+    ], close: () => store.close() };
+  } catch (error) {
+    try { store.close(); } catch { /* preserve the original migration/registration error */ }
+    throw error;
+  }
+}

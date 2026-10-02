@@ -1,0 +1,6 @@
+.entity-detail{margin-top:1rem;padding:1rem;border:1px solid var(--line,#d9e1e8);border-radius:.75rem;background:var(--surface,#fff)}
+.entity-row{display:block;width:100%;text-align:left;margin:.35rem 0}
+.entity-value{padding:.35rem 0;border-bottom:1px solid var(--line,#e5eaf0);overflow-wrap:anywhere}
+.entity-edit{display:grid;gap:.75rem;margin-top:1rem}
+.entity-retry{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-top:1rem}
+.entity-retry p{flex-basis:100%;margin:0}

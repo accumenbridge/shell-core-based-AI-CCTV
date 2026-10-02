@@ -1,0 +1,171 @@
+import type { Workspace } from '@quadbridge/contracts';
+import { el, button, heading, section, emptyState } from '@quadbridge/web-shell/dom';
+
+type FieldSpec = { id: string; label: string; type: 'text' | 'integer' | 'boolean' | 'enum'; required: boolean; default?: string | number | boolean; minLength?: number; maxLength?: number; minimum?: number; maximum?: number; values?: string[] };
+type EntityRecord = { id: string; version: number; fields: Record<string, string | number | boolean> };
+const fields = __FIELDS__ as FieldSpec[];
+const recordLabel = __ENTITY_LABEL__;
+
+function control(spec: FieldSpec) {
+  const wrap = el('label', 'field');
+  wrap.append(el('span', 'field-label', spec.label));
+  let input: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+  if (spec.type === 'enum') {
+    const select = el('select');
+    for (const value of spec.values ?? []) {
+      const option = el('option', '', value); option.value = value; select.append(option);
+    }
+    input = select;
+  } else if (spec.type === 'text' && (spec.maxLength ?? 0) > 200) {
+    input = el('textarea'); input.rows = 3;
+  } else {
+    const element = el('input');
+    if (spec.type === 'integer') { element.type = 'number'; element.step = '1'; if (spec.minimum !== undefined) element.min = String(spec.minimum); if (spec.maximum !== undefined) element.max = String(spec.maximum); }
+    else if (spec.type === 'boolean') element.type = 'checkbox';
+    else element.type = 'text';
+    input = element;
+  }
+  input.name = spec.id; input.required = spec.type !== 'boolean' && spec.required;
+  if (spec.type === 'text' && spec.maxLength !== undefined) (input as HTMLInputElement | HTMLTextAreaElement).maxLength = spec.maxLength;
+  if (spec.type === 'boolean') (input as HTMLInputElement).checked = spec.default === true;
+  else if (spec.default !== undefined) input.value = String(spec.default);
+  wrap.append(input);
+  return { wrap, input };
+}
+
+function captureValues(inputs: Map<string, ReturnType<typeof control>>) {
+  const values: Record<string, unknown> = {};
+  for (const spec of fields) {
+    const input = inputs.get(spec.id)!.input;
+    if (spec.type === 'boolean') { values[spec.id] = (input as HTMLInputElement).checked; continue; }
+    const raw = input.value;
+    if (!raw.trim()) { if (spec.required) throw new Error(`${spec.label} is required`); continue; }
+    if (spec.type === 'integer') {
+      if (!/^-?(?:0|[1-9]\d*)$/.test(raw.trim())) throw new Error(`${spec.label} must be a whole number`);
+      const number = Number(raw); if (!Number.isSafeInteger(number)) throw new Error(`${spec.label} is outside the supported range`);
+      values[spec.id] = number;
+    } else values[spec.id] = raw;
+  }
+  return values;
+}
+
+export const workspace: Workspace = { mount(ctx) {
+  ctx.root.append(heading(recordLabel, 'Tenant-scoped records. Reads and writes stay with this module’s owner.'));
+  const grid = el('div', 'grid'), createCard = section(), browseCard = section();
+  grid.append(createCard, browseCard); ctx.root.append(grid);
+  createCard.append(el('h3', '', `Create ${recordLabel.toLowerCase()}`));
+  const createForm = el('form'), createInputs = new Map<string, ReturnType<typeof control>>();
+  for (const spec of fields) { const item = control(spec); createInputs.set(spec.id, item); createForm.append(item.wrap); }
+  const createSubmit = el('button', 'button', 'Create record'); createSubmit.type = 'submit'; createForm.append(createSubmit);
+  const createStatus = el('p', 'small muted'); createStatus.setAttribute('aria-live', 'polite');
+  if (ctx.permissions.includes('__WRITE_PERMISSION__')) createCard.append(createForm, createStatus);
+  else createCard.append(el('p', 'muted', 'Read-only access. Record changes are not permitted.'));
+
+  browseCard.append(el('h3', '', `${recordLabel} records`));
+  const list = el('div'), detail = el('div', 'entity-detail'), status = el('p', 'small muted');
+  browseCard.append(list, detail, status);
+  let listGeneration = 0, detailGeneration = 0, selectedId: string | undefined, selectedRecord: EntityRecord | undefined;
+  let pendingIntent: { kind: 'create' | 'edit'; path: string; payload: unknown; commandId: string; recordId?: string; selectionGeneration: number } | undefined;
+  let busy = false;
+  const retryPanel = section('entity-retry');
+  const retryText = el('p', 'small muted');
+  const retryButton = button('Retry the exact command', () => { if (pendingIntent) void send(pendingIntent); }, 'button secondary small');
+  const newIntentButton = button('Start a new command', () => {
+    pendingIntent = undefined; retryPanel.hidden = true;
+    status.textContent = 'The previous result remains unresolved. A new command will use a different identity.';
+    updateCreateButton();
+  }, 'button secondary small');
+  retryPanel.append(retryText, retryButton, newIntentButton); retryPanel.hidden = true; browseCard.append(retryPanel);
+
+  function updateCreateButton() { createSubmit.disabled = busy || !!pendingIntent || ctx.signal.aborted; }
+  async function loadList() {
+    const generation = ++listGeneration;
+    try {
+      const response = await ctx.api.get('/api/__MODULE__', ctx.signal) as { items: { id: string; version: number; label: string }[]; limit: number };
+      if (ctx.signal.aborted || generation !== listGeneration) return;
+      list.replaceChildren();
+      if (!response.items.length) list.append(emptyState('No records yet.', `Create the first ${recordLabel.toLowerCase()} record.`));
+      for (const item of response.items) list.append(button(`${item.label} · v${item.version}`, () => void loadDetail(item.id), 'button secondary entity-row'));
+      status.textContent = `Showing ${response.items.length} records (maximum ${response.limit}).`;
+    } catch (error) { if (!ctx.signal.aborted && generation === listGeneration) status.textContent = error instanceof Error ? error.message : 'Records could not be loaded.'; }
+  }
+  function renderDetail(record: EntityRecord) {
+    detail.replaceChildren(el('h4', '', `${recordLabel} · v${record.version}`));
+    for (const spec of fields) {
+      if (!Object.hasOwn(record.fields, spec.id)) continue;
+      const value = record.fields[spec.id];
+      detail.append(el('p', 'entity-value', `${spec.label}: ${typeof value === 'boolean' ? (value ? 'Yes' : 'No') : String(value)}`));
+    }
+    if (!ctx.permissions.includes('__WRITE_PERMISSION__')) return;
+    const beginEdit = button('Edit record', () => beginEditForm(record), 'button secondary small'); detail.append(beginEdit);
+  }
+  async function loadDetail(recordId: string) {
+    selectedId = recordId; selectedRecord = undefined;
+    const generation = ++detailGeneration; detail.replaceChildren(el('p', 'muted', 'Loading record…'));
+    try {
+      const response = await ctx.api.get(`/api/__MODULE__/record?id=${encodeURIComponent(recordId)}`, ctx.signal) as EntityRecord;
+      if (ctx.signal.aborted || generation !== detailGeneration || selectedId !== recordId) return;
+      if (response.id !== recordId || !Number.isSafeInteger(response.version) || response.version < 1) throw new Error('The selected record response did not match the current selection.');
+      selectedRecord = response; renderDetail(response);
+    } catch (error) { if (!ctx.signal.aborted && generation === detailGeneration && selectedId === recordId) detail.replaceChildren(el('p', 'error', error instanceof Error ? error.message : 'Record could not be loaded.')); }
+  }
+  function beginEditForm(record: EntityRecord) {
+    if (selectedId !== record.id || selectedRecord?.version !== record.version) return;
+    const form = el('form', 'entity-edit'), inputs = new Map<string, ReturnType<typeof control>>(), generation = detailGeneration;
+    form.append(el('h4', '', `Edit ${recordLabel} · expected version ${record.version}`));
+    for (const spec of fields) { const item = control(spec); const value = record.fields[spec.id]; if (value !== undefined) { if (spec.type === 'boolean') (item.input as HTMLInputElement).checked = value === true; else item.input.value = String(value); } inputs.set(spec.id, item); form.append(item.wrap); }
+    const submit = el('button', 'button', 'Save version'); submit.type = 'submit'; form.append(submit);
+    const editStatus = el('p', 'small muted'); form.append(editStatus); detail.replaceChildren(form);
+    form.addEventListener('submit', event => {
+      event.preventDefault(); if (busy || ctx.signal.aborted || selectedId !== record.id || generation !== detailGeneration) return;
+      let fieldsValue: Record<string, unknown>;
+      try { fieldsValue = captureValues(inputs); } catch (error) { editStatus.textContent = error instanceof Error ? error.message : 'Check the entered values.'; return; }
+      void submitIntent('edit', `/api/__MODULE__/edit`, { id: record.id, expectedVersion: record.version, fields: fieldsValue }, record.id, generation, editStatus);
+    }, { signal: ctx.signal });
+  }
+  async function send(intent: NonNullable<typeof pendingIntent>) {
+    if (busy || ctx.signal.aborted) return;
+    busy = true; updateCreateButton(); retryButton.disabled = true; createStatus.textContent = 'Sending the captured command…';
+    try {
+      const result = await ctx.api.post(intent.path, intent.payload, intent.commandId, ctx.signal) as { id?: string; version?: number };
+      if (ctx.signal.aborted) return;
+      if (pendingIntent === intent) { pendingIntent = undefined; retryPanel.hidden = true; }
+      createStatus.textContent = `Saved${Number.isSafeInteger(result.version) ? ` as version ${result.version}` : ''}.`;
+      await loadList();
+      if (intent.kind === 'edit' && intent.recordId && selectedId === intent.recordId && detailGeneration === intent.selectionGeneration) await loadDetail(intent.recordId);
+      else if (intent.kind === 'create' && result.id && detailGeneration === intent.selectionGeneration) await loadDetail(result.id);
+    } catch (error) {
+      if (ctx.signal.aborted) return;
+      const code = error && typeof error === 'object' && 'code' in error ? (error as { code?: unknown }).code : undefined;
+      if (intent.kind === 'edit' && code === 'CONFLICT' && intent.recordId && selectedId === intent.recordId && detailGeneration === intent.selectionGeneration) {
+        if (pendingIntent === intent) pendingIntent = undefined;
+        retryPanel.hidden = true;
+        createStatus.textContent = 'This record changed after you loaded it. Reload the selected record before editing.';
+        const recordId = intent.recordId;
+        const reload = button('Reload selected record', () => { if (selectedId === recordId) void loadDetail(recordId); }, 'button secondary small');
+        detail.replaceChildren(el('p', 'error', 'This version is no longer current. Your edit was not applied.'), reload);
+        return;
+      }
+      pendingIntent = intent; retryText.textContent = 'The response was not confirmed. Retry keeps the original payload and command identity.';
+      retryPanel.hidden = false; createStatus.textContent = error instanceof Error ? error.message : 'The command result is unknown.';
+    } finally {
+      busy = false; retryButton.disabled = false; updateCreateButton();
+    }
+  }
+  async function submitIntent(kind: 'create' | 'edit', path: string, payload: unknown, recordId: string | undefined, generation: number, localStatus: HTMLElement) {
+    if (pendingIntent) { localStatus.textContent = 'Resolve the previous command or explicitly start a new command first.'; return; }
+    const intent = { kind, path, payload: JSON.parse(JSON.stringify(payload)), commandId: crypto.randomUUID(), recordId, selectionGeneration: generation };
+    pendingIntent = intent; updateCreateButton(); await send(intent);
+  }
+  if (ctx.permissions.includes('__WRITE_PERMISSION__')) {
+    createForm.addEventListener('input', () => { if (pendingIntent) retryText.textContent = 'The draft changed, but the earlier command identity and payload remain available for exact retry.'; }, { signal: ctx.signal });
+    createForm.addEventListener('submit', event => {
+      event.preventDefault(); if (busy || ctx.signal.aborted || pendingIntent) return;
+      let fieldsValue: Record<string, unknown>;
+      try { fieldsValue = captureValues(createInputs); } catch (error) { createStatus.textContent = error instanceof Error ? error.message : 'Check the entered values.'; return; }
+      void submitIntent('create', '/api/__MODULE__', { fields: fieldsValue }, undefined, detailGeneration, createStatus);
+    }, { signal: ctx.signal });
+  }
+  void loadList();
+  return () => { listGeneration++; detailGeneration++; selectedId = undefined; selectedRecord = undefined; };
+} };

@@ -1,22 +1,22 @@
 # Current workflow checkpoint
 
-Revision: 86  
-Event: d2ea41c9-0e09-42c8-8897-c212dece790a  
-Recorded: 2026-10-02T10:31:45.546Z  
-Reported actor: /root actual trusted UI completion
+Revision: 91  
+Event: 724d8c58-0e74-47ae-b5e6-9cbfd244ab28  
+Recorded: 2026-10-02T12:01:23.392Z  
+Reported actor: /root actual bounded Entity reconciliation
 
 This generated view summarizes immutable project-local records. Reported run and review fields are not authenticated proof of execution, reviewer identity, model identity, or external acceptance.
 
 ## Mapped platform work
 
-Task: EXTENSION-001
+Task: ENTITY-BUILDER-001
 Status: ACCEPTED
-Candidate: fd404c7993497c2016887f01676574c2f1f3daad4a323f7105a874b99b980e9b
-Next action: Trusted UI contributions accepted locally. Reinspect/adopt revised03 finite13 entity generator; fresh build/focused/frozen full and both actual generated browser/recovery products plus independent Sol review. User authorized proper commit/push after core completion.
+Candidate: f63cf65d2985820ae271c6e01c95f7f6e610db6214652687b99c0b739faa1590
+Next action: Bounded Entity builder accepted locally; commit and push exact reviewed source/evidence to the user-authorized repository, then complete local core goal with remaining profile limits explicit.
 Blockers: none reported
-Run records: 33ffda38-af23-425a-b543-a18475a5e611, 7ac8e1c2-0848-4c83-a5f8-f28cdb605fef, 6b2a90cc-26e1-4c4a-a4b2-3fafbd0ed0d0, a65e83df-9538-4438-95e6-8085004911b2, 11e46d74-e0e8-4901-86ab-f7be68763968
-Review records: 07d6a399-05de-4097-a5b2-75e465a0d941
-Gates: native-device=BLOCKED, native-identity-api=DEFERRED, historical-uncertain-owner=UNKNOWN, interrupted-mobile-focused-owner=UNKNOWN, full-suite-repair=PASSED, browser-device-specific=NOT_RUN, planning-html-policy=BLOCKED, windows-file-symlink-coverage=BLOCKED, historical-mobile-audit-full-suite=FAILED, prior-mobile-history=REPORTED, current-reliability-full-suite=PASSED, reliability-prerequisite=PASSED, historical-capability-first-full-suite=FAILED, current-capability-full-suite=PASSED, capability-prerequisite=PASSED, family-focused=PASSED, family-browser=PASSED, current-family-full-suite=PASSED, family-prerequisite=PASSED, ui-pre-admission-stylesheet-scope-deviation=REPORTED, ui-slots-focused=PASSED, ui-slots-browser=PASSED, current-ui-full-suite=PASSED
+Run records: 7509bdd3-29c4-4e1d-b459-2905f1db91e1, 72f3ec96-391b-458d-aaa5-65def5a66da2, 9c55ce1c-ab27-4ec8-9397-243e1fcec58b, 33607166-843b-4a09-b922-688e401e1d9c
+Review records: 4ffce1bc-cf93-4f54-9120-6c8a6f779f15
+Gates: native-device=BLOCKED, native-identity-api=DEFERRED, historical-uncertain-owner=UNKNOWN, interrupted-mobile-focused-owner=UNKNOWN, full-suite-repair=PASSED, browser-device-specific=NOT_RUN, planning-html-policy=BLOCKED, windows-file-symlink-coverage=BLOCKED, historical-mobile-audit-full-suite=FAILED, prior-mobile-history=REPORTED, current-reliability-full-suite=PASSED, reliability-prerequisite=PASSED, historical-capability-first-full-suite=FAILED, current-capability-full-suite=PASSED, capability-prerequisite=PASSED, family-focused=PASSED, family-browser=PASSED, current-family-full-suite=PASSED, family-prerequisite=PASSED, ui-pre-admission-stylesheet-scope-deviation=REPORTED, ui-slots-focused=PASSED, ui-slots-browser=PASSED, current-ui-full-suite=PASSED, ui-slots-prerequisite=PASSED, entity-brain-build=PASSED, entity-entity-builder-focused=PASSED, entity-entity-builder-browser=PASSED, entity-brain-full-suite=BLOCKED
 
 ## Maintenance work
 

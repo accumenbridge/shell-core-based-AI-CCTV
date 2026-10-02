@@ -101,6 +101,24 @@ Refresh the Studio catalogue. Checklist appears without editing the Studio's Jav
 other supported modules and choose a new product ID. The example generator creates a scoped item list,
 not a finished checklist business domain. Review/update the lockfile after changing the workspace set.
 
+## Generate a bounded record module
+
+For a simple tenant-scoped record with fixed fields, the source builder accepts a reviewed JSON spec and
+writes a new, ordinary module owner and workspace. It refuses an existing module directory; generated
+source must be reviewed and versioned like any other module.
+
+```text
+npm run factory -- generate-entity examples/entities/asset-register.json
+npm run factory -- create-product maintenance-assets --modules asset-register --version 1.0.0
+npm run build
+```
+
+The spec supports bounded text, integer, boolean and enum fields, defaults, a module-owned SQLite table,
+fixed list/get/create/edit operations and matching routes, plus a list/detail/create/edit workspace.
+Commands carry stable receipts, and edits require the version that was read. See
+[`docs/ENTITY_BUILDER.md`](docs/ENTITY_BUILDER.md) for limits and the independent Room Inspection example.
+This does not generate relations, approvals, attachments, schema upgrades/data migrations or a universal business model.
+
 A terminal-only path uses the same catalogue and resolver:
 
 ```text

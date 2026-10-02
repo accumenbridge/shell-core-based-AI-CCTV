@@ -1,0 +1,20 @@
+{
+  "schema": "quadbridge.entity-spec.v1",
+  "module": {
+    "id": "room-inspection",
+    "version": "0.1.0",
+    "label": "Room Inspection"
+  },
+  "entity": {
+    "id": "inspection",
+    "label": "Inspection",
+    "displayField": "room"
+  },
+  "fields": [
+    { "id": "room", "label": "Room", "type": "text", "required": true, "minLength": 1, "maxLength": 80 },
+    { "id": "notes", "label": "Notes", "type": "text", "required": false, "minLength": 1, "maxLength": 1000 },
+    { "id": "score", "label": "Score", "type": "integer", "required": true, "minimum": 0, "maximum": 5 },
+    { "id": "passed", "label": "Passed", "type": "boolean", "required": true, "default": false },
+    { "id": "category", "label": "Category", "type": "enum", "required": true, "default": "routine", "values": ["routine", "follow-up"] }
+  ]
+}

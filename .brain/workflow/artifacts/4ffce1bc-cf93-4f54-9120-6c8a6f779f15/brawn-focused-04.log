@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: generated modules build as separate products and keep owner, receipt, UI selection, and field semantics
+ok 1 - generated modules build as separate products and keep owner, receipt, UI selection, and field semantics
+  ---
+  duration_ms: 36652.0696
+  type: 'test'
+  ...
+# Subtest: entity specifications are closed, bounded inputs with explicit field defaults and types
+ok 2 - entity specifications are closed, bounded inputs with explicit field defaults and types
+  ---
+  duration_ms: 4.6675
+  type: 'test'
+  ...
+# Subtest: generator reserves a new owner, records exact output hashes, and treats inserted labels literally
+ok 3 - generator reserves a new owner, records exact output hashes, and treats inserted labels literally
+  ---
+  duration_ms: 40.9289
+  type: 'test'
+  ...
+# Subtest: exported neutral product starts with all domain directories physically absent
+ok 4 - exported neutral product starts with all domain directories physically absent
+  ---
+  duration_ms: 386.9345
+  type: 'test'
+  ...
+# Subtest: exported Service Desk has no knowledge or handoff package and persists a real record
+ok 5 - exported Service Desk has no knowledge or handoff package and persists a real record
+  ---
+  duration_ms: 453.7231
+  type: 'test'
+  ...
+# Subtest: factory export includes the selected Knowledge package closure and actual ai-core dependency
+ok 6 - factory export includes the selected Knowledge package closure and actual ai-core dependency
+  ---
+  duration_ms: 360.0354
+  type: 'test'
+  ...
+# Subtest: independent Knowledge and Combined exports invoke real operations without source or compiler trees
+ok 7 - independent Knowledge and Combined exports invoke real operations without source or compiler trees
+  ---
+  duration_ms: 1581.5763
+  type: 'test'
+  ...
+# Subtest: factory refuses collisions and path traversal
+ok 8 - factory refuses collisions and path traversal
+  ---
+  duration_ms: 545.7822
+  type: 'test'
+  ...
+# Subtest: generated full-stack module builds and runs without editing maintained shell source
+ok 9 - generated full-stack module builds and runs without editing maintained shell source
+  ---
+  duration_ms: 6689.3388
+  type: 'test'
+  ...
+# Subtest: real separate worker process completes a preexisting durable job
+ok 10 - real separate worker process completes a preexisting durable job
+  ---
+  duration_ms: 626.1908
+  type: 'test'
+  ...
+# Subtest: source-only provider omission is not mistaken for runtime completion
+ok 11 - source-only provider omission is not mistaken for runtime completion
+  ---
+  duration_ms: 53.2812
+  type: 'test'
+  ...
+# Subtest: React bridge cleanup is idempotent (port contract, not a React runtime test)
+ok 12 - React bridge cleanup is idempotent (port contract, not a React runtime test)
+  ---
+  duration_ms: 0.2998
+  type: 'test'
+  ...
+# Subtest: React bridge does not create a root after scope cancellation
+ok 13 - React bridge does not create a root after scope cancellation
+  ---
+  duration_ms: 0.0849
+  type: 'test'
+  ...
+# Subtest: generic framework packages import no reference-domain packages
+ok 14 - generic framework packages import no reference-domain packages
+  ---
+  duration_ms: 4.6873
+  type: 'test'
+  ...
+# Subtest: provider failure closes the started modules in reverse dependency order
+ok 15 - provider failure closes the started modules in reverse dependency order
+  ---
+  duration_ms: 0.3887
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 48549.8009

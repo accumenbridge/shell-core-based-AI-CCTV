@@ -1,0 +1,114 @@
+TAP version 13
+# Subtest: generated modules build as separate products and keep owner, receipt, UI selection, and field semantics
+not ok 1 - generated modules build as separate products and keep owner, receipt, UI selection, and field semantics
+  ---
+  duration_ms: 12845.0159
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\entity-builder-ui.test.mjs:121:1'
+  failureType: 'testCodeFailure'
+  error: 'Invalid audit actor'
+  code: 'INVALID'
+  name: 'PlatformError'
+  stack: |-
+    fail (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/packages/control-plane/dist/index.js:41:35)
+    validateActor (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/packages/control-plane/dist/index.js:103:9)
+    ControlPlaneStore.admitBuild (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/packages/control-plane/dist/index.js:509:23)
+    LocalBuildWorker.admit (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/build-worker.js:303:35)
+    async buildThroughReviewedWorker (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/entity-builder-ui.test.mjs:67:22)
+    async TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/entity-builder-ui.test.mjs:362:31)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: entity specifications are closed, bounded inputs with explicit field defaults and types
+ok 2 - entity specifications are closed, bounded inputs with explicit field defaults and types
+  ---
+  duration_ms: 14.6062
+  type: 'test'
+  ...
+# Subtest: generator reserves a new owner, records exact output hashes, and treats inserted labels literally
+ok 3 - generator reserves a new owner, records exact output hashes, and treats inserted labels literally
+  ---
+  duration_ms: 59.1935
+  type: 'test'
+  ...
+# Subtest: exported neutral product starts with all domain directories physically absent
+ok 4 - exported neutral product starts with all domain directories physically absent
+  ---
+  duration_ms: 388.4197
+  type: 'test'
+  ...
+# Subtest: exported Service Desk has no knowledge or handoff package and persists a real record
+ok 5 - exported Service Desk has no knowledge or handoff package and persists a real record
+  ---
+  duration_ms: 777.985
+  type: 'test'
+  ...
+# Subtest: factory export includes the selected Knowledge package closure and actual ai-core dependency
+ok 6 - factory export includes the selected Knowledge package closure and actual ai-core dependency
+  ---
+  duration_ms: 423.2625
+  type: 'test'
+  ...
+# Subtest: independent Knowledge and Combined exports invoke real operations without source or compiler trees
+ok 7 - independent Knowledge and Combined exports invoke real operations without source or compiler trees
+  ---
+  duration_ms: 1871.5216
+  type: 'test'
+  ...
+# Subtest: factory refuses collisions and path traversal
+ok 8 - factory refuses collisions and path traversal
+  ---
+  duration_ms: 420.1244
+  type: 'test'
+  ...
+# Subtest: generated full-stack module builds and runs without editing maintained shell source
+ok 9 - generated full-stack module builds and runs without editing maintained shell source
+  ---
+  duration_ms: 5371.4619
+  type: 'test'
+  ...
+# Subtest: real separate worker process completes a preexisting durable job
+ok 10 - real separate worker process completes a preexisting durable job
+  ---
+  duration_ms: 589.3821
+  type: 'test'
+  ...
+# Subtest: source-only provider omission is not mistaken for runtime completion
+ok 11 - source-only provider omission is not mistaken for runtime completion
+  ---
+  duration_ms: 60.2917
+  type: 'test'
+  ...
+# Subtest: React bridge cleanup is idempotent (port contract, not a React runtime test)
+ok 12 - React bridge cleanup is idempotent (port contract, not a React runtime test)
+  ---
+  duration_ms: 0.3043
+  type: 'test'
+  ...
+# Subtest: React bridge does not create a root after scope cancellation
+ok 13 - React bridge does not create a root after scope cancellation
+  ---
+  duration_ms: 0.0873
+  type: 'test'
+  ...
+# Subtest: generic framework packages import no reference-domain packages
+ok 14 - generic framework packages import no reference-domain packages
+  ---
+  duration_ms: 4.6083
+  type: 'test'
+  ...
+# Subtest: provider failure closes the started modules in reverse dependency order
+ok 15 - provider failure closes the started modules in reverse dependency order
+  ---
+  duration_ms: 0.4516
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 14
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 24058.0461

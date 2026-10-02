@@ -1,0 +1,99 @@
+{
+  "fixtureId": "e762c24e-a90c-4310-b681-962e3b6728c7",
+  "candidate": "f63cf65d2985820ae271c6e01c95f7f6e610db6214652687b99c0b739faa1590",
+  "files": [
+    {
+      "path": "modules/asset-register/entity-spec.json",
+      "sha256": "a7f8a03e11307ba9049aad7fb149c9196e4a30dbbb10cb8a39c845c4cf998211"
+    },
+    {
+      "path": "modules/asset-register/generation.json",
+      "sha256": "7ff93e49c6f207541e86d6365ac602e3ae738c775fa81855c78e881a7a99ec36"
+    },
+    {
+      "path": "modules/asset-register/module.json",
+      "sha256": "52674e88095a01b1a97403d7446289348feb7d02a2a8056ce7e280672fa7b5a4"
+    },
+    {
+      "path": "modules/asset-register/package.json",
+      "sha256": "0beb4f01c3f0131214ca2ea0cc0b5162872eb47baeb3b28850589ac94eeb263a"
+    },
+    {
+      "path": "modules/asset-register/README.md",
+      "sha256": "c5caa0d8929dbc820b9b2e492d9a875381cca9e1d59421aebc77e903f8e8ebd6"
+    },
+    {
+      "path": "modules/asset-register/src/index.ts",
+      "sha256": "9bffd8c7987f2a2a7b66670b021cfd00e27880ace152acae8b05200811865118"
+    },
+    {
+      "path": "modules/asset-register/src/ui.ts",
+      "sha256": "fdf0d286fb74d5a3b3b28b7351de6ca95412c4c0c23ef95065e2a56872f93768"
+    },
+    {
+      "path": "modules/asset-register/src/ui/entity.css",
+      "sha256": "8aa676e077dd392b4acc76bbbaceb5e3614785b2c33a627bfe7646a1a55ae602"
+    },
+    {
+      "path": "modules/asset-register/tsconfig.json",
+      "sha256": "5ceb52a02364664f51c79a573432c69d26ea3b5fd1b5ddc0cd724293ef4579da"
+    },
+    {
+      "path": "modules/room-inspection/entity-spec.json",
+      "sha256": "c3d94e3c1c0ff71c1bf660e39b39b90bd9ac987fc689b46023b7bc9f4c752286"
+    },
+    {
+      "path": "modules/room-inspection/generation.json",
+      "sha256": "c1008182e4340ada10207a40e2dfff63e710ddb95e089f25eb7289d71817220d"
+    },
+    {
+      "path": "modules/room-inspection/module.json",
+      "sha256": "5d61c036207e26cc2d1b266f6ffc1217008e24eaa91f024761b236ebdb7a7ccf"
+    },
+    {
+      "path": "modules/room-inspection/package.json",
+      "sha256": "ad6fac67ea9edb3dae33e954e99341affccb3fd24bc2659fd180ea22d9b33753"
+    },
+    {
+      "path": "modules/room-inspection/README.md",
+      "sha256": "61a9bbdf8dce4fd0e8305ab3b0faaec80b22b940a6a153e43f9b5a162c2e96b0"
+    },
+    {
+      "path": "modules/room-inspection/src/index.ts",
+      "sha256": "2a2413b5152a9bd61455ea20b527505cd5aa6b0500b141b69fd2f9bdda36c3dd"
+    },
+    {
+      "path": "modules/room-inspection/src/ui.ts",
+      "sha256": "960d3dcf3b1d8deec8cedc4028291f3dd476ae91a1b4c71c84b20fa21d4e0e41"
+    },
+    {
+      "path": "modules/room-inspection/src/ui/entity.css",
+      "sha256": "8aa676e077dd392b4acc76bbbaceb5e3614785b2c33a627bfe7646a1a55ae602"
+    },
+    {
+      "path": "modules/room-inspection/tsconfig.json",
+      "sha256": "5ceb52a02364664f51c79a573432c69d26ea3b5fd1b5ddc0cd724293ef4579da"
+    },
+    {
+      "path": "products/maintenance-assets/product.json",
+      "sha256": "d32f271ca0382346bb9c9046453ec312bcf6c9047412051c0281714fbddbf62f"
+    },
+    {
+      "path": "products/site-inspections/product.json",
+      "sha256": "b78040ccb03595382fa198067228b6a37995eefcd404f80a9eaba74785ed78a4"
+    }
+  ],
+  "manualRepairs": false,
+  "cases": [
+    {
+      "moduleId": "asset-register",
+      "productId": "maintenance-assets",
+      "version": "1.0.0"
+    },
+    {
+      "moduleId": "room-inspection",
+      "productId": "site-inspections",
+      "version": "2.1.0"
+    }
+  ]
+}

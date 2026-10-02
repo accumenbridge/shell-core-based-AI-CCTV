@@ -1,0 +1,148 @@
+{
+  "recordedAt": "2026-10-02T11:21:57.598Z",
+  "coordinator": "/root",
+  "scope": "Actual finite bounded entity source inspection, not delivery acceptance",
+  "changes": [
+    {
+      "path": "README.md",
+      "before": "d641e2e0076e81b8a7fdd298ccf1f8c4a2162d260e07163823c1d0db97948aa0",
+      "after": "1192c3e6a367c671cc1e823831fa0f6123cd0693f22633fbddc6cd8a698fbd31",
+      "reason": "Read bounded generator CLI/create-product version/build instructions and supported owner operations, correcting initial generated migration versus unsupported schema upgrades/data migrations. Documentation points to actual supported local scope without claiming production acceptance."
+    },
+    {
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "before": "aa43159e1f688abfdbd99ed8c8abe171a251e863f7e77e55a68fc769e8e2a423",
+      "after": "76a3e74e27f073ed6a12f0411d1092f2107d2ea7da0696dafad76d994bcfe828",
+      "reason": "Inspected exact TOOL_FILES/TEMPLATE_FILES additions and depth-three module metadata leaves. Generator, existing product helper, three templates and inert spec/receipt/README now participate in existing reviewed copy and fingerprint rules without broad JSON or executable import authority."
+    },
+    {
+      "path": "docs/STATUS.md",
+      "before": "2736780521c1015a2b232f26f9ea2c5633bb455853360a0b81e738b3cccde133",
+      "after": "291ab0eb8a5cf0ddcbb31b0782fd05c8a5ee6660951c4fea9527fcc4cbc9ef03",
+      "reason": "Read bounded generated owner/workspace implementation description and normal immutable product pipeline. It retains historical statuses and identifies existing-data and future-profile limits without inventing execution results."
+    },
+    {
+      "path": "tools/factory.mjs",
+      "before": "fc1e8b8bb0953216bb61df7b31893d3be23319f733fd02cb5fee8af2f281f62c",
+      "after": "9d04ed4b696390ed72769600e0a36680cadb063157db1c9fbb66ad29e51f62b2",
+      "reason": "Inspected bounded generate-entity CLI dispatch and optional validated product semver through the existing catalogue/compose/importProduct path. Legacy module generation remains intact; no maintained host wiring is added."
+    },
+    {
+      "path": "tools/entity-builder.mjs",
+      "before": null,
+      "after": "dc5f75445ddc89888f788881fe5262253d3fd3c55cfd982a6e21e4bf0ad54a6f",
+      "reason": "Read closed field/spec normalization, JSON/SQL literal construction, single-pass template insertion, fixed operation metadata and exclusive physical new-owner generation. Hash receipt captures normalized spec, generator, templates, neutral versions and output bytes without making metadata runtime authority."
+    },
+    {
+      "path": "templates/entity-backend.ts.txt",
+      "before": null,
+      "after": "3b59d861d339895ab7e59edba16b046442b4eedb972430a0566ffbd58c839caa",
+      "reason": "Read generated tenant-scoped owner migration and shared list/get/create/edit handlers. Normalized full fields and original identity enter synchronous SqliteOwner commands; optimistic version comparison and checked output remain inside transaction callback with no awaited effect."
+    },
+    {
+      "path": "templates/entity-ui.ts.txt",
+      "before": null,
+      "after": "6dba7aeaa00751c4d55aa12e5ea2ccc63dc0efb3796dde27de233312d2880b5c",
+      "reason": "Read mixed-type whole workspace create/list/detail/edit, false required boolean handling, exact captured payload/key retry, explicit conflict reload and selection-generation fences. Read/write controls use actual granted permissions and disposal preserves scope cleanup."
+    },
+    {
+      "path": "templates/entity.css.txt",
+      "before": null,
+      "after": "8aa676e077dd392b4acc76bbbaceb5e3614785b2c33a627bfe7646a1a55ae602",
+      "reason": "Read six bounded module-owned presentation rules. Asset declaration copies their exact bytes into the selected compiled browser closure without importing another owner or changing neutral shell styling authority."
+    },
+    {
+      "path": "examples/entities/asset-register.json",
+      "before": null,
+      "after": "4f500e75eaa70fae2d03691d1d7d94b78d703e44005f2f1e44c600397bd302dc",
+      "reason": "Read independent asset-register module version1.0.0 and Asset display field with bounded text, service interval default/range, boolean active and enum condition. Blueprint is explicit generation input, not extra maintained build roots or grants."
+    },
+    {
+      "path": "examples/entities/room-inspection.json",
+      "before": null,
+      "after": "31f1f44af64d8017756817d54646569ad2c2491ac734901fac3f00bf14cc0d5f",
+      "reason": "Read independent room-inspection module version0.1.0 and Inspection label/display field, optional notes, bounded score, false boolean default and enum category. Distinct generated product version2.1.0 uses ordinary source composition."
+    },
+    {
+      "path": "docs/ENTITY_BUILDER.md",
+      "before": null,
+      "after": "198ff8e7537cb9f6ef648e1f38f13061c9d63e7c785707e28cf1a4d51127a949",
+      "reason": "Read practical CLI/example, closed fields and owner receipt/version/conflict behaviour, independent selected builds and paired registration/promotion/runtime controls. Existing data/custom source remains unchanged; upgrades and broader domains are explicitly deferred."
+    },
+    {
+      "path": "tests/entity-builder.test.mjs",
+      "before": null,
+      "after": "8531a6a238794cb1f47edefbb26c03e9cab7d410ba08996f8596d324e90002f1",
+      "reason": "Read closed-spec/type/default validation and exclusive generation receipt/output hash checks, single-pass inserted label literal proof and occupied-directory refusal. Tests exercise actual generator code within a new owned private fixture."
+    },
+    {
+      "path": "tests/entity-builder-ui.test.mjs",
+      "before": null,
+      "after": "3ed8aee2a45cb046eb445e3fc02d4e770082ae67596da25b656018ccb46f3d24",
+      "reason": "Read two independent generated compiled/exported owners with real HTTP/operations/defaults/replay/conflict/tenant/viewer/mode/revocation/reopen and compiled UI checks. Reviewed file membership/spec-receipt fingerprint drift/adjacent refusal and one normal short-root worker admission prove copy closure. Complete generated source removal retains release-bound dist CSS served over HTTP; uncertain worker cleanup retains its root. Windows profile copy is conditional, preserving POSIX worker path."
+    }
+  ],
+  "updatedAtlasRefs": [
+    {
+      "id": "readme",
+      "path": "README.md",
+      "before": "d641e2e0076e81b8a7fdd298ccf1f8c4a2162d260e07163823c1d0db97948aa0",
+      "after": "1192c3e6a367c671cc1e823831fa0f6123cd0693f22633fbddc6cd8a698fbd31",
+      "reason": "Read bounded generator CLI/create-product version/build instructions and supported owner operations, correcting initial generated migration versus unsupported schema upgrades/data migrations. Documentation points to actual supported local scope without claiming production acceptance."
+    },
+    {
+      "id": "status",
+      "path": "docs/STATUS.md",
+      "before": "2736780521c1015a2b232f26f9ea2c5633bb455853360a0b81e738b3cccde133",
+      "after": "291ab0eb8a5cf0ddcbb31b0782fd05c8a5ee6660951c4fea9527fcc4cbc9ef03",
+      "reason": "Read bounded generated owner/workspace implementation description and normal immutable product pipeline. It retains historical statuses and identifies existing-data and future-profile limits without inventing execution results."
+    },
+    {
+      "id": "family-source-1",
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "before": "aa43159e1f688abfdbd99ed8c8abe171a251e863f7e77e55a68fc769e8e2a423",
+      "after": "76a3e74e27f073ed6a12f0411d1092f2107d2ea7da0696dafad76d994bcfe828",
+      "reason": "Inspected exact TOOL_FILES/TEMPLATE_FILES additions and depth-three module metadata leaves. Generator, existing product helper, three templates and inert spec/receipt/README now participate in existing reviewed copy and fingerprint rules without broad JSON or executable import authority."
+    },
+    {
+      "id": "ui-slots-source-6",
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "before": "aa43159e1f688abfdbd99ed8c8abe171a251e863f7e77e55a68fc769e8e2a423",
+      "after": "76a3e74e27f073ed6a12f0411d1092f2107d2ea7da0696dafad76d994bcfe828",
+      "reason": "Inspected exact TOOL_FILES/TEMPLATE_FILES additions and depth-three module metadata leaves. Generator, existing product helper, three templates and inert spec/receipt/README now participate in existing reviewed copy and fingerprint rules without broad JSON or executable import authority."
+    },
+    {
+      "id": "entity-builder-source-0",
+      "path": "tools/factory.mjs",
+      "before": "fc1e8b8bb0953216bb61df7b31893d3be23319f733fd02cb5fee8af2f281f62c",
+      "after": "9d04ed4b696390ed72769600e0a36680cadb063157db1c9fbb66ad29e51f62b2",
+      "reason": "Inspected bounded generate-entity CLI dispatch and optional validated product semver through the existing catalogue/compose/importProduct path. Legacy module generation remains intact; no maintained host wiring is added."
+    },
+    {
+      "id": "entity-builder-source-2",
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "before": "aa43159e1f688abfdbd99ed8c8abe171a251e863f7e77e55a68fc769e8e2a423",
+      "after": "76a3e74e27f073ed6a12f0411d1092f2107d2ea7da0696dafad76d994bcfe828",
+      "reason": "Inspected exact TOOL_FILES/TEMPLATE_FILES additions and depth-three module metadata leaves. Generator, existing product helper, three templates and inert spec/receipt/README now participate in existing reviewed copy and fingerprint rules without broad JSON or executable import authority."
+    },
+    {
+      "id": "entity-builder-source-8",
+      "path": "README.md",
+      "before": "d641e2e0076e81b8a7fdd298ccf1f8c4a2162d260e07163823c1d0db97948aa0",
+      "after": "1192c3e6a367c671cc1e823831fa0f6123cd0693f22633fbddc6cd8a698fbd31",
+      "reason": "Read bounded generator CLI/create-product version/build instructions and supported owner operations, correcting initial generated migration versus unsupported schema upgrades/data migrations. Documentation points to actual supported local scope without claiming production acceptance."
+    },
+    {
+      "id": "entity-builder-source-9",
+      "path": "docs/STATUS.md",
+      "before": "2736780521c1015a2b232f26f9ea2c5633bb455853360a0b81e738b3cccde133",
+      "after": "291ab0eb8a5cf0ddcbb31b0782fd05c8a5ee6660951c4fea9527fcc4cbc9ef03",
+      "reason": "Read bounded generated owner/workspace implementation description and normal immutable product pipeline. It retains historical statuses and identifies existing-data and future-profile limits without inventing execution results."
+    }
+  ],
+  "outsideEditBoundaryUnchanged": true,
+  "limitations": [
+    "Historical acceptance candidates/results stay unchanged; source pins describe current inspected planning source.",
+    "No browser/MCP/provider/production qualification from pin reconciliation."
+  ]
+}

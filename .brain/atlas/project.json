@@ -2,8 +2,8 @@
   "schema": "brain.atlas.v1",
   "projectId": "quadbridge-core-frameworks",
   "title": "Quadbridge Product Studio",
-  "planRevision": 40,
-  "updatedAt": "2026-10-02T10:31:58.507Z",
+  "planRevision": 42,
+  "updatedAt": "2026-10-02T11:21:57.596Z",
   "intentBasis": "User authorized the local full architecture program and on 2026-10-01 requested a reusable architecture-first Brain with visual planning, core prioritization and continuous review. Existing source architecture and bounded execution contracts remain authoritative. User 2026-10-01 explicitly created a complete-core actual realtime goal; checkpoint28 selects the continuous local core journey and grounded Brain readiness maintenance. User2026-10-01 ok proceed adopts the next bounded reliability/CI increment after source-grounded verdict review. Preserve local-core completion and unresolved historical startup cause. User2026-10-02 authorizes the reviewed mobile shell build and explicitly defers identity/API profile selection. MOBILE-001 adopts browser-shell/client packaging only; native acceptance remains open. Continued user local core/plugin architecture request and explicit implementation handoff adopt FRAMEWORK-RELIABILITY-001 from actual revision63 failed audit; MOBILE-001 historical acceptance retained.",
   "vision": {
     "destination": "Build and operate reviewed products through a product-neutral Studio, with exact composition, immutable artifacts, domain ownership and understandable user journeys.",
@@ -77,13 +77,13 @@
       "id": "readme",
       "path": "README.md",
       "role": "user journeys",
-      "sha256": "d641e2e0076e81b8a7fdd298ccf1f8c4a2162d260e07163823c1d0db97948aa0"
+      "sha256": "1192c3e6a367c671cc1e823831fa0f6123cd0693f22633fbddc6cd8a698fbd31"
     },
     {
       "id": "status",
       "path": "docs/STATUS.md",
       "role": "historical status",
-      "sha256": "2736780521c1015a2b232f26f9ea2c5633bb455853360a0b81e738b3cccde133"
+      "sha256": "291ab0eb8a5cf0ddcbb31b0782fd05c8a5ee6660951c4fea9527fcc4cbc9ef03"
     },
     {
       "id": "roadmap",
@@ -773,7 +773,7 @@
       "id": "family-source-1",
       "path": "apps/control-plane/src/build-inputs.ts",
       "role": "Inspected family integration baseline; source changes require semantic reconciliation",
-      "sha256": "aa43159e1f688abfdbd99ed8c8abe171a251e863f7e77e55a68fc769e8e2a423"
+      "sha256": "76a3e74e27f073ed6a12f0411d1092f2107d2ea7da0696dafad76d994bcfe828"
     },
     {
       "id": "family-source-2",
@@ -959,7 +959,7 @@
       "id": "ui-slots-source-6",
       "path": "apps/control-plane/src/build-inputs.ts",
       "role": "Inspected current source owner baseline",
-      "sha256": "aa43159e1f688abfdbd99ed8c8abe171a251e863f7e77e55a68fc769e8e2a423"
+      "sha256": "76a3e74e27f073ed6a12f0411d1092f2107d2ea7da0696dafad76d994bcfe828"
     },
     {
       "id": "ui-slots-source-7",
@@ -1206,6 +1206,132 @@
       "path": ".brain/workflow/runs/07d6a399-05de-4097-a5b2-75e465a0d941.json",
       "role": "Separate exact Sol review",
       "sha256": "cebc4f7c196a7b695b590448f68adceeddc3fd9e0025da8f8daa8ec9b48cb1d6"
+    },
+    {
+      "id": "entity-builder-task",
+      "path": ".brain/tasks/ENTITY-BUILDER-001.md",
+      "role": "Current bounded source builder task",
+      "sha256": "ff29ed989ca2cb783676fa6328eb02145d71f0d6315310d3b747391cd2793516"
+    },
+    {
+      "id": "entity-builder-work-order",
+      "path": ".brain/evidence/entity-builder-approved-work-order.md",
+      "role": "Adopted reinspected revised Sol proposal, not execution",
+      "sha256": "b62b20b8fc2e478f07ac7cd314b35d624476f386028878f812f3122ea768f55c"
+    },
+    {
+      "id": "entity-builder-source-0",
+      "path": "tools/factory.mjs",
+      "role": "Actual accepted prior source owner reinspection",
+      "sha256": "9d04ed4b696390ed72769600e0a36680cadb063157db1c9fbb66ad29e51f62b2"
+    },
+    {
+      "id": "entity-builder-source-1",
+      "path": "tools/product-source.mjs",
+      "role": "Actual accepted prior source owner reinspection",
+      "sha256": "d3a7d465f2c32f82329936dcaeb041cfde85bd536019a59aa7c754531909a8f2"
+    },
+    {
+      "id": "entity-builder-source-2",
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "role": "Actual accepted prior source owner reinspection",
+      "sha256": "76a3e74e27f073ed6a12f0411d1092f2107d2ea7da0696dafad76d994bcfe828"
+    },
+    {
+      "id": "entity-builder-source-3",
+      "path": "packages/sqlite/src/index.ts",
+      "role": "Actual accepted prior source owner reinspection",
+      "sha256": "03fb605c558044e72002d3787b7b7b974de3850597fb06852e07883c3d7d1e08"
+    },
+    {
+      "id": "entity-builder-source-4",
+      "path": "packages/backend-host/src/index.ts",
+      "role": "Actual accepted prior source owner reinspection",
+      "sha256": "e9cdcd0455fe1ae7af574bee7f9c378d368f983ca0cf7cdb0ed2f870f104c7fa"
+    },
+    {
+      "id": "entity-builder-source-5",
+      "path": "packages/contracts/src/operations.ts",
+      "role": "Actual accepted prior source owner reinspection",
+      "sha256": "8666d65dceac6667b18d5cec252beb758106eb296aef8c09e925fa052764e765"
+    },
+    {
+      "id": "entity-builder-source-6",
+      "path": "packages/client-core/src/index.ts",
+      "role": "Actual accepted prior source owner reinspection",
+      "sha256": "f2b8521725db0f06934ac59ccb0139cd82eea608805457bc8e33f0122d863c5e"
+    },
+    {
+      "id": "entity-builder-source-7",
+      "path": "modules/service-desk/src/index.ts",
+      "role": "Actual accepted prior source owner reinspection",
+      "sha256": "a013d0e6034fca24434e54b6096d748127fabfe6a414b822d91c8954afc2d69c"
+    },
+    {
+      "id": "entity-builder-source-8",
+      "path": "README.md",
+      "role": "Actual accepted prior source owner reinspection",
+      "sha256": "1192c3e6a367c671cc1e823831fa0f6123cd0693f22633fbddc6cd8a698fbd31"
+    },
+    {
+      "id": "entity-builder-source-9",
+      "path": "docs/STATUS.md",
+      "role": "Actual accepted prior source owner reinspection",
+      "sha256": "291ab0eb8a5cf0ddcbb31b0782fd05c8a5ee6660951c4fea9527fcc4cbc9ef03"
+    },
+    {
+      "id": "entity-builder-added-tools-entity-builder-mjs",
+      "path": "tools/entity-builder.mjs",
+      "role": "Read closed field/spec normalization, JSON/SQL literal construction, single-pass template insertion, fixed operation metadata and exclusive physical new-owner generation. Hash receipt captures normalized spec, generator, templates, neutral versions and output bytes without making metadata runtime authority.",
+      "sha256": "dc5f75445ddc89888f788881fe5262253d3fd3c55cfd982a6e21e4bf0ad54a6f"
+    },
+    {
+      "id": "entity-builder-added-templates-entity-backend-ts-txt",
+      "path": "templates/entity-backend.ts.txt",
+      "role": "Read generated tenant-scoped owner migration and shared list/get/create/edit handlers. Normalized full fields and original identity enter synchronous SqliteOwner commands; optimistic version comparison and checked output remain inside transaction callback with no awaited effect.",
+      "sha256": "3b59d861d339895ab7e59edba16b046442b4eedb972430a0566ffbd58c839caa"
+    },
+    {
+      "id": "entity-builder-added-templates-entity-ui-ts-txt",
+      "path": "templates/entity-ui.ts.txt",
+      "role": "Read mixed-type whole workspace create/list/detail/edit, false required boolean handling, exact captured payload/key retry, explicit conflict reload and selection-generation fences. Read/write controls use actual granted permissions and disposal preserves scope cleanup.",
+      "sha256": "6dba7aeaa00751c4d55aa12e5ea2ccc63dc0efb3796dde27de233312d2880b5c"
+    },
+    {
+      "id": "entity-builder-added-templates-entity-css-txt",
+      "path": "templates/entity.css.txt",
+      "role": "Read six bounded module-owned presentation rules. Asset declaration copies their exact bytes into the selected compiled browser closure without importing another owner or changing neutral shell styling authority.",
+      "sha256": "8aa676e077dd392b4acc76bbbaceb5e3614785b2c33a627bfe7646a1a55ae602"
+    },
+    {
+      "id": "entity-builder-added-examples-entities-asset-register-json",
+      "path": "examples/entities/asset-register.json",
+      "role": "Read independent asset-register module version1.0.0 and Asset display field with bounded text, service interval default/range, boolean active and enum condition. Blueprint is explicit generation input, not extra maintained build roots or grants.",
+      "sha256": "4f500e75eaa70fae2d03691d1d7d94b78d703e44005f2f1e44c600397bd302dc"
+    },
+    {
+      "id": "entity-builder-added-examples-entities-room-inspection-json",
+      "path": "examples/entities/room-inspection.json",
+      "role": "Read independent room-inspection module version0.1.0 and Inspection label/display field, optional notes, bounded score, false boolean default and enum category. Distinct generated product version2.1.0 uses ordinary source composition.",
+      "sha256": "31f1f44af64d8017756817d54646569ad2c2491ac734901fac3f00bf14cc0d5f"
+    },
+    {
+      "id": "entity-builder-added-docs-entity-builder-md",
+      "path": "docs/ENTITY_BUILDER.md",
+      "role": "Read practical CLI/example, closed fields and owner receipt/version/conflict behaviour, independent selected builds and paired registration/promotion/runtime controls. Existing data/custom source remains unchanged; upgrades and broader domains are explicitly deferred.",
+      "sha256": "198ff8e7537cb9f6ef648e1f38f13061c9d63e7c785707e28cf1a4d51127a949"
+    },
+    {
+      "id": "entity-builder-added-tests-entity-builder-test-mjs",
+      "path": "tests/entity-builder.test.mjs",
+      "role": "Read closed-spec/type/default validation and exclusive generation receipt/output hash checks, single-pass inserted label literal proof and occupied-directory refusal. Tests exercise actual generator code within a new owned private fixture.",
+      "sha256": "8531a6a238794cb1f47edefbb26c03e9cab7d410ba08996f8596d324e90002f1"
+    },
+    {
+      "id": "entity-builder-added-tests-entity-builder-ui-test-mjs",
+      "path": "tests/entity-builder-ui.test.mjs",
+      "role": "Read two independent generated compiled/exported owners with real HTTP/operations/defaults/replay/conflict/tenant/viewer/mode/revocation/reopen and compiled UI checks. Reviewed file membership/spec-receipt fingerprint drift/adjacent refusal and one normal short-root worker admission prove copy closure. Complete generated source removal retains release-bound dist CSS served over HTTP; uncertain worker cleanup retains its root. Windows profile copy is conditional, preserving POSIX worker path.",
+      "sha256": "3ed8aee2a45cb046eb445e3fc02d4e770082ae67596da25b656018ccb46f3d24"
     }
   ],
   "nodes": [
@@ -2835,6 +2961,84 @@
         "Actual ordinary browser on exact promoted full artifact shows indexed document embedded Desk search, library recent cards, tenant replacement, read-only viewer, logout and persistent restart followed by positive native owner stop/close.",
         "Fresh build before focused tests, frozen ordinary npm test original close0/nullsignal, zero failed/cancel/TODO and no unexpected skips plus independent exact review before local acceptance."
       ]
+    },
+    {
+      "id": "M-ENTITY-BUILDER-001",
+      "kind": "milestone",
+      "title": "Bounded owner entity source builder",
+      "summary": "Generate and operate two distinct ordinary owned entity modules without maintained-host edits or manual generated repairs.",
+      "owner": "Root; Sol/high Brain; sole Luna/xhigh Brawn",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Complete useful core construction beyond fixed family and reusable trusted UI.",
+      "dependsOn": [
+        "M-EXTENSION-001"
+      ],
+      "links": [
+        "J-CREATE",
+        "J-OPERATE",
+        "C-COMPOSITION",
+        "ST-ENTITY-BUILDER-001"
+      ],
+      "sourceRefs": [
+        "entity-builder-task",
+        "entity-builder-work-order",
+        "entity-builder-source-0",
+        "entity-builder-source-1",
+        "entity-builder-source-2",
+        "entity-builder-source-3",
+        "entity-builder-source-4",
+        "entity-builder-source-5",
+        "entity-builder-source-6",
+        "entity-builder-source-7",
+        "entity-builder-source-8",
+        "entity-builder-source-9",
+        "entity-builder-added-tools-entity-builder-mjs",
+        "entity-builder-added-templates-entity-backend-ts-txt",
+        "entity-builder-added-templates-entity-ui-ts-txt",
+        "entity-builder-added-templates-entity-css-txt",
+        "entity-builder-added-examples-entities-asset-register-json",
+        "entity-builder-added-examples-entities-room-inspection-json",
+        "entity-builder-added-docs-entity-builder-md",
+        "entity-builder-added-tests-entity-builder-test-mjs",
+        "entity-builder-added-tests-entity-builder-ui-test-mjs"
+      ],
+      "acceptance": [
+        "Closed bounded one-entity spec generates an exclusively new owned module, fields/defaults/constraints, owner migration and receipt/source hashes, four declared and implemented operations with shared HTTP handlers; legacy factory preserved.",
+        "Two distinct actual generated modules/products compile without manual repairs and use immutable export/register/promote/runtime: create/defaults/list/detail/edit version1→2, exact command replay, stale edit conflict, tenant/viewer/mode/revocation and same-identity restart persistence.",
+        "Both independently versioned selected products omit the other generated owner/UI/assets, captured generator/template/spec/receipt bytes enter existing reviewed source copy identity; no compiler/checkout dependency.",
+        "Generated whole workspace offers usable mixed-type create/list/detail/edit, read-only viewer, captured command payload identity across retry, conflict reload and scope/version/generation cleanup.",
+        "Actual ordinary browser on both exact promoted products creates/reads/edits, verifies conflict handling and retained same-artifact restart; Asset also uses existing stopped backup/verify/root-refusal/absent test-owned root restore/restart.",
+        "Fresh build before focused tests, frozen ordinary npm test original close0/nullsignal, zero failed/cancel/TODO/only named justified unavailable coverage and separate exact Sol review before local acceptance."
+      ]
+    },
+    {
+      "id": "ST-ENTITY-BUILDER-001",
+      "kind": "story",
+      "title": "Generate and operate asset and room records with versioned edits",
+      "summary": "Generate and operate two distinct ordinary owned entity modules without maintained-host edits or manual generated repairs.",
+      "owner": "Root; Sol/high Brain; sole Luna/xhigh Brawn",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Complete useful core construction beyond fixed family and reusable trusted UI.",
+      "dependsOn": [
+        "M-EXTENSION-001"
+      ],
+      "links": [
+        "M-ENTITY-BUILDER-001"
+      ],
+      "sourceRefs": [
+        "entity-builder-task",
+        "entity-builder-work-order"
+      ],
+      "acceptance": [
+        "Closed bounded one-entity spec generates an exclusively new owned module, fields/defaults/constraints, owner migration and receipt/source hashes, four declared and implemented operations with shared HTTP handlers; legacy factory preserved.",
+        "Two distinct actual generated modules/products compile without manual repairs and use immutable export/register/promote/runtime: create/defaults/list/detail/edit version1→2, exact command replay, stale edit conflict, tenant/viewer/mode/revocation and same-identity restart persistence.",
+        "Both independently versioned selected products omit the other generated owner/UI/assets, captured generator/template/spec/receipt bytes enter existing reviewed source copy identity; no compiler/checkout dependency.",
+        "Generated whole workspace offers usable mixed-type create/list/detail/edit, read-only viewer, captured command payload identity across retry, conflict reload and scope/version/generation cleanup.",
+        "Actual ordinary browser on both exact promoted products creates/reads/edits, verifies conflict handling and retained same-artifact restart; Asset also uses existing stopped backup/verify/root-refusal/absent test-owned root restore/restart.",
+        "Fresh build before focused tests, frozen ordinary npm test original close0/nullsignal, zero failed/cancel/TODO/only named justified unavailable coverage and separate exact Sol review before local acceptance."
+      ]
     }
   ],
   "observations": [
@@ -3221,5 +3425,5 @@
       "status": "proposed"
     }
   ],
-  "focusNodeId": "M-EXTENSION-001"
+  "focusNodeId": "M-ENTITY-BUILDER-001"
 }

@@ -1,0 +1,82 @@
+{
+  "fixtureId": "e762c24e-a90c-4310-b681-962e3b6728c7",
+  "closed": true,
+  "candidate": "f63cf65d2985820ae271c6e01c95f7f6e610db6214652687b99c0b739faa1590",
+  "generatedUnchanged": true,
+  "closedAt": "2026-10-02T11:41:26.516Z",
+  "summary": {
+    "products": [
+      {
+        "id": "combined",
+        "version": "0.2.3"
+      },
+      {
+        "id": "knowledge",
+        "version": "0.2.3"
+      },
+      {
+        "id": "maintenance-assets",
+        "version": "1.0.0"
+      },
+      {
+        "id": "neutral",
+        "version": "0.2.0"
+      },
+      {
+        "id": "service-desk",
+        "version": "0.2.1"
+      },
+      {
+        "id": "site-inspections",
+        "version": "2.1.0"
+      }
+    ],
+    "builds": [
+      {
+        "id": "81b62edd-8e26-4a97-8b0e-f74c3a130b26",
+        "productId": "maintenance-assets",
+        "version": "1.0.0",
+        "state": "SUCCEEDED",
+        "snapshotDigest": "ea32d2a531e9e6694feb506bacdb5dabe5c0dd0b48bec6affe20069a663d5ade"
+      },
+      {
+        "id": "48dbd68f-fe7a-474b-aec0-4ac991100865",
+        "productId": "site-inspections",
+        "version": "2.1.0",
+        "state": "SUCCEEDED",
+        "snapshotDigest": "89258ef599825a61f82ba684f3b4ec11a1292b43b4a2d7450792b8a3cf356adb"
+      }
+    ],
+    "slot": {
+      "state": "EMPTY",
+      "instanceId": null,
+      "operationId": null
+    },
+    "runtimes": [
+      {
+        "id": "runtime-a5e45eb6-423b-419b-942a-35036c16b115",
+        "productId": "maintenance-assets",
+        "version": "1.0.0",
+        "artifactDigest": "ea32d2a531e9e6694feb506bacdb5dabe5c0dd0b48bec6affe20069a663d5ade",
+        "state": "STOPPED",
+        "attempt": 3,
+        "physicalState": "EMPTY",
+        "emptyObserved": 1,
+        "helperClosed": 1,
+        "executionClean": 1
+      },
+      {
+        "id": "runtime-78c24d5c-9661-49fa-a5f1-4d00bb23d019",
+        "productId": "site-inspections",
+        "version": "2.1.0",
+        "artifactDigest": "89258ef599825a61f82ba684f3b4ec11a1292b43b4a2d7450792b8a3cf356adb",
+        "state": "STOPPED",
+        "attempt": 2,
+        "physicalState": "EMPTY",
+        "emptyObserved": 1,
+        "helperClosed": 1,
+        "executionClean": 1
+      }
+    ]
+  }
+}

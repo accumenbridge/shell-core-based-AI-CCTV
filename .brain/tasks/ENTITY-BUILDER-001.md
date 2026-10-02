@@ -1,0 +1,9 @@
+# ENTITY-BUILDER-001 Bounded owner entity source builder
+
+Adopted after actual trusted UI acceptance revision86, eventd2ea41c9-0e09-42c8-8897-c212dece790a. Read .brain/evidence/entity-builder-approved-work-order.md and exact finite13-path contract. Sol/high plans and independently reviews; sole Luna/xhigh maintained source writer; root exclusively owns shared Brain/browser. Preserve prior accepted core/evidence.
+
+Implement closed one-entity CLI generation into exclusively new module directories with ordinary fixed source, owned SQL/migration/operations and whole create/list/detail/edit workspace. Four HTTP/operation handlers share command identity; optimistic edit checks inside synchronous after-BEGIN transaction. Bound/validate DTO before commit; no coercion, authority from spec or await inside SQLite callbacks. Legacy checklist factory stays working.
+
+Actual Asset Register and Room Inspection generated independently versioned products must compile without manual repairs, selected exports omit each other, and real SQLite/HTTP/operation/replay/conflict/tenant/viewer/revocation/mode/restart proofs qualify useful core. Exact tools/templates/module source metadata enter existing reviewed copy policy, not generic file allowance. Generated source may be written only under newly owned private fixtures as explicitly listed in contract.
+
+Fresh build/focused first. Root ordinary browser on both immutable promoted products create/detail/edit/conflict/restart and Asset existing stopped backup/verify/root-refusal/absent test-owned root restore required, plus positive original managed owner closure. Frozen241 candidate ordinary npm test original close0/nullsignal/zero failures/cancel/TODO/only named unavailable skip and separate exact review before local acceptance. No relation/date/currency/approval/attachment/delete/regeneration/upgrade/provider/native-phone/hosted/production claim.

@@ -345,6 +345,38 @@
         "UI-BROWSER"
       ],
       "evidenceScope": "Actual browser exact source/runtime identity; no VM substitute or policy bypass."
+    },
+    {
+      "id": "entity-builder-focused",
+      "argv": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/entity-builder.test.mjs",
+        "tests/entity-builder-ui.test.mjs",
+        "tests/factory-lifecycle.test.mjs"
+      ],
+      "cwd": ".",
+      "description": "Actual two generated owner products, mixed fields/defaults/edit/replay/conflict/selected closure and supporting generated workspace UI.",
+      "criterionIds": [
+        "ENTITY-GENERATOR",
+        "ENTITY-CORE-JOURNEY",
+        "ENTITY-CLOSURE",
+        "ENTITY-UI"
+      ],
+      "evidenceScope": "Actual generated SQLite/export/runtime and controlled UI; browser separately observed."
+    },
+    {
+      "id": "entity-builder-browser",
+      "argv": [
+        "manual-browser-observation"
+      ],
+      "cwd": ".",
+      "description": "Ordinary real browser both promoted generated products CRUD/edit/conflict/restart plus existing Asset stopped recovery.",
+      "criterionIds": [
+        "ENTITY-BROWSER"
+      ],
+      "evidenceScope": "Actual browser exact source/product/runtime identity, no VM substitute or policy bypass."
     }
   ]
 }

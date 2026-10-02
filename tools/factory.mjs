@@ -27,14 +27,26 @@ else if (command === 'create-product') {
         throw new Error('Invalid product');
     const idx = rest.indexOf('--modules');
     const selected = idx < 0 ? [] : (rest[idx + 1] ?? '').split(',').filter(Boolean);
+    const versionIdx = rest.indexOf('--version');
+    const version = versionIdx < 0 ? undefined : rest[versionIdx + 1];
+    if (versionIdx >= 0 && (typeof version !== 'string' || !/^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)$/.test(version)))
+        throw new Error('Invalid product version');
     const linked = spawnSync(process.execPath,[join(root,'tools/link-workspaces.mjs')],{cwd:root,stdio:'inherit'}); if(linked.status!==0)throw Error('Workspace setup failed');
     const { readCatalogue, composeDraft } = await import('./studio-catalogue.mjs');
     const { importProduct } = await import('./product-source.mjs');
     const catalogue = await readCatalogue(root);
     const title = name.split('-').map(s => s[0].toUpperCase() + s.slice(1)).join(' ');
     const draft = composeDraft({id:name,title,selected},catalogue.modules,catalogue.solutions,catalogue.sourceVersion);
+    if (version !== undefined) draft.product.version = version;
     await importProduct(root,draft.product);
     console.log(`Created products/${name}/product.json. Run npm run build, then npm run demo -- --product ${name} --port 4350.`);
+}
+else if (command === 'generate-entity') {
+    if (!name || rest.length)
+        throw new Error('Use: factory generate-entity <spec-file>');
+    const { generateEntity } = await import('./entity-builder.mjs');
+    const generated = await generateEntity(root, resolve(name));
+    console.log(`Created modules/${generated.moduleId}; source receipt ${generated.specSha256}. Run npm run factory -- create-product <new-product> --modules ${generated.moduleId} --version <version>, then npm run build.`);
 }
 else if (command === 'import-product') {
     if (!name) throw Error('Use: factory import-product <exported.product.json>');
@@ -92,7 +104,7 @@ else if (command === 'assemble') {
     console.log(`Assembled ${name} at ${out}; no existing data or credentials copied.`);
 }
 else {
-    console.log('factory import-product <file>\nfactory plan <product>\nfactory create-module <name>\nfactory create-product <name> --modules module-a,module-b\nfactory assemble <product> <new-directory>');
+    console.log('factory import-product <file>\nfactory plan <product>\nfactory create-module <name>\nfactory generate-entity <spec-file>\nfactory create-product <name> --modules module-a,module-b [--version x.y.z]\nfactory assemble <product> <new-directory>');
     if (command)
         process.exitCode = 2;
 }

@@ -1,0 +1,301 @@
+{
+  "fixtureId": "e762c24e-a90c-4310-b681-962e3b6728c7",
+  "candidate": "f63cf65d2985820ae271c6e01c95f7f6e610db6214652687b99c0b739faa1590",
+  "contractDigest": "633b7ae9945481cd61920f980e3954d9c6e70626e10b33866580cad974f92d1e",
+  "sourceFingerprint": "b2cf8117502d731327cbc1ae4beac493978478327b21869ba0abd58978e797a2",
+  "studioSha": "c1fd7cd4bf808788d9b9b7202e11da66c4d516d3e0cfa5a78d208ea725525fbf",
+  "observedAt": "2026-10-02T11:44:04.533Z",
+  "builds": [
+    {
+      "id": "81b62edd-8e26-4a97-8b0e-f74c3a130b26",
+      "productId": "maintenance-assets",
+      "version": "1.0.0",
+      "state": "SUCCEEDED",
+      "snapshotDigest": "ea32d2a531e9e6694feb506bacdb5dabe5c0dd0b48bec6affe20069a663d5ade",
+      "cleanupState": "CLEAN"
+    },
+    {
+      "id": "48dbd68f-fe7a-474b-aec0-4ac991100865",
+      "productId": "site-inspections",
+      "version": "2.1.0",
+      "state": "SUCCEEDED",
+      "snapshotDigest": "89258ef599825a61f82ba684f3b4ec11a1292b43b4a2d7450792b8a3cf356adb",
+      "cleanupState": "CLEAN"
+    }
+  ],
+  "instances": [
+    {
+      "id": "runtime-a5e45eb6-423b-419b-942a-35036c16b115",
+      "productId": "maintenance-assets",
+      "version": "1.0.0",
+      "artifactDigest": "ea32d2a531e9e6694feb506bacdb5dabe5c0dd0b48bec6affe20069a663d5ade",
+      "profileDigest": "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1",
+      "configDigest": "32df6578566d885899f3645dd60bcd6a7a2e9f3617e0af43669359da4357915a",
+      "state": "STOPPED",
+      "attempt": 3
+    },
+    {
+      "id": "runtime-78c24d5c-9661-49fa-a5f1-4d00bb23d019",
+      "productId": "site-inspections",
+      "version": "2.1.0",
+      "artifactDigest": "89258ef599825a61f82ba684f3b4ec11a1292b43b4a2d7450792b8a3cf356adb",
+      "profileDigest": "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1",
+      "configDigest": "7023466069061dd1db557832a524799aa9d6047d75b29b43d434db87c8db2237",
+      "state": "STOPPED",
+      "attempt": 2
+    }
+  ],
+  "attempts": [
+    {
+      "id": "f0ec5abe-ddbe-4e41-8368-3d34f6f6bb6a",
+      "instanceId": "runtime-78c24d5c-9661-49fa-a5f1-4d00bb23d019",
+      "attempt": 1,
+      "state": "STOPPED",
+      "physicalState": "EMPTY",
+      "emptyObserved": 1,
+      "helperClosed": 1,
+      "executionClean": 1
+    },
+    {
+      "id": "f99f237b-af33-4ef5-9ea9-3e581a5b5caf",
+      "instanceId": "runtime-78c24d5c-9661-49fa-a5f1-4d00bb23d019",
+      "attempt": 2,
+      "state": "STOPPED",
+      "physicalState": "EMPTY",
+      "emptyObserved": 1,
+      "helperClosed": 1,
+      "executionClean": 1
+    },
+    {
+      "id": "309cb3d4-8539-422f-aa94-98946f809acc",
+      "instanceId": "runtime-a5e45eb6-423b-419b-942a-35036c16b115",
+      "attempt": 1,
+      "state": "STOPPED",
+      "physicalState": "EMPTY",
+      "emptyObserved": 1,
+      "helperClosed": 1,
+      "executionClean": 1
+    },
+    {
+      "id": "9bbd892b-df77-49f6-ab65-df8c5f3775bd",
+      "instanceId": "runtime-a5e45eb6-423b-419b-942a-35036c16b115",
+      "attempt": 2,
+      "state": "STOPPED",
+      "physicalState": "EMPTY",
+      "emptyObserved": 1,
+      "helperClosed": 1,
+      "executionClean": 1
+    },
+    {
+      "id": "c33acfd0-0a2b-44da-99df-11d3e56d3ce1",
+      "instanceId": "runtime-a5e45eb6-423b-419b-942a-35036c16b115",
+      "attempt": 3,
+      "state": "STOPPED",
+      "physicalState": "EMPTY",
+      "emptyObserved": 1,
+      "helperClosed": 1,
+      "executionClean": 1
+    }
+  ],
+  "slot": {
+    "state": "EMPTY",
+    "instanceId": null,
+    "operationId": null
+  },
+  "registry": {
+    "operation_id": null,
+    "reserved_bytes": 0,
+    "reserved_files": 0,
+    "reserved_objects": 0
+  },
+  "recovery": [
+    {
+      "id": "e7db33e1-1097-4c42-b2f9-5eaac4626a42",
+      "kind": "BACKUP",
+      "state": "FAILED",
+      "physicalState": "CLEAN",
+      "instanceId": "runtime-a5e45eb6-423b-419b-942a-35036c16b115",
+      "attempt": 1,
+      "backupDigest": null,
+      "errorCode": "RECOVERY_DRIVER_FAILED",
+      "driverEmpty": 1,
+      "driverClosed": 1,
+      "publisherClosed": 0,
+      "destinationVerified": 0,
+      "emptyObserved": 1,
+      "helperClosed": 1,
+      "stagingClean": 1
+    },
+    {
+      "id": "3eae4683-61dc-4ea3-8f98-24a698626847",
+      "kind": "BACKUP",
+      "state": "SUCCEEDED",
+      "physicalState": "CLEAN",
+      "instanceId": "runtime-a5e45eb6-423b-419b-942a-35036c16b115",
+      "attempt": 2,
+      "backupDigest": "23212b0684037bc4e68b46bb30190ef279624c965020bc09b02d2addfc224e05",
+      "errorCode": null,
+      "driverEmpty": 1,
+      "driverClosed": 1,
+      "publisherClosed": 1,
+      "destinationVerified": 1,
+      "emptyObserved": 1,
+      "helperClosed": 1,
+      "stagingClean": 1
+    },
+    {
+      "id": "7280871b-1165-4e24-a932-882b6a3ec72e",
+      "kind": "RESTORE",
+      "state": "SUCCEEDED",
+      "physicalState": "CLEAN",
+      "instanceId": "runtime-a5e45eb6-423b-419b-942a-35036c16b115",
+      "attempt": 2,
+      "backupDigest": "23212b0684037bc4e68b46bb30190ef279624c965020bc09b02d2addfc224e05",
+      "errorCode": null,
+      "driverEmpty": 1,
+      "driverClosed": 1,
+      "publisherClosed": 1,
+      "destinationVerified": 1,
+      "emptyObserved": 1,
+      "helperClosed": 1,
+      "stagingClean": 1
+    }
+  ],
+  "recoverySlot": {
+    "state": "EMPTY",
+    "operationId": null,
+    "reservedBytes": 0
+  },
+  "backups": [
+    {
+      "digest": "23212b0684037bc4e68b46bb30190ef279624c965020bc09b02d2addfc224e05",
+      "instanceId": "runtime-a5e45eb6-423b-419b-942a-35036c16b115",
+      "attempt": 2,
+      "artifactDigest": "ea32d2a531e9e6694feb506bacdb5dabe5c0dd0b48bec6affe20069a663d5ade",
+      "fileCount": 8
+    }
+  ],
+  "sourceUnchanged": true,
+  "generatedUnchanged": true,
+  "consoleOriginalClose": {
+    "fixtureId": "e762c24e-a90c-4310-b681-962e3b6728c7",
+    "originalExecSession": 14525,
+    "observedExitCode": 0,
+    "observedMarker": "ENTITY_BROWSER_CLOSED",
+    "observer": "/root directly observed original write_stdin close after nonce STOP and actual two-runtime positive stop",
+    "limitations": [
+      "The tool response supplied numeric original exit0 and close marker; exact wall-clock close timestamp was not supplied."
+    ]
+  },
+  "products": [
+    {
+      "bindings": [],
+      "description": "Product-owned composition created by the Quadbridge Studio.",
+      "id": "maintenance-assets",
+      "layout": "sidebar",
+      "modules": [
+        {
+          "id": "asset-register",
+          "version": "1.0.0"
+        }
+      ],
+      "platformAbi": "quadbridge.module.v1",
+      "title": "Maintenance Assets",
+      "version": "1.0.0"
+    },
+    {
+      "bindings": [],
+      "description": "Product-owned composition created by the Quadbridge Studio.",
+      "id": "site-inspections",
+      "layout": "sidebar",
+      "modules": [
+        {
+          "id": "room-inspection",
+          "version": "0.1.0"
+        }
+      ],
+      "platformAbi": "quadbridge.module.v1",
+      "title": "Site Inspections",
+      "version": "2.1.0"
+    }
+  ],
+  "records": [
+    {
+      "productId": "maintenance-assets",
+      "owner": [
+        {
+          "name": "asset-register"
+        }
+      ],
+      "rows": [
+        {
+          "tenant": "customer-a",
+          "id": "0e6262e7-ce60-4c39-a372-df51426c1688",
+          "version": 2,
+          "assetCode": "PUMP-REALTIME-100",
+          "serviceInterval": 24,
+          "active": 0,
+          "condition": "repair"
+        }
+      ]
+    },
+    {
+      "productId": "site-inspections",
+      "owner": [
+        {
+          "name": "room-inspection"
+        }
+      ],
+      "rows": [
+        {
+          "tenant": "customer-a",
+          "id": "f70907d2-572a-496d-9bfe-21ac75c5fd06",
+          "version": 2,
+          "room": "North hall live",
+          "notes": "Exits cleared and rechecked",
+          "score": 5,
+          "passed": 1,
+          "category": "follow-up"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "productId": "maintenance-assets",
+      "artifactDigest": "ea32d2a531e9e6694feb506bacdb5dabe5c0dd0b48bec6affe20069a663d5ade",
+      "sourceFingerprint": "b2cf8117502d731327cbc1ae4beac493978478327b21869ba0abd58978e797a2",
+      "selectedModules": [
+        "asset-register"
+      ],
+      "compilerAbsent": true,
+      "cssRoute": "/assets/modules/asset-register/ui/entity.css",
+      "cssPath": "modules/asset-register/dist/ui/entity.css",
+      "cssSha256": "8aa676e077dd392b4acc76bbbaceb5e3614785b2c33a627bfe7646a1a55ae602"
+    },
+    {
+      "productId": "site-inspections",
+      "artifactDigest": "89258ef599825a61f82ba684f3b4ec11a1292b43b4a2d7450792b8a3cf356adb",
+      "sourceFingerprint": "b2cf8117502d731327cbc1ae4beac493978478327b21869ba0abd58978e797a2",
+      "selectedModules": [
+        "room-inspection"
+      ],
+      "compilerAbsent": true,
+      "cssRoute": "/assets/modules/room-inspection/ui/entity.css",
+      "cssPath": "modules/room-inspection/dist/ui/entity.css",
+      "cssSha256": "8aa676e077dd392b4acc76bbbaceb5e3614785b2c33a627bfe7646a1a55ae602"
+    }
+  ],
+  "ownedRecoveryMove": {
+    "fixtureId": "e762c24e-a90c-4310-b681-962e3b6728c7",
+    "candidate": "f63cf65d2985820ae271c6e01c95f7f6e610db6214652687b99c0b739faa1590",
+    "observedAt": "2026-10-02T11:34:57.8646395Z",
+    "canonicalRootAbsent": true,
+    "originalHeld": true,
+    "heldBytesUnchanged": true,
+    "files": 11,
+    "source": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qe-Dka34w\\.local\\platform-runtime-data\\runtime-a5e45eb6-423b-419b-942a-35036c16b115\\ea32d2a531e9e6694feb506bacdb5dabe5c0dd0b48bec6affe20069a663d5ade",
+    "destination": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qe-Dka34w\\.local\\held-asset-data\\runtime-a5e45eb6-423b-419b-942a-35036c16b115\\ea32d2a531e9e6694feb506bacdb5dabe5c0dd0b48bec6affe20069a663d5ade",
+    "heldBytesStillUnchanged": true
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "kind": "build",
+  "command": [
+    "npm",
+    "run",
+    "build"
+  ],
+  "actualProcess": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+    "run",
+    "build"
+  ],
+  "startedAt": "2026-10-02T11:05:19.498Z",
+  "finishedAt": "2026-10-02T11:05:21.062Z",
+  "exitCode": 0,
+  "signal": null,
+  "candidateBefore": "b389b8d07c6f7f9db088ec9b753f74dd1a8a3416c8470d4f21c1cf3739ba6e3c",
+  "candidateAfter": "b389b8d07c6f7f9db088ec9b753f74dd1a8a3416c8470d4f21c1cf3739ba6e3c",
+  "sourceUnchanged": true
+}

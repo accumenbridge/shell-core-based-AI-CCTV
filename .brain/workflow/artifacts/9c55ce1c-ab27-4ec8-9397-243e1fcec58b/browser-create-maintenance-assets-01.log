@@ -1,0 +1,2 @@
+Local workspace links prepared. No third-party packages were downloaded.
+Created products/maintenance-assets/product.json. Run npm run build, then npm run demo -- --product maintenance-assets --port 4350.

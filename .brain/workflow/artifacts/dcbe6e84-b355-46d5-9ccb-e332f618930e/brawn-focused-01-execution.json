@@ -1,0 +1,35 @@
+{
+  "kind": "focused",
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/entity-builder.test.mjs",
+    "tests/entity-builder-ui.test.mjs",
+    "tests/factory-lifecycle.test.mjs"
+  ],
+  "actualProcess": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "--test-reporter=tap",
+    "--test",
+    "--test-concurrency=1",
+    "tests/entity-builder.test.mjs",
+    "tests/entity-builder-ui.test.mjs",
+    "tests/factory-lifecycle.test.mjs"
+  ],
+  "startedAt": "2026-10-02T11:04:11.152Z",
+  "finishedAt": "2026-10-02T11:04:30.713Z",
+  "exitCode": 1,
+  "signal": null,
+  "candidateBefore": "60a62b9f9d9784466fce0389ed5640271bf777a135f140671875dd8ecd1d37ea",
+  "candidateAfter": "60a62b9f9d9784466fce0389ed5640271bf777a135f140671875dd8ecd1d37ea",
+  "sourceUnchanged": true,
+  "counts": {
+    "tests": 15,
+    "passed": 14,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

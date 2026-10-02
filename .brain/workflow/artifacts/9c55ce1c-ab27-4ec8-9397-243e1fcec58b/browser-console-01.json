@@ -1,0 +1,22 @@
+[
+  {
+    "tab": "studio",
+    "logs": []
+  },
+  {
+    "tab": "asset",
+    "logs": []
+  },
+  {
+    "tab": "asset-stale",
+    "logs": []
+  },
+  {
+    "tab": "room",
+    "logs": []
+  },
+  {
+    "tab": "room-stale",
+    "logs": []
+  }
+]
