@@ -1,7 +1,7 @@
 /** Product-definition drafting over reviewed catalogues. Browser and CLI use this same code.
  * This chooses declared wiring, never invents adapter implementations, grants or endpoints.
  */
-import { PLATFORM_ABI, PlatformError, object, type Binding, type CompositionPlan, type ModuleManifest, type ProductDefinition } from '@quadbridge/contracts';
+import { PLATFORM_ABI, PlatformError, object, validSourceDirectoryId, type Binding, type CompositionPlan, type ModuleManifest, type ProductDefinition } from '@quadbridge/contracts';
 import { resolve } from './index.js';
 
 export interface StudioChoice { id: string; label: string; binding: Omit<Binding, 'consumer' | 'contract'>; prerequisites?: string[] }
@@ -20,7 +20,7 @@ export interface StudioProductInspection {
     graph?: StudioProductGraph;
 }
 const fail = (message: string): never => { throw new PlatformError('INCOMPATIBLE', message); };
-export const validProductId = (value: unknown): value is string => typeof value === 'string' && /^[a-z][a-z0-9-]{1,47}$/.test(value);
+export const validProductId = (value: unknown): value is string => validSourceDirectoryId(value);
 export function composeDraft(input: StudioInput, catalog: readonly ModuleManifest[], solutions: readonly StudioSolution[], version = '0.2.0') {
     object(input, ['id', 'title', 'selected', 'layout', 'choices', 'version']);
     if (!validProductId(input.id)) fail('Use a product ID of 2–48 lowercase letters, digits or hyphens, starting with a letter.');

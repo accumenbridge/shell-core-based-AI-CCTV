@@ -1,0 +1,9 @@
+# CONSTRUCTION-RELIABILITY-001 Construction reliability
+
+User authorized the reviewed next sequence. Root adopted Sol/high plan-02 SHA7133b56465cffbd2c2404c150ad34c67c68104d4daea446718d1c496cf3dcd19 after unchanged Entity acceptance revision91, event724d8c58-0e74-47ae-b5e6-9cbfd244ab28. Read .brain/evidence/construction-reliability-approved-work-order.md. Sole Luna/xhigh owns exact25 maintained paths; root owns shared Brain/browser; independent Sol reviews.
+
+Fix supported optional UI omission, workspace ownership/linking, canonical manifest preflight and same-ID envelope. Source-generated Studio declarations remain advisory. Prove two-copy explicit lock reconciliation and fresh npm ci/build without inherited dependencies. Consolidate current architecture/version docs without rewriting historical acceptance. Root expressly adopts base build-before-first-generation prerequisite for canonical validation; no automatic build/install or runtime metadata authority.
+
+Fresh build/focused, one explicit clean-install proof and scoped ordinary source-free optional UI browser/reopen/original closure, then stable-source full npm test and exact independent review. Only named justified unavailable coverage may remain separately BLOCKED with zero failures/cancel/TODO. Preserve all prior failures. Product upgrade follows this increment; atomic staging, relations/query/evidence migration and production work are deferred.
+
+Current ownership amendment: root adopted exact26 owners by adding only packages/composition/src/integrity.ts; see .brain/evidence/construction-reliability-inventory-amendment-01.md. Earlier25-owner plan and all failed runs remain historical. Update the current factory expected helper inventory only, preserve legacy snapshot minimum requirements, then fresh build/focused before final install/browser/full/review.

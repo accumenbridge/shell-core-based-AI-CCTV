@@ -1,6 +1,18 @@
-# Quadbridge Product Studio — actual editable structure
+# Quadbridge Product Studio — historical Foundation 0.2 / Studio integration 1 tree
 
-Studio integration 1 extends Foundation 0.2. Compiled runtime files are included separately under dist/ and .artifacts/.
+Studio integration 1 extends Foundation 0.2. Compiled runtime files are included separately under dist/ and .artifacts/. Repository package, Studio program, module/product, ABI, operation, schema and artifact versions are separate dimensions; see [PLATFORM_ARCHITECTURE.md](PLATFORM_ARCHITECTURE.md).
+
+The long inventory below is retained as that historical tree snapshot; it is not a complete current
+file listing. The current source map is: `apps/control-plane` owns the paired local operator and
+runtime/recovery APIs; `apps/studio-web` owns the paired console; `apps/runtime` composes product
+owners; `packages/contracts`, `composition`, `backend-host`, `web-shell` and the other `packages/*`
+provide neutral mechanisms; `modules/*` own their domain data and migrations; `products/*` select
+exact module versions and bindings; `tools/factory.mjs`, `tools/entity-builder.mjs` and the source
+preflight/link helpers generate or validate inert source; `tools/mobile/assemble.mjs` creates the
+client-only mobile shell. Product-family drafting and static UI contribution contracts live in
+`packages/composition` and `packages/contracts`, with their renderers under `apps/studio-web` and
+`packages/web-shell`. See the current [build map](FULL_PLATFORM_BUILD_MAP.md) and
+[implementation status](IMPLEMENTATION_STATUS_0.3.md) for current boundaries.
 
 ```text
 .gitignore

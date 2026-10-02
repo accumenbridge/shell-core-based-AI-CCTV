@@ -1,6 +1,9 @@
 /** Product-neutral public contracts. No Camera, Document, Work or other domain entity. */
 import type { OperationDescriptor } from './operations.js';
 export const PLATFORM_ABI = 'quadbridge.module.v1' as const;
+/** Shared lowercase source/package identity envelope used by generators and composition. */
+export const validSourceDirectoryId = (value: unknown): value is string =>
+    typeof value === 'string' && /^[a-z][a-z0-9-]{1,47}$/.test(value);
 export type Mode = 'enabled' | 'read-only' | 'off';
 export interface Actor {
     readonly id: string;

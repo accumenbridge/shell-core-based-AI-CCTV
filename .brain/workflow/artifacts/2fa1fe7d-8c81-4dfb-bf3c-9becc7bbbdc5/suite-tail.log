@@ -1,0 +1,172 @@
+# Subtest: Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+ok 293 - Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+  ---
+  duration_ms: 8922.907
+  type: 'test'
+  ...
+# Subtest: complete definition round-trip preserves description, exact versions, custom binding identity and wiring
+ok 294 - complete definition round-trip preserves description, exact versions, custom binding identity and wiring
+  ---
+  duration_ms: 2.1047
+  type: 'test'
+  ...
+# Subtest: unsupported definition stays unchanged and returns diagnostics without a preview plan
+ok 295 - unsupported definition stays unchanged and returns diagnostics without a preview plan
+  ---
+  duration_ms: 0.3273
+  type: 'test'
+  ...
+# Subtest: editor helpers are present in the offline browser bundle and remain pure data operations
+ok 296 - editor helpers are present in the offline browser bundle and remain pure data operations
+  ---
+  duration_ms: 4.5183
+  type: 'test'
+  ...
+# Subtest: inspection keeps supported HTTP bindings valid without claiming local launchability
+ok 297 - inspection keeps supported HTTP bindings valid without claiming local launchability
+  ---
+  duration_ms: 0.3391
+  type: 'test'
+  ...
+# Subtest: Products click and genuine hash navigation both render the catalogue while stale navigation stays selected
+ok 298 - Products click and genuine hash navigation both render the catalogue while stale navigation stays selected
+  ---
+  duration_ms: 7.0623
+  type: 'test'
+  ...
+# Subtest: product save uses an unchecked exact-version confirmation and sends only the current preview
+ok 299 - product save uses an unchecked exact-version confirmation and sends only the current preview
+  ---
+  duration_ms: 4.102
+  type: 'test'
+  ...
+# Subtest: runtime overview consumes the public promoted-release array and offers the exact release
+ok 300 - runtime overview consumes the public promoted-release array and offers the exact release
+  ---
+  duration_ms: 8.6703
+  type: 'test'
+  ...
+# Subtest: runtime UI reports UNKNOWN stop facts and reuses the same request key after an ambiguous start error
+ok 301 - runtime UI reports UNKNOWN stop facts and reuses the same request key after an ambiguous start error
+  ---
+  duration_ms: 4.0635
+  type: 'test'
+  ...
+# Subtest: runtime action success messages require proof in the exact current-attempt DTO
+ok 302 - runtime action success messages require proof in the exact current-attempt DTO
+  ---
+  duration_ms: 3.6977
+  type: 'test'
+  ...
+# Subtest: runtime overview and detail responses cannot restore stale routes, attempts, or application addresses
+ok 303 - runtime overview and detail responses cannot restore stale routes, attempts, or application addresses
+  ---
+  duration_ms: 2.9405
+  type: 'test'
+  ...
+# Subtest: a stale runtime overview failure cannot replace a newer successful refresh
+ok 304 - a stale runtime overview failure cannot replace a newer successful refresh
+  ---
+  duration_ms: 1.6412
+  type: 'test'
+  ...
+# Subtest: runtime confirmations survive same-attempt polling and are scoped away from a successor attempt
+ok 305 - runtime confirmations survive same-attempt polling and are scoped away from a successor attempt
+  ---
+  duration_ms: 1.6247
+  type: 'test'
+  ...
+# Subtest: recovery controls require positive stop proof, verify opaque backups, and confirm backup and absent-root restore
+ok 306 - recovery controls require positive stop proof, verify opaque backups, and confirm backup and absent-root restore
+  ---
+  duration_ms: 15.9666
+  type: 'test'
+  ...
+# Subtest: recovery controls stay hidden when a stopped runtime lacks current positive cleanup facts
+ok 307 - recovery controls stay hidden when a stopped runtime lacks current positive cleanup facts
+  ---
+  duration_ms: 2.0054
+  type: 'test'
+  ...
+# Subtest: Visual: all eight input combinations use the canonical resolver
+ok 308 - Visual: all eight input combinations use the canonical resolver
+  ---
+  duration_ms: 2.0257
+  type: 'test'
+  ...
+# Subtest: Visual: reviewed Handoff wiring selects current local providers
+ok 309 - Visual: reviewed Handoff wiring selects current local providers
+  ---
+  duration_ms: 0.5254
+  type: 'test'
+  ...
+# Subtest: Visual: neutral product has no domain, bindings or solution
+ok 310 - Visual: neutral product has no domain, bindings or solution
+  ---
+  duration_ms: 0.1112
+  type: 'test'
+  ...
+# Subtest: Visual: invalid and unknown selections fail visibly
+ok 311 - Visual: invalid and unknown selections fail visibly
+  ---
+  duration_ms: 0.2478
+  type: 'test'
+  ...
+# Subtest: Visual: standalone preview sends no network calls and includes no external scripts
+ok 312 - Visual: standalone preview sends no network calls and includes no external scripts
+  ---
+  duration_ms: 3.403
+  type: 'test'
+  ...
+# Subtest: Visual: offline composer exposes complete import, edit, canonical preview and download controls
+ok 313 - Visual: offline composer exposes complete import, edit, canonical preview and download controls
+  ---
+  duration_ms: 1.214
+  type: 'test'
+  ...
+# Subtest: Visual: a newer definition import invalidates preview immediately and wins out-of-order file reads
+ok 314 - Visual: a newer definition import invalidates preview immediately and wins out-of-order file reads
+  ---
+  duration_ms: 2.3575
+  type: 'test'
+  ...
+# Subtest: Visual: documentation, responsive rules and source build retained
+ok 315 - Visual: documentation, responsive rules and source build retained
+  ---
+  duration_ms: 1.6959
+  type: 'test'
+  ...
+# Subtest: Visual: runtime counters remain explicitly scoped
+ok 316 - Visual: runtime counters remain explicitly scoped
+  ---
+  duration_ms: 0.977
+  type: 'test'
+  ...
+# Subtest: Visual: all eight views render through controlled document ports
+ok 317 - Visual: all eight views render through controlled document ports
+  ---
+  duration_ms: 5.9295
+  type: 'test'
+  ...
+# Subtest: workspace export closure follows selected Knowledge package manifests and actual ai-core version
+ok 318 - workspace export closure follows selected Knowledge package manifests and actual ai-core version
+  ---
+  duration_ms: 8.3557
+  type: 'test'
+  ...
+# Subtest: workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+ok 319 - workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+  ---
+  duration_ms: 2.1529
+  type: 'test'
+  ...
+1..319
+# tests 322
+# suites 0
+# pass 319
+# fail 2
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 1023935.1677
+

@@ -1,0 +1,616 @@
+TAP version 13
+# Subtest: Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+ok 1 - Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+  ---
+  duration_ms: 40241.2917
+  type: 'test'
+  ...
+# Subtest: worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+ok 2 - worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+  ---
+  duration_ms: 27300.7836
+  type: 'test'
+  ...
+# Subtest: a worker that loses its live lease observes its descendant and preserves the successor attempt workspace
+ok 3 - a worker that loses its live lease observes its descendant and preserves the successor attempt workspace
+  ---
+  duration_ms: 18026.8932
+  type: 'test'
+  ...
+# Subtest: missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+ok 4 - missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+  ---
+  duration_ms: 16321.5387
+  type: 'test'
+  ...
+# Subtest: Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+not ok 5 - Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+  ---
+  duration_ms: 22398.3537
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\build-worker-process.test.mjs:205:1'
+  failureType: 'testCodeFailure'
+  error: 'Owned descendant did not start its marker heartbeat within 10000 ms'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    waitForMarker (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/build-worker-process.test.mjs:68:11)
+    runNextTicks (node:internal/process/task_queues:65:5)
+    process.processTimers (node:internal/timers:568:9)
+    async TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/build-worker-process.test.mjs:208:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: source and pinned compiler drift are rejected before a build is admitted
+ok 6 - source and pinned compiler drift are rejected before a build is admitted
+  ---
+  duration_ms: 7135.8003
+  type: 'test'
+  ...
+# Subtest: source and toolchain drift after admission fail the queued request before export
+ok 7 - source and toolchain drift after admission fail the queued request before export
+  ---
+  duration_ms: 17784.7719
+  type: 'test'
+  ...
+# Subtest: fixed factory output tampering fails before a local snapshot is published
+not ok 8 - fixed factory output tampering fails before a local snapshot is published
+  ---
+  duration_ms: 8673.5266
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\build-worker-process.test.mjs:284:1'
+  failureType: 'testCodeFailure'
+  error: 'The pinned local build toolchain or host profile is unavailable'
+  code: 'ERR_TEST_FAILURE'
+  name: 'BuildExecutorUnavailable'
+  stack: |-
+    LocalBuildWorker.create (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/build-worker.js:282:19)
+    createWorker (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/build-worker-process.test.mjs:51:64)
+    startWorker (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/build-worker-process.test.mjs:52:39)
+    fixture (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/build-worker-process.test.mjs:53:24)
+    async TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/build-worker-process.test.mjs:287:19)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+ok 9 - real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+  ---
+  duration_ms: 30485.5032
+  type: 'test'
+  ...
+# Subtest: real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+ok 10 - real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+  ---
+  duration_ms: 19447.6217
+  type: 'test'
+  ...
+# Subtest: resolve neutral with only its selected capabilities
+ok 11 - resolve neutral with only its selected capabilities
+  ---
+  duration_ms: 1.061
+  type: 'test'
+  ...
+# Subtest: resolve service-desk with only its selected capabilities
+ok 12 - resolve service-desk with only its selected capabilities
+  ---
+  duration_ms: 1.0129
+  type: 'test'
+  ...
+# Subtest: resolve knowledge with only its selected capabilities
+ok 13 - resolve knowledge with only its selected capabilities
+  ---
+  duration_ms: 6.7009
+  type: 'test'
+  ...
+# Subtest: resolve combined with only its selected capabilities
+ok 14 - resolve combined with only its selected capabilities
+  ---
+  duration_ms: 0.6106
+  type: 'test'
+  ...
+# Subtest: resolution order is deterministic
+ok 15 - resolution order is deterministic
+  ---
+  duration_ms: 1.4119
+  type: 'test'
+  ...
+# Subtest: unknown module fails closed
+ok 16 - unknown module fails closed
+  ---
+  duration_ms: 0.6216
+  type: 'test'
+  ...
+# Subtest: unsupported ABI fails
+ok 17 - unsupported ABI fails
+  ---
+  duration_ms: 0.1954
+  type: 'test'
+  ...
+# Subtest: exact version mismatch fails
+ok 18 - exact version mismatch fails
+  ---
+  duration_ms: 0.2129
+  type: 'test'
+  ...
+# Subtest: required dependency must be selected
+ok 19 - required dependency must be selected
+  ---
+  duration_ms: 0.2328
+  type: 'test'
+  ...
+# Subtest: dependency cycle rejected
+ok 20 - dependency cycle rejected
+  ---
+  duration_ms: 0.4887
+  type: 'test'
+  ...
+# Subtest: optional absent dependency is valid
+ok 21 - optional absent dependency is valid
+  ---
+  duration_ms: 0.3817
+  type: 'test'
+  ...
+# Subtest: duplicate public route rejected
+ok 22 - duplicate public route rejected
+  ---
+  duration_ms: 0.3092
+  type: 'test'
+  ...
+# Subtest: route permission must be owned
+ok 23 - route permission must be owned
+  ---
+  duration_ms: 0.3056
+  type: 'test'
+  ...
+# Subtest: required public port cannot be left unbound
+ok 24 - required public port cannot be left unbound
+  ---
+  duration_ms: 0.7122
+  type: 'test'
+  ...
+# Subtest: ambiguous consumer bindings rejected
+ok 25 - ambiguous consumer bindings rejected
+  ---
+  duration_ms: 0.3901
+  type: 'test'
+  ...
+# Subtest: same instance ID cannot imply different implementations
+ok 26 - same instance ID cannot imply different implementations
+  ---
+  duration_ms: 0.4321
+  type: 'test'
+  ...
+# Subtest: bindings do not supply a missing local provider
+ok 27 - bindings do not supply a missing local provider
+  ---
+  duration_ms: 0.1776
+  type: 'test'
+  ...
+# Subtest: application and module instance scopes are different
+ok 28 - application and module instance scopes are different
+  ---
+  duration_ms: 0.1446
+  type: 'test'
+  ...
+# Subtest: request instances are isolated and require a context
+ok 29 - request instances are isolated and require a context
+  ---
+  duration_ms: 0.0765
+  type: 'test'
+  ...
+# Subtest: removal blocked by retained records or dependents
+ok 30 - removal blocked by retained records or dependents
+  ---
+  duration_ms: 0.43
+  type: 'test'
+  ...
+# Subtest: canonical JSON is stable, rejecting undefined and nonfinite numbers
+ok 31 - canonical JSON is stable, rejecting undefined and nonfinite numbers
+  ---
+  duration_ms: 0.1023
+  type: 'test'
+  ...
+# Subtest: input contracts reject unknown fields and invalid identifiers
+ok 32 - input contracts reject unknown fields and invalid identifiers
+  ---
+  duration_ms: 0.1419
+  type: 'test'
+  ...
+# Subtest: modules cannot shadow host-owned authentication routes
+ok 33 - modules cannot shadow host-owned authentication routes
+  ---
+  duration_ms: 0.2886
+  type: 'test'
+  ...
+# Subtest: selected composition determines the exact local package dependency closure
+ok 34 - selected composition determines the exact local package dependency closure
+  ---
+  duration_ms: 1.8355
+  type: 'test'
+  ...
+# Subtest: operation declarations are module-owned, permission-owned and globally unique by exact version
+ok 35 - operation declarations are module-owned, permission-owned and globally unique by exact version
+  ---
+  duration_ms: 0.9166
+  type: 'test'
+  ...
+# Subtest: public health and static entry are narrow while state and audit require pairing and exact Host
+ok 36 - public health and static entry are narrow while state and audit require pairing and exact Host
+  ---
+  duration_ms: 114.0225
+  type: 'test'
+  ...
+# Subtest: pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+ok 37 - pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+  ---
+  duration_ms: 50.253
+  type: 'test'
+  ...
+# Subtest: paired family derivation is source-authoritative and immutable provenance follows only the exact saved version
+ok 38 - paired family derivation is source-authoritative and immutable provenance follows only the exact saved version
+  ---
+  duration_ms: 188.405
+  type: 'test'
+  ...
+# Subtest: managed runtime API exposes fixed authenticated routes and exact confirmed request envelopes
+ok 39 - managed runtime API exposes fixed authenticated routes and exact confirmed request envelopes
+  ---
+  duration_ms: 45.3931
+  type: 'test'
+  ...
+# Subtest: private recovery routes require confirmation and never expose operation ownership secrets
+ok 40 - private recovery routes require confirmation and never expose operation ownership secrets
+  ---
+  duration_ms: 40.9705
+  type: 'test'
+  ...
+# Subtest: managed runtime HTTP errors use fixed non-path messages
+ok 41 - managed runtime HTTP errors use fixed non-path messages
+  ---
+  duration_ms: 36.113
+  type: 'test'
+  ...
+# Subtest: pairing attempts are bounded and expire their rate window
+ok 42 - pairing attempts are bounded and expire their rate window
+  ---
+  duration_ms: 38.7626
+  type: 'test'
+  ...
+# Subtest: authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+ok 43 - authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+  ---
+  duration_ms: 42.8666
+  type: 'test'
+  ...
+# Subtest: AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+ok 44 - AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+  ---
+  duration_ms: 41.9113
+  type: 'test'
+  ...
+# Subtest: build requests fail closed without an executor and deployment requests enforce immutable references
+ok 45 - build requests fail closed without an executor and deployment requests enforce immutable references
+  ---
+  duration_ms: 50.8225
+  type: 'test'
+  ...
+# Subtest: overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+ok 46 - overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+  ---
+  duration_ms: 66.9711
+  type: 'test'
+  ...
+# Subtest: a body is rejected if its exact authenticated session expires while the stream is pending
+ok 47 - a body is rejected if its exact authenticated session expires while the stream is pending
+  ---
+  duration_ms: 36.4579
+  type: 'test'
+  ...
+# Subtest: a body is rejected if that session logs out before streaming completes
+ok 48 - a body is rejected if that session logs out before streaming completes
+  ---
+  duration_ms: 36.2275
+  type: 'test'
+  ...
+# Subtest: canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+ok 49 - canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+  ---
+  duration_ms: 154.3547
+  type: 'test'
+  ...
+# Subtest: complete ProductDefinition keeps custom reviewed bindings through exact read-only preview, immutable save and build
+ok 50 - complete ProductDefinition keeps custom reviewed bindings through exact read-only preview, immutable save and build
+  ---
+  duration_ms: 169.647
+  type: 'test'
+  ...
+# Subtest: logout during awaited worker admission rejects the original request before queue mutation
+ok 51 - logout during awaited worker admission rejects the original request before queue mutation
+  ---
+  duration_ms: 40.3081
+  type: 'test'
+  ...
+# Subtest: logout during awaited result inspection returns 401 and accepted work remains independent of the session
+ok 52 - logout during awaited result inspection returns 401 and accepted work remains independent of the session
+  ---
+  duration_ms: 41.0818
+  type: 'test'
+  ...
+# Subtest: exported neutral product starts with all domain directories physically absent
+ok 53 - exported neutral product starts with all domain directories physically absent
+  ---
+  duration_ms: 395.9441
+  type: 'test'
+  ...
+# Subtest: exported Service Desk has no knowledge or handoff package and persists a real record
+ok 54 - exported Service Desk has no knowledge or handoff package and persists a real record
+  ---
+  duration_ms: 600.91
+  type: 'test'
+  ...
+# Subtest: factory export includes the selected Knowledge package closure and actual ai-core dependency
+ok 55 - factory export includes the selected Knowledge package closure and actual ai-core dependency
+  ---
+  duration_ms: 453.7962
+  type: 'test'
+  ...
+# Subtest: independent Knowledge and Combined exports invoke real operations without source or compiler trees
+ok 56 - independent Knowledge and Combined exports invoke real operations without source or compiler trees
+  ---
+  duration_ms: 2529.0587
+  type: 'test'
+  ...
+# Subtest: factory refuses collisions and path traversal
+ok 57 - factory refuses collisions and path traversal
+  ---
+  duration_ms: 588.5979
+  type: 'test'
+  ...
+# Subtest: generated full-stack module builds and runs without editing maintained shell source
+ok 58 - generated full-stack module builds and runs without editing maintained shell source
+  ---
+  duration_ms: 8229.9977
+  type: 'test'
+  ...
+# Subtest: real separate worker process completes a preexisting durable job
+ok 59 - real separate worker process completes a preexisting durable job
+  ---
+  duration_ms: 782.8666
+  type: 'test'
+  ...
+# Subtest: source-only provider omission is not mistaken for runtime completion
+ok 60 - source-only provider omission is not mistaken for runtime completion
+  ---
+  duration_ms: 274.054
+  type: 'test'
+  ...
+# Subtest: React bridge cleanup is idempotent (port contract, not a React runtime test)
+ok 61 - React bridge cleanup is idempotent (port contract, not a React runtime test)
+  ---
+  duration_ms: 0.316
+  type: 'test'
+  ...
+# Subtest: React bridge does not create a root after scope cancellation
+ok 62 - React bridge does not create a root after scope cancellation
+  ---
+  duration_ms: 0.0866
+  type: 'test'
+  ...
+# Subtest: generic framework packages import no reference-domain packages
+ok 63 - generic framework packages import no reference-domain packages
+  ---
+  duration_ms: 34.755
+  type: 'test'
+  ...
+# Subtest: provider failure closes the started modules in reverse dependency order
+ok 64 - provider failure closes the started modules in reverse dependency order
+  ---
+  duration_ms: 2.5383
+  type: 'test'
+  ...
+# Subtest: R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces
+ok 65 - R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces
+  ---
+  duration_ms: 363.0011
+  type: 'test'
+  ...
+# Subtest: reviewed product mapping is literal in the full build and absent from the Desk-only closure
+ok 66 - reviewed product mapping is literal in the full build and absent from the Desk-only closure
+  ---
+  duration_ms: 13.1087
+  type: 'test'
+  ...
+# Subtest: R05: closure includes static imports, literal lazy chunks and declared asset references
+ok 67 - R05: closure includes static imports, literal lazy chunks and declared asset references
+  ---
+  duration_ms: 21.3122
+  type: 'test'
+  ...
+# Subtest: R05: missing dependency fails the build rather than making a broken release
+ok 68 - R05: missing dependency fails the build rather than making a broken release
+  ---
+  duration_ms: 6.8166
+  type: 'test'
+  ...
+# Subtest: R05: server-only package import fails before being publicly packaged
+ok 69 - R05: server-only package import fails before being publicly packaged
+  ---
+  duration_ms: 6.3888
+  type: 'test'
+  ...
+# Subtest: R05: nonliteral runtime import is not converted into an arbitrary URL
+ok 70 - R05: nonliteral runtime import is not converted into an arbitrary URL
+  ---
+  duration_ms: 5.9123
+  type: 'test'
+  ...
+# Subtest: R05: a relative import cannot escape the selected module
+ok 71 - R05: a relative import cannot escape the selected module
+  ---
+  duration_ms: 5.9967
+  type: 'test'
+  ...
+# Subtest: R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM
+ok 72 - R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM
+  ---
+  duration_ms: 6.3249
+  type: 'test'
+  ...
+# Subtest: mobile preview assets survive an ordinary fixed product export and are served by that snapshot
+ok 73 - mobile preview assets survive an ordinary fixed product export and are served by that snapshot
+  ---
+  duration_ms: 981.9388
+  type: 'test'
+  ...
+# Subtest: mobile rebuild replaces only generated trees and exports the exact compact snapshot inventory
+ok 74 - mobile rebuild replaces only generated trees and exports the exact compact snapshot inventory
+  ---
+  duration_ms: 7486.9829
+  type: 'test'
+  ...
+# Subtest: module SDK creates a full vertical-slice manifest
+ok 75 - module SDK creates a full vertical-slice manifest
+  ---
+  duration_ms: 0.9125
+  type: 'test'
+  ...
+# Subtest: module SDK accepts a validated owned operation declaration and rejects unsupported schema keywords
+ok 76 - module SDK accepts a validated owned operation declaration and rejects unsupported schema keywords
+  ---
+  duration_ms: 0.9154
+  type: 'test'
+  ...
+# Subtest: module SDK validates fixed read-only UI contributions against owned permissions
+ok 77 - module SDK validates fixed read-only UI contributions against owned permissions
+  ---
+  duration_ms: 0.6817
+  type: 'test'
+  ...
+# Subtest: R01: pending tenant change cannot mount or write under obsolete context
+ok 78 - R01: pending tenant change cannot mount or write under obsolete context
+  ---
+  duration_ms: 23.5495
+  type: 'test'
+  ...
+# Subtest: R01: denied replacement retains no old workspace and no old request authority
+ok 79 - R01: denied replacement retains no old workspace and no old request authority
+  ---
+  duration_ms: 1.348
+  type: 'test'
+  ...
+# Subtest: R01: unchanged periodic bootstrap preserves accepted client scope
+ok 80 - R01: unchanged periodic bootstrap preserves accepted client scope
+  ---
+  duration_ms: 1.0861
+  type: 'test'
+  ...
+# Subtest: R01: late read denial from aborted scope cannot clear the new scope
+ok 81 - R01: late read denial from aborted scope cannot clear the new scope
+  ---
+  duration_ms: 1.7846
+  type: 'test'
+  ...
+# Subtest: R01: late lazy import cannot mount into a replacement scope
+ok 82 - R01: late lazy import cannot mount into a replacement scope
+  ---
+  duration_ms: 0.8059
+  type: 'test'
+  ...
+# Subtest: R08: successful unchanged bootstrap remounts after failed refresh
+ok 83 - R08: successful unchanged bootstrap remounts after failed refresh
+  ---
+  duration_ms: 0.9531
+  type: 'test'
+  ...
+# Subtest: R06: two named workspace exports mount exactly their declarations
+ok 84 - R06: two named workspace exports mount exactly their declarations
+  ---
+  duration_ms: 0.5675
+  type: 'test'
+  ...
+# Subtest: R06: invalid named export undefined never substitutes default
+ok 85 - R06: invalid named export undefined never substitutes default
+  ---
+  duration_ms: 0.6637
+  type: 'test'
+  ...
+# Subtest: R06: invalid named export {} never substitutes default
+ok 86 - R06: invalid named export {} never substitutes default
+  ---
+  duration_ms: 0.3955
+  type: 'test'
+  ...
+# Subtest: R06: invalid named export {"mount":1} never substitutes default
+ok 87 - R06: invalid named export {"mount":1} never substitutes default
+  ---
+  duration_ms: 0.4372
+  type: 'test'
+  ...
+# Subtest: R01: stale workspace notifications cannot overwrite current UI
+ok 88 - R01: stale workspace notifications cannot overwrite current UI
+  ---
+  duration_ms: 1.1078
+  type: 'test'
+  ...
+# Subtest: fixed UI contribution uses its declaring module read API and is disposed with the workspace scope
+ok 89 - fixed UI contribution uses its declaring module read API and is disposed with the workspace scope
+  ---
+  duration_ms: 1.4609
+  type: 'test'
+  ...
+# Subtest: reviewed UI slots resolve actual module ownership for desk.requests
+ok 90 - reviewed UI slots resolve actual module ownership for desk.requests
+  ---
+  duration_ms: 8.6221
+  type: 'test'
+  ...
+# Subtest: optional UI slots explain omission from source workspace ownership and contribution owner
+ok 91 - optional UI slots explain omission from source workspace ownership and contribution owner
+  ---
+  duration_ms: 0.1902
+  type: 'test'
+  ...
+# Subtest: a selected owner must carry the same source-declared contribution
+ok 92 - a selected owner must carry the same source-declared contribution
+  ---
+  duration_ms: 0.3358
+  type: 'test'
+  ...
+# Subtest: the reviewed source closure admits the exact solution UI mapping leaf
+ok 93 - the reviewed source closure admits the exact solution UI mapping leaf
+  ---
+  duration_ms: 11.485
+  type: 'test'
+  ...
+# Subtest: the reviewed UI mapping is copied byte-for-byte and contributes to the source fingerprint
+ok 94 - the reviewed UI mapping is copied byte-for-byte and contributes to the source fingerprint
+  ---
+  duration_ms: 883.787
+  type: 'test'
+  ...
+# Subtest: current source import preserves the captured old product identity and is idempotent
+ok 95 - current source import preserves the captured old product identity and is idempotent
+  ---
+  duration_ms: 30.8767
+  type: 'test'
+  ...
+# Subtest: workspace export closure follows selected Knowledge package manifests and actual ai-core version
+ok 96 - workspace export closure follows selected Knowledge package manifests and actual ai-core version
+  ---
+  duration_ms: 10.4605
+  type: 'test'
+  ...
+# Subtest: workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+ok 97 - workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+  ---
+  duration_ms: 2.338
+  type: 'test'
+  ...
+1..97
+# tests 97
+# suites 0
+# pass 95
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 235071.8028

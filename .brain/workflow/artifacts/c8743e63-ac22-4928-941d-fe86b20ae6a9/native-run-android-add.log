@@ -1,0 +1,15 @@
+
+> quadbridge-mobile-app@0.1.0 android:add
+> cap add android
+
+√ Adding native android project in android in 362.60ms
+√ add in 364.07ms
+√ Copying web assets from www to android\app\src\main\assets\public in 41.25ms
+√ Creating capacitor.config.json in android\app\src\main\assets in 1.58ms
+√ copy android in 62.95ms
+√ Updating Android plugins in 2.37ms
+√ update android in 54.61ms
+√ Syncing Gradle in 561.90μs
+[success] android platform added!
+Follow the Developer Workflow guide to get building:
+https://capacitorjs.com/docs/basics/workflow

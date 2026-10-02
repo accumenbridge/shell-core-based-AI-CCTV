@@ -1,0 +1,555 @@
+TAP version 13
+# Subtest: public health and static entry are narrow while state and audit require pairing and exact Host
+ok 1 - public health and static entry are narrow while state and audit require pairing and exact Host
+  ---
+  duration_ms: 90.7522
+  type: 'test'
+  ...
+# Subtest: pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+ok 2 - pairing rejects bad input, issues a scoped HttpOnly session, and logout removes it
+  ---
+  duration_ms: 49.8873
+  type: 'test'
+  ...
+# Subtest: paired family derivation is source-authoritative and immutable provenance follows only the exact saved version
+ok 3 - paired family derivation is source-authoritative and immutable provenance follows only the exact saved version
+  ---
+  duration_ms: 173.7945
+  type: 'test'
+  ...
+# Subtest: managed runtime API exposes fixed authenticated routes and exact confirmed request envelopes
+ok 4 - managed runtime API exposes fixed authenticated routes and exact confirmed request envelopes
+  ---
+  duration_ms: 49.2521
+  type: 'test'
+  ...
+# Subtest: private recovery routes require confirmation and never expose operation ownership secrets
+ok 5 - private recovery routes require confirmation and never expose operation ownership secrets
+  ---
+  duration_ms: 42.9127
+  type: 'test'
+  ...
+# Subtest: managed runtime HTTP errors use fixed non-path messages
+ok 6 - managed runtime HTTP errors use fixed non-path messages
+  ---
+  duration_ms: 37.1601
+  type: 'test'
+  ...
+# Subtest: pairing attempts are bounded and expire their rate window
+ok 7 - pairing attempts are bounded and expire their rate window
+  ---
+  duration_ms: 40.9427
+  type: 'test'
+  ...
+# Subtest: authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+ok 8 - authenticated mutations require exact origin, JSON, bounded shape, confirmation, and server-derived audit actor
+  ---
+  duration_ms: 46.9675
+  type: 'test'
+  ...
+# Subtest: AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+ok 9 - AI pipeline writes validate runtime schemas and identical versions do not add audit rows
+  ---
+  duration_ms: 43.9697
+  type: 'test'
+  ...
+# Subtest: build requests fail closed without an executor and deployment requests enforce immutable references
+ok 10 - build requests fail closed without an executor and deployment requests enforce immutable references
+  ---
+  duration_ms: 50.4975
+  type: 'test'
+  ...
+# Subtest: overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+ok 11 - overview is read-only and restart re-imports equal source versions without new audit or timestamp writes
+  ---
+  duration_ms: 67.1269
+  type: 'test'
+  ...
+# Subtest: a body is rejected if its exact authenticated session expires while the stream is pending
+ok 12 - a body is rejected if its exact authenticated session expires while the stream is pending
+  ---
+  duration_ms: 38.2801
+  type: 'test'
+  ...
+# Subtest: a body is rejected if that session logs out before streaming completes
+ok 13 - a body is rejected if that session logs out before streaming completes
+  ---
+  duration_ms: 38.9853
+  type: 'test'
+  ...
+# Subtest: canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+ok 14 - canonical compose preview, immutable save, and idempotent local build admission stay behind the paired session
+  ---
+  duration_ms: 164.2412
+  type: 'test'
+  ...
+# Subtest: complete ProductDefinition keeps custom reviewed bindings through exact read-only preview, immutable save and build
+ok 15 - complete ProductDefinition keeps custom reviewed bindings through exact read-only preview, immutable save and build
+  ---
+  duration_ms: 178.6389
+  type: 'test'
+  ...
+# Subtest: logout during awaited worker admission rejects the original request before queue mutation
+ok 16 - logout during awaited worker admission rejects the original request before queue mutation
+  ---
+  duration_ms: 39.2483
+  type: 'test'
+  ...
+# Subtest: logout during awaited result inspection returns 401 and accepted work remains independent of the session
+ok 17 - logout during awaited result inspection returns 401 and accepted work remains independent of the session
+  ---
+  duration_ms: 41.4022
+  type: 'test'
+  ...
+# Subtest: control plane persists source versions and admits builds/deployments only with exact successful build evidence
+ok 18 - control plane persists source versions and admits builds/deployments only with exact successful build evidence
+  ---
+  duration_ms: 4.7564
+  type: 'test'
+  ...
+# Subtest: product and AI versions are idempotent when equal and immutable across store restarts
+ok 19 - product and AI versions are idempotent when equal and immutable across store restarts
+  ---
+  duration_ms: 21.6522
+  type: 'test'
+  ...
+# Subtest: family provenance is atomic, exact-version and immutable with the product version
+not ok 20 - family provenance is atomic, exact-version and immutable with the product version
+  ---
+  duration_ms: 3.0699
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\control-plane.test.mjs:85:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    2 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/control-plane.test.mjs:106:16)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: legacy audit migration preserves every old value and marks its actor unknown
+ok 21 - legacy audit migration preserves every old value and marks its actor unknown
+  ---
+  duration_ms: 33.5419
+  type: 'test'
+  ...
+# Subtest: future database versions are rejected without changing schema metadata
+ok 22 - future database versions are rejected without changing schema metadata
+  ---
+  duration_ms: 3.8323
+  type: 'test'
+  ...
+# Subtest: schema 3 artifact publication facts are added without changing older operation values
+ok 23 - schema 3 artifact publication facts are added without changing older operation values
+  ---
+  duration_ms: 17.2827
+  type: 'test'
+  ...
+# Subtest: mutation and actor audit commit atomically and audit faults roll back the record
+ok 24 - mutation and actor audit commit atomically and audit faults roll back the record
+  ---
+  duration_ms: 1.9231
+  type: 'test'
+  ...
+# Subtest: environment and product validators fail closed on coercible primitive values
+ok 25 - environment and product validators fail closed on coercible primitive values
+  ---
+  duration_ms: 1.7947
+  type: 'test'
+  ...
+# Subtest: exported neutral product starts with all domain directories physically absent
+ok 26 - exported neutral product starts with all domain directories physically absent
+  ---
+  duration_ms: 390.4063
+  type: 'test'
+  ...
+# Subtest: exported Service Desk has no knowledge or handoff package and persists a real record
+ok 27 - exported Service Desk has no knowledge or handoff package and persists a real record
+  ---
+  duration_ms: 610.2197
+  type: 'test'
+  ...
+# Subtest: factory export includes the selected Knowledge package closure and actual ai-core dependency
+ok 28 - factory export includes the selected Knowledge package closure and actual ai-core dependency
+  ---
+  duration_ms: 397.923
+  type: 'test'
+  ...
+# Subtest: independent Knowledge and Combined exports invoke real operations without source or compiler trees
+ok 29 - independent Knowledge and Combined exports invoke real operations without source or compiler trees
+  ---
+  duration_ms: 2420.4923
+  type: 'test'
+  ...
+# Subtest: factory refuses collisions and path traversal
+ok 30 - factory refuses collisions and path traversal
+  ---
+  duration_ms: 561.3214
+  type: 'test'
+  ...
+# Subtest: generated full-stack module builds and runs without editing maintained shell source
+ok 31 - generated full-stack module builds and runs without editing maintained shell source
+  ---
+  duration_ms: 6849.1405
+  type: 'test'
+  ...
+# Subtest: real separate worker process completes a preexisting durable job
+ok 32 - real separate worker process completes a preexisting durable job
+  ---
+  duration_ms: 628.4936
+  type: 'test'
+  ...
+# Subtest: source-only provider omission is not mistaken for runtime completion
+ok 33 - source-only provider omission is not mistaken for runtime completion
+  ---
+  duration_ms: 71.4766
+  type: 'test'
+  ...
+# Subtest: React bridge cleanup is idempotent (port contract, not a React runtime test)
+ok 34 - React bridge cleanup is idempotent (port contract, not a React runtime test)
+  ---
+  duration_ms: 0.3414
+  type: 'test'
+  ...
+# Subtest: React bridge does not create a root after scope cancellation
+ok 35 - React bridge does not create a root after scope cancellation
+  ---
+  duration_ms: 0.129
+  type: 'test'
+  ...
+# Subtest: generic framework packages import no reference-domain packages
+ok 36 - generic framework packages import no reference-domain packages
+  ---
+  duration_ms: 5.5595
+  type: 'test'
+  ...
+# Subtest: provider failure closes the started modules in reverse dependency order
+ok 37 - provider failure closes the started modules in reverse dependency order
+  ---
+  duration_ms: 0.4779
+  type: 'test'
+  ...
+# Subtest: Service Operations derives three exact source-grounded business selections through the canonical composer
+ok 38 - Service Operations derives three exact source-grounded business selections through the canonical composer
+  ---
+  duration_ms: 33.3503
+  type: 'test'
+  ...
+# Subtest: family derivation rejects unavailable modules and never silently selects a new default port
+ok 39 - family derivation rejects unavailable modules and never silently selects a new default port
+  ---
+  duration_ms: 5.2572
+  type: 'test'
+  ...
+# Subtest: three family variants build, register, promote and run as exact owned local artifacts
+not ok 40 - three family variants build, register, promote and run as exact owned local artifacts
+  ---
+  duration_ms: 70069.7078
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\product-family.test.mjs:84:1'
+  failureType: 'testCodeFailure'
+  error: 'Verified runtime entry identity or path changed before its private copy'
+  code: 'RUNTIME_SOURCE_INVALID'
+  name: 'RuntimePreparationError'
+  stack: |-
+    file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:116:19
+    Array.map (<anonymous>)
+    copyVerifiedRuntimeSnapshot (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:107:111)
+    ManagedRuntimeManager.startAttempt (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/apps/control-plane/dist/runtime-manager.js:1100:28)
+  ...
+# Subtest: source paths normalize both separators and exclude operational components exactly
+ok 41 - source paths normalize both separators and exclude operational components exactly
+  ---
+  duration_ms: 0.6392
+  type: 'test'
+  ...
+# Subtest: maintained fingerprint ignores operational records and changes with source
+ok 42 - maintained fingerprint ignores operational records and changes with source
+  ---
+  duration_ms: 14.5203
+  type: 'test'
+  ...
+# Subtest: portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+ok 43 - portable copy retains maintained source and profiles, excludes operational state, and cleans early failures
+  ---
+  duration_ms: 45.0531
+  type: 'test'
+  ...
+# Subtest: reviewed source copy detects a maintained input changed while the asynchronous copy is active
+ok 44 - reviewed source copy detects a maintained input changed while the asynchronous copy is active
+  ---
+  duration_ms: 114.5813
+  type: 'test'
+  ...
+# Subtest: reviewed source copy includes fixed family data as inert input and rejects neighboring files
+ok 45 - reviewed source copy includes fixed family data as inert input and rejects neighboring files
+  ---
+  duration_ms: 8.7443
+  type: 'test'
+  ...
+# Subtest: TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+ok 46 - TAP verification accepts explicit terminal summaries with skipped and TODO accounting
+  ---
+  duration_ms: 1.1497
+  type: 'test'
+  ...
+# Subtest: TAP verification follows actual Node nested, TODO, and skipped report counts
+ok 47 - TAP verification follows actual Node nested, TODO, and skipped report counts
+  ---
+  duration_ms: 322.3155
+  type: 'test'
+  ...
+# Subtest: TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+ok 48 - TAP verification rejects unknown, zero, malformed and ambiguous discovery or reports
+  ---
+  duration_ms: 0.3215
+  type: 'test'
+  ...
+# Subtest: TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+ok 49 - TAP verification fails test exits, failures, cancellations, spawn errors, and signals
+  ---
+  duration_ms: 0.1809
+  type: 'test'
+  ...
+# Subtest: build failure reports tests as NOT_RUN and claims only current passing evidence
+ok 50 - build failure reports tests as NOT_RUN and claims only current passing evidence
+  ---
+  duration_ms: 0.8835
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+ok 51 - START_FULL_STUDIO.cmd handles foreign-cwd success and exact build/start failures
+  ---
+  duration_ms: 163.8931
+  type: 'test'
+  ...
+# Subtest: START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+ok 52 - START_FULL_STUDIO.cmd reaches the actual bounded loopback health response
+  ---
+  duration_ms: 4826.1583
+  type: 'test'
+  ...
+# {"fixture":"portable source copy","cwd":"foreign directory","health":{"path":"/healthz","status":200,"body":{"status":"ok"}},"page":{"path":"/","status":200}}
+# Subtest: complete definition round-trip preserves description, exact versions, custom binding identity and wiring
+ok 53 - complete definition round-trip preserves description, exact versions, custom binding identity and wiring
+  ---
+  duration_ms: 3.5821
+  type: 'test'
+  ...
+# Subtest: unsupported definition stays unchanged and returns diagnostics without a preview plan
+ok 54 - unsupported definition stays unchanged and returns diagnostics without a preview plan
+  ---
+  duration_ms: 0.578
+  type: 'test'
+  ...
+# Subtest: editor helpers are present in the offline browser bundle and remain pure data operations
+ok 55 - editor helpers are present in the offline browser bundle and remain pure data operations
+  ---
+  duration_ms: 10.4724
+  type: 'test'
+  ...
+# Subtest: inspection keeps supported HTTP bindings valid without claiming local launchability
+ok 56 - inspection keeps supported HTTP bindings valid without claiming local launchability
+  ---
+  duration_ms: 0.8652
+  type: 'test'
+  ...
+# Subtest: Products click and genuine hash navigation both render the catalogue while stale navigation stays selected
+ok 57 - Products click and genuine hash navigation both render the catalogue while stale navigation stays selected
+  ---
+  duration_ms: 8.6996
+  type: 'test'
+  ...
+# Subtest: product save uses an unchecked exact-version confirmation and sends only the current preview
+not ok 58 - product save uses an unchecked exact-version confirmation and sends only the current preview
+  ---
+  duration_ms: 3.9212
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\studio-product-editor.test.mjs:191:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    navigation does not preserve save approval
+    + actual - expected
+    
+    + undefined
+    - false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/studio-product-editor.test.mjs:212:10)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: paired family defaults derive through the source catalogue and only an unchanged preview carries its family claim
+not ok 59 - paired family defaults derive through the source catalogue and only an unchanged preview carries its family claim
+  ---
+  duration_ms: 6.0364
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\studio-product-editor.test.mjs:230:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(ui.app.innerHTML.includes('family-editor-proof@3.3.0'))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/studio-product-editor.test.mjs:249:10)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Visual: all eight input combinations use the canonical resolver
+ok 60 - Visual: all eight input combinations use the canonical resolver
+  ---
+  duration_ms: 6.7307
+  type: 'test'
+  ...
+# Subtest: Visual: reviewed Handoff wiring selects current local providers
+ok 61 - Visual: reviewed Handoff wiring selects current local providers
+  ---
+  duration_ms: 0.9274
+  type: 'test'
+  ...
+# Subtest: Visual: operation-bearing source catalogue uses the fixed shared schema validator
+ok 62 - Visual: operation-bearing source catalogue uses the fixed shared schema validator
+  ---
+  duration_ms: 1.794
+  type: 'test'
+  ...
+# Subtest: Visual: neutral product has no domain, bindings or solution
+ok 63 - Visual: neutral product has no domain, bindings or solution
+  ---
+  duration_ms: 0.1262
+  type: 'test'
+  ...
+# Subtest: Visual: invalid and unknown selections fail visibly
+ok 64 - Visual: invalid and unknown selections fail visibly
+  ---
+  duration_ms: 0.2082
+  type: 'test'
+  ...
+# Subtest: Visual: standalone preview sends no network calls and includes no external scripts
+ok 65 - Visual: standalone preview sends no network calls and includes no external scripts
+  ---
+  duration_ms: 3.8705
+  type: 'test'
+  ...
+# Subtest: Visual: offline composer exposes complete import, edit, canonical preview and download controls
+ok 66 - Visual: offline composer exposes complete import, edit, canonical preview and download controls
+  ---
+  duration_ms: 1.9019
+  type: 'test'
+  ...
+# Subtest: Visual: a newer definition import invalidates preview immediately and wins out-of-order file reads
+ok 67 - Visual: a newer definition import invalidates preview immediately and wins out-of-order file reads
+  ---
+  duration_ms: 3.6672
+  type: 'test'
+  ...
+# Subtest: Visual: documentation, responsive rules and source build retained
+ok 68 - Visual: documentation, responsive rules and source build retained
+  ---
+  duration_ms: 1.6593
+  type: 'test'
+  ...
+# Subtest: Visual: runtime counters remain explicitly scoped
+ok 69 - Visual: runtime counters remain explicitly scoped
+  ---
+  duration_ms: 0.8958
+  type: 'test'
+  ...
+# Subtest: Visual: all eight views render through controlled document ports
+ok 70 - Visual: all eight views render through controlled document ports
+  ---
+  duration_ms: 9.9755
+  type: 'test'
+  ...
+# Subtest: Visual: offline family builder uses loaded defaults and canonical derivation without network access
+not ok 71 - Visual: offline family builder uses loaded defaults and canonical derivation without network access
+  ---
+  duration_ms: 3.8961
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\visual-edition.test.mjs:25:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /"id": "my-service-product"/. Input:
+    
+    '<div class="layout"><aside class="sidebar" id="sidebar"><a class="brand" href="#/overview"><span class="brand-mark">Q</span><span class="brand-name">Quadbridge<small>Product Platform</small></span></a><div class="nav-section">BUILD</div><button type="button" class="nav-button " data-action="go:overview" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Overview</button><button type="button" class="nav-button active" data-action="go:composer" aria-current="page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg>Product composer</button><button type="button" class="nav-button " data-action="go:modules" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5v8l-9 5-9-5V8l9-5Zm0 10v8M3 8l9 5 9-5M7.5 5.5l9 5"/></svg>Module library<span class="nav-count">3</span></button><button type="button" class="nav-button " data-action="go:architecture" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="3" width="8" height="5" rx="1"/><rect x="2" y="16" width="8" height="5" rx="1"/><rect x="14" y="16" width="8" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></svg>Architecture</button><button type="button" class="nav-button " data-action="go:build" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 4 12 8-12 8V4Z"/></svg>Build & run</button><div class="nav-section">EXPLORE SAMPLE SCREENS</div><button type="button" class="nav-button " data-action="go:desk" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="15" rx="2"/><path d="M3 9h18M8 9v10M11 13h6M11 16h4"/></svg>Service Desk</button><button type="button" class="nav-button " data-action="go:knowledge" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C8 3 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-6-1-10 2Zm0 0v15"/></svg>Knowledge</button><button type="button" class="nav-button " data-action="go:handoff" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 13 4-4m-7 6-1 1a4 4 0 0 0 6 6l4-4a4 4 0 0 0-1-6M17 9l1-1a4 4 0 0 0-6-6L8 6a4 4 0 0 0 1 6" transform="translate(0 -1) scale(.95)"/></svg>Cross-product</button><div class="sidebar-foot"><div class="version-row"><span class="status-dot"></span>Foundation 0.2 · Studio integration 1</div><p>Local framework tools.<br>No production connection.</p><a class="doc-link" href="DOCUMENTATION.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C8 3 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-6-1-10 2Zm0 0v15"/></svg> Documentation <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3h8v8m0-8L10 14M8 5H4v15h15v-5"/></svg></a></div></aside><main class="main"><header class="topbar"><div style="display:flex;gap:11px;align-items:center"><button type="button" class="btn quiet menu-toggle" data-action="menu" aria-label="Toggle navigation"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><div class="breadcrumb"><span>Workspace</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg><strong>Product composer</strong></div></div><div class="top-actions"><span class="mode-badge">OFFLINE INTERACTIVE PREVIEW</span><button type="button" class="btn " data-action="run" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 4 12 8-12 8V4Z"/></svg> Run real apps</button><span class="avatar" aria-label="Preview identity, not signed in">QB</span></div></header><div class="preview-strip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg><strong>Preview mode.</strong><span>Sample records and simulations stay in this page. Refresh resets them. Start npm run studio for the actual local builder.</span></div><div class="canvas"><section class="panel family-builder"><div class="section-title"><h3>Library-first operations</h3><span class="status">Reviewed product family</span></div><p class="help">Start with service requests, then add a shared library and reviewed document handoff when your work needs them. Offline preview only. Source manifests supply exact module versions; this page cannot save, build or launch.</p><label class="form-label">Family<select class="input" data-family-id><option value="service-operations" >Service Operations</option><option value="library-first" selected>Library-first operations</option></select></label><div class="inline-actions"><label class="form-label">Product ID<input class="input" data-family-field="id" value="my-service-product" maxlength="48"></label><label class="form-label">Title<input class="input" data-family-field="title" value="Library-first operations" maxlength="80"></label><label class="form-label">Version<input class="input" data-family-field="version" value="1.0.0" maxlength="20"></label><label class="form-label">Description<input class="input" data-family-field="description" value="" maxlength="2000"></label></div><div class="choice-list"><label class="choice"><input type="checkbox" data-family-feature="requests" checked disabled><span><strong>Requests</strong><small>Create, track and close service requests.</small></span></label><label class="choice"><input type="checkbox" data-family-feature="shared-library" checked ><span><strong>Shared library</strong><small>Add indexed reference documents for the service team.</small></span></label><label class="choice"><input type="checkbox" data-family-feature="document-handoff"  ><span><strong>Document handoff</strong><small>Attach a reviewed local knowledge and request handoff to each request.</small></span></label></div><div class="actions"><button type="button" class="btn primary" data-action="family-derive" >Preview family composition</button><button type="button" class="btn " data-action="family-load-editor" >Load into complete editor</button><button type="button" class="btn " data-action="family-export" >Export family definition</button></div><div class="family-result"><p>my-service-product@1.0.0 · separate worker required</p><div class="state-list"><div class="state-item">knowledge@0.2.2</div><div class="state-item">service-desk@0.2.0</div></div><p class="help">Requests · Shared library · Preview only; not saved or running.</p></div></section><div class="page-head"><div><div class="eyebrow">PRODUCT COMPOSER</div><h1>Compose your next product.</h1><p class="subtitle">Choose source modules and reviewed connections. The same composition resolver runs here and in the build.</p></div><div class="inline-actions"><button type="button" class="btn " data-action="export" ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg> Export product.json</button><button type="button" class="btn primary" data-action="save-source" ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 4 12 8-12 8V4Z"/></svg> Save to local source</button></div></div><div class="composer-grid"><section class="panel"><h3>01 / Product identity</h3><label class="form-label" for="product-title">Product name</label><input class="input" id="product-title" data-field="title" value="My next product" maxlength="80"><label class="form-label" for="product-id">Product ID</label><input class="input" id="product-id" data-field="id" value="my-product" maxlength="48"><p class="help">A new source directory, not a customer ID. Existing products are never overwritten.</p><label class="form-label" for="product-layout">Shell layout</label><select class="input" id="product-layout" data-field="layout"><option value="sidebar" selected>Sidebar navigation</option><option value="top" >Top navigation</option></select><h3 style="margin-top:26px">02 / Domain modules</h3><label class="choice"><input type="checkbox" data-module="handoff"  ><span class="module-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="rou'... 5486 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <div class="layout"><aside class="sidebar" id="sidebar"><a class="brand" href="#/overview"><span class="brand-mark">Q</span><span class="brand-name">Quadbridge<small>Product Platform</small></span></a><div class="nav-section">BUILD</div><button type="button" class="nav-button " data-action="go:overview" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Overview</button><button type="button" class="nav-button active" data-action="go:composer" aria-current="page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg>Product composer</button><button type="button" class="nav-button " data-action="go:modules" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5v8l-9 5-9-5V8l9-5Zm0 10v8M3 8l9 5 9-5M7.5 5.5l9 5"/></svg>Module library<span class="nav-count">3</span></button><button type="button" class="nav-button " data-action="go:architecture" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="3" width="8" height="5" rx="1"/><rect x="2" y="16" width="8" height="5" rx="1"/><rect x="14" y="16" width="8" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></svg>Architecture</button><button type="button" class="nav-button " data-action="go:build" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 4 12 8-12 8V4Z"/></svg>Build & run</button><div class="nav-section">EXPLORE SAMPLE SCREENS</div><button type="button" class="nav-button " data-action="go:desk" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="15" rx="2"/><path d="M3 9h18M8 9v10M11 13h6M11 16h4"/></svg>Service Desk</button><button type="button" class="nav-button " data-action="go:knowledge" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C8 3 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-6-1-10 2Zm0 0v15"/></svg>Knowledge</button><button type="button" class="nav-button " data-action="go:handoff" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 13 4-4m-7 6-1 1a4 4 0 0 0 6 6l4-4a4 4 0 0 0-1-6M17 9l1-1a4 4 0 0 0-6-6L8 6a4 4 0 0 0 1 6" transform="translate(0 -1) scale(.95)"/></svg>Cross-product</button><div class="sidebar-foot"><div class="version-row"><span class="status-dot"></span>Foundation 0.2 · Studio integration 1</div><p>Local framework tools.<br>No production connection.</p><a class="doc-link" href="DOCUMENTATION.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C8 3 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-6-1-10 2Zm0 0v15"/></svg> Documentation <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3h8v8m0-8L10 14M8 5H4v15h15v-5"/></svg></a></div></aside><main class="main"><header class="topbar"><div style="display:flex;gap:11px;align-items:center"><button type="button" class="btn quiet menu-toggle" data-action="menu" aria-label="Toggle navigation"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><div class="breadcrumb"><span>Workspace</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg><strong>Product composer</strong></div></div><div class="top-actions"><span class="mode-badge">OFFLINE INTERACTIVE PREVIEW</span><button type="button" class="btn " data-action="run" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 4 12 8-12 8V4Z"/></svg> Run real apps</button><span class="avatar" aria-label="Preview identity, not signed in">QB</span></div></header><div class="preview-strip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg><strong>Preview mode.</strong><span>Sample records and simulations stay in this page. Refresh resets them. Start npm run studio for the actual local builder.</span></div><div class="canvas"><section class="panel family-builder"><div class="section-title"><h3>Library-first operations</h3><span class="status">Reviewed product family</span></div><p class="help">Start with service requests, then add a shared library and reviewed document handoff when your work needs them. Offline preview only. Source manifests supply exact module versions; this page cannot save, build or launch.</p><label class="form-label">Family<select class="input" data-family-id><option value="service-operations" >Service Operations</option><option value="library-first" selected>Library-first operations</option></select></label><div class="inline-actions"><label class="form-label">Product ID<input class="input" data-family-field="id" value="my-service-product" maxlength="48"></label><label class="form-label">Title<input class="input" data-family-field="title" value="Library-first operations" maxlength="80"></label><label class="form-label">Version<input class="input" data-family-field="version" value="1.0.0" maxlength="20"></label><label class="form-label">Description<input class="input" data-family-field="description" value="" maxlength="2000"></label></div><div class="choice-list"><label class="choice"><input type="checkbox" data-family-feature="requests" checked disabled><span><strong>Requests</strong><small>Create, track and close service requests.</small></span></label><label class="choice"><input type="checkbox" data-family-feature="shared-library" checked ><span><strong>Shared library</strong><small>Add indexed reference documents for the service team.</small></span></label><label class="choice"><input type="checkbox" data-family-feature="document-handoff"  ><span><strong>Document handoff</strong><small>Attach a reviewed local knowledge and request handoff to each request.</small></span></label></div><div class="actions"><button type="button" class="btn primary" data-action="family-derive" >Preview family composition</button><button type="button" class="btn " data-action="family-load-editor" >Load into complete editor</button><button type="button" class="btn " data-action="family-export" >Export family definition</button></div><div class="family-result"><p>my-service-product@1.0.0 · separate worker required</p><div class="state-list"><div class="state-item">knowledge@0.2.2</div><div class="state-item">service-desk@0.2.0</div></div><p class="help">Requests · Shared library · Preview only; not saved or running.</p></div></section><div class="page-head"><div><div class="eyebrow">PRODUCT COMPOSER</div><h1>Compose your next product.</h1><p class="subtitle">Choose source modules and reviewed connections. The same composition resolver runs here and in the build.</p></div><div class="inline-actions"><button type="button" class="btn " data-action="export" ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg> Export product.json</button><button type="button" class="btn primary" data-action="save-source" ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 4 12 8-12 8V4Z"/></svg> Save to local source</button></div></div><div class="composer-grid"><section class="panel"><h3>01 / Product identity</h3><label class="form-label" for="product-title">Product name</label><input class="input" id="product-title" data-field="title" value="My next product" maxlength="80"><label class="form-label" for="product-id">Product ID</label><input class="input" id="product-id" data-field="id" value="my-product" maxlength="48"><p class="help">A new source directory, not a customer ID. Existing products are never overwritten.</p><label class="form-label" for="product-layout">Shell layout</label><select class="input" id="product-layout" data-field="layout"><option value="sidebar" selected>Sidebar navigation</option><option value="top" >Top navigation</option></select><h3 style="margin-top:26px">02 / Domain modules</h3><label class="choice"><input type="checkbox" data-module="handoff"  ><span class="module-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 13 4-4m-7 6-1 1a4 4 0 0 0 6 6l4-4a4 4 0 0 0-1-6M17 9l1-1a4 4 0 0 0-6-6L8 6a4 4 0 0 0 1 6" transform="translate(0 -1) scale(.95)"/></svg></span><span><strong>Cross-product handoff</strong><small>1 workspaces · Worker required · 0.2.2</small></span></label><label class="choice"><input type="checkbox" data-module="knowledge"  ><span class="module-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C8 3 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-6-1-10 2Zm0 0v15"/></svg></span><span><strong>Knowledge Library</strong><small>1 workspaces · Worker required · 0.2.2</small></span></label><label class="choice"><input type="checkbox" data-module="service-desk" checked ><span class="module-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="15" rx="2"/><path d="M3 9h18M8 9v10M11 13h6M11 16h4"/></svg></span><span><strong>Service Desk</strong><small>2 workspaces · Owned records · 0.2.0</small></span></label><p class="help">Dependencies are added to the resolved composition. A required provider cannot be silently removed.</p><button type="button" class="btn wide" data-action="save-draft" >Save preview draft</button>
+      </section><section><div class="panel"><h3>Resolved composition</h3><p>A validated definition is not a running application.</p><div id="composition-error" class="composition-error" role="status"></div><div class="builder-surface" style="margin-top:17px"><div class="mini-built-app" ><div class="built-side" ><strong>My next product</strong><span>Service Desk</span></div><div class="built-content"><span class="pill green">Resolver passed</span><h3>Your workspaces mount here.</h3><p>Identity stays in the shell.<br>Records stay with their domain owners.</p><div class="stack-bars"><span>2 workspaces</span></div></div></div></div><div class="state-list"><div class="state-item"><strong>Service Desk</strong><p>Selected by you</p></div></div><div class="diagram-note">1 modules · 0 public bindings · Offline preview. Export a definition or open the local Studio.</div></div><details class="panel" style="margin-top:18px"><summary>Generated product definition starter</summary><pre class="code-panel">{
+      &quot;id&quot;: &quot;my-product&quot;,
+      &quot;title&quot;: &quot;My next product&quot;,
+      &quot;description&quot;: &quot;Product-owned composition created by the Quadbridge Studio.&quot;,
+      &quot;version&quot;: &quot;0.2.0&quot;,
+      &quot;platformAbi&quot;: &quot;quadbridge.module.v1&quot;,
+      &quot;layout&quot;: &quot;sidebar&quot;,
+      &quot;modules&quot;: [
+        {
+          &quot;id&quot;: &quot;service-desk&quot;,
+          &quot;version&quot;: &quot;0.2.0&quot;
+        }
+      ],
+      &quot;bindings&quot;: []
+    }</pre><div class="actions"><button type="button" class="btn " data-action="definition-starter" >Load starter into complete editor</button></div></details></section></div><section class="panel definition-editor" aria-labelledby="definition-editor-title"><h3 id="definition-editor-title">Complete product definition</h3><p class="help">The full JSON is authoritative. Import and edit bounded data; preview derives only source-manifest and reviewed-solution choices. This panel never calls the network.</p><div class="inline-actions"><label class="form-label">Load saved definition <select class="input" data-definition-saved><option value="">Choose exact source version</option><option value="0">combined@0.2.2</option><option value="1">knowledge@0.2.2</option><option value="2">neutral@0.2.0</option><option value="3">service-desk@0.2.0</option></select></label><button type="button" class="btn " data-action="definition-load" >Load</button><label class="btn">Import product.json<input type="file" accept="application/json,.json" data-definition-import></label></div><label class="form-label" for="definition-json">ProductDefinition JSON</label><textarea id="definition-json" data-definition-json rows="16" maxlength="65536" spellcheck="false">{
+      &quot;id&quot;: &quot;my-service-product&quot;,
+      &quot;title&quot;: &quot;Library-first operations&quot;,
+      &quot;description&quot;: &quot;&quot;,
+      &quot;version&quot;: &quot;1.0.0&quot;,
+      &quot;platformAbi&quot;: &quot;quadbridge.module.v1&quot;,
+      &quot;layout&quot;: &quot;sidebar&quot;,
+      &quot;modules&quot;: [
+        {
+          &quot;id&quot;: &quot;knowledge&quot;,
+          &quot;version&quot;: &quot;0.2.2&quot;
+        },
+        {
+          &quot;id&quot;: &quot;service-desk&quot;,
+          &quot;version&quot;: &quot;0.2.0&quot;
+        }
+      ],
+      &quot;bindings&quot;: []
+    }
+    </textarea><div class="actions"><button type="button" class="btn primary" data-action="definition-preview" >Preview definition</button><button type="button" class="btn " data-action="definition-export" disabled>Export exact definition</button></div><p class="small-muted">Preview is a construction plan, not a launch or deployment.</p></section><footer class="footnote"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg> Maintained shells · selected modules · explicit ownership</footer></div></main></div>
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/visual-edition.test.mjs:46:9)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..71
+# tests 71
+# suites 0
+# pass 66
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 95661.8626

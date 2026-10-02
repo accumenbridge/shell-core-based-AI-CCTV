@@ -1,0 +1,40 @@
+
+> quadbridge-product-platform@0.2.0 build
+> node tools/build.mjs
+
+Local workspace links prepared. No third-party packages were downloaded.
+packages/contracts/src/ui-contributions.ts(81,17): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+packages/contracts/src/ui-contributions.ts(81,36): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+packages/contracts/src/ui-contributions.ts(82,13): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+packages/contracts/src/ui-contributions.ts(82,30): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+packages/contracts/src/ui-contributions.ts(83,17): error TS2345: Argument of type 'Readonly<{ id: unknown; permission: unknown; export: unknown; label: unknown; }>' is not assignable to parameter of type 'UiContributionDescriptor'.
+  Types of property 'id' are incompatible.
+    Type 'unknown' is not assignable to type 'string'.
+packages/contracts/src/ui-contributions.ts(114,21): error TS18046: 'mapping.bindings' is of type 'unknown'.
+packages/contracts/src/ui-contributions.ts(125,52): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+packages/contracts/src/ui-contributions.ts(126,36): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+packages/contracts/src/ui-contributions.ts(131,31): error TS18048: 'target' is possibly 'undefined'.
+packages/contracts/src/ui-contributions.ts(132,41): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+packages/contracts/src/ui-contributions.ts(135,45): error TS2345: Argument of type '{ reason: "WORKSPACE_MODULE_NOT_SELECTED"; workspaceId: unknown; slot: UiContributionSlot; contributionId: unknown; }' is not assignable to parameter of type 'UiContributionOmission'.
+  Types of property 'workspaceId' are incompatible.
+    Type 'unknown' is not assignable to type 'string'.
+packages/contracts/src/ui-contributions.ts(139,45): error TS2345: Argument of type '{ reason: "CONTRIBUTION_MODULE_NOT_SELECTED"; workspaceId: unknown; slot: UiContributionSlot; contributionId: unknown; }' is not assignable to parameter of type 'UiContributionOmission'.
+  Types of property 'workspaceId' are incompatible.
+    Type 'unknown' is not assignable to type 'string'.
+packages/contracts/src/ui-contributions.ts(142,25): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+packages/contracts/src/ui-contributions.ts(143,66): error TS2345: Argument of type 'ModuleManifest | undefined' is not assignable to parameter of type 'Pick<ModuleManifest, "id" | "permissions" | "uiContributions">'.
+  Type 'undefined' is not assignable to type 'Pick<ModuleManifest, "id" | "permissions" | "uiContributions">'.
+packages/contracts/src/ui-contributions.ts(144,9): error TS18048: 'target' is possibly 'undefined'.
+packages/contracts/src/ui-contributions.ts(145,43): error TS18048: 'target' is possibly 'undefined'.
+packages/contracts/src/ui-contributions.ts(146,39): error TS18048: 'target' is possibly 'undefined'.
+packages/contracts/src/ui-contributions.ts(147,38): error TS18048: 'target' is possibly 'undefined'.
+packages/contracts/src/ui-contributions.ts(149,31): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+packages/contracts/src/ui-contributions.ts(151,16): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+packages/contracts/src/ui-contributions.ts(152,19): error TS2345: Argument of type 'Readonly<{ workspaceId: unknown; slot: "workspace.aside" | "workspace.footer"; contributionId: unknown; }>' is not assignable to parameter of type 'UiContributionBinding'.
+  Types of property 'workspaceId' are incompatible.
+    Type 'unknown' is not assignable to type 'string'.
+packages/web-shell/src/index.ts(237,50): error TS2339: Property 'id' does not exist on type 'Workspace'.
+packages/web-shell/src/index.ts(237,57): error TS2552: Cannot find name 'UI_CONTRIBUTION_SLOTS'. Did you mean 'contributionSlots'?
+packages/web-shell/src/index.ts(362,38): error TS2345: Argument of type '{ id: string; label: string; path: string; moduleId: string; export: string; }' is not assignable to parameter of type 'Workspace'.
+  Property 'mount' is missing in type '{ id: string; label: string; path: string; moduleId: string; export: string; }' but required in type 'Workspace'.

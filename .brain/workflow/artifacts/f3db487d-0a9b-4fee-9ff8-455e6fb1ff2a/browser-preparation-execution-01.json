@@ -1,0 +1,83 @@
+{
+  "fixtureId": "2790a262-f613-4d1f-a319-420e2a0c703a",
+  "candidate": "25e59142bcf5e0950dbd79a15533f4de5e8b4d8b889631afcf3169304d63ebee",
+  "commands": [
+    {
+      "label": "base-build-01",
+      "command": [
+        "node",
+        "tools/build.mjs"
+      ],
+      "startedAt": "2026-10-02T15:54:30.881Z",
+      "finishedAt": "2026-10-02T15:54:35.067Z",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "generate-01",
+      "command": [
+        "node",
+        "tools/factory.mjs",
+        "generate-entity",
+        ".local/specs/optional.json"
+      ],
+      "startedAt": "2026-10-02T15:54:35.068Z",
+      "finishedAt": "2026-10-02T15:54:35.155Z",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "product-01",
+      "command": [
+        "node",
+        "tools/factory.mjs",
+        "create-product",
+        "optional-workflow",
+        "--modules",
+        "optional-records",
+        "--version",
+        "1.0.0"
+      ],
+      "startedAt": "2026-10-02T15:54:35.156Z",
+      "finishedAt": "2026-10-02T15:54:35.319Z",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "generated-build-01",
+      "command": [
+        "node",
+        "tools/build.mjs"
+      ],
+      "startedAt": "2026-10-02T15:54:35.319Z",
+      "finishedAt": "2026-10-02T15:54:36.605Z",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "assemble-01",
+      "command": [
+        "node",
+        "tools/factory.mjs",
+        "assemble",
+        "optional-workflow",
+        "<owned-fixture>\\exported"
+      ],
+      "startedAt": "2026-10-02T15:54:36.606Z",
+      "finishedAt": "2026-10-02T15:54:36.806Z",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "export-setup-01",
+      "command": [
+        "node",
+        "tools/link-workspaces.mjs"
+      ],
+      "startedAt": "2026-10-02T15:54:36.806Z",
+      "finishedAt": "2026-10-02T15:54:36.965Z",
+      "exitCode": 0,
+      "signal": null
+    }
+  ]
+}

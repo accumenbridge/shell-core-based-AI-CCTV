@@ -1,0 +1,26 @@
+{
+  "kind": "export",
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/frontend-assembly.test.mjs"
+  ],
+  "startedAt": "2026-10-02T16:13:00.671Z",
+  "finishedAt": "2026-10-02T16:13:07.710Z",
+  "exitCode": 0,
+  "signal": null,
+  "candidateBefore": "25e59142bcf5e0950dbd79a15533f4de5e8b4d8b889631afcf3169304d63ebee",
+  "candidateAfter": "25e59142bcf5e0950dbd79a15533f4de5e8b4d8b889631afcf3169304d63ebee",
+  "contractBefore": "38c96314983810a44afd2baefcadb3884f2debad274a4f0496d42f38039c9bde",
+  "contractAfter": "38c96314983810a44afd2baefcadb3884f2debad274a4f0496d42f38039c9bde",
+  "sourceUnchanged": true,
+  "counts": {
+    "tests": 10,
+    "passed": 10,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

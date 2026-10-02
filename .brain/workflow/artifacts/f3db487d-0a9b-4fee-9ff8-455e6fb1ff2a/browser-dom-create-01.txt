@@ -1,0 +1,57 @@
+- complementary:
+  - generic: Q
+  - generic: Quadbridge
+  - generic: PRODUCT WORKSPACE
+  - generic: Optional Workflow
+  - paragraph: Product-owned composition created by the Quadbridge Studio.
+  - navigation "Workspaces":
+    - link "Record":
+      - /url: "#/optional-records/records"
+  - generic: LOCAL DEVELOPER PROFILE
+  - paragraph: 1 selected modules
+  - paragraph: optional-browser-instance
+- main:
+  - text: Tenant
+  - combobox "Tenant":
+    - option "tenant-a" [selected]
+    - option "tenant-b"
+  - generic: admin
+  - button "Sign out"
+  - heading "Record" [level=2]
+  - paragraph: Tenant-scoped records. Reads and writes stay with this module’s owner.
+  - heading "Create record" [level=3]
+  - generic: Name
+  - textbox "Name": Unset workflow
+  - generic: Flag
+  - combobox "Flag":
+    - option "Not set" [selected]
+    - option "Yes"
+    - option "No"
+  - generic: Category
+  - combobox "Category":
+    - option "Not set" [selected]
+    - option "alpha"
+    - option "beta"
+  - generic: Default flag
+  - combobox "Default flag":
+    - option "Not set"
+    - option "Yes"
+    - option "No" [selected]
+  - generic: Default category
+  - combobox "Default category":
+    - option "Not set"
+    - option "alpha" [selected]
+    - option "beta"
+  - generic: Required flag
+  - checkbox "Required flag"
+  - button "Create record"
+  - paragraph: Saved as version 1.
+  - heading "Record records" [level=3]
+  - button "Unset workflow · v1"
+  - heading "Record · v1" [level=4]
+  - paragraph: "Name: Unset workflow"
+  - paragraph: "Default flag: No"
+  - paragraph: "Default category: alpha"
+  - paragraph: "Required flag: No"
+  - button "Edit record"
+  - paragraph: Showing 1 records (maximum 100).

@@ -56,6 +56,22 @@ source-derived catalogue; generator output does not bypass artifact registration
 controls. Existing data is never reseeded, overwritten, or upgraded by this builder. See
 [`ENTITY_BUILDER.md`](ENTITY_BUILDER.md) for the supported profile and deferred domain capabilities.
 
+Both source generators now use one lowercase 2–48 character package/source-directory identity rule,
+check physical workspace manifests for declared-name collisions, and validate generated manifests
+through the compiled canonical resolver before creating their destination. Run `npm ci` and
+`npm run build` before generation; generators do not install packages or edit the lockfile. Optional
+boolean and enum controls preserve “Not set” separately from explicit false/value, and generated Studio
+metadata describes declarations rather than grants or live resources. The separate
+`node tools/construction-clean-install.mjs` recipe exercises generation, explicit lock reconciliation,
+and a second source-only fresh install/build in private temporary copies; it is not part of generator
+execution or a statement that every consumer checkout has completed that recipe.
+
+Version identity has several independent dimensions: repository package `0.2.0`, Product Studio
+program `0.3` (`studio-web` package `0.3.0`), exact module/product SemVer, module ABI
+`quadbridge.module.v1`, operation contract versions, and entity/family/UI/local-snapshot schema tags.
+These values must be reviewed on their own compatibility boundaries. The local entity builder does not
+provide relations, schema upgrades or cross-artifact data adoption.
+
 ## Current local platform construction status
 
 Platform-007 adds a complete ProductDefinition editor to the paired Products view and standalone offline
@@ -66,6 +82,18 @@ mutation, then saves immutable `id@version` records under explicit confirmation.
 export remains data-only and makes no network or source-tree changes. See `docs/STUDIO_INTEGRATION.md` for
 the exact behavior and limits; candidate-specific checks and browser results belong in the canonical
 Platform-007 evidence record.
+
+The current local construction surface also includes source-derived Product Family drafting, richer
+static UI contributions, the same-origin mobile client shell and the bounded Entity source builder.
+Their accepted scoped records are [Family](../.brain/evidence/family-result.md),
+[UI contributions](../.brain/evidence/ui-slots-result.md),
+[mobile](../.brain/evidence/mobile-001-result.json), and
+[Entity generation](../.brain/evidence/entity-builder-result.md); the Knowledge capability result is
+[recorded here](../.brain/evidence/capability-result.md). These local developer journeys do not establish
+native mobile qualification, hosted/provider deployment or cross-artifact data migration. Runtime backup
+and restore is same-instance and requires positive stop proof; startup does not reseed removed users or
+grants. See [the architecture map](../PLATFORM_ARCHITECTURE.md) and
+[the build map](../FULL_PLATFORM_BUILD_MAP.md) for source ownership and future boundaries.
 
 Platform-002 adds an end-to-end paired local product journey: canonical preview, immutable save,
 durable build admission, fixed compilation and factory assembly, complete local-export integrity

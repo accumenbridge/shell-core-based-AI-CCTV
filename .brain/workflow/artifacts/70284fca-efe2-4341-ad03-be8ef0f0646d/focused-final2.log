@@ -1,0 +1,53 @@
+TAP version 13
+# Subtest: R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces
+ok 1 - R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces
+  ---
+  duration_ms: 173.8724
+  type: 'test'
+  ...
+# Subtest: R05: closure includes static imports, literal lazy chunks and declared asset references
+ok 2 - R05: closure includes static imports, literal lazy chunks and declared asset references
+  ---
+  duration_ms: 22.4679
+  type: 'test'
+  ...
+# Subtest: R05: missing dependency fails the build rather than making a broken release
+ok 3 - R05: missing dependency fails the build rather than making a broken release
+  ---
+  duration_ms: 7.8448
+  type: 'test'
+  ...
+# Subtest: R05: server-only package import fails before being publicly packaged
+ok 4 - R05: server-only package import fails before being publicly packaged
+  ---
+  duration_ms: 6.8148
+  type: 'test'
+  ...
+# Subtest: R05: nonliteral runtime import is not converted into an arbitrary URL
+ok 5 - R05: nonliteral runtime import is not converted into an arbitrary URL
+  ---
+  duration_ms: 6.534
+  type: 'test'
+  ...
+# Subtest: R05: a relative import cannot escape the selected module
+ok 6 - R05: a relative import cannot escape the selected module
+  ---
+  duration_ms: 7.7625
+  type: 'test'
+  ...
+# Subtest: R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM
+ok 7 - R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM
+  ---
+  duration_ms: 6.6427
+  type: 'test'
+  ...
+# Subtest: mobile preview assets survive an ordinary fixed product export and are served by that snapshot
+not ok 8 - mobile preview assets survive an ordinary fixed product export and are served by that snapshot
+  ---
+  duration_ms: 670.7289
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\frontend-assembly.test.mjs:57:1'
+  failureType: 'hookFailed'
+  error: "EBUSY: resource busy or locked, unlink 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-mobile-export-I1kQjb\\data\\access.sqlite-shm'"
+  code: 'EBUSY'
+  ...

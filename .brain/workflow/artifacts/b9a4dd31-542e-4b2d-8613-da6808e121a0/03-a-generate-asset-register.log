@@ -1,0 +1,15 @@
+node:internal/fs/promises:1086
+  const result = await PromisePrototypeThen(
+                 ^
+
+Error: ENOENT: no such file or directory, lstat 'C:\Users\Lenovo\AppData\Local\Temp\qb-construction-source-a--zGhH7m\examples\entities\asset-register.json'
+    at async lstat (node:internal/fs/promises:1086:18)
+    at async generateEntity (file:///C:/Users/Lenovo/AppData/Local/Temp/qb-construction-source-a--zGhH7m/tools/entity-builder.mjs:203:22)
+    at async file:///C:/Users/Lenovo/AppData/Local/Temp/qb-construction-source-a--zGhH7m/tools/factory.mjs:51:23 {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'lstat',
+  path: 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-construction-source-a--zGhH7m\\examples\\entities\\asset-register.json'
+}
+
+Node.js v24.19.0

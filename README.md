@@ -5,6 +5,12 @@ This complete project includes Foundation 0.2 source and compiled output, the dy
 reviewed developer-profile setup, an opt-in local builder, and regression tests.
 It is a local developer release, not a production deployment system.
 
+Version values belong to different layers: the repository package remains `0.2.0`, the full Studio
+program is described as `0.3`, modules and products carry their own exact three-part versions, and
+`quadbridge.module.v1` is the module ABI. Operation contract suffixes, entity/family/UI schema tags,
+and exported-artifact formats are separate compatibility identities; changing one does not imply
+another changed.
+
 ## Open it
 
 Double-click **OPEN_PLATFORM.html** for the self-contained offline explorer. Its examples are sample-only.
@@ -23,7 +29,9 @@ On Windows, double-click **START_FULL_STUDIO.cmd**; it builds and starts the sam
 Open the address printed in the terminal (default `http://127.0.0.1:4480`), click **Connect local Studio**,
 and enter the printed pairing code. `npm run studio` and **START_STUDIO.cmd** remain the legacy standalone
 Studio launcher; use the full-console entry above for the complete product-building and managed-runtime workflow.
-The Windows launchers are supplied; recorded execution was on Linux/Node 22.16.0.
+The Windows launchers are supplied; the execution note in the historical Studio record refers to an
+earlier Linux/Node 22.16.0 run. See the current local qualification record separately; a launcher file
+or workflow definition alone is not evidence of Windows execution.
 
 ## Create and run a product
 
@@ -115,9 +123,26 @@ npm run build
 
 The spec supports bounded text, integer, boolean and enum fields, defaults, a module-owned SQLite table,
 fixed list/get/create/edit operations and matching routes, plus a list/detail/create/edit workspace.
-Commands carry stable receipts, and edits require the version that was read. See
+Run `npm ci` and `npm run build` before either source generator: generation uses the compiled canonical
+composition and Studio validators as a preflight and does not install or build implicitly. Module and
+product source identities use two to 48 lowercase letters/digits/hyphens beginning with a letter.
+Commands carry stable receipts, and edits require the version that was read. Optional booleans and
+enums have a “Not set” choice; absent no-default values stay omitted, while explicit `false` remains
+distinct. Generated Studio metadata describes the generated owner and declares requirements; it does
+not grant access or assert that deployment resources are running. See
 [`docs/ENTITY_BUILDER.md`](docs/ENTITY_BUILDER.md) for limits and the independent Room Inspection example.
 This does not generate relations, approvals, attachments, schema upgrades/data migrations or a universal business model.
+
+The bounded clean-install acceptance driver is separate from routine tests. It creates two temporary
+source copies, generates the examples, explicitly reconciles the temporary lockfile, then verifies a
+fresh `npm ci` and build from source without inherited `node_modules`, compiled output or artifacts:
+
+```text
+node tools/construction-clean-install.mjs
+```
+
+It uses the current ordinary npm configuration and retains private logs and source roots if a step fails.
+It does not alter the repository lockfile or install dependencies during generation.
 
 A terminal-only path uses the same catalogue and resolver:
 
@@ -191,7 +216,7 @@ Open `http://127.0.0.1:4480`.
 
 The new Studio separates the major construction layers—UI, backend, AI, data, build, environments and deployments—while retaining the original resolver/runtime as the authority for executable product composition.
 
-See [`IMPLEMENTATION_STATUS_0.3.md`](IMPLEMENTATION_STATUS_0.3.md) for exact implemented/pending boundaries.
+See [`IMPLEMENTATION_STATUS_0.3.md`](IMPLEMENTATION_STATUS_0.3.md), [`FULL_PLATFORM_BUILD_MAP.md`](FULL_PLATFORM_BUILD_MAP.md), and [`docs/STATUS.md`](docs/STATUS.md) for the current source map and implemented/pending boundaries. The retained local journeys cover bounded Entity source generation, source-derived product families, richer static UI contributions, and the mobile same-origin client shell; none implies native mobile, production deployment or cross-artifact data migration. Accepted scoped evidence is indexed in the local `.brain/evidence/` records for [Capability](.brain/evidence/capability-result.md), [Family](.brain/evidence/family-result.md), [UI contributions](.brain/evidence/ui-slots-result.md), and [Entity generation](.brain/evidence/entity-builder-result.md).
 
 The paired local console supports a bounded **Products → preview → save → Builds → compile/export → Artifacts → register → inspect/download → promote local release** journey. Builds use an immutable saved version, a frozen reviewed source copy, the pinned local compiler toolchain and the fixed factory recipe. Successful exports are checked against the admitted plan and a complete private inventory before the result is recorded. Registration copies that exact verified snapshot into a local immutable registry; file downloads remain attachments and never execute in the operator origin. Promotion records an immutable local product-version release. Registry publication itself does not launch the application or qualify deployment.
 

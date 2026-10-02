@@ -202,7 +202,7 @@ export function expectedFactoryInventory(sourceRoot: string, planValue: unknown)
     copyTree(`.artifacts/${product.id}`,`.artifacts/${product.id}`);
     if (typeof product.wiring === 'string') copyTree(`solutions/${product.wiring}`,`solutions/${product.wiring}`);
     copyTree('profiles','profiles');
-    for (const file of ['tools/link-workspaces.mjs','tools/demo.mjs','tools/local-profile.mjs']) add(file,readFileSync(safeFile(sourceRoot,file)));
+    for (const file of ['tools/link-workspaces.mjs','tools/workspace-identities.mjs','tools/demo.mjs','tools/local-profile.mjs']) add(file,readFileSync(safeFile(sourceRoot,file)));
     const selectedModules = plan.modules.map((module: Record<string,unknown>) => {
         const id = module.id;
         if (typeof id !== 'string' || !/^[a-z][a-z0-9-]{1,47}$/.test(id)) throw new Error('Malformed admitted module closure');

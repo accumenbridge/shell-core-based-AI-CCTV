@@ -1,0 +1,10 @@
+
+> quadbridge-mobile-app@0.1.0 android:sync
+> cap sync android
+
+√ Copying web assets from www to android\app\src\main\assets\public in 10.78ms
+√ Creating capacitor.config.json in android\app\src\main\assets in 479.40μs
+√ copy android in 15.74ms
+√ Updating Android plugins in 280.90μs
+√ update android in 14.47ms
+[info] Sync finished in 0.036s

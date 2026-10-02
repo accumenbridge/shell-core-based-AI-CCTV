@@ -1,0 +1,197 @@
+TAP version 13
+# Subtest: constructor seeds once atomically and reopening never restores removed identities or grants
+ok 1 - constructor seeds once atomically and reopening never restores removed identities or grants
+  ---
+  duration_ms: 59.2211
+  type: 'test'
+  ...
+# Subtest: createRuntime restart keeps configured identities and grants removed from the bound access owner
+ok 2 - createRuntime restart keeps configured identities and grants removed from the bound access owner
+  ---
+  duration_ms: 215.9697
+  type: 'test'
+  ...
+# Subtest: an intentional empty first seed seals the binding and cannot be filled on reopen
+ok 3 - an intentional empty first seed seals the binding and cannot be filled on reopen
+  ---
+  duration_ms: 9.3195
+  type: 'test'
+  ...
+# Subtest: invalid initial seed rolls back binding and principals and leaves an existing owner repair-required
+ok 4 - invalid initial seed rolls back binding and principals and leaves an existing owner repair-required
+  ---
+  duration_ms: 31.83
+  type: 'test'
+  ...
+# Subtest: concurrent first constructors commit one complete principal seed set
+ok 5 - concurrent first constructors commit one complete principal seed set
+  ---
+  duration_ms: 208.7059
+  type: 'test'
+  ...
+# Subtest: module SDK creates a full vertical-slice manifest
+ok 6 - module SDK creates a full vertical-slice manifest
+  ---
+  duration_ms: 1.2723
+  type: 'test'
+  ...
+# Subtest: canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+ok 7 - canonical runtime adapter accepts helper-omitted local document bindings and changes only reviewed local identity fields
+  ---
+  duration_ms: 7.0492
+  type: 'test'
+  ...
+# Subtest: fresh manager preparation writes only bounded enrollment inputs and rechecks authorization after canonical import
+ok 8 - fresh manager preparation writes only bounded enrollment inputs and rechecks authorization after canonical import
+  ---
+  duration_ms: 18.2968
+  type: 'test'
+  ...
+# Subtest: owned execution cleanup removes only exact copied-workspace junctions and quarantines changed targets
+ok 9 - owned execution cleanup removes only exact copied-workspace junctions and quarantines changed targets
+  ---
+  duration_ms: 31.0051
+  type: 'test'
+  ...
+# Subtest: one-use runtime gate is published without a post-publication lookup that can race its consumer
+ok 10 - one-use runtime gate is published without a post-publication lookup that can race its consumer
+  ---
+  duration_ms: 588.0868
+  type: 'test'
+  ...
+# Subtest: original runtime owner can reconcile a late close and retry a rolled-back settlement audit
+ok 11 - original runtime owner can reconcile a late close and retry a rolled-back settlement audit
+  ---
+  duration_ms: 43.5061
+  type: 'test'
+  ...
+# Subtest: public close bounds an unresolved monitor and retries incomplete or rolled-back exact-owner settlement
+ok 12 - public close bounds an unresolved monitor and retries incomplete or rolled-back exact-owner settlement
+  ---
+  duration_ms: 3.6873
+  type: 'test'
+  ...
+# Subtest: terminal capture drains a coalesced startup tail when the event file has no new bytes
+ok 13 - terminal capture drains a coalesced startup tail when the event file has no new bytes
+  ---
+  duration_ms: 8.2529
+  type: 'test'
+  ...
+# Subtest: terminal capture rejects disappearance of an established event channel without erasing native exit proof
+ok 14 - terminal capture rejects disappearance of an established event channel without erasing native exit proof
+  ---
+  duration_ms: 7.9994
+  type: 'test'
+  ...
+# Subtest: late semantic event errors remain separate from a matching native empty and helper-close proof
+ok 15 - late semantic event errors remain separate from a matching native empty and helper-close proof
+  ---
+  duration_ms: 6.6912
+  type: 'test'
+  ...
+# Subtest: runtime start preserves profile and admission rejection without creating unowned execution
+ok 16 - runtime start preserves profile and admission rejection without creating unowned execution
+  ---
+  duration_ms: 475.3555
+  type: 'test'
+  ...
+# Subtest: verified snapshot copy preflights every path and digest before creating its destination
+ok 17 - verified snapshot copy preflights every path and digest before creating its destination
+  ---
+  duration_ms: 5.816
+  type: 'test'
+  ...
+# Subtest: runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+ok 18 - runtime enrollment binds the exact owner path, reserves fresh access storage after awaited authorization, and never reseeds a completed store
+  ---
+  duration_ms: 164.1882
+  type: 'test'
+  ...
+# Subtest: completed enrollment tolerates only a vanished SQLite sidecar while rejecting vanished owner data
+ok 19 - completed enrollment tolerates only a vanished SQLite sidecar while rejecting vanished owner data
+  ---
+  duration_ms: 136.2632
+  type: 'test'
+  ...
+# Subtest: a failed canonical LocalAccess seed leaves repair-required evidence and never publishes enrollment completion
+ok 20 - a failed canonical LocalAccess seed leaves repair-required evidence and never publishes enrollment completion
+  ---
+  duration_ms: 18.7151
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol reports assignment, accepts fragmented nonce-bound controls and proves STOP
+ok 21 - RuntimeProtocol reports assignment, accepts fragmented nonce-bound controls and proves STOP
+  ---
+  duration_ms: 2746.8652
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol wrong-nonce and malformed pre-RESUME controls fail closed without execution
+    # Subtest: wrong-nonce RESUME
+    ok 1 - wrong-nonce RESUME
+      ---
+      duration_ms: 1168.4634
+      type: 'test'
+      ...
+    # Subtest: wrong-nonce STOP
+    ok 2 - wrong-nonce STOP
+      ---
+      duration_ms: 1221.8017
+      type: 'test'
+      ...
+    # Subtest: malformed control
+    ok 3 - malformed control
+      ---
+      duration_ms: 1211.9086
+      type: 'test'
+      ...
+    1..3
+ok 22 - RuntimeProtocol wrong-nonce and malformed pre-RESUME controls fail closed without execution
+  ---
+  duration_ms: 3603.9045
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol EOF before RESUME fails closed without executing the supervisor script
+ok 23 - RuntimeProtocol EOF before RESUME fails closed without executing the supervisor script
+  ---
+  duration_ms: 1190.9705
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol duplicate RESUME after the owned descendant starts terminates the whole job
+ok 24 - RuntimeProtocol duplicate RESUME after the owned descendant starts terminates the whole job
+  ---
+  duration_ms: 1960.9618
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol parses coalesced nonce-bound RESUME and STOP controls
+ok 25 - RuntimeProtocol parses coalesced nonce-bound RESUME and STOP controls
+  ---
+  duration_ms: 1245.351
+  type: 'test'
+  ...
+# Subtest: RuntimeProtocol owns canonical local-access constructor failure through nonce-bound EMPTY and helper close
+ok 26 - RuntimeProtocol owns canonical local-access constructor failure through nonce-bound EMPTY and helper close
+  ---
+  duration_ms: 1074.0251
+  type: 'test'
+  ...
+# Subtest: Studio metadata validation accepts maintained source manifests through the module SDK
+ok 27 - Studio metadata validation accepts maintained source manifests through the module SDK
+  ---
+  duration_ms: 1.0483
+  type: 'test'
+  ...
+# Subtest: Studio metadata validation rejects malformed nested shapes, enums, identifiers and numeric bounds
+ok 28 - Studio metadata validation rejects malformed nested shapes, enums, identifiers and numeric bounds
+  ---
+  duration_ms: 1.0966
+  type: 'test'
+  ...
+1..28
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14314.4324

@@ -1,0 +1,460 @@
+{
+  "schema": "quadbridge.construction-clean-install.v1",
+  "evidenceId": "8d11ce80-12c7-4ea3-8f35-b673ce23a156",
+  "status": "PASSED",
+  "node": "v24.19.0",
+  "npmCommand": "npm",
+  "platform": "win32",
+  "architecture": "x64",
+  "sourceCopies": [
+    {
+      "role": "A",
+      "rootName": "qb-construction-source-a--d4l74m"
+    },
+    {
+      "role": "B",
+      "rootName": "qb-construction-source-b--wWbw55"
+    }
+  ],
+  "steps": [
+    {
+      "command": "npm",
+      "args": [
+        "ci"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 2288,
+      "stdoutBytes": 75,
+      "stderrBytes": 305,
+      "capturedBytes": 380,
+      "truncated": false,
+      "outputSha256": "70fc9b8275e5ade53b07f577830bb5bad8f804c54882c3df1351317986a93065",
+      "label": "a-npm-ci",
+      "logName": "01-a-npm-ci.log"
+    },
+    {
+      "command": "npm",
+      "args": [
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 3541,
+      "stdoutBytes": 409,
+      "stderrBytes": 0,
+      "capturedBytes": 409,
+      "truncated": false,
+      "outputSha256": "3e8b90fac5718ae1c6123956c58db7cde9ff425ae36cff13d3f7aad34634728b",
+      "label": "a-base-build",
+      "logName": "02-a-base-build.log"
+    },
+    {
+      "command": "node.exe",
+      "args": [
+        "tools/factory.mjs",
+        "generate-entity",
+        ".local/construction-specs/asset-register.json"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 123,
+      "stdoutBytes": 231,
+      "stderrBytes": 0,
+      "capturedBytes": 231,
+      "truncated": false,
+      "outputSha256": "b41443f0e6f40941c594e0a9de5fa761fd7f8f221f99aa8ac09b2155c15b0f7d",
+      "label": "a-generate-asset-register",
+      "logName": "03-a-generate-asset-register.log"
+    },
+    {
+      "command": "node.exe",
+      "args": [
+        "tools/factory.mjs",
+        "generate-entity",
+        ".local/construction-specs/room-inspection.json"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 96,
+      "stdoutBytes": 233,
+      "stderrBytes": 0,
+      "capturedBytes": 233,
+      "truncated": false,
+      "outputSha256": "a8359c263fa7efa5ee9c82ec7bbd0c5428745836e404be96c63fef23cbab229d",
+      "label": "a-generate-room-inspection",
+      "logName": "04-a-generate-room-inspection.log"
+    },
+    {
+      "command": "node.exe",
+      "args": [
+        "tools/factory.mjs",
+        "create-module",
+        "checklist"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 89,
+      "stdoutBytes": 98,
+      "stderrBytes": 0,
+      "capturedBytes": 98,
+      "truncated": false,
+      "outputSha256": "9dcc066e82d7cf5f53b33bd97cc5ceba78670fc6f6dc0725feb90876cb3420b3",
+      "label": "a-create-checklist",
+      "logName": "05-a-create-checklist.log"
+    },
+    {
+      "command": "node.exe",
+      "args": [
+        "tools/factory.mjs",
+        "create-product",
+        "construction-assets",
+        "--modules",
+        "asset-register",
+        "--version",
+        "1.0.0"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 177,
+      "stdoutBytes": 207,
+      "stderrBytes": 0,
+      "capturedBytes": 207,
+      "truncated": false,
+      "outputSha256": "ddd32d688efa6ee6fea2c974745680715041086d36521940a8a8ccf572464a46",
+      "label": "a-create-construction-assets",
+      "logName": "06-a-create-construction-assets.log"
+    },
+    {
+      "command": "node.exe",
+      "args": [
+        "tools/factory.mjs",
+        "create-product",
+        "construction-rooms",
+        "--modules",
+        "room-inspection",
+        "--version",
+        "2.1.0"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 180,
+      "stdoutBytes": 205,
+      "stderrBytes": 0,
+      "capturedBytes": 205,
+      "truncated": false,
+      "outputSha256": "c818986b76a9b1939ff8eb08207c352914737c673db69146298fbf6ab6655bf0",
+      "label": "a-create-construction-rooms",
+      "logName": "07-a-create-construction-rooms.log"
+    },
+    {
+      "command": "node.exe",
+      "args": [
+        "tools/factory.mjs",
+        "create-product",
+        "construction-suite",
+        "--modules",
+        "asset-register,room-inspection",
+        "--version",
+        "1.0.0"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 179,
+      "stdoutBytes": 205,
+      "stderrBytes": 0,
+      "capturedBytes": 205,
+      "truncated": false,
+      "outputSha256": "d50d892fe014b67c0787824cc261ac8fd6ab74c7e591d8884ee2fabf848333b9",
+      "label": "a-create-construction-suite",
+      "logName": "08-a-create-construction-suite.log"
+    },
+    {
+      "command": "node.exe",
+      "args": [
+        "tools/factory.mjs",
+        "create-product",
+        "construction-checklist",
+        "--modules",
+        "checklist",
+        "--version",
+        "1.2.0"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 179,
+      "stdoutBytes": 213,
+      "stderrBytes": 0,
+      "capturedBytes": 213,
+      "truncated": false,
+      "outputSha256": "129b8f6c2bfde9fd16a25aa58376b204bbf0f01ed454600ef09a4b2b53d871bd",
+      "label": "a-create-construction-checklist",
+      "logName": "09-a-create-construction-checklist.log"
+    },
+    {
+      "command": "npm",
+      "args": [
+        "install",
+        "--package-lock-only",
+        "--ignore-scripts"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 860,
+      "stdoutBytes": 67,
+      "stderrBytes": 0,
+      "capturedBytes": 67,
+      "truncated": false,
+      "outputSha256": "f33a1f1e741a24f8bcc04929c7f721c1e434982087c4efb1405704ab370a630e",
+      "label": "a-reconcile-lock",
+      "logName": "10-a-reconcile-lock.log"
+    },
+    {
+      "command": "npm",
+      "args": [
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 1665,
+      "stdoutBytes": 630,
+      "stderrBytes": 0,
+      "capturedBytes": 630,
+      "truncated": false,
+      "outputSha256": "1d8cfa44d60c9a6e78eb53e48344685e17d1164c17a0fb9cd42da1ca00bbd575",
+      "label": "a-generated-build",
+      "logName": "11-a-generated-build.log"
+    },
+    {
+      "command": "npm",
+      "args": [
+        "ci"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 2835,
+      "stdoutBytes": 75,
+      "stderrBytes": 305,
+      "capturedBytes": 380,
+      "truncated": false,
+      "outputSha256": "e41e06ebdfd2931576053ff04627afafcf6d0b5013b4cb8ba598b7265d350440",
+      "label": "b-npm-ci",
+      "logName": "12-b-npm-ci.log"
+    },
+    {
+      "command": "npm",
+      "args": [
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 4167,
+      "stdoutBytes": 630,
+      "stderrBytes": 0,
+      "capturedBytes": 630,
+      "truncated": false,
+      "outputSha256": "1d8cfa44d60c9a6e78eb53e48344685e17d1164c17a0fb9cd42da1ca00bbd575",
+      "label": "b-build",
+      "logName": "13-b-build.log"
+    },
+    {
+      "command": "node.exe",
+      "args": [
+        "tools/link-workspaces.mjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 94,
+      "stdoutBytes": 73,
+      "stderrBytes": 0,
+      "capturedBytes": 73,
+      "truncated": false,
+      "outputSha256": "2cabf27ebe2d1fd669caee7f1214b5e80bf42089d3eb8330110d955c1d4bbcf8",
+      "label": "b-link-idempotence-1",
+      "logName": "14-b-link-idempotence-1.log"
+    },
+    {
+      "command": "node.exe",
+      "args": [
+        "tools/link-workspaces.mjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 96,
+      "stdoutBytes": 73,
+      "stderrBytes": 0,
+      "capturedBytes": 73,
+      "truncated": false,
+      "outputSha256": "2cabf27ebe2d1fd669caee7f1214b5e80bf42089d3eb8330110d955c1d4bbcf8",
+      "label": "b-link-idempotence-2",
+      "logName": "15-b-link-idempotence-2.log"
+    }
+  ],
+  "generated": {
+    "asset-register": {
+      "manifestSha256": "b7814db19808158e2a0808b253d32e5496d682fcf91ec3aa7bcaeb0aa6f36f07",
+      "packageSha256": "0beb4f01c3f0131214ca2ea0cc0b5162872eb47baeb3b28850589ac94eeb263a",
+      "workspaceId": "asset-register"
+    },
+    "room-inspection": {
+      "manifestSha256": "e5eb396ac6b83162b77d49a67f48ce4e06a014e22c9836c06d05721d824bbfd2",
+      "packageSha256": "ad6fac67ea9edb3dae33e954e99341affccb3fd24bc2659fd180ea22d9b33753",
+      "workspaceId": "room-inspection"
+    },
+    "checklist": {
+      "manifestSha256": "b92e5b16c1b6c30c10a0f9c765e7abd8efbe6f21cc8fb02a698cad6023babd11",
+      "packageSha256": "83d2c25556b86655da03315937b2aae67dc741131d8d4dd609f6794a68c7224c",
+      "workspaceId": "checklist"
+    }
+  },
+  "products": {
+    "construction-assets": {
+      "moduleIds": [
+        "asset-register"
+      ],
+      "webFileCount": 16,
+      "planSha256": "4b2eab7709ed9c2f71bc13700b9aaa4c4f7b76d8ccd86d14109488d162b72879",
+      "webSha256": "1d338e81d5e117550de993b7db697c1584cb0d3b5ed0bab39a0748ea647b828e"
+    },
+    "construction-rooms": {
+      "moduleIds": [
+        "room-inspection"
+      ],
+      "webFileCount": 16,
+      "planSha256": "0bdd76109393580d7e9da07aff77da0d0fa9eb1d2dc2779b2e0afa83a110b6d3",
+      "webSha256": "4d9da91a2218d49af2ff191e5281b244e40d724643b94d84eaa7876d1f237a29"
+    },
+    "construction-suite": {
+      "moduleIds": [
+        "asset-register",
+        "room-inspection"
+      ],
+      "webFileCount": 20,
+      "planSha256": "525533ff5951aead1dbcc9e0bf3c455af4499b0744778ec8fb213efa0e1bbffc",
+      "webSha256": "d8cbc255bdc471e65b703e518f16dbd2d7b7c1e821cfa345cbe63c26cad587f7"
+    },
+    "construction-checklist": {
+      "moduleIds": [
+        "checklist"
+      ],
+      "webFileCount": 14,
+      "planSha256": "ca2d33bc492972e010eb56d3df906988fbc5e35f784d39281bf15e0fa9a52504",
+      "webSha256": "431d521359848d1912330d53ed491a6889544a023f3a990b6c9bcba10ac4b3d6"
+    }
+  },
+  "lock": {
+    "changedByExplicitReconcile": true,
+    "sha256": "61429b5db596fbc4702406fb0e11bb1f96a360b423607089740c59ba4ebc43ef",
+    "afterBuildASha256": "61429b5db596fbc4702406fb0e11bb1f96a360b423607089740c59ba4ebc43ef",
+    "copiedToBSha256": "61429b5db596fbc4702406fb0e11bb1f96a360b423607089740c59ba4ebc43ef",
+    "afterCiBuildBSha256": "61429b5db596fbc4702406fb0e11bb1f96a360b423607089740c59ba4ebc43ef"
+  },
+  "retainedOnFailure": false,
+  "sourceFingerprintBeforeA": "42720c79680dd581f4444d626875b7c87dc320d0028bb6288c953f3279dfaff3",
+  "sourceFingerprintCopiedA": "42720c79680dd581f4444d626875b7c87dc320d0028bb6288c953f3279dfaff3",
+  "generationSpecs": {
+    "asset-register": {
+      "sourcePath": "examples/entities/asset-register.json",
+      "sourceByteCount": 777,
+      "sourceSha256": "4f500e75eaa70fae2d03691d1d7d94b78d703e44005f2f1e44c600397bd302dc",
+      "copiedPath": ".local/construction-specs/asset-register.json",
+      "copiedByteCount": 777,
+      "copiedSha256": "4f500e75eaa70fae2d03691d1d7d94b78d703e44005f2f1e44c600397bd302dc"
+    },
+    "room-inspection": {
+      "sourcePath": "examples/entities/room-inspection.json",
+      "sourceByteCount": 822,
+      "sourceSha256": "31f1f44af64d8017756817d54646569ad2c2491ac734901fac3f00bf14cc0d5f",
+      "copiedPath": ".local/construction-specs/room-inspection.json",
+      "copiedByteCount": 822,
+      "copiedSha256": "31f1f44af64d8017756817d54646569ad2c2491ac734901fac3f00bf14cc0d5f"
+    }
+  },
+  "sourceFingerprintA": "3a2294b6426c54bbff10acce4ff622bfe8f84d703705c312ff233125c5390488",
+  "sourceFingerprintCopiedB": "3a2294b6426c54bbff10acce4ff622bfe8f84d703705c312ff233125c5390488",
+  "sourceFingerprintAfterBBuild": "3a2294b6426c54bbff10acce4ff622bfe8f84d703705c312ff233125c5390488",
+  "productsB": {
+    "construction-assets": {
+      "moduleIds": [
+        "asset-register"
+      ],
+      "webFileCount": 16,
+      "planSha256": "4b2eab7709ed9c2f71bc13700b9aaa4c4f7b76d8ccd86d14109488d162b72879",
+      "webSha256": "1d338e81d5e117550de993b7db697c1584cb0d3b5ed0bab39a0748ea647b828e"
+    },
+    "construction-rooms": {
+      "moduleIds": [
+        "room-inspection"
+      ],
+      "webFileCount": 16,
+      "planSha256": "0bdd76109393580d7e9da07aff77da0d0fa9eb1d2dc2779b2e0afa83a110b6d3",
+      "webSha256": "4d9da91a2218d49af2ff191e5281b244e40d724643b94d84eaa7876d1f237a29"
+    },
+    "construction-suite": {
+      "moduleIds": [
+        "asset-register",
+        "room-inspection"
+      ],
+      "webFileCount": 20,
+      "planSha256": "525533ff5951aead1dbcc9e0bf3c455af4499b0744778ec8fb213efa0e1bbffc",
+      "webSha256": "d8cbc255bdc471e65b703e518f16dbd2d7b7c1e821cfa345cbe63c26cad587f7"
+    },
+    "construction-checklist": {
+      "moduleIds": [
+        "checklist"
+      ],
+      "webFileCount": 14,
+      "planSha256": "ca2d33bc492972e010eb56d3df906988fbc5e35f784d39281bf15e0fa9a52504",
+      "webSha256": "431d521359848d1912330d53ed491a6889544a023f3a990b6c9bcba10ac4b3d6"
+    }
+  },
+  "finishedAt": "2026-10-02T15:54:31.033Z"
+}

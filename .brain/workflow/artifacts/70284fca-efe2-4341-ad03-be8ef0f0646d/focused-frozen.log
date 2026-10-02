@@ -1,0 +1,179 @@
+TAP version 13
+# Subtest: R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces
+ok 1 - R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces
+  ---
+  duration_ms: 183.7256
+  type: 'test'
+  ...
+# Subtest: R05: closure includes static imports, literal lazy chunks and declared asset references
+ok 2 - R05: closure includes static imports, literal lazy chunks and declared asset references
+  ---
+  duration_ms: 21.7154
+  type: 'test'
+  ...
+# Subtest: R05: missing dependency fails the build rather than making a broken release
+ok 3 - R05: missing dependency fails the build rather than making a broken release
+  ---
+  duration_ms: 6.9405
+  type: 'test'
+  ...
+# Subtest: R05: server-only package import fails before being publicly packaged
+ok 4 - R05: server-only package import fails before being publicly packaged
+  ---
+  duration_ms: 7.5082
+  type: 'test'
+  ...
+# Subtest: R05: nonliteral runtime import is not converted into an arbitrary URL
+ok 5 - R05: nonliteral runtime import is not converted into an arbitrary URL
+  ---
+  duration_ms: 5.6761
+  type: 'test'
+  ...
+# Subtest: R05: a relative import cannot escape the selected module
+ok 6 - R05: a relative import cannot escape the selected module
+  ---
+  duration_ms: 7.5435
+  type: 'test'
+  ...
+# Subtest: R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM
+ok 7 - R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM
+  ---
+  duration_ms: 6.4764
+  type: 'test'
+  ...
+# Subtest: mobile preview assets survive an ordinary fixed product export and are served by that snapshot
+ok 8 - mobile preview assets survive an ordinary fixed product export and are served by that snapshot
+  ---
+  duration_ms: 451.3747
+  type: 'test'
+  ...
+# Subtest: mobile packaging derives neutral, Desk and Combined client-only snapshots with exact inventories
+ok 9 - mobile packaging derives neutral, Desk and Combined client-only snapshots with exact inventories
+  ---
+  duration_ms: 271.4813
+  type: 'test'
+  ...
+# Subtest: mobile assembler rejects a plan mutation against the frozen release identity
+ok 10 - mobile assembler rejects a plan mutation against the frozen release identity
+  ---
+  duration_ms: 1.1835
+  type: 'test'
+  ...
+# Subtest: mobile bundler rebases nested new-URL assets into its reviewed raw asset tree
+ok 11 - mobile bundler rebases nested new-URL assets into its reviewed raw asset tree
+  ---
+  duration_ms: 9.7567
+  type: 'test'
+  ...
+# Subtest: mobile shell derives tenant, account and workspace navigation from the accepted bootstrap
+ok 12 - mobile shell derives tenant, account and workspace navigation from the accepted bootstrap
+  ---
+  duration_ms: 18.2069
+  type: 'test'
+  ...
+# Subtest: initially hidden mobile page stays suspended until visibility resumes
+ok 13 - initially hidden mobile page stays suspended until visibility resumes
+  ---
+  duration_ms: 0.9523
+  type: 'test'
+  ...
+# Subtest: logout remains fenced across suspend/resume and renders login only after a visible settle
+ok 14 - logout remains fenced across suspend/resume and renders login only after a visible settle
+  ---
+  duration_ms: 1.5886
+  type: 'test'
+  ...
+# Subtest: packaged mobile shell shows deferred connection state without auth or API requests
+ok 15 - packaged mobile shell shows deferred connection state without auth or API requests
+  ---
+  duration_ms: 0.3916
+  type: 'test'
+  ...
+# Subtest: R01: pending tenant change cannot mount or write under obsolete context
+ok 16 - R01: pending tenant change cannot mount or write under obsolete context
+  ---
+  duration_ms: 19.0064
+  type: 'test'
+  ...
+# Subtest: R01: denied replacement retains no old workspace and no old request authority
+ok 17 - R01: denied replacement retains no old workspace and no old request authority
+  ---
+  duration_ms: 1.2958
+  type: 'test'
+  ...
+# Subtest: R01: unchanged periodic bootstrap preserves accepted client scope
+ok 18 - R01: unchanged periodic bootstrap preserves accepted client scope
+  ---
+  duration_ms: 1.0703
+  type: 'test'
+  ...
+# Subtest: R01: late read denial from aborted scope cannot clear the new scope
+ok 19 - R01: late read denial from aborted scope cannot clear the new scope
+  ---
+  duration_ms: 1.4143
+  type: 'test'
+  ...
+# Subtest: R01: late lazy import cannot mount into a replacement scope
+ok 20 - R01: late lazy import cannot mount into a replacement scope
+  ---
+  duration_ms: 1.3709
+  type: 'test'
+  ...
+# Subtest: R08: successful unchanged bootstrap remounts after failed refresh
+ok 21 - R08: successful unchanged bootstrap remounts after failed refresh
+  ---
+  duration_ms: 0.8636
+  type: 'test'
+  ...
+# Subtest: R06: two named workspace exports mount exactly their declarations
+ok 22 - R06: two named workspace exports mount exactly their declarations
+  ---
+  duration_ms: 0.6326
+  type: 'test'
+  ...
+# Subtest: R06: invalid named export undefined never substitutes default
+ok 23 - R06: invalid named export undefined never substitutes default
+  ---
+  duration_ms: 0.6086
+  type: 'test'
+  ...
+# Subtest: R06: invalid named export {} never substitutes default
+ok 24 - R06: invalid named export {} never substitutes default
+  ---
+  duration_ms: 0.4399
+  type: 'test'
+  ...
+# Subtest: R06: invalid named export {"mount":1} never substitutes default
+ok 25 - R06: invalid named export {"mount":1} never substitutes default
+  ---
+  duration_ms: 0.7193
+  type: 'test'
+  ...
+# Subtest: R01: stale workspace notifications cannot overwrite current UI
+ok 26 - R01: stale workspace notifications cannot overwrite current UI
+  ---
+  duration_ms: 0.78
+  type: 'test'
+  ...
+# Subtest: workspace export closure follows selected Knowledge package manifests and actual ai-core version
+ok 27 - workspace export closure follows selected Knowledge package manifests and actual ai-core version
+  ---
+  duration_ms: 9.0787
+  type: 'test'
+  ...
+# Subtest: workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+ok 28 - workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+  ---
+  duration_ms: 2.2064
+  type: 'test'
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1649.5153
+exit_code=0

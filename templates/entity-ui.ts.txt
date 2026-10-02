@@ -10,10 +10,21 @@ function control(spec: FieldSpec) {
   const wrap = el('label', 'field');
   wrap.append(el('span', 'field-label', spec.label));
   let input: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
-  if (spec.type === 'enum') {
+  if (spec.type === 'enum' || (spec.type === 'boolean' && !spec.required)) {
     const select = el('select');
+    if (!spec.required) {
+      const absent = el('option', '', 'Not set');
+      absent.value = '';
+      select.append(absent);
+    }
+    if (spec.type === 'boolean') {
+      for (const [value, label] of [['true', 'Yes'], ['false', 'No']] as const) {
+        const option = el('option', '', label); option.value = value; select.append(option);
+      }
+    } else {
     for (const value of spec.values ?? []) {
       const option = el('option', '', value); option.value = value; select.append(option);
+    }
     }
     input = select;
   } else if (spec.type === 'text' && (spec.maxLength ?? 0) > 200) {
@@ -27,8 +38,10 @@ function control(spec: FieldSpec) {
   }
   input.name = spec.id; input.required = spec.type !== 'boolean' && spec.required;
   if (spec.type === 'text' && spec.maxLength !== undefined) (input as HTMLInputElement | HTMLTextAreaElement).maxLength = spec.maxLength;
-  if (spec.type === 'boolean') (input as HTMLInputElement).checked = spec.default === true;
-  else if (spec.default !== undefined) input.value = String(spec.default);
+  if (spec.type === 'boolean') {
+    if (!spec.required) input.value = spec.default === undefined ? '' : String(spec.default);
+    else (input as HTMLInputElement).checked = spec.default === true;
+  } else if (spec.default !== undefined) input.value = String(spec.default);
   wrap.append(input);
   return { wrap, input };
 }
@@ -37,7 +50,14 @@ function captureValues(inputs: Map<string, ReturnType<typeof control>>) {
   const values: Record<string, unknown> = {};
   for (const spec of fields) {
     const input = inputs.get(spec.id)!.input;
-    if (spec.type === 'boolean') { values[spec.id] = (input as HTMLInputElement).checked; continue; }
+    if (spec.type === 'boolean') {
+      if (!spec.required) {
+        if (!input.value) { if (spec.required) throw new Error(`${spec.label} is required`); continue; }
+        if (input.value !== 'true' && input.value !== 'false') throw new Error(`${spec.label} must be Yes, No, or Not set`);
+        values[spec.id] = input.value === 'true';
+      } else values[spec.id] = (input as HTMLInputElement).checked;
+      continue;
+    }
     const raw = input.value;
     if (!raw.trim()) { if (spec.required) throw new Error(`${spec.label} is required`); continue; }
     if (spec.type === 'integer') {
@@ -113,7 +133,7 @@ export const workspace: Workspace = { mount(ctx) {
     if (selectedId !== record.id || selectedRecord?.version !== record.version) return;
     const form = el('form', 'entity-edit'), inputs = new Map<string, ReturnType<typeof control>>(), generation = detailGeneration;
     form.append(el('h4', '', `Edit ${recordLabel} · expected version ${record.version}`));
-    for (const spec of fields) { const item = control(spec); const value = record.fields[spec.id]; if (value !== undefined) { if (spec.type === 'boolean') (item.input as HTMLInputElement).checked = value === true; else item.input.value = String(value); } inputs.set(spec.id, item); form.append(item.wrap); }
+    for (const spec of fields) { const item = control(spec); const value = record.fields[spec.id]; if (value !== undefined) { if (spec.type === 'boolean' && !spec.required) item.input.value = String(value); else if (spec.type === 'boolean') (item.input as HTMLInputElement).checked = value === true; else item.input.value = String(value); } inputs.set(spec.id, item); form.append(item.wrap); }
     const submit = el('button', 'button', 'Save version'); submit.type = 'submit'; form.append(submit);
     const editStatus = el('p', 'small muted'); form.append(editStatus); detail.replaceChildren(form);
     form.addEventListener('submit', event => {

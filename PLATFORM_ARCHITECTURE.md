@@ -176,3 +176,29 @@ Knowledge owns tenant filtering, indexed-record selection, excerpt ranges, body 
 The local limits are 1000 question characters, five evidence records, 16 KiB excerpts, 8 KiB answer text, a five-second provider deadline and four actual in-flight calls. Per-call cancellation is joined with the workspace lifetime; deadline/cancel suppresses late results while a provider that has not settled continues to occupy its slot. The same original request session and module read permission are checked around the asynchronous provider boundary. This does not add a general retrieval framework, answer store, model adapter or new Knowledge schema.
 
 Build, factory assembly and immutable release verification share a pure closure computed from fixed host packages plus the selected module package manifests. The exact dependency versions are recorded in the exported runtime package metadata. `web-shell` remains part of the frontend copy closure while retaining its existing browser-only release-digest treatment. Captured snapshots verify their own package manifests rather than consulting a later maintained checkout.
+
+## Construction release and version identities
+
+The repository package remains at `0.2.0`; the whole Product Studio application is described as
+`0.3` (its `studio-web` package is independently `0.3.0`). These labels do not version every
+contract. Module and product versions are exact three-part values, while the module ABI remains
+`quadbridge.module.v1`. Operation contract suffixes such as `knowledge.document.read.v1`, entity
+specifications (`quadbridge.entity-spec.v1`), product-family schemas, UI-slot mappings and immutable
+local snapshots each have their own schema/format identity. An update to one axis is not evidence of
+compatibility on another.
+
+The bounded entity builder writes ordinary module-owned source. Both source generators share the
+2–48 character lowercase source-directory identity rule, check declared workspace package names,
+and validate generated module metadata/routes with the existing canonical resolver before creating
+an output directory. Generation requires a prior dependency install and build; it never invokes an
+implicit install or edits the lockfile. Optional boolean and enum inputs preserve “Not set” separately
+from explicit `false` or a selected value, and owner-side defaults remain authoritative. Generated
+Studio declarations summarize emitted source requirements; they do not grant permissions or claim
+that a process or resource is active. See [docs/ENTITY_BUILDER.md](docs/ENTITY_BUILDER.md).
+
+The optional `node tools/construction-clean-install.mjs` acceptance driver works only in newly owned
+temporary source copies. It generates reviewed examples in one copy, explicitly reconciles that copy's
+lockfile, then performs a normal fresh install/build from a second copy without inherited compiled
+files or dependencies. It is distinct from generator behavior and does not modify the maintained
+repository lockfile. Source generation, module/product SemVer, schema/ABI evolution and local
+artifact-format compatibility remain separate review decisions.

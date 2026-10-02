@@ -1,0 +1,25 @@
+{
+  "fixtureId": "2790a262-f613-4d1f-a319-420e2a0c703a",
+  "completed": true,
+  "viewerReadOnly": true,
+  "tenantIsolation": true,
+  "logoutObserved": true,
+  "reopenedRecordObserved": true,
+  "recordedAt": "2026-10-02T15:58:41.162Z",
+  "toolReferences": "Root ordinary Chrome3 CUA calls: create v1, untouched edit v2, false/beta v3, clear v4, tenant-b empty/create, viewer detail without writes, logout, exact fixtureREOPEN session75352, admin retainedv4 screenshot, logout/tabclose. FullPage capture first timedout; viewport capture succeeded. Fixed runner originalclose recorded separately.",
+  "domPaths": [
+    ".local/construction-reliability-001/browser-dom-create-01.txt",
+    ".local/construction-reliability-001/browser-dom-untouched-01.txt",
+    ".local/construction-reliability-001/browser-dom-explicit-01.txt",
+    ".local/construction-reliability-001/browser-dom-cleared-01.txt",
+    ".local/construction-reliability-001/browser-dom-cleared-complete-01.txt",
+    ".local/construction-reliability-001/browser-dom-tenant-b-empty-01.txt",
+    ".local/construction-reliability-001/browser-dom-tenant-b-empty-complete-01.txt",
+    ".local/construction-reliability-001/browser-dom-tenant-b-create-01.txt",
+    ".local/construction-reliability-001/browser-dom-viewer-01.txt",
+    ".local/construction-reliability-001/browser-dom-viewer-detail-01.txt",
+    ".local/construction-reliability-001/browser-dom-logout-01.txt",
+    ".local/construction-reliability-001/browser-dom-retained-01.txt",
+    ".local/construction-reliability-001/browser-dom-final-logout-01.txt"
+  ]
+}

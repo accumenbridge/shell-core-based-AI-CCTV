@@ -10,7 +10,7 @@ const SECRET = (name: string) => /^\.env(?:\.|$)/i.test(name) || /(?:^|[._-])(pr
 const PORTABLE = (path: string) => path.split('/').every(part => Boolean(part) && part !== '.' && part !== '..' && !/[\x00-\x1f\x7f:]/.test(part) && !/[. ]$/.test(part) && !/^(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\.|$)/i.test(part));
 const sha = (value: Uint8Array | string) => createHash('sha256').update(value).digest('hex');
 
-const TOOL_FILES = new Set(['build-host-preflight.ps1','build-job.ps1','build.mjs','build-visual.mjs','demo.mjs','entity-builder.mjs','factory.mjs','frontend-closure.mjs','link-workspaces.mjs','local-profile.mjs','product-source.mjs','studio-catalogue.mjs']);
+const TOOL_FILES = new Set(['build-host-preflight.ps1','build-job.ps1','build.mjs','build-visual.mjs','construction-clean-install.mjs','demo.mjs','entity-builder.mjs','factory.mjs','frontend-closure.mjs','generation-preflight.mjs','link-workspaces.mjs','local-profile.mjs','product-source.mjs','studio-catalogue.mjs','workspace-identities.mjs']);
 const TEMPLATE_FILES = new Set(['entity-backend.ts.txt','entity-ui.ts.txt','entity.css.txt','module-backend.ts.txt','module-ui.ts.txt']);
 const STATIC_WEB_FILES = new Set(['index.html','studio.css']);
 function declaredModuleAssets(root: string): Set<string> {

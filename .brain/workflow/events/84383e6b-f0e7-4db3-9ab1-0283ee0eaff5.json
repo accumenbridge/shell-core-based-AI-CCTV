@@ -1,0 +1,1421 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "84383e6b-f0e7-4db3-9ab1-0283ee0eaff5",
+  "revision": 95,
+  "previousEventId": "e3d831e7-b712-4c51-9220-ac6f92c02381",
+  "reportedActor": "/root actual construction reconciliation",
+  "recordedAt": "2026-10-02T15:50:42.614Z",
+  "platformTask": {
+    "taskId": "CONSTRUCTION-RELIABILITY-001",
+    "status": "IMPLEMENTING",
+    "candidate": {
+      "files": [
+        {
+          "path": ".github/workflows/kernel-ci.yml",
+          "sha256": "0e509b1cdc6d75e3c267aa898a0783dc579ec75466a225cab9731938b2337b38"
+        },
+        {
+          "path": ".github/workflows/kernel-native.yml",
+          "sha256": "fecef547a3b7bf50e5a8b58de3091bcde9bf200588c15b45d45f0f1bb4bd073f"
+        },
+        {
+          "path": ".gitignore",
+          "sha256": "f2889e14ae60205b9bd125bf0619c9c6b6aab37944b2015f0bee794580826fa9"
+        },
+        {
+          "path": ".nvmrc",
+          "sha256": "7e8a2fa94951112b894a3dbe3d05efef5e9263741fa49125f0a70f40fedab4cc"
+        },
+        {
+          "path": "AGENTS.md",
+          "sha256": "f5fa2f703d6159e325b579e0f8003fb18988d33cf961816da5bca038c7b5605d"
+        },
+        {
+          "path": "apps/control-plane/package.json",
+          "sha256": "4e7c793385e0507589ca071f44a44c7d7f75acdb40c1860bb4b87bbe4b9095cd"
+        },
+        {
+          "path": "apps/control-plane/src/artifact-store.ts",
+          "sha256": "d4610c786b9221a3ca1ea569adcd6aa5bb64870efdd1cc280d13e1a68f45b4da"
+        },
+        {
+          "path": "apps/control-plane/src/build-host.ts",
+          "sha256": "5e167f48ff8ebea9a6374fc45f22fbf639adcba378eba29249e9da88d6e2a262"
+        },
+        {
+          "path": "apps/control-plane/src/build-inputs.ts",
+          "sha256": "d83bf8031d016ea76da88ed47feb46110f499bec88a89ce553efbb4dec9e56ed"
+        },
+        {
+          "path": "apps/control-plane/src/build-worker.ts",
+          "sha256": "c1c4589676cb77c51af44ac158545b6bcc5f8462847f84b9c9510494b483bbda"
+        },
+        {
+          "path": "apps/control-plane/src/main.ts",
+          "sha256": "4eea7a1c88c1a97c42b7b6737a2d6e0615d2394bc7e3eae9d1ea0bba0ef9ea7a"
+        },
+        {
+          "path": "apps/control-plane/src/operator-server.ts",
+          "sha256": "89931273655c17818ac2b0168eb572e286ec14c7d99e8f1edf1541828cae2624"
+        },
+        {
+          "path": "apps/control-plane/src/runtime-manager.ts",
+          "sha256": "99208fc042aa334caf54eca526a09adaf338ab6e6b3d6783a084f9194943067f"
+        },
+        {
+          "path": "apps/control-plane/src/runtime-recovery.ts",
+          "sha256": "02f9fdb51c5cbfac1a12d92ae19e861fdc3ee03626a462979b8a31bea90e3f1d"
+        },
+        {
+          "path": "apps/control-plane/src/source-import.ts",
+          "sha256": "dac9c38a03a6adb0993cdcf9e25ac121a07c247e063598960593874e20f02a25"
+        },
+        {
+          "path": "apps/control-plane/tsconfig.json",
+          "sha256": "cb2f8b54c1a682ab3cefa76a5b2251086b01f6faa20d769939b47eb0dd0f50f2"
+        },
+        {
+          "path": "apps/runtime/package.json",
+          "sha256": "0f0d90a539c5d741ce80f91dcf0eb686981c8e31df792694becc03ee0cad7fad"
+        },
+        {
+          "path": "apps/runtime/src/index.ts",
+          "sha256": "e50ab366caa2302be73257ea12500131f29ea5802928fb76c1f026331ad57136"
+        },
+        {
+          "path": "apps/runtime/src/main.ts",
+          "sha256": "69e3c13d2505b628bfdf3ceb78e111e8d167b28a9678acc189a4c3cc3497190e"
+        },
+        {
+          "path": "apps/runtime/tsconfig.json",
+          "sha256": "8c60973ed1459feb21802b33dd4459517f8e001518a6978e2e7e2e9ec196bcb9"
+        },
+        {
+          "path": "apps/studio-web/package.json",
+          "sha256": "7637521117c9438480ed57b38215f58a40c9db92b2e64caf51c393f29035a2a0"
+        },
+        {
+          "path": "apps/studio-web/src/main.ts",
+          "sha256": "952630beae1e6c6e22d8dfc1f2f674ce0370e560278973d1670d01b12c966421"
+        },
+        {
+          "path": "apps/studio-web/static/index.html",
+          "sha256": "8a679a1799b701234958f03a8364657e82fb0a817e06d59f6691eea19c7138cc"
+        },
+        {
+          "path": "apps/studio-web/static/studio.css",
+          "sha256": "b7eead083dd183df490b5312b166c016f5bd629608e9381767cff494590ce933"
+        },
+        {
+          "path": "apps/studio-web/tsconfig.json",
+          "sha256": "f7cc61f55db06a0f7d30b7b54405dbe03e7d1321340dd5be0819dd9cbbec2ae7"
+        },
+        {
+          "path": "CODEX_START.md",
+          "sha256": "2f1fcda0809baca8aeee7657f7b1011db245de1c07ac6e372287b33a4fded503"
+        },
+        {
+          "path": "docs/brain/ARCHITECTURE.md",
+          "sha256": "595b29f8a2bf89e7a0e3454fa867a047756eab2d2ca14b1deb71fe928c764fc9"
+        },
+        {
+          "path": "docs/brain/CONTROL.md",
+          "sha256": "cd84b18b3fe11346a30c0a82199f363292f48efd31d40ed7070469f148e23709"
+        },
+        {
+          "path": "docs/CAPABILITY_OPERATIONS.md",
+          "sha256": "d1a011219a8c2ae2f92ee8e5e82257c026c1db7b3aa37f923231b0c69f43edfb"
+        },
+        {
+          "path": "docs/CI.md",
+          "sha256": "59bd64ce2628f0728784806017fb9c63cb9482ff5879269b98103e7c55125a3d"
+        },
+        {
+          "path": "docs/DECISIONS.md",
+          "sha256": "601d6109e0b7293195d4de5c8747cbaa75b8c8906c637e6c02e218db3ca6372c"
+        },
+        {
+          "path": "docs/DEVELOPER_GUIDE.md",
+          "sha256": "06c32f43273ddcf116e94585fd37e2e006acf2b7c8edf943135862876aa4cbe1"
+        },
+        {
+          "path": "docs/diagrams/construction.mmd",
+          "sha256": "cd076d150cc5435d94905f5529a2dcaa18d2b90bdd23733fcde50e6bed1c8dc0"
+        },
+        {
+          "path": "docs/diagrams/cross-product.mmd",
+          "sha256": "bd8db6bd0c6c595257b598d9b646130296887e7517ec8e9848f802258c21c967"
+        },
+        {
+          "path": "docs/diagrams/job-lifecycle.mmd",
+          "sha256": "d88000d1ee637548225c726c943a23953772ab6376e4f0304937211943d61d67"
+        },
+        {
+          "path": "docs/diagrams/neutrality.mmd",
+          "sha256": "61f815590d16dc313267e8a7b36d0b7eb352a29d6df1631484726a023f3a0a98"
+        },
+        {
+          "path": "docs/ENTITY_BUILDER.md",
+          "sha256": "8c4d130795c4dc07874901074a0aa34c639d97b23884d875aeba3c495017ba0d"
+        },
+        {
+          "path": "docs/HOW_TO_CODE_PRODUCT_STUDIO.md",
+          "sha256": "0fd914fd7e9c378ba9c2436e66931b46a1b05f70dd5dc006ee978630686effc7"
+        },
+        {
+          "path": "docs/MOBILE_APP_SHELL.md",
+          "sha256": "9884e85180326efb47c52c9c1141690abc1e28268570eeb2cb40fe934440f918"
+        },
+        {
+          "path": "docs/PRODUCT_FAMILIES.md",
+          "sha256": "01185f1137333010336354ba39c529960be635bdf5c33b29249054bff89eb91d"
+        },
+        {
+          "path": "docs/REMEDIATION.md",
+          "sha256": "e816add68ea2f4200cc93f4947b628d696545bd09ffae4d1b325e2a952152fb8"
+        },
+        {
+          "path": "docs/SECURITY_AND_LIFECYCLE.md",
+          "sha256": "295074ac51fbbfad4a612c5d6b233404b87d610f0a7690ace215581891ee7b51"
+        },
+        {
+          "path": "docs/SOURCES.md",
+          "sha256": "b1b95ca8f091cf53ef0327216b0511143c3752903e3f3187e640a4e7f32c373d"
+        },
+        {
+          "path": "docs/STATUS.md",
+          "sha256": "d00f35fd42988f928024e9f5c2d0bff09a90b91888251633b948e68229412aea"
+        },
+        {
+          "path": "docs/STUDIO_INTEGRATION.md",
+          "sha256": "f2000f0a18726f1fe7c9fc7698ebb56de3c256e4ccea7af6a355fe30af127799"
+        },
+        {
+          "path": "docs/UI_CONTRIBUTIONS.md",
+          "sha256": "690efc40463f037ef7d6c82169b799b692e7586f5b00d239d3e39abbf200d6e5"
+        },
+        {
+          "path": "docs/UPGRADE_FROM_0_1.md",
+          "sha256": "9e45d11165b6fbfb6fa68485beb08f2ab12ec34c93b3e65b84b5299562d9b51d"
+        },
+        {
+          "path": "docs/VEYVIZ_ADOPTION.md",
+          "sha256": "f7acfa0f974070cb3c51cd06a2cb60fe9faa58317ebee6cc25b8190d03261fb4"
+        },
+        {
+          "path": "docs/VISUAL_EDITION.md",
+          "sha256": "7d37c07482402e22906d09dcec27a120709d9d557521ff595b490f86c3257534"
+        },
+        {
+          "path": "DOCUMENTATION.html",
+          "sha256": "24955517dcd0620bc0a8c6e6d284296584070b02291132f45e6ef0e7df8b58c9"
+        },
+        {
+          "path": "examples/entities/asset-register.json",
+          "sha256": "4f500e75eaa70fae2d03691d1d7d94b78d703e44005f2f1e44c600397bd302dc"
+        },
+        {
+          "path": "examples/entities/room-inspection.json",
+          "sha256": "31f1f44af64d8017756817d54646569ad2c2491ac734901fac3f00bf14cc0d5f"
+        },
+        {
+          "path": "families/service-operations/family.json",
+          "sha256": "9cf0b0db8f1032b8fd1bdb4887b4aecfb5319bd47b5d513085e862135396e4e3"
+        },
+        {
+          "path": "FOLDER_STRUCTURE.md",
+          "sha256": "a8bd37ea7388920d19253df6e3c5c1c30c3780030a43897a8175816a686ea124"
+        },
+        {
+          "path": "FULL_PLATFORM_BUILD_MAP.md",
+          "sha256": "c56c1edc0d683b5d2c39951445533e3b5bf45ab1a4fb3755a6da7d9f7829f7cc"
+        },
+        {
+          "path": "IMPLEMENTATION_STATUS_0.3.md",
+          "sha256": "b7cb08566773c52138747b2de4105f487a1c509a17b6be9f089e5281fe9587aa"
+        },
+        {
+          "path": "modules/handoff/module.json",
+          "sha256": "cced127c2365552d607c3490c67a77dc91b87dfd84aa750b919e7cbd6fc93e06"
+        },
+        {
+          "path": "modules/handoff/package.json",
+          "sha256": "56ffea0209fe6340cfd73d57f86ef2d917951c6ce4aeb6e0b144abf99e5d6992"
+        },
+        {
+          "path": "modules/handoff/src/index.ts",
+          "sha256": "c329c58b33ea8634543a1bdcf97d960765b3bc861f51dfaadacb234967b2d3c2"
+        },
+        {
+          "path": "modules/handoff/src/ui.ts",
+          "sha256": "5bf0ee4d94d78c2a56e1cce22e44f2d9bb2754affa24c32febef375dc1c433a0"
+        },
+        {
+          "path": "modules/handoff/tsconfig.json",
+          "sha256": "b534b1e5a4ac853bedb306189d5eb15737128d03a645785682737f1f117b1b1b"
+        },
+        {
+          "path": "modules/knowledge/module.json",
+          "sha256": "54940b0135e0ab46c4cfe5d92ed4b897355fed536481fbc8f3b1615353e3abaf"
+        },
+        {
+          "path": "modules/knowledge/package.json",
+          "sha256": "327e28215f63e178dda57e043447eeab4740f778faf143eea58f093658aec283"
+        },
+        {
+          "path": "modules/knowledge/src/index.ts",
+          "sha256": "3446c2a41abdcac89b22bb6481c7b48d3b72912636928b2da613e0e320722b34"
+        },
+        {
+          "path": "modules/knowledge/src/ui.ts",
+          "sha256": "6cda83eb31f559e2c1f2329e96dc51c40f233225078046f68b39f69c833ac9ab"
+        },
+        {
+          "path": "modules/knowledge/src/ui/reference-search.ts",
+          "sha256": "62ca400e6c5a2fb8ed31da013c91610399c97ae4b02434b645497c5798a4ffe2"
+        },
+        {
+          "path": "modules/knowledge/tsconfig.json",
+          "sha256": "7c632ef78fe2fe1983a97ac7bd63207e097b50f8a19e8b97c963614d7fba33ea"
+        },
+        {
+          "path": "modules/service-desk/module.json",
+          "sha256": "6f1cb2e2fde1c008a30fb6cfac14d17b1ecf208a3f5baa66d4b3092542c2578c"
+        },
+        {
+          "path": "modules/service-desk/package.json",
+          "sha256": "aa6bcb33cee0c0a57f98ee3f78728ca67684622a3aa3c4447d23043bb5f20c36"
+        },
+        {
+          "path": "modules/service-desk/src/index.ts",
+          "sha256": "a013d0e6034fca24434e54b6096d748127fabfe6a414b822d91c8954afc2d69c"
+        },
+        {
+          "path": "modules/service-desk/src/ui.ts",
+          "sha256": "26a67fd72c54878a8a16a0a08dd1adcc644798e8fbee0d0a9d5c5146763cf864"
+        },
+        {
+          "path": "modules/service-desk/src/ui/overview.css",
+          "sha256": "d5eac48954d0c8c06cdcf64a71061b4c8a887fc6115557e10aadf74f8d32e69f"
+        },
+        {
+          "path": "modules/service-desk/src/ui/overview.ts",
+          "sha256": "5de3636f9ae8ec385625e4eb9c5509a1670984b7547ce57c74968b1f01926d55"
+        },
+        {
+          "path": "modules/service-desk/src/ui/recent-requests.ts",
+          "sha256": "cd9637f5099618cab57c4e15c1f72e48687d04c65417f2c2f2db4d69e8988b54"
+        },
+        {
+          "path": "modules/service-desk/tsconfig.json",
+          "sha256": "5ceb52a02364664f51c79a573432c69d26ea3b5fd1b5ddc0cd724293ef4579da"
+        },
+        {
+          "path": "OPEN_PLATFORM.html",
+          "sha256": "369280dd31031cb6692653bece3b5db7d19676dba92f6c1aeab8bab36eae634a"
+        },
+        {
+          "path": "package-lock.json",
+          "sha256": "fe8093fc5cc441763b65e2d58d16ac59fd0cff04e1c536acefe8f515a12f6254"
+        },
+        {
+          "path": "package.json",
+          "sha256": "ed9933b4022a295182887c51a5b4aa05e9d8933c5ca0af4b57b55aee6ec85085"
+        },
+        {
+          "path": "packages/ai-core/package.json",
+          "sha256": "0b79e8504d9d5ba536d109e61cc827e4af85d56f09505c706448ba7829ef0212"
+        },
+        {
+          "path": "packages/ai-core/src/index.ts",
+          "sha256": "72f502724b9f1759d8708e92e9cde98b1432650ebb5dccce7fcbf5d6311bfba1"
+        },
+        {
+          "path": "packages/ai-core/tsconfig.json",
+          "sha256": "a283d71bea137ceb0fb3400ac19a1410ef046160da686bd4fc37530b445d64a7"
+        },
+        {
+          "path": "packages/backend-host/package.json",
+          "sha256": "86c0f02c63e6a47ff65dddc805ce4abfb47be75a245e7d653645a41413ddd434"
+        },
+        {
+          "path": "packages/backend-host/src/http.ts",
+          "sha256": "068f320aec5321fcd55e1002a251fd13f7d2ad4456f817bc13615d33268bb3f0"
+        },
+        {
+          "path": "packages/backend-host/src/index.ts",
+          "sha256": "e9cdcd0455fe1ae7af574bee7f9c378d368f983ca0cf7cdb0ed2f870f104c7fa"
+        },
+        {
+          "path": "packages/backend-host/tsconfig.json",
+          "sha256": "c40d7e42d4d28fa0c812ed1d1a18594c5d1883ef64bd141fea592e5cbe707122"
+        },
+        {
+          "path": "packages/client-core/package.json",
+          "sha256": "bd7c591fb7ee0ae0b1bddc0be4e238ff2e129a2f152e3126a20b2ef55bcd4449"
+        },
+        {
+          "path": "packages/client-core/src/index.ts",
+          "sha256": "f2b8521725db0f06934ac59ccb0139cd82eea608805457bc8e33f0122d863c5e"
+        },
+        {
+          "path": "packages/client-core/tsconfig.json",
+          "sha256": "fd02bcd47cfdca9108e67fe0ab461469921502c9f98e1a38bc17abe3396224aa"
+        },
+        {
+          "path": "packages/composition/package.json",
+          "sha256": "dfcddc24509a7d3699b6c4c04a06df1e092ec0011ade976fa68946be71c5c9bb"
+        },
+        {
+          "path": "packages/composition/src/family.ts",
+          "sha256": "07a2576ce9c3ff8e765314b7bfd342cd08ace293c6abf89f94a932ecae5a6c98"
+        },
+        {
+          "path": "packages/composition/src/index.ts",
+          "sha256": "c897ed5639e3a255de83ff96ca37697d7e1ab19c5015e5d137751f841a629276"
+        },
+        {
+          "path": "packages/composition/src/integrity.ts",
+          "sha256": "b24805451b0aac25a418beb36901dbd0cd17b6da19e525d1f2e98654d3afaee7"
+        },
+        {
+          "path": "packages/composition/src/snapshot-access.ts",
+          "sha256": "97fa166ba41bbb814d87dd72882f7d3716856ad12e316b67083a33c78cc76dd3"
+        },
+        {
+          "path": "packages/composition/src/studio.ts",
+          "sha256": "01c3a40d60cb8c29d6c5af705f2a4abc186059fa19b36545f984f68990d350d6"
+        },
+        {
+          "path": "packages/composition/src/workspace-closure.ts",
+          "sha256": "49d362421e6f7d99c285a508c4023f367358cec6ab67a10dd59507992b7a724a"
+        },
+        {
+          "path": "packages/composition/tsconfig.json",
+          "sha256": "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1"
+        },
+        {
+          "path": "packages/connections/package.json",
+          "sha256": "4878d00d155649f22c5c83def1b4ab95835fcad20ef43073844fc645ed0213ca"
+        },
+        {
+          "path": "packages/connections/src/index.ts",
+          "sha256": "9b7225de0920bcc782e741d43f247c44b1922ff8bb303936ba4afeb0f2369911"
+        },
+        {
+          "path": "packages/connections/tsconfig.json",
+          "sha256": "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1"
+        },
+        {
+          "path": "packages/contracts/package.json",
+          "sha256": "190b192652234b5c1875c3014eb72001e6a6ae77bd28c69c10829b52d5e59ebe"
+        },
+        {
+          "path": "packages/contracts/src/index.ts",
+          "sha256": "cfa0794ce8dbd772a8c2a10c137449ba145020ea2d2a45f8f7b1d64c82907c72"
+        },
+        {
+          "path": "packages/contracts/src/operations.ts",
+          "sha256": "8666d65dceac6667b18d5cec252beb758106eb296aef8c09e925fa052764e765"
+        },
+        {
+          "path": "packages/contracts/src/ui-contributions.ts",
+          "sha256": "f194ed9e049adacc6b666f29bd233377307f64fff3324410dd02c65e2fddb112"
+        },
+        {
+          "path": "packages/contracts/tsconfig.json",
+          "sha256": "3b612bbcc4309a9da4bbff6fc5e2d266f9578f884a8671cc51d00c43a89d3ccf"
+        },
+        {
+          "path": "packages/control-plane/package.json",
+          "sha256": "6440abfb09167090a9a65716e974c4a71f9a3827d6451ab4fcc1563ed7622c12"
+        },
+        {
+          "path": "packages/control-plane/src/index.ts",
+          "sha256": "2fd5a03c68e128bada529c6a43f8ec5baf444ed4631903eefbf4d62ce4a093be"
+        },
+        {
+          "path": "packages/control-plane/tsconfig.json",
+          "sha256": "bb1726cfa17cf253ba135437e4df03ba9524479884aac617b66a0b9d3b60f3f5"
+        },
+        {
+          "path": "packages/local-access/package.json",
+          "sha256": "14472fafb8bd74aacc8c2dddfeb0ab9fd6c138b5041b97d0f4983cb607dff8cd"
+        },
+        {
+          "path": "packages/local-access/src/index.ts",
+          "sha256": "7c4bf32a59012adabc43361ca9be720198cd4f3edef4b05a2556e947ce0f6d0c"
+        },
+        {
+          "path": "packages/local-access/tsconfig.json",
+          "sha256": "31dbcfd33d2091b8225ba45bffd0c396c2351db4b754270721461b225f8c05cb"
+        },
+        {
+          "path": "packages/mobile-shell/package.json",
+          "sha256": "0970900f5cbb68fd32cbb6316f46e79a043a51c6e0829101197fd88d4725fba7"
+        },
+        {
+          "path": "packages/mobile-shell/src/index.ts",
+          "sha256": "ea152efa4ab20ca1680a488cbf48f5eab617ec3e8b007e0498944810e8c28873"
+        },
+        {
+          "path": "packages/mobile-shell/src/mobile.css",
+          "sha256": "b4adf39c8628c983ae8e919331a8de698597456de5d8432129b3b8d65289a080"
+        },
+        {
+          "path": "packages/mobile-shell/tsconfig.json",
+          "sha256": "221c154487a5e76b80eaf0a1b4f136850dcd1a2fd96c6ff6414895045a9ece0a"
+        },
+        {
+          "path": "packages/module-sdk/package.json",
+          "sha256": "89cc8e8ecaeb4d1070c284c14c5227a627c5e4e87d53cdb3bc1e2ecd7417ca71"
+        },
+        {
+          "path": "packages/module-sdk/src/index.ts",
+          "sha256": "f6f8a68254f695d07fa08b8ba3c2f7e5af5df18f0c8b3f0617e21e16e80d213d"
+        },
+        {
+          "path": "packages/module-sdk/tsconfig.json",
+          "sha256": "ae92fe46b8673c125946386a9df0e5e161dbfa35242f92630f9b616b4f431d94"
+        },
+        {
+          "path": "packages/sqlite/package.json",
+          "sha256": "82f370af2a574bfd3d4cadce7b4a2855b1667a475f4d9ba1d48c9b169d1e779e"
+        },
+        {
+          "path": "packages/sqlite/src/index.ts",
+          "sha256": "03fb605c558044e72002d3787b7b7b974de3850597fb06852e07883c3d7d1e08"
+        },
+        {
+          "path": "packages/sqlite/tsconfig.json",
+          "sha256": "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1"
+        },
+        {
+          "path": "packages/studio-model/package.json",
+          "sha256": "00d021b34e38e1f47eabd90f5bbbf05eaa30601a1b50ee027619713813dc30f9"
+        },
+        {
+          "path": "packages/studio-model/src/index.ts",
+          "sha256": "bb73726b2c7e866442ec84592cec4bb06ebb7f94675c337482a781262ccb2e88"
+        },
+        {
+          "path": "packages/studio-model/tsconfig.json",
+          "sha256": "a283d71bea137ceb0fb3400ac19a1410ef046160da686bd4fc37530b445d64a7"
+        },
+        {
+          "path": "packages/web-shell/package.json",
+          "sha256": "d9ebfd7ece36bd7043d6dd5822c3fe68a89c2b7d1f6bd07a9c72d068703df2dc"
+        },
+        {
+          "path": "packages/web-shell/src/dom.ts",
+          "sha256": "14dfeecc630f1b229ae487ce209756df91a4610b6a4ad11500ff7af30af50920"
+        },
+        {
+          "path": "packages/web-shell/src/index.ts",
+          "sha256": "a5fa992459c5acf6429b8bc3169c3355616e1f1fd7d11b13f16780ab318e8848"
+        },
+        {
+          "path": "packages/web-shell/src/react-adapter.ts",
+          "sha256": "65959d9eae79cb3f80c71b1d3ce2910e4206918ed1bda697733195fe8057c315"
+        },
+        {
+          "path": "packages/web-shell/src/shell.css",
+          "sha256": "9f84b581785f17e070e42cd592e54c06c6e109814e31eb37da1c20f61639d54e"
+        },
+        {
+          "path": "packages/web-shell/tsconfig.json",
+          "sha256": "7cd5a474fe91582ca0d2bf76041855dcd977ac22a3a9701a87b0035b5fcf2520"
+        },
+        {
+          "path": "packages/worker-host/package.json",
+          "sha256": "1f3afb329d62a1c72047813e76f1e6530b2170b43e9fb69b5b5d7b70448ccb99"
+        },
+        {
+          "path": "packages/worker-host/src/index.ts",
+          "sha256": "ab86d7d5222d05983d63c3820396593ebd9490aef7a3be7c2476da72b38293f8"
+        },
+        {
+          "path": "packages/worker-host/tsconfig.json",
+          "sha256": "8afcb499ebf64277826f7243a4a0c6e0f7c3b0690d0f0d1e798c0d5ede3df1e1"
+        },
+        {
+          "path": "PLATFORM_ARCHITECTURE.md",
+          "sha256": "8f42425572600db36a71bf79db374551f373cc29d5d95726d378f44a114cba82"
+        },
+        {
+          "path": "products/combined/product.json",
+          "sha256": "28cd5271f415848dad92eb5a090513ab922c19abd2210cbd89825d9de2fccbae"
+        },
+        {
+          "path": "products/knowledge/product.json",
+          "sha256": "e7ee879edce5781d9e5ad0129a0a2e062be5305ba9adf18c0d8f246dfe36b557"
+        },
+        {
+          "path": "products/neutral/product.json",
+          "sha256": "82b25dc4f7976dcc016b32b490a10230961cc819d1a7d8e60bcc73b9f5381577"
+        },
+        {
+          "path": "products/service-desk/product.json",
+          "sha256": "8e489f4fdd9dc9533bee14813522d319ebc899190d4195726ffcbb7e72f14aa7"
+        },
+        {
+          "path": "profiles/local-developer.json",
+          "sha256": "7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1"
+        },
+        {
+          "path": "README.md",
+          "sha256": "2b53f93688aa4409e288757135d9b14167dfaa342b0afabab6c2e61c242bc6c3"
+        },
+        {
+          "path": "remediation-source.patch",
+          "sha256": "b8dc26f944a00907525e25982bcf8a01cce16ffc688592765267c6868222a6ec"
+        },
+        {
+          "path": "solutions/knowledge-to-desk/solution.json",
+          "sha256": "21eab4f7ee5a273df687a805055dd3c35b746ed35a12e94711529a5f8fa2a9ee"
+        },
+        {
+          "path": "solutions/knowledge-to-desk/ui.json",
+          "sha256": "188f09afb481f735548c6e977a4003a6a5a2a956798433f78f206bfe68874bb5"
+        },
+        {
+          "path": "solutions/knowledge-to-desk/wiring.mjs",
+          "sha256": "5c2def96393bb5f02c95d362624fec14637c83513daf8b266ce7ce547656bb9f"
+        },
+        {
+          "path": "START_APPS.cmd",
+          "sha256": "f561a017a562b7e46a470792c6f23f957ee474ba96ca752a0e6d1110df44db15"
+        },
+        {
+          "path": "START_APPS.sh",
+          "sha256": "a4d243f860abc057750f0d35ef1a52feacdbcc50a8d3ee9f8ca6e7f6642c0050"
+        },
+        {
+          "path": "START_FULL_STUDIO.cmd",
+          "sha256": "ef7b44e0cf3d614a107bbc0561d2f24c16104795c1f80b3fc13bd27c149928f1"
+        },
+        {
+          "path": "START_FULL_STUDIO.sh",
+          "sha256": "caa3656f787de0a5c9e253513b15723a3524135f5eff76a2f5e4b74ab6aa7ccd"
+        },
+        {
+          "path": "START_STUDIO.cmd",
+          "sha256": "5cbfcf347ab3a9dd61f7aaabc17cf120a13e497131d17ae30dcd1576a3311d4b"
+        },
+        {
+          "path": "start-studio.sh",
+          "sha256": "17f26302f1157d01ba3f665fbd91d1055176a4bc3e7bfe9fe5ec74b4a12f2806"
+        },
+        {
+          "path": "studio-source.patch",
+          "sha256": "4b0359c4242a8a47f17162d5d71b467ecc6e2ddeb1d7cbd99232f66cf047b8f5"
+        },
+        {
+          "path": "templates/entity-backend.ts.txt",
+          "sha256": "3b59d861d339895ab7e59edba16b046442b4eedb972430a0566ffbd58c839caa"
+        },
+        {
+          "path": "templates/entity-ui.ts.txt",
+          "sha256": "0102838d994b0402c6e2212cd42dde7d14acca3431f862ecc81235a9cdfb9522"
+        },
+        {
+          "path": "templates/entity.css.txt",
+          "sha256": "8aa676e077dd392b4acc76bbbaceb5e3614785b2c33a627bfe7646a1a55ae602"
+        },
+        {
+          "path": "templates/mobile/package-lock.json",
+          "sha256": "dc7a6e9130bef578c434886e5873a65539a5c4e51ed12c8fc8be69a70a5b58c8"
+        },
+        {
+          "path": "templates/mobile/package.json",
+          "sha256": "5bd02e4bb08475f88ee8ad79fba8d36e16f8f08205487db3594fbc56577ce200"
+        },
+        {
+          "path": "templates/mobile/README.md",
+          "sha256": "fb4a7e341eb8cf73a0eee8b53fe3091975669e89c58c2340138609895414b1c1"
+        },
+        {
+          "path": "templates/module-backend.ts.txt",
+          "sha256": "54826a7c489967e5aca7175e31addc67435a0f522600212ac65b7b16f5e1359c"
+        },
+        {
+          "path": "templates/module-ui.ts.txt",
+          "sha256": "f077a9c63960778c0559eb71bae4389a825163f6b89e2b575d88e6ac50ac3202"
+        },
+        {
+          "path": "tests/adapter-replacement.test.mjs",
+          "sha256": "403587708e5904da30723e57d2ebb58bedd59aa9165ac24eb7e2df2372f7dcd0"
+        },
+        {
+          "path": "tests/ai-core.test.mjs",
+          "sha256": "68b6fe1ef81f7c1ca5dbf2ed165dba827f181e07a7b80d844d293f13c7807f94"
+        },
+        {
+          "path": "tests/build-worker-process.test.mjs",
+          "sha256": "90b49197c3ee28f561d6fa43bb910105653f67c1e5ed30d2f26974c250e759e9"
+        },
+        {
+          "path": "tests/capability-operations.test.mjs",
+          "sha256": "18f0427bd79d859213f389978254f0c1bbe643c9b8fabcdf135eb3253cd93e39"
+        },
+        {
+          "path": "tests/composition.test.mjs",
+          "sha256": "89ad1f511d608fff58ad4726e2b512d9e55a7ed2e548062a26bdf4ca07555f6d"
+        },
+        {
+          "path": "tests/construction-reliability.test.mjs",
+          "sha256": "bac199940fc7dea340d5a0e81744e07ff6e9e2d34a902ad4304bc5b095cec18a"
+        },
+        {
+          "path": "tests/control-plane-artifacts.test.mjs",
+          "sha256": "064f016cb119a1681da6ed4187474a51095e4b1c18bcd43f966f824c6c4128f8"
+        },
+        {
+          "path": "tests/control-plane-build-host.test.mjs",
+          "sha256": "0e4830727b4700909fc37ec05e8e7a7d61b0ae9a6c7d07ffcf63b203f95428c5"
+        },
+        {
+          "path": "tests/control-plane-build-lifecycle.test.mjs",
+          "sha256": "77ea03312798fcf7627799185a9b5910f5a3dddcd1eeccaec2e556cfce479385"
+        },
+        {
+          "path": "tests/control-plane-http.test.mjs",
+          "sha256": "1aaa3ad32990f0b4d97c1b4ee0d82561c3d4c721868f0b88f2e246fd88f41dc8"
+        },
+        {
+          "path": "tests/control-plane-main.test.mjs",
+          "sha256": "b278b7117e7535d6380943756366c20a87f527a7965f7c4e9e8d87786e631861"
+        },
+        {
+          "path": "tests/control-plane.test.mjs",
+          "sha256": "297fe68516e4357b72d0e660ee8f933f047accc3dc5fc83cae252cfac89670f2"
+        },
+        {
+          "path": "tests/data-worker.test.mjs",
+          "sha256": "3b35bfe6a6d640be952eaad6e2938b5348c64c5f53359a22a27384d01e56d67b"
+        },
+        {
+          "path": "tests/entity-builder-ui.test.mjs",
+          "sha256": "802aa6436544cc85119200118d6bbc1794462ec339b0b15988a5ccd2d484fe58"
+        },
+        {
+          "path": "tests/entity-builder.test.mjs",
+          "sha256": "76e2cbc9e554fa506cc23665c51ccd2f140cb90f90d25d914013612cd1409e87"
+        },
+        {
+          "path": "tests/factory-lifecycle.test.mjs",
+          "sha256": "b6994973c21f023f21cb24d488fa0f3236e0279309d8a34ccc68ae5c7161726f"
+        },
+        {
+          "path": "tests/fixtures/artifact-registry-owner.mjs",
+          "sha256": "49d26a8b24575c21e5f5efd40aeb0895ccd1de1100228da1f36d2c43609283b7"
+        },
+        {
+          "path": "tests/fixtures/hold-staging-file.ps1",
+          "sha256": "57c790ba7e99acecb6cbfefb5e2598785eec3eba85ef880524c7bf786875e4d6"
+        },
+        {
+          "path": "tests/fixtures/local-access-constructor-fault.mjs",
+          "sha256": "e89382bb5bf6199387f29c491bf1c1d1248022b29fbe99bcef7e73a37316bdc3"
+        },
+        {
+          "path": "tests/fixtures/managed-runtime-reopen-observer.mjs",
+          "sha256": "01ead24382052f1b26fcfb799e91c90053d46f3620b46a739f90911839b900ab"
+        },
+        {
+          "path": "tests/fixtures/managed-runtime-slot-contender.mjs",
+          "sha256": "820d65f51f546c01782827f2f62b3f028ed448dd0276214ee31de3f60878b1e5"
+        },
+        {
+          "path": "tests/fixtures/memory-execution-store.ts",
+          "sha256": "eadb17913d31c608746010b8b9a589e7f51b3d815f453f23d3abc8a0ba7f79ae"
+        },
+        {
+          "path": "tests/fixtures/runtime-protocol-heartbeat.mjs",
+          "sha256": "c0127c3e62795702317f29bacfcd5b0f7395d052238924eb002f4eb1951b436c"
+        },
+        {
+          "path": "tests/fixtures/runtime-seed-before-complete-exit.mjs",
+          "sha256": "f68bf6f2553788f09099005e242f478c1d767a0a00975632770efb0b915b4d05"
+        },
+        {
+          "path": "tests/frontend-assembly.test.mjs",
+          "sha256": "a730e8b73404d7d69bedb09744dd304df6e99569312b9d05cd513a0789aae957"
+        },
+        {
+          "path": "tests/hardening.test.mjs",
+          "sha256": "4a9a060878d9b5d3f3178b476636e00e31b0a324f55c8707d21b627a920b4dd2"
+        },
+        {
+          "path": "tests/helpers.mjs",
+          "sha256": "d8abc57a5f20a061270c922a78039b404ecc94c3ed2d21967b239900aaf00d18"
+        },
+        {
+          "path": "tests/http-cross-product.test.mjs",
+          "sha256": "11eef3648fc598c1ec7f7cef7b34734d19cf17057bbb298fe84d5b5ee47b24f3"
+        },
+        {
+          "path": "tests/knowledge-answer-ui.test.mjs",
+          "sha256": "47e8f72f706f514a180821854618383fd4820c2bc78c44db5922bc7dc4f70876"
+        },
+        {
+          "path": "tests/knowledge-answer.test.mjs",
+          "sha256": "3828253f11d8842d29ef04e3b66a584d2e1e877ba6ca2222d5078b051b949c5e"
+        },
+        {
+          "path": "tests/local-access-enrollment.test.mjs",
+          "sha256": "2f274b70bae141e44f57c572017786477db7baaecdf4942a289d4c94d904dd28"
+        },
+        {
+          "path": "tests/managed-runtime-recovery-store.test.mjs",
+          "sha256": "941512e49e102493c993439abffd9837dab3ace676b42af347475d923f1df9be"
+        },
+        {
+          "path": "tests/managed-runtime-store.test.mjs",
+          "sha256": "2de1db607bf5aa8a93b81b15eaacc152383634466f80501a0884283598222de1"
+        },
+        {
+          "path": "tests/mobile-assembly.test.mjs",
+          "sha256": "1d4171e863a900d48b99d99248632d5a667f091cf36e6465e2ad296403995085"
+        },
+        {
+          "path": "tests/mobile-shell.test.mjs",
+          "sha256": "7360062233b0658bfb5329f6b609c82cf5894afc756c0401f03ee7f34e000ede"
+        },
+        {
+          "path": "tests/module-sdk.test.mjs",
+          "sha256": "30d1a8caaed11c8fddcb35a7d8a259d1a1e1753eadc4e322b0da61788b0397f4"
+        },
+        {
+          "path": "tests/product-family.test.mjs",
+          "sha256": "daa8274aa1b807a83908813d8c2e3abea2dd18d9cd01e58b084d489cf4575356"
+        },
+        {
+          "path": "tests/reliability-baseline.test.mjs",
+          "sha256": "975466f643465747d5443a3aab1818278a53140c2e4b7601990f9c9a711b6c03"
+        },
+        {
+          "path": "tests/runtime-manager-preparation.test.mjs",
+          "sha256": "e53439892dc5649d826126c1954745cd55f8501ba3672307de91ec63e906a4c6"
+        },
+        {
+          "path": "tests/runtime-protocol.test.mjs",
+          "sha256": "0e329ed57e26804cb4b4fddc784f211a1ffa7d981324d9cedaf7fd061ad47625"
+        },
+        {
+          "path": "tests/shell-regressions.test.mjs",
+          "sha256": "b44b0af184a8d36c7c2d7019876b1df24504066b188398b79762135d21f768b0"
+        },
+        {
+          "path": "tests/source-copy.mjs",
+          "sha256": "e88efe311d1f9079e6896959435c8a769e9407681e55fee5d3e6fb4b53e2f59e"
+        },
+        {
+          "path": "tests/studio-integration.test.mjs",
+          "sha256": "ebd9e19b77fc3245f15e421a5c90e48f437b1f73be1a745f684cea6e1ee5dac5"
+        },
+        {
+          "path": "tests/studio-model.test.mjs",
+          "sha256": "ca889c06775545145498fcf416bbbc7d9cc0556ce2acf43b5b53641648077a69"
+        },
+        {
+          "path": "tests/studio-product-editor.test.mjs",
+          "sha256": "a373154a9b63e03efbfa85fba3d041c2be8f30ade884d9f214e3e6e075df15d7"
+        },
+        {
+          "path": "tests/studio-runtime-ui.test.mjs",
+          "sha256": "901848c20743c9b65a49e52a5456e0e4e9cf21ae7b901bb3c9634cef3f2c3063"
+        },
+        {
+          "path": "tests/support/shell-harness.mjs",
+          "sha256": "7d520464af8a755e824e486927cafadd9793ea27cc96f0001af614e64a690225"
+        },
+        {
+          "path": "tests/ui-contributions.test.mjs",
+          "sha256": "8e1b91847cf33cec6c92d7e61d2818c63d1a8032615c6e4174177e1ad0186555"
+        },
+        {
+          "path": "tests/visual-edition.test.mjs",
+          "sha256": "5b99a772bc3debbb6d157195b09b7b4275513d881ddbb94d3c4b069624915b18"
+        },
+        {
+          "path": "tests/workspace-closure.test.mjs",
+          "sha256": "2400c136171877a3662d47d0dd19c2da0cbe529875ca8e54057ad5b53ed6ebee"
+        },
+        {
+          "path": "tools/brain-app-server.mjs",
+          "sha256": "7bf18811b487a10a96505b0845f2a3966bf7cca866a5201583be971c2f6f46d7"
+        },
+        {
+          "path": "tools/browser_test.py",
+          "sha256": "ca02080f966329071f0dc7831be6424cfa14bad57f407e20bd8305a8f91dfff7"
+        },
+        {
+          "path": "tools/build-host-preflight.ps1",
+          "sha256": "53df528e77e7859ed6c69d973053c8654400cb91ebc57ac9f2e88aa35af9ab74"
+        },
+        {
+          "path": "tools/build-job.ps1",
+          "sha256": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9"
+        },
+        {
+          "path": "tools/build-visual.mjs",
+          "sha256": "5cc3de734d943be0176c458ada3730b88f1142b32a458bea344a5c5ce37599d8"
+        },
+        {
+          "path": "tools/build.mjs",
+          "sha256": "35b9ccd2b23bf8a7d80eb5c04c732f53fc4d351a309d4f2d1e09724efd5b73c6"
+        },
+        {
+          "path": "tools/ci-build-host.mjs",
+          "sha256": "4dbd8df124f54d824b6ea7e453a4c49de3242cd3e2b728bd991d7af5879b6379"
+        },
+        {
+          "path": "tools/construction-clean-install.mjs",
+          "sha256": "8e967dcd43b7b3c4f8cd42f5a7663301989cfc867c485b1ae66748baa1a7ea58"
+        },
+        {
+          "path": "tools/demo.mjs",
+          "sha256": "5708ee8f3e3aaec48f34974591a1cae6fae86ea59e5290982eb537d8f1d9e10e"
+        },
+        {
+          "path": "tools/entity-builder.mjs",
+          "sha256": "97c42fbbcded417cdc8e2235d4654afebb7164c53ebc76046ffcf2687245a6f8"
+        },
+        {
+          "path": "tools/factory.mjs",
+          "sha256": "05853c6ee024a8e510bfba54c8dd7cbff415ce731fa4197e2d3249c329ed3ee7"
+        },
+        {
+          "path": "tools/format.mjs",
+          "sha256": "42311650d79710176f4f75c0ec5f3b89c02dfe65ba2128348b13dacf47d394d2"
+        },
+        {
+          "path": "tools/frontend-closure.mjs",
+          "sha256": "7f7999cdf60eb80558aa9aaade8e5566c102414be670d370b94db4a4cc8cc45f"
+        },
+        {
+          "path": "tools/generation-preflight.mjs",
+          "sha256": "2026f8b1da07e36f743571fe01f19f82a06c4153ee9875fef41be14a2df5bad7"
+        },
+        {
+          "path": "tools/link-workspaces.mjs",
+          "sha256": "c687bf59974dcd2695a641c345a746a79f51d3e61b195700e3973939d3d50536"
+        },
+        {
+          "path": "tools/local-profile.mjs",
+          "sha256": "b780e4f6dfbb1048bed4efe5b83e60a959cdc9556c6de63935426d50aa4e4590"
+        },
+        {
+          "path": "tools/mobile/assemble.mjs",
+          "sha256": "85996517abfd5da7138535403b812cde9f3721f108e16ccce3e1626fb3b8694e"
+        },
+        {
+          "path": "tools/product-source.mjs",
+          "sha256": "d3a7d465f2c32f82329936dcaeb041cfde85bd536019a59aa7c754531909a8f2"
+        },
+        {
+          "path": "tools/registry-publish.ps1",
+          "sha256": "21193a3fb4ac19b966bc797f980eddc800cf7673485060ab02a09caa9adf3bb9"
+        },
+        {
+          "path": "tools/runtime-recovery-publish.ps1",
+          "sha256": "5f08724183c1e6abf21fe4dbd470762df21cb8f26e8c8f98d39335e8079175c5"
+        },
+        {
+          "path": "tools/runtime-recovery.mjs",
+          "sha256": "8fd0981ee90b31673e4487a2de72b4dd6918d8b16abab1dea8131885a364cf35"
+        },
+        {
+          "path": "tools/runtime-supervisor.mjs",
+          "sha256": "e8bee18aed4399433f6a85cf653c78401f2b5cb8576aee8d8a9da61df33e9d52"
+        },
+        {
+          "path": "tools/studio-browser-test.py",
+          "sha256": "786a3ddf56a121a0be63568a652182b1f4847e094cbc26ad5b2a7fd785545699"
+        },
+        {
+          "path": "tools/studio-catalogue.mjs",
+          "sha256": "2feb370d5aee5d7dc134850a49279cc6479f3fe8e97d358f49655f71258d97e3"
+        },
+        {
+          "path": "tools/studio-manager.mjs",
+          "sha256": "efcf90f8f3391ee6a848b325528793e0e8771e5e185f9e3d1bbc2e4005f34545"
+        },
+        {
+          "path": "tools/studio.mjs",
+          "sha256": "80d8b9d406ab21a484184a9407db74b429baed2b2ab3b3d54903a0e1630b7918"
+        },
+        {
+          "path": "tools/verify-checksums.mjs",
+          "sha256": "4511d710cbc0ee4bb10fb4ab0f8fd17ce456057823b5ba2b2bbade39279b4f69"
+        },
+        {
+          "path": "tools/verify-core.mjs",
+          "sha256": "9267a78eb15464d86ce8c677e9dfabbcd520a8e1d39e47b8421dbcc9ff52ca38"
+        },
+        {
+          "path": "tools/verify.mjs",
+          "sha256": "7d758ca9f3b7e5457dce23d0097f4df6c488b505fd79d18f76e87a6ab58f88cb"
+        },
+        {
+          "path": "tools/version-isolation.mjs",
+          "sha256": "b592218cb9539620e45b6816c6dd3e6678562b7c8cc971454f21b906858aa501"
+        },
+        {
+          "path": "tools/visual-browser-test.py",
+          "sha256": "65831796de64f9be2e9344cb03a5e34d5c4feedfce1ab516a37ee9ed1b17bff2"
+        },
+        {
+          "path": "tools/workspace-identities.mjs",
+          "sha256": "6652072df864e2baa86a24faf81e015c88e8c0df23a77a34c61ee9484c4883d2"
+        },
+        {
+          "path": "tsconfig.base.json",
+          "sha256": "d023138f27bdc747b14d3147e64bd70aecd8b965c058d515d5cb56a4f41228fb"
+        },
+        {
+          "path": "tsconfig.json",
+          "sha256": "efa8bde382b466d0985c8e45cb4f897f879a8941eddf6757dcd37b89c9a1f134"
+        },
+        {
+          "path": "visual/data.json",
+          "sha256": "ba5d707516222fed9d20b8aa89ac0b86ef09bd98ba1a221d75edc515eb2ca7dd"
+        },
+        {
+          "path": "visual/studio.css",
+          "sha256": "05e6d50ba1d8a1db6d61e66ab38f4613eddfc6d2040b7c3f1065d5e5e4ffe4e7"
+        },
+        {
+          "path": "visual/studio.js",
+          "sha256": "33cf049a2d50f7625d35bc2164679769fd0c7f50a4a3a361ee999030cb0f2cf8"
+        }
+      ],
+      "digest": "7c093a0598a566a8fc5c2e750e540d1f3b343424b85cd5061933a80dec4aec91"
+    },
+    "runIds": [
+      "573dae48-bc43-4f5a-aec4-0b569437eae6",
+      "b571c954-8065-4e49-8c1d-f888371e3bfc",
+      "b9a4dd31-542e-4b2d-8613-da6808e121a0"
+    ],
+    "reviewIds": [],
+    "blockers": [],
+    "nextAction": "Finite construction source frozen; complete independent install, ordinary optional-field browser/reopen, full npm test and separate exact review.",
+    "gates": [
+      {
+        "id": "native-device",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".local/mobile-001/environment.json"
+        ],
+        "limitations": [
+          "No Android SDK/Java/device tools found in inspected locations; Android/iOS native execution unqualified."
+        ]
+      },
+      {
+        "id": "native-identity-api",
+        "status": "DEFERRED",
+        "evidenceRefs": [
+          ".brain/tasks/MOBILE-001.md"
+        ],
+        "limitations": [
+          "User explicitly selected identity/API in later increment."
+        ]
+      },
+      {
+        "id": "historical-uncertain-owner",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/04021fa0-298a-4a26-8523-28a7924d5114.json"
+        ],
+        "limitations": [
+          "Prior interrupted owner close remains unobserved; no speculative fixture cleanup or PID control."
+        ]
+      },
+      {
+        "id": "interrupted-mobile-focused-owner",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/70284fca-efe2-4341-ad03-be8ef0f0646d.json"
+        ],
+        "limitations": [
+          "Earlier focused exec27608 was interrupted after EBUSY; original poll had no numeric completion and later Unknown process id. No PID recovery or speculative fixture cleanup."
+        ]
+      },
+      {
+        "id": "full-suite-repair",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/79be4758-a19c-44e3-aaeb-797efbabceab.json",
+          ".brain/workflow/runs/16878e4f-8954-403b-a531-237dab61231a.json",
+          ".brain/workflow/runs/882caf11-9e6b-4852-af21-bcec3a263910.json"
+        ],
+        "limitations": [
+          "Final corrected candidate passes the actual complete suite; earlier failed608e and72df runs remain immutable history. Skipped cases remain unqualified coverage."
+        ]
+      },
+      {
+        "id": "browser-device-specific",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/ebe16682-f289-406f-9d96-803f13994889.json"
+        ],
+        "limitations": [
+          "Actual browser360CSS journey passed. Physical keyboard/safe-area, assistive technology, Android/iOS device lifecycle and native secure storage were not tested."
+        ]
+      },
+      {
+        "id": "planning-html-policy",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/ebe16682-f289-406f-9d96-803f13994889.json"
+        ],
+        "limitations": [
+          "Earlier offline planning HTML browser navigation was policy blocked; no workaround or inferred pass. Actual product HTTP preview was independently allowed and observed."
+        ]
+      },
+      {
+        "id": "windows-file-symlink-coverage",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/79be4758-a19c-44e3-aaeb-797efbabceab.json"
+        ],
+        "limitations": [
+          "The named owned file-symlink fixture was skipped because this host denied fixture creation with EPERM. Complete command exit0 does not qualify that coverage."
+        ]
+      },
+      {
+        "id": "historical-mobile-audit-full-suite",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/2fa1fe7d-8c81-4dfb-bf3c-9becc7bbbdc5.json"
+        ],
+        "limitations": [
+          "Fresh audit npm test exit1:322 total/319pass/2fail/1EPERM skip. Historical ACCEPTED status is retained by the terminal-state workflow, not renewed regression acceptance.",
+          "This FAILED gate belongs to the retained pre-repair MOBILE candidate, not current repaired qualification."
+        ]
+      },
+      {
+        "id": "prior-mobile-history",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/workflow/events/6bdcdf38-af72-497d-be06-db222d10dcbe.json"
+        ],
+        "limitations": [
+          "Historical mobile acceptance preserved; latest audit was FAILED and does not qualify new source."
+        ]
+      },
+      {
+        "id": "current-reliability-full-suite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/a85c21b5-eb02-44cd-aca5-bf1e1431cd0d.json",
+          ".brain/workflow/runs/f5d0934d-7d03-41fe-b8f9-962c1faefb42.json",
+          ".brain/workflow/runs/44423705-d2ec-42f0-9233-101fe53ad038.json"
+        ],
+        "limitations": [
+          "Actual original outer npm test exit0; skipped coverage stays separately BLOCKED. Historical audit failure retained; no browser/provider/native-phone/hosted production qualification."
+        ]
+      },
+      {
+        "id": "reliability-prerequisite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/events/eb237842-35e0-4d68-a2b0-3401514a0334.json"
+        ],
+        "limitations": [
+          "Accepted local reliability prerequisite; no external qualification."
+        ]
+      },
+      {
+        "id": "historical-capability-first-full-suite",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/8a1126f9-d48a-4cb6-8f48-bab9b0fd8f52.json"
+        ],
+        "limitations": [
+          "Actual original npm child close exit1/nullsignal, unchanged4ab candidate; focused passes cannot qualify full regression.",
+          "Three missed offline VM integrations in two existing tests; named EPERM fixture remains separately blocked.",
+          "Retained actual FAILED first full run; finite independently approved two-test VM repair qualified only by later amended-contract candidate-specific evidence."
+        ]
+      },
+      {
+        "id": "current-capability-full-suite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/e2373db2-35b1-4e0c-8758-a8f1f6111196.json",
+          ".brain/workflow/runs/9c537144-9edf-4eca-8abd-d45898d79824.json",
+          ".brain/workflow/runs/5519e88d-4c9f-440f-8f34-75f9ff13004e.json"
+        ],
+        "limitations": [
+          "Actual original ordinary npm test close exit0 and no failed/cancelled/TODO; named skipped coverage separately blocked.",
+          "Local owner/host/export/offline composer only; no new live browser, MCP, model provider, native phone, hosted or production qualification."
+        ]
+      },
+      {
+        "id": "capability-prerequisite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/events/c7844f2a-7b53-4883-a514-0f34518141b4.json"
+        ],
+        "limitations": [
+          "Accepted local operation prerequisite; no MCP/provider/production claim."
+        ]
+      },
+      {
+        "id": "family-focused",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/c420ee76-596b-444e-83ea-19af8cbbfbe6.json"
+        ],
+        "limitations": [
+          "Actual71/71 stable-source local scope; earlier FAILED iterations retained."
+        ]
+      },
+      {
+        "id": "family-browser",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/c77a574d-c8df-4f84-880a-728fdcaae6ed.json"
+        ],
+        "limitations": [
+          "Actual ordinary Chrome full flow and original native closure; first console fixture termination exit1 preserved, separate same-fixture reopened graceful controller originalclose0.",
+          "Earlier file-import policy block and native/provider/hosted/production remain unqualified."
+        ]
+      },
+      {
+        "id": "current-family-full-suite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/a7b0f4df-f3b1-4ac3-8de2-27ee2e626683.json"
+        ],
+        "limitations": [
+          "Actual original npm test close and exact candidate evidence; named skipped coverage separately BLOCKED."
+        ]
+      },
+      {
+        "id": "family-prerequisite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/events/072e6aa9-f28a-4aab-a15e-026c445d30b6.json"
+        ],
+        "limitations": [
+          "Accepted useful local family; external/native/provider/production coverage remains unqualified."
+        ]
+      },
+      {
+        "id": "ui-pre-admission-stylesheet-scope-deviation",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/evidence/ui-slots-version-layout-amendment.md",
+          ".brain/evidence/ui-slots-scope-deviation-01.json"
+        ],
+        "limitations": [
+          "Outside37 edit observed before owner report. Forward39 amendment is not retroactive approval or delivery evidence."
+        ]
+      },
+      {
+        "id": "ui-slots-focused",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/33ffda38-af23-425a-b543-a18475a5e611.json",
+          ".brain/workflow/runs/7ac8e1c2-0848-4c83-a5f8-f28cdb605fef.json",
+          ".brain/workflow/runs/6b2a90cc-26e1-4c4a-a4b2-3fafbd0ed0d0.json",
+          ".brain/workflow/runs/a65e83df-9538-4438-95e6-8085004911b2.json"
+        ],
+        "limitations": [
+          "Actual scoped local evidence; named EPERM skipped coverage remains separately BLOCKED."
+        ]
+      },
+      {
+        "id": "ui-slots-browser",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/33ffda38-af23-425a-b543-a18475a5e611.json",
+          ".brain/workflow/runs/7ac8e1c2-0848-4c83-a5f8-f28cdb605fef.json",
+          ".brain/workflow/runs/6b2a90cc-26e1-4c4a-a4b2-3fafbd0ed0d0.json",
+          ".brain/workflow/runs/a65e83df-9538-4438-95e6-8085004911b2.json"
+        ],
+        "limitations": [
+          "Actual scoped local evidence; named EPERM skipped coverage remains separately BLOCKED."
+        ]
+      },
+      {
+        "id": "current-ui-full-suite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/33ffda38-af23-425a-b543-a18475a5e611.json",
+          ".brain/workflow/runs/7ac8e1c2-0848-4c83-a5f8-f28cdb605fef.json",
+          ".brain/workflow/runs/6b2a90cc-26e1-4c4a-a4b2-3fafbd0ed0d0.json",
+          ".brain/workflow/runs/a65e83df-9538-4438-95e6-8085004911b2.json"
+        ],
+        "limitations": [
+          "Actual scoped local evidence; named EPERM skipped coverage remains separately BLOCKED."
+        ]
+      },
+      {
+        "id": "ui-slots-prerequisite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/events/d2ea41c9-0e09-42c8-8897-c212dece790a.json"
+        ],
+        "limitations": [
+          "Accepted local trusted UI; provider/native/hosted/production remains unqualified."
+        ]
+      },
+      {
+        "id": "entity-brain-build",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/7509bdd3-29c4-4e1d-b459-2905f1db91e1.json"
+        ],
+        "limitations": [
+          "Local selected developer profile only; native phone, new browser journey, provider, hosted execution and production profile not qualified by this run.",
+          "Historical failed audit and unknown owner closures remain preserved."
+        ]
+      },
+      {
+        "id": "entity-entity-builder-focused",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/72f3ec96-391b-458d-aaa5-65def5a66da2.json"
+        ],
+        "limitations": [
+          "Local selected developer profile only; native phone, new browser journey, provider, hosted execution and production profile not qualified by this run.",
+          "Historical failed audit and unknown owner closures remain preserved."
+        ]
+      },
+      {
+        "id": "entity-entity-builder-browser",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/9c55ce1c-ab27-4ec8-9397-243e1fcec58b.json"
+        ],
+        "limitations": [
+          "This verifies captured ordinary Chrome and readonly owner evidence; no alternative browser driver.",
+          "Initial backup FAILED/CLEAN is retained. One unexpired app session and the recovery source refusal rule were observed; attribution to that rule is an inference because the driver reported only generic RECOVERY_DRIVER_FAILED. Successful retry followed ordinary same-instance restart and browser logout without source/data/security changes.",
+          "An unused task-created blank tab and stale disconnected Chrome binding were reconciled through documented browser inventory; user tabs remained untouched. Early async snapshots/three mismatched waits were retargeted from current DOM, no duplicate build/start or policy bypass.",
+          "Root owned move script initially failed its Split-Path parameter set before any movement, then used native Path.GetDirectoryName and Move-Item with contained absolute targets. Original stopped data was held and byte checked; no data deleted.",
+          "Browser tenant change proves immediate old-record clearance; completed empty-list/authorization semantics are independently covered by actual owner focused tests.",
+          "Local trusted developer profile only; native phone/provider/hosted/production remains unqualified."
+        ]
+      },
+      {
+        "id": "entity-brain-full-suite",
+        "status": "BLOCKED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/33607166-843b-4a09-b922-688e401e1d9c.json"
+        ],
+        "limitations": [
+          "Local selected developer profile only; native phone, new browser journey, provider, hosted execution and production profile not qualified by this run.",
+          "Historical failed audit and unknown owner closures remain preserved.",
+          "Actual outer command exit0 with skipped coverage remains BLOCKED for that coverage; inspect exact named skips during independent qualification."
+        ]
+      },
+      {
+        "id": "entity-prerequisite",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/events/724d8c58-0e74-47ae-b5e6-9cbfd244ab28.json"
+        ],
+        "limitations": [
+          "Prior bounded examples qualified; later optional-combination defect separately admitted, no historical rewrite."
+        ]
+      },
+      {
+        "id": "historical-construction-focused-01",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/cc362600-6865-4726-8e6c-857a0efc7c17.json"
+        ],
+        "limitations": [
+          "Original actual failed preparation preserved; older candidate/contract does not qualify amended final source."
+        ]
+      },
+      {
+        "id": "historical-construction-focused-02",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/c0d1f406-f7d9-4bc8-8aac-d63e7c428881.json"
+        ],
+        "limitations": [
+          "Original actual failed preparation preserved; older candidate/contract does not qualify amended final source."
+        ]
+      },
+      {
+        "id": "historical-construction-focused-03",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/fed1052b-004c-44a1-bd8a-f9be2f12e5f9.json"
+        ],
+        "limitations": [
+          "Original actual failed preparation preserved; older candidate/contract does not qualify amended final source."
+        ]
+      },
+      {
+        "id": "historical-construction-focused-04",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/7fdb49ce-383f-4312-bb58-65fc5068772d.json"
+        ],
+        "limitations": [
+          "Original actual failed preparation preserved; older candidate/contract does not qualify amended final source."
+        ]
+      },
+      {
+        "id": "historical-construction-derivation-build",
+        "status": "UNKNOWN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/4c672199-bd43-4440-974a-62ac3bacf54e.json"
+        ],
+        "limitations": [
+          "Actual build0 regenerated offline page; source changed, so frozen candidate qualification UNKNOWN."
+        ]
+      },
+      {
+        "id": "construction-inventory-admission",
+        "status": "REPORTED",
+        "evidenceRefs": [
+          ".brain/evidence/construction-reliability-inventory-amendment-01.md"
+        ],
+        "limitations": [
+          "Root inspected and admitted one required integration owner after actual READY preflight; execution qualification remains pending."
+        ]
+      },
+      {
+        "id": "construction-brain-build",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/573dae48-bc43-4f5a-aec4-0b569437eae6.json"
+        ],
+        "limitations": [
+          "Actual local original process only. Native-phone/provider/hosted/production remain unqualified.",
+          "Historical immutable failures and skipped coverage remain preserved."
+        ]
+      },
+      {
+        "id": "construction-construction-focused",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/b571c954-8065-4e49-8c1d-f888371e3bfc.json"
+        ],
+        "limitations": [
+          "Actual local original process only. Native-phone/provider/hosted/production remain unqualified.",
+          "Historical immutable failures and skipped coverage remain preserved."
+        ]
+      },
+      {
+        "id": "construction-construction-clean-install",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/b9a4dd31-542e-4b2d-8613-da6808e121a0.json"
+        ],
+        "limitations": [
+          "Actual local original process only. Native-phone/provider/hosted/production remain unqualified.",
+          "Historical immutable failures and skipped coverage remain preserved."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "8eb85fddb6e0165294e64c53657ce392279c66840293053ec8fec18e984dcc58"
+}

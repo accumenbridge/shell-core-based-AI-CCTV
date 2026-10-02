@@ -16,7 +16,7 @@
     "strategy": ".brain/STRATEGY.md",
     "decisions": ".brain/DECISIONS.md",
     "progress": ".brain/CURRENT.md",
-    "current_work": ".brain/tasks/ENTITY-BUILDER-001.md"
+    "current_work": ".brain/tasks/CONSTRUCTION-RELIABILITY-001.md"
   },
   "execution": {
     "mode": "existing_agent_sessions",

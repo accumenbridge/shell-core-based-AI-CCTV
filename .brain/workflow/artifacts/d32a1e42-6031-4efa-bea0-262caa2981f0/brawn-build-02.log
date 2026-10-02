@@ -1,0 +1,16 @@
+
+> quadbridge-product-platform@0.2.0 build
+> node tools/build.mjs
+
+Local workspace links prepared. No third-party packages were downloaded.
+file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/frontend-closure.mjs:57
+                    throw Error(`Unsupported browser import ${spec}; select a supported browser build adapter rather than exposing server code`);
+                          ^
+
+Error: Unsupported browser import @quadbridge/contracts/ui-contributions; select a supported browser build adapter rather than exposing server code
+    at dependency (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/frontend-closure.mjs:57:27)
+    at visit (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/frontend-closure.mjs:93:23)
+    at async frontendClosure (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/frontend-closure.mjs:110:5)
+    at async file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/build.mjs:118:54
+
+Node.js v24.19.0

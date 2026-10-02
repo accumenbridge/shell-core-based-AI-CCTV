@@ -1,0 +1,1 @@
+Created modules/asset-register; source receipt a7f8a03e11307ba9049aad7fb149c9196e4a30dbbb10cb8a39c845c4cf998211. Run npm run factory -- create-product <new-product> --modules asset-register --version <version>, then npm run build.

@@ -1,0 +1,1 @@
+Created modules/room-inspection; source receipt c3d94e3c1c0ff71c1bf660e39b39b90bd9ac987fc689b46023b7bc9f4c752286. Run npm run factory -- create-product <new-product> --modules room-inspection --version <version>, then npm run build.

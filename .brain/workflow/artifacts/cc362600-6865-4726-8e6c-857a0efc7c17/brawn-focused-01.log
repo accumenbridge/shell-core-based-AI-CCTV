@@ -1,0 +1,197 @@
+TAP version 13
+# Subtest: source-directory identity is shared and stays within the 2–48 character envelope
+ok 1 - source-directory identity is shared and stays within the 2–48 character envelope
+  ---
+  duration_ms: 0.5675
+  type: 'test'
+  ...
+# Subtest: workspace identity scan rejects duplicate names and checks availability without linking
+ok 2 - workspace identity scan rejects duplicate names and checks availability without linking
+  ---
+  duration_ms: 15.5534
+  type: 'test'
+  ...
+# Subtest: workspace linker is idempotent for its exact link and refuses a different existing owner
+ok 3 - workspace linker is idempotent for its exact link and refuses a different existing owner
+  ---
+  duration_ms: 250.6535
+  type: 'test'
+  ...
+# Subtest: canonical module preflight rejects the host session route before generation can write
+ok 4 - canonical module preflight rejects the host session route before generation can write
+  ---
+  duration_ms: 0.6762
+  type: 'test'
+  ...
+# Subtest: both source generators reject package and host-route conflicts before destination creation
+ok 5 - both source generators reject package and host-route conflicts before destination creation
+  ---
+  duration_ms: 4095.7167
+  type: 'test'
+  ...
+# Subtest: generated modules build as separate products and keep owner, receipt, UI selection, and field semantics
+not ok 6 - generated modules build as separate products and keep owner, receipt, UI selection, and field semantics
+  ---
+  duration_ms: 5514.6647
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\entity-builder-ui.test.mjs:148:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    tools/build.mjs exited 1
+    Local workspace links prepared. No third-party packages were downloaded.
+    modules/asset-register/src/ui.ts(59,49): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+    modules/room-inspection/src/ui.ts(63,49): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+    
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    run (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/entity-builder-ui.test.mjs:40:10)
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/entity-builder-ui.test.mjs:169:3)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: entity specifications are closed, bounded inputs with explicit field defaults and types
+ok 7 - entity specifications are closed, bounded inputs with explicit field defaults and types
+  ---
+  duration_ms: 4.3916
+  type: 'test'
+  ...
+# Subtest: generator reserves a new owner, records exact output hashes, and treats inserted labels literally
+not ok 8 - generator reserves a new owner, records exact output hashes, and treats inserted labels literally
+  ---
+  duration_ms: 47.5981
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\entity-builder.test.mjs:32:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /destination already exists/. Input:
+    
+    'Error: Workspace package identity already exists: @quadbridge/literal-entity'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Workspace package identity already exists: @quadbridge/literal-entity'
+  stack: |-
+    assertWorkspaceNameAvailable (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/workspace-identities.mjs:51:45)
+    generateEntity (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/entity-builder.mjs:265:3)
+    async waitForActual (node:assert:646:5)
+    async strict.rejects (node:assert:769:25)
+    async TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/entity-builder.test.mjs:78:3)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/entity-builder.test.mjs:78:3)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Studio: newly named products receive the reviewed local provider identity
+ok 9 - Studio: newly named products receive the reviewed local provider identity
+  ---
+  duration_ms: 1.3822
+  type: 'test'
+  ...
+# Subtest: Studio: neutral product does not receive unrelated service identities
+ok 10 - Studio: neutral product does not receive unrelated service identities
+  ---
+  duration_ms: 0.4894
+  type: 'test'
+  ...
+# Subtest: Studio: local seed cannot request an undeclared permission
+ok 11 - Studio: local seed cannot request an undeclared permission
+  ---
+  duration_ms: 0.6716
+  type: 'test'
+  ...
+# Subtest: Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+ok 12 - Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+  ---
+  duration_ms: 0.6175
+  type: 'test'
+  ...
+# Subtest: Studio: unsupported remote fixture origin is refused
+ok 13 - Studio: unsupported remote fixture origin is refused
+  ---
+  duration_ms: 0.3661
+  type: 'test'
+  ...
+# Subtest: Studio: dependency explanation is source-derived and uses actual versions
+ok 14 - Studio: dependency explanation is source-derived and uses actual versions
+  ---
+  duration_ms: 0.6989
+  type: 'test'
+  ...
+# Subtest: Studio: no guessed provider for an unsupported new required contract
+ok 15 - Studio: no guessed provider for an unsupported new required contract
+  ---
+  duration_ms: 0.1448
+  type: 'test'
+  ...
+# Subtest: Studio: unused or invalid binding selection fails rather than retargeting
+ok 16 - Studio: unused or invalid binding selection fails rather than retargeting
+  ---
+  duration_ms: 0.168
+  type: 'test'
+  ...
+# Subtest: Studio: import rejects runtime authority, path escape and unknown source wiring
+ok 17 - Studio: import rejects runtime authority, path escape and unknown source wiring
+  ---
+  duration_ms: 0.5004
+  type: 'test'
+  ...
+# Subtest: Studio: browser and CLI use the same compiled resolver
+ok 18 - Studio: browser and CLI use the same compiled resolver
+  ---
+  duration_ms: 7.762
+  type: 'test'
+  ...
+# Subtest: Studio: browser, product and package source IDs share the exact 2–48 identity predicate
+ok 19 - Studio: browser, product and package source IDs share the exact 2–48 identity predicate
+  ---
+  duration_ms: 1.8373
+  type: 'test'
+  ...
+# Subtest: Runtime: Handoff document picker uses the permitted Knowledge owner query
+ok 20 - Runtime: Handoff document picker uses the permitted Knowledge owner query
+  ---
+  duration_ms: 92.1628
+  type: 'test'
+  ...
+# Subtest: Runtime: missing destination authority is visible before new handoff submission
+ok 21 - Runtime: missing destination authority is visible before new handoff submission
+  ---
+  duration_ms: 77.4245
+  type: 'test'
+  ...
+# Subtest: Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+ok 22 - Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+  ---
+  duration_ms: 3875.4677
+  type: 'test'
+  ...
+# Subtest: Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+ok 23 - Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+  ---
+  duration_ms: 7707.7432
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 21
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 26189.8849

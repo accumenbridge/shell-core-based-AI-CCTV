@@ -1,4 +1,4 @@
-import type { CompositionPlan } from '@quadbridge/contracts';
+import { validSourceDirectoryId, type CompositionPlan } from '@quadbridge/contracts';
 
 export interface RuntimeWorkspaceRoot {
   id: string;
@@ -13,7 +13,6 @@ export interface RuntimeWorkspaceClosure {
   dependencies: Readonly<Record<string, string>>;
 }
 
-const PACKAGE_ID = /^[a-z][a-z0-9-]{1,47}$/;
 const EXACT_VERSION = /^\d+\.\d+\.\d+$/;
 const REVIEWED_HOST_ROOTS = ['contracts', 'composition', 'sqlite', 'local-access', 'backend-host', 'web-shell'] as const;
 const REVIEWED_PACKAGES = new Set([...REVIEWED_HOST_ROOTS, 'worker-host', 'connections', 'ai-core', 'client-core']);
@@ -28,7 +27,7 @@ export function deriveRuntimeWorkspaceClosure(
 
   const selectedModules = new Map<string, string>();
   for (const module of plan.modules) {
-    if (!module || !PACKAGE_ID.test(module.id) || !EXACT_VERSION.test(module.version) || selectedModules.has(module.id))
+    if (!module || !validSourceDirectoryId(module.id) || !EXACT_VERSION.test(module.version) || selectedModules.has(module.id))
       throw new Error('Malformed or duplicate selected module');
     selectedModules.set(module.id, module.version);
   }
@@ -72,10 +71,10 @@ export function deriveRuntimeWorkspaceClosure(
     if (packageDependencies !== undefined && (!packageDependencies || typeof packageDependencies !== 'object' || Array.isArray(packageDependencies)))
       throw new Error('Malformed workspace dependency map');
     for (const [name, dependencyVersion] of Object.entries((packageDependencies ?? {}) as Record<string, unknown>).sort(([a], [b]) => a.localeCompare(b))) {
-      const match = /^@quadbridge\/([a-z][a-z0-9-]{1,47})$/.exec(name);
-      if (!match || typeof dependencyVersion !== 'string' || !EXACT_VERSION.test(dependencyVersion))
+      const prefix = '@quadbridge/';
+      const dependencyId = typeof name === 'string' && name.startsWith(prefix) ? name.slice(prefix.length) : '';
+      if (!validSourceDirectoryId(dependencyId) || typeof dependencyVersion !== 'string' || !EXACT_VERSION.test(dependencyVersion))
         throw new Error('Runtime workspace dependencies must be exact reviewed local packages');
-      const dependencyId = match[1]!;
       const dependencyKind = selectedModules.has(dependencyId) ? 'module' : 'host';
       if (dependencyKind === 'host' && !REVIEWED_PACKAGES.has(dependencyId))
         throw new Error('Runtime workspace dependency is not selected or reviewed');

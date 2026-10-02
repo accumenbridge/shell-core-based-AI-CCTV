@@ -1,0 +1,16 @@
+{
+  "kind": "install",
+  "command": [
+    "node",
+    "tools/construction-clean-install.mjs"
+  ],
+  "startedAt": "2026-10-02T15:49:06.568Z",
+  "finishedAt": "2026-10-02T15:49:16.530Z",
+  "exitCode": 1,
+  "signal": null,
+  "candidateBefore": "7c093a0598a566a8fc5c2e750e540d1f3b343424b85cd5061933a80dec4aec91",
+  "candidateAfter": "7c093a0598a566a8fc5c2e750e540d1f3b343424b85cd5061933a80dec4aec91",
+  "contractBefore": "38c96314983810a44afd2baefcadb3884f2debad274a4f0496d42f38039c9bde",
+  "contractAfter": "38c96314983810a44afd2baefcadb3884f2debad274a4f0496d42f38039c9bde",
+  "sourceUnchanged": true
+}

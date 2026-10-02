@@ -3,9 +3,12 @@ import { readFile, writeFile, mkdir, access, cp } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validSourceDirectoryId } from '../packages/contracts/dist/index.js';
+import { assertWorkspaceNameAvailable, inspectWorkspaceIdentities } from './workspace-identities.mjs';
+import { preflightGeneratedModule } from './generation-preflight.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const [command, name, ...rest] = process.argv.slice(2);
-const valid = s => typeof s === 'string' && /^[a-z][a-z0-9-]{1,48}$/.test(s);
+const valid = validSourceDirectoryId;
 const write = async (p, value) => { await mkdir(resolve(p, '..'), { recursive: true }); await writeFile(p, typeof value === 'string' ? value : JSON.stringify(value, null, 2) + '\n', { flag: 'wx' }); };
 const fresh = async (p) => {
     try {
@@ -61,15 +64,49 @@ else if (command === 'create-module') {
     if (!valid(name))
         throw new Error('Invalid module');
     const dir = join(root, 'modules', name);
-    await fresh(dir);
     const deps = ['contracts', 'sqlite', 'backend-host', 'web-shell'];
-    await write(join(dir, 'package.json'), { name: `@quadbridge/${name}`, version: '0.2.0', private: true, type: 'module', exports: { '.': { types: './dist/index.d.ts', import: './dist/index.js' }, './*': { types: './dist/*.d.ts', import: './dist/*.js' } }, dependencies: Object.fromEntries(deps.map(d => [`@quadbridge/${d}`, '0.2.0'])) });
-    await write(join(dir, 'tsconfig.json'), { extends: '../../tsconfig.base.json', compilerOptions: { rootDir: 'src', outDir: 'dist', tsBuildInfoFile: 'dist/.tsbuildinfo' }, include: ['src/**/*.ts'], references: deps.map(d => ({ path: `../../packages/${d}` })) });
-    await write(join(dir, 'module.json'), { id: name, version: '0.2.0', abi: 'quadbridge.module.v1', dependencies: [], provides: [], requires: [], permissions: [`${name}.read`, `${name}.write`], routes: [{ method: 'GET', path: `/api/${name}`, permission: `${name}.read`, kind: 'read' }, { method: 'POST', path: `/api/${name}`, permission: `${name}.write`, kind: 'write' }], workspaces: [{ id: `${name}.main`, label: name, path: `/${name}`, permission: `${name}.read`, export: 'workspace' }], schema: { current: 1, readMin: 1, readMax: 1 }, background: false });
+    const identities = await inspectWorkspaceIdentities(root);
+    assertWorkspaceNameAvailable(identities, `@quadbridge/${name}`);
+    const dependencyVersions = {};
+    for (const dependency of deps) {
+        const packageManifest = JSON.parse(await readFile(join(root, 'packages', dependency, 'package.json'), 'utf8'));
+        if (packageManifest.name !== `@quadbridge/${dependency}` || typeof packageManifest.version !== 'string' || !/^\d+\.\d+\.\d+$/.test(packageManifest.version))
+            throw new Error(`Reviewed dependency identity is invalid: ${dependency}`);
+        dependencyVersions[packageManifest.name] = packageManifest.version;
+    }
+    const version = '0.2.0';
+    const manifest = {
+        id: name, version, abi: 'quadbridge.module.v1', dependencies: [], provides: [], requires: [],
+        permissions: [`${name}.read`, `${name}.write`],
+        routes: [{ method: 'GET', path: `/api/${name}`, permission: `${name}.read`, kind: 'read' }, { method: 'POST', path: `/api/${name}`, permission: `${name}.write`, kind: 'write' }],
+        workspaces: [{ id: `${name}.main`, label: name, path: `/${name}`, permission: `${name}.read`, export: 'workspace' }],
+        schema: { current: 1, readMin: 1, readMax: 1 }, background: false,
+        studio: {
+            label: name,
+            summary: 'Generated module-owned item records.',
+            category: 'data', layers: ['ui', 'backend', 'data'],
+            ui: { routes: [{ path: `/${name}`, workspace: `${name}.main`, label: name }] },
+            data: { stores: [{ id: `${name}.items`, kind: 'relational', ownership: 'module' }], schemas: [{ id: `${name}.schema`, version: 1 }] },
+            deployment: { processes: [{ id: name, kind: 'http' }] }
+        }
+    };
+    preflightGeneratedModule(manifest);
+    const packageJson = { name: `@quadbridge/${name}`, version, private: true, type: 'module', exports: { '.': { types: './dist/index.d.ts', import: './dist/index.js' }, './*': { types: './dist/*.d.ts', import: './dist/*.js' } }, dependencies: dependencyVersions };
+    const tsconfig = { extends: '../../tsconfig.base.json', compilerOptions: { rootDir: 'src', outDir: 'dist', tsBuildInfoFile: 'dist/.tsbuildinfo' }, include: ['src/**/*.ts'], references: deps.map(d => ({ path: `../../packages/${d}` })) };
     const source = await readFile(join(root, 'templates/module-backend.ts.txt'), 'utf8'), ui = await readFile(join(root, 'templates/module-ui.ts.txt'), 'utf8');
-    await write(join(dir, 'src/index.ts'), source.replaceAll('__NAME__', name));
-    await write(join(dir, 'src/ui.ts'), ui.replaceAll('__NAME__', name));
-    await write(join(dir, 'README.md'), `# ${name}\n\nGenerated working item-list example, not an invented business model. Define real invariants, retention and acceptance before product use.\n`);
+    await fresh(dir);
+    await mkdir(dir);
+    try {
+        await mkdir(join(dir, 'src'));
+        await write(join(dir, 'package.json'), packageJson);
+        await write(join(dir, 'tsconfig.json'), tsconfig);
+        await write(join(dir, 'module.json'), manifest);
+        await write(join(dir, 'src/index.ts'), source.replaceAll('__NAME__', name));
+        await write(join(dir, 'src/ui.ts'), ui.replaceAll('__NAME__', name));
+        await write(join(dir, 'README.md'), `# ${name}\n\nGenerated working item-list example, not an invented business model. Define real invariants, retention and acceptance before product use.\n`);
+    } catch (error) {
+        throw new Error(`Module generation was incomplete under modules/${name}; preserve the directory for inspection`, { cause: error });
+    }
     console.log(`Created modules/${name}. Run npm run build; update and review package-lock.json before release.`);
 }
 else if (command === 'assemble') {
@@ -94,7 +131,7 @@ else if (command === 'assemble') {
     if (plan.product.wiring)
         await cp(join(root, 'solutions', plan.product.wiring), join(out, 'solutions', plan.product.wiring), { recursive: true });
     await write(join(out, 'generated/solution-catalog.mjs'), `export const solutions={${plan.product.wiring ? `${JSON.stringify(plan.product.wiring)}:()=>import('../solutions/${plan.product.wiring}/wiring.mjs')` : ''}};\n`);
-    for (const file of ['link-workspaces.mjs', 'demo.mjs', 'local-profile.mjs']) {
+    for (const file of ['link-workspaces.mjs', 'workspace-identities.mjs', 'demo.mjs', 'local-profile.mjs']) {
         await mkdir(join(out, 'tools'), { recursive: true });
         await cp(join(root, 'tools', file), join(out, 'tools', file));
     }

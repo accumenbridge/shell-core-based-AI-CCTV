@@ -2,11 +2,13 @@ import { createHash } from 'node:crypto';
 import { lstat, mkdir, readFile, realpath, writeFile } from 'node:fs/promises';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validSourceDirectoryId } from '../packages/contracts/dist/index.js';
+import { assertWorkspaceNameAvailable, inspectWorkspaceIdentities } from './workspace-identities.mjs';
 
 const TOOL_ROOT = fileURLToPath(new URL('../', import.meta.url));
 const SPEC_LIMIT = 64 * 1024;
 const FIELD_ID = /^[a-z][A-Za-z0-9_]{0,31}$/;
-const MODULE_ID = /^[a-z][a-z0-9-]{1,48}$/;
+const ENTITY_ID = /^[a-z][a-z0-9-]{1,48}$/;
 const VERSION = /^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)$/;
 const RESERVED = new Set(['id', 'tenant', 'version', 'created', 'updated', 'constructor', 'prototype', '__proto__']);
 const NEUTRAL_PACKAGES = ['contracts', 'sqlite', 'backend-host', 'web-shell'];
@@ -31,11 +33,11 @@ export function validateEntitySpec(value) {
   if (root.schema !== 'quadbridge.entity-spec.v1' || !Array.isArray(root.fields) || root.fields.length < 1 || root.fields.length > 12)
     throw new Error('Unsupported entity specification');
   const module = exact(root.module, ['id', 'version', 'label'], 'module');
-  if (typeof module.id !== 'string' || !MODULE_ID.test(module.id) || typeof module.version !== 'string' || !VERSION.test(module.version))
+  if (!validSourceDirectoryId(module.id) || typeof module.version !== 'string' || !VERSION.test(module.version))
     throw new Error('Invalid generated module identity');
   const normalizedModule = { id: module.id, version: module.version, label: label(module.label, 'module label') };
   const entity = exact(root.entity, ['id', 'label', 'displayField'], 'entity');
-  if (typeof entity.id !== 'string' || !MODULE_ID.test(entity.id) || typeof entity.displayField !== 'string' || !FIELD_ID.test(entity.displayField))
+  if (typeof entity.id !== 'string' || !ENTITY_ID.test(entity.id) || typeof entity.displayField !== 'string' || !FIELD_ID.test(entity.displayField))
     throw new Error('Invalid generated entity identity');
   const normalizedEntity = { id: entity.id, label: label(entity.label, 'entity label'), displayField: entity.displayField };
   const seen = new Set();
@@ -249,8 +251,20 @@ export async function generateEntity(projectRoot, specPath) {
       { method: 'POST', path: `/api/${moduleId}/edit`, permission: `${moduleId}.write`, kind: 'write' }
     ],
     workspaces: [{ id: `${moduleId}.records`, label: spec.entity.label, path: `/${moduleId}/records`, permission: `${moduleId}.read`, export: 'workspace' }],
-    schema: { current: 1, readMin: 1, readMax: 1 }, background: false, browserAssets: ['ui/entity.css']
+    schema: { current: 1, readMin: 1, readMax: 1 }, background: false, browserAssets: ['ui/entity.css'],
+    studio: {
+      label: spec.module.label,
+      summary: `Generated ${spec.entity.label} records with module-owned SQLite storage.`,
+      category: 'data', layers: ['ui', 'backend', 'data'],
+      ui: { routes: [{ path: `/${moduleId}/records`, workspace: `${moduleId}.records`, label: spec.entity.label }] },
+      data: { stores: [{ id: `${moduleId}.data`, kind: 'relational', ownership: 'module' }], schemas: [{ id: `${moduleId}.schema`, version: 1 }] },
+      deployment: { processes: [{ id: moduleId, kind: 'http' }] }
+    }
   };
+  const workspaceIndex = await inspectWorkspaceIdentities(root);
+  assertWorkspaceNameAvailable(workspaceIndex, `@quadbridge/${moduleId}`);
+  const { preflightGeneratedModule } = await import('./generation-preflight.mjs');
+  preflightGeneratedModule(moduleManifest);
   const packageJson = {
     name: `@quadbridge/${moduleId}`, version: spec.module.version, private: true, type: 'module',
     exports: { '.': { types: './dist/index.d.ts', import: './dist/index.js' }, './*': { types: './dist/*.d.ts', import: './dist/*.js' } },

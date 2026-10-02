@@ -1,0 +1,47 @@
+✔ exported neutral product starts with all domain directories physically absent (389.8563ms)
+✔ exported Service Desk has no knowledge or handoff package and persists a real record (530.8187ms)
+✔ factory export includes the selected Knowledge package closure and actual ai-core dependency (329.9352ms)
+✔ factory refuses collisions and path traversal (391.7938ms)
+✔ generated full-stack module builds and runs without editing maintained shell source (5443.3039ms)
+✔ real separate worker process completes a preexisting durable job (533.1292ms)
+✔ source-only provider omission is not mistaken for runtime completion (135.6838ms)
+✔ React bridge cleanup is idempotent (port contract, not a React runtime test) (0.2745ms)
+✔ React bridge does not create a root after scope cancellation (0.1372ms)
+✔ generic framework packages import no reference-domain packages (4.6118ms)
+✔ provider failure closes the started modules in reverse dependency order (0.3841ms)
+✔ R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces (186.3018ms)
+✔ R05: closure includes static imports, literal lazy chunks and declared asset references (21.3757ms)
+✔ R05: missing dependency fails the build rather than making a broken release (6.3825ms)
+✔ R05: server-only package import fails before being publicly packaged (6.662ms)
+✔ R05: nonliteral runtime import is not converted into an arbitrary URL (7.5098ms)
+✔ R05: a relative import cannot escape the selected module (7.0566ms)
+✔ R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM (6.7958ms)
+✔ mobile preview assets survive an ordinary fixed product export and are served by that snapshot (590.8383ms)
+✔ mobile packaging derives neutral, Desk and Combined client-only snapshots with exact inventories (281.2977ms)
+✔ mobile assembler rejects a plan mutation against the frozen release identity (1.1827ms)
+✔ mobile bundler rebases nested new-URL assets into its reviewed raw asset tree (9.7711ms)
+✔ mobile shell derives tenant, account and workspace navigation from the accepted bootstrap (20.2593ms)
+✔ initially hidden mobile page stays suspended until visibility resumes (0.958ms)
+✔ logout remains fenced across suspend/resume and renders login only after a visible settle (1.6457ms)
+✔ packaged mobile shell shows deferred connection state without auth or API requests (0.6279ms)
+✔ R01: pending tenant change cannot mount or write under obsolete context (20.0127ms)
+✔ R01: denied replacement retains no old workspace and no old request authority (1.2268ms)
+✔ R01: unchanged periodic bootstrap preserves accepted client scope (0.9625ms)
+✔ R01: late read denial from aborted scope cannot clear the new scope (1.7678ms)
+✔ R01: late lazy import cannot mount into a replacement scope (0.7973ms)
+✔ R08: successful unchanged bootstrap remounts after failed refresh (0.8379ms)
+✔ R06: two named workspace exports mount exactly their declarations (0.5805ms)
+✔ R06: invalid named export undefined never substitutes default (0.5668ms)
+✔ R06: invalid named export {} never substitutes default (0.4298ms)
+✔ R06: invalid named export {"mount":1} never substitutes default (0.4104ms)
+✔ R01: stale workspace notifications cannot overwrite current UI (0.6691ms)
+✔ workspace export closure follows selected Knowledge package manifests and actual ai-core version (8.7284ms)
+✔ workspace closure rejects stale repeated package versions, unselected packages and identifier collisions (2.2247ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9790.8446

@@ -1,28 +1,24 @@
-import { readdir, readFile, mkdir, symlink, lstat } from 'node:fs/promises';
-import { resolve, join, relative } from 'node:path';
+import { mkdir, lstat, realpath, symlink } from 'node:fs/promises';
+import { dirname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { inspectWorkspaceIdentities } from './workspace-identities.mjs';
+
 const root = fileURLToPath(new URL('../', import.meta.url));
-for (const group of ['packages', 'modules', 'apps'])
-    for (const entry of await readdir(join(root, group), { withFileTypes: true })) {
-        if (!entry.isDirectory())
-            continue;
-        const dir = join(root, group, entry.name);
-        let pkg;
-        try {
-            pkg = JSON.parse(await readFile(join(dir, 'package.json'), 'utf8'));
-        }
-        catch {
-            continue;
-        }
-        if (!pkg.name.startsWith('@quadbridge/'))
-            throw new Error('Unapproved workspace scope');
-        const link = join(root, 'node_modules', pkg.name);
-        await mkdir(resolve(link, '..'), { recursive: true });
-        try {
-            await lstat(link);
-        }
-        catch {
-            await symlink(process.platform === 'win32' ? dir : relative(resolve(link, '..'), dir), link, process.platform === 'win32' ? 'junction' : 'dir');
-        }
-    }
+const index = await inspectWorkspaceIdentities(root);
+for (const item of index.entries) {
+  const link = resolve(root, 'node_modules', ...item.name.split('/'));
+  await mkdir(dirname(link), { recursive: true });
+  try {
+    const info = await lstat(link);
+    if (!info.isSymbolicLink()) throw new Error(`Workspace link path is already owned by a non-link: ${item.name}`);
+    let target;
+    try { target = await realpath(link); }
+    catch { throw new Error(`Workspace link is broken: ${item.name}`); }
+    if (target !== await realpath(item.path)) throw new Error(`Workspace link points to a different package: ${item.name}`);
+  } catch (error) {
+    if (error?.code !== 'ENOENT') throw error;
+    await symlink(process.platform === 'win32' ? item.path : relative(dirname(link), item.path), link,
+      process.platform === 'win32' ? 'junction' : 'dir');
+  }
+}
 console.log('Local workspace links prepared. No third-party packages were downloaded.');

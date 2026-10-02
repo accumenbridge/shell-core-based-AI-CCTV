@@ -1,0 +1,478 @@
+TAP version 13
+# Subtest: Knowledge create operation and HTTP route share one SQLite command, then indexed search/get stay tenant-scoped
+ok 1 - Knowledge create operation and HTTP route share one SQLite command, then indexed search/get stay tenant-scoped
+  ---
+  duration_ms: 121.1104
+  type: 'test'
+  ...
+# Subtest: ApplicationHost reconciles the original session and cancellation around an awaited operation
+ok 2 - ApplicationHost reconciles the original session and cancellation around an awaited operation
+  ---
+  duration_ms: 1.2849
+  type: 'test'
+  ...
+# Subtest: resolve neutral with only its selected capabilities
+ok 3 - resolve neutral with only its selected capabilities
+  ---
+  duration_ms: 1.0676
+  type: 'test'
+  ...
+# Subtest: resolve service-desk with only its selected capabilities
+ok 4 - resolve service-desk with only its selected capabilities
+  ---
+  duration_ms: 0.4667
+  type: 'test'
+  ...
+# Subtest: resolve knowledge with only its selected capabilities
+ok 5 - resolve knowledge with only its selected capabilities
+  ---
+  duration_ms: 8.2424
+  type: 'test'
+  ...
+# Subtest: resolve combined with only its selected capabilities
+ok 6 - resolve combined with only its selected capabilities
+  ---
+  duration_ms: 0.6006
+  type: 'test'
+  ...
+# Subtest: resolution order is deterministic
+ok 7 - resolution order is deterministic
+  ---
+  duration_ms: 1.4892
+  type: 'test'
+  ...
+# Subtest: unknown module fails closed
+ok 8 - unknown module fails closed
+  ---
+  duration_ms: 0.5655
+  type: 'test'
+  ...
+# Subtest: unsupported ABI fails
+ok 9 - unsupported ABI fails
+  ---
+  duration_ms: 0.2523
+  type: 'test'
+  ...
+# Subtest: exact version mismatch fails
+ok 10 - exact version mismatch fails
+  ---
+  duration_ms: 0.2318
+  type: 'test'
+  ...
+# Subtest: required dependency must be selected
+ok 11 - required dependency must be selected
+  ---
+  duration_ms: 0.2735
+  type: 'test'
+  ...
+# Subtest: dependency cycle rejected
+ok 12 - dependency cycle rejected
+  ---
+  duration_ms: 0.5928
+  type: 'test'
+  ...
+# Subtest: optional absent dependency is valid
+ok 13 - optional absent dependency is valid
+  ---
+  duration_ms: 0.3686
+  type: 'test'
+  ...
+# Subtest: duplicate public route rejected
+ok 14 - duplicate public route rejected
+  ---
+  duration_ms: 0.3227
+  type: 'test'
+  ...
+# Subtest: route permission must be owned
+ok 15 - route permission must be owned
+  ---
+  duration_ms: 0.3224
+  type: 'test'
+  ...
+# Subtest: required public port cannot be left unbound
+ok 16 - required public port cannot be left unbound
+  ---
+  duration_ms: 0.6944
+  type: 'test'
+  ...
+# Subtest: ambiguous consumer bindings rejected
+ok 17 - ambiguous consumer bindings rejected
+  ---
+  duration_ms: 0.3927
+  type: 'test'
+  ...
+# Subtest: same instance ID cannot imply different implementations
+ok 18 - same instance ID cannot imply different implementations
+  ---
+  duration_ms: 0.427
+  type: 'test'
+  ...
+# Subtest: bindings do not supply a missing local provider
+ok 19 - bindings do not supply a missing local provider
+  ---
+  duration_ms: 0.2041
+  type: 'test'
+  ...
+# Subtest: application and module instance scopes are different
+ok 20 - application and module instance scopes are different
+  ---
+  duration_ms: 0.1613
+  type: 'test'
+  ...
+# Subtest: request instances are isolated and require a context
+ok 21 - request instances are isolated and require a context
+  ---
+  duration_ms: 0.0993
+  type: 'test'
+  ...
+# Subtest: removal blocked by retained records or dependents
+ok 22 - removal blocked by retained records or dependents
+  ---
+  duration_ms: 0.4378
+  type: 'test'
+  ...
+# Subtest: canonical JSON is stable, rejecting undefined and nonfinite numbers
+ok 23 - canonical JSON is stable, rejecting undefined and nonfinite numbers
+  ---
+  duration_ms: 0.1135
+  type: 'test'
+  ...
+# Subtest: input contracts reject unknown fields and invalid identifiers
+ok 24 - input contracts reject unknown fields and invalid identifiers
+  ---
+  duration_ms: 0.1403
+  type: 'test'
+  ...
+# Subtest: modules cannot shadow host-owned authentication routes
+ok 25 - modules cannot shadow host-owned authentication routes
+  ---
+  duration_ms: 0.278
+  type: 'test'
+  ...
+# Subtest: selected composition determines the exact local package dependency closure
+ok 26 - selected composition determines the exact local package dependency closure
+  ---
+  duration_ms: 1.857
+  type: 'test'
+  ...
+# Subtest: operation declarations are module-owned, permission-owned and globally unique by exact version
+ok 27 - operation declarations are module-owned, permission-owned and globally unique by exact version
+  ---
+  duration_ms: 0.9916
+  type: 'test'
+  ...
+# Subtest: exported neutral product starts with all domain directories physically absent
+ok 28 - exported neutral product starts with all domain directories physically absent
+  ---
+  duration_ms: 374.178
+  type: 'test'
+  ...
+# Subtest: exported Service Desk has no knowledge or handoff package and persists a real record
+ok 29 - exported Service Desk has no knowledge or handoff package and persists a real record
+  ---
+  duration_ms: 446.0153
+  type: 'test'
+  ...
+# Subtest: factory export includes the selected Knowledge package closure and actual ai-core dependency
+ok 30 - factory export includes the selected Knowledge package closure and actual ai-core dependency
+  ---
+  duration_ms: 250.6824
+  type: 'test'
+  ...
+# Subtest: independent Knowledge and Combined exports invoke real operations without source or compiler trees
+ok 31 - independent Knowledge and Combined exports invoke real operations without source or compiler trees
+  ---
+  duration_ms: 1426.9203
+  type: 'test'
+  ...
+# Subtest: factory refuses collisions and path traversal
+ok 32 - factory refuses collisions and path traversal
+  ---
+  duration_ms: 506.1156
+  type: 'test'
+  ...
+# Subtest: generated full-stack module builds and runs without editing maintained shell source
+ok 33 - generated full-stack module builds and runs without editing maintained shell source
+  ---
+  duration_ms: 6372.153
+  type: 'test'
+  ...
+# Subtest: real separate worker process completes a preexisting durable job
+ok 34 - real separate worker process completes a preexisting durable job
+  ---
+  duration_ms: 619.2072
+  type: 'test'
+  ...
+# Subtest: source-only provider omission is not mistaken for runtime completion
+ok 35 - source-only provider omission is not mistaken for runtime completion
+  ---
+  duration_ms: 249.8077
+  type: 'test'
+  ...
+# Subtest: React bridge cleanup is idempotent (port contract, not a React runtime test)
+ok 36 - React bridge cleanup is idempotent (port contract, not a React runtime test)
+  ---
+  duration_ms: 1.6094
+  type: 'test'
+  ...
+# Subtest: React bridge does not create a root after scope cancellation
+ok 37 - React bridge does not create a root after scope cancellation
+  ---
+  duration_ms: 0.4334
+  type: 'test'
+  ...
+# Subtest: generic framework packages import no reference-domain packages
+ok 38 - generic framework packages import no reference-domain packages
+  ---
+  duration_ms: 33.3048
+  type: 'test'
+  ...
+# Subtest: provider failure closes the started modules in reverse dependency order
+ok 39 - provider failure closes the started modules in reverse dependency order
+  ---
+  duration_ms: 2.2941
+  type: 'test'
+  ...
+# Subtest: real Knowledge route answers only from indexed tenant records with exact UTF-16 citations
+ok 40 - real Knowledge route answers only from indexed tenant records with exact UTF-16 citations
+  ---
+  duration_ms: 116.6467
+  type: 'test'
+  ...
+# Subtest: Knowledge keeps document meaning inside its owner and rechecks the original read permission after provider await
+ok 41 - Knowledge keeps document meaning inside its owner and rechecks the original read permission after provider await
+  ---
+  duration_ms: 23.9798
+  type: 'test'
+  ...
+# Subtest: Knowledge rejects provider selections outside its captured excerpt set
+ok 42 - Knowledge rejects provider selections outside its captured excerpt set
+  ---
+  duration_ms: 11.521
+  type: 'test'
+  ...
+# Subtest: HTTP logout during an awaited Knowledge provider suppresses the original answer response
+ok 43 - HTTP logout during an awaited Knowledge provider suppresses the original answer response
+  ---
+  duration_ms: 157.8754
+  type: 'test'
+  ...
+# Subtest: module SDK creates a full vertical-slice manifest
+ok 44 - module SDK creates a full vertical-slice manifest
+  ---
+  duration_ms: 0.8404
+  type: 'test'
+  ...
+# Subtest: module SDK accepts a validated owned operation declaration and rejects unsupported schema keywords
+ok 45 - module SDK accepts a validated owned operation declaration and rejects unsupported schema keywords
+  ---
+  duration_ms: 0.9567
+  type: 'test'
+  ...
+# Subtest: Studio: newly named products receive the reviewed local provider identity
+ok 46 - Studio: newly named products receive the reviewed local provider identity
+  ---
+  duration_ms: 1.4786
+  type: 'test'
+  ...
+# Subtest: Studio: neutral product does not receive unrelated service identities
+ok 47 - Studio: neutral product does not receive unrelated service identities
+  ---
+  duration_ms: 0.5771
+  type: 'test'
+  ...
+# Subtest: Studio: local seed cannot request an undeclared permission
+ok 48 - Studio: local seed cannot request an undeclared permission
+  ---
+  duration_ms: 0.6872
+  type: 'test'
+  ...
+# Subtest: Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+ok 49 - Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+  ---
+  duration_ms: 0.6245
+  type: 'test'
+  ...
+# Subtest: Studio: unsupported remote fixture origin is refused
+ok 50 - Studio: unsupported remote fixture origin is refused
+  ---
+  duration_ms: 0.3778
+  type: 'test'
+  ...
+# Subtest: Studio: dependency explanation is source-derived and uses actual versions
+ok 51 - Studio: dependency explanation is source-derived and uses actual versions
+  ---
+  duration_ms: 0.3499
+  type: 'test'
+  ...
+# Subtest: Studio: no guessed provider for an unsupported new required contract
+ok 52 - Studio: no guessed provider for an unsupported new required contract
+  ---
+  duration_ms: 0.143
+  type: 'test'
+  ...
+# Subtest: Studio: unused or invalid binding selection fails rather than retargeting
+ok 53 - Studio: unused or invalid binding selection fails rather than retargeting
+  ---
+  duration_ms: 0.1515
+  type: 'test'
+  ...
+# Subtest: Studio: import rejects runtime authority, path escape and unknown source wiring
+ok 54 - Studio: import rejects runtime authority, path escape and unknown source wiring
+  ---
+  duration_ms: 0.6425
+  type: 'test'
+  ...
+# Subtest: Studio: browser and CLI use the same compiled resolver
+ok 55 - Studio: browser and CLI use the same compiled resolver
+  ---
+  duration_ms: 7.2159
+  type: 'test'
+  ...
+# Subtest: Runtime: Handoff document picker uses the permitted Knowledge owner query
+ok 56 - Runtime: Handoff document picker uses the permitted Knowledge owner query
+  ---
+  duration_ms: 97.4709
+  type: 'test'
+  ...
+# Subtest: Runtime: missing destination authority is visible before new handoff submission
+ok 57 - Runtime: missing destination authority is visible before new handoff submission
+  ---
+  duration_ms: 83.1163
+  type: 'test'
+  ...
+# Subtest: Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+ok 58 - Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+  ---
+  duration_ms: 4923.4324
+  type: 'test'
+  ...
+# Subtest: Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+ok 59 - Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+  ---
+  duration_ms: 9055.2027
+  type: 'test'
+  ...
+# Subtest: complete definition round-trip preserves description, exact versions, custom binding identity and wiring
+ok 60 - complete definition round-trip preserves description, exact versions, custom binding identity and wiring
+  ---
+  duration_ms: 3.9533
+  type: 'test'
+  ...
+# Subtest: unsupported definition stays unchanged and returns diagnostics without a preview plan
+ok 61 - unsupported definition stays unchanged and returns diagnostics without a preview plan
+  ---
+  duration_ms: 0.5595
+  type: 'test'
+  ...
+# Subtest: editor helpers are present in the offline browser bundle and remain pure data operations
+ok 62 - editor helpers are present in the offline browser bundle and remain pure data operations
+  ---
+  duration_ms: 8.7473
+  type: 'test'
+  ...
+# Subtest: inspection keeps supported HTTP bindings valid without claiming local launchability
+ok 63 - inspection keeps supported HTTP bindings valid without claiming local launchability
+  ---
+  duration_ms: 0.9248
+  type: 'test'
+  ...
+# Subtest: Products click and genuine hash navigation both render the catalogue while stale navigation stays selected
+ok 64 - Products click and genuine hash navigation both render the catalogue while stale navigation stays selected
+  ---
+  duration_ms: 8.0698
+  type: 'test'
+  ...
+# Subtest: product save uses an unchecked exact-version confirmation and sends only the current preview
+ok 65 - product save uses an unchecked exact-version confirmation and sends only the current preview
+  ---
+  duration_ms: 3.8938
+  type: 'test'
+  ...
+# Subtest: Visual: all eight input combinations use the canonical resolver
+ok 66 - Visual: all eight input combinations use the canonical resolver
+  ---
+  duration_ms: 6.6904
+  type: 'test'
+  ...
+# Subtest: Visual: reviewed Handoff wiring selects current local providers
+ok 67 - Visual: reviewed Handoff wiring selects current local providers
+  ---
+  duration_ms: 1.4283
+  type: 'test'
+  ...
+# Subtest: Visual: operation-bearing source catalogue uses the fixed shared schema validator
+ok 68 - Visual: operation-bearing source catalogue uses the fixed shared schema validator
+  ---
+  duration_ms: 1.3324
+  type: 'test'
+  ...
+# Subtest: Visual: neutral product has no domain, bindings or solution
+ok 69 - Visual: neutral product has no domain, bindings or solution
+  ---
+  duration_ms: 0.1049
+  type: 'test'
+  ...
+# Subtest: Visual: invalid and unknown selections fail visibly
+ok 70 - Visual: invalid and unknown selections fail visibly
+  ---
+  duration_ms: 0.194
+  type: 'test'
+  ...
+# Subtest: Visual: standalone preview sends no network calls and includes no external scripts
+ok 71 - Visual: standalone preview sends no network calls and includes no external scripts
+  ---
+  duration_ms: 3.4607
+  type: 'test'
+  ...
+# Subtest: Visual: offline composer exposes complete import, edit, canonical preview and download controls
+ok 72 - Visual: offline composer exposes complete import, edit, canonical preview and download controls
+  ---
+  duration_ms: 1.5774
+  type: 'test'
+  ...
+# Subtest: Visual: a newer definition import invalidates preview immediately and wins out-of-order file reads
+ok 73 - Visual: a newer definition import invalidates preview immediately and wins out-of-order file reads
+  ---
+  duration_ms: 3.5709
+  type: 'test'
+  ...
+# Subtest: Visual: documentation, responsive rules and source build retained
+ok 74 - Visual: documentation, responsive rules and source build retained
+  ---
+  duration_ms: 1.6348
+  type: 'test'
+  ...
+# Subtest: Visual: runtime counters remain explicitly scoped
+ok 75 - Visual: runtime counters remain explicitly scoped
+  ---
+  duration_ms: 0.8237
+  type: 'test'
+  ...
+# Subtest: Visual: all eight views render through controlled document ports
+ok 76 - Visual: all eight views render through controlled document ports
+  ---
+  duration_ms: 8.6613
+  type: 'test'
+  ...
+# Subtest: workspace export closure follows selected Knowledge package manifests and actual ai-core version
+ok 77 - workspace export closure follows selected Knowledge package manifests and actual ai-core version
+  ---
+  duration_ms: 10.2019
+  type: 'test'
+  ...
+# Subtest: workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+ok 78 - workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+  ---
+  duration_ms: 2.2057
+  type: 'test'
+  ...
+1..78
+# tests 78
+# suites 0
+# pass 78
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 31574.8346

@@ -1,0 +1,167 @@
+TAP version 13
+# Subtest: source-directory identity is shared and stays within the 2–48 character envelope
+ok 1 - source-directory identity is shared and stays within the 2–48 character envelope
+  ---
+  duration_ms: 0.4878
+  type: 'test'
+  ...
+# Subtest: workspace identity scan rejects duplicate names and checks availability without linking
+ok 2 - workspace identity scan rejects duplicate names and checks availability without linking
+  ---
+  duration_ms: 11.9984
+  type: 'test'
+  ...
+# Subtest: workspace linker is idempotent for its exact link and refuses a different existing owner
+ok 3 - workspace linker is idempotent for its exact link and refuses a different existing owner
+  ---
+  duration_ms: 207.2784
+  type: 'test'
+  ...
+# Subtest: canonical module preflight rejects the host session route before generation can write
+ok 4 - canonical module preflight rejects the host session route before generation can write
+  ---
+  duration_ms: 0.6947
+  type: 'test'
+  ...
+# Subtest: both source generators reject package and host-route conflicts before destination creation
+ok 5 - both source generators reject package and host-route conflicts before destination creation
+  ---
+  duration_ms: 4207.4096
+  type: 'test'
+  ...
+# Subtest: generated modules build as separate products and keep owner, receipt, UI selection, and field semantics
+not ok 6 - generated modules build as separate products and keep owner, receipt, UI selection, and field semantics
+  ---
+  duration_ms: 24286.2368
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\entity-builder-ui.test.mjs:148:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    the normal LocalBuildWorker did not publish a successful generated-source build (FAILED)
+    + actual - expected
+    
+    + 'FAILED'
+    - 'SUCCEEDED'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'SUCCEEDED'
+  actual: 'FAILED'
+  operator: 'strictEqual'
+  stack: |-
+    buildThroughReviewedWorker (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/entity-builder-ui.test.mjs:92:12)
+    async TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/entity-builder-ui.test.mjs:417:31)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: entity specifications are closed, bounded inputs with explicit field defaults and types
+ok 7 - entity specifications are closed, bounded inputs with explicit field defaults and types
+  ---
+  duration_ms: 6.625
+  type: 'test'
+  ...
+# Subtest: generator reserves a new owner, records exact output hashes, and treats inserted labels literally
+ok 8 - generator reserves a new owner, records exact output hashes, and treats inserted labels literally
+  ---
+  duration_ms: 95.2174
+  type: 'test'
+  ...
+# Subtest: Studio: newly named products receive the reviewed local provider identity
+ok 9 - Studio: newly named products receive the reviewed local provider identity
+  ---
+  duration_ms: 1.396
+  type: 'test'
+  ...
+# Subtest: Studio: neutral product does not receive unrelated service identities
+ok 10 - Studio: neutral product does not receive unrelated service identities
+  ---
+  duration_ms: 0.4866
+  type: 'test'
+  ...
+# Subtest: Studio: local seed cannot request an undeclared permission
+ok 11 - Studio: local seed cannot request an undeclared permission
+  ---
+  duration_ms: 0.6785
+  type: 'test'
+  ...
+# Subtest: Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+ok 12 - Studio: connected selection retains explicit tenant relationship without silently embedding the destination
+  ---
+  duration_ms: 0.6025
+  type: 'test'
+  ...
+# Subtest: Studio: unsupported remote fixture origin is refused
+ok 13 - Studio: unsupported remote fixture origin is refused
+  ---
+  duration_ms: 0.3692
+  type: 'test'
+  ...
+# Subtest: Studio: dependency explanation is source-derived and uses actual versions
+ok 14 - Studio: dependency explanation is source-derived and uses actual versions
+  ---
+  duration_ms: 0.7781
+  type: 'test'
+  ...
+# Subtest: Studio: no guessed provider for an unsupported new required contract
+ok 15 - Studio: no guessed provider for an unsupported new required contract
+  ---
+  duration_ms: 0.163
+  type: 'test'
+  ...
+# Subtest: Studio: unused or invalid binding selection fails rather than retargeting
+ok 16 - Studio: unused or invalid binding selection fails rather than retargeting
+  ---
+  duration_ms: 0.1705
+  type: 'test'
+  ...
+# Subtest: Studio: import rejects runtime authority, path escape and unknown source wiring
+ok 17 - Studio: import rejects runtime authority, path escape and unknown source wiring
+  ---
+  duration_ms: 0.544
+  type: 'test'
+  ...
+# Subtest: Studio: browser and CLI use the same compiled resolver
+ok 18 - Studio: browser and CLI use the same compiled resolver
+  ---
+  duration_ms: 7.411
+  type: 'test'
+  ...
+# Subtest: Studio: browser, product and package source IDs share the exact 2–48 identity predicate
+ok 19 - Studio: browser, product and package source IDs share the exact 2–48 identity predicate
+  ---
+  duration_ms: 1.786
+  type: 'test'
+  ...
+# Subtest: Runtime: Handoff document picker uses the permitted Knowledge owner query
+ok 20 - Runtime: Handoff document picker uses the permitted Knowledge owner query
+  ---
+  duration_ms: 205.0223
+  type: 'test'
+  ...
+# Subtest: Runtime: missing destination authority is visible before new handoff submission
+ok 21 - Runtime: missing destination authority is visible before new handoff submission
+  ---
+  duration_ms: 85.695
+  type: 'test'
+  ...
+# Subtest: Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+ok 22 - Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint
+  ---
+  duration_ms: 4116.5434
+  type: 'test'
+  ...
+# Subtest: Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+ok 23 - Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt
+  ---
+  duration_ms: 7451.702
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 22
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 46257.6064

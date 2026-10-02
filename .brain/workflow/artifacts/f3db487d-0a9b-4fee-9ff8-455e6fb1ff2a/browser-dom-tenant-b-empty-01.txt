@@ -1,0 +1,20 @@
+- complementary:
+  - generic: Q
+  - generic: Quadbridge
+  - generic: PRODUCT WORKSPACE
+  - generic: Optional Workflow
+  - paragraph: Product-owned composition created by the Quadbridge Studio.
+  - navigation "Workspaces":
+    - link "Record":
+      - /url: "#/optional-records/records"
+  - generic: LOCAL DEVELOPER PROFILE
+  - paragraph: 1 selected modules
+  - paragraph: optional-browser-instance
+- main:
+  - text: Tenant
+  - combobox "Tenant":
+    - option "tenant-a"
+    - option "tenant-b" [selected]
+  - generic: admin
+  - button "Sign out"
+  - status: Loading authorized tenant context…

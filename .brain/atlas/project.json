@@ -2,8 +2,8 @@
   "schema": "brain.atlas.v1",
   "projectId": "quadbridge-core-frameworks",
   "title": "Quadbridge Product Studio",
-  "planRevision": 42,
-  "updatedAt": "2026-10-02T11:21:57.596Z",
+  "planRevision": 47,
+  "updatedAt": "2026-10-02T16:28:57.255Z",
   "intentBasis": "User authorized the local full architecture program and on 2026-10-01 requested a reusable architecture-first Brain with visual planning, core prioritization and continuous review. Existing source architecture and bounded execution contracts remain authoritative. User 2026-10-01 explicitly created a complete-core actual realtime goal; checkpoint28 selects the continuous local core journey and grounded Brain readiness maintenance. User2026-10-01 ok proceed adopts the next bounded reliability/CI increment after source-grounded verdict review. Preserve local-core completion and unresolved historical startup cause. User2026-10-02 authorizes the reviewed mobile shell build and explicitly defers identity/API profile selection. MOBILE-001 adopts browser-shell/client packaging only; native acceptance remains open. Continued user local core/plugin architecture request and explicit implementation handoff adopt FRAMEWORK-RELIABILITY-001 from actual revision63 failed audit; MOBILE-001 historical acceptance retained.",
   "vision": {
     "destination": "Build and operate reviewed products through a product-neutral Studio, with exact composition, immutable artifacts, domain ownership and understandable user journeys.",
@@ -71,19 +71,19 @@
       "id": "architecture",
       "path": "PLATFORM_ARCHITECTURE.md",
       "role": "architecture",
-      "sha256": "0f14979eecf2ce1846d7ab00bcec820325046fb7ad2613c90604857f7ffe5118"
+      "sha256": "8f42425572600db36a71bf79db374551f373cc29d5d95726d378f44a114cba82"
     },
     {
       "id": "readme",
       "path": "README.md",
       "role": "user journeys",
-      "sha256": "1192c3e6a367c671cc1e823831fa0f6123cd0693f22633fbddc6cd8a698fbd31"
+      "sha256": "2b53f93688aa4409e288757135d9b14167dfaa342b0afabab6c2e61c242bc6c3"
     },
     {
       "id": "status",
       "path": "docs/STATUS.md",
       "role": "historical status",
-      "sha256": "291ab0eb8a5cf0ddcbb31b0782fd05c8a5ee6660951c4fea9527fcc4cbc9ef03"
+      "sha256": "d00f35fd42988f928024e9f5c2d0bff09a90b91888251633b948e68229412aea"
     },
     {
       "id": "roadmap",
@@ -119,13 +119,13 @@
       "id": "structure",
       "path": "FOLDER_STRUCTURE.md",
       "role": "historical source layout",
-      "sha256": "004dadfdd0981b2d9e37ea812500f945837e8f1e5836fabcb2c8994821e34c9f"
+      "sha256": "a8bd37ea7388920d19253df6e3c5c1c30c3780030a43897a8175816a686ea124"
     },
     {
       "id": "old-map",
       "path": "FULL_PLATFORM_BUILD_MAP.md",
       "role": "target history",
-      "sha256": "850758dd0e91820a01666f1964081a7dd85dad75cc98711a22aa9257ed2d40bb"
+      "sha256": "c56c1edc0d683b5d2c39951445533e3b5bf45ab1a4fb3755a6da7d9f7829f7cc"
     },
     {
       "id": "studio-ui",
@@ -137,7 +137,7 @@
       "id": "contracts",
       "path": "packages/contracts/src/index.ts",
       "role": "public interfaces",
-      "sha256": "f246c861f2ecd5916e072ebdc71b2d116c81f19ebb55e362b120ff3a238b2d0c"
+      "sha256": "cfa0794ce8dbd772a8c2a10c137449ba145020ea2d2a45f8f7b1d64c82907c72"
     },
     {
       "id": "control-contracts",
@@ -185,7 +185,7 @@
       "id": "implementation",
       "path": "IMPLEMENTATION_STATUS_0.3.md",
       "role": "implemented and pending boundaries",
-      "sha256": "bed43db35e029b2bb512c31a96918c3e71d3786637e360b714689f9a0f1656fd"
+      "sha256": "b7cb08566773c52138747b2de4105f487a1c509a17b6be9f089e5281fe9587aa"
     },
     {
       "id": "construction-diagram",
@@ -389,7 +389,7 @@
       "id": "kernel-startup-journey",
       "path": "tests/studio-integration.test.mjs",
       "role": "Actual post-merge generated-product startup failure; bounded owning evidence followup",
-      "sha256": "4bfa1294685e128381eaedd6283d6542672285bb73add51e6e8c33104242758d"
+      "sha256": "ebd9e19b77fc3245f15e421a5c90e48f437b1f73be1a745f684cea6e1ee5dac5"
     },
     {
       "id": "kernel-startup-demo",
@@ -563,7 +563,7 @@
       "id": "capability-source-0",
       "path": "packages/contracts/src/index.ts",
       "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
-      "sha256": "f246c861f2ecd5916e072ebdc71b2d116c81f19ebb55e362b120ff3a238b2d0c"
+      "sha256": "cfa0794ce8dbd772a8c2a10c137449ba145020ea2d2a45f8f7b1d64c82907c72"
     },
     {
       "id": "capability-source-1",
@@ -677,13 +677,13 @@
       "id": "capability-source-19",
       "path": "tools/studio-catalogue.mjs",
       "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
-      "sha256": "9f0dc5198ceee5468fab3dbcfe305e153c25d6862b2ed15e6ea62583a1c809c7"
+      "sha256": "2feb370d5aee5d7dc134850a49279cc6479f3fe8e97d358f49655f71258d97e3"
     },
     {
       "id": "capability-source-20",
       "path": "OPEN_PLATFORM.html",
       "role": "Inspected operation integration baseline; candidate changes require semantic reconciliation",
-      "sha256": "1cc0fd9d14ef493d6d1ca6d0065974120cd5b76a195de00550e6743c855c4d72"
+      "sha256": "369280dd31031cb6692653bece3b5db7d19676dba92f6c1aeab8bab36eae634a"
     },
     {
       "id": "capability-source-21",
@@ -767,13 +767,13 @@
       "id": "family-source-0",
       "path": "tools/studio-catalogue.mjs",
       "role": "Inspected family integration baseline; source changes require semantic reconciliation",
-      "sha256": "9f0dc5198ceee5468fab3dbcfe305e153c25d6862b2ed15e6ea62583a1c809c7"
+      "sha256": "2feb370d5aee5d7dc134850a49279cc6479f3fe8e97d358f49655f71258d97e3"
     },
     {
       "id": "family-source-1",
       "path": "apps/control-plane/src/build-inputs.ts",
       "role": "Inspected family integration baseline; source changes require semantic reconciliation",
-      "sha256": "76a3e74e27f073ed6a12f0411d1092f2107d2ea7da0696dafad76d994bcfe828"
+      "sha256": "d83bf8031d016ea76da88ed47feb46110f499bec88a89ce553efbb4dec9e56ed"
     },
     {
       "id": "family-source-2",
@@ -803,7 +803,7 @@
       "id": "family-source-6",
       "path": "OPEN_PLATFORM.html",
       "role": "Inspected family integration baseline; source changes require semantic reconciliation",
-      "sha256": "1cc0fd9d14ef493d6d1ca6d0065974120cd5b76a195de00550e6743c855c4d72"
+      "sha256": "369280dd31031cb6692653bece3b5db7d19676dba92f6c1aeab8bab36eae634a"
     },
     {
       "id": "family-source-7",
@@ -923,7 +923,7 @@
       "id": "ui-slots-source-0",
       "path": "packages/contracts/src/index.ts",
       "role": "Inspected current source owner baseline",
-      "sha256": "f246c861f2ecd5916e072ebdc71b2d116c81f19ebb55e362b120ff3a238b2d0c"
+      "sha256": "cfa0794ce8dbd772a8c2a10c137449ba145020ea2d2a45f8f7b1d64c82907c72"
     },
     {
       "id": "ui-slots-source-1",
@@ -959,7 +959,7 @@
       "id": "ui-slots-source-6",
       "path": "apps/control-plane/src/build-inputs.ts",
       "role": "Inspected current source owner baseline",
-      "sha256": "76a3e74e27f073ed6a12f0411d1092f2107d2ea7da0696dafad76d994bcfe828"
+      "sha256": "d83bf8031d016ea76da88ed47feb46110f499bec88a89ce553efbb4dec9e56ed"
     },
     {
       "id": "ui-slots-source-7",
@@ -977,7 +977,7 @@
       "id": "ui-slots-source-9",
       "path": "tools/studio-catalogue.mjs",
       "role": "Inspected current source owner baseline",
-      "sha256": "9f0dc5198ceee5468fab3dbcfe305e153c25d6862b2ed15e6ea62583a1c809c7"
+      "sha256": "2feb370d5aee5d7dc134850a49279cc6479f3fe8e97d358f49655f71258d97e3"
     },
     {
       "id": "ui-slots-source-10",
@@ -1061,7 +1061,7 @@
       "id": "ui-slots-source-23",
       "path": "OPEN_PLATFORM.html",
       "role": "Inspected current source owner baseline",
-      "sha256": "1cc0fd9d14ef493d6d1ca6d0065974120cd5b76a195de00550e6743c855c4d72"
+      "sha256": "369280dd31031cb6692653bece3b5db7d19676dba92f6c1aeab8bab36eae634a"
     },
     {
       "id": "ui-slots-source-24",
@@ -1223,7 +1223,7 @@
       "id": "entity-builder-source-0",
       "path": "tools/factory.mjs",
       "role": "Actual accepted prior source owner reinspection",
-      "sha256": "9d04ed4b696390ed72769600e0a36680cadb063157db1c9fbb66ad29e51f62b2"
+      "sha256": "05853c6ee024a8e510bfba54c8dd7cbff415ce731fa4197e2d3249c329ed3ee7"
     },
     {
       "id": "entity-builder-source-1",
@@ -1235,7 +1235,7 @@
       "id": "entity-builder-source-2",
       "path": "apps/control-plane/src/build-inputs.ts",
       "role": "Actual accepted prior source owner reinspection",
-      "sha256": "76a3e74e27f073ed6a12f0411d1092f2107d2ea7da0696dafad76d994bcfe828"
+      "sha256": "d83bf8031d016ea76da88ed47feb46110f499bec88a89ce553efbb4dec9e56ed"
     },
     {
       "id": "entity-builder-source-3",
@@ -1271,19 +1271,19 @@
       "id": "entity-builder-source-8",
       "path": "README.md",
       "role": "Actual accepted prior source owner reinspection",
-      "sha256": "1192c3e6a367c671cc1e823831fa0f6123cd0693f22633fbddc6cd8a698fbd31"
+      "sha256": "2b53f93688aa4409e288757135d9b14167dfaa342b0afabab6c2e61c242bc6c3"
     },
     {
       "id": "entity-builder-source-9",
       "path": "docs/STATUS.md",
       "role": "Actual accepted prior source owner reinspection",
-      "sha256": "291ab0eb8a5cf0ddcbb31b0782fd05c8a5ee6660951c4fea9527fcc4cbc9ef03"
+      "sha256": "d00f35fd42988f928024e9f5c2d0bff09a90b91888251633b948e68229412aea"
     },
     {
       "id": "entity-builder-added-tools-entity-builder-mjs",
       "path": "tools/entity-builder.mjs",
       "role": "Read closed field/spec normalization, JSON/SQL literal construction, single-pass template insertion, fixed operation metadata and exclusive physical new-owner generation. Hash receipt captures normalized spec, generator, templates, neutral versions and output bytes without making metadata runtime authority.",
-      "sha256": "dc5f75445ddc89888f788881fe5262253d3fd3c55cfd982a6e21e4bf0ad54a6f"
+      "sha256": "97c42fbbcded417cdc8e2235d4654afebb7164c53ebc76046ffcf2687245a6f8"
     },
     {
       "id": "entity-builder-added-templates-entity-backend-ts-txt",
@@ -1295,7 +1295,7 @@
       "id": "entity-builder-added-templates-entity-ui-ts-txt",
       "path": "templates/entity-ui.ts.txt",
       "role": "Read mixed-type whole workspace create/list/detail/edit, false required boolean handling, exact captured payload/key retry, explicit conflict reload and selection-generation fences. Read/write controls use actual granted permissions and disposal preserves scope cleanup.",
-      "sha256": "6dba7aeaa00751c4d55aa12e5ea2ccc63dc0efb3796dde27de233312d2880b5c"
+      "sha256": "0102838d994b0402c6e2212cd42dde7d14acca3431f862ecc81235a9cdfb9522"
     },
     {
       "id": "entity-builder-added-templates-entity-css-txt",
@@ -1319,19 +1319,235 @@
       "id": "entity-builder-added-docs-entity-builder-md",
       "path": "docs/ENTITY_BUILDER.md",
       "role": "Read practical CLI/example, closed fields and owner receipt/version/conflict behaviour, independent selected builds and paired registration/promotion/runtime controls. Existing data/custom source remains unchanged; upgrades and broader domains are explicitly deferred.",
-      "sha256": "198ff8e7537cb9f6ef648e1f38f13061c9d63e7c785707e28cf1a4d51127a949"
+      "sha256": "8c4d130795c4dc07874901074a0aa34c639d97b23884d875aeba3c495017ba0d"
     },
     {
       "id": "entity-builder-added-tests-entity-builder-test-mjs",
       "path": "tests/entity-builder.test.mjs",
       "role": "Read closed-spec/type/default validation and exclusive generation receipt/output hash checks, single-pass inserted label literal proof and occupied-directory refusal. Tests exercise actual generator code within a new owned private fixture.",
-      "sha256": "8531a6a238794cb1f47edefbb26c03e9cab7d410ba08996f8596d324e90002f1"
+      "sha256": "76e2cbc9e554fa506cc23665c51ccd2f140cb90f90d25d914013612cd1409e87"
     },
     {
       "id": "entity-builder-added-tests-entity-builder-ui-test-mjs",
       "path": "tests/entity-builder-ui.test.mjs",
       "role": "Read two independent generated compiled/exported owners with real HTTP/operations/defaults/replay/conflict/tenant/viewer/mode/revocation/reopen and compiled UI checks. Reviewed file membership/spec-receipt fingerprint drift/adjacent refusal and one normal short-root worker admission prove copy closure. Complete generated source removal retains release-bound dist CSS served over HTTP; uncertain worker cleanup retains its root. Windows profile copy is conditional, preserving POSIX worker path.",
-      "sha256": "3ed8aee2a45cb046eb445e3fc02d4e770082ae67596da25b656018ccb46f3d24"
+      "sha256": "802aa6436544cc85119200118d6bbc1794462ec339b0b15988a5ccd2d484fe58"
+    },
+    {
+      "id": "construction-task",
+      "path": ".brain/tasks/CONSTRUCTION-RELIABILITY-001.md",
+      "role": "Current authorized bounded construction task",
+      "sha256": "761a5a8596e08ebd5e4921d8503e50a6a21a3bbe281bc96c29c990259c5bc29b"
+    },
+    {
+      "id": "construction-order",
+      "path": ".brain/evidence/construction-reliability-approved-work-order.md",
+      "role": "Actual adopted Sol source-grounded work order",
+      "sha256": "7133b56465cffbd2c2404c150ad34c67c68104d4daea446718d1c496cf3dcd19"
+    },
+    {
+      "id": "construction-source-0",
+      "path": "packages/contracts/src/index.ts",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "cfa0794ce8dbd772a8c2a10c137449ba145020ea2d2a45f8f7b1d64c82907c72"
+    },
+    {
+      "id": "construction-source-1",
+      "path": "packages/composition/src/studio.ts",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "01c3a40d60cb8c29d6c5af705f2a4abc186059fa19b36545f984f68990d350d6"
+    },
+    {
+      "id": "construction-source-2",
+      "path": "packages/composition/src/workspace-closure.ts",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "49d362421e6f7d99c285a508c4023f367358cec6ab67a10dd59507992b7a724a"
+    },
+    {
+      "id": "construction-source-3",
+      "path": "tools/link-workspaces.mjs",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "c687bf59974dcd2695a641c345a746a79f51d3e61b195700e3973939d3d50536"
+    },
+    {
+      "id": "construction-source-4",
+      "path": "tools/factory.mjs",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "05853c6ee024a8e510bfba54c8dd7cbff415ce731fa4197e2d3249c329ed3ee7"
+    },
+    {
+      "id": "construction-source-5",
+      "path": "tools/entity-builder.mjs",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "97c42fbbcded417cdc8e2235d4654afebb7164c53ebc76046ffcf2687245a6f8"
+    },
+    {
+      "id": "construction-source-6",
+      "path": "templates/entity-ui.ts.txt",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "0102838d994b0402c6e2212cd42dde7d14acca3431f862ecc81235a9cdfb9522"
+    },
+    {
+      "id": "construction-source-7",
+      "path": "tools/studio-catalogue.mjs",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "2feb370d5aee5d7dc134850a49279cc6479f3fe8e97d358f49655f71258d97e3"
+    },
+    {
+      "id": "construction-source-8",
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "d83bf8031d016ea76da88ed47feb46110f499bec88a89ce553efbb4dec9e56ed"
+    },
+    {
+      "id": "construction-source-9",
+      "path": "tests/entity-builder.test.mjs",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "76e2cbc9e554fa506cc23665c51ccd2f140cb90f90d25d914013612cd1409e87"
+    },
+    {
+      "id": "construction-source-10",
+      "path": "tests/entity-builder-ui.test.mjs",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "802aa6436544cc85119200118d6bbc1794462ec339b0b15988a5ccd2d484fe58"
+    },
+    {
+      "id": "construction-source-11",
+      "path": "tests/studio-integration.test.mjs",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "ebd9e19b77fc3245f15e421a5c90e48f437b1f73be1a745f684cea6e1ee5dac5"
+    },
+    {
+      "id": "construction-source-12",
+      "path": "README.md",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "2b53f93688aa4409e288757135d9b14167dfaa342b0afabab6c2e61c242bc6c3"
+    },
+    {
+      "id": "construction-source-13",
+      "path": "docs/ENTITY_BUILDER.md",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "8c4d130795c4dc07874901074a0aa34c639d97b23884d875aeba3c495017ba0d"
+    },
+    {
+      "id": "construction-source-14",
+      "path": "PLATFORM_ARCHITECTURE.md",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "8f42425572600db36a71bf79db374551f373cc29d5d95726d378f44a114cba82"
+    },
+    {
+      "id": "construction-source-15",
+      "path": "IMPLEMENTATION_STATUS_0.3.md",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "b7cb08566773c52138747b2de4105f487a1c509a17b6be9f089e5281fe9587aa"
+    },
+    {
+      "id": "construction-source-16",
+      "path": "FOLDER_STRUCTURE.md",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "a8bd37ea7388920d19253df6e3c5c1c30c3780030a43897a8175816a686ea124"
+    },
+    {
+      "id": "construction-source-17",
+      "path": "FULL_PLATFORM_BUILD_MAP.md",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "c56c1edc0d683b5d2c39951445533e3b5bf45ab1a4fb3755a6da7d9f7829f7cc"
+    },
+    {
+      "id": "construction-source-18",
+      "path": "docs/STATUS.md",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "d00f35fd42988f928024e9f5c2d0bff09a90b91888251633b948e68229412aea"
+    },
+    {
+      "id": "construction-source-19",
+      "path": "OPEN_PLATFORM.html",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "369280dd31031cb6692653bece3b5db7d19676dba92f6c1aeab8bab36eae634a"
+    },
+    {
+      "id": "construction-source-20",
+      "path": "visual/data.json",
+      "role": "Actual prior source reinspection; bounded repair assigned, no new execution claim",
+      "sha256": "ba5d707516222fed9d20b8aa89ac0b86ef09bd98ba1a221d75edc515eb2ca7dd"
+    },
+    {
+      "id": "construction-tools-workspace-identities-mjs",
+      "path": "tools/workspace-identities.mjs",
+      "role": "Inspected built-ins-only physical manifest index and declared package-name collision refusal across fixed packages, modules and apps.",
+      "sha256": "6652072df864e2baa86a24faf81e015c88e8c0df23a77a34c61ee9484c4883d2"
+    },
+    {
+      "id": "construction-tools-generation-preflight-mjs",
+      "path": "tools/generation-preflight.mjs",
+      "role": "Inspected inert synthetic one-module composition and existing Studio validator preflight; no copied reserved-route policy or generated executable import.",
+      "sha256": "2026f8b1da07e36f743571fe01f19f82a06c4153ee9875fef41be14a2df5bad7"
+    },
+    {
+      "id": "construction-tools-construction-clean-install-mjs",
+      "path": "tools/construction-clean-install.mjs",
+      "role": "Inspected separate two-copy ordinary npm install/build proof, explicit private lock reconciliation, selected output checks, full copied-source stability and checked owned cleanup; generator behavior is unchanged by this acceptance driver.",
+      "sha256": "40f4899647d79b7e3518c5d5be0324d031b120e821581683003823d475dd7b61"
+    },
+    {
+      "id": "construction-tests-construction-reliability-test-mjs",
+      "path": "tests/construction-reliability.test.mjs",
+      "role": "Inspected isolated fresh-built generator refusal probes and physical workspace link ownership checks for the actual authoring conflicts.",
+      "sha256": "bac199940fc7dea340d5a0e81744e07ff6e9e2d34a902ad4304bc5b095cec18a"
+    },
+    {
+      "id": "construction-packages-composition-src-integrity-ts",
+      "path": "packages/composition/src/integrity.ts",
+      "role": "Inspected exact current factory expected inventory mismatch: add the reviewed built-ins workspace identity helper copied by the current assembler; retain older snapshot minimum metadata requirements unchanged.",
+      "sha256": "b24805451b0aac25a418beb36901dbd0cd17b6da19e525d1f2e98654d3afaee7"
+    },
+    {
+      "id": "construction--brain-evidence-construction-reliability-inventory-amendment-01-md",
+      "path": ".brain/evidence/construction-reliability-inventory-amendment-01.md",
+      "role": "Actual current factory inventory ownership amendment; qualification pending.",
+      "sha256": "34bf5eabf121972c9887a0db6b5ff9c5c81da5f2bd8cf09082fb026ec3edb04e"
+    },
+    {
+      "id": "construction-result",
+      "path": ".brain/evidence/construction-reliability-result.md",
+      "role": "Actual scoped local construction acceptance",
+      "sha256": "6fb295006fde05482d92eb636d7cefc59250371ccd039c917bd89ca964242ede"
+    },
+    {
+      "id": "construction-run-0",
+      "path": ".brain/workflow/runs/cb2e3d2a-342f-4051-9919-f57008a4aa01.json",
+      "role": "Actual current candidate original execution evidence",
+      "sha256": "26866766b5c4319fc3c5c41ec85c43bf0e10811eee254d1916b173a94271dfec"
+    },
+    {
+      "id": "construction-run-1",
+      "path": ".brain/workflow/runs/6b681dde-0093-4c43-8f99-36b2e81eb35e.json",
+      "role": "Actual current candidate original execution evidence",
+      "sha256": "2a79d6396d54471c9ba628a5a7c4dfdbf18093102dabc334b34b4ee2b7bab33c"
+    },
+    {
+      "id": "construction-run-2",
+      "path": ".brain/workflow/runs/e8937c90-2a68-447f-8282-b707fb750fd0.json",
+      "role": "Actual current candidate original execution evidence",
+      "sha256": "5c171bb33a86470b06050bcbf993004fdf358f81221b8daed724daf5f7fd65c1"
+    },
+    {
+      "id": "construction-run-3",
+      "path": ".brain/workflow/runs/f3db487d-0a9b-4fee-9ff8-455e6fb1ff2a.json",
+      "role": "Actual current candidate original execution evidence",
+      "sha256": "a84ff1d28cffc04ca154289831d3aae013bca41cb764fc02f41d9904b52f7e67"
+    },
+    {
+      "id": "construction-run-4",
+      "path": ".brain/workflow/runs/e4aea92c-84da-4183-afed-217efe1ebbe1.json",
+      "role": "Actual current candidate original execution evidence",
+      "sha256": "8eb56309d8255a2f657595d8eef3575747f68adc5b68e4ea85ace00b539d5313"
+    },
+    {
+      "id": "construction-review-0",
+      "path": ".brain/workflow/runs/4bd3d5ab-ae68-45c4-ba66-f69e10be2d6e.json",
+      "role": "Actual separate exact source/evidence review",
+      "sha256": "260eaaae629be1cfb695746ee078a6ecfdff8219e55981987a83bd914baff2cc"
     }
   ],
   "nodes": [
@@ -3039,6 +3255,110 @@
         "Actual ordinary browser on both exact promoted products creates/reads/edits, verifies conflict handling and retained same-artifact restart; Asset also uses existing stopped backup/verify/root-refusal/absent test-owned root restore/restart.",
         "Fresh build before focused tests, frozen ordinary npm test original close0/nullsignal, zero failed/cancel/TODO/only named justified unavailable coverage and separate exact Sol review before local acceptance."
       ]
+    },
+    {
+      "id": "M-CONSTRUCTION-RELIABILITY-001",
+      "kind": "milestone",
+      "title": "Construction reliability and independent fresh installation",
+      "summary": "Correct bounded authoring/UI semantics and prove independently installed generated workspaces.",
+      "owner": "Root; Sol/high Brain; sole Luna/xhigh Brawn",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Confirmed supported construction bugs and reproducibility gap precede product upgrades.",
+      "dependsOn": [
+        "M-ENTITY-BUILDER-001"
+      ],
+      "links": [
+        "J-CREATE",
+        "J-OPERATE",
+        "C-COMPOSITION",
+        "ST-CONSTRUCTION-RELIABILITY-001"
+      ],
+      "sourceRefs": [
+        "construction-task",
+        "construction-order",
+        "construction-source-0",
+        "construction-source-1",
+        "construction-source-2",
+        "construction-source-3",
+        "construction-source-4",
+        "construction-source-5",
+        "construction-source-6",
+        "construction-source-7",
+        "construction-source-8",
+        "construction-source-9",
+        "construction-source-10",
+        "construction-source-11",
+        "construction-source-12",
+        "construction-source-13",
+        "construction-source-14",
+        "construction-source-15",
+        "construction-source-16",
+        "construction-source-17",
+        "construction-source-18",
+        "construction-source-19",
+        "construction-source-20",
+        "contracts",
+        "construction-tools-workspace-identities-mjs",
+        "construction-tools-generation-preflight-mjs",
+        "entity-builder-source-0",
+        "entity-builder-added-tools-entity-builder-mjs",
+        "entity-builder-added-templates-entity-ui-ts-txt",
+        "capability-source-19",
+        "family-source-1",
+        "construction-tools-construction-clean-install-mjs",
+        "construction-tests-construction-reliability-test-mjs",
+        "entity-builder-added-tests-entity-builder-test-mjs",
+        "entity-builder-added-tests-entity-builder-ui-test-mjs",
+        "kernel-startup-journey",
+        "readme",
+        "entity-builder-added-docs-entity-builder-md",
+        "architecture",
+        "implementation",
+        "structure",
+        "old-map",
+        "status",
+        "capability-source-20",
+        "capability-source-21",
+        "construction-packages-composition-src-integrity-ts",
+        "construction--brain-evidence-construction-reliability-inventory-amendment-01-md"
+      ],
+      "acceptance": [
+        "Both generators reject package identity collisions and canonical reserved route/manifest conflicts before destination creation; linker refuses duplicate or wrong ownership and remains idempotent; same source IDs use2–48 envelope.",
+        "Generated optional boolean/enum preserve omission vs explicit false/value through create/edit and exact ambiguous command retry; required/default controls and existing scope/conflict behavior stay intact; emitted Studio metadata describes actual source.",
+        "Two newly owned clean source copies prove explicit lock reconciliation, ordinary fresh npm ci/build and selected generated product closure without inherited node_modules/dist/junction compiler state or generator lock mutation.",
+        "Current architecture guides name version dimensions, actual capability/family/UI/mobile/entity implementation and same-artifact recovery limits; historical evidence remains distinct from current qualification.",
+        "Ordinary browser uses a source-free assembled optional-field product: unset create/untouched edit, explicit false/enum, removal to unset and read/reopen; exact owner/export identity and original process closure.",
+        "Fresh build, focused tests, separate install proof and browser precede full npm test on stable source; original exit0/zero fail/cancel/TODO with named blocked skips preserved and separate Sol review."
+      ]
+    },
+    {
+      "id": "ST-CONSTRUCTION-RELIABILITY-001",
+      "kind": "story",
+      "title": "Author and freshly install correct generated record products",
+      "summary": "Correct bounded authoring/UI semantics and prove independently installed generated workspaces.",
+      "owner": "Root; Sol/high Brain; sole Luna/xhigh Brawn",
+      "intentStatus": "accepted",
+      "priority": "core",
+      "priorityReason": "Confirmed supported construction bugs and reproducibility gap precede product upgrades.",
+      "dependsOn": [
+        "M-ENTITY-BUILDER-001"
+      ],
+      "links": [
+        "M-CONSTRUCTION-RELIABILITY-001"
+      ],
+      "sourceRefs": [
+        "construction-task",
+        "construction-order"
+      ],
+      "acceptance": [
+        "Both generators reject package identity collisions and canonical reserved route/manifest conflicts before destination creation; linker refuses duplicate or wrong ownership and remains idempotent; same source IDs use2–48 envelope.",
+        "Generated optional boolean/enum preserve omission vs explicit false/value through create/edit and exact ambiguous command retry; required/default controls and existing scope/conflict behavior stay intact; emitted Studio metadata describes actual source.",
+        "Two newly owned clean source copies prove explicit lock reconciliation, ordinary fresh npm ci/build and selected generated product closure without inherited node_modules/dist/junction compiler state or generator lock mutation.",
+        "Current architecture guides name version dimensions, actual capability/family/UI/mobile/entity implementation and same-artifact recovery limits; historical evidence remains distinct from current qualification.",
+        "Ordinary browser uses a source-free assembled optional-field product: unset create/untouched edit, explicit false/enum, removal to unset and read/reopen; exact owner/export identity and original process closure.",
+        "Fresh build, focused tests, separate install proof and browser precede full npm test on stable source; original exit0/zero fail/cancel/TODO with named blocked skips preserved and separate Sol review."
+      ]
     }
   ],
   "observations": [
@@ -3376,6 +3696,28 @@
         "Named EPERM blocked coverage, pre-admission CSS deviation, prior failures/unknown causes retained.",
         "Trusted local profile; native phone/provider/hosted/production unqualified."
       ]
+    },
+    {
+      "id": "OBS-CONSTRUCTION-RELIABILITY-001-RESULT",
+      "nodeId": "M-CONSTRUCTION-RELIABILITY-001",
+      "state": "verified",
+      "summary": "Local construction accepted: build0,focus23/23,independent two-copy install15closes0,source-free Chrome omission/default/tenant/viewer/reopen, fullretry362/361pass/0fail/1namedblocked original0 and separate exact review.",
+      "sourceRefs": [
+        "construction-result",
+        "construction-run-0",
+        "construction-run-1",
+        "construction-run-2",
+        "construction-run-3",
+        "construction-run-4",
+        "construction-review-0"
+      ],
+      "candidate": "25e59142bcf5e0950dbd79a15533f4de5e8b4d8b889631afcf3169304d63ebee",
+      "observedAt": "2026-10-02T16:28:57.255Z",
+      "provenance": "execution-record",
+      "limitations": [
+        "Named Windows EPERM fixture remains blocked. First full cleanup ENOTEMPTY cause unknown and FAILED history preserved; unchanged diagnostic/full retry qualification only.",
+        "Scoped local developer construction only; safeupgrade/native-device/provider/hosted/production remain separate."
+      ]
     }
   ],
   "retrospectives": [
@@ -3425,5 +3767,5 @@
       "status": "proposed"
     }
   ],
-  "focusNodeId": "M-ENTITY-BUILDER-001"
+  "focusNodeId": "M-CONSTRUCTION-RELIABILITY-001"
 }

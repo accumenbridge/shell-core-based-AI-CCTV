@@ -377,6 +377,66 @@
         "ENTITY-BROWSER"
       ],
       "evidenceScope": "Actual browser exact source/product/runtime identity, no VM substitute or policy bypass."
+    },
+    {
+      "id": "construction-focused",
+      "argv": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/construction-reliability.test.mjs",
+        "tests/entity-builder.test.mjs",
+        "tests/entity-builder-ui.test.mjs",
+        "tests/studio-integration.test.mjs"
+      ],
+      "cwd": ".",
+      "description": "Meaningful authoring/link/optional UI/metadata/offline integration checks.",
+      "criterionIds": [
+        "CONSTRUCTION-AUTHORING",
+        "CONSTRUCTION-UI",
+        "CONSTRUCTION-DOCS"
+      ],
+      "evidenceScope": "Fresh actual compiled owners/UI and canonical helper integration; real browser separately."
+    },
+    {
+      "id": "construction-clean-install",
+      "argv": [
+        "node",
+        "tools/construction-clean-install.mjs"
+      ],
+      "cwd": ".",
+      "description": "Explicit private two-copy lock reconciliation and ordinary npm ci/build proof.",
+      "criterionIds": [
+        "CONSTRUCTION-INSTALL"
+      ],
+      "evidenceScope": "Original actual installed npm children; no inherited dependencies in final clean copy."
+    },
+    {
+      "id": "construction-browser",
+      "argv": [
+        "manual-browser-observation"
+      ],
+      "cwd": ".",
+      "description": "Real source-free generated optional-field app create/edit/omit/reopen.",
+      "criterionIds": [
+        "CONSTRUCTION-BROWSER"
+      ],
+      "evidenceScope": "Ordinary actual browser and exact owner/export/original closure; no duplicate native recovery qualification."
+    },
+    {
+      "id": "construction-export-observation",
+      "argv": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/frontend-assembly.test.mjs"
+      ],
+      "cwd": ".",
+      "description": "One unchanged-source ordinary export observation after actual full-suite mobile-export cleanup ENOTEMPTY; no new source grant or broad campaign.",
+      "criterionIds": [
+        "BRAIN-REGRESSION"
+      ],
+      "evidenceScope": "Original local export/HTTP and owner-close/temp-cleanup execution; root cause remains unknown without reproducible evidence."
     }
   ]
 }

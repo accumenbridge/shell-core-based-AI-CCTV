@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces
+ok 1 - R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces
+  ---
+  duration_ms: 187.6395
+  type: 'test'
+  ...
+# Subtest: reviewed product mapping is literal in the full build and absent from the Desk-only closure
+ok 2 - reviewed product mapping is literal in the full build and absent from the Desk-only closure
+  ---
+  duration_ms: 1.2396
+  type: 'test'
+  ...
+# Subtest: R05: closure includes static imports, literal lazy chunks and declared asset references
+ok 3 - R05: closure includes static imports, literal lazy chunks and declared asset references
+  ---
+  duration_ms: 21.4834
+  type: 'test'
+  ...
+# Subtest: R05: missing dependency fails the build rather than making a broken release
+ok 4 - R05: missing dependency fails the build rather than making a broken release
+  ---
+  duration_ms: 8.0183
+  type: 'test'
+  ...
+# Subtest: R05: server-only package import fails before being publicly packaged
+ok 5 - R05: server-only package import fails before being publicly packaged
+  ---
+  duration_ms: 6.7776
+  type: 'test'
+  ...
+# Subtest: R05: nonliteral runtime import is not converted into an arbitrary URL
+ok 6 - R05: nonliteral runtime import is not converted into an arbitrary URL
+  ---
+  duration_ms: 7.2364
+  type: 'test'
+  ...
+# Subtest: R05: a relative import cannot escape the selected module
+ok 7 - R05: a relative import cannot escape the selected module
+  ---
+  duration_ms: 6.4339
+  type: 'test'
+  ...
+# Subtest: R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM
+ok 8 - R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM
+  ---
+  duration_ms: 5.7789
+  type: 'test'
+  ...
+# Subtest: mobile preview assets survive an ordinary fixed product export and are served by that snapshot
+ok 9 - mobile preview assets survive an ordinary fixed product export and are served by that snapshot
+  ---
+  duration_ms: 562.4947
+  type: 'test'
+  ...
+# Subtest: mobile rebuild replaces only generated trees and exports the exact compact snapshot inventory
+ok 10 - mobile rebuild replaces only generated trees and exports the exact compact snapshot inventory
+  ---
+  duration_ms: 4796.7263
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5826.8955

@@ -1,0 +1,93 @@
+✔ exported neutral product starts with all domain directories physically absent (384.5324ms)
+✖ exported Service Desk has no knowledge or handoff package and persists a real record (667.2052ms)
+✔ factory export includes the selected Knowledge package closure and actual ai-core dependency (328.9699ms)
+✔ factory refuses collisions and path traversal (508.5137ms)
+✖ generated full-stack module builds and runs without editing maintained shell source (3354.1466ms)
+✔ real separate worker process completes a preexisting durable job (644.6597ms)
+✔ source-only provider omission is not mistaken for runtime completion (187.0946ms)
+✔ React bridge cleanup is idempotent (port contract, not a React runtime test) (1.4863ms)
+✔ React bridge does not create a root after scope cancellation (0.4139ms)
+✔ generic framework packages import no reference-domain packages (27.6615ms)
+✔ provider failure closes the started modules in reverse dependency order (2.0235ms)
+✔ R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces (179.8924ms)
+✔ R05: closure includes static imports, literal lazy chunks and declared asset references (21.4105ms)
+✔ R05: missing dependency fails the build rather than making a broken release (7.4596ms)
+✔ R05: server-only package import fails before being publicly packaged (7.1299ms)
+✔ R05: nonliteral runtime import is not converted into an arbitrary URL (7.3593ms)
+✔ R05: a relative import cannot escape the selected module (6.3767ms)
+✔ R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM (6.4486ms)
+✔ mobile preview assets survive an ordinary fixed product export and are served by that snapshot (766.1819ms)
+✔ mobile packaging derives neutral, Desk and Combined client-only snapshots with exact inventories (290.2313ms)
+✔ mobile assembler rejects a plan mutation against the frozen release identity (1.4241ms)
+✔ mobile bundler rebases nested new-URL assets into its reviewed raw asset tree (9.4483ms)
+✔ mobile shell derives tenant, account and workspace navigation from the accepted bootstrap (19.4699ms)
+✔ initially hidden mobile page stays suspended until visibility resumes (0.9217ms)
+✔ logout remains fenced across suspend/resume and renders login only after a visible settle (1.8425ms)
+✔ packaged mobile shell shows deferred connection state without auth or API requests (0.4232ms)
+✔ R01: pending tenant change cannot mount or write under obsolete context (21.0198ms)
+✔ R01: denied replacement retains no old workspace and no old request authority (1.3253ms)
+✔ R01: unchanged periodic bootstrap preserves accepted client scope (1.0406ms)
+✔ R01: late read denial from aborted scope cannot clear the new scope (1.1932ms)
+✔ R01: late lazy import cannot mount into a replacement scope (1.241ms)
+✔ R08: successful unchanged bootstrap remounts after failed refresh (0.8349ms)
+✔ R06: two named workspace exports mount exactly their declarations (0.5363ms)
+✔ R06: invalid named export undefined never substitutes default (0.5686ms)
+✔ R06: invalid named export {} never substitutes default (0.4052ms)
+✔ R06: invalid named export {"mount":1} never substitutes default (0.3681ms)
+✔ R01: stale workspace notifications cannot overwrite current UI (0.6657ms)
+✔ workspace export closure follows selected Knowledge package manifests and actual ai-core version (8.4116ms)
+✔ workspace closure rejects stale repeated package versions, unselected packages and identifier collisions (2.185ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 37
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8346.2849
+
+✖ failing tests:
+
+test at tests\factory-lifecycle.test.mjs:28:1
+✖ exported Service Desk has no knowledge or handoff package and persists a real record (667.2052ms)
+  [Error: ENOTEMPTY: directory not empty, rmdir 'C:\Users\Lenovo\AppData\Local\Temp\qb-export-MCtPmq\data\modules'] { errno: -4051, code: 'ENOTEMPTY', syscall: 'rmdir', path: 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\qb-export-MCtPmq\\data\\modules' }
+
+test at tests\factory-lifecycle.test.mjs:60:1
+✖ generated full-stack module builds and runs without editing maintained shell source (3354.1466ms)
+  AssertionError [ERR_ASSERTION]: Local workspace links prepared. No third-party packages were downloaded.
+  
+  node:internal/modules/package_json_reader:301
+    throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+          ^
+  
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'esbuild' imported from C:\Users\Lenovo\AppData\Local\Temp\qb-generator-Ca86F2\source\tools\mobile\assemble.mjs
+      at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+      at packageResolve (node:internal/modules/esm/resolve:768:81)
+      at moduleResolve (node:internal/modules/esm/resolve:859:18)
+      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+      at #resolve (node:internal/modules/esm/loader:683:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+      at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+    code: 'ERR_MODULE_NOT_FOUND'
+  }
+  
+  Node.js v24.19.0
+  
+  
+  1 !== 0
+  
+      at run (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/factory-lifecycle.test.mjs:14:141)
+      at TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/factory-lifecycle.test.mjs:63:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+exit_code=1

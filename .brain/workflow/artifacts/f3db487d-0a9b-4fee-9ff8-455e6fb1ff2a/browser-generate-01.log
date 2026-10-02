@@ -1,0 +1,1 @@
+Created modules/optional-records; source receipt 79ea71c6f015bd061100c4c0bc4c805917b7311cc2023448d174f3771a4946f6. Run npm run factory -- create-product <new-product> --modules optional-records --version <version>, then npm run build.

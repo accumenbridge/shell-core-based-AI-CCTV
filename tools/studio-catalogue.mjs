@@ -47,10 +47,10 @@ export async function browserCore(root) {
         if (/^import |\bexport \{/m.test(code)) throw Error('Unsupported browser-core module format');
         return `globalThis.${name}=(()=>{\n${imports}\n${code}\nreturn {${exports}};\n})();\n`;
     };
-    return await build('packages/contracts/dist/index.js','QBContracts','', 'PLATFORM_ABI,PlatformError,canonical,object')+
+    return await build('packages/contracts/dist/index.js','QBContracts','', 'PLATFORM_ABI,PlatformError,canonical,object,validSourceDirectoryId')+
         await build('packages/contracts/dist/operations.js','QBOperations','const {PlatformError,canonical}=globalThis.QBContracts;', 'OPERATION_LIMITS,validateOperationDescriptor,validateOperationValue,sameOperationDescriptor')+
         await build('packages/contracts/dist/ui-contributions.js','QBUiContributions','const {PlatformError}=globalThis.QBContracts;', 'UI_CONTRIBUTION_SLOTS,validateUiContributionDescriptors,resolveUiContributionBindings')+
         await build('packages/composition/dist/index.js','QBComposition','const {PLATFORM_ABI,PlatformError,canonical}=globalThis.QBContracts;const {validateOperationDescriptor}=globalThis.QBOperations;const {validateUiContributionDescriptors}=globalThis.QBUiContributions;', 'resolve')+
-        await build('packages/composition/dist/studio.js','QBComposer','const {PLATFORM_ABI,PlatformError,canonical,object}=globalThis.QBContracts;const {resolve}=globalThis.QBComposition;', 'composeDraft,validateProduct,validProductId,inspectProductDefinition,parseProductDefinition,previewProductDefinition,serializeProductDefinition,STUDIO_PRODUCT_TEXT_LIMIT')+
+        await build('packages/composition/dist/studio.js','QBComposer','const {PLATFORM_ABI,PlatformError,canonical,object,validSourceDirectoryId}=globalThis.QBContracts;const {resolve}=globalThis.QBComposition;', 'composeDraft,validateProduct,validProductId,inspectProductDefinition,parseProductDefinition,previewProductDefinition,serializeProductDefinition,STUDIO_PRODUCT_TEXT_LIMIT')+
         await build('packages/composition/dist/family.js','QBFamilies','const {resolve}=globalThis.QBComposition;const {composeDraft,validateProduct}=globalThis.QBComposer;', 'validateProductFamily,deriveFamily');
 }

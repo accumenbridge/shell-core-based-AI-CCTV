@@ -1,0 +1,484 @@
+TAP version 13
+# Subtest: Knowledge create operation and HTTP route share one SQLite command, then indexed search/get stay tenant-scoped
+ok 1 - Knowledge create operation and HTTP route share one SQLite command, then indexed search/get stay tenant-scoped
+  ---
+  duration_ms: 114.0877
+  type: 'test'
+  ...
+# Subtest: ApplicationHost reconciles the original session and cancellation around an awaited operation
+ok 2 - ApplicationHost reconciles the original session and cancellation around an awaited operation
+  ---
+  duration_ms: 1.055
+  type: 'test'
+  ...
+# Subtest: resolve neutral with only its selected capabilities
+ok 3 - resolve neutral with only its selected capabilities
+  ---
+  duration_ms: 0.9554
+  type: 'test'
+  ...
+# Subtest: resolve service-desk with only its selected capabilities
+ok 4 - resolve service-desk with only its selected capabilities
+  ---
+  duration_ms: 0.4013
+  type: 'test'
+  ...
+# Subtest: resolve knowledge with only its selected capabilities
+ok 5 - resolve knowledge with only its selected capabilities
+  ---
+  duration_ms: 7.3903
+  type: 'test'
+  ...
+# Subtest: resolve combined with only its selected capabilities
+ok 6 - resolve combined with only its selected capabilities
+  ---
+  duration_ms: 0.571
+  type: 'test'
+  ...
+# Subtest: resolution order is deterministic
+ok 7 - resolution order is deterministic
+  ---
+  duration_ms: 1.3033
+  type: 'test'
+  ...
+# Subtest: unknown module fails closed
+ok 8 - unknown module fails closed
+  ---
+  duration_ms: 0.5469
+  type: 'test'
+  ...
+# Subtest: unsupported ABI fails
+ok 9 - unsupported ABI fails
+  ---
+  duration_ms: 0.1805
+  type: 'test'
+  ...
+# Subtest: exact version mismatch fails
+ok 10 - exact version mismatch fails
+  ---
+  duration_ms: 0.1951
+  type: 'test'
+  ...
+# Subtest: required dependency must be selected
+ok 11 - required dependency must be selected
+  ---
+  duration_ms: 0.4083
+  type: 'test'
+  ...
+# Subtest: dependency cycle rejected
+ok 12 - dependency cycle rejected
+  ---
+  duration_ms: 0.4955
+  type: 'test'
+  ...
+# Subtest: optional absent dependency is valid
+ok 13 - optional absent dependency is valid
+  ---
+  duration_ms: 0.3336
+  type: 'test'
+  ...
+# Subtest: duplicate public route rejected
+ok 14 - duplicate public route rejected
+  ---
+  duration_ms: 0.2799
+  type: 'test'
+  ...
+# Subtest: route permission must be owned
+ok 15 - route permission must be owned
+  ---
+  duration_ms: 0.3077
+  type: 'test'
+  ...
+# Subtest: required public port cannot be left unbound
+ok 16 - required public port cannot be left unbound
+  ---
+  duration_ms: 0.4354
+  type: 'test'
+  ...
+# Subtest: ambiguous consumer bindings rejected
+ok 17 - ambiguous consumer bindings rejected
+  ---
+  duration_ms: 0.6968
+  type: 'test'
+  ...
+# Subtest: same instance ID cannot imply different implementations
+ok 18 - same instance ID cannot imply different implementations
+  ---
+  duration_ms: 0.4323
+  type: 'test'
+  ...
+# Subtest: bindings do not supply a missing local provider
+ok 19 - bindings do not supply a missing local provider
+  ---
+  duration_ms: 0.199
+  type: 'test'
+  ...
+# Subtest: application and module instance scopes are different
+ok 20 - application and module instance scopes are different
+  ---
+  duration_ms: 0.196
+  type: 'test'
+  ...
+# Subtest: request instances are isolated and require a context
+ok 21 - request instances are isolated and require a context
+  ---
+  duration_ms: 0.0993
+  type: 'test'
+  ...
+# Subtest: removal blocked by retained records or dependents
+ok 22 - removal blocked by retained records or dependents
+  ---
+  duration_ms: 0.46
+  type: 'test'
+  ...
+# Subtest: canonical JSON is stable, rejecting undefined and nonfinite numbers
+ok 23 - canonical JSON is stable, rejecting undefined and nonfinite numbers
+  ---
+  duration_ms: 0.0954
+  type: 'test'
+  ...
+# Subtest: input contracts reject unknown fields and invalid identifiers
+ok 24 - input contracts reject unknown fields and invalid identifiers
+  ---
+  duration_ms: 0.1715
+  type: 'test'
+  ...
+# Subtest: modules cannot shadow host-owned authentication routes
+ok 25 - modules cannot shadow host-owned authentication routes
+  ---
+  duration_ms: 0.2954
+  type: 'test'
+  ...
+# Subtest: selected composition determines the exact local package dependency closure
+ok 26 - selected composition determines the exact local package dependency closure
+  ---
+  duration_ms: 1.7822
+  type: 'test'
+  ...
+# Subtest: operation declarations are module-owned, permission-owned and globally unique by exact version
+ok 27 - operation declarations are module-owned, permission-owned and globally unique by exact version
+  ---
+  duration_ms: 0.9162
+  type: 'test'
+  ...
+# Subtest: exported neutral product starts with all domain directories physically absent
+ok 28 - exported neutral product starts with all domain directories physically absent
+  ---
+  duration_ms: 371.2739
+  type: 'test'
+  ...
+# Subtest: exported Service Desk has no knowledge or handoff package and persists a real record
+ok 29 - exported Service Desk has no knowledge or handoff package and persists a real record
+  ---
+  duration_ms: 557.7593
+  type: 'test'
+  ...
+# Subtest: factory export includes the selected Knowledge package closure and actual ai-core dependency
+ok 30 - factory export includes the selected Knowledge package closure and actual ai-core dependency
+  ---
+  duration_ms: 325.6414
+  type: 'test'
+  ...
+# Subtest: independent Knowledge and Combined exports invoke real operations without source or compiler trees
+ok 31 - independent Knowledge and Combined exports invoke real operations without source or compiler trees
+  ---
+  duration_ms: 1141.4415
+  type: 'test'
+  ...
+# Subtest: factory refuses collisions and path traversal
+ok 32 - factory refuses collisions and path traversal
+  ---
+  duration_ms: 492.1791
+  type: 'test'
+  ...
+# Subtest: generated full-stack module builds and runs without editing maintained shell source
+ok 33 - generated full-stack module builds and runs without editing maintained shell source
+  ---
+  duration_ms: 5177.9331
+  type: 'test'
+  ...
+# Subtest: real separate worker process completes a preexisting durable job
+ok 34 - real separate worker process completes a preexisting durable job
+  ---
+  duration_ms: 429.7774
+  type: 'test'
+  ...
+# Subtest: source-only provider omission is not mistaken for runtime completion
+ok 35 - source-only provider omission is not mistaken for runtime completion
+  ---
+  duration_ms: 54.6997
+  type: 'test'
+  ...
+# Subtest: React bridge cleanup is idempotent (port contract, not a React runtime test)
+ok 36 - React bridge cleanup is idempotent (port contract, not a React runtime test)
+  ---
+  duration_ms: 0.3144
+  type: 'test'
+  ...
+# Subtest: React bridge does not create a root after scope cancellation
+ok 37 - React bridge does not create a root after scope cancellation
+  ---
+  duration_ms: 0.0857
+  type: 'test'
+  ...
+# Subtest: generic framework packages import no reference-domain packages
+ok 38 - generic framework packages import no reference-domain packages
+  ---
+  duration_ms: 4.2259
+  type: 'test'
+  ...
+# Subtest: provider failure closes the started modules in reverse dependency order
+ok 39 - provider failure closes the started modules in reverse dependency order
+  ---
+  duration_ms: 0.4885
+  type: 'test'
+  ...
+# Subtest: real Knowledge route answers only from indexed tenant records with exact UTF-16 citations
+ok 40 - real Knowledge route answers only from indexed tenant records with exact UTF-16 citations
+  ---
+  duration_ms: 118.1876
+  type: 'test'
+  ...
+# Subtest: Knowledge keeps document meaning inside its owner and rechecks the original read permission after provider await
+ok 41 - Knowledge keeps document meaning inside its owner and rechecks the original read permission after provider await
+  ---
+  duration_ms: 25.8427
+  type: 'test'
+  ...
+# Subtest: Knowledge rejects provider selections outside its captured excerpt set
+ok 42 - Knowledge rejects provider selections outside its captured excerpt set
+  ---
+  duration_ms: 11.7375
+  type: 'test'
+  ...
+# Subtest: HTTP logout during an awaited Knowledge provider suppresses the original answer response
+ok 43 - HTTP logout during an awaited Knowledge provider suppresses the original answer response
+  ---
+  duration_ms: 162.9338
+  type: 'test'
+  ...
+# Subtest: module SDK creates a full vertical-slice manifest
+ok 44 - module SDK creates a full vertical-slice manifest
+  ---
+  duration_ms: 0.7549
+  type: 'test'
+  ...
+# Subtest: module SDK accepts a validated owned operation declaration and rejects unsupported schema keywords
+ok 45 - module SDK accepts a validated owned operation declaration and rejects unsupported schema keywords
+  ---
+  duration_ms: 0.8819
+  type: 'test'
+  ...
+# Subtest: Visual: all eight input combinations use the canonical resolver
+not ok 46 - Visual: all eight input combinations use the canonical resolver
+  ---
+  duration_ms: 1.3891
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\visual-edition.test.mjs:14:1'
+  failureType: 'testCodeFailure'
+  error: 'Invalid operation descriptor'
+  code: 'INVALID'
+  name: 'PlatformError'
+  stack: |-
+    invalid (evalmachine.<anonymous>:64:11)
+    ownRecord (evalmachine.<anonymous>:74:9)
+    validateOperationDescriptor (evalmachine.<anonymous>:219:20)
+    resolve (evalmachine.<anonymous>:360:32)
+    Object.composeDraft (evalmachine.<anonymous>:530:18)
+    Object.compose (evalmachine.<anonymous>:58:31)
+    compose (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/visual-edition.test.mjs:13:85)
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/visual-edition.test.mjs:14:164)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+  ...
+# Subtest: Visual: reviewed Handoff wiring selects current local providers
+not ok 47 - Visual: reviewed Handoff wiring selects current local providers
+  ---
+  duration_ms: 0.2007
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\visual-edition.test.mjs:15:1'
+  failureType: 'testCodeFailure'
+  error: 'Invalid operation descriptor'
+  code: 'INVALID'
+  name: 'PlatformError'
+  stack: |-
+    invalid (evalmachine.<anonymous>:64:11)
+    ownRecord (evalmachine.<anonymous>:74:9)
+    validateOperationDescriptor (evalmachine.<anonymous>:219:20)
+    resolve (evalmachine.<anonymous>:360:32)
+    Object.composeDraft (evalmachine.<anonymous>:530:18)
+    Object.compose (evalmachine.<anonymous>:58:31)
+    compose (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/visual-edition.test.mjs:13:85)
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/visual-edition.test.mjs:15:85)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+  ...
+# Subtest: Visual: operation-bearing source catalogue uses the fixed shared schema validator
+not ok 48 - Visual: operation-bearing source catalogue uses the fixed shared schema validator
+  ---
+  duration_ms: 0.1909
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\visual-edition.test.mjs:16:1'
+  failureType: 'testCodeFailure'
+  error: 'Operation input must use plain objects'
+  code: 'INVALID'
+  name: 'PlatformError'
+  stack: |-
+    invalid (evalmachine.<anonymous>:64:11)
+    inspect (evalmachine.<anonymous>:109:21)
+    safeJson (evalmachine.<anonymous>:121:5)
+    Object.validateOperationValue (evalmachine.<anonymous>:283:18)
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/visual-edition.test.mjs:16:288)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: Visual: neutral product has no domain, bindings or solution
+ok 49 - Visual: neutral product has no domain, bindings or solution
+  ---
+  duration_ms: 0.1367
+  type: 'test'
+  ...
+# Subtest: Visual: invalid and unknown selections fail visibly
+ok 50 - Visual: invalid and unknown selections fail visibly
+  ---
+  duration_ms: 0.2342
+  type: 'test'
+  ...
+# Subtest: Visual: standalone preview sends no network calls and includes no external scripts
+ok 51 - Visual: standalone preview sends no network calls and includes no external scripts
+  ---
+  duration_ms: 4.5001
+  type: 'test'
+  ...
+# Subtest: Visual: offline composer exposes complete import, edit, canonical preview and download controls
+ok 52 - Visual: offline composer exposes complete import, edit, canonical preview and download controls
+  ---
+  duration_ms: 1.1711
+  type: 'test'
+  ...
+# Subtest: Visual: a newer definition import invalidates preview immediately and wins out-of-order file reads
+not ok 53 - Visual: a newer definition import invalidates preview immediately and wins out-of-order file reads
+  ---
+  duration_ms: 1.6699
+  type: 'test'
+  location: 'D:\\professional-works\\company-works\\Quadbridge\\CORE-FRAMEWORKS\\tests\\visual-edition.test.mjs:21:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /data-action="definition-export"(?! disabled)/. Input:
+    
+    '<div class="layout"><aside class="sidebar" id="sidebar"><a class="brand" href="#/overview"><span class="brand-mark">Q</span><span class="brand-name">Quadbridge<small>Product Platform</small></span></a><div class="nav-section">BUILD</div><button type="button" class="nav-button " data-action="go:overview" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Overview</button><button type="button" class="nav-button active" data-action="go:composer" aria-current="page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg>Product composer</button><button type="button" class="nav-button " data-action="go:modules" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5v8l-9 5-9-5V8l9-5Zm0 10v8M3 8l9 5 9-5M7.5 5.5l9 5"/></svg>Module library<span class="nav-count">3</span></button><button type="button" class="nav-button " data-action="go:architecture" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="3" width="8" height="5" rx="1"/><rect x="2" y="16" width="8" height="5" rx="1"/><rect x="14" y="16" width="8" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></svg>Architecture</button><button type="button" class="nav-button " data-action="go:build" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 4 12 8-12 8V4Z"/></svg>Build & run</button><div class="nav-section">EXPLORE SAMPLE SCREENS</div><button type="button" class="nav-button " data-action="go:desk" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="15" rx="2"/><path d="M3 9h18M8 9v10M11 13h6M11 16h4"/></svg>Service Desk</button><button type="button" class="nav-button " data-action="go:knowledge" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C8 3 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-6-1-10 2Zm0 0v15"/></svg>Knowledge</button><button type="button" class="nav-button " data-action="go:handoff" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 13 4-4m-7 6-1 1a4 4 0 0 0 6 6l4-4a4 4 0 0 0-1-6M17 9l1-1a4 4 0 0 0-6-6L8 6a4 4 0 0 0 1 6" transform="translate(0 -1) scale(.95)"/></svg>Cross-product</button><div class="sidebar-foot"><div class="version-row"><span class="status-dot"></span>Foundation 0.2 · Studio integration 1</div><p>Local framework tools.<br>No production connection.</p><a class="doc-link" href="DOCUMENTATION.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C8 3 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-6-1-10 2Zm0 0v15"/></svg> Documentation <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3h8v8m0-8L10 14M8 5H4v15h15v-5"/></svg></a></div></aside><main class="main"><header class="topbar"><div style="display:flex;gap:11px;align-items:center"><button type="button" class="btn quiet menu-toggle" data-action="menu" aria-label="Toggle navigation"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><div class="breadcrumb"><span>Workspace</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg><strong>Product composer</strong></div></div><div class="top-actions"><span class="mode-badge">OFFLINE INTERACTIVE PREVIEW</span><button type="button" class="btn " data-action="run" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 4 12 8-12 8V4Z"/></svg> Run real apps</button><span class="avatar" aria-label="Preview identity, not signed in">QB</span></div></header><div class="preview-strip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg><strong>Preview mode.</strong><span>Sample records and simulations stay in this page. Refresh resets them. Start npm run studio for the actual local builder.</span></div><div class="canvas"><div class="page-head"><div><div class="eyebrow">PRODUCT COMPOSER</div><h1>Compose your next product.</h1><p class="subtitle">Choose source modules and reviewed connections. The same composition resolver runs here and in the build.</p></div><div class="inline-actions"><button type="button" class="btn " data-action="export" ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg> Export product.json</button><button type="button" class="btn primary" data-action="save-source" ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 4 12 8-12 8V4Z"/></svg> Save to local source</button></div></div><div class="composer-grid"><section class="panel"><h3>01 / Product identity</h3><label class="form-label" for="product-title">Product name</label><input class="input" id="product-title" data-field="title" value="My next product" maxlength="80"><label class="form-label" for="product-id">Product ID</label><input class="input" id="product-id" data-field="id" value="my-product" maxlength="48"><p class="help">A new source directory, not a customer ID. Existing products are never overwritten.</p><label class="form-label" for="product-layout">Shell layout</label><select class="input" id="product-layout" data-field="layout"><option value="sidebar" selected>Sidebar navigation</option><option value="top" >Top navigation</option></select><h3 style="margin-top:26px">02 / Domain modules</h3><label class="choice"><input type="checkbox" data-module="handoff"  ><span class="module-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 13 4-4m-7 6-1 1a4 4 0 0 0 6 6l4-4a4 4 0 0 0-1-6M17 9l1-1a4 4 0 0 0-6-6L8 6a4 4 0 0 0 1 6" transform="translate(0 -1) scale(.95)"/></svg></span><span><strong>Cross-product handoff</strong><small>1 workspaces · Worker required · 0.2.2</small></span></label><label class="choice"><input type="checkbox" data-module="knowledge"  ><span class="module-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C8 3 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-6-1-10 2Zm0 0v15"/></svg></span><span><strong>Knowledge Library</strong><small>1 workspaces · Worker required · 0.2.2</small></span></label><label class="choice"><input type="checkbox" data-module="service-desk" checked ><span class="module-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="15" rx="2"/><path d="M3 9h18M8 9v10M11 13h6M11 16h4"/></svg></span><span><strong>Service Desk</strong><small>2 workspaces · Owned records · 0.2.0</small></span></label><p class="help">Dependencies are added to the resolved composition. A required provider cannot be silently removed.</p><button type="button" class="btn wide" data-action="save-draft" >Save preview draft</button>\n' +
+      '  </section><section><div class="panel"><h3>Resolved composition</h3><p>A validated definition is not a running application.</p><div id="composition-error" class="composition-error" role="status"></div><div class="builder-surface" style="margin-top:17px"><div class="mini-built-app" ><div class="built-side" ><strong>My next product</strong><span>Service Desk</span></div><div class="built-content"><span class="pill green">Resolver passed</span><h3>Your workspaces mount here.</h3><p>Identity stays in the shell.<br>Records stay with their domain owners.</p><div class="stack-bars"><span>2 workspaces</span></div></div></div></div><div class="state-list"><div class="state-item"><strong>Service Desk</strong><p>Selected by you</p></div></div><div class="diagram-note">1 modules · 0 public bindings · Offline preview. Export a definition or open the local Studio.</div></div><details class="panel" style="margin-top:18px"><summary>Generated product definition starter</summary><pre clas'... 3953 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <div class="layout"><aside class="sidebar" id="sidebar"><a class="brand" href="#/overview"><span class="brand-mark">Q</span><span class="brand-name">Quadbridge<small>Product Platform</small></span></a><div class="nav-section">BUILD</div><button type="button" class="nav-button " data-action="go:overview" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Overview</button><button type="button" class="nav-button active" data-action="go:composer" aria-current="page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg>Product composer</button><button type="button" class="nav-button " data-action="go:modules" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5v8l-9 5-9-5V8l9-5Zm0 10v8M3 8l9 5 9-5M7.5 5.5l9 5"/></svg>Module library<span class="nav-count">3</span></button><button type="button" class="nav-button " data-action="go:architecture" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="3" width="8" height="5" rx="1"/><rect x="2" y="16" width="8" height="5" rx="1"/><rect x="14" y="16" width="8" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></svg>Architecture</button><button type="button" class="nav-button " data-action="go:build" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 4 12 8-12 8V4Z"/></svg>Build & run</button><div class="nav-section">EXPLORE SAMPLE SCREENS</div><button type="button" class="nav-button " data-action="go:desk" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="15" rx="2"/><path d="M3 9h18M8 9v10M11 13h6M11 16h4"/></svg>Service Desk</button><button type="button" class="nav-button " data-action="go:knowledge" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C8 3 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-6-1-10 2Zm0 0v15"/></svg>Knowledge</button><button type="button" class="nav-button " data-action="go:handoff" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 13 4-4m-7 6-1 1a4 4 0 0 0 6 6l4-4a4 4 0 0 0-1-6M17 9l1-1a4 4 0 0 0-6-6L8 6a4 4 0 0 0 1 6" transform="translate(0 -1) scale(.95)"/></svg>Cross-product</button><div class="sidebar-foot"><div class="version-row"><span class="status-dot"></span>Foundation 0.2 · Studio integration 1</div><p>Local framework tools.<br>No production connection.</p><a class="doc-link" href="DOCUMENTATION.html"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C8 3 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-6-1-10 2Zm0 0v15"/></svg> Documentation <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3h8v8m0-8L10 14M8 5H4v15h15v-5"/></svg></a></div></aside><main class="main"><header class="topbar"><div style="display:flex;gap:11px;align-items:center"><button type="button" class="btn quiet menu-toggle" data-action="menu" aria-label="Toggle navigation"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><div class="breadcrumb"><span>Workspace</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg><strong>Product composer</strong></div></div><div class="top-actions"><span class="mode-badge">OFFLINE INTERACTIVE PREVIEW</span><button type="button" class="btn " data-action="run" ><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 4 12 8-12 8V4Z"/></svg> Run real apps</button><span class="avatar" aria-label="Preview identity, not signed in">QB</span></div></header><div class="preview-strip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg><strong>Preview mode.</strong><span>Sample records and simulations stay in this page. Refresh resets them. Start npm run studio for the actual local builder.</span></div><div class="canvas"><div class="page-head"><div><div class="eyebrow">PRODUCT COMPOSER</div><h1>Compose your next product.</h1><p class="subtitle">Choose source modules and reviewed connections. The same composition resolver runs here and in the build.</p></div><div class="inline-actions"><button type="button" class="btn " data-action="export" ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg> Export product.json</button><button type="button" class="btn primary" data-action="save-source" ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 4 12 8-12 8V4Z"/></svg> Save to local source</button></div></div><div class="composer-grid"><section class="panel"><h3>01 / Product identity</h3><label class="form-label" for="product-title">Product name</label><input class="input" id="product-title" data-field="title" value="My next product" maxlength="80"><label class="form-label" for="product-id">Product ID</label><input class="input" id="product-id" data-field="id" value="my-product" maxlength="48"><p class="help">A new source directory, not a customer ID. Existing products are never overwritten.</p><label class="form-label" for="product-layout">Shell layout</label><select class="input" id="product-layout" data-field="layout"><option value="sidebar" selected>Sidebar navigation</option><option value="top" >Top navigation</option></select><h3 style="margin-top:26px">02 / Domain modules</h3><label class="choice"><input type="checkbox" data-module="handoff"  ><span class="module-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 13 4-4m-7 6-1 1a4 4 0 0 0 6 6l4-4a4 4 0 0 0-1-6M17 9l1-1a4 4 0 0 0-6-6L8 6a4 4 0 0 0 1 6" transform="translate(0 -1) scale(.95)"/></svg></span><span><strong>Cross-product handoff</strong><small>1 workspaces · Worker required · 0.2.2</small></span></label><label class="choice"><input type="checkbox" data-module="knowledge"  ><span class="module-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C8 3 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-6-1-10 2Zm0 0v15"/></svg></span><span><strong>Knowledge Library</strong><small>1 workspaces · Worker required · 0.2.2</small></span></label><label class="choice"><input type="checkbox" data-module="service-desk" checked ><span class="module-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="15" rx="2"/><path d="M3 9h18M8 9v10M11 13h6M11 16h4"/></svg></span><span><strong>Service Desk</strong><small>2 workspaces · Owned records · 0.2.0</small></span></label><p class="help">Dependencies are added to the resolved composition. A required provider cannot be silently removed.</p><button type="button" class="btn wide" data-action="save-draft" >Save preview draft</button>
+      </section><section><div class="panel"><h3>Resolved composition</h3><p>A validated definition is not a running application.</p><div id="composition-error" class="composition-error" role="status"></div><div class="builder-surface" style="margin-top:17px"><div class="mini-built-app" ><div class="built-side" ><strong>My next product</strong><span>Service Desk</span></div><div class="built-content"><span class="pill green">Resolver passed</span><h3>Your workspaces mount here.</h3><p>Identity stays in the shell.<br>Records stay with their domain owners.</p><div class="stack-bars"><span>2 workspaces</span></div></div></div></div><div class="state-list"><div class="state-item"><strong>Service Desk</strong><p>Selected by you</p></div></div><div class="diagram-note">1 modules · 0 public bindings · Offline preview. Export a definition or open the local Studio.</div></div><details class="panel" style="margin-top:18px"><summary>Generated product definition starter</summary><pre class="code-panel">{
+      &quot;id&quot;: &quot;my-product&quot;,
+      &quot;title&quot;: &quot;My next product&quot;,
+      &quot;description&quot;: &quot;Product-owned composition created by the Quadbridge Studio.&quot;,
+      &quot;version&quot;: &quot;0.2.0&quot;,
+      &quot;platformAbi&quot;: &quot;quadbridge.module.v1&quot;,
+      &quot;layout&quot;: &quot;sidebar&quot;,
+      &quot;modules&quot;: [
+        {
+          &quot;id&quot;: &quot;service-desk&quot;,
+          &quot;version&quot;: &quot;0.2.0&quot;
+        }
+      ],
+      &quot;bindings&quot;: []
+    }</pre><div class="actions"><button type="button" class="btn " data-action="definition-starter" >Load starter into complete editor</button></div></details></section></div><section class="panel definition-editor" aria-labelledby="definition-editor-title"><h3 id="definition-editor-title">Complete product definition</h3><p class="help">The full JSON is authoritative. Import and edit bounded data; preview derives only source-manifest and reviewed-solution choices. This panel never calls the network.</p><div class="inline-actions"><label class="form-label">Load saved definition <select class="input" data-definition-saved><option value="">Choose exact source version</option><option value="0">combined@0.2.2</option><option value="1">knowledge@0.2.2</option><option value="2">neutral@0.2.0</option><option value="3">service-desk@0.2.0</option></select></label><button type="button" class="btn " data-action="definition-load" >Load</button><label class="btn">Import product.json<input type="file" accept="application/json,.json" data-definition-import></label></div><label class="form-label" for="definition-json">ProductDefinition JSON</label><textarea id="definition-json" data-definition-json rows="16" maxlength="65536" spellcheck="false">{
+      &quot;id&quot;: &quot;combined&quot;,
+      &quot;version&quot;: &quot;0.2.2&quot;,
+      &quot;platformAbi&quot;: &quot;quadbridge.module.v1&quot;,
+      &quot;title&quot;: &quot;Operations + Knowledge&quot;,
+      &quot;description&quot;: &quot;Two domain families composed into one application.&quot;,
+      &quot;layout&quot;: &quot;sidebar&quot;,
+      &quot;modules&quot;: [
+        {
+          &quot;id&quot;: &quot;service-desk&quot;,
+          &quot;version&quot;: &quot;0.2.0&quot;
+        },
+        {
+          &quot;id&quot;: &quot;knowledge&quot;,
+          &quot;version&quot;: &quot;0.2.2&quot;
+        },
+        {
+          &quot;id&quot;: &quot;handoff&quot;,
+          &quot;version&quot;: &quot;0.2.2&quot;
+        }
+      ],
+      &quot;bindings&quot;: [
+        {
+          &quot;contract&quot;: &quot;knowledge.document.read.v1&quot;,
+          &quot;instanceId&quot;: &quot;local-documents&quot;,
+          &quot;implementation&quot;: &quot;knowledge&quot;,
+          &quot;scope&quot;: &quot;application&quot;,
+          &quot;consumer&quot;: &quot;handoff&quot;,
+          &quot;mode&quot;: &quot;local&quot;
+        },
+        {
+          &quot;contract&quot;: &quot;desk.requests.create.v2&quot;,
+          &quot;instanceId&quot;: &quot;local-desk&quot;,
+          &quot;implementation&quot;: &quot;service-desk&quot;,
+          &quot;scope&quot;: &quot;application&quot;,
+          &quot;consumer&quot;: &quot;handoff&quot;,
+          &quot;mode&quot;: &quot;local&quot;
+        }
+      ],
+      &quot;wiring&quot;: &quot;knowledge-to-desk&quot;
+    }
+    </textarea><p class="composition-error">Invalid operation descriptor</p><div class="actions"><button type="button" class="btn primary" data-action="definition-preview" >Preview definition</button><button type="button" class="btn " data-action="definition-export" disabled>Export exact definition</button></div><p class="small-muted">Preview is a construction plan, not a launch or deployment.</p></section><footer class="footnote"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg> Maintained shells · selected modules · explicit ownership</footer></div></main></div>
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/visual-edition.test.mjs:21:519)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Visual: documentation, responsive rules and source build retained
+ok 54 - Visual: documentation, responsive rules and source build retained
+  ---
+  duration_ms: 1.8872
+  type: 'test'
+  ...
+# Subtest: Visual: runtime counters remain explicitly scoped
+ok 55 - Visual: runtime counters remain explicitly scoped
+  ---
+  duration_ms: 0.8298
+  type: 'test'
+  ...
+# Subtest: Visual: all eight views render through controlled document ports
+ok 56 - Visual: all eight views render through controlled document ports
+  ---
+  duration_ms: 6.1977
+  type: 'test'
+  ...
+# Subtest: workspace export closure follows selected Knowledge package manifests and actual ai-core version
+ok 57 - workspace export closure follows selected Knowledge package manifests and actual ai-core version
+  ---
+  duration_ms: 9.8087
+  type: 'test'
+  ...
+# Subtest: workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+ok 58 - workspace closure rejects stale repeated package versions, unselected packages and identifier collisions
+  ---
+  duration_ms: 2.1481
+  type: 'test'
+  ...
+1..58
+# tests 58
+# suites 0
+# pass 54
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11579.0573

@@ -1,0 +1,21 @@
+
+> quadbridge-product-platform@0.2.0 build
+> node tools/build.mjs
+
+Local workspace links prepared. No third-party packages were downloaded.
+packages/composition/src/family.ts(59,14): error TS2488: Type 'unknown' must have a '[Symbol.iterator]()' method that returns an iterator.
+packages/composition/src/family.ts(71,22): error TS18046: 'value' is of type 'unknown'.
+packages/composition/src/family.ts(85,9): error TS2322: Type 'unknown' is not assignable to type 'string'.
+packages/composition/src/family.ts(90,41): error TS18046: 'value' is of type 'unknown'.
+packages/composition/src/family.ts(91,40): error TS18046: 'value' is of type 'unknown'.
+packages/composition/src/family.ts(94,20): error TS18046: 'value' is of type 'unknown'.
+packages/composition/src/family.ts(94,38): error TS18046: 'value' is of type 'unknown'.
+packages/composition/src/family.ts(94,57): error TS18046: 'value' is of type 'unknown'.
+packages/composition/src/family.ts(94,79): error TS18046: 'value' is of type 'unknown'.
+packages/composition/src/family.ts(94,105): error TS18046: 'value' is of type 'unknown'.
+packages/composition/src/family.ts(135,35): error TS18046: 'identityInput' is of type 'unknown'.
+packages/composition/src/family.ts(135,60): error TS18046: 'identityInput' is of type 'unknown'.
+packages/composition/src/family.ts(135,90): error TS18046: 'identityInput' is of type 'unknown'.
+packages/composition/src/family.ts(136,15): error TS18046: 'identityInput' is of type 'unknown'.
+packages/composition/src/family.ts(136,147): error TS18046: 'identityInput' is of type 'unknown'.
+packages/composition/src/family.ts(149,72): error TS18046: 'identityInput' is of type 'unknown'.

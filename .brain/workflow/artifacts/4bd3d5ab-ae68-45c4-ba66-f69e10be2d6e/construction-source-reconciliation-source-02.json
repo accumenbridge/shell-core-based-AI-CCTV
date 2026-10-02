@@ -1,0 +1,171 @@
+{
+  "recordedAt": "2026-10-02T15:54:01.257Z",
+  "coordinator": "/root",
+  "scope": "Finite adopted construction source inspection; delivery qualification separate",
+  "changes": [
+    {
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "before": "76a3e74e27f073ed6a12f0411d1092f2107d2ea7da0696dafad76d994bcfe828",
+      "after": "d83bf8031d016ea76da88ed47feb46110f499bec88a89ce553efbb4dec9e56ed",
+      "reason": "Inspected only the three adopted new exact tool leaves in the reviewed source inventory; unchanged credential/path/copy boundaries."
+    },
+    {
+      "path": "docs/ENTITY_BUILDER.md",
+      "before": "198ff8e7537cb9f6ef648e1f38f13061c9d63e7c785707e28cf1a4d51127a949",
+      "after": "8c4d130795c4dc07874901074a0aa34c639d97b23884d875aeba3c495017ba0d",
+      "reason": "Inspected source-generator bootstrap and shared module/product identity envelope, distinct entity/field IDs and explicit omitted optional versus default normalization semantics."
+    },
+    {
+      "path": "docs/STATUS.md",
+      "before": "291ab0eb8a5cf0ddcbb31b0782fd05c8a5ee6660951c4fea9527fcc4cbc9ef03",
+      "after": "d00f35fd42988f928024e9f5c2d0bff09a90b91888251633b948e68229412aea",
+      "reason": "Inspected current family/UI/mobile/entity/capability scoped evidence links, optional-control/source-generation behavior and preserved historical development status."
+    },
+    {
+      "path": "FOLDER_STRUCTURE.md",
+      "before": "004dadfdd0981b2d9e37ea812500f945837e8f1e5836fabcb2c8994821e34c9f",
+      "after": "a8bd37ea7388920d19253df6e3c5c1c30c3780030a43897a8175816a686ea124",
+      "reason": "Inspected concise current neutral/domain/host/source-construction ownership map; retained Foundation inventory now explicitly labeled historical instead of complete current source."
+    },
+    {
+      "path": "FULL_PLATFORM_BUILD_MAP.md",
+      "before": "850758dd0e91820a01666f1964081a7dd85dad75cc98711a22aa9257ed2d40bb",
+      "after": "c56c1edc0d683b5d2c39951445533e3b5bf45ab1a4fb3755a6da7d9f7829f7cc",
+      "reason": "Inspected current shipped local artifact/construction/operations boundaries alongside explicitly future hosted production work and independent version dimensions."
+    },
+    {
+      "path": "IMPLEMENTATION_STATUS_0.3.md",
+      "before": "bed43db35e029b2bb512c31a96918c3e71d3786637e360b714689f9a0f1656fd",
+      "after": "b7cb08566773c52138747b2de4105f487a1c509a17b6be9f089e5281fe9587aa",
+      "reason": "Inspected bounded construction status overlay with explicit build prerequisite and separate install recipe, without claiming future production or cross-artifact adoption."
+    },
+    {
+      "path": "OPEN_PLATFORM.html",
+      "before": "1cc0fd9d14ef493d6d1ca6d0065974120cd5b76a195de00550e6743c855c4d72",
+      "after": "369280dd31031cb6692653bece3b5db7d19676dba92f6c1aeab8bab36eae634a",
+      "reason": "Inspected normal build-derived offline shared source-ID predicate and composer injection; data-only source catalogue page has no filesystem/build privileges."
+    },
+    {
+      "path": "packages/composition/src/integrity.ts",
+      "before": "793fe843fe513aaeac1e673976a23a935336d9abccc07c018803e536931232b3",
+      "after": "b24805451b0aac25a418beb36901dbd0cd17b6da19e525d1f2e98654d3afaee7",
+      "reason": "Inspected exact current factory expected inventory mismatch: add the reviewed built-ins workspace identity helper copied by the current assembler; retain older snapshot minimum metadata requirements unchanged."
+    },
+    {
+      "path": "packages/composition/src/studio.ts",
+      "before": "e0d317bdbc16ee0f202e598f91220fcc749a3387401a2ea65856afbf9bf8697b",
+      "after": "01c3a40d60cb8c29d6c5af705f2a4abc186059fa19b36545f984f68990d350d6",
+      "reason": "Inspected public validProductId wrapper delegating to the shared contracts predicate; existing draft/composition validation remains canonical."
+    },
+    {
+      "path": "packages/composition/src/workspace-closure.ts",
+      "before": "1745577d88134c57b2bc3248e185be38019134322420f61c456c9bbfface906f",
+      "after": "49d362421e6f7d99c285a508c4023f367358cec6ab67a10dd59507992b7a724a",
+      "reason": "Inspected selected module and exact local dependency identity validation using the shared predicate without broadening the reviewed host closure."
+    },
+    {
+      "path": "packages/contracts/src/index.ts",
+      "before": "f246c861f2ecd5916e072ebdc71b2d116c81f19ebb55e362b120ff3a238b2d0c",
+      "after": "cfa0794ce8dbd772a8c2a10c137449ba145020ea2d2a45f8f7b1d64c82907c72",
+      "reason": "Inspected pure shared 2–48 lowercase source-directory identity predicate; existing request/context/ABI contracts stay intact."
+    },
+    {
+      "path": "PLATFORM_ARCHITECTURE.md",
+      "before": "0f14979eecf2ce1846d7ab00bcec820325046fb7ad2613c90604857f7ffe5118",
+      "after": "8f42425572600db36a71bf79db374551f373cc29d5d95726d378f44a114cba82",
+      "reason": "Inspected bounded source-generation, canonical before-write preflight and ownership declarations; version and artifact compatibility dimensions remain distinct from runtime authority."
+    },
+    {
+      "path": "README.md",
+      "before": "1192c3e6a367c671cc1e823831fa0f6123cd0693f22633fbddc6cd8a698fbd31",
+      "after": "2b53f93688aa4409e288757135d9b14167dfaa342b0afabab6c2e61c242bc6c3",
+      "reason": "Inspected generation bootstrap prerequisite and optional field behavior, independent version identities and current scoped evidence links; earlier launcher execution is explicitly historical."
+    },
+    {
+      "path": "templates/entity-ui.ts.txt",
+      "before": "6dba7aeaa00751c4d55aa12e5ea2ccc63dc0efb3796dde27de233312d2880b5c",
+      "after": "0102838d994b0402c6e2212cd42dde7d14acca3431f862ecc81235a9cdfb9522",
+      "reason": "Inspected optional boolean tri-state and enum empty choice, default initialization, omission capture and selected edit values; retained command/selection guards."
+    },
+    {
+      "path": "tests/entity-builder-ui.test.mjs",
+      "before": "3ed8aee2a45cb046eb445e3fc02d4e770082ae67596da25b656018ccb46f3d24",
+      "after": "802aa6436544cc85119200118d6bbc1794462ec339b0b15988a5ccd2d484fe58",
+      "reason": "Inspected private optional-field generation, actual owner omission/false/edit/reopen checks and controlled original-payload retry/selection conflict assertions."
+    },
+    {
+      "path": "tests/entity-builder.test.mjs",
+      "before": "8531a6a238794cb1f47edefbb26c03e9cab7d410ba08996f8596d324e90002f1",
+      "after": "76e2cbc9e554fa506cc23665c51ccd2f140cb90f90d25d914013612cd1409e87",
+      "reason": "Inspected generated metadata validation and canonical plan summary assertions without changing maintained example specifications."
+    },
+    {
+      "path": "tests/studio-integration.test.mjs",
+      "before": "4bfa1294685e128381eaedd6283d6542672285bb73add51e6e8c33104242758d",
+      "after": "ebd9e19b77fc3245f15e421a5c90e48f437b1f73be1a745f684cea6e1ee5dac5",
+      "reason": "Inspected the exact compiled source predicate shared with the offline browser core; existing Studio/runtime integration coverage retained."
+    },
+    {
+      "path": "tools/entity-builder.mjs",
+      "before": "dc5f75445ddc89888f788881fe5262253d3fd3c55cfd982a6e21e4bf0ad54a6f",
+      "after": "97c42fbbcded417cdc8e2235d4654afebb7164c53ebc76046ffcf2687245a6f8",
+      "reason": "Inspected shared source ID, package collision and canonical before-write preflight integration; generated metadata describes module-owned UI/backend/data."
+    },
+    {
+      "path": "tools/factory.mjs",
+      "before": "9d04ed4b696390ed72769600e0a36680cadb063157db1c9fbb66ad29e51f62b2",
+      "after": "05853c6ee024a8e510bfba54c8dd7cbff415ce731fa4197e2d3249c329ed3ee7",
+      "reason": "Inspected before-write package/manifest checks and source dependency versions; assembled setup copies only the built-ins identity helper."
+    },
+    {
+      "path": "tools/link-workspaces.mjs",
+      "before": "bef21a5c9e216974017aa425d7e9eb425eeb399ac8e0dab9a91f7477e1fc5a2c",
+      "after": "c687bf59974dcd2695a641c345a746a79f51d3e61b195700e3973939d3d50536",
+      "reason": "Inspected duplicate discovery before linking and exact existing-link target checks; unrelated paths are refused without replacement."
+    },
+    {
+      "path": "tools/studio-catalogue.mjs",
+      "before": "9f0dc5198ceee5468fab3dbcfe305e153c25d6862b2ed15e6ea62583a1c809c7",
+      "after": "2feb370d5aee5d7dc134850a49279cc6479f3fe8e97d358f49655f71258d97e3",
+      "reason": "Inspected exact compiled shared predicate export and injection into offline composer; no new filesystem/build authority in the offline page."
+    },
+    {
+      "path": "tools/workspace-identities.mjs",
+      "before": null,
+      "after": "6652072df864e2baa86a24faf81e015c88e8c0df23a77a34c61ee9484c4883d2",
+      "reason": "Inspected built-ins-only physical manifest index and declared package-name collision refusal across fixed packages, modules and apps."
+    },
+    {
+      "path": "tools/generation-preflight.mjs",
+      "before": null,
+      "after": "2026f8b1da07e36f743571fe01f19f82a06c4153ee9875fef41be14a2df5bad7",
+      "reason": "Inspected inert synthetic one-module composition and existing Studio validator preflight; no copied reserved-route policy or generated executable import."
+    },
+    {
+      "path": "tools/construction-clean-install.mjs",
+      "before": null,
+      "after": "40f4899647d79b7e3518c5d5be0324d031b120e821581683003823d475dd7b61",
+      "reason": "Inspected separate two-copy ordinary npm install/build proof, explicit private lock reconciliation, selected output checks, full copied-source stability and checked owned cleanup. The actual first independent run lacked excluded example inputs; the bounded driver copies and hashes only the two fixed reviewed example specifications into private invocation paths, without widening maintained build-worker copy authority."
+    },
+    {
+      "path": "tests/construction-reliability.test.mjs",
+      "before": null,
+      "after": "bac199940fc7dea340d5a0e81744e07ff6e9e2d34a902ad4304bc5b095cec18a",
+      "reason": "Inspected isolated fresh-built generator refusal probes and physical workspace link ownership checks for the actual authoring conflicts."
+    }
+  ],
+  "updatedAtlasRefs": [
+    {
+      "id": "construction-tools-construction-clean-install-mjs",
+      "path": "tools/construction-clean-install.mjs",
+      "before": "8e967dcd43b7b3c4f8cd42f5a7663301989cfc867c485b1ae66748baa1a7ea58",
+      "after": "40f4899647d79b7e3518c5d5be0324d031b120e821581683003823d475dd7b61",
+      "reason": "Inspected separate two-copy ordinary npm install/build proof, explicit private lock reconciliation, selected output checks, full copied-source stability and checked owned cleanup. The actual first independent run lacked excluded example inputs; the bounded driver copies and hashes only the two fixed reviewed example specifications into private invocation paths, without widening maintained build-worker copy authority."
+    }
+  ],
+  "outsideEditBoundaryUnchanged": true,
+  "limitations": [
+    "Historical candidate/evidence records stay unchanged.",
+    "No browser/provider/production qualification from planning-source reconciliation."
+  ]
+}

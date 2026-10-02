@@ -1,0 +1,89 @@
+{
+  "schema": "quadbridge.construction-clean-install.v1",
+  "evidenceId": "11b1761f-63e7-44a7-a23d-f4761fe3b5e0",
+  "status": "FAILED",
+  "node": "v24.19.0",
+  "npmCommand": "npm",
+  "platform": "win32",
+  "architecture": "x64",
+  "sourceCopies": [
+    {
+      "role": "A",
+      "rootName": "qb-construction-source-a--zGhH7m"
+    },
+    {
+      "role": "B",
+      "rootName": "qb-construction-source-b--B7s7ws"
+    }
+  ],
+  "steps": [
+    {
+      "command": "npm",
+      "args": [
+        "ci"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 4971,
+      "stdoutBytes": 75,
+      "stderrBytes": 305,
+      "capturedBytes": 380,
+      "truncated": false,
+      "outputSha256": "80cc361e9430a9207a7ae73dda61ea46eb2da9032f5a67350e915f47bd6489a2",
+      "label": "a-npm-ci",
+      "logName": "01-a-npm-ci.log"
+    },
+    {
+      "command": "npm",
+      "args": [
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 3849,
+      "stdoutBytes": 409,
+      "stderrBytes": 0,
+      "capturedBytes": 409,
+      "truncated": false,
+      "outputSha256": "3e8b90fac5718ae1c6123956c58db7cde9ff425ae36cff13d3f7aad34634728b",
+      "label": "a-base-build",
+      "logName": "02-a-base-build.log"
+    },
+    {
+      "command": "node.exe",
+      "args": [
+        "tools/factory.mjs",
+        "generate-entity",
+        "examples/entities/asset-register.json"
+      ],
+      "exitCode": 1,
+      "signal": null,
+      "timedOut": false,
+      "spawnErrorCode": null,
+      "closeObserved": true,
+      "elapsedMs": 66,
+      "stdoutBytes": 0,
+      "stderrBytes": 774,
+      "capturedBytes": 774,
+      "truncated": false,
+      "outputSha256": "561112b3764c6a3964a9723e842a5c1f4f49d19173b21562171a35a3edf2b09c",
+      "label": "a-generate-asset-register",
+      "logName": "03-a-generate-asset-register.log"
+    }
+  ],
+  "generated": {},
+  "products": {},
+  "lock": {},
+  "retainedOnFailure": true,
+  "sourceFingerprintBeforeA": "6770c2bda803a1a77c5d135ecc40e6af88d077db1171deb5f297ae34bd693356",
+  "sourceFingerprintCopiedA": "6770c2bda803a1a77c5d135ecc40e6af88d077db1171deb5f297ae34bd693356",
+  "failure": "Construction proof step failed: a-generate-asset-register",
+  "finishedAt": "2026-10-02T15:49:15.872Z"
+}

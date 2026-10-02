@@ -1,0 +1,2 @@
+Local workspace links prepared. No third-party packages were downloaded.
+Created products/optional-workflow/product.json. Run npm run build, then npm run demo -- --product optional-workflow --port 4350.

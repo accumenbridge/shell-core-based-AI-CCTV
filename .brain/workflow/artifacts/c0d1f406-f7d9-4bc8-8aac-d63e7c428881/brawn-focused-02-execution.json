@@ -1,0 +1,29 @@
+{
+  "kind": "focused",
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/construction-reliability.test.mjs",
+    "tests/entity-builder.test.mjs",
+    "tests/entity-builder-ui.test.mjs",
+    "tests/studio-integration.test.mjs"
+  ],
+  "startedAt": "2026-10-02T15:35:18.479Z",
+  "finishedAt": "2026-10-02T15:35:48.087Z",
+  "exitCode": 1,
+  "signal": null,
+  "candidateBefore": "b414849010f3659e9d54fc395d5ddcee0e3587713bdede2f2552ebdd53859269",
+  "candidateAfter": "b414849010f3659e9d54fc395d5ddcee0e3587713bdede2f2552ebdd53859269",
+  "contractBefore": "869df00e38d29c7ca0bd6f1bef54c43ef9d9fc1045f3dfd99ddb4808badc5a80",
+  "contractAfter": "869df00e38d29c7ca0bd6f1bef54c43ef9d9fc1045f3dfd99ddb4808badc5a80",
+  "sourceUnchanged": true,
+  "counts": {
+    "tests": 23,
+    "passed": 22,
+    "failed": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

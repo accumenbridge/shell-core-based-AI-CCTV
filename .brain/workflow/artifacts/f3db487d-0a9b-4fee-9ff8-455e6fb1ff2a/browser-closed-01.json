@@ -1,0 +1,51 @@
+{
+  "fixtureId": "2790a262-f613-4d1f-a319-420e2a0c703a",
+  "closed": true,
+  "closedAt": "2026-10-02T15:58:48.481Z",
+  "candidate": "25e59142bcf5e0950dbd79a15533f4de5e8b4d8b889631afcf3169304d63ebee",
+  "contractDigest": "38c96314983810a44afd2baefcadb3884f2debad274a4f0496d42f38039c9bde",
+  "sourceUnchanged": true,
+  "inventory": {
+    "selectedModules": [
+      "optional-records"
+    ],
+    "compilerAbsent": true,
+    "sourceAbsent": true,
+    "css": [
+      {
+        "route": "/assets/modules/optional-records/ui/entity.css",
+        "path": "modules/optional-records/dist/ui/entity.css",
+        "sha256": "8aa676e077dd392b4acc76bbbaceb5e3614785b2c33a627bfe7646a1a55ae602"
+      }
+    ]
+  },
+  "owner": [
+    {
+      "name": "optional-records"
+    }
+  ],
+  "rows": [
+    {
+      "tenant": "tenant-a",
+      "id": "ea9decf4-00ef-4148-87c2-e41e871620cb",
+      "version": 4,
+      "name": "Unset workflow",
+      "flag": null,
+      "category": null,
+      "defaultFlag": 0,
+      "defaultCategory": "alpha",
+      "requiredFlag": 0
+    },
+    {
+      "tenant": "tenant-b",
+      "id": "c7f7a3ca-a607-4650-909a-4c562a8c5130",
+      "version": 1,
+      "name": "Tenant B record",
+      "flag": null,
+      "category": null,
+      "defaultFlag": 0,
+      "defaultCategory": "alpha",
+      "requiredFlag": 0
+    }
+  ]
+}

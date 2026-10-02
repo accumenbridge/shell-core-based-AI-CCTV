@@ -6,6 +6,8 @@ import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { generateEntity, validateEntitySpec } from '../tools/entity-builder.mjs';
 import { ROOT } from '../apps/runtime/dist/index.js';
+import { resolve } from '../packages/composition/dist/index.js';
+import { summarizePlan, validateStudioModule } from '../packages/studio-model/dist/index.js';
 
 const hash = value => createHash('sha256').update(value).digest('hex');
 
@@ -58,8 +60,22 @@ test('generator reserves a new owner, records exact output hashes, and treats in
   assert.deepEqual(manifest.operations.map(item => item.id), [
     'literal-entity.item.list', 'literal-entity.item.get', 'literal-entity.item.create', 'literal-entity.item.edit'
   ]);
+  validateStudioModule(manifest);
+  assert.deepEqual(manifest.studio.layers, ['ui', 'backend', 'data']);
+  assert.deepEqual(manifest.studio.ui.routes, [{ path: '/literal-entity/records', workspace: 'literal-entity.records', label: 'Item $& __MODULE__' }]);
+  assert.deepEqual(manifest.studio.data, {
+    stores: [{ id: 'literal-entity.data', kind: 'relational', ownership: 'module' }],
+    schemas: [{ id: 'literal-entity.schema', version: 1 }]
+  });
+  assert.deepEqual(manifest.studio.deployment.processes, [{ id: 'literal-entity', kind: 'http' }]);
+  const summary = summarizePlan(resolve({ id: 'literal-entity', version: '1.0.0', platformAbi: manifest.abi,
+    title: 'Generated entity', description: '', layout: 'sidebar', modules: [{ id: manifest.id, version: manifest.version }], bindings: [] }, [manifest]));
+  assert.deepEqual(summary.find(layer => layer.layer === 'data').modules, ['literal-entity']);
+  assert.equal(summary.find(layer => layer.layer === 'worker').implemented, false);
   for (const [relative, expected] of Object.entries(receipt.outputSha256))
     assert.equal(hash(await readFile(join(root, 'modules/literal-entity', ...relative.split('/')))), expected, relative);
   assert.equal(receipt.specSha256, generated.specSha256);
-  await assert.rejects(generateEntity(root, specPath), /destination already exists/);
+  const existingSource = await readFile(join(root, 'modules/literal-entity/src/index.ts'));
+  await assert.rejects(generateEntity(root, specPath), /Workspace package identity already exists/);
+  assert.deepEqual(await readFile(join(root, 'modules/literal-entity/src/index.ts')), existingSource, 'a duplicate declared package is refused without changing the existing owner');
 });

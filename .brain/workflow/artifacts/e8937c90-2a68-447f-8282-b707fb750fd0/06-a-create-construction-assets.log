@@ -1,0 +1,2 @@
+Local workspace links prepared. No third-party packages were downloaded.
+Created products/construction-assets/product.json. Run npm run build, then npm run demo -- --product construction-assets --port 4350.

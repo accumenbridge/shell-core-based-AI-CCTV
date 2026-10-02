@@ -1,0 +1,17 @@
+{
+  "kind": "build",
+  "command": [
+    "npm",
+    "run",
+    "build"
+  ],
+  "startedAt": "2026-10-02T15:36:56.826Z",
+  "finishedAt": "2026-10-02T15:36:58.345Z",
+  "exitCode": 0,
+  "signal": null,
+  "candidateBefore": "898d20064bc7d16f589b0e240ff1e9b07f1f916893afbaddf5ebdd6914350709",
+  "candidateAfter": "898d20064bc7d16f589b0e240ff1e9b07f1f916893afbaddf5ebdd6914350709",
+  "contractBefore": "869df00e38d29c7ca0bd6f1bef54c43ef9d9fc1045f3dfd99ddb4808badc5a80",
+  "contractAfter": "869df00e38d29c7ca0bd6f1bef54c43ef9d9fc1045f3dfd99ddb4808badc5a80",
+  "sourceUnchanged": true
+}

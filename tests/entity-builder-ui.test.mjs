@@ -19,6 +19,19 @@ import { harness, flush } from './support/shell-harness.mjs';
 
 const sha256 = value => createHash('sha256').update(value).digest('hex');
 const retainedWorkerBuilds = [];
+// Reusable source-only fixture for optional values: blank boolean/enum means omission.
+const OPTIONAL_FIELD_SPEC = {
+  schema: 'quadbridge.entity-spec.v1',
+  module: { id: 'room-inspection', version: '0.1.0', label: 'Room Inspection' },
+  entity: { id: 'inspection', label: 'Inspection', displayField: 'room' },
+  fields: [
+    { id: 'room', label: 'Room', type: 'text', required: true, minLength: 1, maxLength: 80 },
+    { id: 'notes', label: 'Notes', type: 'text', required: false, minLength: 1, maxLength: 1000 },
+    { id: 'score', label: 'Score', type: 'integer', required: true, minimum: 0, maximum: 5 },
+    { id: 'passed', label: 'Passed', type: 'boolean', required: false },
+    { id: 'category', label: 'Category', type: 'enum', required: false, values: ['routine', 'follow-up'] }
+  ]
+};
 
 const run = (root, ...args) => {
   const result = spawnSync(process.execPath, args, { cwd: root, encoding: 'utf8', timeout: 300_000, windowsHide: true });
@@ -76,7 +89,9 @@ async function buildThroughReviewedWorker(sourceRoot) {
       if (built && ['SUCCEEDED', 'FAILED', 'CANCELLED'].includes(built.state)) break;
       await new Promise(resolve => setTimeout(resolve, 100));
     }
-    assert.equal(built?.state, 'SUCCEEDED', `the normal LocalBuildWorker did not publish a successful generated-source build (${built?.state ?? 'missing'})`);
+    const safeFailureCodes = [built?.failureCode, built?.attemptDetail?.errorCode]
+      .filter(value => typeof value === 'string' && /^[A-Z][A-Z0-9_]{1,63}$/.test(value));
+    assert.equal(built?.state, 'SUCCEEDED', `the normal LocalBuildWorker did not publish a successful generated-source build (${built?.state ?? 'missing'}; ${safeFailureCodes.join('/') || 'no-safe-code'})`);
     const inspected = await worker.inspect(admitted.id);
     assert.equal(inspected.build.productId, product.id);
     assert.equal(inspected.build.version, product.version);
@@ -147,6 +162,7 @@ test('generated modules build as separate products and keep owner, receipt, UI s
 
   // create-product reads the compiled source catalogue, so first compile the fresh copy.
   run(root, 'tools/build.mjs');
+  await writeFile(join(root, 'examples/entities/room-inspection.json'), `${JSON.stringify(OPTIONAL_FIELD_SPEC, null, 2)}\n`);
   for (const moduleId of ['asset-register', 'room-inspection'])
     run(root, 'tools/factory.mjs', 'generate-entity', `examples/entities/${moduleId}.json`);
   run(root, 'tools/factory.mjs', 'create-product', 'maintenance-assets', '--modules', 'asset-register', '--version', '1.0.0');
@@ -221,7 +237,7 @@ test('generated modules build as separate products and keep owner, receipt, UI s
     ['maintenance-assets', 'asset-register', 'asset', 'assetCode',
       { assetCode: '  ASSET-100  ' }, { assetCode: 'ASSET-100 updated', serviceInterval: 24, active: false, condition: 'repair' }, 'ASSET-100'],
     ['site-inspections', 'room-inspection', 'inspection', 'room',
-      { room: 'North hall', score: 4 }, { room: 'North hall revised', score: 5, passed: true, category: 'follow-up' }, 'North hall']
+      { room: 'North hall', score: 4 }, { room: 'North hall revised', score: 5, passed: false, category: 'follow-up' }, 'North hall']
   ]) {
     const permissions = [`${moduleId}.read`, `${moduleId}.write`];
     const config = {
@@ -257,8 +273,8 @@ test('generated modules build as separate products and keep owner, receipt, UI s
       assert.equal(created.body.fields.active, true);
       assert.equal(created.body.fields.condition, 'in-service');
     } else {
-      assert.equal(created.body.fields.passed, false);
-      assert.equal(created.body.fields.category, 'routine');
+      assert.equal(Object.hasOwn(created.body.fields, 'passed'), false);
+      assert.equal(Object.hasOwn(created.body.fields, 'category'), false);
       assert.equal(Object.hasOwn(created.body.fields, 'notes'), false);
     }
     const operationReplay = await active.app.host.invokeOperation(`${moduleId}.${entityId}.create`, 1, actors.admin, 'tenant-a', { fields: createFields }, createKey);
@@ -282,6 +298,17 @@ test('generated modules build as separate products and keep owner, receipt, UI s
     assert.equal(edited.body.version, 2);
     const editReplay = await active.app.host.invokeOperation(`${moduleId}.${entityId}.edit`, 1, actors.admin, 'tenant-a', editBody, editKey);
     assert.deepEqual(editReplay, edited.body);
+    let finalRecord = edited.body;
+    if (moduleId === 'room-inspection') {
+      assert.equal(edited.body.fields.passed, false, 'an explicit false optional boolean is retained');
+      assert.equal(edited.body.fields.category, 'follow-up', 'an explicit optional enum value is retained');
+      const cleared = await httpRequest(active.server, `${path}/edit`, { method: 'POST', cookie: adminCookie, key: 'entity-room-inspection-clear-optionals',
+        body: { id: created.body.id, expectedVersion: 2, fields: { room: 'North hall revised', score: 5 } } });
+      assert.equal(cleared.status, 200, JSON.stringify(cleared.body));
+      assert.equal(cleared.body.version, 3);
+      for (const optional of ['passed', 'category', 'notes']) assert.equal(Object.hasOwn(cleared.body.fields, optional), false, `${optional} stays absent when not set`);
+      finalRecord = cleared.body;
+    }
     const stale = await httpRequest(active.server, `${path}/edit`, {
       method: 'POST', cookie: adminCookie, key: `entity-${moduleId}-stale-edit`,
       body: { ...editBody, fields: { ...editFields, [displayField]: 'Must not overwrite' } }
@@ -289,7 +316,7 @@ test('generated modules build as separate products and keep owner, receipt, UI s
     assert.equal(stale.status, 409);
     assert.equal(stale.body.error.code, 'CONFLICT');
     const afterConflict = await httpRequest(active.server, `${path}/record?id=${encodeURIComponent(created.body.id)}`, { cookie: adminCookie });
-    assert.deepEqual(afterConflict.body, edited.body);
+    assert.deepEqual(afterConflict.body, finalRecord);
 
     const mode = await httpRequest(active.server, '/api/modules/mode', { method: 'POST', cookie: adminCookie, body: { moduleId, mode: 'read-only' } });
     assert.equal(mode.status, 200);
@@ -306,7 +333,7 @@ test('generated modules build as separate products and keep owner, receipt, UI s
     active.server = await active.app.http(0);
     const retained = await httpRequest(active.server, `${path}/record?id=${encodeURIComponent(created.body.id)}`, { cookie: adminCookie });
     assert.equal(retained.status, 200);
-    assert.deepEqual(retained.body, edited.body);
+    assert.deepEqual(retained.body, finalRecord);
     const stillRevoked = await httpRequest(active.server, path, { method: 'POST', cookie: adminCookie, key: `after-reopen-${moduleId}`, body: { fields: createFields } });
     assert.equal(stillRevoked.status, 403);
     await active.server.close(); active.server = undefined;
@@ -316,6 +343,7 @@ test('generated modules build as separate products and keep owner, receipt, UI s
   const workspaceModuleUrl = pathToFileURL(join(exportRoots.get('site-inspections'), 'modules/room-inspection/dist/ui.js')).href;
   const { workspace } = await import(workspaceModuleUrl);
   const pendingCreate = deferred();
+  const createAttempts = [], editAttempts = [];
   let savedPayload;
   let existing = { id: 'existing-room', version: 1, fields: { room: 'Existing room', score: 3, passed: false, category: 'routine' } };
   await harness(async env => {
@@ -325,7 +353,14 @@ test('generated modules build as separate products and keep owner, receipt, UI s
         return { ...existing };
       },
       async post(path, body, commandId) {
-        if (path === '/api/room-inspection') { savedPayload = { body, commandId }; return pendingCreate.promise; }
+        if (path === '/api/room-inspection') {
+          const captured = { body: structuredClone(body), commandId };
+          createAttempts.push(captured);
+          if (createAttempts.length === 1) throw new Error('The first response was not received');
+          savedPayload = captured;
+          return pendingCreate.promise;
+        }
+        editAttempts.push({ body: structuredClone(body), commandId });
         throw new PlatformError('CONFLICT', 'Record changed; reload before editing');
       }
     };
@@ -334,15 +369,22 @@ test('generated modules build as separate products and keep owner, receipt, UI s
     await flush();
     const controls = env.all().filter(node => node.name);
     const passed = controls.find(node => node.name === 'passed');
-    assert.equal(passed.checked, false);
+    assert.equal(passed.value, '', 'an optional boolean begins in its not-set state');
     assert.equal(passed.required, false, 'false is a valid required boolean value');
     const roomInput = controls.find(node => node.name === 'room'); roomInput.value = 'New room';
     const scoreInput = controls.find(node => node.name === 'score'); scoreInput.value = '4';
     const createForm = env.all().find(node => node.tag === 'form');
     createForm.emit('submit');
+    await flush(); await flush();
+    assert.equal(createAttempts.length, 1);
+    assert.deepEqual(createAttempts[0].body, { fields: { room: 'New room', score: 4 } }, 'unset optional boolean/enum/text are omitted from the captured payload');
+    roomInput.value = 'Draft changed after uncertain response';
+    createForm.emit('input');
+    const retry = env.all().find(node => node.tag === 'button' && node.textContent === 'Retry the exact command');
+    retry.emit('click');
     await flush();
-    assert.ok(savedPayload);
-    assert.deepEqual(savedPayload.body, { fields: { room: 'New room', score: 4, passed: false, category: 'routine' } });
+    assert.equal(createAttempts.length, 2);
+    assert.deepEqual(createAttempts[1], createAttempts[0], 'retry preserves the original payload and command identity after draft edits');
     assert.ok(savedPayload.commandId);
 
     const existingRow = env.all().find(node => node.tag === 'button' && node.textContent.includes('Existing room'));
@@ -359,8 +401,11 @@ test('generated modules build as separate products and keep owner, receipt, UI s
     editButton.emit('click');
     await flush();
     const editForm = env.all().find(node => node.tag === 'form' && node.className === 'entity-edit');
+    for (const id of ['passed', 'category']) env.all().filter(node => node.name === id).at(-1).value = '';
     editForm.emit('submit');
     await flush(); await flush();
+    assert.equal(editAttempts.length, 1);
+    assert.deepEqual(editAttempts[0].body.fields, { room: 'Existing room', score: 3 }, 'an edit may return optional controls to Not set');
     assert.ok(env.all().some(node => node.textContent.includes('This version is no longer current')));
     const reload = env.all().find(node => node.tag === 'button' && node.textContent === 'Reload selected record');
     assert.ok(reload, 'a known version conflict offers an explicit reload');

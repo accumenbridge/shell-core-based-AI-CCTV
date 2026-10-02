@@ -210,3 +210,21 @@ Linux/macOS:
 ```bash
 ./START_FULL_STUDIO.sh
 ```
+
+## Bounded source construction
+
+The entity generator and `create-module` emit ordinary inspectable source. They share the platform's
+2–48 character lowercase source-directory identity predicate, scan declared workspace package names,
+and run new module manifests through the existing composition and Studio validators before creating
+the output directory. Run `npm ci` and `npm run build` first; generation itself does not install
+dependencies or mutate the lockfile. Generated optional booleans/enums retain a distinct “Not set”
+state, and generated Studio metadata records the UI/backend/data/process declarations actually emitted.
+Those declarations do not grant permissions or establish runtime readiness.
+
+`node tools/construction-clean-install.mjs` is a separate source-copy acceptance recipe, not an
+automatic part of either generator. It exercises generated workspaces, explicit temporary lockfile
+reconciliation and a second clean install/build. The source has independent version identities:
+repository package `0.2.0`, Studio program `0.3` (`studio-web` `0.3.0`), exact module/product SemVer,
+`quadbridge.module.v1` ABI, operation contract versions, and entity/family/UI/local-snapshot schema
+tags. No one value implies compatibility of the others. The entity profile remains a bounded record
+starter without relationships, schema upgrades or cross-artifact data adoption.

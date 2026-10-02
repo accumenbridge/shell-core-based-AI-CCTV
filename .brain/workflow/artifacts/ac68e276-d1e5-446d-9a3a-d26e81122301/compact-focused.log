@@ -1,0 +1,67 @@
+✔ paired console starts with no private build-host profile and reports build requests unavailable (1132.5578ms)
+✔ reviewed mobile build inputs are copied and contribute to the source fingerprint (814.8615ms)
+✔ unknown siblings beside the exact mobile build inputs remain rejected (2452.8387ms)
+✔ private toolchain copy matches its digest and a test-owned native binary drift changes it (6607.0583ms)
+✔ private toolchain rejects native package version mismatch and binary override (1692.1098ms)
+✔ exported neutral product starts with all domain directories physically absent (507.8525ms)
+✔ exported Service Desk has no knowledge or handoff package and persists a real record (488.3489ms)
+✔ factory export includes the selected Knowledge package closure and actual ai-core dependency (379.8853ms)
+✔ factory refuses collisions and path traversal (472.1153ms)
+✔ generated full-stack module builds and runs without editing maintained shell source (5966.6714ms)
+✔ real separate worker process completes a preexisting durable job (482.7363ms)
+✔ source-only provider omission is not mistaken for runtime completion (78.0939ms)
+✔ React bridge cleanup is idempotent (port contract, not a React runtime test) (2.0132ms)
+✔ React bridge does not create a root after scope cancellation (0.58ms)
+✔ generic framework packages import no reference-domain packages (32.2296ms)
+✔ provider failure closes the started modules in reverse dependency order (2.2113ms)
+✔ R05/R06: actual product serves a nested lazy chunk, CSS and both declared workspaces (175.995ms)
+✔ R05: closure includes static imports, literal lazy chunks and declared asset references (21.2381ms)
+✔ R05: missing dependency fails the build rather than making a broken release (9.2833ms)
+✔ R05: server-only package import fails before being publicly packaged (7.6931ms)
+✔ R05: nonliteral runtime import is not converted into an arbitrary URL (7.7374ms)
+✔ R05: a relative import cannot escape the selected module (7.9869ms)
+✔ R05: unsupported stylesheet-as-JavaScript import fails rather than shipping invalid native ESM (7.9529ms)
+✔ mobile preview assets survive an ordinary fixed product export and are served by that snapshot (798.0634ms)
+✔ mobile packaging derives neutral, Desk and Combined client-only snapshots with exact inventories (270.5667ms)
+✔ compact mobile preview assets fit the managed runtime copy path geometry (0.6213ms)
+✔ mobile assembler rejects a plan mutation against the frozen release identity (1.0567ms)
+✖ mobile bundler rebases nested new-URL assets into its reviewed raw asset tree (13.8021ms)
+✔ mobile shell derives tenant, account and workspace navigation from the accepted bootstrap (19.2839ms)
+✔ initially hidden mobile page stays suspended until visibility resumes (1.1ms)
+✔ logout remains fenced across suspend/resume and renders login only after a visible settle (1.7037ms)
+✔ packaged mobile shell shows deferred connection state without auth or API requests (0.3865ms)
+✔ R01: pending tenant change cannot mount or write under obsolete context (20.4557ms)
+✔ R01: denied replacement retains no old workspace and no old request authority (1.191ms)
+✔ R01: unchanged periodic bootstrap preserves accepted client scope (0.996ms)
+✔ R01: late read denial from aborted scope cannot clear the new scope (1.8272ms)
+✔ R01: late lazy import cannot mount into a replacement scope (0.8015ms)
+✔ R08: successful unchanged bootstrap remounts after failed refresh (0.8487ms)
+✔ R06: two named workspace exports mount exactly their declarations (0.5572ms)
+✔ R06: invalid named export undefined never substitutes default (0.5983ms)
+✔ R06: invalid named export {} never substitutes default (0.4305ms)
+✔ R06: invalid named export {"mount":1} never substitutes default (0.4006ms)
+✔ R01: stale workspace notifications cannot overwrite current UI (0.697ms)
+✔ workspace export closure follows selected Knowledge package manifests and actual ai-core version (8.9875ms)
+✔ workspace closure rejects stale repeated package versions, unselected packages and identifier collisions (2.4052ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 44
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23719.1073
+
+✖ failing tests:
+
+test at tests\mobile-assembly.test.mjs:87:1
+✖ mobile bundler rebases nested new-URL assets into its reviewed raw asset tree (13.8021ms)
+  Error: CSS URL reference is outside the checked frontend closure: modules/example/dist/nested.css -> ../assets/icons/marker.svg
+      at compactReference (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/mobile/assemble.mjs:103:13)
+      at file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/mobile/assemble.mjs:125:24
+      at String.replace (<anonymous>)
+      at rewriteCss (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/mobile/assemble.mjs:114:32)
+      at buildMobileBundle (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tools/mobile/assemble.mjs:223:74)
+      at async TestContext.<anonymous> (file:///D:/professional-works/company-works/Quadbridge/CORE-FRAMEWORKS/tests/mobile-assembly.test.mjs:122:18)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

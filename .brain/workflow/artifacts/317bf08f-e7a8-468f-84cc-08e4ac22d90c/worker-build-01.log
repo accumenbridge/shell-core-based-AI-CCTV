@@ -1,0 +1,8 @@
+
+> quadbridge-product-platform@0.2.0 build
+> node tools/build.mjs
+
+Local workspace links prepared. No third-party packages were downloaded.
+packages/contracts/src/operations.ts(171,3): error TS2322: Type '{ id: string; version: number; title: string; description: string; permission: string; kind: string; inputSchema: Readonly<Record<string, unknown>>; outputSchema: Readonly<Record<string, unknown>>; }' is not assignable to type 'OperationDescriptor'.
+  Types of property 'kind' are incompatible.
+    Type 'string' is not assignable to type '"read" | "write"'.
