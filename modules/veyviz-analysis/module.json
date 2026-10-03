@@ -341,8 +341,15 @@
   ],
   "workspaces": [
     {
+      "id": "veyviz.command",
+      "label": "Command Center",
+      "path": "/command-center",
+      "permission": "veyviz.analysis.read",
+      "export": "commandCenter"
+    },
+    {
       "id": "veyviz.analysis",
-      "label": "Video analysis",
+      "label": "Investigate",
       "path": "/analysis",
       "permission": "veyviz.analysis.read",
       "export": "workspace"
@@ -371,10 +378,16 @@
     "ui": {
       "routes": [
         {
+          "path": "/command-center",
+          "workspace": "veyviz.command",
+          "label": "Command Center",
+          "nav": "Command Center"
+        },
+        {
           "path": "/analysis",
           "workspace": "veyviz.analysis",
-          "label": "Video analysis",
-          "nav": "Analysis"
+          "label": "Investigate",
+          "nav": "Investigate"
         }
       ],
       "extensionPoints": []

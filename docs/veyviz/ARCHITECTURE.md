@@ -43,3 +43,9 @@ Local acceptance excludes cloud deployment, physical live cameras, continuous li
 The frozen first protocol uses inherited anonymous pipes, shell-disabled launch and a fixed installed Python runner. It is not a public inference HTTP service. Sources select the admitted mivia-vid0062 fixture and rfdetr-small-cpu-v1 profile through opaque IDs. Exact recording/model bytes live in digest-bound private companion assets rather than being misrepresented as part of the small Quadbridge export. Read the root-owned contracts/veyviz-product-ai/v1/README.md for request/response bounds, source version, revocation/lease rechecks, cleanup and result-proposal behavior.
 
 Modules: veyviz-sources, veyviz-analysis and veyviz-rfdetr. veyviz-review selects all three; veyviz-catalog selects sources alone. solutions/veyviz owns explicit binding translation. Root owns the separate runner/profile/inventory verification and launcher lifecycle.
+
+## Product presentation
+
+The product selects the maintained sidebar shell; product-owned styles establish its visual system. Recordings belongs to veyviz-sources. Command Center and Investigate are separate named workspace exports of veyviz-analysis, sharing the same scoped analysis behavior. System Health belongs to veyviz-rfdetr and shows verified profile facts through that owner's read route. No cross-owner browser API access or global UI controller is introduced. The source-only catalogue retains only Recordings.
+
+At the pinned framework version, default workspace and navigation order follow the resolved module/workspace sequence. Use an explicit Command Center deep link when entering that view. Product-manifest branding, navigation order and a configurable default workspace are upstream extension points still to be implemented; the product does not patch maintained hosts or mutate their DOM to emulate those hooks.

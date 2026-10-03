@@ -2,6 +2,8 @@
 
 Design intent, 2026-10-03: the user rejected the engineering-demo presentation. The core outcome is a reviewer understanding the recording, sampled evidence, model observations and saved review decision without reading implementation details.
 
+The user subsequently rejected this first visual direction. [CONCEPT_IMPLEMENTATION.md](CONCEPT_IMPLEMENTATION.md) is the current visual target; the interaction requirements below remain applicable.
+
 ## Selected direction
 
 A quiet professional review workstation: midnight navigation and media stage, warm white working surfaces, a restrained teal accent, crisp type hierarchy, deliberate spacing and borders. Use system fonts and local CSS; no external assets or fake telemetry. Product identity and the actual task take precedence over framework exposition. Retain accessible navigation, tenant switching and sign-out.

@@ -1,0 +1,37 @@
+{
+  "schema": "veyviz.regression-completion.v1",
+  "candidate": "f69ae33064c0ee0e2047be15bd29909cd6cd0b150a599721aec77e381613c27b",
+  "fullSuiteAttempts": [
+    {
+      "command": "npm test",
+      "log": ".local/veyviz-concept-full-suite.log",
+      "exitCode": 1,
+      "tests": 379,
+      "passed": 374,
+      "failed": 4,
+      "skipped": 1,
+      "durationMs": 1359937.7573
+    }
+  ],
+  "workerRetry": {
+    "command": "node --test --test-concurrency=1 --test-reporter=tap tests/build-worker-process.test.mjs",
+    "log": ".local/veyviz-concept-worker-retry.log",
+    "exitCode": 1,
+    "status": "FAILED",
+    "tests": 10,
+    "passed": 6,
+    "failed": 4,
+    "skipped": 0,
+    "durationMs": 243294.5884,
+    "failedCases": [1, 2, 5, 10],
+    "detail": "Cases 1/2/5 exceeded the unchanged 10000ms descendant heartbeat deadline. Case 10 exceeded the intentional-compiler-failure terminal-state deadline. Lease-loss case 3 passed on retry; file-lock case 5 had passed in the full invocation. This demonstrates repeated timing failures, not a proven resource-contention cause. Real compile/export case 9 passed."
+  },
+  "fullSuiteSummary": "Required npm test completed: 379 tests, 374 passed, 4 failed, 1 skipped; exit 1, 1359937.7573 ms. Failures are unchanged Windows worker startup/state deadlines in cases 46/47/48/55. Required symlink fixture 101 is BLOCKED_ENV/EPERM.",
+  "workerRetrySummary": "Unchanged-source isolated worker file: 10 tests, 6 passed, 4 failed, no skips; exit 1, 243294.5884 ms. Three heartbeat deadlines and the intentional-compiler-failure terminal-state deadline repeated. Startup/preparation latency is observed; the cause is not conclusively established. No source, timeout, profile or security setting was changed.",
+  "summary": "Concept-led source and actual browser/Python/export checks accepted. Required full suite: 374 passed, 4 worker deadline failures and 1 EPERM-blocked fixture. Isolated unchanged-source worker retry: 6 passed, 4 deadline failures. Formal project qualification remains REVIEW with unresolved worker timing and host fixture issues.",
+  "remainingQualificationIssues": [
+    "Required full npm test invocation failed four Windows worker startup/state deadlines. The isolated unchanged-source worker retry also failed four timing cases; root cause remains unresolved and was reported to the framework worker. No all-checks acceptance.",
+    "Required Windows file-symlink fixture could not be created due to EPERM; this remains blocked, not passed."
+  ],
+  "nextAction": "Resolve the repeated worker startup/state deadline issue through the maintained framework source owner and qualify the required symlink fixture on an authorized capable host. Product UI/source acceptance does not waive either issue."
+}

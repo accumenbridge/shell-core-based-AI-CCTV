@@ -219,8 +219,8 @@
     },
     {
       "path": "modules/veyviz-analysis/module.json",
-      "bytes": 10899,
-      "sha256": "114f93c7bb3aab82d9ff6d25234e831eb7bac1373d8c1db78e0f9e37f89b850e"
+      "bytes": 11264,
+      "sha256": "5ea30a107b3c13a7ed840a1274869e1cb267818cdae141b780279c253ea1e3dd"
     },
     {
       "path": "modules/veyviz-analysis/package.json",
@@ -244,13 +244,13 @@
     },
     {
       "path": "modules/veyviz-analysis/src/styles.css",
-      "bytes": 19530,
-      "sha256": "b761fec6a5897f070cd8aabc5d0db5159e0c555d481bdc927fea7edcbbb95f61"
+      "bytes": 35832,
+      "sha256": "cb6e5c0c76b52245b56a2a4c37c9d5d9354edbe2dd30d144e4871c7dfdf12719"
     },
     {
       "path": "modules/veyviz-analysis/src/ui.ts",
-      "bytes": 42106,
-      "sha256": "4c680fcc8af10510a1c04ee6e46d4674ab44944354f5edc9dc162f37dce2062c"
+      "bytes": 57666,
+      "sha256": "dbbfc15bcd2d055d233b97343954ea72a0de53ac2b4ce323d6054f5d7c281ee8"
     },
     {
       "path": "modules/veyviz-analysis/tsconfig.json",
@@ -259,8 +259,8 @@
     },
     {
       "path": "modules/veyviz-rfdetr/module.json",
-      "bytes": 4686,
-      "sha256": "97807d301b26ee28dc644c588a8ee152a95e4f9434024c50c629e6de15d31612"
+      "bytes": 5066,
+      "sha256": "ec8462fc0e84a217fb50ccd20836cc0b69162ae3eca9220a34b5a7db0b420fa1"
     },
     {
       "path": "modules/veyviz-rfdetr/package.json",
@@ -284,13 +284,13 @@
     },
     {
       "path": "modules/veyviz-rfdetr/src/styles.css",
-      "bytes": 2818,
-      "sha256": "16be272034bc0aaaa87d9a89a22276a2cd6f59bafc791756e52c6906e6eaf7f3"
+      "bytes": 11758,
+      "sha256": "18578b68dd4ed5022b10c9795aceb03b8fc165b75d4796d873f5c13d74036bb2"
     },
     {
       "path": "modules/veyviz-rfdetr/src/ui.ts",
-      "bytes": 2953,
-      "sha256": "4742d13f9fbaa1dbbbc0d1ec0eafa6a7bd8b86e85c086d7980086b99c5267311"
+      "bytes": 11150,
+      "sha256": "9229e747300b9529d25bd685c5fe54eba4131bc4224caf75a4ccba6252e2409a"
     },
     {
       "path": "modules/veyviz-rfdetr/tsconfig.json",
@@ -324,13 +324,13 @@
     },
     {
       "path": "modules/veyviz-sources/src/styles.css",
-      "bytes": 13510,
-      "sha256": "08a6684ba5044018b269971bd7dac4b7d3d1fd9fb962106215ed26ab0466dc89"
+      "bytes": 23085,
+      "sha256": "4517adf0525076e1304f4baaad13692860d65178912ff051a2f4ddda379ab216"
     },
     {
       "path": "modules/veyviz-sources/src/ui.ts",
-      "bytes": 10587,
-      "sha256": "7d7e456c80fc93c3d3bdd8277804740e72b1dec74bd1edb9fdaf2a22ba7af822"
+      "bytes": 14469,
+      "sha256": "040377c27c5f3919e8e35c5cb4e98d740abe3143923dd01182cab07dc0a362b3"
     },
     {
       "path": "modules/veyviz-sources/tsconfig.json",
@@ -639,13 +639,13 @@
     },
     {
       "path": "products/veyviz-catalog/product.json",
-      "bytes": 310,
-      "sha256": "0bbf2e07ad46dc38e56241f0918f31002d38fa73d9306f4afca243ce1821fab3"
+      "bytes": 313,
+      "sha256": "92c535252734d9541e67c32a5859fae9958a792bbfbd49b26b36cf7901bab5f3"
     },
     {
       "path": "products/veyviz-review/product.json",
-      "bytes": 1017,
-      "sha256": "07572af4e9a0648d6b4fbce1fcd56a54ac633674b23260e33f6ad35e440ff6b2"
+      "bytes": 970,
+      "sha256": "6ed4c7427d9e89e778810fae2ad9e68f18a6a1d07c24998339fb19bade7692e8"
     },
     {
       "path": "profiles/local-developer.json",
@@ -1676,11 +1676,11 @@
   "generated": [
     {
       "path": ".artifacts/veyviz-review/release.json",
-      "sha256": "fdeec7e142202bdb6c6ff4d45d1e3bdb15e3e42d4873136573610246ccfbf5d7"
+      "sha256": "e4b7805dd3b8932828f7f976ada7aeac169a1354c49d298b0f6b1b3238fc3015"
     },
     {
       "path": ".artifacts/veyviz-catalog/release.json",
-      "sha256": "fc44cac97ebc5e00298f1334d5649abd7b4dd662c1e068d8c4d6d1a027f94148"
+      "sha256": "87ef642b247ede1a3cc55c3f2cad4734aceb934ca8d0cab22cb8c929230f69c5"
     }
   ],
   "companion": [
@@ -1693,5 +1693,5 @@
       "sha256": "c5d559532407e36e7155063395cebc9ee4d96bd18255db25e9bc89e193d1f644"
     }
   ],
-  "digest": "8a8da11d29efd18b2c5965a1f8ba69f9e68716697ad65336a6d3e392373660de"
+  "digest": "cb92db69938bd52fbcb2301bcdf4c2b6ab8eadf1c50ccac4f4a0e58eca106831"
 }

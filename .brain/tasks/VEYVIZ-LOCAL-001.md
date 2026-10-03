@@ -22,3 +22,7 @@ No writer modifies maintained packages/apps or existing construction tools. Pref
 ## Review experience increment (2026-10-03)
 
 User: "why the product looks very mediocre? can't we make a world standard product?" Reopen the selected local product for the bounded review-workstation redesign in docs/veyviz/EXPERIENCE.md. Root owns governance and verification; assigned disjoint writers own product UI/CSS and product/solution presentation only. Backend, protocol, AI and maintained framework hosts stay unchanged. Previous candidate records remain historical and cannot qualify the redesigned source. Finish real browser layout, role, navigation and review checks before the broad regression freeze.
+
+## Concept-led interface implementation (2026-10-03)
+
+User rejected the previous UI again and explicitly requested the working product match the generated concepts. Adopt docs/veyviz/CONCEPT_IMPLEMENTATION.md for a sidebar design system, real Command Center and System Health workspaces, and an image-led searchable investigation view. Root owns metadata and evidence; disjoint UI writers preserve the scoped backend and source owners. Prior UX acceptance is historical and does not qualify this candidate.

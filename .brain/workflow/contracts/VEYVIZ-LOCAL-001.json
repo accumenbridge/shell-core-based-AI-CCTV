@@ -4,7 +4,7 @@
   "title": "Usable local scoped Veyviz video-analysis product",
   "authorization": {
     "kind": "authorized",
-    "reference": "User request 2026-10-03: analyze latest worker/framework/Veyviz state and build an independent new full-stack modular, plugin-capable product using Quadbridge; original repositories remain preserved. Root adopts local recorded-video scope and proposed new target. User further requested a substantially better product experience on 2026-10-03; bounded UX design in docs/veyviz/EXPERIENCE.md."
+    "reference": "User request 2026-10-03: analyze latest worker/framework/Veyviz state and build an independent new full-stack modular, plugin-capable product using Quadbridge; original repositories remain preserved. Root adopts local recorded-video scope and proposed new target. User further requested a substantially better product experience on 2026-10-03; bounded UX design in docs/veyviz/EXPERIENCE.md. User explicitly authorized concept-led working UI implementation after rejecting the prior design on 2026-10-03; see docs/veyviz/CONCEPT_IMPLEMENTATION.md."
   },
   "sourceTaskRef": ".brain/tasks/VEYVIZ-LOCAL-001.md",
   "owners": {
@@ -68,7 +68,8 @@
     "tools/veyviz-verify.mjs",
     "tsconfig.json",
     "vendor/veyviz-ai/PROVENANCE.json",
-    "docs/veyviz/EXPERIENCE.md"
+    "docs/veyviz/EXPERIENCE.md",
+    "docs/veyviz/CONCEPT_IMPLEMENTATION.md"
   ],
   "excludedActions": [
     "Editing maintained packages/apps/framework construction tools",

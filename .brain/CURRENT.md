@@ -1,8 +1,8 @@
 # Current workflow checkpoint
 
-Revision: 12  
-Event: b71b1b64-2060-41f5-9999-7bf61db5b7e4  
-Recorded: 2026-10-03T01:41:26.625Z  
+Revision: 17  
+Event: 8b87bee5-43a2-4a56-a99b-67c6b010f2ff  
+Recorded: 2026-10-03T05:24:12.985Z  
 Reported actor: /root
 
 This generated view summarizes immutable project-local records. Reported run and review fields are not authenticated proof of execution, reviewer identity, model identity, or external acceptance.
@@ -11,12 +11,12 @@ This generated view summarizes immutable project-local records. Reported run and
 
 Task: VEYVIZ-LOCAL-001
 Status: REVIEW
-Candidate: 21387ecf7587cdea575a75981801f41cb0c5f48130343947584d3c85ddd2c4a1
-Next action: Use the redesigned local recorded-video review product and obtain human experience feedback. Formal all-checks qualification requires the same-candidate symlink fixture on an authorized capable host. Next proposed core product increment is owned recording admission and representative footage evaluation; live-camera, identity, deployment and native-device profiles remain separate.
-Blockers: Windows denied required file-symlink fixture with EPERM: 378 passes, 0 failures, 1 blocked/skip. Security settings preserved.
-Run records: 0cb5b98e-285d-4cfc-9ae3-8639d7cb88c6, baf42ea3-dc0a-4911-8887-0fadfdd5cff3, b4db0d2f-77e2-4c9e-9398-c7dbccfa524d, 08fcb51a-51ca-4a5f-ab8f-973a4e8299dd, 8566ffb7-9fe9-4648-9db3-87adf33aaa36
-Review records: bc082668-f691-40fd-a55c-502302d579d9
-Gates: independent-construction=PASSED, real-model=PASSED, authority=PASSED, browser=PASSED, restart-cleanup=PASSED, second-variant=PASSED, full-suite=BLOCKED, independent-review=PASSED, live-camera=DEFERRED, native-mobile=DEFERRED, production=DEFERRED
+Candidate: f69ae33064c0ee0e2047be15bd29909cd6cd0b150a599721aec77e381613c27b
+Next action: Use the concept-led local recorded-video product and obtain human feedback. Resolve the repeated worker startup/state deadline issue through the maintained framework source owner and qualify the required symlink fixture on an authorized capable host. Product UI/source acceptance does not waive either issue. Next product functionality remains owned recording admission and representative footage evaluation; live-camera, identity, deployment and native-device profiles remain separate.
+Blockers: Required full npm test invocation failed four Windows worker startup/state deadlines. The isolated unchanged-source worker retry also failed four timing cases; root cause remains unresolved and was reported to the framework worker. No all-checks acceptance.; Required Windows file-symlink fixture could not be created due to EPERM; this remains blocked, not passed.
+Run records: 56e9e9e0-ce48-44f2-bc0b-f8c429cd70d3, 09fc206f-f261-45a2-a5b4-1e23414b1d76, 0547b1fb-cfcc-4f8c-b32a-9ab68333cbc5, f9046e91-184d-4157-ae5c-0cee2b56b665, edf701de-a456-42df-b287-6f60eb254d45
+Review records: 96f7ad30-2aa6-4077-8342-25747338f69f
+Gates: independent-construction=PASSED, real-model=PASSED, authority=PASSED, browser=PASSED, restart-cleanup=PASSED, second-variant=PASSED, full-suite=FAILED, independent-review=PASSED, live-camera=DEFERRED, native-mobile=DEFERRED, production=DEFERRED
 
 ## Maintenance work
 

@@ -1,0 +1,9 @@
+PASS actual authenticated HTTP runtime
+PASS durable source registration and idempotency conflict
+PASS tenant, viewer write and forged-scope denials
+PASS actual three-frame RF-DETR result adopted with original identity and native cleanup
+PASS scoped saved-result access and human review
+PASS graceful restart retains exact accepted result and review without reseeding
+PASS running-job cancellation cannot adopt a successful result
+PASS owned runtime and worker observed closed
+Evidence: D:\Veyviz-code\veyviz-quadbridge-product\.local\independent-export-concept-20261003\review-e2e-data\e2e-result.json

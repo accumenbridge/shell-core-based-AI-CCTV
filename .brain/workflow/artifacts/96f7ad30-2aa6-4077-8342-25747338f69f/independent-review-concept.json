@@ -1,0 +1,183 @@
+{
+  "schema": "veyviz.independent-review.v1",
+  "reviewer": "/root/veyviz_integration_map",
+  "recordedAt": "2026-10-03T05:23:39.415Z",
+  "status": "FINAL",
+  "sourceAcceptance": "ACCEPTED_FOR_SELECTED_LOCAL_RECORDED_PROFILE",
+  "formalReleaseQualification": "REVIEW_FAILED_REQUIRED_WORKER_GATE_AND_BLOCKED_ENV",
+  "sourceInventoryDigest": "cb92db69938bd52fbcb2301bcdf4c2b6ab8eadf1c50ccac4f4a0e58eca106831",
+  "sourceFiles": 334,
+  "brainCandidateDigest": "f69ae33064c0ee0e2047be15bd29909cd6cd0b150a599721aec77e381613c27b",
+  "runtimeFingerprint": "3967f885524505c64d392aac98c946db6a284d9d4b16f8b2a4641b38bf17a2ca",
+  "reviewScope": "Independent read-only review of product-owned workspace declarations, analysis/recording/health UI, CSS, async and review state, immutable source inventory, browser report and six actual final screenshots. No source edits, rebuilds or duplicate broad tests.",
+  "sourceIntegrity": {
+    "inventory": "docs/veyviz/RELEASE_INPUTS.json",
+    "independentlyHashedEntries": 338,
+    "sourceEntries": 334,
+    "generatedReleaseEntries": 2,
+    "companionMetadataEntries": 2,
+    "mismatches": [],
+    "canonicalDigestRecomputed": true,
+    "captureVerifyStatus": "MATCHED",
+    "completenessCheck": "Read-only canonical verifyInventory recaptured the full prescribed source root inventory and matched it; independent SHA-256 and byte-size check covered each listed entry.",
+    "finalVerificationStatus": "MATCHED_AFTER_FULL_SUITE_AND_ISOLATED_RETRY"
+  },
+  "resolvedFindings": [
+    "Command Center mobile grid area mismatch fixed by a named rail containing its queue, review and findings; viewer precedes rail at widths up to850px and in DOM order.",
+    "Investigation filter column minimums now relax at1150px; actual browser report includes900px with matched client/scroll widths.",
+    "Result-card image decode error reveals a persistent explanatory fallback; failure resets only when the assigned preview source changes. Full fallback text no longer uses a tiny circular icon box.",
+    "Reparented Command Center review card explicitly hides in the no-selected-item branch and while accepted result is unavailable; stale controls no longer remain after new queue selection.",
+    "Right rail is top-aligned; source context has full rail width; sample label contrasts on graphite; primary metadata and actions are readable; review states have explicit gallery badges.",
+    "System Health primary status uses product language and keeps raw captured-source details inside provenance; it distinguishes integrity checks from actual execution and live monitoring.",
+    "Existing selection epochs, single-flight list refresh, pre-mutation list invalidation, matching-request finalizers, busy guards and original command identities remain in place.",
+    "Source changed warning, captured/current source versions, zero-detection qualification and viewer read-only controls remain explicit.",
+    "The previously deferred .workspace selector mismatch is repaired by .workspace.veyviz-analysis and .workspace.veyviz-command selectors."
+  ],
+  "unresolvedBlockingSourceFindings": [],
+  "nonBlockingFindings": [],
+  "evidence": {
+    "build": {
+      "status": "PASSED",
+      "log": ".local/veyviz-concept-build-05.log",
+      "observed": "Successful assembly includes review/catalog and all six products; source has not been edited by this reviewer."
+    },
+    "browser": {
+      "status": "PASSED_AS_REPORTED_WITH_SCREENSHOTS_INDEPENDENTLY_INSPECTED",
+      "report": ".local/veyviz-concept-browser-evidence.json",
+      "screenshots": [
+        ".local/concept-command-desktop-final.png",
+        ".local/concept-investigate-desktop-final.png",
+        ".local/concept-health-desktop-final.png",
+        ".local/concept-command-phone-final.png",
+        ".local/concept-investigate-phone-final.png",
+        ".local/concept-recordings-phone-final.png"
+      ],
+      "observedVisuals": [
+        "Desktop Command Center presents an actual accepted six-frame recording beside an aligned attention/review/findings rail.",
+        "Light Investigation gallery distinguishes cancelled, dismissed and reviewed real runs, shows source-change warning, and retains selected frame and review state.",
+        "System Health shows the actual local profile and23 package versions without fabricated live telemetry.",
+        "Phone Command Center puts selected footage before the rail; Investigation screenshot shows a scrolled evidence/review region and intentionally horizontally scrollable sample strip.",
+        "Recordings phone screenshot presents real renamed source, working filter state and registration disclosure.",
+        "No fictional maps, live playback, positive detections or safe/empty-site assurance is present."
+      ],
+      "supportedJourney": "Actual registration/rename, six- and three-frame inference, next/keyboard samples, review/dismiss/reload, cancellation, scoped filters and retained evidence, viewer read-only UI, tenant separation, health refresh, responsive1440/1280/900/768/390 geometry.",
+      "qualificationLimit": "This reviewer inspected root-recorded interaction evidence and actual screenshots rather than repeating the browser journey. Screenshots support visual assessment; detailed responsive geometry and mutation outcomes are backed by the report.",
+      "exportedRuntimeRestart": {
+        "status": "PASSED_AS_REPORTED",
+        "sameFingerprintAndOriginalDataGeneration": true,
+        "observed": "After owned source preview closure, fresh fixed export reload restored all three analyses, Dismissed three-frame result and Reviewed six-frame result with capturedv1/currentv2 source warning; no reseeding."
+      }
+    },
+    "python": {
+      "status": "PASSED",
+      "tests": 10,
+      "log": ".local/veyviz-concept-python-tests.log",
+      "durationSeconds": 21.143,
+      "includesRealCPUInferenceAndOwnedCancellation": true
+    },
+    "fileVerification": {
+      "status": "PASSED",
+      "log": ".local/veyviz-concept-verify.log",
+      "reviewFiles": 62,
+      "catalogFiles": 41,
+      "limitation": "Verifies files/assets only; does not establish behavior or model accuracy.",
+      "beforeAndAfterExportChecksPassed": true
+    },
+    "reviewExport": {
+      "status": "PASS",
+      "checks": 8,
+      "allChecksPassed": true,
+      "report": ".local/independent-export-concept-20261003/review-e2e-data/e2e-result.json",
+      "completedAt": "2026-10-03T04:58:19.354Z",
+      "fingerprintMatchesBrowser": true
+    },
+    "catalogExport": {
+      "status": "PASS",
+      "checks": 5,
+      "allChecksPassed": true,
+      "report": ".local/independent-export-concept-20261003/catalog-export-evidence.json",
+      "completedAt": "2026-10-03T04:58:37.981Z",
+      "sourceOnlyCompositionAndNoWorkerRoutes": true
+    },
+    "fullSuite": {
+      "status": "COMPLETED_FAILED_WITH_BLOCKED_ENV_SKIP",
+      "log": ".local/veyviz-concept-full-suite.log",
+      "sessionReportedByRoot": 14560,
+      "observedFailedTests": [
+        46,
+        47,
+        48,
+        55
+      ],
+      "observedFailure": "Tests46/47/48: owned compiler descendant did not start marker heartbeat within10000ms. Test55: intentional compiler failure did not reach FAILED; last state RUNNING.",
+      "finalCounts": {
+        "tests": 379,
+        "passed": 374,
+        "failed": 4,
+        "cancelled": 0,
+        "skipped": 1,
+        "todo": 0,
+        "durationMs": 1359937.7573
+      },
+      "exitCode": 1,
+      "note": "Completed session14560 exit1 reported by root; reviewer independently read completed TAP counts. Failures46/47/48/55 remain failed. Test101 is explicit BLOCKED_ENV SKIP because Windows denied owned file-symlink fixture creation with EPERM. A later isolated retry cannot replace this failed required invocation.",
+      "isolatedRetry": {
+        "status": "COMPLETED_FAILED",
+        "log": ".local/veyviz-concept-worker-retry.log",
+        "sessionReportedByRoot": 44875,
+        "exitCode": 1,
+        "finalCounts": {
+          "tests": 10,
+          "passed": 6,
+          "failed": 4,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "durationMs": 243294.5884
+        },
+        "failedCases": [
+          1,
+          2,
+          5,
+          10
+        ],
+        "observedFailure": "Cases1/2/5 exceeded unchanged10000ms descendant heartbeat deadline; case10 did not reach expected FAILED terminal state and remained RUNNING.",
+        "assessment": "Repeated deadline failures remain unresolved. Lease-loss case3 passed on retry while file-lock case5 had passed in the full invocation; real compile/export case9 passed. No source, timeout, host-profile or security setting was changed. Root reported completed exit1 and this reviewer read the actual terminal TAP counts."
+      },
+      "diagnosis": {
+        "report": ".local/veyviz-concept-worker-timeout-diagnosis.json",
+        "status": "UNRESOLVED_AFTER_ISOLATED_RETRY",
+        "assessment": "Relevant process-owner and test bytes match previous release, but unchanged-source isolated retry repeated four startup/state deadline failures. Preparation/native startup latency is observed; root cause is not established and cannot be reduced to parallel inference/export contention."
+      }
+    },
+    "regressionCompletion": {
+      "report": ".local/concept-regression-completion.json",
+      "candidateMatches": true,
+      "completedCountsIndependentlyRead": true
+    }
+  },
+  "readinessAssessment": "The product-owned UI source, real browser journeys,10 Python checks and independently exported review8/8 and catalog5/5 checks are accepted for the selected local sampled-recording profile. The concept-derived UI increment is complete. Overall project release qualification remains REVIEW: required npm test completed with374 passed, four worker deadline failures and one EPERM-blocked fixture out of379 tests, and the isolated unchanged-source worker retry failed4/10. These observed failures are retained, not reclassified as passes or assumed environmental contention. The evidence does not establish world-class quality, universal application readiness, bug-free behavior, detection accuracy or production qualification.",
+  "qualificationLimits": [
+    "Only the admitted local research recording and RF-DETR CPU profile are covered.",
+    "Actual fixture results have zero detections; positive-detection overlays, accuracy and occupancy are not qualified by these journeys.",
+    "Thumbnail corruption response injection,25-result stress, exhaustive network faults, screen-reader study, formal accessibility audit and representative user evaluation were not performed.",
+    "Live cameras, maps, arbitrary uploads, semantic search, continuous playback, native devices, external identity, deployment and arbitrary plugin installation remain outside this profile.",
+    "Reports/logs/screenshots are observed execution evidence, not cryptographic execution attestation.",
+    "Current candidate required Windows file-symlink test101 is BLOCKED_ENV/EPERM; four repeated worker deadline failures are separately FAILED, not environmental skips."
+  ],
+  "unresolvedQualificationIssues": [
+    {
+      "id": "REQUIRED-WORKER-DEADLINES",
+      "status": "FAILED",
+      "owner": "Maintained framework source owner",
+      "description": "Required full npm test failed cases46/47/48/55. Entire unchanged-source worker file retry failed cases1/2/5/10. Repeated descendant startup/state deadline failures remain unresolved; neither invocation is passed.",
+      "nextAction": "Diagnose and repair through maintained framework ownership, preserving owner/cleanup protections and truthful qualification."
+    },
+    {
+      "id": "REQUIRED-SYMLINK-FIXTURE",
+      "status": "BLOCKED_ENV",
+      "description": "Required full-suite test101 could not create its owned file-symlink fixture because the host returned EPERM. It remains skipped and unqualified.",
+      "nextAction": "Qualify on an authorized capable host; do not weaken security controls merely to obtain a pass."
+    }
+  ]
+}

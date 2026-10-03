@@ -121,7 +121,15 @@
       "kind": "read"
     }
   ],
-  "workspaces": [],
+  "workspaces": [
+    {
+      "id": "veyviz.health",
+      "label": "System Health",
+      "path": "/system-health",
+      "permission": "veyviz.ai.read",
+      "export": "healthWorkspace"
+    }
+  ],
   "uiContributions": [
     {
       "id": "veyviz-rfdetr.provenance",
@@ -144,11 +152,19 @@
     "summary": "Fixed-profile local CPU inference through a verified Python companion process.",
     "category": "vision",
     "layers": [
+      "ui",
       "backend",
       "ai"
     ],
     "ui": {
-      "routes": [],
+      "routes": [
+        {
+          "path": "/system-health",
+          "workspace": "veyviz.health",
+          "label": "System Health",
+          "nav": "System Health"
+        }
+      ],
       "extensionPoints": [
         "veyviz.analysis.provenance"
       ]

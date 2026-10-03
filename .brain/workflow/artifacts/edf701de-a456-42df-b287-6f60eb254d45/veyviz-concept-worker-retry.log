@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+not ok 1 - Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup
+  ---
+  duration_ms: 17378.0641
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:114:1'
+  failureType: 'testCodeFailure'
+  error: 'Owned descendant did not start its marker heartbeat within 10000 ms; bounded pre-cleanup owner state: {"waitedMs":10014,"build":{"id":"d1ec3f09-1447-4959-a76a-dbcb87c06758","state":"RUNNING","attempt":1,"phase":"Compiling frozen product source","failureCode":null,"cleanupState":"PENDING","updated":1791004668631},"attempt":{"attempt":1,"state":"RUNNING","phase":"Compiling frozen product source","startedAt":1791004660194,"updatedAt":1791004668631,"finishedAt":null,"cleanupState":"PENDING","errorCode":null},"marker":{"state":"missing"},"redactedOutputTail":""}'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    waitForMarker (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:68:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:118:15)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+not ok 2 - worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two
+  ---
+  duration_ms: 19998.1409
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:140:1'
+  failureType: 'testCodeFailure'
+  error: 'Owned descendant did not start its marker heartbeat within 10000 ms'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    waitForMarker (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:68:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:144:22)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a worker that loses its live lease observes its descendant and preserves the successor attempt workspace
+ok 3 - a worker that loses its live lease observes its descendant and preserves the successor attempt workspace
+  ---
+  duration_ms: 19283.3392
+  type: 'test'
+  ...
+# Subtest: missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+ok 4 - missing Windows empty-job proof leaves cancellation pending with private work retained and redacted logs
+  ---
+  duration_ms: 18299.4457
+  type: 'test'
+  ...
+# Subtest: Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+not ok 5 - Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN
+  ---
+  duration_ms: 20728.4216
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:205:1'
+  failureType: 'testCodeFailure'
+  error: 'Owned descendant did not start its marker heartbeat within 10000 ms'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    waitForMarker (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:68:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:208:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: source and pinned compiler drift are rejected before a build is admitted
+ok 6 - source and pinned compiler drift are rejected before a build is admitted
+  ---
+  duration_ms: 9736.5097
+  type: 'test'
+  ...
+# Subtest: source and toolchain drift after admission fail the queued request before export
+ok 7 - source and toolchain drift after admission fail the queued request before export
+  ---
+  duration_ms: 22903.5951
+  type: 'test'
+  ...
+# Subtest: fixed factory output tampering fails before a local snapshot is published
+ok 8 - fixed factory output tampering fails before a local snapshot is published
+  ---
+  duration_ms: 31096.0401
+  type: 'test'
+  ...
+# Subtest: real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+ok 9 - real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering
+  ---
+  duration_ms: 42675.1067
+  type: 'test'
+  ...
+# Subtest: real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+not ok 10 - real TypeScript compiler failure is terminal and cleans the private attempt without exporting success
+  ---
+  duration_ms: 32491.9574
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\tests\\build-worker-process.test.mjs:326:1'
+  failureType: 'testCodeFailure'
+  error: 'Build 580eff40-875a-4a30-8275-933d09041a6e did not reach FAILED; last state RUNNING'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    waitForState (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:59:11)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/tests/build-worker-process.test.mjs:329:17)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 6
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 243294.5884

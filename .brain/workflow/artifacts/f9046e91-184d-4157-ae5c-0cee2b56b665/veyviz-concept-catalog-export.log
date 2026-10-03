@@ -1,0 +1,6 @@
+PASS export composition is source-only
+PASS exported catalog serves HTTP with no analysis or inference routes
+PASS exported catalog registers and lists a tenant-owned recording
+PASS exported catalog restarts without reseeding, retains source, and still has no worker routes
+PASS exported runtime and HTTP owner closed cleanly
+Evidence: D:\Veyviz-code\veyviz-quadbridge-product\.local\independent-export-concept-20261003\catalog-export-evidence.json

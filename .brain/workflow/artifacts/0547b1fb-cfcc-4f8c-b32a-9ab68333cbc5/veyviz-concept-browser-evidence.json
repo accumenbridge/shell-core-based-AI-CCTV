@@ -1,0 +1,45 @@
+{
+  "schema": "veyviz.browser-review.v1",
+  "date": "2026-10-03",
+  "status": "PASSED",
+  "sourceInventory": "cb92db69938bd52fbcb2301bcdf4c2b6ab8eadf1c50ccac4f4a0e58eca106831",
+  "runtimeFingerprint": "3967f885524505c64d392aac98c946db6a284d9d4b16f8b2a4641b38bf17a2ca",
+  "build": ".local/veyviz-concept-build-05.log",
+  "browser": "Actual Codex in-app browser controlled through cua_repl; viewport sizes verified from DOM rather than assuming browser zoom.",
+  "url": "http://127.0.0.1:58926/#/command-center",
+  "dataRoot": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\concept-browser-a097366f-1e21-4aac-a0a0-aed723258040",
+  "checks": [
+    "Admin sign-in and actual source registration through the redesigned Recordings UI; no grants reseeded. Each changed fingerprint used a fresh isolated generation.",
+    "Real six-frame analysis b003a178 completed with accepted JPEG frames 0/10/20/30/40/50. Next and ArrowRight selected actual sample3; Mark reviewed persisted and removed its open-review queue item.",
+    "Recording rename changed source to Roadside · Review sample version2; unchanged Save name was disabled. Name search returned0 and Clear restored1; renamed filter returned the version2 recording.",
+    "Investigate preserved captured sourceversion1 warning while switching samples; actual context showed currentversion2 separately.",
+    "Investigation search no-match returned0 while retaining selected evidence; Open review excluded reviewed run; Result ready + Today returned1; Clear restored list.",
+    "Actual three-frame analysis47bae4ef completed from sourceversion2. Viewer observed accepted results and real review state without New analysis, review, cancel, add or rename mutation controls; Command Center also omitted viewer review controls.",
+    "Tenant beta showed zero analyses, no recording and no alpha frame; switching alpha restored scoped results. Viewer tenant menu contained alpha only.",
+    "Admin dismissed three-frame result; actual reload retained aria-pressed=true. Starting new analysis hid old Command Center review actions while pending.",
+    "Third analysisbcaf485f was cancelled through UI, progressed through Cancellation requested to Cancelled with no accepted result.",
+    "System Health named export mounted, Refresh returned verified profile with23 actual versions. Full fingerprints disclosure at390px did not overflow.",
+    "Command Center1440px has aligned media/right rail, legible12px metadata and light sample label. At1280x900 review card bottom506.29 and viewer bottom809.84; both primary media and review actions fit. No horizontal document overflow.",
+    "Command Center mobile media-first order observed: at390 viewerY460.72 before railY921.40; at768 viewerY214.69 before railY790.84. Actions remain reachable.",
+    "Investigate width/client-scroll measurements matched:1440/1425,1280/1265,900/885,768/753,390/375. Source registration form and Health expanded fingerprints also matched at390.",
+    "Accepted result selection loaded9 actual images including main frame, six samples and two result previews; source warning and review state remained coherent.",
+    "Source preview closed through its owned STOP marker, logged CONCEPT_BROWSER_CLOSED and exited0 before final inventory capture.",
+    "Fresh independent review export with identical runtime fingerprint relaunched on the original data generation after source preview exit0. Browser reload restored all three analyses and dismissed three-frame result; selecting the six-frame result restored Reviewed with capturedv1/currentv2 source warning. No reseeding performed."
+  ],
+  "screenshots": [
+    ".local/concept-command-desktop-final.png",
+    ".local/concept-investigate-desktop-final.png",
+    ".local/concept-health-desktop-final.png",
+    ".local/concept-command-phone-final.png",
+    ".local/concept-investigate-phone-final.png",
+    ".local/concept-recordings-phone-final.png"
+  ],
+  "limitations": [
+    "Actual tool observations, not cryptographic execution attestation or exhaustive accessibility/network-fault testing.",
+    "Local admitted research recording and CPU profile only; zero detections do not establish accuracy or occupancy. Positive-detection overlays unqualified.",
+    "No live cameras, maps, semantic search, continuous playback, native devices, external identity, deployment or arbitrary plugin installation was tested or implied.",
+    "Thumbnail decode fallback and bounded background request logic were independently source-reviewed; no deliberately corrupt response or25-result stress scenario was injected into the browser.",
+    "One getByLabel filter driver lookup failed; fresh DOM showed the correctly named combobox and getByRole succeeded. This driver attempt is not a product test pass.",
+    "Earlier build/visual iterations are historical only; they are not substituted for the final Build05 browser observations."
+  ]
+}

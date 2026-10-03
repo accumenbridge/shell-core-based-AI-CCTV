@@ -1,0 +1,10 @@
+npm notice run veyviz-quadbridge-product@0.2.0 veyviz:verify
+npm notice run node tools/veyviz-verify.mjs
+{"product":"veyviz-review","status":"VERIFIED_FILES","files":62}
+{"product":"veyviz-catalog","status":"VERIFIED_FILES","files":41}
+AI companion file and asset verification passed. This command does not establish model accuracy or end-to-end behavior.
+npm notice run veyviz-quadbridge-product@0.2.0 veyviz:verify
+npm notice run node tools/veyviz-verify.mjs
+{"product":"veyviz-review","status":"VERIFIED_FILES","files":62}
+{"product":"veyviz-catalog","status":"VERIFIED_FILES","files":41}
+AI companion file and asset verification passed. This command does not establish model accuracy or end-to-end behavior.

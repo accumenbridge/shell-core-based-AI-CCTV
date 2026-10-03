@@ -1,4 +1,4 @@
-import type { Workspace } from '@quadbridge/contracts';
+import type { Workspace, WorkspaceContext } from '@quadbridge/contracts';
 import { button, el, emptyState, field, section } from '@quadbridge/web-shell/dom';
 import type { AnalysisResult, AnalysisSample } from './protocol.js';
 import type { SourceView } from '@quadbridge/veyviz-sources/protocol';
@@ -32,6 +32,9 @@ interface ResultResponse {
 interface RunRow {
   element: HTMLLIElement;
   select: HTMLButtonElement;
+  thumbnail: HTMLImageElement;
+  thumbnailFallback: HTMLElement;
+  reviewBadge: HTMLElement;
   title: HTMLElement;
   meta: HTMLElement;
   summary: HTMLElement;
@@ -44,6 +47,7 @@ interface LinkedController {
   dispose(): void;
 }
 const activeStates = new Set<JobState>(['QUEUED', 'RUNNING', 'CANCEL_REQUESTED']);
+type WorkspaceMode = 'investigate' | 'command-center';
 
 function setText(node: HTMLElement, value: string) {
   if (node.textContent !== value) node.textContent = value;
@@ -87,10 +91,14 @@ function linkedController(parent: AbortSignal): LinkedController {
   };
 }
 
-export const workspace: Workspace = { mount(ctx) {
+export const workspace: Workspace = { mount(ctx) { return mountAnalysisWorkspace(ctx, 'investigate'); } };
+export const commandCenter: Workspace = { mount(ctx) { return mountAnalysisWorkspace(ctx, 'command-center'); } };
+
+function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () => void {
+  const commandCenterMode = mode === 'command-center';
   const canWrite = ctx.permissions.includes('veyviz.analysis.write');
   const root = ctx.root;
-  root.classList.add('veyviz-analysis');
+  root.classList.add(commandCenterMode ? 'veyviz-command' : 'veyviz-analysis');
 
   let sourceRecords: SourceView[] = [];
   let items: AnalysisItem[] = [];
@@ -111,6 +119,12 @@ export const workspace: Workspace = { mount(ctx) {
   let listQueued = false;
   let listLimit = 25;
   let loadingId: string | null = null;
+  const previewCache = new Map<string, AnalysisResult>();
+  const previewFailed = new Set<string>();
+  const previewDecodeFailed = new Set<string>();
+  const previewRequests = new Map<string, LinkedController>();
+  const previewQueue: string[] = [];
+  let previewWanted = new Set<string>();
   let pendingSubmission: { commandId: string; sourceId: string; frameCount: number; sampleStride: number } | null = null;
   const pendingReviews = new Map<string, { commandId: string; decision: ReviewState }>();
   const rows = new Map<string, RunRow>();
@@ -120,9 +134,15 @@ export const workspace: Workspace = { mount(ctx) {
 
   const header = el('header', 'analysis-page-header');
   const headingCopy = el('div', 'analysis-heading-copy');
-  headingCopy.append(el('p', 'analysis-eyebrow', 'VEYVIZ  /  RECORDED VIDEO'), el('h1', '', 'Video review'),
-    el('p', 'analysis-intro', 'Inspect sampled footage and record your review.'));
+  headingCopy.append(
+    el('p', 'analysis-eyebrow', commandCenterMode ? 'VEYVIZ  /  LOCAL REVIEW' : 'EVIDENCE WORKSPACE'),
+    el('h1', '', commandCenterMode ? 'Command Center' : 'Investigate'),
+    el('p', 'analysis-intro', commandCenterMode
+      ? 'Review accepted frames and the work that needs attention.'
+      : 'Search the latest analyses and inspect their accepted footage.')
+  );
   header.append(headingCopy);
+  const headerActions = el('div', 'analysis-header-actions');
   const summary = el('div', 'analysis-summary');
   const totalCount = el('strong', '', '0'), openCount = el('strong', '', '0'), activeCount = el('strong', '', '0');
   const metric = (label: string, value: HTMLElement) => {
@@ -130,12 +150,13 @@ export const workspace: Workspace = { mount(ctx) {
     node.append(value, el('span', '', label));
     return node;
   };
-  summary.setAttribute('aria-label', 'Summary of the latest 25 analyses');
-  summary.append(metric('analyses', totalCount), metric('open reviews', openCount), metric('in progress', activeCount));
-  header.append(summary);
-  root.append(header);
+  summary.setAttribute('aria-label', 'Current tenant analysis facts');
+  summary.append(metric('latest analyses', totalCount), metric('open reviews', openCount), metric('active', activeCount));
+  headerActions.append(summary);
+  header.append(headerActions);
 
   const toolbar = el('div', 'analysis-toolbar');
+  toolbar.classList.add(commandCenterMode ? 'command-toolbar' : 'investigate-toolbar');
   const readiness = el('div', 'analysis-readiness');
   const readinessMark = el('span', 'analysis-readiness-mark');
   const readinessText = el('span', '', 'Checking local inference readiness…');
@@ -144,7 +165,55 @@ export const workspace: Workspace = { mount(ctx) {
   liveStatus.setAttribute('role', 'status');
   liveStatus.setAttribute('aria-live', 'polite');
   liveStatus.setAttribute('aria-atomic', 'true');
-  toolbar.append(readiness);
+  toolbar.append(readiness, liveStatus);
+
+  const filterBar = el('section', 'analysis-filter-bar');
+  filterBar.hidden = commandCenterMode;
+  filterBar.setAttribute('aria-label', 'Filter latest analyses');
+  const searchLabel = el('label', 'analysis-search-field');
+  searchLabel.append(el('span', 'analysis-filter-label', 'Search latest analyses'));
+  const searchInput = el('input');
+  searchInput.type = 'search';
+  searchInput.name = 'analysisSearch';
+  searchInput.placeholder = 'Source name, status or analysis ID';
+  searchInput.autocomplete = 'off';
+  searchInput.setAttribute('aria-describedby', 'analysis-filter-scope');
+  searchLabel.append(searchInput);
+  const sourceFilterLabel = el('label', 'analysis-filter-select');
+  sourceFilterLabel.append(el('span', 'analysis-filter-label', 'Recording'));
+  const sourceFilter = el('select');
+  sourceFilter.setAttribute('aria-label', 'Filter by recording');
+  const allSourcesOption = el('option', '', 'All recordings');
+  allSourcesOption.value = 'all';
+  sourceFilter.append(allSourcesOption);
+  sourceFilterLabel.append(sourceFilter);
+  const stateFilterLabel = el('label', 'analysis-filter-select');
+  stateFilterLabel.append(el('span', 'analysis-filter-label', 'State'));
+  const stateFilter = el('select');
+  stateFilter.setAttribute('aria-label', 'Filter by analysis state');
+  for (const [value, label] of [['all', 'All states'], ['open', 'Open review'], ['ready', 'Result ready'], ['active', 'In progress'], ['failed', 'Failed']] as const) {
+    const option = el('option', '', label); option.value = value; stateFilter.append(option);
+  }
+  stateFilterLabel.append(stateFilter);
+  const dateFilterLabel = el('label', 'analysis-filter-select');
+  dateFilterLabel.append(el('span', 'analysis-filter-label', 'Date'));
+  const dateFilter = el('select');
+  dateFilter.setAttribute('aria-label', 'Filter by creation date');
+  for (const [value, label] of [['all', 'Any date'], ['today', 'Today'], ['7d', 'Last 7 days'], ['30d', 'Last 30 days']] as const) {
+    const option = el('option', '', label); option.value = value; dateFilter.append(option);
+  }
+  dateFilterLabel.append(dateFilter);
+  const clearFilters = button('Clear filters', () => {
+    searchInput.value = '';
+    sourceFilter.value = 'all';
+    stateFilter.value = 'all';
+    dateFilter.value = 'all';
+    updateRows();
+    schedulePreviewLoads();
+  }, 'analysis-filter-clear');
+  const filterScope = el('p', 'analysis-filter-scope', 'Filters match only the latest 25 analyses returned for this tenant.');
+  filterScope.id = 'analysis-filter-scope';
+  filterBar.append(searchLabel, sourceFilterLabel, stateFilterLabel, dateFilterLabel, clearFilters, filterScope);
 
   let setSubmitState = () => {};
   let sourceSelectRef: HTMLSelectElement | null = null;
@@ -227,34 +296,47 @@ export const workspace: Workspace = { mount(ctx) {
         selectedLoadedId = null;
         selectedResultFailedId = null;
         pendingSubmission = null;
+        searchInput.value = '';
+        sourceFilter.value = 'all';
+        stateFilter.value = 'all';
+        dateFilter.value = 'all';
         selectionEpoch++;
         disclosure.open = false;
         setText(formFeedback, 'Analysis was queued. Its actual sampled results will appear when accepted.');
-        setText(liveStatus, 'Analysis queued. Worker state: queued.');
+        setLive('Analysis queued. Worker state: queued.', true);
         updateSelectedPanel();
         if (document.activeElement === document.body || form.contains(document.activeElement)) selectedTitle.focus();
         await refresh();
       }).catch(error => {
         if (closed || ctx.signal.aborted) return;
         setText(formFeedback, error instanceof Error ? error.message : 'Analysis could not be queued.');
-        setText(liveStatus, 'Analysis could not be queued.');
+        setLive('Analysis could not be queued.', true);
       }).finally(() => {
         submitting = false;
         if (!closed && !ctx.signal.aborted) setSubmitState();
       });
     }, { signal: ctx.signal });
   }
-  root.append(toolbar, liveStatus);
+  headerActions.append(toolbar);
+  root.append(header, filterBar);
 
   const workbench = el('div', 'analysis-workbench');
+  workbench.classList.add(commandCenterMode ? 'command-workbench' : 'investigate-workbench');
   const runsPanel = section('analysis-panel analysis-runs');
   const runHeading = el('div', 'analysis-panel-heading');
-  const runHeadingTitle = el('h2', '', 'Analyses');
+  const runHeadingTitle = el('h2', '', commandCenterMode ? 'Needs attention' : 'Results');
   const runCount = el('span', 'analysis-panel-count', '0');
   runHeading.append(runHeadingTitle, runCount);
-  const runScope = el('p', 'analysis-run-scope', 'Most recent analyses');
-  const runEmpty = emptyState('No analyses yet', canWrite ? 'Register a recording, then start a new analysis to create your first review.' : 'No analyses are available in this tenant.');
+  const runScope = el('p', 'analysis-run-scope', commandCenterMode
+    ? 'Open reviews and active work in the latest 25 analyses.'
+    : 'Latest 25 analyses · newest first');
+  const runEmpty = emptyState(commandCenterMode ? 'Nothing needs attention' : 'No matching analyses', commandCenterMode
+    ? 'There are no open reviews, active jobs or failed jobs in the latest 25 analyses.'
+    : canWrite ? 'Register a recording, then start a new analysis to create your first review.' : 'No analyses match these filters in this tenant.');
+  const runEmptyTitle = runEmpty.querySelector('h3');
+  const runEmptyCopy = runEmpty.querySelector('p');
   const runList = el('ol', 'analysis-run-list');
+  runList.classList.add(commandCenterMode ? 'analysis-queue-list' : 'analysis-result-grid');
   const cancelFeedback = el('p', 'analysis-inline-status');
   cancelFeedback.setAttribute('role', 'status');
   cancelFeedback.setAttribute('aria-live', 'polite');
@@ -328,27 +410,76 @@ export const workspace: Workspace = { mount(ctx) {
   const reviewCard = section('analysis-review-card');
   const reviewLabel = el('p', 'analysis-eyebrow', 'HUMAN REVIEW');
   const reviewState = el('p', 'analysis-review-state', 'Awaiting human review');
-  const reviewNote = el('p', 'analysis-review-note', 'Your decision applies to this analysis. Occupancy remains unverified.');
+  const reviewNote = el('p', 'analysis-review-note', 'This records a human review decision for the selected analysis.');
   const reviewActions = el('div', 'analysis-review-actions');
   const markReviewed = button('Mark reviewed', () => void saveReview('REVIEWED'), 'analysis-primary-action');
   const dismiss = button('Dismiss result', () => void saveReview('DISMISSED'), 'analysis-secondary-action');
   if (canWrite) reviewActions.append(markReviewed, dismiss);
   else reviewActions.append(el('p', 'analysis-readonly-note', 'Read-only access. Review decisions cannot be changed by this account.'));
   reviewCard.append(reviewLabel, reviewState, reviewNote, reviewActions);
+  reviewCard.hidden = true;
+  resultView.append(reviewCard);
   const technical = el('details', 'analysis-technical');
   technical.append(el('summary', '', 'Analysis provenance'));
   const technicalFacts = el('dl', 'analysis-technical-facts');
   technical.append(technicalFacts);
-  findingsView.append(findingsHeader, findingsNote, detections, reviewCard, technical);
-  findingsPanel.append(findingsPlaceholder, findingsView);
-  workbench.append(reviewPanel, findingsPanel, runsPanel);
+  findingsView.append(findingsHeader, findingsNote, detections, technical);
+  const sourceContext = section('analysis-source-context');
+  sourceContext.hidden = true;
+  sourceContext.append(el('p', 'analysis-eyebrow', 'RECORDING CONTEXT'));
+  const sourceContextName = el('strong', 'analysis-source-context-name', 'No recording selected');
+  const sourceContextFacts = el('dl', 'analysis-source-context-facts');
+  sourceContext.append(sourceContextName, sourceContextFacts);
+  findingsPanel.append(findingsPlaceholder, findingsView, sourceContext);
+  if (commandCenterMode) {
+    const commandRail = el('div', 'analysis-command-rail');
+    commandRail.append(runsPanel, reviewCard, findingsPanel);
+    workbench.append(reviewPanel, commandRail);
+  } else {
+    workbench.append(runsPanel, reviewPanel, findingsPanel);
+  }
   root.append(workbench);
 
-  function setLive(message: string) { setText(liveStatus, message); }
+  function setLive(message: string, visible = false) {
+    setText(liveStatus, message);
+    liveStatus.classList.toggle('is-visible', visible);
+  }
   function setRunCount(value: number) {
     setText(runCount, value + ' / ' + listLimit);
     runCount.setAttribute('aria-label', 'Showing ' + value + ' of the latest ' + listLimit + ' analyses');
-    setText(runScope, 'Most recent ' + listLimit);
+    setText(runScope, commandCenterMode
+      ? 'Open reviews and active or failed jobs · latest ' + listLimit
+      : value + ' shown · filters apply to latest ' + listLimit);
+  }
+  function displayedItems(): AnalysisItem[] {
+    if (commandCenterMode) {
+      return items.filter(item =>
+        (item.jobState === 'SUCCEEDED' && item.sampleCount > 0 && item.reviewState === 'OPEN') ||
+        activeStates.has(item.jobState) || item.jobState === 'FAILED');
+    }
+    const query = searchInput.value.trim().toLocaleLowerCase();
+    const sourceId = sourceFilter.value;
+    const status = stateFilter.value;
+    const now = new Date();
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const dateValue = dateFilter.value;
+    const after = dateValue === 'today' ? todayStart
+      : dateValue === '7d' ? Date.now() - 7 * 24 * 60 * 60 * 1000
+      : dateValue === '30d' ? Date.now() - 30 * 24 * 60 * 60 * 1000 : 0;
+    return items.filter(item => {
+      if (sourceId !== 'all' && item.sourceId !== sourceId) return false;
+      if (status === 'open' && !(item.jobState === 'SUCCEEDED' && item.sampleCount > 0 && item.reviewState === 'OPEN')) return false;
+      if (status === 'ready' && !(item.jobState === 'SUCCEEDED' && item.sampleCount > 0)) return false;
+      if (status === 'active' && !activeStates.has(item.jobState)) return false;
+      if (status === 'failed' && item.jobState !== 'FAILED') return false;
+      if (after && item.created < after) return false;
+      if (query) {
+        const haystack = [sourceName(sourceRecords, item.sourceId), item.id, item.jobId, stateLabel(item.jobState), item.reviewState]
+          .join(' ').toLocaleLowerCase();
+        if (!haystack.includes(query)) return false;
+      }
+      return true;
+    });
   }
   function setCancelState(row: RunRow, item: AnalysisItem) {
     if (!row.cancel) return;
@@ -363,19 +494,37 @@ export const workspace: Workspace = { mount(ctx) {
     const element = el('li', 'analysis-run-row');
     const select = el('button', 'analysis-run-select');
     select.type = 'button';
+    const media = el('span', 'analysis-run-media');
+    const thumbnail = el('img', 'analysis-run-thumbnail');
+    thumbnail.alt = '';
+    thumbnail.loading = 'lazy';
+    thumbnail.hidden = true;
+    const thumbnailFallback = el('span', 'analysis-run-thumbnail-fallback', 'Loading frame');
+    media.append(thumbnail, thumbnailFallback);
     const title = el('span', 'analysis-run-title');
     const meta = el('span', 'analysis-run-meta');
+    const reviewBadge = el('span', 'analysis-run-review-badge');
+    thumbnail.addEventListener('error', () => {
+      const failedSource = thumbnail.dataset.previewSource;
+      if (!failedSource || thumbnail.src !== failedSource) return;
+      previewDecodeFailed.add(item.id);
+      thumbnail.hidden = true;
+      thumbnailFallback.hidden = false;
+      setText(thumbnailFallback, 'Preview could not be decoded');
+    }, { signal: ctx.signal });
     const summary = el('span', 'analysis-run-summary');
     const warning = el('span', 'analysis-run-warning', 'Source changed since this analysis was captured.');
     warning.hidden = true;
-    select.append(title, meta, summary, warning);
+    const copy = el('span', 'analysis-run-copy');
+    copy.append(title, meta, reviewBadge, summary, warning);
+    select.append(media, copy);
     select.addEventListener('click', () => chooseRun(item.id), { signal: ctx.signal });
     let cancel: HTMLButtonElement | null = null;
     if (canWrite) {
       cancel = button('Cancel', () => void cancelRun(item.id), 'analysis-cancel-action');
       element.append(select, cancel);
     } else element.append(select);
-    return { element, select, title, meta, summary, warning, cancel };
+    return { element, select, thumbnail, thumbnailFallback, reviewBadge, title, meta, summary, warning, cancel };
   }
   function updateSummary() {
     const awaiting = items.filter(item => item.jobState === 'SUCCEEDED' && item.sampleCount > 0 && item.reviewState === 'OPEN').length;
@@ -383,21 +532,41 @@ export const workspace: Workspace = { mount(ctx) {
     setText(totalCount, String(items.length));
     setText(openCount, String(awaiting));
     setText(activeCount, String(inProgress));
-    setRunCount(items.length);
+    setRunCount(displayedItems().length);
   }
   function updateRows() {
     const keep = new Set(items.map(item => item.id));
+    const visible = displayedItems();
+    const visibleIds = new Set(visible.map(item => item.id));
     for (const [id, row] of rows) {
       if (!keep.has(id)) {
         if (document.activeElement === row.select || document.activeElement === row.cancel) selectedTitle.focus();
         row.element.remove();
         rows.delete(id);
+      } else if (!visibleIds.has(id) && row.element.parentElement === runList) {
+        if (document.activeElement === row.select || document.activeElement === row.cancel) {
+          if (!commandCenterMode && !filterBar.hidden) searchInput.focus(); else selectedTitle.focus();
+        }
+        row.element.remove();
       }
     }
-    runEmpty.hidden = items.length > 0;
-    runList.hidden = items.length === 0;
-    for (let index = 0; index < items.length; index++) {
-      const item = items[index];
+    runEmpty.hidden = visible.length > 0;
+    runList.hidden = visible.length === 0;
+    if (!visible.length && runEmptyTitle && runEmptyCopy) {
+      if (commandCenterMode) {
+        setText(runEmptyTitle, 'Nothing needs attention');
+        setText(runEmptyCopy, 'There are no open reviews, active jobs or failed jobs in the latest 25 analyses.');
+      } else if (!items.length) {
+        setText(runEmptyTitle, 'No analyses yet');
+        setText(runEmptyCopy, canWrite ? 'Register a recording, then start a new analysis to create your first review.' : 'No analyses are available in this tenant.');
+      } else {
+        setText(runEmptyTitle, 'No matching analyses');
+        setText(runEmptyCopy, 'Try clearing the filters. Search and filters cover only the latest ' + listLimit + ' analyses.');
+      }
+    }
+    setRunCount(visible.length);
+    for (let index = 0; index < visible.length; index++) {
+      const item = visible[index];
       if (!item) continue;
       let row = rows.get(item.id);
       if (!row) {
@@ -407,8 +576,32 @@ export const workspace: Workspace = { mount(ctx) {
       setText(row.title, sourceName(sourceRecords, item.sourceId));
       setText(row.meta, formatDate(item.created) + ' · ' + stateLabel(item.jobState));
       setText(row.summary, item.sampleCount > 0
-        ? item.sampleCount + ' sampled frames · ' + item.detectionCount + ' model observations · ' + item.reviewState.toLowerCase()
+        ? item.sampleCount + ' sampled frames · ' + item.detectionCount + ' model observations'
         : stateMessage(item.jobState));
+      const hasReview = item.jobState === 'SUCCEEDED' && item.sampleCount > 0;
+      row.reviewBadge.hidden = !hasReview;
+      row.reviewBadge.className = 'analysis-run-review-badge review-badge-' + item.reviewState.toLowerCase();
+      setText(row.reviewBadge, item.reviewState === 'OPEN' ? 'Open review'
+        : item.reviewState === 'REVIEWED' ? 'Reviewed' : 'Dismissed');
+      const preview = previewCache.get(item.id)?.samples[0];
+      const previewUrl = preview?.thumbnailJpegBase64 ? 'data:image/jpeg;base64,' + preview.thumbnailJpegBase64 : '';
+      const oldPreviewUrl = row.thumbnail.dataset.previewSource ?? '';
+      if (oldPreviewUrl !== previewUrl) {
+        previewDecodeFailed.delete(item.id);
+        row.thumbnail.dataset.previewSource = previewUrl;
+        row.thumbnail.removeAttribute('src');
+        if (previewUrl) row.thumbnail.src = previewUrl;
+      }
+      const decodeFailed = previewDecodeFailed.has(item.id);
+      const showPreview = Boolean(previewUrl) && !decodeFailed;
+      row.thumbnail.hidden = !showPreview;
+      row.thumbnailFallback.hidden = showPreview;
+      setText(row.thumbnailFallback, decodeFailed ? 'Preview could not be decoded'
+        : previewCache.has(item.id) ? 'No still provided'
+        : previewFailed.has(item.id) ? 'Preview unavailable'
+        : item.sampleCount === 0 ? 'No accepted frame'
+        : loadingId === item.id || previewRequests.has(item.id) || previewQueue.includes(item.id) ? 'Loading preview'
+        : 'Open to load sample');
       row.warning.hidden = !item.sourceChanged;
       row.select.setAttribute('aria-pressed', item.id === selectedId ? 'true' : 'false');
       row.select.setAttribute('aria-label', sourceName(sourceRecords, item.sourceId) + ', ' + stateLabel(item.jobState) +
@@ -419,6 +612,57 @@ export const workspace: Workspace = { mount(ctx) {
       if (existing !== row.element) runList.insertBefore(row.element, existing ?? null);
     }
   }
+  function rememberPreview(id: string, result: AnalysisResult) {
+    previewCache.delete(id);
+    previewCache.set(id, result);
+    while (previewCache.size > 8) {
+      const oldest = previewCache.keys().next().value as string | undefined;
+      if (!oldest) break;
+      previewCache.delete(oldest);
+    }
+  }
+  function pumpPreviewLoads() {
+    if (closed || ctx.signal.aborted) return;
+    while (previewRequests.size < 2 && previewQueue.length) {
+      const id = previewQueue.shift();
+      if (!id || !previewWanted.has(id) || previewCache.has(id) || previewFailed.has(id) || id === selectedId) continue;
+      const request = linkedController(ctx.signal);
+      previewRequests.set(id, request);
+      void ctx.api.get('/api/analysis/result?analysisId=' + encodeURIComponent(id), request.signal).then(raw => {
+        if (closed || request.signal.aborted || !previewWanted.has(id)) return;
+        const response = raw as ResultResponse;
+        if (response.analysisId === id && response.result) rememberPreview(id, response.result);
+        else previewFailed.add(id);
+      }).catch(() => {
+        if (!closed && !request.signal.aborted) previewFailed.add(id);
+      }).finally(() => {
+        if (previewRequests.get(id) === request) previewRequests.delete(id);
+        request.dispose();
+        if (!closed && !ctx.signal.aborted) {
+          updateRows();
+          pumpPreviewLoads();
+        }
+      });
+    }
+  }
+  function schedulePreviewLoads() {
+    if (closed || ctx.signal.aborted) return;
+    const candidates = displayedItems().filter(item => item.jobState === 'SUCCEEDED' && item.sampleCount > 0).slice(0, 8);
+    previewWanted = new Set(candidates.map(item => item.id));
+    for (let index = previewQueue.length - 1; index >= 0; index--) {
+      const id = previewQueue[index];
+      if (id && !previewWanted.has(id)) previewQueue.splice(index, 1);
+    }
+    for (const [id, request] of previewRequests) {
+      if (!previewWanted.has(id)) request.abort();
+    }
+    for (const item of candidates) {
+      if (item.id === selectedId || previewCache.has(item.id) || previewFailed.has(item.id) ||
+        previewRequests.has(item.id) || previewQueue.includes(item.id)) continue;
+      previewQueue.push(item.id);
+    }
+    pumpPreviewLoads();
+  }
   function updateSelectedPanel() {
     const item = items.find(current => current.id === selectedId) ?? null;
     if (!item) {
@@ -427,7 +671,9 @@ export const workspace: Workspace = { mount(ctx) {
       selectedState.className = 'analysis-job-state';
       setText(selectedState, 'No selection');
       sourceWarning.hidden = true;
+      sourceContext.hidden = true;
       resultView.hidden = true;
+      reviewCard.hidden = true;
       pendingState.hidden = false;
       findingsView.hidden = true;
       findingsPlaceholder.hidden = false;
@@ -442,18 +688,30 @@ export const workspace: Workspace = { mount(ctx) {
     setText(selectedMeta, 'Started ' + formatDate(item.created) + ' · ' + item.sampleCount + ' accepted sample' + (item.sampleCount === 1 ? '' : 's'));
     selectedState.className = 'analysis-job-state state-' + item.jobState.toLowerCase().replaceAll('_', '-');
     setText(selectedState, stateLabel(item.jobState));
+    sourceContext.hidden = false;
+    const currentSource = sourceRecords.find(source => source.id === item.sourceId);
+    setText(sourceContextName, sourceName(sourceRecords, item.sourceId));
+    sourceContextFacts.replaceChildren();
+    const sourceFacts: Array<[string, string]> = [
+      ['Captured source version', 'v' + item.sourceVersion],
+      ['Current version', currentSource ? 'v' + currentSource.version : 'Unavailable'],
+      ['Input', 'Registered local recording']
+    ];
+    for (const [label, value] of sourceFacts) sourceContextFacts.append(el('dt', '', label), el('dd', '', value));
     const changed = item.sourceChanged || Boolean(selectedResponse?.sourceChanged);
     sourceWarning.hidden = !changed;
     setText(sourceWarning, 'Source changed since this analysis was submitted (captured version ' + item.sourceVersion + '). The accepted result remains tied to its original source identity.');
     if (selectedResult && selectedLoadedId === item.id) {
       pendingState.hidden = true;
       resultView.hidden = false;
+      reviewCard.hidden = false;
       findingsPlaceholder.hidden = true;
       findingsView.hidden = false;
       retryResult.hidden = true;
       syncReviewPanel(item);
     } else {
       resultView.hidden = true;
+      reviewCard.hidden = true;
       findingsView.hidden = true;
       findingsPlaceholder.hidden = false;
       pendingState.hidden = false;
@@ -580,6 +838,8 @@ export const workspace: Workspace = { mount(ctx) {
   function renderAcceptedResult(result: AnalysisResult, analysisId: string) {
     selectedResult = result;
     selectedLoadedId = analysisId;
+    rememberPreview(analysisId, result);
+    previewFailed.delete(analysisId);
     currentSample = 0;
     sampleButtons = [];
     filmstrip.replaceChildren();
@@ -606,12 +866,22 @@ export const workspace: Workspace = { mount(ctx) {
     renderTechnical(result);
     selectedResultFailedId = null;
     updateSelectedPanel();
+    updateRows();
     showSample(0);
+    schedulePreviewLoads();
   }
   function loadSelectedResult(id: string) {
     const item = items.find(current => current.id === id);
     if (!item || item.sampleCount === 0 || closed || ctx.signal.aborted || loadingId === id) return;
     if (selectedLoadedId === id && selectedResult) return;
+    const cached = previewCache.get(id);
+    if (cached) {
+      selectedResponse = null;
+      selectedResultFailedId = null;
+      renderAcceptedResult(cached, id);
+      setLive('Accepted result loaded with ' + cached.samples.length + ' sampled frames.');
+      return;
+    }
     resultRequest?.abort();
     resultRequest?.dispose();
     loadingId = null;
@@ -619,7 +889,7 @@ export const workspace: Workspace = { mount(ctx) {
     resultRequest = request;
     const epoch = selectionEpoch;
     loadingId = id;
-    setText(liveStatus, 'Loading the accepted sample result.');
+    setLive('Loading the accepted sample result.');
     void ctx.api.get('/api/analysis/result?analysisId=' + encodeURIComponent(id), request.signal).then(raw => {
       if (closed || request.signal.aborted || selectedId !== id || selectionEpoch !== epoch) return;
       const response = raw as ResultResponse;
@@ -633,6 +903,7 @@ export const workspace: Workspace = { mount(ctx) {
         setText(pendingCopy, 'No accepted sample result is available for this analysis. Retry to check again.');
         return;
       }
+      rememberPreview(id, response.result);
       renderAcceptedResult(response.result, id);
       setLive('Accepted result loaded with ' + response.result.samples.length + ' sampled frames.');
     }).catch(error => {
@@ -640,7 +911,7 @@ export const workspace: Workspace = { mount(ctx) {
       selectedResultFailedId = id;
       updateSelectedPanel();
       setText(pendingCopy, error instanceof Error ? error.message : 'Saved result could not be loaded.');
-      setLive('The accepted result could not be loaded. Retry from the selected analysis.');
+      setLive('The accepted result could not be loaded. Retry from the selected analysis.', true);
     }).finally(() => {
       if (resultRequest === request) {
         resultRequest = null;
@@ -664,8 +935,9 @@ export const workspace: Workspace = { mount(ctx) {
     updateRows();
     updateSelectedPanel();
     const item = items.find(current => current.id === id);
+    schedulePreviewLoads();
     if (item?.sampleCount) loadSelectedResult(id);
-    else setLive(item ? stateLabel(item.jobState) + '. ' + stateMessage(item.jobState) : 'Analysis selected.');
+    else setLive(item ? stateLabel(item.jobState) + '. ' + stateMessage(item.jobState) : 'Analysis selected.', Boolean(item));
   }
   function saveReview(decision: ReviewState) {
     const id = selectedId;
@@ -675,7 +947,7 @@ export const workspace: Workspace = { mount(ctx) {
     const focusedAction = document.activeElement === markReviewed ? markReviewed : document.activeElement === dismiss ? dismiss : null;
     reviewBusy.add(id);
     syncReviewPanel(item);
-    setLive('Saving review decision…');
+    setLive('Saving review decision…', true);
     let intent = pendingReviews.get(id);
     if (!intent || intent.decision !== decision) {
       intent = { commandId: crypto.randomUUID(), decision };
@@ -692,11 +964,11 @@ export const workspace: Workspace = { mount(ctx) {
       updateRows();
       const selected = items.find(current => current.id === selectedId);
       if (selected) syncReviewPanel(selected);
-      setLive('Review decision saved: ' + (saved === 'REVIEWED' ? 'Reviewed.' : 'Dismissed.'));
+      setLive('Review decision saved: ' + (saved === 'REVIEWED' ? 'Reviewed.' : 'Dismissed.'), true);
       void refresh();
     }).catch(error => {
       if (!closed && !ctx.signal.aborted) {
-        setLive('Review decision could not be saved.');
+        setLive('Review decision could not be saved.', true);
         ctx.notice(error instanceof Error ? error.message : 'Review decision could not be saved.');
       }
     }).finally(() => {
@@ -722,7 +994,7 @@ export const workspace: Workspace = { mount(ctx) {
       if (closed || ctx.signal.aborted) return;
       pendingCancellations.delete(id);
       listEpoch++;
-      setLive('Cancellation request recorded. Owned work closure is still pending.');
+      setLive('Cancellation request recorded. Owned work closure is still pending.', true);
       void refresh();
     }).catch(error => {
       if (!closed && !ctx.signal.aborted) {
@@ -754,7 +1026,9 @@ export const workspace: Workspace = { mount(ctx) {
       updateSummary();
       updateRows();
       if (!selectedId) {
-        const newest = items.find(item => item.jobState === 'SUCCEEDED' && item.sampleCount > 0) ?? items[0];
+        const newest = (commandCenterMode
+          ? items.find(item => item.jobState === 'SUCCEEDED' && item.sampleCount > 0 && item.reviewState === 'OPEN')
+          : undefined) ?? items.find(item => item.jobState === 'SUCCEEDED' && item.sampleCount > 0) ?? items[0];
         if (newest) {
           selectedId = newest.id;
           selectionEpoch++;
@@ -765,10 +1039,11 @@ export const workspace: Workspace = { mount(ctx) {
       updateSelectedPanel();
       const selected = items.find(item => item.id === selectedId);
       if (selected?.sampleCount && !selectedResult && selectedResultFailedId !== selected.id) loadSelectedResult(selected.id);
+      schedulePreviewLoads();
       for (const item of items) {
         const old = previous.get(item.id);
         if (old && old !== item.jobState && item.id === selectedId) {
-          setLive(sourceName(sourceRecords, item.sourceId) + ' analysis is now ' + stateLabel(item.jobState).toLowerCase() + '.');
+          setLive(sourceName(sourceRecords, item.sourceId) + ' analysis is now ' + stateLabel(item.jobState).toLowerCase() + '.', true);
         }
       }
     } catch (error) {
@@ -777,7 +1052,7 @@ export const workspace: Workspace = { mount(ctx) {
           setText(pendingTitle, 'Analysis history unavailable');
           setText(pendingCopy, error instanceof Error ? error.message : 'Analysis history could not be loaded.');
         }
-        setLive('Analysis history could not be refreshed. The last saved view remains available.');
+        setLive('Analysis history could not be refreshed. The last saved view remains available.', true);
       }
     } finally {
       if (listRequest === request) {
@@ -797,6 +1072,17 @@ export const workspace: Workspace = { mount(ctx) {
       if (closed || ctx.signal.aborted) return;
       const response = raw as { items: SourceView[] };
       sourceRecords = Array.isArray(response.items) ? response.items : [];
+      const selectedFilter = sourceFilter.value || 'all';
+      sourceFilter.replaceChildren();
+      const allSources = el('option', '', 'All recordings');
+      allSources.value = 'all';
+      sourceFilter.append(allSources);
+      for (const source of sourceRecords) {
+        const option = el('option', '', source.name);
+        option.value = source.id;
+        sourceFilter.append(option);
+      }
+      sourceFilter.value = sourceRecords.some(source => source.id === selectedFilter) ? selectedFilter : 'all';
       if (canWrite) setSubmitState();
       updateRows();
       updateSelectedPanel();
@@ -824,7 +1110,7 @@ export const workspace: Workspace = { mount(ctx) {
       }
     } catch (error) {
       if (!closed && !ctx.signal.aborted) {
-        setLive('Recording list unavailable. Analysis history remains readable.');
+        setLive('Recording list unavailable. Analysis history remains readable.', true);
         ctx.notice(error instanceof Error ? error.message : 'Recording list could not be loaded.');
       }
     }
@@ -846,6 +1132,15 @@ export const workspace: Workspace = { mount(ctx) {
     }
   }
 
+  const refreshFilters = () => {
+    updateRows();
+    schedulePreviewLoads();
+  };
+  searchInput.addEventListener('input', refreshFilters, { signal: ctx.signal });
+  sourceFilter.addEventListener('change', refreshFilters, { signal: ctx.signal });
+  stateFilter.addEventListener('change', refreshFilters, { signal: ctx.signal });
+  dateFilter.addEventListener('change', refreshFilters, { signal: ctx.signal });
+
   function moveToSampleFromKey(event: KeyboardEvent) {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
     event.preventDefault();
@@ -855,7 +1150,7 @@ export const workspace: Workspace = { mount(ctx) {
   imageRegion.setAttribute('role', 'group');
   imageRegion.setAttribute('aria-label', 'Sample image. Use the Previous and Next sample buttons, or arrow keys while this area is focused.');
   imageRegion.addEventListener('keydown', moveToSampleFromKey, { signal: ctx.signal });
-  if (!canWrite) root.append(el('p', 'analysis-readonly-note', 'Read-only access. You can inspect saved analyses and review decisions.'));
+  if (!canWrite) root.insertBefore(el('p', 'analysis-readonly-note', 'Read-only access. You can inspect saved analyses and review decisions.'), workbench);
 
   void Promise.all([loadSources(), loadReadiness(), refresh()]);
   const timer = setInterval(() => { if (!closed) void refresh(); }, 1500);
@@ -867,6 +1162,9 @@ export const workspace: Workspace = { mount(ctx) {
     listRequest?.dispose();
     resultRequest?.abort();
     resultRequest?.dispose();
-    root.classList.remove('veyviz-analysis');
+    for (const request of previewRequests.values()) { request.abort(); request.dispose(); }
+    previewRequests.clear();
+    previewQueue.length = 0;
+    root.classList.remove(commandCenterMode ? 'veyviz-command' : 'veyviz-analysis');
   };
-} };
+}

@@ -2,8 +2,8 @@
   "schema": "brain.atlas.v1",
   "projectId": "veyviz-quadbridge-product",
   "title": "Veyviz local video-analysis product",
-  "planRevision": 9,
-  "updatedAt": "2026-10-03T01:41:26.628Z",
+  "planRevision": 12,
+  "updatedAt": "2026-10-03T05:24:12.990Z",
   "intentBasis": "User request 2026-10-03: analyze latest worker/framework/Veyviz state and build an independent new full-stack modular, plugin-capable product using Quadbridge; original repositories remain preserved. Root adopts local recorded-video scope and proposed new target.",
   "vision": {
     "destination": "A usable modular local Product/UI plus separately owned AI/media implementation, proven by actual construction, inference, browser and restart.",
@@ -48,13 +48,13 @@
       "id": "task",
       "path": ".brain/tasks/VEYVIZ-LOCAL-001.md",
       "role": "task",
-      "sha256": "ca3c0ff9b7c7b2f14458f2997aba10cfe47c3e04c2517656e769cb2bc76c07d0"
+      "sha256": "ddb5db9a102badc4ac317a35cb5e31025e347815548d6b1c9497612f718c5142"
     },
     {
       "id": "architecture",
       "path": "docs/veyviz/ARCHITECTURE.md",
       "role": "architecture",
-      "sha256": "c71466ed0473d0c08c15b0afca2e155a892941b3965d78fea8228f1f979f1a19"
+      "sha256": "7910a88d4fce09a020f700b5c8540d9c23b8c352a0234d62707165bf0a7a8d6c"
     },
     {
       "id": "acceptance",
@@ -84,31 +84,31 @@
       "id": "analysis-module",
       "path": "modules/veyviz-analysis/module.json",
       "role": "Current owned analysis module contract",
-      "sha256": "114f93c7bb3aab82d9ff6d25234e831eb7bac1373d8c1db78e0f9e37f89b850e"
+      "sha256": "5ea30a107b3c13a7ed840a1274869e1cb267818cdae141b780279c253ea1e3dd"
     },
     {
       "id": "ai-module",
       "path": "modules/veyviz-rfdetr/module.json",
       "role": "Current owned AI adapter and UI contribution contract",
-      "sha256": "97807d301b26ee28dc644c588a8ee152a95e4f9434024c50c629e6de15d31612"
+      "sha256": "ec8462fc0e84a217fb50ccd20836cc0b69162ae3eca9220a34b5a7db0b420fa1"
     },
     {
       "id": "recording-ui",
       "path": "modules/veyviz-sources/src/ui.ts",
       "role": "Implemented recording experience with read-only presentation",
-      "sha256": "7d7e456c80fc93c3d3bdd8277804740e72b1dec74bd1edb9fdaf2a22ba7af822"
+      "sha256": "040377c27c5f3919e8e35c5cb4e98d740abe3143923dd01182cab07dc0a362b3"
     },
     {
       "id": "analysis-ui",
       "path": "modules/veyviz-analysis/src/ui.ts",
       "role": "Implemented analysis and human review experience",
-      "sha256": "4c680fcc8af10510a1c04ee6e46d4674ab44944354f5edc9dc162f37dce2062c"
+      "sha256": "dbbfc15bcd2d055d233b97343954ea72a0de53ac2b4ce323d6054f5d7c281ee8"
     },
     {
       "id": "release-inputs",
       "path": "docs/veyviz/RELEASE_INPUTS.json",
       "role": "Complete verified current source/profile/release inventory",
-      "sha256": "bf198b8020b9330fbc79fef4c719ecab0585558f2a42db91a55074274cdc8efd"
+      "sha256": "7b3e9a2cc27ec2aad5752e963c082e73e9e8b9795284f604365f9651cf40324d"
     },
     {
       "id": "product-build",
@@ -150,7 +150,7 @@
       "id": "experience",
       "path": "docs/veyviz/EXPERIENCE.md",
       "role": "Authorized review-workstation design and acceptance",
-      "sha256": "841579a7e97005ef7f105dede8028104f588219dfc90a31765bc83898366cdd0"
+      "sha256": "9c40c18d7e12329a6177cf576edc3b97442b5b59f054b94d6b7968ced8bdea54"
     },
     {
       "id": "ux-product-build",
@@ -187,6 +187,48 @@
       "path": ".brain/workflow/runs/bc082668-f691-40fd-a55c-502302d579d9.json",
       "role": "Immutable actual UX candidate evidence",
       "sha256": "83eef01ffa093723c8e00929a09392987103d455816591e84d496a6ceb0f1bf8"
+    },
+    {
+      "id": "concept-implementation",
+      "path": "docs/veyviz/CONCEPT_IMPLEMENTATION.md",
+      "role": "Authorized visual target and next implementation acceptance",
+      "sha256": "e545d837f07a6fa692ef905c553c63256cf91090d70984946587f92189109f83"
+    },
+    {
+      "id": "concept-product-build",
+      "path": ".brain/workflow/runs/56e9e9e0-ce48-44f2-bc0b-f8c429cd70d3.json",
+      "role": "Immutable actual concept-led UI candidate evidence",
+      "sha256": "be8a52bbee7b3552ce2173b2b771100b2f830fbd906048c96036a3513114481d"
+    },
+    {
+      "id": "concept-product-python",
+      "path": ".brain/workflow/runs/09fc206f-f261-45a2-a5b4-1e23414b1d76.json",
+      "role": "Immutable actual concept-led UI candidate evidence",
+      "sha256": "709e81096ebff1a156dc5e31cd570a408526b73e9267394126fa60e15415f755"
+    },
+    {
+      "id": "concept-product-browser",
+      "path": ".brain/workflow/runs/0547b1fb-cfcc-4f8c-b32a-9ab68333cbc5.json",
+      "role": "Immutable actual concept-led UI candidate evidence",
+      "sha256": "291b9246b022e6845208a5adf6d01a5101ae01f38cc8da445c02ed247826aa43"
+    },
+    {
+      "id": "concept-product-construction",
+      "path": ".brain/workflow/runs/f9046e91-184d-4157-ae5c-0cee2b56b665.json",
+      "role": "Immutable actual concept-led UI candidate evidence",
+      "sha256": "5494ccd9609bd9acbef7011368b22ea0cf8a8a3c5bc41b61e8e3c77b15ff438c"
+    },
+    {
+      "id": "concept-full-suite-1",
+      "path": ".brain/workflow/runs/edf701de-a456-42df-b287-6f60eb254d45.json",
+      "role": "Immutable actual concept-led UI candidate evidence",
+      "sha256": "c309ee6ab8dc8eedb0f19cb83f1c213b49b2ea099c655d131fbed83bd9594353"
+    },
+    {
+      "id": "concept-independent-review",
+      "path": ".brain/workflow/runs/96f7ad30-2aa6-4077-8342-25747338f69f.json",
+      "role": "Immutable actual concept-led UI candidate evidence",
+      "sha256": "afd8e042ad80e6aa48c507695129b3b7c8e7cda217e8e4d834ff08e61435e093"
     }
   ],
   "nodes": [
@@ -232,7 +274,8 @@
         "acceptance",
         "provenance",
         "protocol",
-        "experience"
+        "experience",
+        "concept-implementation"
       ],
       "acceptance": [
         "Clean independent source/dependency construction and correct owner boundaries.",
@@ -242,7 +285,8 @@
         "Actual authenticated product browser journey.",
         "Second exact composition and trusted contribution without host edits.",
         "Fresh build, required npm test and installed Python regressions.",
-        "Focused accessible video review and recording library satisfy docs/veyviz/EXPERIENCE.md across desktop and narrow browser views."
+        "Focused accessible video review and recording library satisfy docs/veyviz/EXPERIENCE.md across desktop and narrow browser views.",
+        "Actual interface matches the approved concept composition and typography while showing only real owner-scoped behavior. See docs/veyviz/CONCEPT_IMPLEMENTATION.md."
       ]
     },
     {
@@ -544,7 +588,7 @@
       "id": "OBS-UX-REVIEW",
       "nodeId": "J-REVIEW",
       "state": "verified",
-      "summary": "Redesigned workstation completed real six/three-sample reviews, keyboard navigation, saved decisions, source warning, cancellation, tenant/viewer and desktop/narrow checks. Fresh Python10 and export8+5 checks passed.",
+      "summary": "Historical prior design, subsequently rejected by the user: Previous candidate: Redesigned workstation completed real six/three-sample reviews, keyboard navigation, saved decisions, source warning, cancellation, tenant/viewer and desktop/narrow checks. Fresh Python10 and export8+5 checks passed.",
       "sourceRefs": [
         "ux-product-browser",
         "ux-product-python",
@@ -562,7 +606,7 @@
       "id": "OBS-UX-QUALIFICATION",
       "nodeId": "M-VEYVIZ-LOCAL-001",
       "state": "blocked",
-      "summary": "Current independent source review accepted. Fresh npm test: 378 passed, 0 failed, 1 skipped. Required Windows EPERM symlink fixture remains blocked.",
+      "summary": "Historical prior design, subsequently rejected by the user: Previous candidate: Current independent source review accepted. Fresh npm test: 378 passed, 0 failed, 1 skipped. Required Windows EPERM symlink fixture remains blocked.",
       "sourceRefs": [
         "ux-full-suite",
         "ux-independent-review"
@@ -573,6 +617,43 @@
       "limitations": [
         "Required file-symlink fixture denied by Windows with EPERM. Recorded BLOCKED_ENV, not all-checks pass. Security settings preserved.",
         "Local selected profile only; no production or detector-accuracy qualification."
+      ]
+    },
+    {
+      "id": "OBS-CONCEPT-REVIEW",
+      "nodeId": "J-REVIEW",
+      "state": "verified",
+      "summary": "Implemented dark Command Center, light image-led Investigate, Recordings and verified System Health. Actual browser sample/review/cancel/search/role/tenant/responsive journeys passed; fixed export retained reviews across restart. Python10 and independent export8+5 checks passed.",
+      "sourceRefs": [
+        "concept-product-browser",
+        "concept-product-python",
+        "concept-product-construction",
+        "concept-implementation"
+      ],
+      "candidate": "f69ae33064c0ee0e2047be15bd29909cd6cd0b150a599721aec77e381613c27b",
+      "observedAt": "2026-10-03T05:24:12.990Z",
+      "provenance": "execution-record",
+      "limitations": [
+        "Source/visual acceptance does not override a failed full invocation or required host-blocked fixture.",
+        "Reported execution/reviewer identity is not authenticated attestation.",
+        "No user satisfaction, world-standard, production or detector-accuracy guarantee."
+      ]
+    },
+    {
+      "id": "OBS-CONCEPT-QUALIFICATION",
+      "nodeId": "M-VEYVIZ-LOCAL-001",
+      "state": "blocked",
+      "summary": "Concept-led source and actual browser/Python/export checks accepted. Required full suite: 374 passed, 4 worker deadline failures and 1 EPERM-blocked fixture. Isolated unchanged-source worker retry: 6 passed, 4 deadline failures. Formal project qualification remains REVIEW with unresolved worker timing and host fixture issues.",
+      "sourceRefs": [
+        "concept-full-suite-1",
+        "concept-independent-review"
+      ],
+      "candidate": "f69ae33064c0ee0e2047be15bd29909cd6cd0b150a599721aec77e381613c27b",
+      "observedAt": "2026-10-03T05:24:12.990Z",
+      "provenance": "execution-record",
+      "limitations": [
+        "Required full npm test invocation failed four Windows worker startup/state deadlines. The isolated unchanged-source worker retry also failed four timing cases; root cause remains unresolved and was reported to the framework worker. No all-checks acceptance.",
+        "Required Windows file-symlink fixture could not be created due to EPERM; this remains blocked, not passed."
       ]
     }
   ],
@@ -587,7 +668,7 @@
       "hypothesis": "Completing cheap source-catalogue checks and browser breakpoint/role review before the broad freeze reduces repeated expensive checks.",
       "action": "Use source validation, installed smoke checks and real UI/role review before the final frozen broad regression. Keep all failed/blocked attempts.",
       "owner": "Root coordinator",
-      "measure": "This UX increment froze source after actual browser review; one required broad regression ran after freeze. Retain the practice; no statistical sigma estimate is claimed.",
+      "measure": "Build05 source was frozen after browser and independent UI review; required regression and separately documented worker retries retained. No statistical sigma estimate is claimed.",
       "status": "in_progress"
     },
     {
@@ -602,6 +683,20 @@
       "action": "Applied the experience rubric and independent interaction review before broad regression. Browser-tested media/review flow, stable selection, source warning and narrow geometry. Obtain real user feedback; no satisfaction score is invented.",
       "owner": "Root product coordinator",
       "measure": "Observe core journey completion, stable keyboard selection, review feedback and zero overflow at the specified viewports. No user-satisfaction or world-class certification is claimed.",
+      "status": "in_progress"
+    },
+    {
+      "id": "RETRO-CONCEPT-GAP",
+      "problem": "The user rejected the revised interface because it still resembled an academic demonstration when compared with the generated concepts.",
+      "evidenceRefs": [
+        "concept-implementation",
+        "analysis-ui",
+        "recording-ui"
+      ],
+      "hypothesis": "A concrete screen composition and browser-to-reference comparison before regression will expose visual gaps that functional tests cannot.",
+      "action": "Implemented reference hierarchy and independently inspected actual desktop/phone screenshots before freeze. Corrected mobile order, stale review controls, contrast, filter overflow and image fallback. Await direct human experience feedback.",
+      "owner": "Root coordinator",
+      "measure": "Compare desktop screenshots at specified CSS widths; user satisfaction remains unmeasured until feedback.",
       "status": "in_progress"
     }
   ],

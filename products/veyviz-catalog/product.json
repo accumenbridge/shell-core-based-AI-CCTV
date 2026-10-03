@@ -2,9 +2,9 @@
   "id": "veyviz-catalog",
   "version": "0.1.0",
   "platformAbi": "quadbridge.module.v1",
-  "title": "Veyviz Library",
-  "description": "Your local recording library.",
-  "layout": "top",
+  "title": "VEYVIZ",
+  "description": "Recording library · Local workspace",
+  "layout": "sidebar",
   "modules": [
     {
       "id": "veyviz-sources",

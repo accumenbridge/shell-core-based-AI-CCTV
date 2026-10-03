@@ -1,0 +1,347 @@
+{
+  "schema": "veyviz.worker-timeout-diagnosis.v1",
+  "createdAt": "2026-10-03T05:05:24.695Z",
+  "repository": "D:/Veyviz-code/veyviz-quadbridge-product",
+  "status": "DIAGNOSTIC_HYPOTHESIS_REQUIRES_ISOLATED_RETRY",
+  "scope": "Read-only comparison of four build-worker process failures in the still-running concept full suite. This report does not replace the full suite result or qualify failed tests as passed.",
+  "logs": {
+    "current": ".local/veyviz-concept-full-suite.log",
+    "prior": ".local/veyviz-ux-full-suite.log",
+    "currentSuiteCompletionNotEstablishedByThisReport": true
+  },
+  "priorRelease": {
+    "head": "a4223680965c2c8127509c60d09e0e0007bfab05",
+    "inventoryPath": "HEAD:docs/veyviz/RELEASE_INPUTS.json",
+    "digest": "8a8da11d29efd18b2c5965a1f8ba69f9e68716697ad65336a6d3e392373660de",
+    "sourceFiles": 334
+  },
+  "comparedInputs": [
+    {
+      "path": "tests/build-worker-process.test.mjs",
+      "currentSha256": "90b49197c3ee28f561d6fa43bb910105653f67c1e5ed30d2f26974c250e759e9",
+      "headSha256": "90b49197c3ee28f561d6fa43bb910105653f67c1e5ed30d2f26974c250e759e9",
+      "priorSha256": "90b49197c3ee28f561d6fa43bb910105653f67c1e5ed30d2f26974c250e759e9",
+      "matchesHead": true,
+      "matchesPriorInventory": true
+    },
+    {
+      "path": "apps/control-plane/src/build-worker.ts",
+      "currentSha256": "c1c4589676cb77c51af44ac158545b6bcc5f8462847f84b9c9510494b483bbda",
+      "headSha256": "c1c4589676cb77c51af44ac158545b6bcc5f8462847f84b9c9510494b483bbda",
+      "priorSha256": "c1c4589676cb77c51af44ac158545b6bcc5f8462847f84b9c9510494b483bbda",
+      "matchesHead": true,
+      "matchesPriorInventory": true
+    },
+    {
+      "path": "apps/control-plane/src/build-host.ts",
+      "currentSha256": "5e167f48ff8ebea9a6374fc45f22fbf639adcba378eba29249e9da88d6e2a262",
+      "headSha256": "5e167f48ff8ebea9a6374fc45f22fbf639adcba378eba29249e9da88d6e2a262",
+      "priorSha256": "5e167f48ff8ebea9a6374fc45f22fbf639adcba378eba29249e9da88d6e2a262",
+      "matchesHead": true,
+      "matchesPriorInventory": true
+    },
+    {
+      "path": "apps/control-plane/src/build-inputs.ts",
+      "currentSha256": "283c7ea287a3ae56af29e58034399237f956d806fa4102f8bfa5d27b475429d8",
+      "headSha256": "283c7ea287a3ae56af29e58034399237f956d806fa4102f8bfa5d27b475429d8",
+      "priorSha256": "283c7ea287a3ae56af29e58034399237f956d806fa4102f8bfa5d27b475429d8",
+      "matchesHead": true,
+      "matchesPriorInventory": true
+    },
+    {
+      "path": "apps/control-plane/src/source-import.ts",
+      "currentSha256": "dac9c38a03a6adb0993cdcf9e25ac121a07c247e063598960593874e20f02a25",
+      "headSha256": "dac9c38a03a6adb0993cdcf9e25ac121a07c247e063598960593874e20f02a25",
+      "priorSha256": "dac9c38a03a6adb0993cdcf9e25ac121a07c247e063598960593874e20f02a25",
+      "matchesHead": true,
+      "matchesPriorInventory": true
+    },
+    {
+      "path": "tools/build-job.ps1",
+      "currentSha256": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9",
+      "headSha256": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9",
+      "priorSha256": "24364492a899af03afde4ef023d47e67744c2db0fa979208eaa0137214e68ea9",
+      "matchesHead": true,
+      "matchesPriorInventory": true
+    },
+    {
+      "path": "tools/build-host-preflight.ps1",
+      "currentSha256": "53df528e77e7859ed6c69d973053c8654400cb91ebc57ac9f2e88aa35af9ab74",
+      "headSha256": "53df528e77e7859ed6c69d973053c8654400cb91ebc57ac9f2e88aa35af9ab74",
+      "priorSha256": "53df528e77e7859ed6c69d973053c8654400cb91ebc57ac9f2e88aa35af9ab74",
+      "matchesHead": true,
+      "matchesPriorInventory": true
+    },
+    {
+      "path": "tools/build.mjs",
+      "currentSha256": "35b9ccd2b23bf8a7d80eb5c04c732f53fc4d351a309d4f2d1e09724efd5b73c6",
+      "headSha256": "35b9ccd2b23bf8a7d80eb5c04c732f53fc4d351a309d4f2d1e09724efd5b73c6",
+      "priorSha256": "35b9ccd2b23bf8a7d80eb5c04c732f53fc4d351a309d4f2d1e09724efd5b73c6",
+      "matchesHead": true,
+      "matchesPriorInventory": true
+    },
+    {
+      "path": "tools/ci-build-host.mjs",
+      "currentSha256": "4dbd8df124f54d824b6ea7e453a4c49de3242cd3e2b728bd991d7af5879b6379",
+      "headSha256": "4dbd8df124f54d824b6ea7e453a4c49de3242cd3e2b728bd991d7af5879b6379",
+      "priorSha256": "4dbd8df124f54d824b6ea7e453a4c49de3242cd3e2b728bd991d7af5879b6379",
+      "matchesHead": true,
+      "matchesPriorInventory": true
+    },
+    {
+      "path": "package.json",
+      "currentSha256": "c2bd85be60294d4020b2d8d80c9549bda94174068d0ca49e763d358dc8b180f2",
+      "headSha256": "c2bd85be60294d4020b2d8d80c9549bda94174068d0ca49e763d358dc8b180f2",
+      "priorSha256": "c2bd85be60294d4020b2d8d80c9549bda94174068d0ca49e763d358dc8b180f2",
+      "matchesHead": true,
+      "matchesPriorInventory": true
+    },
+    {
+      "path": "package-lock.json",
+      "currentSha256": "376cf49b54d978b4ffea84dd08f4c01d6ed237f930b8e544dd91d6592626e25f",
+      "headSha256": "376cf49b54d978b4ffea84dd08f4c01d6ed237f930b8e544dd91d6592626e25f",
+      "priorSha256": "376cf49b54d978b4ffea84dd08f4c01d6ed237f930b8e544dd91d6592626e25f",
+      "matchesHead": true,
+      "matchesPriorInventory": true
+    },
+    {
+      "path": ".nvmrc",
+      "currentSha256": "7e8a2fa94951112b894a3dbe3d05efef5e9263741fa49125f0a70f40fedab4cc",
+      "headSha256": "7e8a2fa94951112b894a3dbe3d05efef5e9263741fa49125f0a70f40fedab4cc",
+      "priorSha256": "7e8a2fa94951112b894a3dbe3d05efef5e9263741fa49125f0a70f40fedab4cc",
+      "matchesHead": true,
+      "matchesPriorInventory": true
+    }
+  ],
+  "changedPriorInputs": [
+    "modules/veyviz-analysis/module.json",
+    "modules/veyviz-analysis/src/styles.css",
+    "modules/veyviz-analysis/src/ui.ts",
+    "modules/veyviz-rfdetr/module.json",
+    "modules/veyviz-rfdetr/src/styles.css",
+    "modules/veyviz-rfdetr/src/ui.ts",
+    "modules/veyviz-sources/src/styles.css",
+    "modules/veyviz-sources/src/ui.ts",
+    "products/veyviz-catalog/product.json",
+    "products/veyviz-review/product.json"
+  ],
+  "failedTests": [
+    {
+      "number": 46,
+      "name": "Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup",
+      "status": "FAIL",
+      "durationMs": 16296.1155,
+      "error": "'Owned descendant did not start its marker heartbeat within 10000 ms; bounded pre-cleanup owner state: {\"waitedMs\":10021,\"build\":{\"id\":\"7b736d62-5437-49a8-9502-eb64667e7997\",\"state\":\"RUNNING\",\"attempt\":1,\"phase\":\"Compiling frozen product source\",\"failureCode\":null,\"cleanupState\":\"PENDING\",\"updated\":1791003305096},\"attempt\":{\"attempt\":1,\"state\":\"RUNNING\",\"phase\":\"Compiling frozen product source\",\"startedAt\":1791003296961,\"updatedAt\":1791003305096,\"finishedAt\":null,\"cleanupState\":\"PENDING\",\"errorCode\":null},\"marker\":{\"state\":\"missing\"},\"redactedOutputTail\":\"\"}'",
+      "prior": {
+        "number": 46,
+        "name": "Windows job cancellation and timeout observe the compiler descendant exit before CLEAN cleanup",
+        "status": "PASS",
+        "durationMs": 29467.0047,
+        "error": null
+      }
+    },
+    {
+      "number": 47,
+      "name": "worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two",
+      "status": "FAIL",
+      "durationMs": 19779.9861,
+      "error": "'Owned descendant did not start its marker heartbeat within 10000 ms'",
+      "prior": {
+        "number": 47,
+        "name": "worker shutdown observes an active job, requeues cleanly, and the restarted worker claims attempt two",
+        "status": "PASS",
+        "durationMs": 16973.7474,
+        "error": null
+      }
+    },
+    {
+      "number": 48,
+      "name": "a worker that loses its live lease observes its descendant and preserves the successor attempt workspace",
+      "status": "FAIL",
+      "durationMs": 19644.6884,
+      "error": "'Owned descendant did not start its marker heartbeat within 10000 ms'",
+      "prior": {
+        "number": 48,
+        "name": "a worker that loses its live lease observes its descendant and preserves the successor attempt workspace",
+        "status": "PASS",
+        "durationMs": 9291.2105,
+        "error": null
+      }
+    },
+    {
+      "number": 55,
+      "name": "real TypeScript compiler failure is terminal and cleans the private attempt without exporting success",
+      "status": "FAIL",
+      "durationMs": 28367.3224,
+      "error": "'Build ccd2f1d8-0cde-4c14-9ad0-db07c4dec2e8 did not reach FAILED; last state RUNNING'",
+      "prior": {
+        "number": 55,
+        "name": "real TypeScript compiler failure is terminal and cleans the private attempt without exporting success",
+        "status": "PASS",
+        "durationMs": 12728.8244,
+        "error": null
+      }
+    }
+  ],
+  "successfulControlsInSameRun": [
+    {
+      "number": 50,
+      "name": "Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN",
+      "status": "PASS",
+      "durationMs": 11031.5347,
+      "error": null,
+      "prior": {
+        "number": 50,
+        "name": "Windows file-lock cleanup failure retains the cancelled attempt as UNKNOWN",
+        "status": "PASS",
+        "durationMs": 10741.1972,
+        "error": null
+      }
+    },
+    {
+      "number": 54,
+      "name": "real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering",
+      "status": "PASS",
+      "durationMs": 33002.1366,
+      "error": null,
+      "prior": {
+        "number": 54,
+        "name": "real compile and factory export persist a verified snapshot and detect package, catalogue, and launcher tampering",
+        "status": "PASS",
+        "durationMs": 18402.1863,
+        "error": null
+      }
+    }
+  ],
+  "firstFailureSnapshot": {
+    "testNumber": 46,
+    "buildId": "7b736d62-5437-49a8-9502-eb64667e7997",
+    "attempt": 1,
+    "state": "RUNNING",
+    "phase": "Compiling frozen product source",
+    "cleanupState": "PENDING",
+    "failureCode": null,
+    "startedAt": "2026-10-03T04:54:56.961Z",
+    "lastPhaseUpdateAt": "2026-10-03T04:55:05.096Z",
+    "elapsedClaimToPhaseUpdateMs": 8135,
+    "markerWaitObservedMs": 10021,
+    "markerDeadlineMs": 10000,
+    "markerState": "missing",
+    "redactedOutputTail": "",
+    "nominalRemainingBudgetAfterPhaseUpdateMs": 1886,
+    "budgetQualification": "The marker wait begins after admission and before a later worker claim. Approximately 1.9 seconds is an upper bound based on the reported timestamps, not a measured runner-start duration."
+  },
+  "sourceMechanism": [
+    {
+      "path": "tests/build-worker-process.test.mjs",
+      "lines": [
+        18,
+        24,
+        60,
+        114,
+        140,
+        166
+      ],
+      "observation": "Tests 46–48 replace tools/build.mjs in their private copied fixture with a tiny Node descendant heartbeat script. Their 10-second marker wait starts immediately after admission and includes asynchronous source/toolchain preparation, verification and host startup. Product UI is copied and hashed, not compiled or executed by that marker script."
+    },
+    {
+      "path": "apps/control-plane/src/build-worker.ts",
+      "lines": [
+        292,
+        298,
+        304,
+        323,
+        328,
+        390,
+        398
+      ],
+      "observation": "The compilation phase is persisted before runCommand performs its ordinary PowerShell host preflight and launches the fixed runner. Preparation includes repeated reviewed-source/toolchain digests and private copies."
+    },
+    {
+      "path": "tools/build-job.ps1",
+      "lines": [
+        11
+      ],
+      "observation": "The fixed PowerShell runner compiles its C# process-owner helper using Add-Type before starting the owned Node process."
+    },
+    {
+      "path": "apps/control-plane/src/build-worker.ts",
+      "lines": [
+        84,
+        406,
+        411
+      ],
+      "observation": "QB_READY protocol markers are removed from public output, and private compiler output is read upon command close. Therefore an empty redacted output tail cannot establish that PowerShell or the descendant was blocked."
+    },
+    {
+      "path": "tests/build-worker-process.test.mjs",
+      "lines": [
+        55,
+        326,
+        329
+      ],
+      "observation": "Test 55 waits 20 seconds for terminal FAILED. Its current failure is RUNNING at that wait deadline, not an observed incorrect compiler result or accepted success."
+    }
+  ],
+  "hostEvidence": {
+    "profilePath": ".local/platform-build-host.json",
+    "profileLastWriteAt": "2026-10-02T22:33:25.654Z",
+    "selectedPowerShellVersion": "7.6.5",
+    "selectedPolicy": "RemoteSigned",
+    "profileExecutableSha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+    "observedExecutableSha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+    "executableMatchesProfile": true,
+    "recordedPreflightPath": ".local/ci-host-preflight.json",
+    "recordedPreflightStatus": "READY",
+    "recordedPolicyScopes": {
+      "effective": "RemoteSigned",
+      "machine": "Undefined",
+      "user": "Undefined",
+      "process": "Undefined",
+      "currentUser": "Undefined",
+      "localMachine": "RemoteSigned"
+    },
+    "nodeVersion": "v24.19.0",
+    "nodeExecutableSha256": "3602f2bb1a10f2cbab4c36886218a33c1ab3db87290e73b033c46c77147d0237",
+    "recordedNode": {
+      "version": "v24.19.0",
+      "sha256": "3602f2bb1a10f2cbab4c36886218a33c1ab3db87290e73b033c46c77147d0237"
+    },
+    "limitation": "Existing preflight evidence was read and executable bytes hashed. No new native preflight, tests, policy probe, profile preparation or configuration changes were executed by this diagnostic assignment."
+  },
+  "timingContext": {
+    "pythonSuiteLog": ".local/veyviz-concept-python-tests.log",
+    "pythonSuiteStartFromLogCreation": "2026-10-03T04:55:02.027Z",
+    "pythonSuiteLastWrite": "2026-10-03T04:55:23.330Z",
+    "pythonOverlap": "The independent Python inference tests overlap the first failure period; overlap alone does not prove CPU contention caused the failures.",
+    "exportedReviewE2ELog": ".local/veyviz-concept-exported-e2e.log",
+    "exportedReviewE2ELogCreation": "2026-10-03T04:57:24.000Z",
+    "exportedReviewTimingQualification": "Creation timestamp is approximate to the observed second; the export review run occurred later than the first marker failures."
+  },
+  "assessment": {
+    "likelyCause": "Preparation and/or native startup latency exhausting fixed end-to-end fixture deadlines.",
+    "supportingFacts": [
+      "Relevant implementation and test bytes match prior passing release.",
+      "First reported attempt consumed most of the marker deadline before remaining native startup.",
+      "A subsequent marker/cleanup test and real compile/export passed on the same host in the same suite.",
+      "Real compile/export duration increased from 18.402s to 33.002s, and test 55 also expired while RUNNING."
+    ],
+    "notEstablished": [
+      "Exact native runner start time for tests 46–48.",
+      "Whether the marker would have appeared shortly after the failed 10-second wait.",
+      "CPU, storage, antivirus or other host contention at the failure instant.",
+      "A permanent environment/security-policy block.",
+      "A definitive distinction between transient host load and a repeatable preparation-time performance regression."
+    ],
+    "disposition": "Preserve all four failures. Do not label them blocked or passed. Wait for full-suite completion, then run an isolated unchanged-source test-file retry as coordinated by root.",
+    "ifRepeated": "Capture bounded per-phase timestamps and actual runner ready/close diagnostics in an owner-reviewed follow-up. Do not bypass ownership checks, weaken host policy or silently increase timeouts to claim success."
+  },
+  "changesByThisAssignment": {
+    "source": false,
+    "hostProfile": false,
+    "securityPolicy": false,
+    "processesStopped": false,
+    "testsRun": false,
+    "createdOnly": ".local/veyviz-concept-worker-timeout-diagnosis.json"
+  }
+}

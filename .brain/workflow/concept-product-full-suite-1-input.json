@@ -1,0 +1,36 @@
+{
+  "schema": "brain.record-input.v1",
+  "kind": "run",
+  "taskId": "VEYVIZ-LOCAL-001",
+  "recipeId": "product-full-suite",
+  "status": "FAILED",
+  "exitCode": 1,
+  "environment": {
+    "os": "Windows local",
+    "node": "24.19.0",
+    "sourceInventory": "cb92db69938bd52fbcb2301bcdf4c2b6ab8eadf1c50ccac4f4a0e58eca106831"
+  },
+  "artifactPaths": [
+    ".local/veyviz-concept-full-suite.log",
+    ".local/veyviz-concept-worker-timeout-diagnosis.json",
+    ".local/veyviz-concept-worker-retry.log",
+    ".local/concept-regression-completion.json"
+  ],
+  "counts": {
+    "tests": 379,
+    "passed": 374,
+    "failed": 4,
+    "cancelled": 0,
+    "skipped": 1,
+    "todo": 0
+  },
+  "provenance": {
+    "kind": "reported",
+    "reference": "Actual required npm test on frozen Build05 source. Exit observed by root; unchanged-source worker retry is separate and its exact command/result is documented in the completion artifact."
+  },
+  "limitations": [
+    "Only the selected local recorded profile; no production, detector-accuracy or bug-free qualification.",
+    "Actual full-suite worker startup/state deadline failures are retained. Isolated retries do not turn this full invocation into a pass. See diagnosis and retry artifacts.",
+    "Required Windows file-symlink fixture denied with EPERM, recorded BLOCKED_ENV rather than pass; security settings preserved."
+  ]
+}

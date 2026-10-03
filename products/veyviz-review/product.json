@@ -2,9 +2,9 @@
   "id": "veyviz-review",
   "version": "0.1.0",
   "platformAbi": "quadbridge.module.v1",
-  "title": "Veyviz Review",
-  "description": "Explore sampled footage. Review model observations. Keep a clear decision record.",
-  "layout": "top",
+  "title": "VEYVIZ",
+  "description": "Video intelligence · Local workspace",
+  "layout": "sidebar",
   "modules": [
     {
       "id": "veyviz-sources",

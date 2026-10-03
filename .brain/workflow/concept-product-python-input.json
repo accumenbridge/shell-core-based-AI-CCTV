@@ -1,0 +1,37 @@
+{
+  "schema": "brain.record-input.v1",
+  "kind": "run",
+  "taskId": "VEYVIZ-LOCAL-001",
+  "recipeId": "product-python",
+  "status": "PASSED",
+  "exitCode": 0,
+  "environment": {
+    "os": "Windows local",
+    "node": "24.19.0",
+    "python": "3.13.7 isolated installed distributions",
+    "sourceInventory": "cb92db69938bd52fbcb2301bcdf4c2b6ab8eadf1c50ccac4f4a0e58eca106831",
+    "runtimeFingerprint": "3967f885524505c64d392aac98c946db6a284d9d4b16f8b2a4641b38bf17a2ca"
+  },
+  "artifactPaths": [
+    ".local/veyviz-concept-python-tests.log"
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "Actual root browser/build and separately delegated installed Python/export checks after Build05 freeze. Not an authenticated execution attestation."
+  },
+  "limitations": [
+    "Local admitted recording and CPU profile only; no live-camera, external identity, native-device or production qualification.",
+    "Actual inference returned zero detections; no accuracy, occupancy or positive-detection overlay qualification.",
+    "Browser checks are selected admin/viewer/tenant/review/cancel/responsive journeys, not exhaustive accessibility, stress or fault testing.",
+    "Private AI companion, model and media redistribution remain unqualified.",
+    "Passing these scopes does not override failures observed in the separately running required full regression."
+  ],
+  "counts": {
+    "tests": 10,
+    "passed": 10,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

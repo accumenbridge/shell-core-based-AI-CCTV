@@ -994,8 +994,15 @@
       ],
       "workspaces": [
         {
+          "id": "veyviz.command",
+          "label": "Command Center",
+          "path": "/command-center",
+          "permission": "veyviz.analysis.read",
+          "export": "commandCenter"
+        },
+        {
           "id": "veyviz.analysis",
-          "label": "Video analysis",
+          "label": "Investigate",
           "path": "/analysis",
           "permission": "veyviz.analysis.read",
           "export": "workspace"
@@ -1024,10 +1031,16 @@
         "ui": {
           "routes": [
             {
+              "path": "/command-center",
+              "workspace": "veyviz.command",
+              "label": "Command Center",
+              "nav": "Command Center"
+            },
+            {
               "path": "/analysis",
               "workspace": "veyviz.analysis",
-              "label": "Video analysis",
-              "nav": "Analysis"
+              "label": "Investigate",
+              "nav": "Investigate"
             }
           ],
           "extensionPoints": []
@@ -1211,7 +1224,15 @@
           "kind": "read"
         }
       ],
-      "workspaces": [],
+      "workspaces": [
+        {
+          "id": "veyviz.health",
+          "label": "System Health",
+          "path": "/system-health",
+          "permission": "veyviz.ai.read",
+          "export": "healthWorkspace"
+        }
+      ],
       "uiContributions": [
         {
           "id": "veyviz-rfdetr.provenance",
@@ -1234,11 +1255,19 @@
         "summary": "Fixed-profile local CPU inference through a verified Python companion process.",
         "category": "vision",
         "layers": [
+          "ui",
           "backend",
           "ai"
         ],
         "ui": {
-          "routes": [],
+          "routes": [
+            {
+              "path": "/system-health",
+              "workspace": "veyviz.health",
+              "label": "System Health",
+              "nav": "System Health"
+            }
+          ],
           "extensionPoints": [
             "veyviz.analysis.provenance"
           ]
@@ -1636,9 +1665,9 @@
       "id": "veyviz-catalog",
       "version": "0.1.0",
       "platformAbi": "quadbridge.module.v1",
-      "title": "Veyviz Library",
-      "description": "Your local recording library.",
-      "layout": "top",
+      "title": "VEYVIZ",
+      "description": "Recording library · Local workspace",
+      "layout": "sidebar",
       "modules": [
         {
           "id": "veyviz-sources",
@@ -1651,9 +1680,9 @@
       "id": "veyviz-review",
       "version": "0.1.0",
       "platformAbi": "quadbridge.module.v1",
-      "title": "Veyviz Review",
-      "description": "Explore sampled footage. Review model observations. Keep a clear decision record.",
-      "layout": "top",
+      "title": "VEYVIZ",
+      "description": "Video intelligence · Local workspace",
+      "layout": "sidebar",
       "modules": [
         {
           "id": "veyviz-sources",
@@ -3417,9 +3446,9 @@
           "id": "veyviz-catalog",
           "version": "0.1.0",
           "platformAbi": "quadbridge.module.v1",
-          "title": "Veyviz Library",
-          "description": "Your local recording library.",
-          "layout": "top",
+          "title": "VEYVIZ",
+          "description": "Recording library · Local workspace",
+          "layout": "sidebar",
           "modules": [
             {
               "id": "veyviz-sources",
@@ -3687,9 +3716,9 @@
           "id": "veyviz-review",
           "version": "0.1.0",
           "platformAbi": "quadbridge.module.v1",
-          "title": "Veyviz Review",
-          "description": "Explore sampled footage. Review model observations. Keep a clear decision record.",
-          "layout": "top",
+          "title": "VEYVIZ",
+          "description": "Video intelligence · Local workspace",
+          "layout": "sidebar",
           "modules": [
             {
               "id": "veyviz-analysis",
@@ -4090,7 +4119,15 @@
                 "kind": "read"
               }
             ],
-            "workspaces": [],
+            "workspaces": [
+              {
+                "id": "veyviz.health",
+                "label": "System Health",
+                "path": "/system-health",
+                "permission": "veyviz.ai.read",
+                "export": "healthWorkspace"
+              }
+            ],
             "uiContributions": [
               {
                 "id": "veyviz-rfdetr.provenance",
@@ -4113,11 +4150,19 @@
               "summary": "Fixed-profile local CPU inference through a verified Python companion process.",
               "category": "vision",
               "layers": [
+                "ui",
                 "backend",
                 "ai"
               ],
               "ui": {
-                "routes": [],
+                "routes": [
+                  {
+                    "path": "/system-health",
+                    "workspace": "veyviz.health",
+                    "label": "System Health",
+                    "nav": "System Health"
+                  }
+                ],
                 "extensionPoints": [
                   "veyviz.analysis.provenance"
                 ]
@@ -4507,8 +4552,15 @@
             ],
             "workspaces": [
               {
+                "id": "veyviz.command",
+                "label": "Command Center",
+                "path": "/command-center",
+                "permission": "veyviz.analysis.read",
+                "export": "commandCenter"
+              },
+              {
                 "id": "veyviz.analysis",
-                "label": "Video analysis",
+                "label": "Investigate",
                 "path": "/analysis",
                 "permission": "veyviz.analysis.read",
                 "export": "workspace"
@@ -4537,10 +4589,16 @@
               "ui": {
                 "routes": [
                   {
+                    "path": "/command-center",
+                    "workspace": "veyviz.command",
+                    "label": "Command Center",
+                    "nav": "Command Center"
+                  },
+                  {
                     "path": "/analysis",
                     "workspace": "veyviz.analysis",
-                    "label": "Video analysis",
-                    "nav": "Analysis"
+                    "label": "Investigate",
+                    "nav": "Investigate"
                   }
                 ],
                 "extensionPoints": []

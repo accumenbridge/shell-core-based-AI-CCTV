@@ -1,0 +1,110 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "8327dca3-6611-4a0d-809b-e25e0f0c49d6",
+  "revision": 13,
+  "previousEventId": "b71b1b64-2060-41f5-9999-7bf61db5b7e4",
+  "reportedActor": "/root",
+  "recordedAt": "2026-10-03T04:07:05.904Z",
+  "platformTask": {
+    "taskId": "VEYVIZ-LOCAL-001",
+    "status": "IMPLEMENTING",
+    "candidate": null,
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [
+      "Windows denied required file-symlink fixture with EPERM: 378 passes, 0 failures, 1 blocked/skip. Security settings preserved."
+    ],
+    "nextAction": "Implement the concept-led product interface through disjoint UI owners. Inspect actual screenshots against reference before freezing source and running the full regression.",
+    "gates": [
+      {
+        "id": "independent-construction",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Previous source/evidence preserved historically; cannot qualify the new interface."
+        ]
+      },
+      {
+        "id": "real-model",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Previous source/evidence preserved historically; cannot qualify the new interface."
+        ]
+      },
+      {
+        "id": "authority",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Previous source/evidence preserved historically; cannot qualify the new interface."
+        ]
+      },
+      {
+        "id": "browser",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Previous source/evidence preserved historically; cannot qualify the new interface."
+        ]
+      },
+      {
+        "id": "restart-cleanup",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Previous source/evidence preserved historically; cannot qualify the new interface."
+        ]
+      },
+      {
+        "id": "second-variant",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Previous source/evidence preserved historically; cannot qualify the new interface."
+        ]
+      },
+      {
+        "id": "full-suite",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Previous source/evidence preserved historically; cannot qualify the new interface."
+        ]
+      },
+      {
+        "id": "independent-review",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Previous source/evidence preserved historically; cannot qualify the new interface."
+        ]
+      },
+      {
+        "id": "live-camera",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "native-mobile",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "production",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "e97c1df83f0923b533cc270b75b859497ee1413d14e65199ea39e04906a7d86e"
+}
