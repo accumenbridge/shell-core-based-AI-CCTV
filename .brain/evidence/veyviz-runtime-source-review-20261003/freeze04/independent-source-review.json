@@ -1,0 +1,122 @@
+{
+  "schema": "veyviz.immutable-runtime-independent-source-review.v1",
+  "phase": "FROZEN_MINIMAL_REPAIR_CLOSURE_SOURCE_ONLY",
+  "recordedUtc": "2026-10-03T12:17:05.3416118Z",
+  "reviewer": "/root/product_review",
+  "verdict": "BOUNDED_SOURCE_PASS_READY_FOR_ADMITTED_ISOLATED_CHECKS",
+  "candidate": {
+    "authority": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003",
+    "freezePath": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-04\\freeze.json",
+    "freezeSha256": "05d303d4ee1e9bf885167c752e191f2da1610f3eeee0646019a964a752323318",
+    "authoredDigest": "f21db5d1a9971ee5d60ababe601d87bdcdaf400c085c5d13e6b1ae5f1eb5f117",
+    "declaredFiles": 360,
+    "toolchainDigest": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+    "owners": [
+      {
+        "path": "package.json",
+        "bytes": 1539,
+        "sha256": "f0738ec1b03bd4f59b1a05f88815ce6e7f4d7b6104113f6d5a21b62278c31887",
+        "independentlyMatched": true
+      },
+      {
+        "path": "tools/veyviz-build.mjs",
+        "bytes": 14348,
+        "sha256": "f00694386527f5e73c8fab5b4ce056fe8df6c6c918bd85913b1ab3320f22c71c",
+        "independentlyMatched": true
+      },
+      {
+        "path": "tools/veyviz-inventory.mjs",
+        "bytes": 24575,
+        "sha256": "a94720f5a252a5d02c7cc3c3d381530b74cdc58715983c965a69155d5c9fb2cd",
+        "independentlyMatched": true
+      },
+      {
+        "path": "tools/veyviz-start.mjs",
+        "bytes": 15913,
+        "sha256": "c7f9c30c5e11458fbe0f6291abc6254650be93a70ad7f730297ca4e4e2382662",
+        "independentlyMatched": true
+      },
+      {
+        "path": "tools/veyviz-snapshot.mjs",
+        "bytes": 22874,
+        "sha256": "1b20b45a86f781e2c482fd6f80b2092dfc35d390733f6defb01c4bb806448388",
+        "independentlyMatched": true
+      },
+      {
+        "path": "tests/veyviz-lifecycle.test.mjs",
+        "bytes": 14898,
+        "sha256": "1493fab0aa8c97afbd8224dad5262fb0c113ae16c8d5fd220e4919881d716249",
+        "independentlyMatched": true
+      },
+      {
+        "path": "tests/veyviz-snapshot.test.mjs",
+        "bytes": 24999,
+        "sha256": "cfa0c46ecd72597d925926e4817ac73c1c27785ec89ee30a3bdb440e34d9dfcb",
+        "independentlyMatched": true
+      }
+    ],
+    "manifestBytes": [
+      {
+        "name": "source-overlay.json",
+        "bytes": 63696,
+        "sha256": "e9992a9539df4a34c73b7d664d568589d7e3c1dbe0a7baedf629bf97007717e9",
+        "independentlyMatched": true
+      },
+      {
+        "name": "toolchain-overlay.json",
+        "bytes": 52108,
+        "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659",
+        "independentlyMatched": true
+      },
+      {
+        "name": "source-active-observed.json",
+        "bytes": 64045,
+        "sha256": "181ee85718cf8cf430bf50b4e4d53049d039112893fb2f2b1eff2d950007f160",
+        "independentlyMatched": true
+      },
+      {
+        "name": "toolchain-active-observed.json",
+        "bytes": 52108,
+        "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659",
+        "independentlyMatched": true
+      }
+    ]
+  },
+  "priorReview": ".local/product-immutable-runtime-evidence/review/seven-owner-source-review-freeze03-20261003-01.json",
+  "repairClosure": {
+    "id": "RUNTIME-REVIEW-07",
+    "status": "SOURCE_CLOSED",
+    "exactDelta": "Only tools/veyviz-inventory.mjs differs from frozen03 seven-owner candidate. It restores unconditional rejection of symlinks/non-regular discovered entries in both profiles and requires physical regular declared root files in both profiles.",
+    "evidence": "Read exact git diff --no-index against retained freeze03 reviewer copy and latest overlay; independently checked current inventory hash a94720f5a252a5d02c7cc3c3d381530b74cdc58715983c965a69155d5c9fb2cd."
+  },
+  "previousFindings": [
+    "RUNTIME-REVIEW-03 undefined output bound: source repaired in freeze03, unchanged in04.",
+    "RUNTIME-REVIEW-04 producer/export validator misuse: source repaired in freeze03, unchanged in04.",
+    "RUNTIME-REVIEW-05 compiler support closure and fixture: source repaired in freeze03, unchanged in04.",
+    "RUNTIME-REVIEW-06 v1 review/catalog ordering: source repaired in freeze03 and retained in04.",
+    "RUNTIME-REVIEW-01 full-manifest digest repair and RUNTIME-REVIEW-02 enforceable qualification seam remain prior source-level observations; executed acceptance still pending."
+  ],
+  "remainingConcreteSourceBlockers": [],
+  "readiness": "Root may schedule the already-admitted fresh wrapper build and three-file focused checks in this explicitly addressed isolated overlay after coordination window. Source PASS alone is not a successful build, passing tests or product qualification.",
+  "foreignScope": {
+    "includedEarlierUnreviewed": [
+      "modules/veyviz-intelligence/src/protocol.ts",
+      "services/veyviz-ai/runtime_setup.py",
+      "services/veyviz-ai/runtime_worker.py"
+    ],
+    "laterActiveDriftExcluded": [
+      "modules/veyviz-intelligence/src/features.ts",
+      "services/veyviz-ai/runtime_bridge.py",
+      "services/veyviz-ai/temporal.py"
+    ],
+    "meaning": "Concurrent foreign files preserved; no review or acceptance of those changes. Frozen overlay is the exact bounded runtime candidate. No complete active-root match claimed."
+  },
+  "evidenceStatus": "NO_BUILD_OR_TEST_EXECUTION_REVIEWED_FOR_FREEZE04",
+  "limitations": [
+    "Independent review checked all seven current overlay owner hashes plus supplied manifest byte hashes. No full360-file rediscovery or independent toolchain-file rehash was performed here.",
+    "Minimal delta copied only to authorized ignored reviewer area. No source, Brain, dependency, Git, process, build, test, browser or external companion operation performed.",
+    "Original historical child close remains UNKNOWN; foreign4494 association/impact UNKNOWN. No whole-product/framework UI/model/Python/browser/production acceptance.",
+    "Failed freezes02/03 and reports remain preserved; later repairs do not relabel them as passing runs."
+  ],
+  "proposedRootRecords": "Record source-only repair closure/readiness for exact freeze04 overlay if useful. Keep product acceptance unbound; retain fresh source-before/after and raw original build/test outputs and require final same-candidate independent evidence review."
+}

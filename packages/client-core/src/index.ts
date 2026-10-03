@@ -1,4 +1,8 @@
-import { PlatformError, type FailureCode, type WorkspaceContext } from '@quadbridge/contracts';
+import { PlatformError, markTrustedCommandError, validateCommandFieldErrors, validateCommandOutcome, type FailureCode, type WorkspaceContext } from '@quadbridge/contracts';
+
+export { CommandState, createCommandState } from './command-state.js';
+export type { CapturedCommandIntent, CommandIntentState, CommandStateOptions } from './command-state.js';
+export { trustedCommandErrorDetails } from '@quadbridge/contracts';
 
 const failureCodes = new Set<FailureCode>(['INVALID', 'UNAUTHENTICATED', 'DENIED', 'NOT_FOUND', 'CONFLICT', 'DISABLED', 'UNAVAILABLE', 'STALE_ATTEMPT', 'INCOMPATIBLE', 'EXHAUSTED']);
 
@@ -6,6 +10,9 @@ export interface RequestOptions {
   fetcher?: typeof fetch;
   origin?: () => string;
 }
+
+/** Optional fixed transport supplied by an active client profile; business scopes remain unchanged. */
+export type RequestTransport = (path: string, init?: RequestInit, signal?: AbortSignal, tenantId?: string) => Promise<unknown>;
 
 export async function requestJson(
   path: string,
@@ -19,12 +26,20 @@ export async function requestJson(
   if (tenantId) headers.set('X-QB-Tenant', tenantId);
   const fetcher = options.fetcher ?? fetch;
   const response = await fetcher(path, { ...init, headers, credentials: 'same-origin', cache: 'no-store', signal });
-  const data = await response.json() as { error?: { code?: string; message?: string } };
+  const data = await response.json() as { error?: { code?: string; message?: string; commandOutcome?: unknown; fieldErrors?: unknown } };
   if (signal?.aborted) throw new DOMException('Scope closed', 'AbortError');
   if (!response.ok) {
     const reported = data.error?.code;
     const code: FailureCode = reported && failureCodes.has(reported as FailureCode) ? reported as FailureCode : 'UNAVAILABLE';
-    throw new PlatformError(code, data.error?.message ?? 'Operation unavailable');
+    const error = new PlatformError(code, data.error?.message ?? 'Operation unavailable');
+    if (code === 'INVALID' || code === 'CONFLICT' || code === 'NOT_FOUND') {
+      const outcome = validateCommandOutcome(data.error?.commandOutcome);
+      if (outcome) {
+        const fields = validateCommandFieldErrors(data.error?.fieldErrors);
+        if (fields !== undefined) markTrustedCommandError(error, outcome, fields);
+      }
+    }
+    throw error;
   }
   return data;
 }
@@ -37,7 +52,7 @@ export interface ScopedWorkspaceApiOptions {
   isCurrent: () => boolean;
   origin: () => string;
   onAccessFailure: (error: PlatformError) => void;
-  request?: typeof requestJson;
+  request?: RequestTransport;
 }
 
 export function createScopedWorkspaceApi(options: ScopedWorkspaceApiOptions): WorkspaceContext['api'] {

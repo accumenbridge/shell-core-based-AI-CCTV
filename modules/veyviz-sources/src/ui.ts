@@ -1,18 +1,64 @@
 import type { Workspace } from '@quadbridge/contracts';
+import { createCommandState, type CapturedCommandIntent } from '@quadbridge/client-core';
 import { el, field } from '@quadbridge/web-shell/dom';
 import { FIXTURE_ID, type SourceView } from './protocol.js';
+
+const MAX_CURSOR_HISTORY = 100;
 
 export const workspace: Workspace = { mount(ctx) {
   const canWrite = ctx.permissions.includes('veyviz.sources.write');
   const page = el('section', 'veyviz-sources'), header = el('header', 'vv-library-heading'), title = el('div');
-  title.append(el('h1', '', 'Recordings'),
+  page.setAttribute('data-qb-ui-boundary', '');
+  page.setAttribute('data-qb-surface', 'light');
+  page.setAttribute('data-qb-text', 'standard');
+  page.setAttribute('data-qb-accent', 'teal');
+  page.setAttribute('data-qb-density', 'comfortable');
+  page.setAttribute('data-qb-layout-mode', 'reading');
+  title.append(el('p', 'vv-library-eyebrow', 'SOURCE LIBRARY'),
+    el('h1', '', 'Recordings'),
     el('p', 'vv-library-intro', 'Your team’s registered recording references.'));
   const count = el('span', 'vv-library-count', 'Loading recordings');
   header.append(title, count); page.append(header);
   const feedback = el('p', 'vv-library-feedback');
   feedback.setAttribute('role', 'status'); feedback.setAttribute('aria-live', 'polite'); feedback.hidden = true;
   let closed = false, loaded = false, loading = false, registering = false;
-  let registration: { name: string; key: string } | undefined;
+  let queryEpoch = 0, pageIndex = 0, pageBase = 0, nextCursor: string | undefined;
+  let pageCursors: Array<string | undefined> = [undefined];
+  const commandState = createCommandState({ scope: ctx.scope, actor: ctx.actor, signal: ctx.signal, isCurrent: () => !closed && !ctx.signal.aborted });
+  const commandIntents = new Map<string, CapturedCommandIntent>();
+  const capturesInProgress = new Set<string>();
+  const registrationSlot = 'sources.register';
+  const renameSlot = (sourceId: string) => `sources.rename:${sourceId}`;
+  const commandStateFor = (slot: string) => { const intent = commandIntents.get(slot); return intent ? commandState.state(intent) : undefined; };
+  const hasUnresolvedCommand = () => capturesInProgress.size > 0 || [...commandIntents.values()].some(intent => ['PREPARED', 'PENDING', 'UNKNOWN'].includes(commandState.state(intent) ?? ''));
+  const unregisterNavigationGuard = ctx.navigation?.registerUnsavedGuard(() => {
+    if (!hasUnresolvedCommand()) return true;
+    message('Resolve the original command in this workspace before navigating away.');
+    return false;
+  });
+  async function postCommand<T>(slot: string, operation: string, payload: unknown, path: string): Promise<T> {
+    if (!active()) throw new DOMException('Workspace closed', 'AbortError');
+    capturesInProgress.add(slot);
+    let intent: CapturedCommandIntent;
+    try {
+      intent = await commandState.capture(slot, operation, payload);
+      commandIntents.set(slot, intent);
+    } finally { capturesInProgress.delete(slot); }
+    const dispatch = (id: string, body: import('@quadbridge/contracts').Json) => ctx.api.post(path, body, id, ctx.signal) as Promise<T>;
+    try {
+      const result = commandState.state(intent) === 'UNKNOWN'
+        ? await commandState.retry(intent, dispatch)
+        : await commandState.send(intent, dispatch);
+      if (commandState.state(intent) === 'COMMITTED' && commandIntents.get(slot) === intent) commandIntents.delete(slot);
+      return result;
+    } catch (error) {
+      if (commandState.state(intent) === 'REJECTED_NO_BUSINESS_EFFECTS' && commandIntents.get(slot) === intent) commandIntents.delete(slot);
+      throw error;
+    }
+  }
+  const mutationError = (slot: string, error: unknown, label: string) => commandStateFor(slot) === 'UNKNOWN'
+    ? `${label} outcome is unknown. Retry the exact original request before changing its values or leaving this workspace.`
+    : errorText(error, `${label} could not be completed.`);
   const rows = new Map<string, HTMLElement>();
   const records = new Map<string, SourceView>();
   const active = () => !closed && !ctx.signal.aborted;
@@ -37,51 +83,56 @@ export const workspace: Workspace = { mount(ctx) {
   page.append(feedback);
   const toolbar = el('div', 'vv-library-toolbar'), searchLabel = el('label', 'vv-library-search'), search = el('input');
   searchLabel.append(el('span', 'vv-sr-only', 'Search recording names or IDs'));
-  search.type = 'search'; search.placeholder = 'Search recording names or IDs'; search.maxLength = 160; searchLabel.append(search);
+  search.type = 'search'; search.placeholder = 'Search recording names or IDs'; search.maxLength = 200; searchLabel.append(search);
   const filterLabel = el('label', 'vv-library-filter'), filter = el('select');
   filterLabel.append(el('span', 'vv-sr-only', 'Filter recordings'));
   for (const [value, label] of [['all', 'All recordings'], ['renamed', 'Renamed recordings']] as const) { const option = el('option', '', label); option.value = value; filter.append(option); }
   filterLabel.append(filter);
-  const sortLabel = el('label', 'vv-library-filter'), sort = el('select');
-  sortLabel.append(el('span', 'vv-sr-only', 'Sort recordings'));
-  for (const [value, label] of [['newest', 'Newest first'], ['oldest', 'Oldest first'], ['name', 'Name A–Z']] as const) { const option = el('option', '', label); option.value = value; sort.append(option); }
-  sortLabel.append(sort); toolbar.append(searchLabel, filterLabel, sortLabel); page.append(toolbar);
-  page.append(el('p', 'vv-library-scope', 'Search and filters apply to the latest 100 registrations returned for this tenant.'));
+  toolbar.append(searchLabel, filterLabel); page.append(toolbar);
+  page.append(el('p', 'vv-library-scope', 'Search applies across registered names and IDs. Changes between page requests can shift page membership.'));
   const library = el('section', 'vv-recording-library'); library.setAttribute('aria-label', 'Registered recordings');
   const libraryHeader = el('div', 'vv-library-list-heading'), resultCount = el('h2', '', 'Recording library');
   resultCount.setAttribute('role', 'status'); resultCount.setAttribute('aria-live', 'polite');
   libraryHeader.append(resultCount, el('span', 'vv-recorded-label', 'RECORDED MEDIA'));
   const list = el('div', 'vv-recording-list'), placeholder = el('div', 'vv-library-empty');
   placeholder.append(el('p', '', 'Loading your recordings…'));
-  library.append(libraryHeader, list, placeholder); page.append(library); ctx.root.append(page);
+  const pager = el('nav', 'vv-library-pager'); pager.setAttribute('aria-label', 'Recording pages');
+  const previousPage = el('button', 'button secondary', 'Previous'); previousPage.type = 'button'; previousPage.disabled = true;
+  const pageStatus = el('span', 'vv-library-page-status', 'Page 1'); pageStatus.setAttribute('role', 'status'); pageStatus.setAttribute('aria-live', 'polite');
+  const nextPage = el('button', 'button secondary', 'Next'); nextPage.type = 'button'; nextPage.disabled = true;
+  pager.append(previousPage, pageStatus, nextPage);
+  library.append(libraryHeader, list, placeholder, pager); page.append(library); ctx.root.append(page);
 
-  function updateCount() { count.textContent = `${rows.size} ${rows.size === 1 ? 'recording' : 'recordings'}${rows.size >= 100 ? ' shown' : ''}`; }
-  function applyFilters() {
-    if (!loaded) return;
-    const query = search.value.trim().toLocaleLowerCase(ctx.locale);
-    const ordered = [...records.values()].sort((a, b) => sort.value === 'name'
-      ? a.name.localeCompare(b.name, ctx.locale) || a.id.localeCompare(b.id)
-      : (sort.value === 'oldest' ? 1 : -1) * (a.created - b.created) || a.id.localeCompare(b.id));
-    let visible = 0;
-    for (const source of ordered) {
-      const row = rows.get(source.id)!;
-      row.hidden = !(source.name.toLocaleLowerCase(ctx.locale).includes(query) || source.id.toLowerCase().includes(query)) || (filter.value === 'renamed' && source.version <= 1);
-      if (!row.hidden) visible++;
-      list.append(row);
-    }
-    resultCount.textContent = `${visible} ${visible === 1 ? 'recording' : 'recordings'}${visible !== rows.size ? ` of ${rows.size}` : ''}`;
-    if (!rows.size) { showEmpty(); return; }
-    placeholder.hidden = visible > 0;
-    if (visible) return;
-    const clear = el('button', 'button secondary', 'Clear filters'); clear.type = 'button';
-    clear.addEventListener('click', () => { search.value = ''; filter.value = 'all'; applyFilters(); search.focus(); }, { signal: ctx.signal });
-    placeholder.replaceChildren(el('h3', '', 'No recordings match your filters'), el('p', '', 'Try another name or source ID, or remove the renamed filter.'), clear);
+  function updateCount() { count.textContent = `${pageBase + pageIndex + 1} · ${rows.size} shown`; }
+  function resetPage() {
+    pageCursors = [undefined]; pageIndex = 0; pageBase = 0; nextCursor = undefined;
+    previousPage.disabled = true; nextPage.disabled = true; pageStatus.textContent = 'Page 1';
+    void load();
   }
-  for (const [control, event] of [[search, 'input'], [filter, 'change'], [sort, 'change']] as const) control.addEventListener(event, applyFilters, { signal: ctx.signal });
+  search.addEventListener('input', resetPage, { signal: ctx.signal });
+  filter.addEventListener('change', resetPage, { signal: ctx.signal });
+  previousPage.addEventListener('click', () => {
+    if (pageIndex === 0 || !active()) return;
+    pageIndex--; nextCursor = undefined; nextPage.disabled = true; previousPage.disabled = pageIndex === 0; void load();
+  }, { signal: ctx.signal });
+  nextPage.addEventListener('click', () => {
+    if (!nextCursor || !active()) return;
+    pageCursors = pageCursors.slice(0, pageIndex + 1); pageCursors.push(nextCursor); pageIndex++;
+    if (pageCursors.length > MAX_CURSOR_HISTORY) { pageCursors.shift(); pageIndex--; pageBase++; }
+    nextCursor = undefined;
+    previousPage.disabled = false; nextPage.disabled = true; void load();
+  }, { signal: ctx.signal });
   function updateRegister() {
-    register.disabled = registering || !loaded || !name.input.value.trim();
-    register.textContent = registering ? 'Adding recording…' : 'Add to library';
-    name.input.disabled = registering; form.setAttribute('aria-busy', String(registering));
+    const state = commandStateFor(registrationSlot), unresolved = state === 'PREPARED' || state === 'PENDING' || state === 'UNKNOWN';
+    const intent = commandIntents.get(registrationSlot);
+    if (state === 'UNKNOWN' && intent?.payload && typeof intent.payload === 'object' && !Array.isArray(intent.payload)) {
+      const originalName = intent.payload.name;
+      if (typeof originalName === 'string') name.input.value = originalName;
+    }
+    const unknown = state === 'UNKNOWN';
+    register.disabled = registering || !loaded || (!unknown && !name.input.value.trim());
+    register.textContent = registering ? 'Adding recording…' : unknown ? 'Retry original registration' : 'Add to library';
+    name.input.disabled = registering || unresolved; form.setAttribute('aria-busy', String(registering));
   }
   function showEmpty() {
     placeholder.replaceChildren();
@@ -98,7 +149,7 @@ export const workspace: Workspace = { mount(ctx) {
   function recording(initial: SourceView) {
     let source = initial, busy = false;
     records.set(source.id, source);
-    let attempt: { name: string; key: string } | undefined;
+    const slot = renameSlot(source.id);
     const article = el('article', 'vv-recording'), symbol = el('div', 'vv-recording-symbol'); symbol.setAttribute('aria-hidden', 'true');
     const body = el('div', 'vv-recording-body'), sourceName = el('h3', 'vv-recording-name', source.name), facts = el('div', 'vv-recording-facts');
     const profile = el('span', 'vv-recording-profile', source.fixtureId === FIXTURE_ID ? 'MIVIA 0062' : source.fixtureId);
@@ -121,32 +172,41 @@ export const workspace: Workspace = { mount(ctx) {
       const cancel = el('button', 'button small secondary', 'Cancel'); cancel.type = 'button';
       const status = el('p', 'vv-recording-save-status'); status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite');
       const updateSave = () => {
-        save.disabled = busy || !nextName.input.value.trim() || nextName.input.value.trim() === source.name;
-        save.textContent = busy ? 'Saving…' : 'Save name'; nextName.input.disabled = busy; cancel.disabled = busy;
+        const state = commandStateFor(slot), unresolved = state === 'PREPARED' || state === 'PENDING' || state === 'UNKNOWN';
+        const intent = commandIntents.get(slot);
+        if (state === 'UNKNOWN' && intent?.payload && typeof intent.payload === 'object' && !Array.isArray(intent.payload)) {
+          const originalName = intent.payload.name;
+          if (typeof originalName === 'string') nextName.input.value = originalName;
+          status.textContent = 'Rename outcome unknown. Retry the original name before editing or leaving this workspace.';
+          status.classList.remove('is-error');
+        }
+        const unknown = state === 'UNKNOWN';
+        save.disabled = busy || (!unknown && (!nextName.input.value.trim() || nextName.input.value.trim() === source.name));
+        save.textContent = busy ? 'Saving…' : unknown ? 'Retry original rename' : 'Save name'; nextName.input.disabled = busy || unresolved; cancel.disabled = busy || unresolved;
         editForm.setAttribute('aria-busy', String(busy));
       };
       updateSave(); nextName.input.addEventListener('input', updateSave, { signal: ctx.signal });
       cancel.addEventListener('click', () => {
-        if (!active() || busy) return;
+        if (!active() || busy || commandStateFor(slot) === 'UNKNOWN' || commandStateFor(slot) === 'PENDING') return;
         nextName.input.value = source.name; updateSave(); edit.open = false; summary.focus();
       }, { signal: ctx.signal });
       editForm.addEventListener('submit', async event => {
         event.preventDefault(); const value = nextName.input.value.trim();
-        if (!active() || busy || !value || value === source.name) return;
+        if (!active() || busy || !value || (value === source.name && commandStateFor(slot) !== 'UNKNOWN')) return;
         busy = true; updateSave(); status.textContent = ''; status.classList.remove('is-error');
-        if (!attempt || attempt.name !== value) attempt = { name: value, key: crypto.randomUUID() };
         try {
-          const saved = await ctx.api.post('/api/sources/rename', { sourceId: source.id, name: value }, attempt.key, ctx.signal) as SourceView;
+          const saved = await postCommand<SourceView>(slot, 'veyviz.sources.rename', { sourceId: source.id, name: value }, '/api/sources/rename');
           if (!active()) return;
           source = saved; sourceName.textContent = saved.name; version.textContent = `Version ${saved.version}`;
           records.set(saved.id, saved);
           summary.setAttribute('aria-label', `Rename ${saved.name}`);
           detailSummary.setAttribute('aria-label', `Details for ${saved.name}`);
-          nextName.input.value = saved.name; attempt = undefined; edit.open = false; applyFilters();
-          if (article.hidden) search.focus(); else summary.focus();
+          nextName.input.value = saved.name; edit.open = false;
+          await load();
+          if (rows.has(saved.id)) summary.focus(); else search.focus();
           message(`Recording renamed to “${saved.name}”.`);
         } catch (error) {
-          if (active()) { status.textContent = errorText(error, 'The recording name could not be saved. Try again.'); status.classList.add('is-error'); }
+          if (active()) { status.textContent = mutationError(slot, error, 'Rename'); status.classList.add('is-error'); updateSave(); }
         } finally { busy = false; if (active()) updateSave(); }
       }, { signal: ctx.signal });
       actions.append(save, cancel); editForm.append(nextName.wrap, actions, status); edit.append(summary, editForm); article.querySelector('.vv-recording-actions')!.append(edit);
@@ -156,38 +216,72 @@ export const workspace: Workspace = { mount(ctx) {
   name.input.addEventListener('input', updateRegister, { signal: ctx.signal });
   form.addEventListener('submit', async event => {
     event.preventDefault(); const value = name.input.value.trim();
-    if (!active() || registering || !loaded || !canWrite || !value) return;
+    if (!active() || registering || !loaded || !canWrite || (!value && commandStateFor(registrationSlot) !== 'UNKNOWN')) return;
     registering = true; updateRegister(); message('');
-    if (!registration || registration.name !== value) registration = { name: value, key: crypto.randomUUID() };
     try {
-      const saved = await ctx.api.post('/api/sources', { fixtureId: FIXTURE_ID, name: value }, registration.key, ctx.signal) as SourceView;
+      const saved = await postCommand<SourceView>(registrationSlot, 'veyviz.sources.register', { fixtureId: FIXTURE_ID, name: value }, '/api/sources');
       if (!active()) return;
-      if (!rows.has(saved.id)) { const article = recording(saved); rows.set(saved.id, article); list.prepend(article); }
-      updateCount(); applyFilters(); registration = undefined; add.open = false; name.input.value = 'MIVIA video 0062'; addSummary.focus();
-      message(`“${saved.name}” added to your library.${rows.get(saved.id)?.hidden ? ' Clear the current filters to see it.' : ''}`);
-    } catch (error) { message(errorText(error, 'The recording could not be added. Try again.'), true); }
+      add.open = false; name.input.value = 'MIVIA video 0062';
+      await load(); addSummary.focus();
+      message(`“${saved.name}” added to your library. The current search and filters remain applied.`);
+    } catch (error) { message(mutationError(registrationSlot, error, 'Registration'), true); }
     finally { registering = false; if (active()) updateRegister(); }
   }, { signal: ctx.signal });
   async function load() {
-    if (!active() || loading) return;
+    if (!active()) return;
+    const epoch = ++queryEpoch;
     loading = true; library.setAttribute('aria-busy', 'true');
+    previousPage.disabled = pageIndex === 0; nextPage.disabled = true; pageStatus.textContent = `Loading page ${pageBase + pageIndex + 1}`;
     try {
-      const data = await ctx.api.get('/api/sources', ctx.signal) as { items: SourceView[] };
-      if (!active()) return;
-      for (const source of data.items) {
-        if (rows.has(source.id)) continue;
-        const article = recording(source); rows.set(source.id, article); list.append(article);
+      const parameters = new URLSearchParams();
+      const query = search.value.trim();
+      if (query) parameters.set('search', query);
+      if (filter.value === 'renamed') parameters.set('renamedOnly', 'true');
+      parameters.set('limit', '20');
+      const cursor = pageCursors[pageIndex];
+      if (cursor) parameters.set('cursor', cursor);
+      const data = await ctx.api.get('/api/sources/query?' + parameters.toString(), ctx.signal) as { items: SourceView[]; page: { limit: number; nextCursor?: string; coverage: string } };
+      if (!active() || epoch !== queryEpoch) return;
+      if (!Array.isArray(data.items) || !data.page || data.page.limit !== 20 || data.page.coverage !== 'filtered-owner-query') throw Error('The recording query response is invalid.');
+      const present = new Set(data.items.map(source => source.id));
+      for (const [id, article] of rows) {
+        if (present.has(id)) continue;
+        if (article.contains(document.activeElement)) search.focus();
+        article.remove(); rows.delete(id); records.delete(id);
       }
-      loaded = true; updateCount(); applyFilters();
+      records.clear();
+      for (const source of data.items) {
+        records.set(source.id, source);
+        let article = rows.get(source.id);
+        if (!article) { article = recording(source); rows.set(source.id, article); }
+        list.append(article);
+      }
+      nextCursor = data.page.nextCursor;
+      loaded = true; updateCount();
+      resultCount.textContent = `${rows.size} ${rows.size === 1 ? 'recording' : 'recordings'} · page ${pageBase + pageIndex + 1}`;
+      placeholder.hidden = rows.size > 0;
+      if (!rows.size && (query || filter.value === 'renamed')) {
+        const clear = el('button', 'button secondary', 'Clear search and filters'); clear.type = 'button';
+        clear.addEventListener('click', () => { search.value = ''; filter.value = 'all'; resetPage(); search.focus(); }, { signal: ctx.signal });
+        placeholder.replaceChildren(el('h3', '', 'No recordings match this search'), el('p', '', 'Search covers registered recording names and IDs. You can remove the renamed-only filter or try another term.'), clear);
+      } else if (!rows.size) showEmpty();
+      previousPage.disabled = pageIndex === 0;
+      nextPage.disabled = !nextCursor;
+      pageStatus.textContent = `Page ${pageBase + pageIndex + 1}${nextCursor ? ' · More results' : ''}`;
     } catch (error) {
-      if (!active()) return;
+      if (!active() || epoch !== queryEpoch) return;
       count.textContent = 'Library unavailable';
-      placeholder.replaceChildren(el('h3', '', 'We couldn’t load your recordings'), el('p', '', errorText(error, 'Check your connection and try again.')));
-      const retry = el('button', 'button secondary', 'Try again'); retry.type = 'button';
-      retry.addEventListener('click', () => { retry.disabled = true; void load(); }, { signal: ctx.signal });
-      placeholder.append(retry); placeholder.hidden = false;
-    } finally { loading = false; if (active()) { library.setAttribute('aria-busy', 'false'); updateRegister(); } }
+      pageStatus.textContent = `Page ${pageBase + pageIndex + 1} unavailable`;
+      if (!loaded || !rows.size) {
+        placeholder.replaceChildren(el('h3', '', 'We couldn’t load your recordings'), el('p', '', errorText(error, 'Check your connection and try again.')));
+        const retry = el('button', 'button secondary', 'Try again'); retry.type = 'button';
+        retry.addEventListener('click', () => { retry.disabled = true; void load(); }, { signal: ctx.signal });
+        placeholder.append(retry); placeholder.hidden = false;
+      } else message(errorText(error, 'The current recording page could not be refreshed.'), true);
+    } finally {
+      if (epoch === queryEpoch) { loading = false; if (active()) { library.setAttribute('aria-busy', 'false'); updateRegister(); } }
+    }
   }
   void load();
-  return () => { closed = true; page.remove(); };
+  return () => { closed = true; unregisterNavigationGuard?.(); commandState.dispose(); page.remove(); };
 } };

@@ -1,0 +1,2 @@
+{"outputPath":"D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-startup-close-evidence\\original-root-build-deviation-capture.json","activeMaintainedFileCount":917,"activeMaintainedDigest":"942dc5efa2c36e6fbde46069c8d66b4150ee1b4fe5adde30c0bb0d3eaa306d73","deltaCount":0,"deltaPaths":[],"generatedOutputCount":276,"generatedOutputDigest":"85f06780f1155062f8c4c76a4d439c98f622222bbcd58b171c47b00b82a28e76","openPlatform":{"path":"OPEN_PLATFORM.html","bytes":215750,"sha256":"977aad7aca6a00861905dee2e0401a342b770855fc65532157c53bafaea0119f"}}
+EXIT_CODE=0

@@ -7,6 +7,7 @@ class Element {
   append(...nodes) { this.children.push(...nodes); }
   replaceChildren(...nodes) { this.children = [...nodes]; }
   setAttribute(name, value) { this.attributes[name] = String(value); }
+  removeAttribute(name) { delete this.attributes[name]; }
   addEventListener(name, listener) { const list = this.listeners.get(name) ?? []; list.push(listener); this.listeners.set(name, list); }
   fire(name, event = {}) { for (const listener of this.listeners.get(name) ?? []) listener({ preventDefault() {}, ...event }); }
   set textContent(value) { this._text = String(value); this.children = []; }
@@ -66,4 +67,17 @@ test('Knowledge answer UI sends per-call cancellation and discards late answers 
   await pause(); await pause();
   assert.match(status.textContent, /Question changed/);
   assert.doesNotMatch(status.textContent, /A late answer|secret/);
+
+  submit();
+  await until(() => calls.length === 3, 'generated answer request');
+  gates[2].resolve({ label: 'Local model-generated answer', mode: 'generated', state: 'ANSWERED', coverage: 'INDEXED_DOCUMENTS_ONLY', identity: { label: 'Ollama · qwen3:4b' },
+    answer: 'Stop the conveyor before work.', citations: [], segments: [{ text: 'Stop the conveyor before work.', citations: [
+      { title: 'Isolation procedure', version: 2, start: 12, end: 31, excerpt: 'before work begins' }
+    ] }] });
+  await pause(); await pause();
+  assert.match(status.textContent, /Local model-generated answer/);
+  assert.match(status.textContent, /Model: Ollama · qwen3:4b/);
+  assert.match(status.textContent, /Stop the conveyor before work/);
+  assert.match(status.textContent, /Isolation procedure · v2/);
+  assert.match(status.textContent, /before work begins/);
 });

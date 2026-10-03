@@ -1,0 +1,54 @@
+{
+  "schema": "veyviz.bounded-work-order.v1",
+  "writerOwners": [
+    "modules/veyviz-sources/src/ui.ts",
+    "modules/veyviz-analysis/src/ui.ts",
+    "modules/veyviz-intelligence/src/ui.ts",
+    "modules/veyviz-sources/package.json",
+    "modules/veyviz-analysis/package.json",
+    "modules/veyviz-intelligence/package.json",
+    "modules/veyviz-sources/tsconfig.json",
+    "modules/veyviz-analysis/tsconfig.json",
+    "modules/veyviz-intelligence/tsconfig.json",
+    "tests/veyviz-ui-core.test.mjs"
+  ],
+  "rootOwners": [
+    "package-lock.json"
+  ],
+  "intent": "Prevent duplicate product mutations after a lost reply using the existing reviewed public CommandState. This is an essential correctness repair to the visible core, not broader UI expansion.",
+  "requirements": [
+    "Capture actual operation name, actor/product/instance/tenant, exact immutable payload and key before first mutation. UNKNOWN retains this exact intent; edits or different decisions must not create a new command for the unresolved operation.",
+    "Show truthful UNKNOWN and explicit original-command retry. Freeze relevant fields or retain their exact original values, and do not let generic errors imply no effects. Block navigation that discards unresolved intent with the public navigation guard; dispose and hide state on actual access/scope closure.",
+    "Recording rename intent must survive row refresh/replacement. Analysis selected target and review decision must be captured before awaits. Intelligence mutation retry must preserve all original fields and callback targets; playback/retrieval query POSTs stay query operations.",
+    "Success marks committed before subsequent refresh work; a failed refresh must not turn an acknowledged command into UNKNOWN. No new command during pending dispatch.",
+    "Use public @quadbridge/client-core CommandState and exact dependency/TS references. No maintained framework edits, backend receipt migration, operation/permission renaming or forged terminal proofs.",
+    "Existing product owners do not support matching trusted terminal rejection for these operations. Treat unconfirmed errors as UNKNOWN. Mutable catalog/profile preconditions may prevent receipt replay; keep the original identity and visible uncertainty instead of issuing a new key. Record this limitation, not a claimed repaired backend.",
+    "Meaningful mounted UI tests simulate committed effects with lost replies and verify repeated retry uses same key and deeply equal payload, edited/different intent is blocked, only one effect exists, row refresh cannot discard rename intent, late/disposed replies cannot update UI, and acknowledged response plus refresh failure remains committed."
+  ],
+  "checks": [
+    "Root reconciles lock after metadata changes",
+    "Fresh product build",
+    "node --test tests/veyviz-ui-core.test.mjs",
+    "Affected real product backend tests without source changes as needed",
+    "Independent exact diff/evidence review",
+    "Final product npm test"
+  ],
+  "deferred": "General terminal-outcome eligibility for Veyviz owners, legacy dynamic-payload receipt reconciliation and UI04–07 are separate followups; no broadened backend changes under this packet.",
+  "writerAssignments": {
+    "product_ui_core": [
+      "modules/veyviz-sources/src/ui.ts",
+      "modules/veyviz-analysis/src/ui.ts",
+      "modules/veyviz-intelligence/src/ui.ts",
+      "modules/veyviz-sources/package.json",
+      "modules/veyviz-analysis/package.json",
+      "modules/veyviz-intelligence/package.json",
+      "modules/veyviz-sources/tsconfig.json",
+      "modules/veyviz-analysis/tsconfig.json",
+      "modules/veyviz-intelligence/tsconfig.json"
+    ],
+    "framework_ui_core": [
+      "tests/veyviz-ui-core.test.mjs"
+    ]
+  },
+  "coordination": "Two disjoint product writers under existing maximum_active_writers2. UI writer owns nine UI/metadata files, test writer owns the existing mounted test only. Neither builds/tests until both freeze and root authorizes capture. No framework source writer active. This replaces the earlier sole-writer scheduling choice to shorten core delivery."
+}

@@ -5,8 +5,9 @@ import { spawnSync } from 'node:child_process';
 import { copyFile, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { DatabaseSync } from 'node:sqlite';
 import { pathToFileURL } from 'node:url';
-import { PlatformError } from '../packages/contracts/dist/index.js';
+import { PlatformError, canonical } from '../packages/contracts/dist/index.js';
 import { ControlPlaneStore } from '../packages/control-plane/dist/index.js';
 import { resolve as resolveProduct } from '../packages/composition/dist/index.js';
 import { ROOT } from '../apps/runtime/dist/index.js';
@@ -25,7 +26,8 @@ const OPTIONAL_FIELD_SPEC = {
   module: { id: 'room-inspection', version: '0.1.0', label: 'Room Inspection' },
   entity: { id: 'inspection', label: 'Inspection', displayField: 'room' },
   fields: [
-    { id: 'room', label: 'Room', type: 'text', required: true, minLength: 1, maxLength: 80 },
+    { id: 'room', label: 'Room', type: 'text', required: true, minLength: 2, maxLength: 3 },
+    { id: 'tag', label: 'Tag', type: 'text', required: false, minLength: 2, maxLength: 3, default: ' 😀a ' },
     { id: 'notes', label: 'Notes', type: 'text', required: false, minLength: 1, maxLength: 1000 },
     { id: 'score', label: 'Score', type: 'integer', required: true, minimum: 0, maximum: 5 },
     { id: 'passed', label: 'Passed', type: 'boolean', required: false },
@@ -142,9 +144,14 @@ async function buildThroughReviewedWorker(sourceRoot) {
 }
 
 function deferred() {
-  let resolve;
-  const promise = new Promise(yes => { resolve = yes; });
-  return { promise, resolve };
+  let resolve, reject;
+  const promise = new Promise((yes, no) => { resolve = yes; reject = no; });
+  return { promise, resolve, reject };
+}
+
+async function flushUntil(predicate, message) {
+  for (let turn = 0; turn < 100 && !predicate(); turn++) await flush();
+  assert.ok(predicate(), message);
 }
 
 test('generated modules build as separate products and keep owner, receipt, UI selection, and field semantics', async t => {
@@ -237,7 +244,7 @@ test('generated modules build as separate products and keep owner, receipt, UI s
     ['maintenance-assets', 'asset-register', 'asset', 'assetCode',
       { assetCode: '  ASSET-100  ' }, { assetCode: 'ASSET-100 updated', serviceInterval: 24, active: false, condition: 'repair' }, 'ASSET-100'],
     ['site-inspections', 'room-inspection', 'inspection', 'room',
-      { room: 'North hall', score: 4 }, { room: 'North hall revised', score: 5, passed: false, category: 'follow-up' }, 'North hall']
+      { room: '😀a', score: 4 }, { room: 'e\u0301', score: 5, passed: false, category: 'follow-up' }, '😀a']
   ]) {
     const permissions = [`${moduleId}.read`, `${moduleId}.write`];
     const config = {
@@ -258,10 +265,29 @@ test('generated modules build as separate products and keep owner, receipt, UI s
     const adminCookie = await login(active.server, 'admin');
     const viewerCookie = await login(active.server, 'viewer');
     const path = `/api/${moduleId}`;
-    const invalidFields = moduleId === 'asset-register' ? { assetCode: 'BAD-100', serviceInterval: 121 } : { room: 'Bad room', score: 6 };
+    const invalidFields = moduleId === 'asset-register' ? { assetCode: 'BAD-100', serviceInterval: 121 } : { room: 'abc', score: 6 };
     const invalid = await httpRequest(active.server, path, { method: 'POST', cookie: adminCookie, key: `entity-${moduleId}-invalid`, body: { fields: invalidFields } });
     assert.equal(invalid.status, 400);
     assert.equal(invalid.body.error.code, 'INVALID');
+    assert.equal(invalid.body.error.commandOutcome.state, 'REJECTED_NO_BUSINESS_EFFECTS');
+    assert.equal(invalid.body.error.commandOutcome.scope, 'ORIGINAL_COMMAND');
+    assert.equal(invalid.body.error.commandOutcome.command.id, `entity-${moduleId}-invalid`);
+    assert.equal(invalid.body.error.commandOutcome.command.operation, `${moduleId}.${entityId}.create`);
+    assert.equal(invalid.body.error.commandOutcome.command.productId, productId);
+    assert.equal(invalid.body.error.commandOutcome.command.instanceId, active.app.host.instanceId);
+    assert.equal(invalid.body.error.commandOutcome.command.tenantId, 'tenant-a');
+    assert.equal(invalid.body.error.commandOutcome.command.actor.id, 'admin');
+    assert.equal(invalid.body.error.commandOutcome.command.submittedPayloadDigest, sha256(canonical({ fields: invalidFields })));
+      assert.ok(invalid.body.error.fieldErrors.some(error => error.path === `fields.${moduleId === 'asset-register' ? 'serviceInterval' : 'score'}`),
+        `generated owner returns a safe camelCase or standard field path bound to the submitted payload: ${JSON.stringify(invalid.body)}`);
+    if (moduleId === 'room-inspection') {
+      for (const [key, room] of [['short', '😀'], ['long', '😀abc'], ['nul', 'ab\0c']]) {
+        const rejected = await httpRequest(active.server, path, { method: 'POST', cookie: adminCookie, key: `entity-room-${key}`, body: { fields: { room, score: 4 } } });
+        assert.equal(rejected.status, 400, `${key} Unicode input is rejected before owner persistence`);
+        assert.equal(rejected.body.error.code, 'INVALID');
+        assert.doesNotMatch(JSON.stringify(rejected.body), /SQLITE_CONSTRAINT|CHECK constraint/u, 'raw SQLite check errors are not exposed');
+      }
+    }
     assert.deepEqual((await httpRequest(active.server, path, { cookie: adminCookie })).body.items, [], 'rejected source fields create no partial row');
     const createKey = `entity-${moduleId}-create-1`;
     const created = await httpRequest(active.server, path, { method: 'POST', cookie: adminCookie, key: createKey, body: { fields: createFields } });
@@ -273,9 +299,18 @@ test('generated modules build as separate products and keep owner, receipt, UI s
       assert.equal(created.body.fields.active, true);
       assert.equal(created.body.fields.condition, 'in-service');
     } else {
+      assert.equal(created.body.fields.tag, '😀a', 'text defaults are trimmed and bounded in Unicode code points');
       assert.equal(Object.hasOwn(created.body.fields, 'passed'), false);
       assert.equal(Object.hasOwn(created.body.fields, 'category'), false);
       assert.equal(Object.hasOwn(created.body.fields, 'notes'), false);
+      const owner = new DatabaseSync(join(config.dataDirectory, 'modules', 'room-inspection.sqlite'));
+      try {
+        const insert = owner.prepare('INSERT INTO inspection_records(tenant,id,version,room,tag,score) VALUES(?,?,?,?,?,?)');
+        const failsCheck = action => assert.throws(action, error => error.code === 'ERR_SQLITE_ERROR' && (error.errcode & 0xff) === 19);
+        failsCheck(() => insert.run('tenant-a', 'direct-short', 1, '😀', '😀a', 4));
+        failsCheck(() => insert.run('tenant-a', 'direct-long', 1, '😀abc', '😀a', 4));
+        failsCheck(() => insert.run('tenant-a', 'direct-nul', 1, 'ab\0c', '😀a', 4));
+      } finally { owner.close(); }
     }
     const operationReplay = await active.app.host.invokeOperation(`${moduleId}.${entityId}.create`, 1, actors.admin, 'tenant-a', { fields: createFields }, createKey);
     assert.deepEqual(operationReplay, created.body, 'HTTP and operation handlers share the same owner command receipt');
@@ -303,18 +338,26 @@ test('generated modules build as separate products and keep owner, receipt, UI s
       assert.equal(edited.body.fields.passed, false, 'an explicit false optional boolean is retained');
       assert.equal(edited.body.fields.category, 'follow-up', 'an explicit optional enum value is retained');
       const cleared = await httpRequest(active.server, `${path}/edit`, { method: 'POST', cookie: adminCookie, key: 'entity-room-inspection-clear-optionals',
-        body: { id: created.body.id, expectedVersion: 2, fields: { room: 'North hall revised', score: 5 } } });
+        body: { id: created.body.id, expectedVersion: 2, fields: { room: 'abc', score: 5 } } });
       assert.equal(cleared.status, 200, JSON.stringify(cleared.body));
       assert.equal(cleared.body.version, 3);
       for (const optional of ['passed', 'category', 'notes']) assert.equal(Object.hasOwn(cleared.body.fields, optional), false, `${optional} stays absent when not set`);
+      assert.equal(cleared.body.fields.tag, '😀a');
       finalRecord = cleared.body;
     }
-    const stale = await httpRequest(active.server, `${path}/edit`, {
-      method: 'POST', cookie: adminCookie, key: `entity-${moduleId}-stale-edit`,
-      body: { ...editBody, fields: { ...editFields, [displayField]: 'Must not overwrite' } }
-    });
+    const staleBody = { ...editBody, fields: { ...editFields, [displayField]: moduleId === 'room-inspection' ? 'xyz' : 'Must not overwrite' } };
+    const staleKey = `entity-${moduleId}-stale-edit`;
+    const stale = await httpRequest(active.server, `${path}/edit`, { method: 'POST', cookie: adminCookie, key: staleKey, body: staleBody });
     assert.equal(stale.status, 409);
     assert.equal(stale.body.error.code, 'CONFLICT');
+    assert.equal(stale.body.error.commandOutcome.state, 'REJECTED_NO_BUSINESS_EFFECTS');
+    assert.equal(stale.body.error.commandOutcome.command.id, staleKey);
+    assert.equal(stale.body.error.commandOutcome.command.submittedPayloadDigest, sha256(canonical(staleBody)));
+    const staleReplay = await httpRequest(active.server, `${path}/edit`, { method: 'POST', cookie: adminCookie, key: staleKey, body: staleBody });
+    assert.deepEqual(staleReplay.body.error.commandOutcome, stale.body.error.commandOutcome, 'exact rejected edit retry replays the same terminal original outcome');
+    const staleRebound = await httpRequest(active.server, `${path}/edit`, { method: 'POST', cookie: adminCookie, key: staleKey, body: { ...staleBody, expectedVersion: staleBody.expectedVersion + 1 } });
+    assert.equal(staleRebound.body.error.code, 'CONFLICT');
+    assert.equal(staleRebound.body.error.commandOutcome, undefined, 'a rejected command key cannot certify a changed payload');
     const afterConflict = await httpRequest(active.server, `${path}/record?id=${encodeURIComponent(created.body.id)}`, { cookie: adminCookie });
     assert.deepEqual(afterConflict.body, finalRecord);
 
@@ -340,10 +383,12 @@ test('generated modules build as separate products and keep owner, receipt, UI s
     await active.app.close(); active = undefined;
   }
 
-  const workspaceModuleUrl = pathToFileURL(join(exportRoots.get('site-inspections'), 'modules/room-inspection/dist/ui.js')).href;
+  const siteExportRoot = exportRoots.get('site-inspections');
+  const workspaceModuleUrl = pathToFileURL(join(siteExportRoot, 'modules/room-inspection/dist/ui.js')).href;
   const { workspace } = await import(workspaceModuleUrl);
-  const pendingCreate = deferred();
-  const createAttempts = [], editAttempts = [];
+  const { markTrustedCommandError: markExportedTrustedCommandError } = await import(pathToFileURL(join(siteExportRoot, 'packages/contracts/dist/ui-state.js')).href);
+  const pendingCreate = deferred(), afterDisposeCreate = deferred();
+  const createAttempts = [], editAttempts = [], postSignals = [];
   let savedPayload;
   let existing = { id: 'existing-room', version: 1, fields: { room: 'Existing room', score: 3, passed: false, category: 'routine' } };
   await harness(async env => {
@@ -352,32 +397,49 @@ test('generated modules build as separate products and keep owner, receipt, UI s
         if (path === '/api/room-inspection') return { items: [{ id: existing.id, version: existing.version, label: existing.fields.room }], limit: 100 };
         return { ...existing };
       },
-      async post(path, body, commandId) {
+      async post(path, body, commandId, requestSignal) {
+        postSignals.push(requestSignal);
         if (path === '/api/room-inspection') {
           const captured = { body: structuredClone(body), commandId };
           createAttempts.push(captured);
           if (createAttempts.length === 1) throw new Error('The first response was not received');
+          if (createAttempts.length === 3) return afterDisposeCreate.promise;
           savedPayload = captured;
           return pendingCreate.promise;
         }
         editAttempts.push({ body: structuredClone(body), commandId });
-        throw new PlatformError('CONFLICT', 'Record changed; reload before editing');
+        if (editAttempts.length === 1) {
+          const error = new PlatformError('CONFLICT', 'Record changed; compare with the current version');
+          markExportedTrustedCommandError(error, {
+            schema: 'quadbridge.command-outcome.v1', state: 'REJECTED_NO_BUSINESS_EFFECTS', scope: 'ORIGINAL_COMMAND', terminal: true,
+            command: { id: commandId, operation: 'room-inspection.inspection.edit', productId: 'site-inspections', instanceId: 'inspection-ui-test', tenantId: 'tenant-a', actor: { id: 'admin', kind: 'user' }, submittedPayloadDigest: sha256(canonical(body)) }
+          });
+          throw error;
+        }
+        existing = { id: body.id, version: body.expectedVersion + 1, fields: structuredClone(body.fields) };
+        return existing;
       }
     };
     const abort = new AbortController();
-    const dispose = workspace.mount({ root: env.root, signal: abort.signal, permissions: ['room-inspection.read', 'room-inspection.write'], api });
+    const dispose = workspace.mount({ root: env.root, scope: { productId: 'site-inspections', instanceId: 'inspection-ui-test', tenantId: 'tenant-a' }, actor: { id: 'admin', kind: 'user' }, signal: abort.signal, permissions: ['room-inspection.read', 'room-inspection.write'], api });
     await flush();
     const controls = env.all().filter(node => node.name);
     const passed = controls.find(node => node.name === 'passed');
     assert.equal(passed.value, '', 'an optional boolean begins in its not-set state');
     assert.equal(passed.required, false, 'false is a valid required boolean value');
-    const roomInput = controls.find(node => node.name === 'room'); roomInput.value = 'New room';
+    const roomInput = controls.find(node => node.name === 'room');
+    assert.equal(roomInput.maxLength, undefined, 'the UI has no UTF-16 native maxlength gate');
     const scoreInput = controls.find(node => node.name === 'score'); scoreInput.value = '4';
     const createForm = env.all().find(node => node.tag === 'form');
+    roomInput.value = '😀'; createForm.emit('submit'); await flush();
+    assert.equal(createAttempts.length, 0, 'one code point is rejected by the UI before the API call');
+    roomInput.value = '😀abc'; createForm.emit('submit'); await flush();
+    assert.equal(createAttempts.length, 0, 'too many code points are rejected by the UI before the API call');
+    roomInput.value = '😀a';
     createForm.emit('submit');
-    await flush(); await flush();
-    assert.equal(createAttempts.length, 1);
-    assert.deepEqual(createAttempts[0].body, { fields: { room: 'New room', score: 4 } }, 'unset optional boolean/enum/text are omitted from the captured payload');
+    await flushUntil(() => createAttempts.length === 1, 'valid create reaches the API after command capture');
+    assert.equal(createAttempts.length, 1, `valid create did not reach the API: ${JSON.stringify(env.all().filter(node => node.tag === 'p').map(node => node.textContent))}`);
+    assert.deepEqual(createAttempts[0].body, { fields: { room: '😀a', tag: '😀a', score: 4 } }, 'Unicode text and its normalized default share the API schema bounds');
     roomInput.value = 'Draft changed after uncertain response';
     createForm.emit('input');
     const retry = env.all().find(node => node.tag === 'button' && node.textContent === 'Retry the exact command');
@@ -401,19 +463,43 @@ test('generated modules build as separate products and keep owner, receipt, UI s
     editButton.emit('click');
     await flush();
     const editForm = env.all().find(node => node.tag === 'form' && node.className === 'entity-edit');
+    const editRoom = env.all().filter(node => node.name === 'room').at(-1);
+    editRoom.value = '😀'; editForm.emit('submit'); await flush();
+    assert.equal(editAttempts.length, 0, 'edit UI applies the same minimum code-point rule');
+    editRoom.value = 'e\u0301';
     for (const id of ['passed', 'category']) env.all().filter(node => node.name === id).at(-1).value = '';
-    editForm.emit('submit');
-    await flush(); await flush();
-    assert.equal(editAttempts.length, 1);
-    assert.deepEqual(editAttempts[0].body.fields, { room: 'Existing room', score: 3 }, 'an edit may return optional controls to Not set');
-    assert.ok(env.all().some(node => node.textContent.includes('This version is no longer current')));
-    const reload = env.all().find(node => node.tag === 'button' && node.textContent === 'Reload selected record');
-    assert.ok(reload, 'a known version conflict offers an explicit reload');
     existing = { ...existing, version: 2, fields: { ...existing.fields, score: 4 } };
-    reload.emit('click');
+    editForm.emit('submit');
+    await flushUntil(() => editAttempts.length === 1, 'valid edit reaches the API after command capture');
+    assert.equal(editAttempts.length, 1);
+    assert.deepEqual(editAttempts[0].body.fields, { room: 'e\u0301', tag: '😀a', score: 3 }, 'combining marks count as two code points and optional controls may remain unset');
+    assert.ok(env.all().some(node => node.textContent.includes('Current version 2')));
+    assert.equal(editRoom.value, 'e\u0301', 'terminal rejection preserves the submitted draft for comparison');
+    const useCurrent = env.all().find(node => node.tag === 'button' && node.textContent === 'Use current version for this draft');
+    assert.ok(useCurrent, 'a matching terminal owner rejection offers an explicit newer-version comparison');
+    useCurrent.emit('click');
+    editForm.emit('submit');
     await flush();
-    assert.ok(env.all().some(node => node.textContent === 'Inspection · v2'));
-    dispose(); abort.abort();
+    await flush();
+    assert.equal(editAttempts.length, 2);
+    assert.notEqual(editAttempts[1].commandId, editAttempts[0].commandId, 'a corrected command receives a fresh key only after the original terminal rejection');
+    assert.equal(editAttempts[1].body.expectedVersion, 2);
+    assert.deepEqual(editAttempts[1].body.fields, editAttempts[0].body.fields, 'the draft survives the version comparison');
+    assert.ok(env.all().some(node => node.textContent === 'Inspection · v3'));
+    roomInput.value = 'xyz';
+    createForm.emit('submit');
+    await flushUntil(() => createAttempts.length === 3, 'valid pending create reaches the API after command capture');
+    assert.equal(createAttempts.length, 3, 'a new command is admitted after the preceding write is confirmed');
+    const retryPanel = env.all().find(node => node.className === 'entity-retry');
+    dispose();
+    assert.equal(postSignals.at(-1).aborted, true, 'cleanup aborts workspace-owned pending requests even if the parent signal stays active');
+    assert.equal(roomInput.value, '', 'cleanup clears the held create draft even when its signal is not aborted');
+    assert.ok(!env.all().some(node => node.textContent === 'Inspection · v3'), 'cleanup clears selected record presentation');
+    afterDisposeCreate.reject(new Error('late post-cleanup failure'));
+    await flush(); await flush();
+    assert.equal(retryPanel.hidden, true, 'a late request failure cannot republish pending intent or retry state after cleanup');
+    assert.doesNotMatch(env.root.textContent, /late post-cleanup failure/);
+    abort.abort();
   });
 
   const reviewedWorkerBuild = await buildThroughReviewedWorker(root);

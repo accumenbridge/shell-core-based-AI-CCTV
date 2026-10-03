@@ -1,0 +1,18 @@
+{
+  "schema": "veyviz.rejected-freeze-source-preservation.v1",
+  "sourceFreeze": "freeze-run-05",
+  "files": [
+    {
+      "originalPath": "tools/veyviz-snapshot.mjs",
+      "archivePath": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-05-original-source\\tools__veyviz-snapshot.mjs",
+      "bytes": 23318,
+      "sha256": "d5833ee0807fc435c695019ac17d882ce345e6c3983aad66543227a8848858c9"
+    },
+    {
+      "originalPath": "tests/veyviz-snapshot.test.mjs",
+      "archivePath": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-05-original-source\\tests__veyviz-snapshot.test.mjs",
+      "bytes": 25703,
+      "sha256": "03725790a03491103a2b896c7cc546f82f836f8985d58f02a28d71cfc11465f4"
+    }
+  ]
+}

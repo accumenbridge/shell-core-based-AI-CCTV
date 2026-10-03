@@ -7,15 +7,19 @@
     "node": ">=22.16.0"
   },
   "scripts": {
+    "android:prepare": "node tools/prepare-native.mjs android",
     "android:add": "cap add android",
     "android:sync": "cap sync android",
+    "ios:prepare": "node tools/prepare-native.mjs ios",
     "ios:add": "cap add ios",
     "ios:sync": "cap sync ios"
   },
   "dependencies": {
+    "@capacitor/app": "8.1.1",
     "@capacitor/android": "8.5.2",
     "@capacitor/core": "8.5.2",
-    "@capacitor/ios": "8.5.2"
+    "@capacitor/ios": "8.5.2",
+    "@quadbridge/native-session": "file:./native-session"
   },
   "devDependencies": {
     "@capacitor/cli": "8.5.2"

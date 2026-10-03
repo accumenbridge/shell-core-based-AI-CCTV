@@ -1,0 +1,99 @@
+{
+  "schema": "veyviz.rejected-source-review-preservation.v1",
+  "recordedAt": "2026-10-03T13:19:14.806Z",
+  "verdict": "CHANGES_REQUIRED",
+  "entries": [
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\package.json",
+      "path": "source/package.json",
+      "bytes": 1539,
+      "sha256": "f0738ec1b03bd4f59b1a05f88815ce6e7f4d7b6104113f6d5a21b62278c31887"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tools\\veyviz-build.mjs",
+      "path": "source/tools/veyviz-build.mjs",
+      "bytes": 14348,
+      "sha256": "f00694386527f5e73c8fab5b4ce056fe8df6c6c918bd85913b1ab3320f22c71c"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tools\\veyviz-inventory.mjs",
+      "path": "source/tools/veyviz-inventory.mjs",
+      "bytes": 24575,
+      "sha256": "a94720f5a252a5d02c7cc3c3d381530b74cdc58715983c965a69155d5c9fb2cd"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tools\\veyviz-start.mjs",
+      "path": "source/tools/veyviz-start.mjs",
+      "bytes": 15913,
+      "sha256": "c7f9c30c5e11458fbe0f6291abc6254650be93a70ad7f730297ca4e4e2382662"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-05-original-source\\tools__veyviz-snapshot.mjs",
+      "path": "source/tools/veyviz-snapshot.mjs",
+      "bytes": 23318,
+      "sha256": "d5833ee0807fc435c695019ac17d882ce345e6c3983aad66543227a8848858c9"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tests\\veyviz-lifecycle.test.mjs",
+      "path": "source/tests/veyviz-lifecycle.test.mjs",
+      "bytes": 14898,
+      "sha256": "1493fab0aa8c97afbd8224dad5262fb0c113ae16c8d5fd220e4919881d716249"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-05-original-source\\tests__veyviz-snapshot.test.mjs",
+      "path": "source/tests/veyviz-snapshot.test.mjs",
+      "bytes": 25703,
+      "sha256": "03725790a03491103a2b896c7cc546f82f836f8985d58f02a28d71cfc11465f4"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-05-original-source/manifest.json",
+      "path": "original-source-preservation.json",
+      "bytes": 770,
+      "sha256": "eb0af751064fa8d3133795d590fbc45444b9f019b7868121b601ce3eef03c431"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-05\\capture-freeze.mjs",
+      "path": "capture/capture-freeze.mjs",
+      "bytes": 6029,
+      "sha256": "1b9d7c2cccb4bed20b9b08dc9b4128765eb258a3c8b968618af4b5dcf7587a88"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-05\\freeze.json",
+      "path": "capture/freeze.json",
+      "bytes": 4862,
+      "sha256": "31b967daf7d498ffa19de8534351387d9224c7b5de043adddf517cdb4e13120b"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-05\\source-active-observed.json",
+      "path": "capture/source-active-observed.json",
+      "bytes": 64728,
+      "sha256": "239c2f140566fd015d3cc7fb6c5172fe663618cb7d79b310e8fc036f787ecf1a"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-05\\source-overlay.json",
+      "path": "capture/source-overlay.json",
+      "bytes": 63696,
+      "sha256": "b9c275414c9ce8647d05b7d4d358461c94f859f0b65c77268a01567fd8d12fc2"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-05\\toolchain-active-observed.json",
+      "path": "capture/toolchain-active-observed.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-05\\toolchain-overlay.json",
+      "path": "capture/toolchain-overlay.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": ".local/product-immutable-runtime-evidence/review/freeze05-minimal-delta-source-review-20261003-01.json",
+      "path": "independent-source-review.json",
+      "bytes": 3704,
+      "sha256": "22e7ecc91a8d9369a300418e79599a4a428d25728c99e4b87f65ea5b54c8b292"
+    }
+  ],
+  "meaning": "Exact rejected freeze05 bytes; no build/test executed for this candidate. Receipt source repair closed, clean fixture still incorrect.",
+  "archiveHistory": "First root preservation stopped honestly on expected test-owner drift after six exact files. Reused only hash-identical partial copies and recovered the rejected helper/test bytes from the implementer original-source archive; all seven now match original freeze05 hashes."
+}

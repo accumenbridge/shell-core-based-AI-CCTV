@@ -1,0 +1,140 @@
+{
+  "schema": "veyviz.product-paging-reviewer-overlay-execution-index.v1",
+  "candidateIdentity": "2437aeb7d7627763afc3cba0081f33a2de4cac2c7ceacc31010fef1d518937a9",
+  "sourceHead": "818097ee4ca6d89270f0f5d6c5dace08bae44fa2",
+  "baseSnapshotIdentity": "b6a3ed725d39ad1e2d77cf6f2e2aa4b07a78e72df53f0427b08f578975489663",
+  "snapshotIdentityKind": "bounded overlay of exactly three authorized owner paths onto the captured combined-source snapshot; this is not a full-current-tree or browser/live acceptance claim",
+  "sourceDigestBeforeBuild": "48f2ae2618c23967146c1c8d6eb4f46425c678695506cd1d89bf4137ebe3389f",
+  "sourceDigestAfterFocusedTests": "48f2ae2618c23967146c1c8d6eb4f46425c678695506cd1d89bf4137ebe3389f",
+  "maintainedSourceFiles": 917,
+  "ownerPathsCompared": 17,
+  "ownerPathHashesStableAcrossBuildAndTests": true,
+  "tempPathDiagnostic": {
+    "rawLogPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\test-temp-path-lengths.txt",
+    "longEvidenceTempRootLength": 98,
+    "longEvidenceTempRuntimeConfigs": 4,
+    "longEvidenceTempDataDirectoryPathLengthRange": [214, 225],
+    "shortWorkspaceTempRootLength": 54,
+    "shortWorkspaceTempRuntimeConfigs": 2,
+    "shortWorkspaceTempDataDirectoryPathLengthRange": [181, 181],
+    "finding": "The Node test-runner startup error (unable to open database file) occurred with the deeply nested evidence TEMP root; catalog start/stop and all lifecycle tests passed with the short workspace-local root. This is a path-depth correlation; no exact OS path limit was established."
+  },
+  "sourceOverlays": [
+    "modules/veyviz-analysis/src/ui.ts",
+    "modules/veyviz-sources/src/index.ts",
+    "tests/veyviz-product.test.mjs"
+  ],
+  "executions": [
+    {
+      "name": "reviewer-overlay-snapshot",
+      "argv": ["node", ".local/product-paging-evidence/create-reviewer-overlay.mjs", "D:\\Veyviz-code\\veyviz-quadbridge-product", "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-1f23701dc1639918-1\\source"],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 0,
+      "rawLogPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\create-reviewer-overlay.txt",
+      "result": {"candidateIdentity": "2437aeb7d7627763afc3cba0081f33a2de4cac2c7ceacc31010fef1d518937a9", "maintainedFiles": 917}
+    },
+    {
+      "name": "owner-path-inventory-before-fresh-build",
+      "argv": ["node", ".local/product-paging-evidence/capture-reviewer-overlay-inventory.mjs", ".local/product-paging-evidence/snapshot-overlay-2437aeb7d7627763/source", "before-fresh-build"],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 0,
+      "rawLogPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\overlay-before-fresh-build-inventory.txt",
+      "result": {"maintainedFiles": 917, "ownerPaths": 17, "changedFromBase": 3, "missingFromBase": 0}
+    },
+    {
+      "name": "fresh-build-reviewer-overlay",
+      "argv": ["npm", "run", "build"],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-overlay-2437aeb7d7627763\\source",
+      "exitCode": 0,
+      "rawLogPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\fresh-build-reviewer-overlay.txt",
+      "result": "Built combined, knowledge, neutral, service-desk, veyviz-catalog and veyviz-review artifacts; review includes 4 modules and worker=true."
+    },
+    {
+      "name": "focused-tests-attempt-01-long-evidence-temp",
+      "argv": ["node", "--test", "--test-concurrency=1", "--test-reporter=tap", "tests/veyviz-product.test.mjs", "tests/veyviz-lifecycle.test.mjs"],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-overlay-2437aeb7d7627763\\source",
+      "exitCode": 1,
+      "testCounts": {"tests": 13, "pass": 11, "fail": 2, "skipped": 0, "cancelled": 0, "todo": 0},
+      "failure": "The two catalog child-start lifecycle cases raised Startup and cleanup failed; a Node-test-runner diagnostic identified unable to open database file with the deeply nested evidence TEMP root.",
+      "rawLogPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\focused-tests-reviewer-overlay.txt"
+    },
+    {
+      "name": "focused-lifecycle-isolated-diagnostic-attempt",
+      "argv": ["node", "--test", "--name-pattern=an unclean owned process exit remains quarantined", "--test-reporter=tap", "tests/veyviz-lifecycle.test.mjs"],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-overlay-2437aeb7d7627763\\source",
+      "exitCode": 1,
+      "testCounts": {"tests": 1, "pass": 0, "fail": 1, "skipped": 0, "cancelled": 0, "todo": 0},
+      "failure": "Same long temporary path startup issue; retained as a failed attempt.",
+      "rawLogPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\focused-lifecycle-isolated-reviewer-overlay.txt"
+    },
+    {
+      "name": "focused-tests-attempt-02-original-command-long-evidence-temp",
+      "argv": ["node", "--test", "tests/veyviz-product.test.mjs", "tests/veyviz-lifecycle.test.mjs"],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-overlay-2437aeb7d7627763\\source",
+      "exitCode": 1,
+      "testCounts": {"tests": 13, "pass": 11, "fail": 2, "skipped": 0, "cancelled": 0, "todo": 0},
+      "failure": "Same long temporary path startup issue; retained as a failed attempt.",
+      "rawLogPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\focused-tests-reviewer-overlay-retry-01.txt"
+    },
+    {
+      "name": "catalog-start-stop-diagnostic-short-host-temp",
+      "argv": ["node", ".local/product-paging-evidence/diagnose-reviewer-overlay-start.mjs", "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-overlay-2437aeb7d7627763\\source", "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\test-temp-reviewer-overlay\\diagnostic-catalog"],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 0,
+      "rawLogPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\diagnose-reviewer-overlay-start.txt",
+      "result": "catalog runtime ready and stopped with cleanup=true"
+    },
+    {
+      "name": "catalog-start-stop-diagnostic-long-local-temp",
+      "argv": ["node", ".local/product-paging-evidence/diagnose-reviewer-overlay-start.mjs", "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-overlay-2437aeb7d7627763\\source", "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\test-temp-reviewer-overlay\\diagnostic-catalog-local"],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 0,
+      "rawLogPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\diagnose-reviewer-overlay-start-local-temp.txt",
+      "result": "catalog runtime ready and stopped with cleanup=true"
+    },
+    {
+      "name": "catalog-start-diagnostic-under-node-test-runner-long-temp",
+      "argv": ["node", "--test", ".local/product-paging-evidence/diagnose-reviewer-overlay-start.test.mjs"],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 1,
+      "testCounts": {"tests": 1, "pass": 0, "fail": 1, "skipped": 0, "cancelled": 0, "todo": 0},
+      "failure": "Product startup failed: unable to open database file; owner diagnostics recorded EPIPE during the failure-path stop request; child exit state was false at diagnostic capture time.",
+      "rawLogPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\diagnose-reviewer-overlay-start-test.txt"
+    },
+    {
+      "name": "focused-tests-final-short-local-temp",
+      "argv": ["node", "--test", "tests/veyviz-product.test.mjs", "tests/veyviz-lifecycle.test.mjs"],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-overlay-2437aeb7d7627763\\source",
+      "exitCode": 0,
+      "testCounts": {"tests": 13, "pass": 13, "fail": 0, "skipped": 0, "cancelled": 0, "todo": 0},
+      "environmentPolicy": "TEMP/TMP/TMPDIR set to the short workspace-local D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\vp-tmp; VEYVIZ_AI_PROFILE, NODE_OPTIONS, NODE_PATH and NODE_ENV removed from this test process.",
+      "inference": "The product test provider is replaced with deterministic resultFor; no model or Python inference runs.",
+      "lifecycleProcesses": "Only test-owned veyviz-catalog children ran on port 0 using local test temp data.",
+      "rawLogPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\focused-tests-reviewer-overlay-retry-02.txt"
+    },
+    {
+      "name": "owner-path-inventory-after-focused-tests",
+      "argv": ["node", ".local/product-paging-evidence/capture-reviewer-overlay-inventory.mjs", ".local/product-paging-evidence/snapshot-overlay-2437aeb7d7627763/source", "after-focused-tests"],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 0,
+      "rawLogPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\overlay-after-focused-tests-inventory.txt",
+      "result": {"maintainedFiles": 917, "ownerPaths": 17, "changedFromBase": 3, "missingFromBase": 0}
+    },
+    {
+      "name": "compare-owner-source-hashes-before-build-and-after-tests",
+      "argv": ["node", ".local/product-paging-evidence/compare-reviewer-overlay-inventories.mjs"],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 0,
+      "rawLogPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\overlay-build-test-source-comparison.txt",
+      "result": {"maintainedDigestStable": true, "maintainedCountStable": true, "ownerPathCount": 17, "ownerPathHashesStable": true}
+    }
+  ],
+  "notRun": ["full npm test", "real model/Python inference", "native qualification", "browser/Playwright", "production/live acceptance"],
+  "unknownCaptures": [
+    {
+      "capture": "Final exit state for the diagnostic Node-test-runner child after the long-temp startup failure",
+      "status": "unknown",
+      "detail": "The owned diagnostic captured childExited=false at the failure-path stop/EPIPE moment. No separate final process-exit or reaper evidence was collected; no PID-based cleanup was attempted."
+    }
+  ]
+}

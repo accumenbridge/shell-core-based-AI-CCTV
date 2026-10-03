@@ -21,13 +21,14 @@ test('workspace export closure follows selected Knowledge package manifests and 
   assert.ok(paths.includes('modules/knowledge'));
   assert.ok(paths.includes('modules/handoff'));
   assert.equal(combined.dependencies['@quadbridge/ai-core'], '0.3.0');
-  assert.equal(combined.dependencies['@quadbridge/knowledge'], '0.2.3');
-  assert.equal(combined.dependencies['@quadbridge/handoff'], '0.2.3');
+  assert.equal(combined.dependencies['@quadbridge/knowledge'], '0.2.4');
+  assert.equal(combined.dependencies['@quadbridge/handoff'], '0.2.4');
 
   const desk = derive(resolve(product('service-desk'), catalog));
   assert.ok(desk.roots.some(root => root.path === 'packages/client-core'));
   assert.equal(desk.roots.some(root => root.path === 'packages/mobile-shell'), false);
-  assert.equal(desk.roots.some(root => root.id === 'ai-core' || root.id === 'knowledge' || root.id === 'handoff'), false);
+  assert.ok(desk.roots.some(root => root.id === 'ai-core'), 'backend-host declares the neutral optional model-answer capability type');
+  assert.equal(desk.roots.some(root => root.id === 'knowledge' || root.id === 'handoff'), false);
 });
 
 test('workspace closure rejects stale repeated package versions, unselected packages and identifier collisions', () => {
@@ -45,4 +46,24 @@ test('workspace closure rejects stale repeated package versions, unselected pack
   const collision = structuredClone(plan);
   collision.modules[0].id = 'ai-core';
   assert.throws(() => deriveRuntimeWorkspaceClosure(collision, path => read(path)), /collide/);
+});
+
+test('runtime closure includes the selected module SDK and exact Studio model transitive packages only when declared', () => {
+  const plan = resolve(product('combined'), catalog);
+  const withSdk = deriveRuntimeWorkspaceClosure(plan, path => {
+    const value = read(path);
+    if (path === 'modules/handoff/package.json') value.dependencies['@quadbridge/module-sdk'] = '0.3.0';
+    return value;
+  });
+  assert.ok(withSdk.roots.some(root => root.path === 'packages/module-sdk'));
+  assert.ok(withSdk.roots.some(root => root.path === 'packages/studio-model'));
+  assert.equal(withSdk.dependencies['@quadbridge/module-sdk'], '0.3.0');
+  assert.equal(withSdk.dependencies['@quadbridge/studio-model'], '0.3.0');
+  assert.equal(withSdk.roots.some(root => root.path === 'packages/mobile-shell'), false);
+
+  assert.throws(() => deriveRuntimeWorkspaceClosure(plan, path => {
+    const value = read(path);
+    if (path === 'modules/handoff/package.json') value.dependencies['@quadbridge/unreviewed-sdk'] = '1.0.0';
+    return value;
+  }), /Runtime workspace dependency is not selected or reviewed/);
 });

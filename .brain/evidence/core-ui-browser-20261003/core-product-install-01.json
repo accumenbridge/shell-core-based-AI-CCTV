@@ -1,0 +1,7 @@
+{
+  "command": "npm ci --offline --no-audit --no-fund",
+  "startedAt": "2026-10-03T16:21:58.2421427Z",
+  "endedAt": "2026-10-03T16:21:59.2631171Z",
+  "exitCode": 0,
+  "lockSha256": "b5ace3fb717e7d0165c636e44430af7b7f0344d89cb700404e38a3fbcc0442c0"
+}

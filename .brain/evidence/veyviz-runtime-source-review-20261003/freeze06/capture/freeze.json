@@ -1,0 +1,135 @@
+{
+  "schema": "veyviz.isolated-source-freeze.v2",
+  "candidate": {
+    "activeRoot": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+    "overlayRoot": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003",
+    "evidenceRoot": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-06",
+    "sourceDigest": "3a6f87bf962237bf3542892b075fdad3807e647693ee89ff4e28223694ff46da",
+    "toolchainDigest": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+    "sourceFiles": 360
+  },
+  "copiedDeltaSinceFreeze05": [
+    {
+      "path": "tests/veyviz-snapshot.test.mjs",
+      "previousSha256": "03725790a03491103a2b896c7cc546f82f836f8985d58f02a28d71cfc11465f4",
+      "candidateSha256": "fee3b59643c5ddaadc4a667f094514b15386688db55458beb4166c5fc1db44f8"
+    }
+  ],
+  "ownerHashes": {
+    "package.json": "f0738ec1b03bd4f59b1a05f88815ce6e7f4d7b6104113f6d5a21b62278c31887",
+    "tools/veyviz-build.mjs": "f00694386527f5e73c8fab5b4ce056fe8df6c6c918bd85913b1ab3320f22c71c",
+    "tools/veyviz-inventory.mjs": "a94720f5a252a5d02c7cc3c3d381530b74cdc58715983c965a69155d5c9fb2cd",
+    "tools/veyviz-start.mjs": "c7f9c30c5e11458fbe0f6291abc6254650be93a70ad7f730297ca4e4e2382662",
+    "tools/veyviz-snapshot.mjs": "d5833ee0807fc435c695019ac17d882ce345e6c3983aad66543227a8848858c9",
+    "tests/veyviz-lifecycle.test.mjs": "1493fab0aa8c97afbd8224dad5262fb0c113ae16c8d5fd220e4919881d716249",
+    "tests/veyviz-snapshot.test.mjs": "fee3b59643c5ddaadc4a667f094514b15386688db55458beb4166c5fc1db44f8"
+  },
+  "toolPackages": [
+    {
+      "name": "typescript",
+      "version": "5.8.3",
+      "files": 130
+    },
+    {
+      "name": "esbuild",
+      "version": "0.28.2",
+      "files": 7
+    },
+    {
+      "name": "@types/node",
+      "version": "22.19.7",
+      "files": 73
+    },
+    {
+      "name": "undici-types",
+      "version": "6.21.0",
+      "files": 41
+    },
+    {
+      "name": "@esbuild/win32-x64",
+      "version": "0.28.2",
+      "files": 3
+    }
+  ],
+  "activeComparison": {
+    "sourceDigest": "34e4c4c7aa0a23b6395e0f4a5bdd5c6706f19899b6e28310a61cfd0aae4d9ca4",
+    "toolchainDigest": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+    "changedFromFreeze05": [
+      "modules/veyviz-intelligence/README.md",
+      "modules/veyviz-intelligence/VERIFICATION.md",
+      "modules/veyviz-intelligence/module.json",
+      "modules/veyviz-intelligence/src/analytics.ts",
+      "modules/veyviz-intelligence/src/features.ts",
+      "modules/veyviz-intelligence/src/index.ts",
+      "modules/veyviz-intelligence/src/runner-hash.ts",
+      "modules/veyviz-intelligence/src/runner.ts",
+      "modules/veyviz-intelligence/src/styles.css",
+      "modules/veyviz-intelligence/src/ui.ts",
+      "modules/veyviz-intelligence/src/validation.ts",
+      "services/veyviz-ai/ingest.py",
+      "services/veyviz-ai/runtime_bridge.py",
+      "services/veyviz-ai/runtime_setup.py",
+      "services/veyviz-ai/runtime_worker.py",
+      "services/veyviz-ai/temporal.py",
+      "services/veyviz-ai/test_ingest.py",
+      "services/veyviz-ai/test_runtime.py",
+      "services/veyviz-ai/test_temporal.py",
+      "solutions/veyviz/wiring.mjs",
+      "tests/veyviz-intelligence.test.mjs",
+      "tests/veyviz-snapshot.test.mjs",
+      "tools/veyviz-intelligence.mjs"
+    ],
+    "activeVsOverlay": [
+      "modules/veyviz-intelligence/README.md",
+      "modules/veyviz-intelligence/VERIFICATION.md",
+      "modules/veyviz-intelligence/module.json",
+      "modules/veyviz-intelligence/src/analytics.ts",
+      "modules/veyviz-intelligence/src/features.ts",
+      "modules/veyviz-intelligence/src/index.ts",
+      "modules/veyviz-intelligence/src/runner-hash.ts",
+      "modules/veyviz-intelligence/src/runner.ts",
+      "modules/veyviz-intelligence/src/styles.css",
+      "modules/veyviz-intelligence/src/ui.ts",
+      "modules/veyviz-intelligence/src/validation.ts",
+      "services/veyviz-ai/ingest.py",
+      "services/veyviz-ai/runtime_bridge.py",
+      "services/veyviz-ai/runtime_setup.py",
+      "services/veyviz-ai/runtime_worker.py",
+      "services/veyviz-ai/temporal.py",
+      "services/veyviz-ai/test_ingest.py",
+      "services/veyviz-ai/test_runtime.py",
+      "services/veyviz-ai/test_temporal.py",
+      "solutions/veyviz/wiring.mjs",
+      "tests/veyviz-intelligence.test.mjs",
+      "tools/veyviz-intelligence.mjs"
+    ],
+    "copiedPaths": [
+      "tests/veyviz-snapshot.test.mjs"
+    ],
+    "copiedOnlyAdmittedPaths": true,
+    "toolchainMatchesCandidate": true
+  },
+  "evidenceFiles": {
+    "source-overlay.json": {
+      "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-06\\source-overlay.json",
+      "bytes": 63696,
+      "sha256": "3af05ba71748d1c501244306c78b92bc27ff9626df75a17d953b9b4596b449bc"
+    },
+    "toolchain-overlay.json": {
+      "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-06\\toolchain-overlay.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    "source-active-observed.json": {
+      "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-06\\source-active-observed.json",
+      "bytes": 64550,
+      "sha256": "86043e9f849d85c91add68f153dc0e9b65419f7bd8af9bbe78a0cf61dac83a5b"
+    },
+    "toolchain-active-observed.json": {
+      "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-06\\toolchain-active-observed.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    }
+  },
+  "capturedAt": "2026-10-03T13:19:10.951Z"
+}

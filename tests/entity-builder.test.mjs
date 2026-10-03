@@ -29,13 +29,26 @@ test('entity specifications are closed, bounded inputs with explicit field defau
   }
 });
 
+test('generated text defaults are normalized before Unicode code-point bounds and reject NUL', () => {
+  const source = {
+    schema: 'quadbridge.entity-spec.v1',
+    module: { id: 'unicode-entity', version: '1.0.0', label: 'Unicode entity' },
+    entity: { id: 'item', label: 'Item', displayField: 'name' },
+    fields: [{ id: 'name', label: 'Name', type: 'text', required: true, minLength: 2, maxLength: 2, default: ' 😀a ' }]
+  };
+  assert.equal(validateEntitySpec(source).fields[0].default, '😀a', 'a supplementary character counts as one code point after trim');
+  const nul = structuredClone(source);
+  nul.fields[0].default = 'a\0b';
+  assert.throws(() => validateEntitySpec(nul), /NUL|default/u);
+});
+
 test('generator reserves a new owner, records exact output hashes, and treats inserted labels literally', async t => {
   const temp = await mkdtemp(join(tmpdir(), 'qb-entity-spec-'));
   t.after(() => rm(temp, { recursive: true, force: true, maxRetries: 4, retryDelay: 100 }));
   const root = join(temp, 'source');
   await mkdir(join(root, 'templates'), { recursive: true });
   await mkdir(join(root, 'modules'));
-  for (const name of ['contracts', 'sqlite', 'backend-host', 'web-shell']) {
+  for (const name of ['contracts', 'sqlite', 'backend-host', 'web-shell', 'client-core']) {
     await mkdir(join(root, 'packages', name), { recursive: true });
     await copyFile(join(ROOT, 'packages', name, 'package.json'), join(root, 'packages', name, 'package.json'));
   }
@@ -56,6 +69,10 @@ test('generator reserves a new owner, records exact output hashes, and treats in
   const receipt = JSON.parse(await readFile(join(root, 'modules/literal-entity/generation.json'), 'utf8'));
   assert.ok(backend.includes('"Invalid Code $& __WRITE_PERMISSION__"'));
   assert.ok(backend.includes('const table = "\\\"item_records\\\"";'));
+  assert.match(backend, /Array\.from\(normalized_code\)\.length/u);
+  assert.ok(backend.includes('instr(') && backend.includes('char(0)'), 'the generated owner schema has an explicit NUL check');
+  assert.match(ui, /Array\.from\(normalized\)\.length/u);
+  assert.doesNotMatch(ui, /\.maxLength\s*=/u, 'the UI does not rely on UTF-16 native maxlength as its validator');
   assert.ok(ui.includes('const recordLabel = "Item $& __MODULE__";'));
   assert.deepEqual(manifest.operations.map(item => item.id), [
     'literal-entity.item.list', 'literal-entity.item.get', 'literal-entity.item.create', 'literal-entity.item.edit'

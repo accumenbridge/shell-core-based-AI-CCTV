@@ -10,6 +10,12 @@ function fact(list: HTMLDListElement, name: string, value: string, code = false)
 
 export const healthWorkspace: Workspace = { mount(ctx) {
   const page = el('section', 'veyviz-health'), header = el('header', 'vv-health-heading'), heading = el('div');
+  page.setAttribute('data-qb-ui-boundary', '');
+  page.setAttribute('data-qb-surface', 'dark');
+  page.setAttribute('data-qb-text', 'standard');
+  page.setAttribute('data-qb-accent', 'teal');
+  page.setAttribute('data-qb-density', 'compact');
+  page.setAttribute('data-qb-layout-mode', 'operational');
   heading.append(el('h1', '', 'System Health'), el('p', '', 'Local recorded-analysis profile and software provenance.'));
   const refresh = el('button', 'button secondary', 'Refresh status'); refresh.type = 'button'; header.append(heading, refresh);
   const tabs = el('div', 'vv-health-section-label'); tabs.append(el('span', '', 'Profile integrity'), el('span', 'vv-health-scope', 'Recorded media · Local CPU'));

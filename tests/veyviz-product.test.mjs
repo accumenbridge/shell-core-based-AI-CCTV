@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { fixture, admin, viewer } from './helpers.mjs';
 import { validateResult } from '@quadbridge/veyviz-rfdetr/bridge';
 import { MODEL_SHA256, RECORDING_SHA256, PROFILE_ID, REQUEST_SCHEMA, RESULT_SCHEMA } from '@quadbridge/veyviz-rfdetr/protocol';
+import { createAnalysisQueryState } from '../modules/veyviz-analysis/dist/ui.js';
 
 // A deterministic inference-port double for owner/race tests. Actual RF-DETR
 // execution is a separate installed-Python and product HTTP evidence gate.
@@ -121,4 +122,207 @@ test('strict AI proposal validator permits optional thumbnail but rejects altere
     value => { value.samples[0].unexpected = true; }
   ];
   for (const corrupt of corruptions) { const value = structuredClone(good); corrupt(value); assert.throws(() => validateResult(value, request, ready)); }
+});
+
+test('source owner query traverses registrations beyond the v1 cap and binds every cursor to query scope', async t => {
+  const { f, source } = await product(t);
+  const expected = new Set([source.id]);
+  const originalNow = Date.now;
+  const tiedCreated = originalNow();
+  Date.now = () => tiedCreated;
+  t.after(() => { Date.now = originalNow; });
+  for (let index = 0; index < 210; index++) {
+    const saved = await f.call('POST', '/api/sources', {
+      name: index === 0 ? 'page-fixture-000-%_literal' : `page-fixture-${String(index).padStart(3, '0')}`,
+      fixtureId: 'mivia-vid0062'
+    }, `source-page-${index}`);
+    expected.add(saved.id);
+  }
+  const unicodeSource = await f.call('POST', '/api/sources', { name: 'Étage', fixtureId: 'mivia-vid0062' }, 'source-unicode');
+  expected.add(unicodeSource.id);
+
+  const seen = [];
+  let cursor;
+  let requests = 0;
+  do {
+    const suffix = cursor ? `&cursor=${encodeURIComponent(cursor)}` : '';
+    const page = await f.call('GET', `/api/sources/query?limit=20${suffix}`);
+    assert.equal(page.page.limit, 20);
+    assert.equal(page.page.coverage, 'filtered-owner-query');
+    assert.ok(page.items.length <= 20);
+    seen.push(...page.items.map(item => item.id));
+    cursor = page.page.nextCursor;
+    assert.ok(++requests <= 12, 'the bounded fixture should traverse in at most twelve requests');
+  } while (cursor);
+  assert.equal(seen.length, 212);
+  assert.equal(new Set(seen).size, seen.length, 'keyset pages must not repeat rows');
+  assert.deepEqual(new Set(seen), expected, 'keyset pages must include old rows beyond the legacy list cap');
+
+  const legacy = await f.call('GET', '/api/sources');
+  assert.equal(legacy.items.length, 100);
+  assert.deepEqual(Object.keys(legacy).sort(), ['items']);
+  assert.deepEqual(Object.keys(legacy.items[0]).sort(), ['created', 'fixtureId', 'id', 'name', 'version']);
+  const legacyOperation = await f.runtime.host.invokeOperation('veyviz-sources.sources.list', 1, admin, 'tenant-a', {});
+  assert.equal(legacyOperation.items.length, 100);
+  assert.deepEqual(Object.keys(legacyOperation).sort(), ['items']);
+  assert.deepEqual(Object.keys(legacyOperation.items[0]).sort(), ['created', 'fixtureId', 'id', 'name', 'version']);
+  const beyondLegacySourceId = seen[100];
+  assert.ok(!legacy.items.some(item => item.id === beyondLegacySourceId));
+  assert.deepEqual((await f.call('GET', `/api/sources/query?search=${encodeURIComponent(beyondLegacySourceId)}&limit=20`)).items.map(item => item.id), [beyondLegacySourceId]);
+  const delegatedOlder = await f.call('GET', `/api/analysis/sources/query?search=${encodeURIComponent(beyondLegacySourceId)}&limit=20`);
+  assert.deepEqual(delegatedOlder.items.map(item => item.id), [beyondLegacySourceId], 'analysis source picker delegates old-source search to the source owner');
+  const delegatedOperation = await f.runtime.host.invokeOperation('veyviz-analysis.sources.query', 1, admin, 'tenant-a', { search: beyondLegacySourceId, limit: 20 });
+  assert.deepEqual(delegatedOperation.items.map(item => item.id), [beyondLegacySourceId]);
+  await assert.rejects(f.runtime.host.invokeOperation('veyviz-analysis.sources.query', 1, admin, 'tenant-a', { search: beyondLegacySourceId, sort: 'name' }), error => error.code === 'INVALID');
+  const olderAnalysis = await f.call('POST', '/api/analysis', { sourceId: delegatedOlder.items[0].id, frameCount: 1, sampleStride: 1 }, 'older-source-submit');
+  assert.equal((await f.call('GET', `/api/analysis/query?sourceId=${encodeURIComponent(beyondLegacySourceId)}&limit=20`)).items[0].id, olderAnalysis.id);
+
+  const matchedById = await f.call('GET', `/api/sources/query?search=${encodeURIComponent(source.id)}&limit=20`);
+  assert.deepEqual(matchedById.items.map(item => item.id), [source.id]);
+  const matchedByName = await f.call('GET', '/api/sources/query?search=page-fixture-209&limit=20');
+  assert.deepEqual(matchedByName.items.map(item => item.name), ['page-fixture-209']);
+  assert.deepEqual((await f.call('GET', `/api/sources/query?search=${encodeURIComponent('Étage')}&limit=20`)).items.map(item => item.id), [unicodeSource.id], 'source search matches an exact non-ASCII name');
+  assert.deepEqual((await f.call('GET', `/api/sources/query?search=${encodeURIComponent('ÉTAGE')}&limit=20`)).items.map(item => item.id), [unicodeSource.id], 'source search folds non-ASCII case with JavaScript semantics');
+  const delegatedUnicode = await f.call('GET', `/api/analysis/sources/query?search=${encodeURIComponent('ÉTAGE')}&limit=20`);
+  assert.deepEqual(delegatedUnicode.items.map(item => item.id), [unicodeSource.id], 'delegated recording picker uses the same non-ASCII case fold');
+  assert.deepEqual((await f.call('GET', `/api/sources/query?search=${encodeURIComponent('%_')}&limit=20`)).items.map(item => item.name), ['page-fixture-000-%_literal'], 'search treats wildcard-looking characters as literal text');
+  await f.call('POST', '/api/sources/rename', { sourceId: source.id, name: 'Renamed scoped recording' }, 'page-test-rename');
+  const renamed = await f.call('GET', '/api/sources/query?renamedOnly=true&limit=20');
+  assert.deepEqual(renamed.items.map(item => item.id), [source.id]);
+
+  const first = await f.call('GET', '/api/sources/query?search=page-fixture-&limit=20');
+  assert.ok(first.page.nextCursor);
+  const pageOperation = await f.runtime.host.invokeOperation('veyviz-sources.sources.query', 1, admin, 'tenant-a', { search: 'page-fixture-', limit: 20 });
+  assert.deepEqual(pageOperation.items.map(item => item.id), first.items.map(item => item.id));
+  assert.deepEqual(Object.keys(pageOperation).sort(), ['items', 'page']);
+  assert.deepEqual(Object.keys(pageOperation.page).sort(), ['coverage', 'limit', 'nextCursor']);
+  assert.deepEqual(Object.keys(pageOperation.items[0]).sort(), ['created', 'fixtureId', 'id', 'name', 'version']);
+  await assert.rejects(f.runtime.host.invokeOperation('veyviz-sources.sources.query', 1, admin, 'tenant-a', { search: 'page-fixture-', sort: 'name' }), error => error.code === 'INVALID');
+  await assert.rejects(f.runtime.host.invokeOperation('veyviz-sources.sources.query', 1, admin, 'tenant-a', { limit: 0 }), error => error.code === 'INVALID');
+  for (const [query, code] of [
+    [`/api/sources/query?search=other&limit=20&cursor=${encodeURIComponent(first.page.nextCursor)}`, 'INVALID'],
+    [`/api/sources/query?search=page-fixture-&renamedOnly=true&limit=20&cursor=${encodeURIComponent(first.page.nextCursor)}`, 'INVALID'],
+    [`/api/sources/query?search=page-fixture-&limit=21&cursor=${encodeURIComponent(first.page.nextCursor)}`, 'INVALID']
+  ]) await assert.rejects(f.call('GET', query), error => error.code === code);
+  await assert.rejects(f.call('GET', `/api/sources/query?search=page-fixture-&limit=20&cursor=${encodeURIComponent(first.page.nextCursor)}`, undefined, undefined, admin, 'tenant-b'), error => error.code === 'INVALID');
+  await assert.rejects(f.call('GET', '/api/sources/query?limit=101'), error => error.code === 'INVALID');
+  await assert.rejects(f.call('GET', '/api/sources/query?cursor=not-a-valid-token'), error => error.code === 'INVALID');
+  await assert.rejects(f.call('GET', '/api/sources/query?limit=20&limit=20'), error => error.code === 'INVALID');
+  await assert.rejects(f.call('GET', `/api/sources/query?search=${'x'.repeat(201)}`), error => error.code === 'INVALID');
+
+  const viewerFirst = await f.call('GET', '/api/sources/query?search=page-fixture-&limit=20', undefined, undefined, viewer);
+  assert.ok(viewerFirst.page.nextCursor);
+  f.runtime.access.revoke('viewer', 'tenant-a', 'veyviz.sources.read');
+  await assert.rejects(f.call('GET', `/api/sources/query?search=page-fixture-&limit=20&cursor=${encodeURIComponent(viewerFirst.page.nextCursor)}`, undefined, undefined, viewer), error => error.code === 'DENIED');
+  await assert.rejects(f.call('GET', '/api/analysis/sources/query?search=page-fixture-&limit=20', undefined, undefined, viewer), error => error.code === 'DENIED');
+});
+
+test('analysis owner query pages all matching history, filters owner rows and leaves the v1 list cap intact', async t => {
+  const { f, source } = await product(t);
+  const originalNow = Date.now;
+  const startedAt = originalNow();
+  let creationOffset = 0;
+  Date.now = () => startedAt + creationOffset;
+  t.after(() => { Date.now = originalNow; });
+  const submitted = [];
+  for (let index = 0; index < 32; index++) {
+    creationOffset = Math.floor(index / 2);
+    submitted.push(await f.call('POST', '/api/analysis', { sourceId: source.id, frameCount: 1, sampleStride: 1 }, `analysis-page-${index}`));
+  }
+  assert.equal(await f.tick(), true);
+
+  const allIds = new Set(submitted.map(item => item.id));
+  const seen = [];
+  let cursor;
+  let requests = 0;
+  do {
+    const suffix = cursor ? `&cursor=${encodeURIComponent(cursor)}` : '';
+    const page = await f.call('GET', `/api/analysis/query?limit=20${suffix}`);
+    assert.equal(page.page.limit, 20);
+    assert.equal(page.page.coverage, 'filtered-owner-query');
+    assert.ok(page.items.length <= 20);
+    seen.push(...page.items.map(item => item.id));
+    cursor = page.page.nextCursor;
+    assert.ok(++requests <= 3, 'the bounded fixture should traverse in at most three requests');
+  } while (cursor);
+  assert.equal(seen.length, 32);
+  assert.equal(new Set(seen).size, seen.length, 'analysis keyset pages must not repeat rows');
+  assert.deepEqual(new Set(seen), allIds, 'analysis query must include rows beyond the legacy 25-item list');
+
+  const legacy = await f.call('GET', '/api/analysis');
+  assert.deepEqual(Object.keys(legacy).sort(), ['items', 'limit']);
+  assert.equal(legacy.limit, 25);
+  assert.equal(legacy.items.length, 25);
+  assert.ok(Object.hasOwn(legacy.items[0], 'sourceChanged'));
+  assert.deepEqual(Object.keys(legacy.items[0]).sort(), ['coverage', 'created', 'detectionCount', 'id', 'jobId', 'jobState', 'occupancy', 'reviewState', 'sampleCount', 'sourceChanged', 'sourceId', 'sourceVersion']);
+  const legacyOperation = await f.runtime.host.invokeOperation('veyviz-analysis.analysis.list', 1, admin, 'tenant-a', {});
+  assert.equal(legacyOperation.items.length, 25);
+  assert.deepEqual(Object.keys(legacyOperation).sort(), ['items']);
+  assert.deepEqual(Object.keys(legacyOperation.items[0]).sort(), ['coverage', 'created', 'detectionCount', 'id', 'jobId', 'jobState', 'occupancy', 'reviewState', 'sampleCount', 'sourceId', 'sourceVersion']);
+  assert.ok(!legacy.items.some(item => item.id === seen[25]));
+  assert.deepEqual((await f.call('GET', `/api/analysis/query?q=${encodeURIComponent(seen[25])}&limit=20`)).items.map(item => item.id), [seen[25]]);
+
+  const allMatchingSource = await f.call('GET', `/api/analysis/query?sourceId=${encodeURIComponent(source.id)}&createdAfter=0&createdBefore=${Date.now()}&limit=100`);
+  assert.equal(allMatchingSource.items.length, 32);
+  assert.ok(allMatchingSource.items.every(item => item.sourceId === source.id && item.created >= startedAt));
+  const sourceSearch = await f.call('GET', `/api/analysis/query?q=${encodeURIComponent(source.id)}&limit=100`);
+  assert.equal(sourceSearch.items.length, 32, 'literal search includes captured source IDs');
+  const tieTimestamp = startedAt + 8;
+  assert.equal((await f.call('GET', `/api/analysis/query?createdAfter=${tieTimestamp}&createdBefore=${tieTimestamp}&limit=20`)).items.length, 2, 'date bounds are inclusive and tied timestamps remain queryable');
+  const exactAnalysis = await f.call('GET', `/api/analysis/query?q=${encodeURIComponent(submitted[0].id)}&limit=20`);
+  assert.deepEqual(exactAnalysis.items.map(item => item.id), [submitted[0].id]);
+  const exactJob = await f.call('GET', `/api/analysis/query?q=${encodeURIComponent(submitted[1].jobId)}&limit=20`);
+  assert.deepEqual(exactJob.items.map(item => item.jobId), [submitted[1].jobId]);
+  assert.equal((await f.call('GET', '/api/analysis/query?jobState=QUEUED&limit=100')).items.length, 31);
+  assert.equal((await f.call('GET', '/api/analysis/query?jobState=SUCCEEDED&limit=100')).items.length, 1);
+
+  const succeeded = (await f.call('GET', '/api/analysis/query?jobState=SUCCEEDED&limit=20')).items[0];
+  await f.call('POST', '/api/analysis/review', { analysisId: succeeded.id, decision: 'REVIEWED' }, 'page-test-review');
+  assert.equal((await f.call('GET', '/api/analysis/query?reviewState=REVIEWED&limit=100')).items.length, 1);
+  assert.equal((await f.call('GET', '/api/analysis/query?reviewState=OPEN&limit=100')).items.length, 31);
+  assert.equal((await f.runtime.host.invokeOperation('veyviz-analysis.analysis.query', 1, admin, 'tenant-a', { q: submitted[0].id, limit: 20 })).items[0].id, submitted[0].id);
+
+  const activeQuery = createAnalysisQueryState('7d', startedAt);
+  const queryFilters = { reviewState: 'OPEN' };
+  const firstActivePage = await f.call('GET', activeQuery.url(queryFilters));
+  assert.ok(firstActivePage.page.nextCursor, 'the active date query spans multiple owner pages');
+  const capturedBound = new URL(activeQuery.url(queryFilters), 'http://fixture').searchParams.get('createdAfter');
+  creationOffset += 5_000;
+  const insertedAfterFirstPage = await f.call('POST', '/api/analysis', { sourceId: source.id, frameCount: 1, sampleStride: 1 }, 'analysis-after-first-query-page');
+  const nextPageUrl = activeQuery.url(queryFilters, firstActivePage.page.nextCursor);
+  assert.equal(new URL(nextPageUrl, 'http://fixture').searchParams.get('createdAfter'), capturedBound, 'paging keeps the date bound captured by the active query');
+  const secondActivePage = await f.call('GET', nextPageUrl);
+  assert.ok(!secondActivePage.items.some(item => item.id === insertedAfterFirstPage.id), 'a newer row does not shift the active cursor page');
+  creationOffset += 5_000;
+  const refreshedActivePage = await f.call('GET', activeQuery.url(queryFilters, firstActivePage.page.nextCursor));
+  assert.deepEqual(refreshedActivePage.items.map(item => item.id), secondActivePage.items.map(item => item.id), 'a later refresh preserves the active query cursor and page membership');
+  assert.equal(new URL(activeQuery.url(queryFilters, firstActivePage.page.nextCursor), 'http://fixture').searchParams.get('createdAfter'), capturedBound);
+  activeQuery.reset('7d');
+  const resetUrl = activeQuery.url(queryFilters);
+  assert.equal(new URL(resetUrl, 'http://fixture').searchParams.has('cursor'), false, 'an explicit query reset starts at page one');
+  assert.ok(Number(new URL(resetUrl, 'http://fixture').searchParams.get('createdAfter')) > Number(capturedBound), 'an explicit reset renews the rolling date bound');
+  assert.equal((await f.call('GET', resetUrl)).items[0].id, insertedAfterFirstPage.id, 'the reset query includes rows added since the prior active query');
+
+  const first = await f.call('GET', '/api/analysis/query?reviewState=OPEN&limit=20');
+  assert.ok(first.page.nextCursor);
+  assert.deepEqual(Object.keys(first).sort(), ['items', 'page']);
+  assert.deepEqual(Object.keys(first.page).sort(), ['coverage', 'limit', 'nextCursor']);
+  assert.deepEqual(Object.keys(first.items[0]).sort(), ['coverage', 'created', 'detectionCount', 'id', 'jobId', 'jobState', 'occupancy', 'reviewState', 'sampleCount', 'sourceId', 'sourceVersion']);
+  await assert.rejects(f.runtime.host.invokeOperation('veyviz-analysis.analysis.query', 1, admin, 'tenant-a', { jobState: 'finished' }), error => error.code === 'INVALID');
+  await assert.rejects(f.runtime.host.invokeOperation('veyviz-analysis.analysis.query', 1, admin, 'tenant-a', { q: submitted[0].id, order: 'name' }), error => error.code === 'INVALID');
+  for (const path of [
+    `/api/analysis/query?reviewState=REVIEWED&limit=20&cursor=${encodeURIComponent(first.page.nextCursor)}`,
+    `/api/analysis/query?reviewState=OPEN&limit=21&cursor=${encodeURIComponent(first.page.nextCursor)}`
+  ]) await assert.rejects(f.call('GET', path), error => error.code === 'INVALID');
+  await assert.rejects(f.call('GET', `/api/analysis/query?reviewState=OPEN&limit=20&cursor=${encodeURIComponent(first.page.nextCursor)}`, undefined, undefined, admin, 'tenant-b'), error => error.code === 'INVALID');
+  await assert.rejects(f.call('GET', '/api/analysis/query?limit=0'), error => error.code === 'INVALID');
+  await assert.rejects(f.call('GET', '/api/analysis/query?cursor=not-a-valid-token'), error => error.code === 'INVALID');
+  await assert.rejects(f.call('GET', '/api/analysis/query?createdAfter=20&createdBefore=10'), error => error.code === 'INVALID');
+  await assert.rejects(f.call('GET', `/api/analysis/query?q=${'x'.repeat(201)}`), error => error.code === 'INVALID');
+
+  const viewerFirst = await f.call('GET', '/api/analysis/query?reviewState=OPEN&limit=20', undefined, undefined, viewer);
+  assert.ok(viewerFirst.page.nextCursor);
+  f.runtime.access.revoke('viewer', 'tenant-a', 'veyviz.analysis.read');
+  await assert.rejects(f.call('GET', `/api/analysis/query?reviewState=OPEN&limit=20&cursor=${encodeURIComponent(viewerFirst.page.nextCursor)}`, undefined, undefined, viewer), error => error.code === 'DENIED');
+  await assert.rejects(f.call('GET', '/api/analysis/sources/query?limit=20', undefined, undefined, viewer), error => error.code === 'DENIED');
 });

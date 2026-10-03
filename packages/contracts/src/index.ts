@@ -117,6 +117,7 @@ export interface ProductDefinition {
     description: string;
     layout: 'sidebar' | 'top';
     wiring?: string;
+    experience?: import('./experience.js').ProductExperience;
     modules: {
         id: string;
         version: string;
@@ -218,6 +219,11 @@ export interface JobHandler {
 export interface WorkspaceContext {
     root: HTMLElement;
     scope: Scope;
+    /** Original authenticated workspace actor. Omitted only by legacy embedders. */
+    actor?: Readonly<Actor>;
+    /** Optional route and navigation ports for providers hosted by the maintained shell. */
+    route?: import('./experience.js').WorkspaceRouteContext;
+    navigation?: import('./experience.js').WorkspaceNavigationPort;
     signal: AbortSignal;
     locale: string;
     permissions: readonly string[];
@@ -227,6 +233,8 @@ export interface WorkspaceContext {
     };
     notice(message: string): void;
 }
+export * from './ui-state.js';
+export * from './experience.js';
 export interface Workspace {
     mount(context: WorkspaceContext): (() => void) | void;
 }

@@ -1,4 +1,4 @@
-import { cp, lstat, mkdir, mkdtemp, rm, symlink } from 'node:fs/promises';
+import { cp, lstat, mkdir, mkdtemp, readFile, rm, symlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join, relative } from 'node:path';
 import { shouldIncludeMaintainedPath } from '../tools/verify-core.mjs';
@@ -11,7 +11,88 @@ const dependencies = [
     ['undici-types', 'undici-types']
 ];
 
-export async function copyPortableFixture(t, sourceRoot, { prefix = 'qb-source-', afterSetup } = {}) {
+const mobileVendorPackages = [
+    { name: '@capacitor/core', version: '8.5.2', relativePath: join('@capacitor', 'core') },
+    { name: '@capacitor/app', version: '8.1.1', relativePath: join('@capacitor', 'app') }
+];
+
+async function physicalManifest(path, expectedName, expectedVersion) {
+    const info = await lstat(path);
+    if (info.isSymbolicLink() || !info.isFile())
+        throw new Error(`Pinned mobile vendor manifest is not a regular file: ${path}`);
+    const bytes = await readFile(path);
+    const manifest = JSON.parse(bytes.toString('utf8'));
+    if (manifest.name !== expectedName || manifest.version !== expectedVersion)
+        throw new Error(`Pinned mobile vendor identity mismatch: ${expectedName}@${expectedVersion}`);
+    return { manifest, bytes };
+}
+
+async function physicalDirectory(path, label) {
+    const info = await lstat(path);
+    if (info.isSymbolicLink() || !info.isDirectory())
+        throw new Error(`Pinned mobile vendor directory is not physical: ${label}`);
+}
+
+async function copyPhysicalVendor(source, destination, packageName) {
+    await physicalDirectory(source, packageName);
+    try {
+        await lstat(destination);
+        throw new Error(`Pinned mobile vendor destination already exists: ${packageName}`);
+    } catch (error) {
+        if (error.code !== 'ENOENT') throw error;
+    }
+    await cp(source, destination, {
+        recursive: true,
+        filter: async entry => {
+            const info = await lstat(entry);
+            if (info.isSymbolicLink())
+                throw new Error(`Pinned mobile vendor contains a symbolic link: ${packageName}`);
+            if (!info.isDirectory() && !info.isFile())
+                throw new Error(`Pinned mobile vendor contains a non-regular entry: ${packageName}`);
+            return true;
+        }
+    });
+}
+
+async function copyPinnedMobileVendors(sourceRoot, fixtureRoot) {
+    const packagesRoot = join(sourceRoot, 'packages');
+    let packagesInfo;
+    try { packagesInfo = await lstat(packagesRoot); }
+    catch (error) { if (error.code === 'ENOENT') return; throw error; }
+    if (packagesInfo.isSymbolicLink() || !packagesInfo.isDirectory())
+        throw new Error('Mobile source packages directory must be a physical directory');
+
+    const mobileRoot = join(packagesRoot, 'mobile-shell');
+    let mobileInfo;
+    try { mobileInfo = await lstat(mobileRoot); }
+    catch (error) { if (error.code === 'ENOENT') return; throw error; }
+    if (mobileInfo.isSymbolicLink() || !mobileInfo.isDirectory())
+        throw new Error('Mobile shell source must be a physical directory');
+
+    const mobileManifestPath = join(mobileRoot, 'package.json');
+    let mobileManifestInfo;
+    try { mobileManifestInfo = await lstat(mobileManifestPath); }
+    catch (error) { if (error.code === 'ENOENT') return; throw error; }
+    if (mobileManifestInfo.isSymbolicLink() || !mobileManifestInfo.isFile())
+        throw new Error('Mobile shell package manifest must be a regular file');
+    const mobileManifest = JSON.parse((await readFile(mobileManifestPath)).toString('utf8'));
+    for (const entry of mobileVendorPackages) {
+        if (mobileManifest.dependencies?.[entry.name] !== entry.version)
+            throw new Error(`Mobile shell does not declare the reviewed ${entry.name}@${entry.version}`);
+        await physicalDirectory(join(sourceRoot, 'node_modules'), 'node_modules');
+        await physicalDirectory(join(sourceRoot, 'node_modules', '@capacitor'), '@capacitor namespace');
+        const sourcePackage = join(sourceRoot, 'node_modules', entry.relativePath);
+        await physicalDirectory(sourcePackage, entry.name);
+        const sourceManifest = await physicalManifest(join(sourcePackage, 'package.json'), entry.name, entry.version);
+        const destinationPackage = join(fixtureRoot, 'node_modules', entry.relativePath);
+        await copyPhysicalVendor(sourcePackage, destinationPackage, entry.name);
+        const copiedManifest = await physicalManifest(join(destinationPackage, 'package.json'), entry.name, entry.version);
+        if (!sourceManifest.bytes.equals(copiedManifest.bytes))
+            throw new Error(`Copied mobile vendor manifest changed: ${entry.name}`);
+    }
+}
+
+export async function copyPortableFixture(t, sourceRoot, { prefix = 'qb-source-', afterSetup, physicalDependencies = false } = {}) {
     const temp = await mkdtemp(join(tmpdir(), prefix));
     const root = join(temp, 'source');
     const ownedCleanups = [];
@@ -50,10 +131,13 @@ export async function copyPortableFixture(t, sourceRoot, { prefix = 'qb-source-'
         for (const [name, targetName] of dependencies) {
             const target = join(sourceRoot, 'node_modules', targetName);
             const destination = join(root, 'node_modules', name);
-            const type = process.platform === 'win32' ? 'junction' : 'dir';
             await mkdir(dirname(destination), { recursive: true });
-            await symlink(target, destination, type);
+            // Product build qualification hashes physical dependency bytes.
+            if (physicalDependencies) await cp(target, destination, { recursive: true, dereference: true });
+            else await symlink(target, destination, process.platform === 'win32' ? 'junction' : 'dir');
         }
+        await mkdir(join(root, 'node_modules', '@capacitor'), { recursive: true });
+        await copyPinnedMobileVendors(sourceRoot, root);
         if (afterSetup) await afterSetup({ root, temp });
         return { root, temp, cleanup, registerCleanup(close) { ownedCleanups.push(close); } };
     } catch (error) {

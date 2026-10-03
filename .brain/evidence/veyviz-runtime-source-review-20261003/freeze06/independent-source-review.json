@@ -1,0 +1,43 @@
+{
+  "schema": "product-immutable-runtime-independent-source-review-v1",
+  "reviewer": "/root/product_review",
+  "verdict": "BOUNDED_SOURCE_PASS_READY_FOR_ADMITTED_ISOLATED_CHECKS",
+  "scope": "Only exact freeze05-to-freeze06 producer fixture correction; prior reviewed receipt and other source repairs retained. Read-only source/evidence review; this ignored report is the only write. No build, test or process execution.",
+  "candidate": {
+    "overlayRoot": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003",
+    "freezeSha256": "2b38b42832b55d071a5ac7e4a901937a6945b427586931eb5635b4adf01e8bff",
+    "sourceDigestReported": "3a6f87bf962237bf3542892b075fdad3807e647693ee89ff4e28223694ff46da",
+    "sourceFilesReported": 360,
+    "toolchainDigestReported": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+    "snapshotHelperSha256": "d5833ee0807fc435c695019ac17d882ce345e6c3983aad66543227a8848858c9",
+    "snapshotTestsSha256": "fee3b59643c5ddaadc4a667f094514b15386688db55458beb4166c5fc1db44f8"
+  },
+  "verification": {
+    "allSevenOverlayOwnerHashesIndependentlyMatchFreeze": true,
+    "sourceOverlayManifestSha256": "3af05ba71748d1c501244306c78b92bc27ff9626df75a17d953b9b4596b449bc",
+    "toolchainOverlayManifestSha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659",
+    "manifestBytesMatchFreeze": true,
+    "suppliedSourceManifestComparison": "Both manifests have360 files; only tests/veyviz-snapshot.test.mjs hash differs from05 to06.",
+    "exactDiffBaseline": ".brain/evidence/veyviz-runtime-source-review-20261003/freeze05/source/tests/veyviz-snapshot.test.mjs independently rehashed to03725790a03491103a2b896c7cc546f82f836f8985d58f02a28d71cfc11465f4 before diff.",
+    "fullAuthoredRediscoveryOrToolchainRehash": false
+  },
+  "findings": [
+    {
+      "id": "RUNTIME-REVIEW-09",
+      "status": "CLOSED_AT_SOURCE_ONLY",
+      "evidence": "Restores dist/.artifacts/generated directory exclusions, keeps all .tsbuildinfo/.pyc file exclusions, removes inherited-dist-present assertions before build, and checks provider declaration outputs only after the fixture's own fixed wrapper returns status0. Failure fixture retention remains unchanged.",
+      "limit": "A clean producer build and its focused regressions have not yet been witnessed for freeze06."
+    },
+    {
+      "id": "RUNTIME-REVIEW-08",
+      "status": "PRIOR_SOURCE_CLOSURE_RETAINED",
+      "evidence": "Receipt helper hash is unchanged from05; same exclusive writable descriptor write/fsync/close-before-rename repair remains exact.",
+      "limit": "No runtime publication or successful Windows flush claim until new actual evidence."
+    }
+  ],
+  "limits": [
+    "Source pass means ready for already-admitted isolated fresh build and focused checks only.",
+    "Freeze04 failed execution and freeze05 rejected source remain preserved; no post-focused equality claim or retroactive qualification.",
+    "Active foreign drift remains excluded/preserved and unqualified. No whole active-root match or broader product/framework acceptance."
+  ]
+}

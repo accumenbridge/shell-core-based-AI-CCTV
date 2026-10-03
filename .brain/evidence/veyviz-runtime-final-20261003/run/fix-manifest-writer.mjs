@@ -1,0 +1,4 @@
+import{readFile,writeFile}from'node:fs/promises';
+const p='D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze09-run-01/write-manifest.mjs';let s=await readFile(p,'utf8');
+const wrong='b30e6ff94ac4eced1b1f3d2d',correct='b30e6ff94ac4eced3c5467c765a7213327c8dec19ac466f8ad54ed6ec9b62c0f';if(!s.includes(wrong))throw Error('Expected prior freeze06 digest typo not found');s=s.replace(wrong,correct);
+const old=",{flag:'wx'});const bytes=await readFile(join(evidence,'MANIFEST.json'))";const next=");const bytes=await readFile(join(evidence,'MANIFEST.json'))";if(!s.includes(old))throw Error('Expected manifest exclusive-create option not found');s=s.replace(old,next);await writeFile(p,s,'utf8');console.log('Corrected prior-failure hash and enabled deterministic manifest refresh.');

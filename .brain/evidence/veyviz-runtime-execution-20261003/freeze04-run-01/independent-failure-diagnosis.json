@@ -1,0 +1,65 @@
+{
+  "schema": "product-immutable-runtime-independent-diagnosis-v1",
+  "reviewer": "/root/product_review",
+  "verdict": "CHANGES_REQUIRED_BEFORE_NEW_SOURCE_FREEZE_AND_EXECUTION",
+  "scope": "Read-only diagnosis of freeze04-run-01 receipt publication and three retained clean-producer fixture failures. No source, Brain, Git, dependency, build, test or process mutation; only this ignored report written.",
+  "candidate": {
+    "root": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003",
+    "freezeSha256": "05d303d4ee1e9bf885167c752e191f2da1610f3eeee0646019a964a752323318",
+    "snapshotHelperSha256": "1b20b45a86f781e2c482fd6f80b2092dfc35d390733f6defb01c4bb806448388",
+    "snapshotTestsSha256": "cfa0c46ecd72597d925926e4817ac73c1c27785ec89ee30a3bdb440e34d9dfcb"
+  },
+  "actualEvidence": {
+    "directory": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01",
+    "build": {
+      "exitCode": 0,
+      "rawSha256": "0b53f174b5710de9561f5445834e99d64594dcfdce32cd457bb714da145a4f93",
+      "closeSha256": "8f18c80da72b15ebbc5502faae82025b1e436a7def7816659c7ca035cac7deac"
+    },
+    "focusedTests": {
+      "exitCode": 1,
+      "tests": 20,
+      "pass": 11,
+      "fail": 9,
+      "skip": 0,
+      "rawSha256": "b16841e8c8d7f1097bdd4b8fc2f14fb1c831ac7fbcc2d7ab9f32d94050f32191",
+      "closeSha256": "36a0896d4398d2ee802b0087f428ce54827161365ad62ddffc7ca92d4e53e5f3"
+    }
+  },
+  "findings": [
+    {
+      "id": "RUNTIME-REVIEW-08",
+      "owner": "tools/veyviz-snapshot.mjs",
+      "observed": "writeReceipt creates temp bytes with writeFileSync flag wx, closes that write handle, reopens the temp file O_RDONLY through requireOpen, then fsyncSync. Focused raw evidence repeatedly reports EPERM at fsync, line197.",
+      "platformEvidence": "Microsoft documents FlushFileBuffers as requiring a file handle with GENERIC_WRITE access. A read-only reopen cannot satisfy this access requirement on Windows.",
+      "primarySource": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-flushfilebuffers",
+      "boundedRepair": "Create the temp file with one exclusive writable descriptor (O_CREAT|O_EXCL|O_WRONLY, mode0600), write all exact receipt bytes using that descriptor, fsync that same descriptor, close it, then rename and retain existing reread/verification. Propagate write, fsync and close failure; never publish the receipt after such failure. Keep refusal and existing destination identity checks intact.",
+      "durabilityLimit": "A future successful file fsync, rename and reread may be reported only when witnessed. This proposal does not assert directory-entry crash durability or successful flush on untested systems. Swallowing EPERM or removing fsync would not close the finding."
+    },
+    {
+      "id": "RUNTIME-REVIEW-09",
+      "owner": "tests/veyviz-snapshot.test.mjs makeProducerFixture",
+      "observed": "Source fixture copy excludes dist directories but retains root-level tsconfig.tsbuildinfo. In all three failed fixture producers, ai-core and studio-model have no dist directories while their tsconfig.tsbuildinfo bytes exactly match the overlay. Metadata version5.8.3 declares latestChangedDtsFile ./dist/index.d.ts. All three raw compiler outputs contain TS2307 for @quadbridge/ai-core and @quadbridge/studio-model followed by cascading inference errors.",
+      "disprovenAlternative": "Inspected tsconfig references already include these providers for control-plane, module-sdk, knowledge and control-plane app; adding references is not the supported repair.",
+      "inference": "Copied successful incremental state with removed emitted files is the supported explanation for provider emit being suppressed; no compiler rerun was performed by this reviewer.",
+      "boundedRepair": "Exclude every .tsbuildinfo file from source fixture copy, alongside existing generated output exclusions. Keep the actual fixed build wrapper, exact toolchain copies, workspace linking and failure retention. Do not copy dist into clean fixtures or weaken types/compiler diagnostics. Verify through a new frozen candidate's actual clean fixture build and focused checks."
+    }
+  ],
+  "retainedFixtures": {
+    "sharedStdoutSha256": "d8a6f6ed625f32e7f6ce3023df06faddd20f3f44725ec65c3edb5c7c2a643bf9",
+    "sharedEmptyStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sharedAiCoreCacheSha256": "9ec8d72ef46da850c5dfa324812b4e52b740b82dac93a735b327c1ca385d026a",
+    "sharedStudioModelCacheSha256": "cf3fe8613a2a7163e698dc0a1d1cf537e29291510b85044f87035f3050ec5c8e",
+    "attempts": [
+      { "producer": "D:/CodexData/worktrees/veyviz-snapshot-test-mAd6Qk/producer", "attempt": "ba6d3e41-8664-40b1-8ba2-b457ac11efb1", "attemptSha256": "158b9b8dc5346cf3897e087f2edf70b04daacde5c04d9938a7d2b29114423e0e" },
+      { "producer": "D:/CodexData/worktrees/veyviz-snapshot-test-DQnpJB/producer", "attempt": "02a5fd46-98cf-4536-bc10-bc569ad63f3a", "attemptSha256": "9cf2a61653079929e1bf344c7bab9fed3e18675a221f4ba154d7148945f5dec9" },
+      { "producer": "D:/CodexData/worktrees/veyviz-snapshot-test-xjJnAO/producer", "attempt": "75f5e5d3-294c-4019-9a3c-6b27e7fb554b", "attemptSha256": "57b36aea459fc796e354c43a09c2d17c1df3e2a5eb72d9ba81a200a3fc9ecbe4" }
+    ]
+  },
+  "limits": [
+    "Retain freeze04 and its failed focus, actual closed-child records and fixture attempt bytes unchanged.",
+    "Root's reported original focused session6904 close1 is not an independent reviewer process observation; raw close evidence above was inspected.",
+    "Prior bounded source repairs remain reviewed, but freeze04 focused execution is failed. New source freeze and bounded delta review must precede future execution acceptance.",
+    "Foreign included/excluded Recording intelligence drift remains preserved and unqualified. No full active product, framework adoption, full suite, browser/provider/native acceptance is implied."
+  ]
+}

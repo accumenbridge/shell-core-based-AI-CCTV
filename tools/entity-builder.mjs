@@ -11,8 +11,11 @@ const FIELD_ID = /^[a-z][A-Za-z0-9_]{0,31}$/;
 const ENTITY_ID = /^[a-z][a-z0-9-]{1,48}$/;
 const VERSION = /^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)$/;
 const RESERVED = new Set(['id', 'tenant', 'version', 'created', 'updated', 'constructor', 'prototype', '__proto__']);
-const NEUTRAL_PACKAGES = ['contracts', 'sqlite', 'backend-host', 'web-shell'];
+const NEUTRAL_PACKAGES = ['contracts', 'sqlite', 'backend-host', 'web-shell', 'client-core'];
+const SQL_TRIM_CHARS = [9, 10, 11, 12, 13, 32, 160, 5760, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200, 8201, 8202, 8232, 8233, 8239, 8287, 12288, 65279]
+  .map(codePoint => `char(${codePoint})`).join('||');
 const sha256 = value => createHash('sha256').update(value).digest('hex');
+const codePointLength = value => Array.from(value).length;
 const isRecord = value => !!value && typeof value === 'object' && !Array.isArray(value) &&
   (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null);
 function exact(value, allowed, label) {
@@ -58,9 +61,10 @@ export function validateEntitySpec(value) {
       if (result.minLength > result.maxLength) throw new Error(`Invalid text range for ${field.id}`);
       totalTextMaximum += result.maxLength;
       if (Object.hasOwn(field, 'default')) {
-        if (typeof field.default !== 'string' || field.default.length > result.maxLength) throw new Error(`Invalid text default for ${field.id}`);
+        if (typeof field.default !== 'string' || field.default.includes('\0')) throw new Error(`Invalid text default for ${field.id}`);
         const normalized = field.default.trim();
-        if (!normalized || normalized.length < result.minLength) throw new Error(`Invalid normalized text default for ${field.id}`);
+        if (!normalized || codePointLength(normalized) > result.maxLength || codePointLength(normalized) < result.minLength)
+          throw new Error(`Invalid normalized text default for ${field.id}`);
         result.default = normalized;
       }
     } else if (field.type === 'integer') {
@@ -81,7 +85,7 @@ export function validateEntitySpec(value) {
         throw new Error(`Unsupported enum constraint for ${field.id}`);
       if (!Array.isArray(field.values) || field.values.length < 1 || field.values.length > 16) throw new Error(`Invalid enum values for ${field.id}`);
       const values = field.values.map(item => {
-        if (typeof item !== 'string' || !item.trim() || item.trim().length > 80 || item.includes('\0')) throw new Error(`Invalid enum member for ${field.id}`);
+        if (typeof item !== 'string' || !item.trim() || codePointLength(item.trim()) > 80 || item.includes('\0')) throw new Error(`Invalid enum member for ${field.id}`);
         return item.trim();
       });
       if (new Set(values).size !== values.length) throw new Error(`Duplicate enum value for ${field.id}`);
@@ -96,7 +100,7 @@ export function validateEntitySpec(value) {
   if (totalTextMaximum > 8000) throw new Error('Combined text field limits exceed the entity budget');
   const display = fields.find(field => field.id === normalizedEntity.displayField);
   if (!display || !['text', 'enum'].includes(display.type) || (!display.required && display.default === undefined) ||
-      (display.type === 'text' ? display.maxLength > 200 : Math.max(...display.values.map(item => item.length)) > 200))
+      (display.type === 'text' ? display.maxLength > 200 : Math.max(...display.values.map(codePointLength)) > 200))
     throw new Error('Display field must be a bounded, always-present text or enum field');
   return { schema: 'quadbridge.entity-spec.v1', module: normalizedModule, entity: normalizedEntity, fields };
 }
@@ -113,7 +117,7 @@ function fieldType(field) {
 function operationFieldSchema(field) {
   if (field.type === 'integer') return { type: 'integer', minimum: field.minimum, maximum: field.maximum };
   if (field.type === 'boolean') return { type: 'boolean' };
-  if (field.type === 'enum') return { type: 'string', minLength: 1, maxLength: Math.max(...field.values.map(item => item.length)), enum: field.values };
+  if (field.type === 'enum') return { type: 'string', minLength: 1, maxLength: Math.max(...field.values.map(codePointLength)), enum: field.values };
   return { type: 'string', minLength: field.minLength, maxLength: field.maxLength };
 }
 function fieldsSchema(fields, { output = false } = {}) {
@@ -143,7 +147,7 @@ function sqlColumn(field) {
   const column = q(field.id), required = field.required || field.default !== undefined;
   let type = field.type === 'integer' || field.type === 'boolean' ? 'INTEGER' : 'TEXT';
   let constraint = required ? ' NOT NULL' : '';
-  if (field.type === 'text') constraint += ` CHECK (${column} IS NULL OR (length(${column}) <= ${field.maxLength} AND length(trim(${column})) >= ${field.minLength}))`;
+  if (field.type === 'text') constraint += ` CHECK (${column} IS NULL OR (instr(${column},char(0)) = 0 AND ${column} = trim(${column},${SQL_TRIM_CHARS}) AND length(${column}) >= ${field.minLength} AND length(${column}) <= ${field.maxLength}))`;
   if (field.type === 'integer') constraint += ` CHECK (${column} IS NULL OR (${column} >= ${field.minimum} AND ${column} <= ${field.maximum}))`;
   if (field.type === 'boolean') constraint += ` CHECK (${column} IS NULL OR ${column} IN (0,1))`;
   if (field.type === 'enum') constraint += ` CHECK (${column} IS NULL OR ${column} IN (${field.values.map(sqlString).join(',')}))`;
@@ -154,12 +158,12 @@ function normalizationLines(fields) {
     const key = json(field.id), local = `candidate_${field.id}`;
     const fallback = field.default === undefined ? 'undefined' : json(field.default);
     const checks = field.type === 'text'
-      ? `if (typeof ${local} !== 'string') invalid(${json(`Invalid ${field.label}`)});\n    const normalized_${field.id} = ${local}.trim();\n    if (normalized_${field.id}.length > ${field.maxLength} || normalized_${field.id}.length < ${field.minLength}) invalid(${json(`Invalid ${field.label}`)});\n    ${local} = normalized_${field.id};`
+      ? `if (typeof ${local} !== 'string' || ${local}.includes('\\0')) invalid(${json(`Invalid ${field.label}`)}, ${json(`fields.${field.id}`)});\n    const normalized_${field.id} = ${local}.trim();\n    const codePoints_${field.id} = Array.from(normalized_${field.id}).length;\n    if (codePoints_${field.id} > ${field.maxLength} || codePoints_${field.id} < ${field.minLength}) invalid(${json(`Invalid ${field.label}`)}, ${json(`fields.${field.id}`)});\n    ${local} = normalized_${field.id};`
       : field.type === 'integer'
-        ? `if (typeof ${local} !== 'number' || !Number.isSafeInteger(${local}) || ${local} < ${field.minimum} || ${local} > ${field.maximum}) invalid(${json(`Invalid ${field.label}`)});`
+        ? `if (typeof ${local} !== 'number' || !Number.isSafeInteger(${local}) || ${local} < ${field.minimum} || ${local} > ${field.maximum}) invalid(${json(`Invalid ${field.label}`)}, ${json(`fields.${field.id}`)});`
         : field.type === 'boolean'
-          ? `if (typeof ${local} !== 'boolean') invalid(${json(`Invalid ${field.label}`)});`
-          : `if (typeof ${local} !== 'string' || !${json(field.values)}.includes(${local})) invalid(${json(`Invalid ${field.label}`)});`;
+          ? `if (typeof ${local} !== 'boolean') invalid(${json(`Invalid ${field.label}`)}, ${json(`fields.${field.id}`)});`
+          : `if (typeof ${local} !== 'string' || !${json(field.values)}.includes(${local})) invalid(${json(`Invalid ${field.label}`)}, ${json(`fields.${field.id}`)});`;
     return `  let ${local}: unknown = Object.hasOwn(source, ${key}) ? source[${key}] : ${fallback};\n  if (${local} !== undefined) {\n    ${checks.replaceAll('\n', '\n    ')}\n    fields[${key}] = ${local};\n  }${field.required && field.default === undefined ? ` else { invalid(${json(`${field.label} is required`)}); }` : ''}`;
   }).join('\n');
 }
@@ -240,7 +244,7 @@ export async function generateEntity(projectRoot, specPath) {
     UPDATE_COLUMNS: fields.map(field => `${q(field.id)}=?`).join(','),
     UPDATE_VALUES: `${fieldValues(fields)},`
   });
-  const ui = applyTemplate(templates['entity-ui.ts.txt'], { FIELDS: JSON.stringify(fields.map(uiField), null, 2), ENTITY_LABEL: json(spec.entity.label), MODULE: moduleId, WRITE_PERMISSION: `${moduleId}.write` });
+  const ui = applyTemplate(templates['entity-ui.ts.txt'], { FIELDS: JSON.stringify(fields.map(uiField), null, 2), ENTITY_LABEL: json(spec.entity.label), MODULE: moduleId, CREATE_OPERATION: json(descriptors[2].id), EDIT_OPERATION: json(descriptors[3].id), WRITE_PERMISSION: `${moduleId}.write` });
   const moduleManifest = {
     id: moduleId, version: spec.module.version, abi: 'quadbridge.module.v1', dependencies: [], provides: [], requires: [],
     permissions: [`${moduleId}.read`, `${moduleId}.write`], operations: descriptors,

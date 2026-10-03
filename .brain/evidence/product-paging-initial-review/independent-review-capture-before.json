@@ -1,0 +1,112 @@
+{
+  "schema": "veyviz.paging-review-exact17-capture.v1",
+  "phase": "before-review-completion",
+  "capturedUtc": "2026-10-03T08:05:24.3476312Z",
+  "baseHead": "818097ee4ca6d89270f0f5d6c5dace08bae44fa2",
+  "snapshotIdentity": "b6a3ed725d39ad1e2d77cf6f2e2aa4b07a78e72df53f0427b08f578975489663",
+  "count": 17,
+  "files": [
+    {
+      "path": "modules/veyviz-sources/src/index.ts",
+      "sha256": "8a3b7b06832a0e49c672a1c3f145531c72240c6d928922796edbd1349924d541",
+      "snapshotSha256": "8a3b7b06832a0e49c672a1c3f145531c72240c6d928922796edbd1349924d541",
+      "matches": true
+    },
+    {
+      "path": "modules/veyviz-sources/src/bridge.ts",
+      "sha256": "ef81d299bf197b79661acaf4af4b77a8ad3a582637bb76516730e27f511b3b83",
+      "snapshotSha256": "ef81d299bf197b79661acaf4af4b77a8ad3a582637bb76516730e27f511b3b83",
+      "matches": true
+    },
+    {
+      "path": "modules/veyviz-sources/src/protocol.ts",
+      "sha256": "91f40e2d48bada8e24a89af126e1dea23b82a47ec3a311f5d5f51546daa64f6b",
+      "snapshotSha256": "91f40e2d48bada8e24a89af126e1dea23b82a47ec3a311f5d5f51546daa64f6b",
+      "matches": true
+    },
+    {
+      "path": "modules/veyviz-sources/module.json",
+      "sha256": "f6445a0eaea7fb5440ba86a92b77c1231351cd0e2bdc4a8d5a8b17678a8c647d",
+      "snapshotSha256": "f6445a0eaea7fb5440ba86a92b77c1231351cd0e2bdc4a8d5a8b17678a8c647d",
+      "matches": true
+    },
+    {
+      "path": "modules/veyviz-analysis/src/bridge.ts",
+      "sha256": "ccc72ffb363ff2802355157f58009ad6d9ee2d51451466b7aaed258ffa236719",
+      "snapshotSha256": "ccc72ffb363ff2802355157f58009ad6d9ee2d51451466b7aaed258ffa236719",
+      "matches": true
+    },
+    {
+      "path": "modules/veyviz-analysis/src/protocol.ts",
+      "sha256": "6b977ecd8e1496851f048a49c85c07e6a4f53e1d4cf0f0ce6b03a27f92e1ca19",
+      "snapshotSha256": "6b977ecd8e1496851f048a49c85c07e6a4f53e1d4cf0f0ce6b03a27f92e1ca19",
+      "matches": true
+    },
+    {
+      "path": "modules/veyviz-analysis/src/index.ts",
+      "sha256": "2eb07c7fb7fb175e86e6ed7523bb9eddeab80d9d184851a484add1a8b4cf6bd4",
+      "snapshotSha256": "2eb07c7fb7fb175e86e6ed7523bb9eddeab80d9d184851a484add1a8b4cf6bd4",
+      "matches": true
+    },
+    {
+      "path": "modules/veyviz-analysis/module.json",
+      "sha256": "5e5105b17e496f1ad561c4ec78c73087db6e0c78d50f1e121f7ad063a6fd90a1",
+      "snapshotSha256": "5e5105b17e496f1ad561c4ec78c73087db6e0c78d50f1e121f7ad063a6fd90a1",
+      "matches": true
+    },
+    {
+      "path": "modules/veyviz-sources/src/ui.ts",
+      "sha256": "ea4668158b5edbdffba9418a926ebf2ae2ba133288c15e59bad8a2b315e3270d",
+      "snapshotSha256": "ea4668158b5edbdffba9418a926ebf2ae2ba133288c15e59bad8a2b315e3270d",
+      "matches": true
+    },
+    {
+      "path": "modules/veyviz-sources/src/styles.css",
+      "sha256": "9d96d579e5451572a226b3f2bf0cfffda44f53be030ea5f8947fc10eea44ba1d",
+      "snapshotSha256": "9d96d579e5451572a226b3f2bf0cfffda44f53be030ea5f8947fc10eea44ba1d",
+      "matches": true
+    },
+    {
+      "path": "modules/veyviz-analysis/src/ui.ts",
+      "sha256": "e8aef3cd775070f17e91f00e575f2444c18653716dc33bc76b3d8ebb473e87fb",
+      "snapshotSha256": "e8aef3cd775070f17e91f00e575f2444c18653716dc33bc76b3d8ebb473e87fb",
+      "matches": true
+    },
+    {
+      "path": "modules/veyviz-analysis/src/styles.css",
+      "sha256": "83f58a95768ce74ba3f990f85d880deb270ee29e48b81d1e030c82e3e93e5b68",
+      "snapshotSha256": "83f58a95768ce74ba3f990f85d880deb270ee29e48b81d1e030c82e3e93e5b68",
+      "matches": true
+    },
+    {
+      "path": "products/veyviz-review/product.json",
+      "sha256": "bff8e682cc19d3604654553e7949bff0b6d6e40e1f8da285a679cd99b8f438f9",
+      "snapshotSha256": "bff8e682cc19d3604654553e7949bff0b6d6e40e1f8da285a679cd99b8f438f9",
+      "matches": true
+    },
+    {
+      "path": "solutions/veyviz/solution.json",
+      "sha256": "76b2d7d31e199b20e0789e3161ee9efa09b146e520faca58b2841530c4ff0d8b",
+      "snapshotSha256": "76b2d7d31e199b20e0789e3161ee9efa09b146e520faca58b2841530c4ff0d8b",
+      "matches": true
+    },
+    {
+      "path": "solutions/veyviz/wiring.mjs",
+      "sha256": "2b5077b2839b711c93b6bed698ae836d93bad9820ea7583ccc030ac64081f9ff",
+      "snapshotSha256": "2b5077b2839b711c93b6bed698ae836d93bad9820ea7583ccc030ac64081f9ff",
+      "matches": true
+    },
+    {
+      "path": "tests/veyviz-product.test.mjs",
+      "sha256": "7c7022f8eb92f4108e5d522cd8fe1333c43ef6ff6dfb6a720b6b8046cebe3050",
+      "snapshotSha256": "7c7022f8eb92f4108e5d522cd8fe1333c43ef6ff6dfb6a720b6b8046cebe3050",
+      "matches": true
+    },
+    {
+      "path": "tests/veyviz-lifecycle.test.mjs",
+      "sha256": "c30ca69d7aa1840c84f22f11d616fb48645a97166aba195310e0ab57bdebb075",
+      "snapshotSha256": "c30ca69d7aa1840c84f22f11d616fb48645a97166aba195310e0ab57bdebb075",
+      "matches": true
+    }
+  ]
+}

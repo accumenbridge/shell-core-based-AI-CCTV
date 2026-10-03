@@ -1,0 +1,13 @@
+{
+  "schema": "veyviz.original-exec-session-observation.v1",
+  "command": "node --test --test-concurrency=1 --test-reporter=tap tests/veyviz-lifecycle.test.mjs tests/veyviz-snapshot.test.mjs tests/veyviz-product.test.mjs",
+  "cwd": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003",
+  "toolSessionId": 38232,
+  "observedOriginalClose": {
+    "exitCode": 1,
+    "closedAtUtc": "2026-10-03T13:42:54.3057146Z"
+  },
+  "closeMetadataPath": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze07-run-01\\focused-tests-close.json",
+  "closeMetadataRetainedUnmodified": true,
+  "note": "Adjacent observation records the exec session returned while the command was running; close JSON remains as originally written."
+}

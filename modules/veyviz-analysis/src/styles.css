@@ -1,17 +1,11 @@
-.content:has(.workspace.veyviz-analysis, .workspace.veyviz-command) {
-  width: 100%;
-  max-width: 1600px;
-  min-width: 0;
-  padding: 20px 24px 30px;
-}
+
 
 .veyviz-analysis,
 .veyviz-command {
   width: 100%;
-  max-width: 1540px;
   min-width: 0;
-  margin: 0 auto;
-  color: var(--vv-ink, #17232d);
+  margin: 0;
+  color: var(--qb-text, #17232d);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   overflow-wrap: anywhere;
 }
@@ -25,7 +19,7 @@
   outline-offset: 2px;
 }
 
-/* Investigate: light evidence workspace */
+
 .veyviz-analysis .analysis-page-header,
 .veyviz-command .analysis-page-header {
   display: flex;
@@ -35,31 +29,31 @@
   gap: 24px;
   margin: 0;
   padding: 0 0 12px;
-  border-bottom: 1px solid var(--vv-border, #dce2e7);
+  border-bottom: 1px solid var(--qb-border, #dce2e7);
   background: transparent;
 }
-.analysis-heading-copy { min-width: 0; }
-.analysis-eyebrow {
+:where(.veyviz-analysis, .veyviz-command) .analysis-heading-copy { min-width: 0; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-eyebrow {
   margin: 0 0 3px;
-  color: var(--vv-muted, #62717e);
+  color: var(--qb-text-muted, #62717e);
   font-size: 9px;
   font-weight: 750;
   letter-spacing: 1.35px;
 }
-.analysis-heading-copy h1 {
+:where(.veyviz-analysis, .veyviz-command) .analysis-heading-copy h1 {
   margin: 0;
-  color: var(--vv-ink, #17232d);
+  color: var(--qb-text, #17232d);
   font-size: clamp(24px, 2.1vw, 31px);
   line-height: 1.08;
   letter-spacing: -.85px;
 }
-.analysis-intro { margin: 4px 0 0; color: var(--vv-muted, #62717e); font-size: 12px; line-height: 1.4; }
-.analysis-summary { display: flex; flex: 0 0 auto; align-items: center; gap: 18px; }
-.analysis-metric { display: grid; gap: 0; min-width: 63px; padding-left: 13px; border-left: 1px solid var(--vv-border, #dce2e7); }
-.analysis-metric strong { color: var(--vv-ink, #17232d); font-size: 16px; font-variant-numeric: tabular-nums; line-height: 1.15; }
-.analysis-metric span { color: var(--vv-muted, #62717e); font-size: 9px; white-space: nowrap; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-intro { margin: 4px 0 0; color: var(--qb-text-muted, #62717e); font-size: 12px; line-height: 1.4; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-summary { display: flex; flex: 0 0 auto; align-items: center; gap: 18px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-metric { display: grid; gap: 0; min-width: 63px; padding-left: 13px; border-left: 1px solid var(--qb-border, #dce2e7); }
+:where(.veyviz-analysis, .veyviz-command) .analysis-metric strong { color: var(--qb-text, #17232d); font-size: 16px; font-variant-numeric: tabular-nums; line-height: 1.15; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-metric span { color: var(--qb-text-muted, #62717e); font-size: 9px; white-space: nowrap; }
 
-.analysis-toolbar {
+:where(.veyviz-analysis, .veyviz-command) .analysis-toolbar {
   display: flex;
   min-height: 42px;
   align-items: center;
@@ -67,192 +61,202 @@
   gap: 12px;
   margin: 10px 0 8px;
 }
-.analysis-readiness {
+:where(.veyviz-analysis, .veyviz-command) .analysis-readiness {
   display: inline-flex;
   min-width: 0;
   align-items: center;
   gap: 7px;
-  color: var(--vv-muted, #62717e);
+  color: var(--qb-text-muted, #62717e);
   font-size: 11px;
 }
-.analysis-readiness-mark { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #a2adb5; }
-.analysis-readiness-mark.is-ready { background: var(--vv-accent, #078c7b); box-shadow: 0 0 0 3px #078c7b18; }
-.analysis-readiness-mark.is-unavailable { background: #c65c4d; }
-.analysis-new-run {
+:where(.veyviz-analysis, .veyviz-command) .analysis-readiness-mark { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #a2adb5; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-readiness-mark.is-ready { background: var(--qb-accent, #078c7b); box-shadow: 0 0 0 3px #078c7b18; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-readiness-mark.is-unavailable { background: #c65c4d; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-new-run {
   position: relative;
   z-index: 2;
   width: min(100%, 570px);
-  border: 1px solid var(--vv-border, #dce2e7);
-  border-radius: var(--vv-radius, 6px);
-  background: var(--vv-surface, #fff);
+  border: 1px solid var(--qb-border, #dce2e7);
+  border-radius: var(--qb-radius, 6px);
+  background: var(--qb-surface-panel, #fff);
 }
-.analysis-new-run > summary,
-.analysis-sampling-settings > summary { cursor: pointer; list-style-position: inside; color: var(--vv-ink, #17232d); font-size: 12px; font-weight: 650; }
-.analysis-new-run > summary { padding: 9px 12px; }
-.analysis-new-run:not([open]) { width: auto; min-width: 142px; }
-.analysis-new-run:not([open]) > summary { color: var(--vv-accent, #078c7b); }
-.analysis-new-run[open] > summary { border-bottom: 1px solid var(--vv-border, #dce2e7); }
-.analysis-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 10px 12px; padding: 12px; }
-.analysis-source-field, .analysis-form .field { display: grid; min-width: 0; gap: 5px; margin: 0; }
-.analysis-field-label, .analysis-form .field-label { color: var(--vv-muted, #62717e); font-size: 10px; font-weight: 650; }
-.analysis-source-field select, .analysis-form input {
-  width: 100%; min-width: 0; padding: 8px 10px; border: 1px solid var(--vv-border, #dce2e7); border-radius: 6px; background: #fff; color: var(--vv-ink, #17232d); font-size: 12px;
+:where(.veyviz-analysis, .veyviz-command) .analysis-new-run > summary,
+:where(.veyviz-analysis, .veyviz-command) .analysis-sampling-settings > summary { cursor: pointer; list-style-position: inside; color: var(--qb-text, #17232d); font-size: 12px; font-weight: 650; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-new-run > summary { padding: 9px 12px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-new-run:not([open]) { width: auto; min-width: 142px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-new-run:not([open]) > summary { color: var(--qb-accent, #078c7b); }
+:where(.veyviz-analysis, .veyviz-command) .analysis-new-run[open] > summary { border-bottom: 1px solid var(--qb-border, #dce2e7); }
+:where(.veyviz-analysis, .veyviz-command) .analysis-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 10px 12px; padding: 12px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-field, :where(.veyviz-analysis, .veyviz-command) .analysis-form .field { display: grid; min-width: 0; gap: 5px; margin: 0; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-field { grid-template-columns: minmax(0, 1fr); }
+:where(.veyviz-analysis, .veyviz-command) .analysis-field-label, :where(.veyviz-analysis, .veyviz-command) .analysis-form .field-label { color: var(--qb-text-muted, #62717e); font-size: 10px; font-weight: 650; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-field select, :where(.veyviz-analysis, .veyviz-command) .analysis-form input {
+  width: 100%; min-width: 0; padding: 8px 10px; border: 1px solid var(--qb-border, #dce2e7); border-radius: 6px; background: var(--qb-surface-panel, #fff); color: var(--qb-text, #17232d); font-size: 12px;
 }
-.analysis-field-help { color: var(--vv-muted, #62717e); font-size: 10px; }
-.analysis-sampling-settings { grid-column: 1 / -1; min-width: 0; padding-top: 1px; }
-.analysis-sampling-settings > summary { color: var(--vv-muted, #62717e); font-size: 10px; }
-.analysis-sampling-settings[open] { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.analysis-sampling-settings[open] > summary { grid-column: 1 / -1; }
-.analysis-primary-action, .analysis-secondary-action {
-  min-height: 36px; padding: 8px 11px; border: 1px solid var(--vv-accent, #078c7b); border-radius: 6px; background: var(--vv-accent, #078c7b); color: #fff; font-size: 11px; font-weight: 700; line-height: 1.25; cursor: pointer;
+:where(.veyviz-analysis, .veyviz-command) .analysis-field-help { color: var(--qb-text-muted, #62717e); font-size: 10px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-pager, :where(.veyviz-analysis, .veyviz-command) .analysis-page-controls { display: flex; align-items: center; justify-content: space-between; gap: 7px; min-width: 0; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-pager { justify-content: flex-start; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-page-button { min-height: 26px; padding: 4px 7px; border: 1px solid var(--qb-border, #dce2e7); border-radius: 4px; background: var(--qb-surface-panel, #fff); color: var(--qb-text-muted, #62717e); font-size: 9px; cursor: pointer; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-page-button:disabled, :where(.veyviz-analysis, .veyviz-command) .analysis-page-controls button:disabled { opacity: .5; cursor: default; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-page-status, :where(.veyviz-analysis, .veyviz-command) .analysis-page-status { color: var(--qb-text-muted, #62717e); font-size: 9px; font-variant-numeric: tabular-nums; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-sampling-settings { grid-column: 1 / -1; min-width: 0; padding-top: 1px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-sampling-settings > summary { color: var(--qb-text-muted, #62717e); font-size: 10px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-sampling-settings[open] { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-sampling-settings[open] > summary { grid-column: 1 / -1; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-primary-action, :where(.veyviz-analysis, .veyviz-command) .analysis-secondary-action {
+  min-height: 36px; padding: 8px 11px; border: 1px solid var(--qb-accent, #078c7b); border-radius: 6px; background: var(--qb-accent, #078c7b); color: var(--qb-accent-text, #fff); font-size: 11px; font-weight: 700; line-height: 1.25; cursor: pointer;
 }
-.analysis-secondary-action { border-color: var(--vv-border, #dce2e7); background: #fff; color: var(--vv-ink, #17232d); }
-.analysis-new-run .analysis-primary-action { white-space: nowrap; }
-.analysis-form-feedback { grid-column: 1 / -1; min-height: 1.1em; margin: 0; color: var(--vv-muted, #62717e); font-size: 10px; }
-.analysis-live-status { min-height: 1.2em; margin: 0 0 8px; color: var(--vv-muted, #62717e); font-size: 10px; }
-.analysis-readonly-note { margin: 0 0 8px; padding: 7px 10px; border-left: 2px solid var(--vv-accent, #078c7b); background: #eaf4f2; color: var(--vv-muted, #62717e); font-size: 11px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-secondary-action { border-color: var(--qb-border, #dce2e7); background: var(--qb-surface-panel, #fff); color: var(--qb-text, #17232d); }
+:where(.veyviz-analysis, .veyviz-command) .analysis-new-run .analysis-primary-action { white-space: nowrap; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-form-feedback { grid-column: 1 / -1; min-height: 1.1em; margin: 0; color: var(--qb-text-muted, #62717e); font-size: 10px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-live-status { min-height: 1.2em; margin: 0 0 8px; color: var(--qb-text-muted, #62717e); font-size: 10px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-readonly-note { margin: 0 0 8px; padding: 7px 10px; border-left: 2px solid var(--qb-accent, #078c7b); background: var(--qb-accent-soft, #eaf4f2); color: var(--qb-text-muted, #62717e); font-size: 11px; }
 
-.analysis-filter-bar {
+:where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar {
   display: grid;
-  grid-template-columns: minmax(230px, 1fr) minmax(135px, 190px) minmax(115px, 150px) minmax(110px, 140px) auto;
+  grid-template-columns: minmax(185px, 1fr) minmax(190px, 1fr) repeat(3, minmax(105px, .55fr)) auto;
   align-items: center;
   gap: 8px;
   margin: 0 0 4px;
   padding: 8px;
-  border: 1px solid var(--vv-border, #dce2e7);
-  border-radius: var(--vv-radius, 6px);
-  background: var(--vv-surface, #fff);
+  border: 1px solid var(--qb-border, #dce2e7);
+  border-radius: var(--qb-radius, 6px);
+  background: var(--qb-surface-panel, #fff);
 }
-.analysis-filter-label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-.analysis-search-field { position: relative; display: block; min-width: 0; }
-.analysis-search-field::before { content: ""; position: absolute; top: 50%; left: 12px; width: 12px; height: 12px; border: 1.5px solid #778791; border-radius: 50%; transform: translateY(-60%); pointer-events: none; }
-.analysis-search-field::after { content: ""; position: absolute; top: 56%; left: 24px; width: 5px; border-top: 1.5px solid #778791; transform: rotate(45deg); pointer-events: none; }
-.analysis-filter-bar input, .analysis-filter-bar select {
-  width: 100%; min-width: 0; height: 36px; padding: 7px 10px; border: 1px solid var(--vv-border, #dce2e7); border-radius: 5px; background: #fff; color: var(--vv-ink, #17232d); font-size: 11px;
+:where(.veyviz-analysis, .veyviz-command) .analysis-filter-label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filter-select { display: grid; min-width: 0; gap: 4px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-filter { grid-row: span 2; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-search-field { position: relative; display: block; min-width: 0; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-search-field::before { content: ""; position: absolute; top: 50%; left: 12px; width: 12px; height: 12px; border: 1.5px solid #778791; border-radius: 50%; transform: translateY(-60%); pointer-events: none; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-search-field::after { content: ""; position: absolute; top: 56%; left: 24px; width: 5px; border-top: 1.5px solid #778791; transform: rotate(45deg); pointer-events: none; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar input, :where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar select {
+  width: 100%; min-width: 0; height: 36px; padding: 7px 10px; border: 1px solid var(--qb-border, #dce2e7); border-radius: 5px; background: var(--qb-surface-panel, #fff); color: var(--qb-text, #17232d); font-size: 11px;
 }
-.analysis-filter-bar input { padding-left: 34px; }
-.analysis-filter-clear { height: 36px; padding: 0 10px; border: 1px solid transparent; border-radius: 5px; background: transparent; color: var(--vv-muted, #62717e); font-size: 10px; font-weight: 650; cursor: pointer; white-space: nowrap; }
-.analysis-filter-clear:hover { border-color: var(--vv-border, #dce2e7); color: var(--vv-ink, #17232d); }
-.analysis-filter-scope { grid-column: 1 / -1; margin: 0; padding: 0 2px; color: var(--vv-muted, #62717e); font-size: 9px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar input { padding-left: 34px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filter-clear { height: 36px; padding: 0 10px; border: 1px solid transparent; border-radius: 5px; background: transparent; color: var(--qb-text-muted, #62717e); font-size: 10px; font-weight: 650; cursor: pointer; white-space: nowrap; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filter-clear:hover { border-color: var(--qb-border, #dce2e7); color: var(--qb-text, #17232d); }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filter-scope { grid-column: 1 / -1; margin: 0; padding: 0 2px; color: var(--qb-text-muted, #62717e); font-size: 9px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-page-controls { justify-content: center; margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--qb-border, #dce2e7); }
+:where(.veyviz-analysis, .veyviz-command) .analysis-page-controls button { min-height: 30px; font-size: 10px; }
 
-.analysis-workbench { display: grid; min-width: 0; gap: 12px; align-items: start; }
-.investigate-workbench { grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr); grid-template-areas: "runs viewer" "runs findings"; }
-.investigate-workbench .analysis-runs { grid-area: runs; }
-.investigate-workbench .analysis-review-room { grid-area: viewer; }
-.investigate-workbench .analysis-findings { grid-area: findings; }
-.analysis-panel { min-width: 0; margin: 0; padding: 13px; border: 1px solid var(--vv-border, #dce2e7); border-radius: var(--vv-radius, 6px); background: var(--vv-surface, #fff); box-shadow: 0 2px 8px #16212a08; }
-.analysis-panel-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 9px; margin: 0 0 2px; }
-.analysis-panel-heading h2, .analysis-selected-heading h2, .analysis-findings-header h2 { min-width: 0; margin: 0; color: var(--vv-ink, #17232d); font-size: 14px; font-weight: 700; letter-spacing: -.2px; }
-.analysis-panel-count { color: var(--vv-muted, #62717e); font-size: 10px; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.analysis-run-scope { margin: 0 0 10px; color: var(--vv-muted, #62717e); font-size: 9px; }
-.analysis-run-list { min-width: 0; margin: 0; padding: 0; list-style: none; }
-.analysis-result-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-height: min(71vh, 740px); overflow: auto; padding: 2px; }
-.analysis-run-row { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; min-width: 0; overflow: hidden; border: 1px solid var(--vv-border, #dce2e7); border-radius: 6px; background: #fff; }
-.analysis-run-select { display: grid; width: 100%; min-width: 0; grid-template-rows: auto minmax(0, 1fr); padding: 0; border: 0; border-radius: 5px; background: transparent; color: var(--vv-ink, #17232d); text-align: left; cursor: pointer; }
-.analysis-run-select[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--vv-accent, #078c7b); background: #f2faf8; }
-.analysis-run-media { position: relative; display: grid; width: 100%; aspect-ratio: 16 / 9; place-items: center; overflow: hidden; background: #16232b; color: #8ea2ad; }
-.analysis-run-media > * { grid-area: 1 / 1; }
-.analysis-run-thumbnail { display: block; width: 100%; height: 100%; object-fit: cover; }
-.analysis-run-thumbnail-fallback { display: grid; width: 32px; height: 32px; place-items: center; border: 1px solid #667985; border-radius: 50%; color: #b7c3c9; font-size: 12px; }
-.analysis-run-copy { display: grid; min-width: 0; align-content: start; gap: 4px; padding: 9px 10px 10px; }
-.analysis-run-title { overflow: hidden; color: var(--vv-ink, #17232d); font-size: 11px; font-weight: 750; text-overflow: ellipsis; white-space: nowrap; }
-.analysis-run-meta, .analysis-run-summary { color: var(--vv-muted, #62717e); font-size: 9px; line-height: 1.4; }
-.analysis-run-warning { color: #9c5128; font-size: 9px; line-height: 1.35; }
-.analysis-cancel-action { justify-self: end; margin: 0 8px 8px; padding: 5px 8px; border: 1px solid var(--vv-border, #dce2e7); border-radius: 4px; background: #fff; color: var(--vv-muted, #62717e); font-size: 9px; cursor: pointer; }
-.analysis-inline-status { margin: 8px 0 0; color: var(--vv-muted, #62717e); font-size: 10px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-workbench { display: grid; min-width: 0; gap: 12px; align-items: start; }
+:where(.veyviz-analysis, .veyviz-command) .investigate-workbench { grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr); grid-template-areas: "runs viewer" "runs findings"; }
+:where(.veyviz-analysis, .veyviz-command) .investigate-workbench .analysis-runs { grid-area: runs; }
+:where(.veyviz-analysis, .veyviz-command) .investigate-workbench .analysis-review-room { grid-area: viewer; }
+:where(.veyviz-analysis, .veyviz-command) .investigate-workbench .analysis-findings { grid-area: findings; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-panel { min-width: 0; margin: 0; padding: 13px; border: 1px solid var(--qb-border, #dce2e7); border-radius: var(--qb-radius, 6px); background: var(--qb-surface-panel, #fff); box-shadow: 0 2px 8px #16212a08; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-panel-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 9px; margin: 0 0 2px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-panel-heading h2, :where(.veyviz-analysis, .veyviz-command) .analysis-selected-heading h2, :where(.veyviz-analysis, .veyviz-command) .analysis-findings-header h2 { min-width: 0; margin: 0; color: var(--qb-text, #17232d); font-size: 14px; font-weight: 700; letter-spacing: -.2px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-panel-count { color: var(--qb-text-muted, #62717e); font-size: 10px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-scope { margin: 0 0 10px; color: var(--qb-text-muted, #62717e); font-size: 9px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-list { min-width: 0; margin: 0; padding: 0; list-style: none; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-result-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-height: min(71vh, 740px); overflow: auto; padding: 2px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-row { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; min-width: 0; overflow: hidden; border: 1px solid var(--qb-border, #dce2e7); border-radius: 6px; background: var(--qb-surface-panel, #fff); }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-select { display: grid; width: 100%; min-width: 0; grid-template-rows: auto minmax(0, 1fr); padding: 0; border: 0; border-radius: 5px; background: transparent; color: var(--qb-text, #17232d); text-align: left; cursor: pointer; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-select[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--qb-accent, #078c7b); background: #f2faf8; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-media { position: relative; display: grid; width: 100%; aspect-ratio: 16 / 9; place-items: center; overflow: hidden; background: #16232b; color: #8ea2ad; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-media > * { grid-area: 1 / 1; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-thumbnail { display: block; width: 100%; height: 100%; object-fit: cover; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-thumbnail-fallback { display: grid; width: 32px; height: 32px; place-items: center; border: 1px solid #667985; border-radius: 50%; color: #b7c3c9; font-size: 12px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-copy { display: grid; min-width: 0; align-content: start; gap: 4px; padding: 9px 10px 10px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-title { overflow: hidden; color: var(--qb-text, #17232d); font-size: 11px; font-weight: 750; text-overflow: ellipsis; white-space: nowrap; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-meta, :where(.veyviz-analysis, .veyviz-command) .analysis-run-summary { color: var(--qb-text-muted, #62717e); font-size: 9px; line-height: 1.4; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-warning { color: #9c5128; font-size: 9px; line-height: 1.35; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-cancel-action { justify-self: end; margin: 0 8px 8px; padding: 5px 8px; border: 1px solid var(--qb-border, #dce2e7); border-radius: 4px; background: var(--qb-surface-panel, #fff); color: var(--qb-text-muted, #62717e); font-size: 9px; cursor: pointer; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-inline-status { margin: 8px 0 0; color: var(--qb-text-muted, #62717e); font-size: 10px; }
 
-.analysis-selected-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 3px; }
-.analysis-selected-heading h2 { font-size: 14px; }
-.analysis-selected-meta { margin: 0 0 8px; color: var(--vv-muted, #62717e); font-size: 10px; }
-.analysis-job-state { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 6px; padding: 4px 8px; border: 1px solid #d4dde2; border-radius: 4px; background: #eef2f4; color: #41545f; font-size: 9px; font-weight: 750; line-height: 1.2; }
-.analysis-job-state::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #81919a; }
-.state-succeeded { border-color: #b8ded4; background: #eaf6f2; color: #176c5c; }
-.state-succeeded::before { background: #078c7b; }
-.state-running, .state-queued, .state-cancel-requested { border-color: #c8d9e3; background: #edf4f7; color: #365b6e; }
-.state-running::before, .state-queued::before, .state-cancel-requested::before { background: #5b8fa8; }
-.state-failed { border-color: #ebc7c2; background: #fbefed; color: #98483e; }
-.state-failed::before { background: #c65c4d; }
-.state-cancelled { border-color: #dadde0; background: #f3f4f5; color: #6d777d; }
-.state-cancelled::before { background: #8d989e; }
-.analysis-source-warning { margin: 0 0 8px; padding: 7px 9px; border-left: 2px solid #c78a42; background: #fff7e9; color: #774d1e; font-size: 10px; }
-.analysis-state-card { display: grid; min-height: 140px; align-content: center; justify-items: center; gap: 7px; padding: 18px; border: 1px dashed var(--vv-border, #dce2e7); border-radius: 5px; background: var(--vv-canvas, #f3f5f6); text-align: center; }
-.analysis-state-kicker { color: var(--vv-muted, #62717e); font-size: 8px; font-weight: 750; letter-spacing: 1.2px; }
-.analysis-state-card h3 { margin: 0; color: var(--vv-ink, #17232d); font-size: 14px; }
-.analysis-state-card p { max-width: 56ch; margin: 0; color: var(--vv-muted, #62717e); font-size: 11px; line-height: 1.5; }
-.analysis-state-card button { margin-top: 3px; }
-.analysis-result-view { min-width: 0; }
-.analysis-sample-summary { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 0 7px; }
-.analysis-sample-label { margin: 0; color: var(--vv-ink, #17232d); font-size: 11px; font-weight: 750; }
-.analysis-sample-clock { margin: 0; color: var(--vv-muted, #62717e); font-size: 9px; text-align: right; }
-.analysis-media-figure { min-width: 0; margin: 0; }
-.analysis-image-frame { position: relative; display: grid; width: 100%; min-height: 100px; place-items: center; overflow: hidden; margin: 0; border-radius: 4px; background: #10191f; }
-.analysis-frame-image { display: block; width: 100%; height: 100%; max-width: 100%; object-fit: contain; }
-.analysis-box-layer { position: absolute; inset: 0; pointer-events: none; }
-.analysis-detection-box { position: absolute; min-width: 2px; min-height: 2px; border: 2px solid #ffd25e; background: #ffd25e12; }
-.analysis-detection-box > span { position: absolute; top: -18px; left: -2px; padding: 1px 4px; border-radius: 2px; background: #ffd25e; color: #17232d; font-size: 8px; font-weight: 800; line-height: 1.3; }
-.analysis-image-status { margin: 6px 0 0; color: var(--vv-muted, #62717e); font-size: 9px; }
-.analysis-image-error { color: #a04737; }
-.analysis-sample-navigation { display: grid; grid-template-columns: minmax(95px, auto) 1fr minmax(95px, auto); gap: 8px; align-items: center; margin: 8px 0; }
-.analysis-sample-navigation button { min-height: 31px; padding: 6px 9px; font-size: 10px; }
-.analysis-sample-position { color: var(--vv-muted, #62717e); font-size: 9px; font-variant-numeric: tabular-nums; text-align: center; }
-.analysis-filmstrip { display: flex; min-width: 0; gap: 7px; overflow-x: auto; padding: 1px 1px 4px; }
-.analysis-filmstrip-item { display: grid; flex: 1 0 82px; min-width: 0; gap: 4px; padding: 4px; border: 1px solid var(--vv-border, #dce2e7); border-radius: 4px; background: #fff; color: var(--vv-muted, #62717e); text-align: left; cursor: pointer; }
-.analysis-filmstrip-item.is-current, .analysis-filmstrip-item[aria-pressed="true"] { border-color: var(--vv-accent, #078c7b); background: #edf7f5; color: var(--vv-ink, #17232d); }
-.analysis-filmstrip-number { font-size: 10px; font-weight: 800; }
-.analysis-filmstrip-thumbnail { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 2px; background: #10191f; }
-.analysis-filmstrip-facts { font-size: 8px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-selected-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 3px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-selected-heading h2 { font-size: 14px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-selected-meta { margin: 0 0 8px; color: var(--qb-text-muted, #62717e); font-size: 10px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-job-state { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 6px; padding: 4px 8px; border: 1px solid #d4dde2; border-radius: 4px; background: #eef2f4; color: #41545f; font-size: 9px; font-weight: 750; line-height: 1.2; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-job-state::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #81919a; }
+:where(.veyviz-analysis, .veyviz-command) .state-succeeded { border-color: #b8ded4; background: #eaf6f2; color: #176c5c; }
+:where(.veyviz-analysis, .veyviz-command) .state-succeeded::before { background: #078c7b; }
+:where(.veyviz-analysis, .veyviz-command) .state-running, :where(.veyviz-analysis, .veyviz-command) .state-queued, :where(.veyviz-analysis, .veyviz-command) .state-cancel-requested { border-color: #c8d9e3; background: #edf4f7; color: #365b6e; }
+:where(.veyviz-analysis, .veyviz-command) .state-running::before, :where(.veyviz-analysis, .veyviz-command) .state-queued::before, :where(.veyviz-analysis, .veyviz-command) .state-cancel-requested::before { background: #5b8fa8; }
+:where(.veyviz-analysis, .veyviz-command) .state-failed { border-color: #ebc7c2; background: #fbefed; color: #98483e; }
+:where(.veyviz-analysis, .veyviz-command) .state-failed::before { background: #c65c4d; }
+:where(.veyviz-analysis, .veyviz-command) .state-cancelled { border-color: #dadde0; background: #f3f4f5; color: #6d777d; }
+:where(.veyviz-analysis, .veyviz-command) .state-cancelled::before { background: #8d989e; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-warning { margin: 0 0 8px; padding: 7px 9px; border-left: 2px solid #c78a42; background: #fff7e9; color: #774d1e; font-size: 10px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-state-card { display: grid; min-height: 140px; align-content: center; justify-items: center; gap: 7px; padding: 18px; border: 1px dashed var(--qb-border, #dce2e7); border-radius: 5px; background: var(--qb-surface-page, #f3f5f6); text-align: center; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-state-kicker { color: var(--qb-text-muted, #62717e); font-size: 8px; font-weight: 750; letter-spacing: 1.2px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-state-card h3 { margin: 0; color: var(--qb-text, #17232d); font-size: 14px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-state-card p { max-width: 56ch; margin: 0; color: var(--qb-text-muted, #62717e); font-size: 11px; line-height: 1.5; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-state-card button { margin-top: 3px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-result-view { min-width: 0; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-sample-summary { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 0 7px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-sample-label { margin: 0; color: var(--qb-text, #17232d); font-size: 11px; font-weight: 750; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-sample-clock { margin: 0; color: var(--qb-text-muted, #62717e); font-size: 9px; text-align: right; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-media-figure { min-width: 0; margin: 0; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-image-frame { position: relative; display: grid; width: 100%; min-height: 100px; place-items: center; overflow: hidden; margin: 0; border-radius: 4px; background: #10191f; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-frame-image { display: block; width: 100%; height: 100%; max-width: 100%; object-fit: contain; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-box-layer { position: absolute; inset: 0; pointer-events: none; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-detection-box { position: absolute; min-width: 2px; min-height: 2px; border: 2px solid #ffd25e; background: #ffd25e12; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-detection-box > span { position: absolute; top: -18px; left: -2px; padding: 1px 4px; border-radius: 2px; background: #ffd25e; color: #17232d; font-size: 8px; font-weight: 800; line-height: 1.3; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-image-status { margin: 6px 0 0; color: var(--qb-text-muted, #62717e); font-size: 9px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-image-error { color: #a04737; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-sample-navigation { display: grid; grid-template-columns: minmax(95px, auto) 1fr minmax(95px, auto); gap: 8px; align-items: center; margin: 8px 0; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-sample-navigation button { min-height: 31px; padding: 6px 9px; font-size: 10px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-sample-position { color: var(--qb-text-muted, #62717e); font-size: 9px; font-variant-numeric: tabular-nums; text-align: center; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filmstrip { display: flex; min-width: 0; gap: 7px; overflow-x: auto; padding: 1px 1px 4px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filmstrip-item { display: grid; flex: 1 0 82px; min-width: 0; gap: 4px; padding: 4px; border: 1px solid var(--qb-border, #dce2e7); border-radius: 4px; background: var(--qb-surface-panel, #fff); color: var(--qb-text-muted, #62717e); text-align: left; cursor: pointer; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filmstrip-item.is-current, :where(.veyviz-analysis, .veyviz-command) .analysis-filmstrip-item[aria-pressed="true"] { border-color: var(--qb-accent, #078c7b); background: #edf7f5; color: var(--qb-text, #17232d); }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filmstrip-number { font-size: 10px; font-weight: 800; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filmstrip-thumbnail { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 2px; background: #10191f; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filmstrip-facts { font-size: 8px; }
 
-.analysis-findings { display: grid; grid-template-columns: minmax(0, 1fr) minmax(165px, .75fr); gap: 10px 16px; align-items: start; }
-.analysis-findings > .analysis-eyebrow { grid-column: 1 / -1; margin: 0; }
-.analysis-findings-placeholder { grid-column: 1 / -1; color: var(--vv-muted, #62717e); font-size: 11px; }
-.analysis-findings-view { min-width: 0; }
-.analysis-findings-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 5px; }
-.analysis-findings-header h2 { font-size: 12px; }
-.analysis-findings-count { display: inline-flex; align-items: center; padding: 3px 7px; border: 1px solid #c7e2dc; border-radius: 4px; background: #edf7f4; color: #137764; font-size: 10px; font-weight: 750; }
-.analysis-observation-note { margin: 0 0 6px; color: var(--vv-muted, #62717e); font-size: 9px; line-height: 1.4; }
-.analysis-detection-list { display: grid; max-height: 150px; gap: 5px; overflow: auto; margin: 0; padding: 0; list-style: none; }
-.analysis-detection, .analysis-no-detections { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 6px; align-items: start; padding: 6px; border: 1px solid var(--vv-border, #dce2e7); border-radius: 4px; background: var(--vv-canvas, #f3f5f6); color: var(--vv-muted, #62717e); font-size: 9px; line-height: 1.4; }
-.analysis-detection strong { color: var(--vv-ink, #17232d); font-size: 10px; }
-.analysis-no-detections { grid-template-columns: minmax(0, 1fr); }
-.analysis-review-card { margin: 0 0 8px; padding: 9px; border: 1px solid var(--vv-border, #dce2e7); border-radius: 5px; background: var(--vv-canvas, #f3f5f6); }
-.analysis-review-card .analysis-eyebrow { margin-bottom: 4px; }
-.analysis-review-state { margin: 0 0 4px; color: var(--vv-ink, #17232d); font-size: 12px; font-weight: 750; }
-.review-reviewed { color: #14705e; }
-.review-dismissed { color: #687780; }
-.analysis-review-note { margin: 0 0 7px; color: var(--vv-muted, #62717e); font-size: 9px; }
-.analysis-review-actions { display: flex; flex-wrap: wrap; gap: 6px; }
-.analysis-review-actions button { flex: 1 1 110px; min-height: 31px; padding: 6px 8px; font-size: 9px; }
-.analysis-review-actions [aria-pressed="true"] { box-shadow: inset 0 0 0 1px #ffffff70; }
-.analysis-source-context { min-width: 0; margin: 0; padding: 9px; border-left: 2px solid var(--vv-accent, #078c7b); background: var(--vv-canvas, #f3f5f6); }
-.analysis-source-context .analysis-eyebrow { margin-bottom: 4px; }
-.analysis-source-context-name { display: block; margin-bottom: 6px; color: var(--vv-ink, #17232d); font-size: 11px; }
-.analysis-source-context-facts, .analysis-technical-facts { display: grid; grid-template-columns: minmax(85px, .7fr) minmax(0, 1fr); gap: 4px 8px; margin: 0; font-size: 9px; }
-.analysis-source-context-facts dt, .analysis-technical-facts dt { color: var(--vv-muted, #62717e); }
-.analysis-source-context-facts dd, .analysis-technical-facts dd { min-width: 0; margin: 0; color: var(--vv-ink, #17232d); overflow-wrap: anywhere; }
-.analysis-technical { margin-top: 8px; border-top: 1px solid var(--vv-border, #dce2e7); padding-top: 7px; }
-.analysis-technical > summary { cursor: pointer; color: var(--vv-muted, #62717e); font-size: 9px; font-weight: 650; }
-.analysis-technical-facts { margin-top: 7px; }
-.analysis-hash { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 8px; }
-.analysis-runs .list-empty { min-height: 160px; padding: 22px 10px; }
-.analysis-runs .empty-symbol { width: 36px; height: 36px; margin-bottom: 8px; font-size: 20px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-findings { display: grid; grid-template-columns: minmax(0, 1fr) minmax(165px, .75fr); gap: 10px 16px; align-items: start; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-findings > .analysis-eyebrow { grid-column: 1 / -1; margin: 0; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-findings-placeholder { grid-column: 1 / -1; color: var(--qb-text-muted, #62717e); font-size: 11px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-findings-view { min-width: 0; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-findings-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 5px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-findings-header h2 { font-size: 12px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-findings-count { display: inline-flex; align-items: center; padding: 3px 7px; border: 1px solid #c7e2dc; border-radius: 4px; background: #edf7f4; color: #137764; font-size: 10px; font-weight: 750; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-observation-note { margin: 0 0 6px; color: var(--qb-text-muted, #62717e); font-size: 9px; line-height: 1.4; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-detection-list { display: grid; max-height: 150px; gap: 5px; overflow: auto; margin: 0; padding: 0; list-style: none; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-detection, :where(.veyviz-analysis, .veyviz-command) .analysis-no-detections { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 6px; align-items: start; padding: 6px; border: 1px solid var(--qb-border, #dce2e7); border-radius: 4px; background: var(--qb-surface-page, #f3f5f6); color: var(--qb-text-muted, #62717e); font-size: 9px; line-height: 1.4; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-detection strong { color: var(--qb-text, #17232d); font-size: 10px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-no-detections { grid-template-columns: minmax(0, 1fr); }
+:where(.veyviz-analysis, .veyviz-command) .analysis-review-card { margin: 0 0 8px; padding: 9px; border: 1px solid var(--qb-border, #dce2e7); border-radius: 5px; background: var(--qb-surface-page, #f3f5f6); }
+:where(.veyviz-analysis, .veyviz-command) .analysis-review-card .analysis-eyebrow { margin-bottom: 4px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-review-state { margin: 0 0 4px; color: var(--qb-text, #17232d); font-size: 12px; font-weight: 750; }
+:where(.veyviz-analysis, .veyviz-command) .review-reviewed { color: #14705e; }
+:where(.veyviz-analysis, .veyviz-command) .review-dismissed { color: #687780; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-review-note { margin: 0 0 7px; color: var(--qb-text-muted, #62717e); font-size: 9px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-review-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-review-actions button { flex: 1 1 110px; min-height: 31px; padding: 6px 8px; font-size: 9px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-review-actions [aria-pressed="true"] { box-shadow: inset 0 0 0 1px #ffffff70; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-context { min-width: 0; margin: 0; padding: 9px; border-left: 2px solid var(--qb-accent, #078c7b); background: var(--qb-surface-page, #f3f5f6); }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-context .analysis-eyebrow { margin-bottom: 4px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-context-name { display: block; margin-bottom: 6px; color: var(--qb-text, #17232d); font-size: 11px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-context-facts, :where(.veyviz-analysis, .veyviz-command) .analysis-technical-facts { display: grid; grid-template-columns: minmax(85px, .7fr) minmax(0, 1fr); gap: 4px 8px; margin: 0; font-size: 9px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-context-facts dt, :where(.veyviz-analysis, .veyviz-command) .analysis-technical-facts dt { color: var(--qb-text-muted, #62717e); }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-context-facts dd, :where(.veyviz-analysis, .veyviz-command) .analysis-technical-facts dd { min-width: 0; margin: 0; color: var(--qb-text, #17232d); overflow-wrap: anywhere; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-technical { margin-top: 8px; border-top: 1px solid var(--qb-border, #dce2e7); padding-top: 7px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-technical > summary { cursor: pointer; color: var(--qb-text-muted, #62717e); font-size: 9px; font-weight: 650; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-technical-facts { margin-top: 7px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-hash { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 8px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-runs .list-empty { min-height: 160px; padding: 22px 10px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-runs .empty-symbol { width: 36px; height: 36px; margin-bottom: 8px; font-size: 20px; }
 
-/* Command Center: evidence-first graphite control room */
-.command-workbench { grid-template-columns: minmax(0, 1fr) minmax(310px, .46fr); grid-template-areas: "viewer queue" "viewer findings"; }
-.command-workbench .analysis-review-room { grid-area: viewer; }
-.command-workbench .analysis-runs { grid-area: queue; }
-.command-workbench .analysis-findings { grid-area: findings; }
-.veyviz-command { color: var(--vv-dark-text, #e8eef2); }
-.veyviz-command .analysis-page-header { border-color: var(--vv-dark-border, #2c3c46); }
-.veyviz-command .analysis-eyebrow { color: var(--vv-dark-muted, #a7bac7); }
+
+:where(.veyviz-analysis, .veyviz-command) .command-workbench { grid-template-columns: minmax(0, 1fr) minmax(310px, .46fr); grid-template-areas: "viewer queue" "viewer findings"; }
+:where(.veyviz-analysis, .veyviz-command) .command-workbench .analysis-review-room { grid-area: viewer; }
+:where(.veyviz-analysis, .veyviz-command) .command-workbench .analysis-runs { grid-area: queue; }
+:where(.veyviz-analysis, .veyviz-command) .command-workbench .analysis-findings { grid-area: findings; }
+.veyviz-command { color: var(--qb-text, #e8eef2); }
+.veyviz-command .analysis-page-header { border-color: var(--qb-border, #2c3c46); }
+.veyviz-command .analysis-eyebrow { color: var(--qb-text-muted, #a7bac7); }
 .veyviz-command .analysis-heading-copy h1,
-.veyviz-command .analysis-metric strong { color: var(--vv-dark-text, #e8eef2); }
+.veyviz-command .analysis-metric strong { color: var(--qb-text, #e8eef2); }
 .veyviz-command .analysis-intro,
 .veyviz-command .analysis-metric span,
 .veyviz-command .analysis-readiness,
-.veyviz-command .analysis-live-status { color: var(--vv-dark-muted, #a7bac7); }
-.veyviz-command .analysis-metric { border-color: var(--vv-dark-border, #2c3c46); }
+.veyviz-command .analysis-live-status { color: var(--qb-text-muted, #a7bac7); }
+.veyviz-command .analysis-metric { border-color: var(--qb-border, #2c3c46); }
 .veyviz-command .analysis-readiness-mark.is-ready { box-shadow: 0 0 0 3px #078c7b30; }
-.veyviz-command .analysis-new-run { border-color: var(--vv-dark-border, #2c3c46); background: var(--vv-dark-surface, #18242d); }
+.veyviz-command .analysis-new-run { border-color: var(--qb-border, #2c3c46); background: var(--qb-surface-panel, #18242d); }
 .veyviz-command .analysis-new-run > summary,
 .veyviz-command .analysis-sampling-settings > summary { color: #e8eef1; }
 .veyviz-command .analysis-new-run:not([open]) > summary { color: #8dd5c9; }
@@ -263,7 +267,7 @@
 .veyviz-command .analysis-form .field-label,
 .veyviz-command .analysis-field-help { color: #a6b5bd; }
 .veyviz-command .analysis-form-feedback { color: #a6b5bd; }
-.veyviz-command .analysis-panel { border-color: var(--vv-dark-border, #2c3c46); background: var(--vv-dark-surface, #18242d); box-shadow: 0 8px 28px #0711162e; }
+.veyviz-command .analysis-panel { border-color: var(--qb-border, #2c3c46); background: var(--qb-surface-panel, #18242d); box-shadow: 0 8px 28px #0711162e; }
 .veyviz-command .analysis-panel-heading h2,
 .veyviz-command .analysis-selected-heading h2,
 .veyviz-command .analysis-findings-header h2,
@@ -279,6 +283,9 @@
 .veyviz-command .analysis-review-note,
 .veyviz-command .analysis-source-context-facts dt,
 .veyviz-command .analysis-technical-facts dt { color: #a6b5bd; }
+.veyviz-command .analysis-page-controls { border-color: var(--qb-border, #2c3c46); }
+.veyviz-command .analysis-page-status { color: #a9b8c0; }
+.veyviz-command .analysis-source-pager button { border-color: #40525e; background: #17262f; color: #dbe6ec; }
 .veyviz-command .analysis-queue-list { display: grid; max-height: min(52vh, 510px); gap: 5px; overflow: auto; }
 .veyviz-command .analysis-run-row { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto; align-items: center; border-color: #2d3d47; background: #1c2b35; }
 .veyviz-command .analysis-run-select { grid-template-columns: 72px minmax(0, 1fr); grid-template-rows: auto; align-items: center; gap: 9px; padding: 5px; color: #edf2f4; }
@@ -314,7 +321,7 @@
 .veyviz-command .analysis-review-card { border: 1px solid #334650; }
 .veyviz-command .analysis-review-card .analysis-eyebrow { color: #9babb4; }
 .veyviz-command .analysis-review-actions .analysis-secondary-action { background: #1d2c35; }
-.veyviz-command .analysis-review-actions .analysis-primary-action { background: #087f72; }
+.veyviz-command .analysis-review-actions .analysis-primary-action { background: var(--qb-accent, #087f72); }
 .veyviz-command .analysis-source-context-facts dd,
 .veyviz-command .analysis-technical-facts dd { color: #e4ecef; }
 .veyviz-command .analysis-technical { border-color: #344650; }
@@ -327,149 +334,203 @@
 .veyviz-command .analysis-readonly-note { border-color: #259786; background: #1e3939; color: #c8d9d9; }
 
 @media (max-width: 1150px) {
-  .investigate-workbench { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
-  .analysis-result-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .command-workbench { grid-template-columns: minmax(0, 1fr) minmax(285px, .52fr); }
+  :where(.veyviz-analysis, .veyviz-command) .investigate-workbench { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-result-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  :where(.veyviz-analysis, .veyviz-command) .command-workbench { grid-template-columns: minmax(0, 1fr) minmax(285px, .52fr); }
 }
 @media (max-width: 850px) {
-  .content:has(.workspace.veyviz-analysis, .workspace.veyviz-command) { padding: 18px 20px 24px; }
-  .analysis-page-header { align-items: flex-start; }
-  .analysis-summary { gap: 10px; }
-  .analysis-metric { min-width: 55px; padding-left: 9px; }
-  .analysis-filter-bar { grid-template-columns: minmax(0, 1fr) repeat(3, minmax(115px, .5fr)); }
-  .analysis-filter-clear { grid-column: 4; justify-self: end; }
-  .analysis-filter-scope { grid-column: 1 / 4; grid-row: 2; align-self: center; }
-  .investigate-workbench, .command-workbench { grid-template-columns: minmax(0, 1fr); grid-template-areas: "viewer" "findings" "runs"; }
-  .analysis-result-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); max-height: 480px; }
-  .analysis-queue-list { max-height: 360px; }
-  .analysis-findings { grid-template-columns: minmax(0, 1fr) minmax(160px, .7fr); }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-page-header { align-items: flex-start; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-summary { gap: 10px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-metric { min-width: 55px; padding-left: 9px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-search-field { grid-column: 1 / -1; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-source-filter { grid-row: auto; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filter-clear { grid-column: auto; justify-self: stretch; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filter-scope { grid-column: 1 / -1; grid-row: auto; align-self: center; }
+  :where(.veyviz-analysis, .veyviz-command) .investigate-workbench, :where(.veyviz-analysis, .veyviz-command) .command-workbench { grid-template-columns: minmax(0, 1fr); grid-template-areas: "viewer" "findings" "runs"; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-result-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); max-height: 480px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-queue-list { max-height: 360px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-findings { grid-template-columns: minmax(0, 1fr) minmax(160px, .7fr); }
 }
 @media (max-width: 600px) {
-  .content:has(.workspace.veyviz-analysis, .workspace.veyviz-command) { padding: 14px 12px 20px; }
-  .analysis-page-header { flex-direction: column; gap: 9px; padding-bottom: 9px; }
-  .analysis-heading-copy h1 { font-size: 23px; }
-  .analysis-intro { font-size: 10px; }
-  .analysis-summary { width: 100%; justify-content: flex-start; gap: 14px; }
-  .analysis-metric { min-width: 0; padding-left: 9px; }
-  .analysis-metric span { font-size: 8px; white-space: normal; }
-  .analysis-toolbar { min-height: 36px; flex-wrap: wrap; align-items: stretch; gap: 7px; margin: 7px 0; }
-  .analysis-readiness { min-height: 28px; font-size: 9px; }
-  .analysis-new-run:not([open]) { min-width: 0; }
-  .analysis-new-run > summary { padding: 7px 9px; font-size: 10px; }
-  .analysis-form { grid-template-columns: minmax(0, 1fr); }
-  .analysis-form > button { width: 100%; }
-  .analysis-sampling-settings[open] { grid-template-columns: minmax(0, 1fr); }
-  .analysis-sampling-settings[open] > summary { grid-column: 1; }
-  .analysis-filter-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 6px; }
-  .analysis-search-field { grid-column: 1 / -1; }
-  .analysis-filter-bar input, .analysis-filter-bar select { height: 34px; font-size: 10px; }
-  .analysis-filter-clear { grid-column: 2; grid-row: 3; justify-self: end; height: 26px; }
-  .analysis-filter-scope { grid-column: 1 / 2; grid-row: 3; align-self: center; font-size: 8px; }
-  .analysis-live-status { margin-bottom: 6px; font-size: 9px; }
-  .analysis-workbench { gap: 8px; }
-  .analysis-panel { padding: 9px; }
-  .analysis-result-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; max-height: 430px; }
-  .analysis-run-copy { padding: 7px; }
-  .analysis-run-title { font-size: 10px; }
-  .analysis-run-meta, .analysis-run-summary { font-size: 8px; }
-  .analysis-queue-list { max-height: 330px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-page-header { flex-direction: column; gap: 9px; padding-bottom: 9px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-heading-copy h1 { font-size: 23px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-intro { font-size: 10px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-summary { width: 100%; justify-content: flex-start; gap: 14px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-metric { min-width: 0; padding-left: 9px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-metric span { font-size: 8px; white-space: normal; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-toolbar { min-height: 36px; flex-wrap: wrap; align-items: stretch; gap: 7px; margin: 7px 0; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-readiness { min-height: 28px; font-size: 9px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-new-run:not([open]) { min-width: 0; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-new-run > summary { padding: 7px 9px; font-size: 10px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-form { grid-template-columns: minmax(0, 1fr); }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-form > button { width: 100%; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-sampling-settings[open] { grid-template-columns: minmax(0, 1fr); }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-sampling-settings[open] > summary { grid-column: 1; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 6px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-search-field { grid-column: 1 / -1; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-source-filter { grid-column: 1 / -1; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar input, :where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar select { height: 34px; font-size: 10px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filter-clear { grid-column: auto; grid-row: auto; justify-self: stretch; height: 30px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filter-scope { grid-column: 1 / -1; grid-row: auto; align-self: center; font-size: 8px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-live-status { margin-bottom: 6px; font-size: 9px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-workbench { gap: 8px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-panel { padding: 9px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-result-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; max-height: 430px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-run-copy { padding: 7px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-run-title { font-size: 10px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-run-meta, :where(.veyviz-analysis, .veyviz-command) .analysis-run-summary { font-size: 8px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-queue-list { max-height: 330px; }
   .veyviz-command .analysis-run-select { grid-template-columns: 58px minmax(0, 1fr); gap: 7px; }
   .veyviz-command .analysis-run-media { width: 58px; }
-  .analysis-findings, .veyviz-command .analysis-findings { grid-template-columns: minmax(0, 1fr); gap: 8px; }
-  .analysis-findings > .analysis-eyebrow { grid-column: 1; }
-  .analysis-source-context { margin-top: 0; }
-  .analysis-selected-heading { align-items: flex-start; }
-  .analysis-selected-heading h2 { font-size: 12px; }
-  .analysis-job-state { font-size: 8px; }
-  .analysis-sample-summary { flex-wrap: wrap; gap: 2px; }
-  .analysis-sample-clock { text-align: left; }
-  .analysis-image-frame { min-height: 90px; }
-  .analysis-sample-navigation { grid-template-columns: minmax(0, 1fr) minmax(34px, auto) minmax(0, 1fr); gap: 5px; }
-  .analysis-sample-navigation button { min-height: 30px; padding: 5px 4px; font-size: 9px; }
-  .analysis-filmstrip-item { flex-basis: 72px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-findings, .veyviz-command .analysis-findings { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-findings > .analysis-eyebrow { grid-column: 1; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-source-context { margin-top: 0; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-selected-heading { align-items: flex-start; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-selected-heading h2 { font-size: 12px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-job-state { font-size: 8px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-sample-summary { flex-wrap: wrap; gap: 2px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-sample-clock { text-align: left; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-image-frame { min-height: 90px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-sample-navigation { grid-template-columns: minmax(0, 1fr) minmax(34px, auto) minmax(0, 1fr); gap: 5px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-sample-navigation button { min-height: 30px; padding: 5px 4px; font-size: 9px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filmstrip-item { flex-basis: 72px; }
 }
 @media (max-width: 390px) {
-  .analysis-result-grid { grid-template-columns: minmax(0, 1fr); }
-  .analysis-run-select { grid-template-columns: 100px minmax(0, 1fr); grid-template-rows: auto; align-items: center; gap: 8px; }
-  .analysis-run-media { width: 100px; aspect-ratio: 16 / 10; }
-  .analysis-run-copy { padding: 6px 0; }
-  .analysis-metric strong { font-size: 14px; }
-  .analysis-metric span { font-size: 8px; }
-  .analysis-search-field { grid-column: 1 / -1; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-result-grid { grid-template-columns: minmax(0, 1fr); }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-run-select { grid-template-columns: 100px minmax(0, 1fr); grid-template-rows: auto; align-items: center; gap: 8px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-run-media { width: 100px; aspect-ratio: 16 / 10; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-run-copy { padding: 6px 0; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-metric strong { font-size: 14px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-metric span { font-size: 8px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-search-field { grid-column: 1 / -1; }
 }
 @media (prefers-reduced-motion: reduce) {
   .veyviz-analysis *, .veyviz-command * { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
 
-/* Final hierarchy pass: readable labels, compact controls and honest status. */
-.analysis-header-actions { display: flex; min-width: 0; align-items: center; justify-content: flex-end; gap: 14px; }
-.analysis-toolbar { min-height: 0; gap: 9px; margin: 0; }
-.analysis-readiness { font-size: 12px; white-space: nowrap; }
-.analysis-metric span, .analysis-panel-count, .analysis-findings-count,
-.analysis-field-label, .analysis-form .field-label, .analysis-field-help,
-.analysis-form-feedback, .analysis-readonly-note, .analysis-source-warning { font-size: 11px; }
-.analysis-primary-action, .analysis-secondary-action { font-size: 12px; }
-.analysis-live-status:not(.is-visible) { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
-.analysis-live-status.is-visible { position: static; width: auto; height: auto; max-width: 300px; margin: 0; overflow: visible; clip: auto; clip-path: none; color: var(--vv-muted, #62717e); font-size: 12px; line-height: 1.3; white-space: normal; }
-.analysis-filter-scope { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
-.analysis-filter-bar input, .analysis-filter-bar select, .analysis-filter-clear { font-size: 12px; }
-.analysis-run-scope, .analysis-selected-meta, .analysis-run-meta, .analysis-run-summary,
-.analysis-run-warning, .analysis-inline-status, .analysis-image-status, .analysis-sample-clock,
-.analysis-sample-position, .analysis-observation-note, .analysis-detection, .analysis-no-detections,
-.analysis-review-note, .analysis-source-context-facts, .analysis-technical-facts { font-size: 12px; }
-.analysis-run-title, .analysis-sample-label, .analysis-findings-header h2 { font-size: 13px; }
-.analysis-run-review-badge { justify-self: start; padding: 3px 7px; border: 1px solid #b7ded4; border-radius: 4px; background: #eaf6f2; color: #176c5c; font-size: 11px; font-weight: 750; line-height: 1.2; }
-.review-badge-open { border-color: #d8b16b; background: #fff7e7; color: #79571a; }
-.review-badge-reviewed { border-color: #b7ded4; background: #eaf6f2; color: #176c5c; }
-.review-badge-dismissed { border-color: #d6dde1; background: #f1f4f5; color: #596b74; }
-.analysis-run-media > * { grid-area: 1 / 1; }
-.analysis-run-thumbnail-fallback { width: auto; height: auto; max-width: 100%; padding: 5px 8px; border: 0; border-radius: 0; background: #10191fbd; color: #e4ecef; font-size: 12px; line-height: 1.3; text-align: center; }
-.analysis-state-kicker, .analysis-job-state { font-size: 11px; }
-.analysis-sample-navigation button, .analysis-review-actions button { min-height: 34px; font-size: 12px; }
-.analysis-filmstrip-number { font-size: 12px; }
-.analysis-filmstrip-facts { font-size: 11px; line-height: 1.3; }
-.analysis-findings-placeholder { font-size: 12px; }
-.analysis-findings { gap: 10px 12px; }
-.analysis-source-context-name { font-size: 12px; }
-.analysis-technical > summary { font-size: 12px; }
-.veyviz-command .analysis-sample-label { color: var(--vv-dark-text, #e8eef2); }
-.veyviz-command .analysis-sample-clock { color: var(--vv-dark-muted, #a7bac7); }
+
+:where(.veyviz-analysis, .veyviz-command) .analysis-header-actions { display: flex; min-width: 0; align-items: center; justify-content: flex-end; gap: 14px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-toolbar { min-height: 0; gap: 9px; margin: 0; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-readiness { font-size: 12px; white-space: nowrap; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-metric span, :where(.veyviz-analysis, .veyviz-command) .analysis-panel-count, :where(.veyviz-analysis, .veyviz-command) .analysis-findings-count,
+:where(.veyviz-analysis, .veyviz-command) .analysis-field-label, :where(.veyviz-analysis, .veyviz-command) .analysis-form .field-label, :where(.veyviz-analysis, .veyviz-command) .analysis-field-help,
+:where(.veyviz-analysis, .veyviz-command) .analysis-form-feedback, :where(.veyviz-analysis, .veyviz-command) .analysis-readonly-note, :where(.veyviz-analysis, .veyviz-command) .analysis-source-warning { font-size: 11px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-primary-action, :where(.veyviz-analysis, .veyviz-command) .analysis-secondary-action { font-size: 12px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-live-status:not(.is-visible) { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-live-status.is-visible { position: static; width: auto; height: auto; max-width: 300px; margin: 0; overflow: visible; clip: auto; clip-path: none; color: var(--qb-text-muted, #62717e); font-size: 12px; line-height: 1.3; white-space: normal; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filter-scope { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar input, :where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar select, :where(.veyviz-analysis, .veyviz-command) .analysis-filter-clear { font-size: 12px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-scope, :where(.veyviz-analysis, .veyviz-command) .analysis-selected-meta, :where(.veyviz-analysis, .veyviz-command) .analysis-run-meta, :where(.veyviz-analysis, .veyviz-command) .analysis-run-summary,
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-warning, :where(.veyviz-analysis, .veyviz-command) .analysis-inline-status, :where(.veyviz-analysis, .veyviz-command) .analysis-image-status, :where(.veyviz-analysis, .veyviz-command) .analysis-sample-clock,
+:where(.veyviz-analysis, .veyviz-command) .analysis-sample-position, :where(.veyviz-analysis, .veyviz-command) .analysis-observation-note, :where(.veyviz-analysis, .veyviz-command) .analysis-detection, :where(.veyviz-analysis, .veyviz-command) .analysis-no-detections,
+:where(.veyviz-analysis, .veyviz-command) .analysis-review-note, :where(.veyviz-analysis, .veyviz-command) .analysis-source-context-facts, :where(.veyviz-analysis, .veyviz-command) .analysis-technical-facts { font-size: 12px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-title, :where(.veyviz-analysis, .veyviz-command) .analysis-sample-label, :where(.veyviz-analysis, .veyviz-command) .analysis-findings-header h2 { font-size: 13px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-review-badge { justify-self: start; padding: 3px 7px; border: 1px solid #b7ded4; border-radius: 4px; background: #eaf6f2; color: #176c5c; font-size: 11px; font-weight: 750; line-height: 1.2; }
+:where(.veyviz-analysis, .veyviz-command) .review-badge-open { border-color: #d8b16b; background: #fff7e7; color: #79571a; }
+:where(.veyviz-analysis, .veyviz-command) .review-badge-reviewed { border-color: #b7ded4; background: #eaf6f2; color: #176c5c; }
+:where(.veyviz-analysis, .veyviz-command) .review-badge-dismissed { border-color: #d6dde1; background: #f1f4f5; color: #596b74; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-media > * { grid-area: 1 / 1; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-run-thumbnail-fallback { width: auto; height: auto; max-width: 100%; padding: 5px 8px; border: 0; border-radius: 0; background: #10191fbd; color: #e4ecef; font-size: 12px; line-height: 1.3; text-align: center; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-state-kicker, :where(.veyviz-analysis, .veyviz-command) .analysis-job-state { font-size: 11px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-sample-navigation button, :where(.veyviz-analysis, .veyviz-command) .analysis-review-actions button { min-height: 34px; font-size: 12px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filmstrip-number { font-size: 12px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-filmstrip-facts { font-size: 11px; line-height: 1.3; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-findings-placeholder { font-size: 12px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-findings { gap: 10px 12px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-source-context-name { font-size: 12px; }
+:where(.veyviz-analysis, .veyviz-command) .analysis-technical > summary { font-size: 12px; }
+.veyviz-command .analysis-sample-label { color: var(--qb-text, #e8eef2); }
+.veyviz-command .analysis-sample-clock { color: var(--qb-text-muted, #a7bac7); }
 .veyviz-command .analysis-findings { grid-template-columns: minmax(0, 1fr); }
-.command-workbench { grid-template-areas: "viewer rail"; align-items: start; }
-.command-workbench .analysis-review-room { grid-area: viewer; }
-.command-workbench .analysis-command-rail { display: grid; min-width: 0; grid-area: rail; align-content: start; gap: 12px; }
-.command-workbench .analysis-command-rail > .analysis-panel { grid-area: auto; align-self: start; }
-.command-workbench .analysis-command-rail > .analysis-review-card { min-width: 0; margin: 0; align-self: start; }
+:where(.veyviz-analysis, .veyviz-command) .command-workbench { grid-template-areas: "viewer rail"; align-items: start; }
+:where(.veyviz-analysis, .veyviz-command) .command-workbench .analysis-review-room { grid-area: viewer; }
+:where(.veyviz-analysis, .veyviz-command) .command-workbench .analysis-command-rail { display: grid; min-width: 0; grid-area: rail; align-content: start; gap: 12px; }
+:where(.veyviz-analysis, .veyviz-command) .command-workbench .analysis-command-rail > .analysis-panel { grid-area: auto; align-self: start; }
+:where(.veyviz-analysis, .veyviz-command) .command-workbench .analysis-command-rail > .analysis-review-card { min-width: 0; margin: 0; align-self: start; }
 .veyviz-command .analysis-run-review-badge { border-color: #426b5f; background: #203a35; color: #a8dfd1; }
 .veyviz-command .review-badge-open { border-color: #816a3a; background: #3b3427; color: #f0d08f; }
 .veyviz-command .review-badge-dismissed { border-color: #45525a; background: #26343b; color: #c2cbd0; }
 .veyviz-command .analysis-run-thumbnail-fallback { width: auto; height: auto; font-size: 11px; }
 
 @media (max-width: 1150px) {
-  .analysis-page-header { flex-wrap: wrap; align-items: flex-start; }
-  .analysis-header-actions { width: 100%; justify-content: space-between; }
-  .analysis-filter-bar { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .analysis-search-field { grid-column: 1 / -1; }
-  .analysis-filter-clear { grid-column: auto; justify-self: stretch; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-page-header { flex-wrap: wrap; align-items: flex-start; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-header-actions { width: 100%; justify-content: space-between; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-search-field { grid-column: 1 / -1; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filter-clear { grid-column: auto; justify-self: stretch; }
 }
 @media (max-width: 850px) {
-  .investigate-workbench { grid-template-areas: "runs" "viewer" "findings"; }
-  .command-workbench { grid-template-columns: minmax(0, 1fr); grid-template-areas: "viewer" "rail"; }
-  .analysis-findings, .veyviz-command .analysis-findings { grid-template-columns: minmax(0, 1fr); }
-  .analysis-filter-bar { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  :where(.veyviz-analysis, .veyviz-command) .investigate-workbench { grid-template-areas: "runs" "viewer" "findings"; }
+  :where(.veyviz-analysis, .veyviz-command) .command-workbench { grid-template-columns: minmax(0, 1fr); grid-template-areas: "viewer" "rail"; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-findings, .veyviz-command .analysis-findings { grid-template-columns: minmax(0, 1fr); }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
-  .analysis-header-actions { flex-wrap: wrap; justify-content: flex-start; gap: 7px 12px; }
-  .analysis-toolbar { min-height: 0; flex-wrap: wrap; align-items: center; gap: 7px; margin: 0; }
-  .analysis-readiness { min-height: 0; font-size: 12px; }
-  .analysis-new-run > summary { padding: 7px 9px; font-size: 12px; }
-  .analysis-intro { font-size: 12px; }
-  .analysis-metric span { font-size: 10px; }
-  .analysis-filter-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .analysis-search-field { grid-column: 1 / -1; }
-  .analysis-filter-clear { grid-column: 2; grid-row: auto; justify-self: stretch; height: 34px; }
-  .analysis-filter-bar input, .analysis-filter-bar select { height: 36px; font-size: 12px; }
-  .analysis-run-meta, .analysis-run-summary, .analysis-run-warning, .analysis-run-title { font-size: 12px; }
-  .analysis-job-state { font-size: 11px; }
-  .analysis-sample-navigation button { font-size: 12px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-header-actions { flex-wrap: wrap; justify-content: flex-start; gap: 7px 12px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-toolbar { min-height: 0; flex-wrap: wrap; align-items: center; gap: 7px; margin: 0; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-readiness { min-height: 0; font-size: 12px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-new-run > summary { padding: 7px 9px; font-size: 12px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-intro { font-size: 12px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-metric span { font-size: 10px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-search-field { grid-column: 1 / -1; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filter-clear { grid-column: 2; grid-row: auto; justify-self: stretch; height: 34px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar input, :where(.veyviz-analysis, .veyviz-command) .analysis-filter-bar select { height: 36px; font-size: 12px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-run-meta, :where(.veyviz-analysis, .veyviz-command) .analysis-run-summary, :where(.veyviz-analysis, .veyviz-command) .analysis-run-warning, :where(.veyviz-analysis, .veyviz-command) .analysis-run-title { font-size: 12px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-job-state { font-size: 11px; }
+  :where(.veyviz-analysis, .veyviz-command) .analysis-sample-navigation button { font-size: 12px; }
+}
+
+.veyviz-analysis, .veyviz-command { box-sizing: border-box; width: 100%; min-width: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.5; }
+.veyviz-analysis :is(button, input, select, summary, a), .veyviz-command :is(button, input, select, summary, a) { font: inherit; }
+.veyviz-analysis :is(button, input, select, summary, a):focus-visible, .veyviz-command :is(button, input, select, summary, a):focus-visible { outline: 3px solid var(--qb-focus, #087f70); outline-offset: 3px; }
+.veyviz-analysis :is(button, input, select), .veyviz-command :is(button, input, select) { min-height: 44px; }
+.veyviz-analysis button, .veyviz-command button { min-height: 44px; }
+.veyviz-analysis { color-scheme: light; background: var(--qb-surface-page, #f4f7f6); color: var(--qb-text, #182522); }
+.veyviz-command { color-scheme: dark; background: var(--qb-surface-page, #111b20); color: var(--qb-text, #e6efec); }
+
+/* Keep expanded forms in flow and give them a complete row. */
+:is(.veyviz-analysis, .veyviz-command) .analysis-page-header { align-items: flex-start; }
+:is(.veyviz-analysis, .veyviz-command) .analysis-header-actions { align-items: flex-start; flex-wrap: wrap; }
+:is(.veyviz-analysis, .veyviz-command) .analysis-toolbar { min-width: 0; max-width: 100%; flex-wrap: wrap; }
+:is(.veyviz-analysis, .veyviz-command) .analysis-page-header:has(.analysis-new-run[open]) { flex-wrap: wrap; }
+:is(.veyviz-analysis, .veyviz-command) .analysis-header-actions:has(.analysis-new-run[open]) { flex: 1 1 100%; width: 100%; }
+:is(.veyviz-analysis, .veyviz-command) .analysis-toolbar:has(.analysis-new-run[open]) { flex: 1 1 100%; width: 100%; align-items: flex-start; justify-content: flex-start; }
+:is(.veyviz-analysis, .veyviz-command) .analysis-new-run[open] { width: min(570px, 100%); max-width: 100%; }
+:is(.veyviz-analysis, .veyviz-command) .analysis-new-run > summary { min-height: 44px; }
+:is(.veyviz-analysis, .veyviz-command) .analysis-readiness { align-self: flex-start; }
+
+/* Give the recording pager stable columns instead of shrinking labels to letters. */
+:is(.veyviz-analysis, .veyviz-command) .analysis-source-pager {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  align-items: center;
+  justify-content: stretch;
+  gap: 6px;
+}
+:is(.veyviz-analysis, .veyviz-command) .analysis-source-page-status {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  min-width: 0;
+  font-size: 11px;
+  line-height: 1.3;
+  text-align: center;
+  white-space: nowrap;
+}
+:is(.veyviz-analysis, .veyviz-command) .analysis-source-pager > .analysis-source-page-button:first-child { grid-column: 1; grid-row: 2; }
+:is(.veyviz-analysis, .veyviz-command) .analysis-source-pager > .analysis-source-page-button:last-child { grid-column: 2; grid-row: 2; }
+:is(.veyviz-analysis, .veyviz-command) .analysis-source-page-button {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 6px;
+  font-size: 11px;
+  line-height: 1.25;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: normal;
 }

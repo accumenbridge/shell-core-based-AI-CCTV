@@ -2,7 +2,7 @@ import { randomUUID, createHash } from 'node:crypto';
 import { SqliteOwner, JobQueue } from '@quadbridge/sqlite';
 import { PlatformError, object, text, id, type ModuleManifest, type RequestContext, type JobHandler } from '@quadbridge/contracts';
 import type { OperationDescriptor, OperationRegistration } from '@quadbridge/contracts/operations';
-import { BoundedProviderExecutor, lexicalTerms, type EvidenceAnswerInput, type EvidenceProvider } from '@quadbridge/ai-core';
+import { BoundedProviderExecutor, lexicalTerms, type EvidenceAnswerInput, type EvidenceProvider, type GeneratedAnswerSegment, type ModelAnswerCapability } from '@quadbridge/ai-core';
 import type { HostedModule } from '@quadbridge/backend-host';
 export interface DocumentRecord {
     id: string;
@@ -22,12 +22,21 @@ export interface KnowledgeCitation {
     productId: string; instanceId: string; tenantId: string; documentId: string; title: string; version: number;
     bodyDigest: string; start: number; end: number; excerpt: string;
 }
-export interface KnowledgeAnswer {
+export interface ExtractiveKnowledgeAnswer {
     label: 'Local extractive answer'; state: 'ANSWERED' | 'NO_EVIDENCE'; coverage: 'INDEXED_DOCUMENTS_ONLY';
     answer: string; citations: KnowledgeCitation[];
 }
+export interface NoEvidenceModelAnswer {
+    label: 'Local model answer not called'; mode: 'generated'; state: 'NO_EVIDENCE'; coverage: 'INDEXED_DOCUMENTS_ONLY';
+    answer: ''; identity: ModelAnswerCapability['identity']; citations: [];
+}
+export interface GeneratedKnowledgeAnswer {
+    label: 'Local model-generated answer'; mode: 'generated'; state: 'ANSWERED'; coverage: 'INDEXED_DOCUMENTS_ONLY';
+    answer: string; identity: ModelAnswerCapability['identity']; segments: { text: string; citations: KnowledgeCitation[] }[]; citations: KnowledgeCitation[];
+}
+export type KnowledgeAnswer = ExtractiveKnowledgeAnswer | NoEvidenceModelAnswer | GeneratedKnowledgeAnswer;
 export interface DocumentRetrieval { answer(ctx: RequestContext, question: string): Promise<KnowledgeAnswer>; }
-export interface KnowledgeOptions { answerProvider?: EvidenceProvider }
+export interface KnowledgeOptions { answerProvider?: EvidenceProvider; modelAnswer?: ModelAnswerCapability }
 const localExtractiveProvider: EvidenceProvider = async (input, { signal }) => {
     if (signal.aborted) throw new PlatformError('UNAVAILABLE', 'Answer request cancelled');
     const terms = new Set(lexicalTerms(input.question));
@@ -85,15 +94,18 @@ function createDocument(store: SqliteOwner, queue: JobQueue, ctx: RequestContext
 }
 
 export function createKnowledge(manifest: ModuleManifest, store: SqliteOwner, options: KnowledgeOptions = {}): KnowledgeModule {
+    if (options.answerProvider && options.modelAnswer) throw new PlatformError('INVALID', 'Select only one Knowledge answer provider');
     store.migrate([{ version: 1, sql: `CREATE TABLE documents(id TEXT NOT NULL,tenant TEXT NOT NULL,title TEXT NOT NULL,body TEXT NOT NULL,version INTEGER NOT NULL,state TEXT NOT NULL,job_id TEXT NOT NULL,created INTEGER NOT NULL,PRIMARY KEY(tenant,id)); CREATE VIRTUAL TABLE document_search USING fts5(document_id UNINDEXED,tenant UNINDEXED,title,body);` }], manifest.schema);
     const queue = new JobQueue(store);
-    const answerExecutor = new BoundedProviderExecutor(4, 5000);
+    const answerExecutor = new BoundedProviderExecutor(options.modelAnswer ? 'local-inference' : 'extractive');
     const answerProvider = options.answerProvider ?? localExtractiveProvider;
     const retrieval: DocumentRetrieval = { async answer(ctx, question) {
             ctx.assertAllowed('knowledge.read', 'read');
             const query = text(question, 'question', answerBounds.question);
             const terms = lexicalTerms(query);
-            if (!terms.length) return { label: 'Local extractive answer', state: 'NO_EVIDENCE', coverage: 'INDEXED_DOCUMENTS_ONLY', answer: '', citations: [] };
+            if (!terms.length) return options.modelAnswer
+                ? { label: 'Local model answer not called', mode: 'generated', state: 'NO_EVIDENCE', coverage: 'INDEXED_DOCUMENTS_ONLY', answer: '', identity: options.modelAnswer.identity, citations: [] as [] }
+                : { label: 'Local extractive answer', state: 'NO_EVIDENCE', coverage: 'INDEXED_DOCUMENTS_ONLY', answer: '', citations: [] };
             const match = terms.slice(0, 12).map(term => `"${term.replaceAll('"', '""')}"`).join(' OR ');
             const rows = store.db.prepare(`SELECT d.id,d.title,d.version,d.body FROM document_search s JOIN documents d ON d.tenant=s.tenant AND d.id=s.document_id
                 WHERE document_search MATCH ? AND s.tenant=? AND d.state='READY' ORDER BY rank LIMIT 5`).all(match, ctx.tenantId) as unknown as {id:string;title:string;version:number;body:string}[];
@@ -101,7 +113,7 @@ export function createKnowledge(manifest: ModuleManifest, store: SqliteOwner, op
             for (const row of rows) {
                 const digest = bodyDigest(row.body);
                 let best: { citation: KnowledgeCitation; score: number } | undefined;
-                const sentence = /[^.!?\n]+(?:[.!?]+|$)/gu;
+                const sentence = /[^.!?\n]+(?:[.!?]+|(?=\n)|$)/gu;
                 for (const found of row.body.matchAll(sentence)) {
                     const raw = found[0], base = found.index ?? 0;
                     let left = 0, right = raw.length;
@@ -125,10 +137,54 @@ export function createKnowledge(manifest: ModuleManifest, store: SqliteOwner, op
                 bounded.push({ citation: item.citation, id: `e${bounded.length}` });
                 excerptBytes += bytes;
             }
-            if (!bounded.length) return { label: 'Local extractive answer', state: 'NO_EVIDENCE', coverage: 'INDEXED_DOCUMENTS_ONLY', answer: '', citations: [] };
+            if (!bounded.length) return options.modelAnswer
+                ? { label: 'Local model answer not called', mode: 'generated', state: 'NO_EVIDENCE', coverage: 'INDEXED_DOCUMENTS_ONLY', answer: '', identity: options.modelAnswer.identity, citations: [] as [] }
+                : { label: 'Local extractive answer', state: 'NO_EVIDENCE', coverage: 'INDEXED_DOCUMENTS_ONLY', answer: '', citations: [] };
             const providerInput: EvidenceAnswerInput = Object.freeze({ question: query,
                 evidence: Object.freeze(bounded.map(item => Object.freeze({ id: item.id, text: item.citation.excerpt }))) });
             ctx.assertAllowed('knowledge.read', 'read');
+            if (options.modelAnswer) {
+                const generated = await answerExecutor.run(({ signal }) => options.modelAnswer!.answer(providerInput, { signal }), { signal: ctx.signal });
+                ctx.assertAllowed('knowledge.read', 'read');
+                if (ctx.signal.aborted) throw new PlatformError('UNAVAILABLE', 'Answer request cancelled');
+                if (!generated || !Array.isArray(generated.segments) || generated.segments.length < 1 || generated.segments.length > answerBounds.records)
+                    throw new PlatformError('INCOMPATIBLE', 'Answer provider returned an invalid generated answer');
+                const citationById = new Map(bounded.map(item => [item.id, item.citation]));
+                const referenced = new Set<string>();
+                let outputBytes = 0;
+                const segments: { text: string; citations: KnowledgeCitation[] }[] = [];
+                for (const segment of generated.segments as readonly GeneratedAnswerSegment[]) {
+                    if (!segment || typeof segment.text !== 'string' || !segment.text.trim() || segment.text.includes('\0') ||
+                        !Array.isArray(segment.evidenceIds) || segment.evidenceIds.length < 1 || segment.evidenceIds.length > answerBounds.records ||
+                        new Set(segment.evidenceIds).size !== segment.evidenceIds.length)
+                        throw new PlatformError('INCOMPATIBLE', 'Answer provider returned an invalid generated segment');
+                    outputBytes += Buffer.byteLength(segment.text, 'utf8') + (segments.length ? 2 : 0);
+                    if (outputBytes > answerBounds.output) throw new PlatformError('INCOMPATIBLE', 'Generated answer exceeds its fixed byte bound');
+                    const citations = segment.evidenceIds.map(evidenceId => {
+                        if (typeof evidenceId !== 'string') throw new PlatformError('INCOMPATIBLE', 'Answer provider returned invalid evidence references');
+                        const citation = citationById.get(evidenceId);
+                        if (!citation) throw new PlatformError('INCOMPATIBLE', 'Answer provider selected unknown evidence');
+                        referenced.add(evidenceId);
+                        return citation;
+                    });
+                    segments.push({ text: segment.text, citations });
+                }
+                if (!segments.length || !referenced.size) throw new PlatformError('INCOMPATIBLE', 'Generated answer must cite captured evidence');
+                const citations: KnowledgeCitation[] = [];
+                for (const evidenceId of referenced) {
+                    const citation = citationById.get(evidenceId)!;
+                    ctx.assertAllowed('knowledge.read', 'read');
+                    const current = store.db.prepare("SELECT title,version,body FROM documents WHERE tenant=? AND id=? AND state='READY'").get(ctx.tenantId, citation.documentId) as {title:string;version:number;body:string} | undefined;
+                    if (!current || current.title !== citation.title || current.version !== citation.version || bodyDigest(current.body) !== citation.bodyDigest ||
+                        current.body.slice(citation.start, citation.end) !== citation.excerpt)
+                        throw new PlatformError('CONFLICT', 'Indexed source changed while preparing the answer');
+                    citations.push(citation);
+                }
+                ctx.assertAllowed('knowledge.read', 'read');
+                if (ctx.signal.aborted) throw new PlatformError('UNAVAILABLE', 'Answer request cancelled');
+                return { label: 'Local model-generated answer', mode: 'generated', state: 'ANSWERED', coverage: 'INDEXED_DOCUMENTS_ONLY',
+                    answer: segments.map(segment => segment.text).join('\n\n'), identity: options.modelAnswer.identity, segments, citations };
+            }
             const selection = await answerExecutor.run(signal => answerProvider(providerInput, signal), { signal: ctx.signal, timeoutMs: 5000 });
             ctx.assertAllowed('knowledge.read', 'read');
             if (ctx.signal.aborted) throw new PlatformError('UNAVAILABLE', 'Answer request cancelled');
@@ -206,4 +262,4 @@ export function createKnowledge(manifest: ModuleManifest, store: SqliteOwner, op
             { method: 'POST', path: '/api/documents/cancel-index', permission: 'knowledge.write', kind: 'write', handle(ctx, input, _q, key) { const b = object(input, ['documentId']); const documentId = id(b.documentId); const record = queries.get(ctx, documentId); return store.command(ctx, 'knowledge.cancel-index', key, { documentId }, 'knowledge.write', () => ({ state: queue.cancel(ctx, record.job_id), jobId: record.job_id })); } }
         ], close: () => store.close() };
 }
-export function register(env: import('@quadbridge/backend-host').ModuleEnvironment) { return createKnowledge(env.manifest, new SqliteOwner(env.dataPath, env.manifest.id)); }
+export function register(env: import('@quadbridge/backend-host').ModuleEnvironment) { return createKnowledge(env.manifest, new SqliteOwner(env.dataPath, env.manifest.id), { modelAnswer: env.modelAnswer }); }

@@ -1,0 +1,2 @@
+{"candidateIdentity":"395412a9e32bba43a1de65e4b218294da9c10b8e99738ac17be3180d3ae69bff","phase":"before-fresh-build","maintainedFileCount":917,"maintainedDigest":"38d8c86c9446fca58a543658d44943c05a9c36733c782af83ed2cec3b3699f19","ownerPathCount":2,"readonlyPathCount":1,"outputPath":"D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-startup-close-evidence\\overlay-before-fresh-build-inventory.json"}
+EXIT_CODE=0

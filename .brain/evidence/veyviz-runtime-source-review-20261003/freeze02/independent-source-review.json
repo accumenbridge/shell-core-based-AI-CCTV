@@ -1,0 +1,112 @@
+{
+  "schema": "veyviz.immutable-runtime-independent-source-review.v1",
+  "reviewer": "/root/product_review",
+  "recordedUtc": "2026-10-03T12:05:18.3746367Z",
+  "phase": "FROZEN_SOURCE_ONLY",
+  "verdict": "CHANGES_REQUIRED",
+  "candidate": {
+    "snapshotRef": ".local/product-immutable-runtime-evidence/review/root-seven-owner-snapshot-01/capture.json",
+    "snapshotDigest": "0e8b229ba192f33ea0e27aeb024ccbbd4d217f6cd0b764a3fea8a92fc80705d3",
+    "freezeRef": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-02/freeze.json",
+    "freezeSha256": "7e14945bd12b9c7985a36ca9cba9d86009a17cc8891ef1a9390c8671e940bae5",
+    "authoredDigest": "05f9db9b875be4f4d5531285ef8842a305ee5b8e1920b084394022a09224dd7d",
+    "toolchainDigest": "e0b378e38c273df23b7d35d4bfa30702e7f43f2b5c86f3bb88e6001f1478b1f1",
+    "owners": [
+      {
+        "path": "package.json",
+        "bytes": 1539,
+        "sha256": "f0738ec1b03bd4f59b1a05f88815ce6e7f4d7b6104113f6d5a21b62278c31887",
+        "independentlyMatched": true
+      },
+      {
+        "path": "tests/veyviz-lifecycle.test.mjs",
+        "bytes": 14898,
+        "sha256": "1493fab0aa8c97afbd8224dad5262fb0c113ae16c8d5fd220e4919881d716249",
+        "independentlyMatched": true
+      },
+      {
+        "path": "tests/veyviz-snapshot.test.mjs",
+        "bytes": 23890,
+        "sha256": "61ccd45de218fd832c18d90e7ddf7ccca784b6d88e1f864fcaeae0924fba6e1d",
+        "independentlyMatched": true
+      },
+      {
+        "path": "tools/veyviz-build.mjs",
+        "bytes": 14348,
+        "sha256": "f00694386527f5e73c8fab5b4ce056fe8df6c6c918bd85913b1ab3320f22c71c",
+        "independentlyMatched": true
+      },
+      {
+        "path": "tools/veyviz-inventory.mjs",
+        "bytes": 22729,
+        "sha256": "fef17865a9dffc913bf34fad81378dcf38f56c4700e2702e515abc7f6bc26986",
+        "independentlyMatched": true
+      },
+      {
+        "path": "tools/veyviz-snapshot.mjs",
+        "bytes": 22874,
+        "sha256": "1b20b45a86f781e2c482fd6f80b2092dfc35d390733f6defb01c4bb806448388",
+        "independentlyMatched": true
+      },
+      {
+        "path": "tools/veyviz-start.mjs",
+        "bytes": 15913,
+        "sha256": "c7f9c30c5e11458fbe0f6291abc6254650be93a70ad7f730297ca4e4e2382662",
+        "independentlyMatched": true
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "RUNTIME-REVIEW-03",
+      "severity": "BLOCKER",
+      "owner": "tools/veyviz-inventory.mjs",
+      "seam": "verifyAttemptEvidence",
+      "description": "MAX_OUTPUT_BYTES is referenced but never declared/imported in this module. Every valid attempt receipt verification reaches a ReferenceError.",
+      "repair": "Declare the fixed raw-output bound consistently with the build wrapper."
+    },
+    {
+      "id": "RUNTIME-REVIEW-04",
+      "severity": "BLOCKER",
+      "owner": "tools/veyviz-inventory.mjs",
+      "seam": "captureBuildOutputs",
+      "description": "assertExpectedFactoryInventory(root, expected) is called against the entire producer root. Its existing exact-export listFiles API rejects excluded operational directories or extra/unrelated files, so successful build qualification cannot publish.",
+      "repair": "Use existing release verification and independently derived expectedFactoryInventory digest for producer output identity; reserve exact inventory assertion for real exported snapshot destinations."
+    },
+    {
+      "id": "RUNTIME-REVIEW-05",
+      "severity": "BLOCKER",
+      "owners": [
+        "tools/veyviz-inventory.mjs",
+        "tests/veyviz-snapshot.test.mjs"
+      ],
+      "seam": "captureBuildToolchain / makeProducerFixture",
+      "description": "The full compiler uses tsconfig.base types node. The test producer copies only TypeScript/esbuild/platform packages; it omits @types/node and undici-types, and link-workspaces only creates @quadbridge links. Shared toolchain identity also omits these actual installed compiler inputs.",
+      "repair": "Copy and capture the exact existing locked installed @types/node and undici-types dependency closure, retaining compiler checks and avoiding external downloads/dependency edits."
+    },
+    {
+      "id": "RUNTIME-REVIEW-06",
+      "severity": "COMPATIBILITY_BLOCKER",
+      "owner": "tools/veyviz-inventory.mjs",
+      "seam": "captureInventory v1 PRODUCTS",
+      "description": "Prior v1 generated inventory order is review then catalog. New shared PRODUCTS is catalog then review, changing v1 JSON and its digest despite the explicit byte-compatible contract.",
+      "repair": "Preserve prior v1 generated ordering independently of any new deterministic build-output ordering."
+    }
+  ],
+  "positiveSourceObservations": [
+    "Prior RUNTIME-REVIEW-01 identity-only digest defect is repaired at source level: candidateKey derives directory identity; snapshotDigest binds full schema/identity/files manifest and is checked by existing snapshot/copy APIs.",
+    "Prior RUNTIME-REVIEW-02 freshness gap has an enforceable receipt seam at source level, but this frozen implementation cannot qualify/verify because of findings 03/04.",
+    "Root package build script selects only the fixed owned wrapper; wrapper retires current receipt before pre-capture/spawn and retains original code/signal/error and raw streams with declared finite bounds. Stable receipt excludes random attempt IDs/timestamps/output logs.",
+    "Authored capture shares one source-root definition, excludes generated root tsconfig while output identity binds it, includes exact visual authored inputs, and preserves per-workspace configs. Catalog build capture does not require private companion profile/model bytes.",
+    "Snapshot preparation rechecks qualification after factory completion and before credentials/enrollment. Execution root/sidecar/in-copy links and original-child cleanup UNKNOWN quarantine remain explicit.",
+    "Meaningful tests retain actual catalog HTTP-byte mutation, original backend row/revoked grant restart, changed generation isolation, source/tooling/receipt tamper refusal, and original IPC/occupied-port regressions. New drift/failure tests retain original close and attempt bytes; source review cannot claim they ran."
+  ],
+  "evidenceAssessment": "NOT_RUN_BY_REVIEWER; source-only review. No new raw build/focused output reviewed for freeze02.",
+  "limitations": [
+    "Only seven snapshot-copied owner files were independently rehashed for this review. The declared complete authored/toolchain manifests were read as provenance, not independently rediscovered or fully rehashed.",
+    "No source, Brain, dependency, Git, build, test, runtime/process, browser or external companion operation was performed by reviewer. Writes confined to ignored review artifact.",
+    "Repairs reported by Brawn after freeze02 are not qualified by this report; require new exact freeze and fresh source/evidence review.",
+    "Filesystem-blocked escaped-link coverage must remain explicitly blocked if encountered. No broader product/UI/Python/model/production acceptance. Historical original child close and foreign4494 impact remain UNKNOWN."
+  ],
+  "proposedRootRecords": "Preserve freeze02 and this changes-required report. Admit no successful source/evidence result from freeze02. Complete the bounded repairs within existing seven owners, freeze again, then use fresh isolated source build and focused tests followed by exact-candidate independent source/evidence review."
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "veyviz.core-integration-review.v1",
+  "createdAt": "2026-10-03T16:11:17.737Z",
+  "reviewer": "/root/core_integration_review",
+  "status": "PASSED_BOUNDED_SOURCE_REVIEW",
+  "scope": "Root Capacitor producer-input addition relative to active product; local selective committed-framework adoption scripts; four concrete UI02 merge outputs. No final UI03 review yet.",
+  "blockers": [],
+  "inputs": [
+    {
+      "path": "tools/veyviz-inventory.mjs",
+      "sha256": "c2a8e279a6c09ffc8353ab1284378b0434b3335e030449b9ac25a596da8b6cca"
+    },
+    {
+      "path": "tests/veyviz-snapshot.test.mjs",
+      "sha256": "a2a95cfbf03c40e81136db6ac98e3c4e233b38f8d8bf8cd431a1c3e0b5769d53"
+    },
+    {
+      "path": ".local/adopt-reviewed-framework.mjs",
+      "sha256": "dbbf3e72a0b51fdb280dd3cd9883b70afe609f40267b6f88ebdbaa9a8cd246bf"
+    },
+    {
+      "path": ".local/merge-framework-overlaps.mjs",
+      "sha256": "13dc8f1a6e047d18bd62fe10e17e4ecb40019baa08d238a643e8c779e4c5bf5c"
+    },
+    {
+      "path": ".local/framework-overlaps-73f35ee51921-03/manifest.json",
+      "sha256": "2ac7a8bcfa594a188c98b08f3b1026ad3f21c21bf8fa9e634893bc3c1dbce0ec"
+    }
+  ],
+  "findings": [
+    "Root product delta is exactly 13 inventory lines and physical SDK fixture copying plus two vendor-byte tamper cases; existing captureToolPackage binds actual physical package bytes and rejects declared/locked/installed mismatch.",
+    "Prepared four merges match recorded current/prepared/upstream digests; source-copy retains physicalDependencies option and upstream pinned SDK physical copy. Studio retains dynamic catalogue adaptation and upstream session checks. Product identity/build wrapper/full test script are preserved.",
+    "Selective adoption reads exact Git commit blobs, preserves manual overlaps, requires unchanged inspection entries, refuses deletions, and verifies copied blobs. Current selected destination ancestors contain no symbolic links. This is a coordinator-controlled local integration helper, not a general filesystem security boundary."
+  ],
+  "requiredNext": [
+    "Regenerate inspection and all four concrete merges against final independently reviewed UI03 commit; old73f35 is preparation only. Recheck exact manual set and hashes immediately before applying.",
+    "Use explicit isolated-product workdir; reconcile lock/install, build edited source, then run finite producer snapshot and UI tests. Root retains full npm/model/browser/export/restart gates separately."
+  ],
+  "verification": {
+    "executed": [
+      "Read-only source and exact-delta inspection",
+      "SHA256 comparisons for all four current/prepared/upstream merges",
+      "Atlas validator: structure VALID; four historical source/UI drift warnings remain"
+    ],
+    "build": "NOT_RUN",
+    "tests": "NOT_RUN",
+    "browser": "NOT_RUN",
+    "adoption": "NOT_APPLIED",
+    "qualification": "NOT_GRANTED"
+  },
+  "proposedRecordUpdate": {
+    "reviewGate": "Bounded root integration source review passed; preserve pending fresh build/tests and final UI03 source review."
+  }
+}

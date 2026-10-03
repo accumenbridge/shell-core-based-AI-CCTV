@@ -1,0 +1,1 @@
+{"status":"QUALIFIED","digest":"3741c7e00dd642068f08ddc0e918465e96bb439e1165c581f50be4dc30118a01","attemptId":"a3f6744d-cdd1-4131-94b4-071f164da667","outputProducts":["veyviz-catalog","veyviz-review"]}

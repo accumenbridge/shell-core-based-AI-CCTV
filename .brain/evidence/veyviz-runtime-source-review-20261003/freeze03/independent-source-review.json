@@ -1,0 +1,104 @@
+{
+  "schema": "veyviz.immutable-runtime-independent-source-review.v1",
+  "phase": "FROZEN_REPAIR_CLOSURE_SOURCE_ONLY",
+  "recordedUtc": "2026-10-03T12:11:21.2473965Z",
+  "reviewer": "/root/product_review",
+  "verdict": "CHANGES_REQUIRED",
+  "freeze": {
+    "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-03\\freeze.json",
+    "sha256": "975d760c03b3b4c0efd3bd7a1904fae9ef30248078423baa5d93505724f89002",
+    "authoredDigest": "a1d070047a01d3c2b6984da8672736467007f991a1d3ac093c18ac76460c1723",
+    "toolchainDigest": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+    "exactOwners": [
+      {
+        "path": "package.json",
+        "sha256": "f0738ec1b03bd4f59b1a05f88815ce6e7f4d7b6104113f6d5a21b62278c31887",
+        "bytes": 1539,
+        "activeOverlayAndManifestMatch": true
+      },
+      {
+        "path": "tools/veyviz-build.mjs",
+        "sha256": "f00694386527f5e73c8fab5b4ce056fe8df6c6c918bd85913b1ab3320f22c71c",
+        "bytes": 14348,
+        "activeOverlayAndManifestMatch": true
+      },
+      {
+        "path": "tools/veyviz-inventory.mjs",
+        "sha256": "06231111915da8d5acd4366e97c1cee3893827bdc8875cf37ac704c1dec875db",
+        "bytes": 24663,
+        "activeOverlayAndManifestMatch": true
+      },
+      {
+        "path": "tools/veyviz-start.mjs",
+        "sha256": "c7f9c30c5e11458fbe0f6291abc6254650be93a70ad7f730297ca4e4e2382662",
+        "bytes": 15913,
+        "activeOverlayAndManifestMatch": true
+      },
+      {
+        "path": "tools/veyviz-snapshot.mjs",
+        "sha256": "1b20b45a86f781e2c482fd6f80b2092dfc35d390733f6defb01c4bb806448388",
+        "bytes": 22874,
+        "activeOverlayAndManifestMatch": true
+      },
+      {
+        "path": "tests/veyviz-lifecycle.test.mjs",
+        "sha256": "1493fab0aa8c97afbd8224dad5262fb0c113ae16c8d5fd220e4919881d716249",
+        "bytes": 14898,
+        "activeOverlayAndManifestMatch": true
+      },
+      {
+        "path": "tests/veyviz-snapshot.test.mjs",
+        "sha256": "cfa0c46ecd72597d925926e4817ac73c1c27785ec89ee30a3bdb440e34d9dfcb",
+        "bytes": 24999,
+        "activeOverlayAndManifestMatch": true
+      }
+    ],
+    "independentCopiedSource": ".local/product-immutable-runtime-evidence/review/independent-freeze03-source-snapshot-01"
+  },
+  "closure": [
+    {
+      "id": "RUNTIME-REVIEW-03",
+      "status": "SOURCE_REPAIRED",
+      "evidence": "Inventory now declares MAX_OUTPUT_BYTES at 128 MiB, matching wrapper raw-output bound."
+    },
+    {
+      "id": "RUNTIME-REVIEW-04",
+      "status": "SOURCE_REPAIRED",
+      "evidence": "Producer output capture verifies releases and derives expected factory digests without exact-export inventory assertion against producer root. Actual export snapshot checks remain unchanged."
+    },
+    {
+      "id": "RUNTIME-REVIEW-05",
+      "status": "SOURCE_REPAIRED",
+      "evidence": "Shared toolchain captures exact locked @types/node and undici-types bytes and validates installed dependency range. Fixture copies both and excludes dist/.artifacts/generated before fixed real build."
+    },
+    {
+      "id": "RUNTIME-REVIEW-06",
+      "status": "SOURCE_REPAIRED_WITH_REMAINING_V1_REGRESSION",
+      "evidence": "RELEASE_PRODUCTS restores v1 review/catalog order, but paths() now silently ignores linked/non-regular entries for v1."
+    }
+  ],
+  "findings": [
+    {
+      "id": "RUNTIME-REVIEW-07",
+      "severity": "COMPATIBILITY_AND_REFUSAL_BLOCKER",
+      "owner": "tools/veyviz-inventory.mjs",
+      "seam": "paths(root, release-v1)",
+      "description": "Original v1 inventory throws on a symbolic link or unsupported non-regular entry. Freeze03 returns/ignores those entries when authored=false. This weakens capture refusal and changes existing API behavior, contrary to preservation requirement.",
+      "minimumRepair": "Restore unconditional symlink and unsupported-entry rejection for both inventory profiles. Keep root-file generated exclusion and product ordering improvements."
+    }
+  ],
+  "foreignDeltas": [
+    "modules/veyviz-intelligence/src/protocol.ts changed concurrently",
+    "services/veyviz-ai/runtime_setup.py new concurrently",
+    "services/veyviz-ai/runtime_worker.py new concurrently"
+  ],
+  "foreignMeaning": "Preserved concurrent foreign work; not seven-owner Brawn changes, not reviewed or accepted by this bounded report.",
+  "evidenceStatus": "NO_BUILD_OR_TEST_EXECUTION_REVIEWED_FOR_FREEZE03",
+  "limitations": [
+    "Source readiness remains blocked by finding07; all earlier four blocker fixes are source-only observations pending executed evidence.",
+    "Seven owners independently rehashed across active/overlay/declared manifests and copied to unique ignored reviewer snapshot. Full360-file discovery or toolchain rehash was not independently repeated.",
+    "No source/Brain/dependency/Git/process/build/test/browser/profile/model mutations. Reviewer writes confined to ignored source snapshot and report.",
+    "Historical failures, original child close UNKNOWN and foreign4494 impact UNKNOWN remain; no whole-product qualification."
+  ],
+  "proposedRootRecords": "Retain freeze03 and repair-closure report. Apply finding07 only inside current inventory owner; freeze again, then source closure review can admit existing isolated fresh wrapper build/focused checks. Final evidence review remains required."
+}

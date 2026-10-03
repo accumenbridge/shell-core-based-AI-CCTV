@@ -1,0 +1,23 @@
+{
+  "schema": "veyviz.startup-close-owner-file-capture.v1",
+  "capturedUtc": "2026-10-03T08:48:44.263Z",
+  "phase": "post-edit-active",
+  "root": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+  "files": [
+    {
+      "path": "tools/veyviz-start.mjs",
+      "bytes": 12450,
+      "sha256": "23a42e9536fcf0e59b37153e60e15b954d2ad7099aac633ea7900a3520d32959"
+    },
+    {
+      "path": "tests/veyviz-lifecycle.test.mjs",
+      "bytes": 12652,
+      "sha256": "d34d90c6ff772f066e574f41170f635550366713eb8bd999f59df8746f4370db"
+    },
+    {
+      "path": "tools/veyviz-runtime.mjs",
+      "bytes": 3132,
+      "sha256": "7bf19c54a83ab16784083762c0c0555281ac44e903403825fa67d99ea12233ca"
+    }
+  ]
+}

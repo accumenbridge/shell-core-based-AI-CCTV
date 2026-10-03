@@ -1,4 +1,7 @@
 import { PlatformError, type CompositionPlan, type ModuleManifest } from '@quadbridge/contracts';
+import { validateModuleManifest } from '@quadbridge/contracts/module-manifest';
+import { validateOperationDescriptor } from '@quadbridge/contracts/operations';
+import { validateUiContributionDescriptors } from '@quadbridge/contracts/ui-contributions';
 
 export type StudioLayer = 'ui' | 'backend' | 'ai' | 'data' | 'worker' | 'integration' | 'deployment';
 export interface UiContribution {
@@ -177,8 +180,10 @@ function validateStudioMetadata(value: unknown): void {
 }
 
 export function validateStudioModule(manifest: StudioModuleManifest): StudioModuleManifest {
+  validateModuleManifest(manifest);
+  for (const operation of manifest.operations ?? []) validateOperationDescriptor(operation, manifest.id, manifest.permissions);
+  validateUiContributionDescriptors(manifest);
   const source = record(manifest, 'module manifest', ['id','version','abi','dependencies','provides','requires','permissions','routes','workspaces','uiContributions','schema','background','browserAssets','operations','studio']);
-  identifier(source.id, 'module id');
   if (source.studio !== undefined) validateStudioMetadata(source.studio);
   return manifest;
 }

@@ -1,0 +1,168 @@
+{
+  "schema": "veyviz.product-paging-execution-index.v1",
+  "executions": [
+    {
+      "command": "snapshot-preparation",
+      "argv": [
+        "node",
+        ".local/product-paging-evidence/prepare-source-snapshot.mjs",
+        "D:\\Veyviz-code\\veyviz-quadbridge-product"
+      ],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 1,
+      "logPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-preparation.txt",
+      "rawOutputCaptured": true
+    },
+    {
+      "command": "snapshot-preparation-retry-01",
+      "argv": [
+        "node",
+        ".local/product-paging-evidence/prepare-source-snapshot.mjs",
+        "D:\\Veyviz-code\\veyviz-quadbridge-product"
+      ],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 2,
+      "logPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-preparation-retry-01.txt",
+      "rawOutputCaptured": true
+    },
+    {
+      "command": "snapshot-preparation-retry-02",
+      "argv": [
+        "node",
+        ".local/product-paging-evidence/prepare-source-snapshot.mjs",
+        "D:\\Veyviz-code\\veyviz-quadbridge-product"
+      ],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 2,
+      "logPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-preparation-retry-02.txt",
+      "rawOutputCaptured": true
+    },
+    {
+      "command": "snapshot-helper-syntax",
+      "argv": [
+        "node",
+        "--check",
+        ".local/product-paging-evidence/prepare-source-snapshot.mjs"
+      ],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 0,
+      "logPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-helper-syntax.txt",
+      "rawOutputCaptured": true
+    },
+    {
+      "command": "snapshot-preparation-retry-03",
+      "argv": [
+        "node",
+        ".local/product-paging-evidence/prepare-source-snapshot.mjs",
+        "D:\\Veyviz-code\\veyviz-quadbridge-product"
+      ],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 0,
+      "logPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-preparation-retry-03.txt",
+      "rawOutputCaptured": true
+    },
+    {
+      "command": "fresh-build",
+      "argv": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-1f23701dc1639918-1\\source",
+      "exitCode": 0,
+      "logPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\fresh-build.txt",
+      "rawOutputCaptured": true,
+      "sourceSnapshotIdentity": "1f23701dc1639918240b4adecb6258e7e69e9068ba3496b389af4e1d3781f5da"
+    },
+    {
+      "command": "correction-helper-syntax",
+      "argv": [
+        "node",
+        "--check",
+        ".local/product-paging-evidence/correct-public-profile.mjs"
+      ],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 0,
+      "logPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\correction-helper-syntax.txt",
+      "rawOutputCaptured": true
+    },
+    {
+      "command": "snapshot-correction-public-profile",
+      "argv": [
+        "node",
+        ".local/product-paging-evidence/correct-public-profile.mjs",
+        "D:\\Veyviz-code\\veyviz-quadbridge-product",
+        "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-1f23701dc1639918-1\\source"
+      ],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 0,
+      "logPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-correction.txt",
+      "rawOutputCaptured": true,
+      "sourceSnapshotIdentityBeforeCorrection": "1f23701dc1639918240b4adecb6258e7e69e9068ba3496b389af4e1d3781f5da"
+    },
+    {
+      "command": "fresh-build-corrected-snapshot",
+      "argv": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-1f23701dc1639918-1\\source",
+      "exitCode": 0,
+      "logPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\fresh-build-corrected.txt",
+      "rawOutputCaptured": true,
+      "sourceSnapshotIdentity": "b6a3ed725d39ad1e2d77cf6f2e2aa4b07a78e72df53f0427b08f578975489663"
+    },
+    {
+      "command": "postbuild-maintained-inventory",
+      "argv": [
+        "node",
+        ".local/product-paging-evidence/capture-postbuild-inventory.mjs",
+        "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-1f23701dc1639918-1\\source"
+      ],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 0,
+      "logPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\postbuild-inventory-corrected.txt",
+      "rawOutputCaptured": true,
+      "sourceSnapshotIdentity": "b6a3ed725d39ad1e2d77cf6f2e2aa4b07a78e72df53f0427b08f578975489663"
+    },
+    {
+      "command": "focused-product-tests",
+      "argv": [
+        "node",
+        "--test",
+        "tests/veyviz-product.test.mjs",
+        "tests/veyviz-lifecycle.test.mjs"
+      ],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-1f23701dc1639918-1\\source",
+      "exitCode": 0,
+      "testCounts": {
+        "cancelled": 0,
+        "fail": 0,
+        "tests": 13,
+        "skipped": 0,
+        "todo": 0,
+        "pass": 13
+      },
+      "logPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\focused-tests.txt",
+      "rawOutputCaptured": true,
+      "sourceSnapshotIdentity": "b6a3ed725d39ad1e2d77cf6f2e2aa4b07a78e72df53f0427b08f578975489663",
+      "environmentPolicy": "TEMP/TMP/TMPDIR under .local evidence; Veyviz model-profile variables, NODE_OPTIONS, NODE_PATH and NODE_ENV cleared",
+      "inference": "deterministic test double in veyviz-product.test.mjs",
+      "lifecycleProcesses": "test-owned catalog runtime children use port 0 and data under .local test temp"
+    },
+    {
+      "command": "posttest-maintained-inventory",
+      "argv": [
+        "node",
+        ".local/product-paging-evidence/capture-posttest-inventory.mjs",
+        "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-1f23701dc1639918-1\\source"
+      ],
+      "cwd": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+      "exitCode": 0,
+      "logPath": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\posttest-inventory-corrected.txt",
+      "rawOutputCaptured": true,
+      "sourceSnapshotIdentity": "b6a3ed725d39ad1e2d77cf6f2e2aa4b07a78e72df53f0427b08f578975489663"
+    }
+  ]
+}

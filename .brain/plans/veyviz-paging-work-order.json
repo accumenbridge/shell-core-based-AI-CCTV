@@ -1,0 +1,122 @@
+{
+  "schema": "veyviz.owner-paging-work-order.v1",
+  "status": "ADMITTED_FOR_IMPLEMENTATION_NOT_ACCEPTED",
+  "authority": "Root adopts this finite product-only protocol/owner manifest under the user fix all request. Existing framework 3b APIs only. No test or delivery acceptance.",
+  "candidate": {
+    "repository": "D:/Veyviz-code/veyviz-quadbridge-product",
+    "head": "818097ee4ca6d89270f0f5d6c5dace08bae44fa2",
+    "frameworkBase": "3b666e9beedb2e5b336f4228091033b1377fae4d",
+    "composition": "veyviz-review",
+    "currentKnownCheckGaps": [
+      "The current full npm test evidence has four worker startup/state timing failures; this increment cannot resolve or waive them.",
+      "The Windows symlink fixture is blocked by EPERM; this increment cannot convert it to a pass."
+    ]
+  },
+  "objective": "Let authorized users search and page beyond 100 registered sources and 25 analysis rows, including selecting an older source for analysis, without changing existing v1 list behavior, source/result/command identities, module-owned persistence, permission scope, or the current Veyviz visual/action behavior.",
+  "explicitlyOutOfScope": [
+    "No future shared UI package, navigation, product branding, command-state, draft/conflict, login/logout, React, or browser-profile adoption. Those remain in the later framework-adoption plan.",
+    "No Python/model execution changes or real inference tests; use only owner/product test fixtures and the existing deterministic test-only runner double.",
+    "No new recording ingestion, live cameras, stream processing, detections, data ownership, or cross-owner SQL.",
+    "No modification to v1 list operation or route shapes/limits; pagination is additive under new operation IDs and routes.",
+    "No database reseeding, local user/grant modification, deployment, external service, or changes to the original repositories."
+  ],
+  "publicQueryContracts": {
+    "commonPage": {
+      "request": {
+        "limit": "Optional integer; default 20; minimum 1; maximum 100.",
+        "cursor": "Optional opaque string; maximum 512 characters. Cursor is bound to normalized query, tenant, product and instance plus the stable last-row key. It is only a bounded page position, never a permission/grant and never a snapshot-consistency guarantee.",
+        "search": "Optional trimmed query string; maximum 200 characters; parameterized literal matching only over fields named for that owner below. No SQL fragments, arbitrary sort keys or wildcard execution input."
+      },
+      "response": {
+        "items": "At most `limit` closed-schema owner projections.",
+        "page": "Closed object with `limit`, optional `nextCursor`, and coverage `filtered-owner-query`; never a guessed tenant-wide total or total page count."
+      },
+      "rules": [
+        "Every page re-runs the current authenticated RequestContext permission assertion and tenant/product/instance predicates; a cursor grants no access.",
+        "Reject malformed cursors and cursors whose query/scope binding differs from the supplied request. Changing search/filter/limit clears the UI cursor stack.",
+        "Use deterministic keyset order `created DESC, id ASC` with a unique-ID tie break; do not use unbounded OFFSET or load the old capped list then filter it in memory.",
+        "Rows inserted, renamed or otherwise changed between page requests may shift membership. State that no cross-page snapshot is promised; do not claim stable snapshot pagination."
+      ]
+    },
+    "sourceOwner": {
+      "newPort": "veyviz.sources.query.v1",
+      "provider": "veyviz-sources",
+      "consumer": "veyviz-analysis",
+      "method": "query(ctx, {q?, renamedOnly?, limit?, cursor?}) -> {items: SourceView[], page}",
+      "searchFields": [
+        "source name",
+        "source ID"
+      ],
+      "filters": [
+        "renamedOnly (boolean; based on source version > 1)"
+      ],
+      "ownerRead": "veyviz.sources.read",
+      "publicEndpoint": "GET /api/sources/query",
+      "operation": "veyviz-sources.sources.query, descriptor version 1, closed bounded input/output schemas",
+      "compatibility": "Keep the existing `veyviz.sources.read.v1` list/get methods and `veyviz-sources.sources.list` operation v1 plus GET /api/sources response `{items}` with its existing maximum of 100. Do not make `list()` silently unbounded or change its output."
+    },
+    "analysisOwner": {
+      "newOperation": "veyviz-analysis.analysis.query, descriptor version 1",
+      "publicEndpoint": "GET /api/analysis/query",
+      "ownerRead": "veyviz.analysis.read",
+      "filters": {
+        "q": "Analysis ID, job ID or source ID only; source-name matching is supplied by the separate source picker query, not by reading the source database.",
+        "sourceId": "Optional exact source ID.",
+        "jobState": "Optional existing finite JobState enum.",
+        "reviewState": "Optional existing OPEN/REVIEWED/DISMISSED enum.",
+        "createdAfter": "Optional non-negative epoch-millisecond lower bound.",
+        "createdBefore": "Optional non-negative epoch-millisecond upper bound."
+      },
+      "compatibility": "Keep `veyviz-analysis.analysis.list` v1 and GET /api/analysis behavior/response and existing 25-row maximum. The UI may migrate to the new query route; current v1 consumers must continue to work unchanged. New query projections retain captured source ID/version, actual job/review states, counts and truthful coverage fields."
+    },
+    "analysisSourcePicker": {
+      "newRoute": "GET /api/analysis/sources/query",
+      "newOperation": "veyviz-analysis.sources.query, descriptor version 1, input/output matching the bounded SourceQuery page contract",
+      "routePermission": "veyviz.analysis.read; the delegated source query also requires the original actor's current veyviz.sources.read permission in the source owner.",
+      "port": "Add an explicit `veyviz.sources.query.v1` source-query service and an `AnalysisPorts.sourcesQuery` method. Analysis invokes it through the existing static solution binding and a context derived for the original actor, product, instance, tenant and request. No analysis SQL joins or reads source tables.",
+      "wireChanges": "Declare the query contract in the sources module `provides` and analysis module `requires`; add a distinct reviewed source-query binding to veyviz-review and its fixed source choice/binding implementation in solutions/veyviz. veyviz-catalog selects only veyviz-sources, so its source-owned query route needs no analysis module, analysis binding or worker. Do not repurpose veyviz.sources.read.v1 to add an undeclared method."
+    }
+  },
+  "implementationPaths": [
+    "modules/veyviz-sources/src/index.ts",
+    "modules/veyviz-sources/src/bridge.ts",
+    "modules/veyviz-sources/src/protocol.ts",
+    "modules/veyviz-sources/module.json",
+    "modules/veyviz-analysis/src/bridge.ts",
+    "modules/veyviz-analysis/src/protocol.ts",
+    "modules/veyviz-analysis/src/index.ts",
+    "modules/veyviz-analysis/module.json",
+    "modules/veyviz-sources/src/ui.ts",
+    "modules/veyviz-sources/src/styles.css",
+    "modules/veyviz-analysis/src/ui.ts",
+    "modules/veyviz-analysis/src/styles.css",
+    "products/veyviz-review/product.json",
+    "solutions/veyviz/solution.json",
+    "solutions/veyviz/wiring.mjs",
+    "tests/veyviz-product.test.mjs",
+    "tests/veyviz-lifecycle.test.mjs"
+  ],
+  "uiBehavior": [
+    "Replace client-only filtering of the first 100/25 rows with the owner query routes. Keep existing dark Command Center/light Investigate visual design, actual sample viewer, filmstrip, review actions, cancel action, provenance panel and read-only controls.",
+    "Recordings gets bounded name/ID search plus Previous/Next controls. The analysis source picker searches source names/IDs through `/api/analysis/sources/query`, so an older source can be selected without an analysis-to-source DB join. The analysis list filters by exact selected sourceId and its own declared analysis fields.",
+    "Investigate's free-text label must not promise source-name search over unqueried sources; use owner-supported analysis/job/source IDs and explicit recording selection. Source-name search belongs in the source-owned picker.",
+    "Show current page and whether another page exists, not a tenant total. Keep a bounded prior-cursor stack for Previous. Reset cursor/page state when filters change. Guard delayed query responses with request epochs so old filter/page results cannot replace the current page or its selected accepted result.",
+    "After registration or rename, refresh the relevant owner query and preserve current receipt, focus and existing user message. The source/analysis mutations themselves, original command IDs, data shapes and result version checks are outside this paging change."
+  ],
+  "verification": {
+    "sourceFixtures": [
+      "Use a temporary owner fixture with at least 211 distinct sources spanning multiple pages; find the oldest source by name and ID after the prior first-100 boundary, exercise renamed-only, repeated-page no-duplicate/no-omission traversal and deterministic created-time ties.",
+      "Test invalid/oversized query/limit/cursor, cross-tenant cursor replay, cursor replay under changed q/filter/limit, permission denial on each page and permission revocation between pages. Assert no source rows leak through analysis when either required read permission is absent.",
+      "Use at least 31 analysis rows across multiple job/review/source/date states with the existing deterministic test-only runner or owner fixtures; locate rows after old 25 boundary, exercise every supported filter and stable next/previous page behavior without invoking Python or real model inference.",
+      "Verify exact v1 source/analysis operation outputs, route output and limits remain unchanged; verify the new operation descriptors reject additional/invalid query fields and return the closed v2 page shape.",
+      "Verify veyviz-review resolves both source contracts and its read permission remains enforced; verify veyviz-catalog still exports only veyviz-sources and exposes no analysis/readiness routes or worker."
+    ],
+    "commandsAfterAdmission": [
+      "Fresh `npm run build` before source-dependent tests.",
+      "Focused `node --test tests/veyviz-product.test.mjs tests/veyviz-lifecycle.test.mjs` with actual exit/count retained.",
+      "Fresh independent factory/export/link checks for review and catalog, followed by ordinary product HTTP/UI paging checks against those exact artifacts; no browser/model acceptance inferred from owner unit tests.",
+      "Complete `npm test` remains required by product policy. Preserve the existing four timing failures and Windows EPERM fixture as failed/blocked until actually resolved by their owners."
+    ],
+    "currentPreparation": "No source files, product Brain, manifests, dependencies or processes were changed or executed. This work order is written only to ignored `.local/veyviz-paging-work-order.json`; its JSON was parsed for syntax."
+  }
+}

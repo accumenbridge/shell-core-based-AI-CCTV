@@ -1,15 +1,18 @@
-# Generated product mobile shell
+# Generated product mobile app
 
-This is an isolated Capacitor dependency template. `tools/mobile/assemble.mjs` copies it beside one fixed, source-derived product bundle and writes a local `capacitor.config.json` with `webDir: "www"`. It is not a root npm workspace and the platform build does not install Android or iOS SDKs.
+This isolated Capacitor project contains one source-derived product bundle and the fixed local native API profile. The generated `www/` directory is bundled locally; the config has no remote `server.url` or live-reload address. Capacitor core, Android, iOS and CLI are pinned to 8.5.2, and `@capacitor/app` is pinned to 8.1.1.
 
-From a generated product directory:
+For an independently assembled product candidate, install the captured lockfile, add and sync the platform, then apply the checked local qualification overlay:
 
 ```text
 npm ci
 npm run android:add
 npm run android:sync
+npm run android:prepare
 ```
 
-The installed project serves the bundled files in `www/`. The generated config has no remote `server.url` or live-reload address. The first packaged screen says **Connection not configured** and performs no sign-in or API request. Do not add a localhost fallback or copy a developer session into the app. Phone authentication and the HTTPS API profile require a separately reviewed adapter and deployment target.
+The same managed-runtime workflow uses Studio's confirmed Android-client action and the repository commands `npm run local:android:build -- --client managed-mobile-<20-hex-reference>` and `npm run local:android:install -- --client managed-mobile-<20-hex-reference>`. These commands bind the client to the captured instance and generation, use a private immutable project copy, and target the already selected local Android device. For manual development of a separate candidate, the generated app uses fixed origin `http://127.0.0.1:4350`; for an emulator, forward that port with `adb reverse tcp:4350 tcp:4350`. Do not configure another host, remote URL or fallback authentication path.
 
-`npm run ios:add` and `npm run ios:sync` create an iOS project when run on an appropriate build host. Creating a project is not device, signing, distribution, or production qualification.
+The registered Android `NativeSession` plugin uses a non-exportable Android Keystore AES key and AES-GCM ciphertext under the app's `noBackupFilesDir`. UI logout calls the ordinary API and clears the encrypted token. Capacitor bridge logging is disabled. The local debug API is intended for emulator port forwarding, not public network exposure or production deployment.
+
+The staged Android instrumentation test exercises the actual WebView, native session bridge, tenant and workspace flow, and writes private stage results only inside the app's sandbox. A source build does not establish an installed-device pass; use the candidate-specific USABILITY-CORE-001 evidence record for qualification. The iOS Keychain source is included, but a built or tested iOS app requires macOS.

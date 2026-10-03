@@ -1,0 +1,12 @@
+import { readFile, writeFile } from 'node:fs/promises';
+const path='D:/Veyviz-code/veyviz-quadbridge-product/tests/veyviz-snapshot.test.mjs';
+const raw=await readFile(path,'utf8');
+const eol=raw.includes('\r\n')?'\r\n':'\n';
+let text=raw.replace(/\r\n/g,'\n');
+const old="  await assertRefusedBeforeFork(producerRoot, dataRoot, /inventory|snapshot|candidate/i);\n  await writeFile(snapshotPlan, originalPlan);";
+const next="  await assertRefusedBeforeFork(producerRoot, dataRoot, /inventory|snapshot|candidate|Factory output differs from its trusted input: \\.artifacts\\/veyviz-catalog\\/plan\\.json/i);\n  await writeFile(snapshotPlan, originalPlan);";
+const count=text.split(old).length-1;
+if(count!==1) throw new Error(`Expected one altered-plan refusal assertion block; found ${count}`);
+text=text.replace(old,next);
+await writeFile(path,text.split('\n').join(eol),'utf8');
+console.log('Updated the altered-plan refusal vocabulary only.');

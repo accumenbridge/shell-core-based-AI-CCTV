@@ -1,0 +1,46 @@
+{
+  "schema": "product-immutable-runtime-independent-source-review-v1",
+  "reviewer": "/root/product_review",
+  "verdict": "CHANGES_REQUIRED",
+  "scope": "Only freeze04-to-freeze05 snapshot helper and producer fixture delta. Read-only source/evidence review; this ignored report is the only write. No build or test executed.",
+  "candidate": {
+    "overlayRoot": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003",
+    "freezeSha256": "31b967daf7d498ffa19de8534351387d9224c7b5de043adddf517cdb4e13120b",
+    "sourceDigestReported": "f435208594a498bcbf7c52e149855d08efe2536f9e76badd6af78ffb73c43a32",
+    "sourceFilesReported": 360,
+    "toolchainDigestReported": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+    "snapshotHelperSha256": "d5833ee0807fc435c695019ac17d882ce345e6c3983aad66543227a8848858c9",
+    "snapshotTestsSha256": "03725790a03491103a2b896c7cc546f82f836f8985d58f02a28d71cfc11465f4"
+  },
+  "verification": {
+    "allSevenOverlayOwnerHashesIndependentlyMatchFreeze": true,
+    "sourceOverlayManifestSha256": "b9c275414c9ce8647d05b7d4d358461c94f859f0b65c77268a01567fd8d12fc2",
+    "toolchainOverlayManifestSha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659",
+    "manifestBytesMatchFreeze": true,
+    "exactDiffBaseline": "Independent freeze03 snapshot helper and snapshot test copies, both rehashed and identical to freeze04 owners.",
+    "fullAuthoredRediscoveryOrToolchainRehash": false
+  },
+  "findings": [
+    {
+      "id": "RUNTIME-REVIEW-08",
+      "status": "CLOSED_AT_SOURCE_ONLY",
+      "owner": "tools/veyviz-snapshot.mjs writeReceipt",
+      "evidence": "Creates temp with O_CREAT|O_EXCL|O_WRONLY mode0600, loops writeSync until all bytes are written, fsyncs the same descriptor, closes it, then renames. Zero/negative write, write exception, fsync exception and initial close exception propagate before rename. Cleanup best efforts do not swallow the original error. Existing destination receipt verification is retained for rename races.",
+      "limit": "No witnessed successful Windows flush, runtime publication or crash durability claim. Freeze04 failed execution remains preserved."
+    },
+    {
+      "id": "RUNTIME-REVIEW-09",
+      "status": "OPEN_CHANGES_REQUIRED",
+      "owner": "tests/veyviz-snapshot.test.mjs makeProducerFixture lines79-98",
+      "evidence": "The new filter excludes .tsbuildinfo and .pyc, but removes dist, .artifacts and generated from the original skipped set. It then asserts inherited ai-core/studio-model dist/index.d.ts is present before the fixture's own build. This copies prebuilt outputs into the purported fresh producer and does not meet the admitted clean-source fixture requirement.",
+      "requiredDelta": "Restore dist/.artifacts/generated exclusions while retaining all .tsbuildinfo exclusion. Remove copied-dist-present assertions. If output assertions are useful, make them only after the fixture's own actual wrapper build. Retain failure fixtures and exact raw attempt evidence.",
+      "rootDisposition": "Root explicitly confirmed this correction direction and requested preservation of rejected freeze05."
+    }
+  ],
+  "limits": [
+    "Prior unchanged bounded source fixes remain reviewed; their full analysis was not repeated.",
+    "Freeze05 is not ready for qualifying execution until the clean-fixture delta is corrected and frozen/reviewed.",
+    "No post-focused source/toolchain equality claim. Only existing postbuild evidence was previously available.",
+    "Observed active foreign drift was not copied into the candidate and is preserved/unqualified. No whole active-root match, foreign acceptance, full product or framework acceptance is implied."
+  ]
+}

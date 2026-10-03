@@ -1,0 +1,26 @@
+TAP version 13
+# Subtest: an unclean owned process exit remains quarantined on later launch
+not ok 1 - an unclean owned process exit remains quarantined on later launch
+  ---
+  duration_ms: 154.5527
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-overlay-2437aeb7d7627763\\source\\tests\\veyviz-lifecycle.test.mjs:37:1'
+  failureType: 'testCodeFailure'
+  error: 'Startup and cleanup failed; the original owner remains available on error.owner.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    startProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-paging-evidence/snapshot-overlay-2437aeb7d7627763/source/tools/veyviz-start.mjs:138:23)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-paging-evidence/snapshot-overlay-2437aeb7d7627763/source/tests/veyviz-lifecycle.test.mjs:39:15)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 226.3741

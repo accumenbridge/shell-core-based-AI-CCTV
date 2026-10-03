@@ -48,8 +48,35 @@ test('factory export includes the selected Knowledge package closure and actual 
     assert.ok(packages.includes('web-shell'));
     const runtime = JSON.parse(await readFile(join(out, 'apps/runtime/package.json'), 'utf8'));
     assert.equal(runtime.dependencies['@quadbridge/ai-core'], '0.3.0');
-    assert.equal(runtime.dependencies['@quadbridge/knowledge'], '0.2.3');
-    assert.equal(runtime.dependencies['@quadbridge/handoff'], '0.2.3');
+    assert.equal(runtime.dependencies['@quadbridge/knowledge'], '0.2.4');
+    assert.equal(runtime.dependencies['@quadbridge/handoff'], '0.2.4');
+    const adapter = await readFile(join(out, 'packages/ai-core/dist/ollama.js'), 'utf8');
+    assert.match(adapter, /127\.0\.0\.1:21434\/api\/chat/);
+    const browserPlan = JSON.parse(await readFile(join(out, '.artifacts/knowledge/web.json'), 'utf8'));
+    const browserCode = await Promise.all(Object.values(browserPlan.files).filter(path => path.endsWith('.js')).map(path => readFile(join(out, path), 'utf8')));
+    assert.doesNotMatch(browserCode.join('\n'), /127\.0\.0\.1:21434|qwen3:4b/, 'model endpoint and identity stay in server code');
+});
+test('initialization-only runtime keeps an explicit model profile inert', async t => {
+    const temp = await mkdtemp(join(tmpdir(), 'qb-model-init-')), out = join(temp, 'knowledge');
+    t.after(() => rm(temp, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 }));
+    run(ROOT, 'tools/factory.mjs', 'assemble', 'knowledge', out);
+    run(out, 'tools/link-workspaces.mjs');
+    const plan = JSON.parse(await readFile(join(out, '.artifacts/knowledge/plan.json'), 'utf8'));
+    const connections = {};
+    for (const binding of plan.bindings) if (binding.contract === 'desk.requests.create.v2') connections[binding.instanceId] = {
+        revision: 'initialization-only-model-v1', mode: binding.mode,
+        destinationProduct: binding.mode === 'local' ? 'knowledge' : 'service-desk',
+        destinationInstance: binding.mode === 'local' ? 'model-init-only' : 'model-init-desk',
+        tenantMap: { 'tenant-a': 'tenant-a' }, baseUrl: 'http://127.0.0.1:1', serviceToken: SERVICE, serviceActor: 'link'
+    };
+    const { createRuntime } = await import(pathToFileURL(join(out, 'apps/runtime/dist/index.js')).href);
+    const app = await createRuntime('knowledge', { instanceId: 'model-init-only', dataDirectory: join(temp, 'data'), principals: [],
+        connections, modelAnswerProfile: 'local-ollama-qwen3-4b' }, undefined, { initializationOnly: true });
+    try {
+        assert.equal(app.plan.modules.some(module => module.id === 'knowledge'), true);
+        await assert.rejects(app.http(0), error => error.code === 'UNAVAILABLE');
+        await assert.rejects(app.worker(), error => error.code === 'UNAVAILABLE');
+    } finally { await app.close(); }
 });
 test('independent Knowledge and Combined exports invoke real operations without source or compiler trees', async t => {
     for (const product of ['knowledge', 'combined']) {

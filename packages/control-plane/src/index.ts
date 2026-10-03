@@ -2,7 +2,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
-import { PlatformError, canonical, type CompositionPlan, type ProductDefinition } from '@quadbridge/contracts';
+import { PlatformError, canonical, validateProductExperience, type CompositionPlan, type ProductDefinition } from '@quadbridge/contracts';
 import { planAiPipeline, type AiPipeline } from '@quadbridge/ai-core';
 
 export type BuildState = 'QUEUED' | 'RUNNING' | 'CANCEL_REQUESTED' | 'CANCELLED' | 'SUCCEEDED' | 'FAILED';
@@ -240,7 +240,7 @@ function boundedText(value: unknown, label: string, max: number): string {
   return value.trim();
 }
 function validateProduct(definition: ProductDefinition): ProductDefinition {
-  const d = exactObject(definition, ['id', 'version', 'platformAbi', 'title', 'description', 'layout', 'modules', 'bindings'], ['wiring'], 'product definition');
+  const d = exactObject(definition, ['id', 'version', 'platformAbi', 'title', 'description', 'layout', 'modules', 'bindings'], ['wiring', 'experience'], 'product definition');
   if (typeof d.id !== 'string' || !/^[a-z][a-z0-9-]{1,47}$/.test(d.id)) fail('Invalid product id');
   if (typeof d.version !== 'string' || !/^\d{1,6}\.\d{1,6}\.\d{1,6}$/.test(d.version)) fail('Invalid product version');
   if (d.platformAbi !== 'quadbridge.module.v1') fail('Invalid product ABI');
@@ -258,8 +258,9 @@ function validateProduct(definition: ProductDefinition): ProductDefinition {
     for (const key of ['contract', 'instanceId', 'implementation', 'consumer'] as const) boundedText(b[key], `binding ${key}`, 128);
     if (typeof b.scope !== 'string' || !['application', 'module', 'request'].includes(b.scope) || typeof b.mode !== 'string' || !['local', 'http'].includes(b.mode)) fail('Invalid binding');
   }
-  canonical(definition);
-  return definition;
+  const normalized = d.experience === undefined ? definition : { ...definition, experience: validateProductExperience(d.experience) };
+  canonical(normalized);
+  return normalized;
 }
 function validateEnvironment(value: EnvironmentSpec): EnvironmentSpec {
   const spec = exactObject(value, ['id', 'label', 'kind', 'target'], ['region'], 'environment') as unknown as EnvironmentSpec;

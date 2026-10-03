@@ -7,6 +7,7 @@ const MAX_PATH=240,MAX_FILE=1024*1024,MAX_DEPTH=32,MAX_ENTRIES=16384,MAX_BYTES=1
 const HASH=/^[a-f0-9]{64}$/;
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const INSTANCE=/^runtime-[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const RUNTIME_INITIALIZER_SCHEMA='quadbridge.runtime-initializer.v1',RUNTIME_INITIALIZER_ENTRY='apps/runtime/dist/index.js',RUNTIME_INITIALIZER_EXPORT='initializeRuntime';
 const PRIVATE=['credentials.json','enrollment-complete.json','enrollment-intent.json','enrollment-private.json','runtime-config.json'];
 const sha=value=>createHash('sha256').update(value).digest('hex');
 function canonical(value){
@@ -59,9 +60,12 @@ function expectedUpgradePaths(operation){
   if(expected.size>64||new Set(moduleIds).size!==moduleIds.length)throw new Error('upgrade-target-inventory-limit');
   return {dataRoot,expected,moduleIds};
 }
+export function isValidRuntimeUpgradeActorId(value){
+  return typeof value==='string'&&/^(?:operator:[0-9a-f-]{36}|system:[a-z][a-z0-9-]{1,63})$/.test(value);
+}
 function assertIdentity(identity,requireAttempt=false){
   if(!identity||!INSTANCE.test(identity.instanceId)||!/^[a-z][a-z0-9-]{1,47}$/.test(identity.productId)||!/^[0-9]{1,6}\.[0-9]{1,6}\.[0-9]{1,6}$/.test(identity.version)||
-    !HASH.test(identity.artifactDigest)||!/^operator:[0-9a-f-]{36}$/i.test(identity.originatingActorId)||!HASH.test(identity.profileDigest)||!HASH.test(identity.configDigest)||
+    !HASH.test(identity.artifactDigest)||!isValidRuntimeUpgradeActorId(identity.originatingActorId)||!HASH.test(identity.profileDigest)||!HASH.test(identity.configDigest)||
     !HASH.test(identity.adapterDigest)||!HASH.test(identity.toolchainDigest)||!HASH.test(identity.recipeDigest)||typeof identity.workerRequired!=='boolean'||
     requireAttempt&&(!UUID.test(identity.attemptId)||!UUID.test(identity.commandId)||!Number.isSafeInteger(identity.attempt)||identity.attempt<1))throw new Error('upgrade-runtime-identity-invalid');
 }
@@ -77,6 +81,10 @@ function assertFixedOperation(operation,operationPath){
   physicalDirectory(staging);physicalDirectory(execution);physicalDirectory(operation.snapshotRoot);physicalDirectory(operation.dataStage);physicalDirectory(operation.sourceDataDirectory);physicalDirectory(dirname(operation.targetDataDirectory));
   if(resolve(operationPath)!==resolve(execution,'operation.json'))throw new Error('upgrade-operation-path-mismatch');
   assertIdentity(operation.sourceIdentity,true);assertIdentity(operation.targetIdentity);
+  const capability=operation.runtimeInitializerCapability;
+  if(!capability||typeof capability!=='object'||Array.isArray(capability)||Object.keys(capability).sort().join('\0')!==['entryPath','exportName','schema','sha256'].join('\0')||
+    capability.schema!==RUNTIME_INITIALIZER_SCHEMA||capability.entryPath!==RUNTIME_INITIALIZER_ENTRY||capability.exportName!==RUNTIME_INITIALIZER_EXPORT||!HASH.test(capability.sha256))
+    throw new Error('upgrade-runtime-capability-invalid');
   if(operation.sourceIdentity.instanceId!==operation.targetIdentity.instanceId||operation.sourceIdentity.productId!==operation.targetIdentity.productId||
     operation.sourceIdentity.artifactDigest===operation.targetIdentity.artifactDigest||operation.sourceIdentity.profileDigest!==operation.targetIdentity.profileDigest||
     operation.sourceIdentity.workerRequired!==operation.targetIdentity.workerRequired||
@@ -118,6 +126,28 @@ function sourceEnrollment(operation,dataRoot){
   return {config,seeds,seedDigest,privateDigest:sha(readBounded(join(dataRoot,'enrollment-private.json'))),credentialsDigest:sha(readBounded(join(dataRoot,'credentials.json')))};
 }
 
+/** Verify the exact snapshot, descriptor, and fixed entry digest before importing target code. */
+export async function loadRuntimeInitializer(snapshotRoot,targetIdentity,expectedCapability){
+  const root=physicalDirectory(snapshotRoot),productId=targetIdentity?.productId,version=targetIdentity?.version,artifactDigest=targetIdentity?.artifactDigest;
+  if(!/^[a-z][a-z0-9-]{1,47}$/.test(productId??'')||!/^[0-9]{1,6}\.[0-9]{1,6}\.[0-9]{1,6}$/.test(version??'')||!HASH.test(artifactDigest??''))
+    throw new Error('upgrade-target-runtime-identity-invalid');
+  const snapshotBytes=readBounded(join(root,'QUADBRIDGE-SNAPSHOT.json'),2*1024*1024),snapshot=JSON.parse(snapshotBytes.toString('utf8'));
+  if(snapshot.schema!=='quadbridge.local-snapshot.v1'||snapshot.productId!==productId||snapshot.version!==version||!snapshot.files||typeof snapshot.files!=='object'||
+    Array.isArray(snapshot.files)||sha(Buffer.from(canonical(snapshot)))!==artifactDigest)throw new Error('upgrade-target-snapshot-identity-invalid');
+  const releasePath=`.artifacts/${productId}/release.json`,releaseBytes=readBounded(join(root,...releasePath.split('/'))),entry=join(root,...RUNTIME_INITIALIZER_ENTRY.split('/'));
+  const entryBytes=readBounded(entry,8*1024*1024),release=JSON.parse(releaseBytes.toString('utf8'));
+  const descriptor=release.runtimeInitializerCapability,keys=['entryPath','exportName','schema','sha256'];
+  if(sha(releaseBytes)!==snapshot.releaseDigest||snapshot.files[releasePath]!==sha(releaseBytes)||snapshot.files[RUNTIME_INITIALIZER_ENTRY]!==sha(entryBytes)||
+    release.product!==productId||release.version!==version||!descriptor||typeof descriptor!=='object'||Array.isArray(descriptor)||
+    Object.keys(descriptor).sort().join('\0')!==keys.join('\0')||descriptor.schema!==RUNTIME_INITIALIZER_SCHEMA||descriptor.entryPath!==RUNTIME_INITIALIZER_ENTRY||
+    descriptor.exportName!==RUNTIME_INITIALIZER_EXPORT||!HASH.test(descriptor.sha256)||!release.backend||release.backend[RUNTIME_INITIALIZER_ENTRY]!==descriptor.sha256||
+    sha(entryBytes)!==descriptor.sha256||!expectedCapability||canonical(descriptor)!==canonical(expectedCapability))
+    throw new Error('upgrade-target-runtime-capability-invalid');
+  const loaded=await import(pathToFileURL(entry).href);
+  if(typeof loaded.initializeRuntime!=='function')throw new Error('upgrade-target-runtime-initializer-unavailable');
+  return loaded.initializeRuntime;
+}
+
 async function run(){
   if(process.argv.length!==4||process.argv[2]!=='--operation')throw new Error('upgrade-fixed-arguments-invalid');
   const operationPath=resolve(process.argv[3]),operation=parseCanonical(readBounded(operationPath));assertFixedOperation(operation,operationPath);
@@ -131,10 +161,9 @@ async function run(){
   const sourceMigrationRows={};for(const row of sourceDatabaseRows.values())sourceMigrationRows[row.path]=row.migrations;
   const accessBefore=operation.sourceAccessStateDigest;
   const stagedRuntimeConfig={...targetConfig,dataDirectory:dataRoot};
-  const entry=join(operation.snapshotRoot,'apps','runtime','dist','index.js');readBounded(entry,8*1024*1024);
-  const loaded=await import(pathToFileURL(entry).href);if(typeof loaded.createRuntime!=='function')throw new Error('upgrade-target-runtime-unavailable');
+  const initializeRuntime=await loadRuntimeInitializer(operation.snapshotRoot,target,operation.runtimeInitializerCapability);
   let runtime;
-  try{runtime=await loaded.createRuntime(target.productId,stagedRuntimeConfig,operation.snapshotRoot,{initializationOnly:true});}
+  try{runtime=await initializeRuntime(target.productId,stagedRuntimeConfig,operation.snapshotRoot);}
   finally{if(runtime)await runtime.close();}
   if(sha(readBounded(join(dataRoot,'enrollment-private.json')))!==source.privateDigest||sha(readBounded(join(dataRoot,'credentials.json')))!==source.credentialsDigest)
     throw new Error('upgrade-private-credential-seed-changed');

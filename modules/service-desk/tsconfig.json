@@ -20,6 +20,9 @@
     },
     {
       "path": "../../packages/web-shell"
+    },
+    {
+      "path": "../../packages/ui"
     }
   ]
 }

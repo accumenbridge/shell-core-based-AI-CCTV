@@ -1,6 +1,6 @@
 {
   "name": "@quadbridge/handoff",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "private": true,
   "type": "module",
   "exports": {
@@ -22,7 +22,9 @@
     "@quadbridge/sqlite": "0.2.0",
     "@quadbridge/backend-host": "0.2.0",
     "@quadbridge/web-shell": "0.2.0",
-    "@quadbridge/connections": "0.2.0"
+    "@quadbridge/client-core": "0.2.0",
+    "@quadbridge/connections": "0.2.0",
+    "@quadbridge/ui": "0.1.0"
   },
   "scripts": {
     "build": "tsc -b"

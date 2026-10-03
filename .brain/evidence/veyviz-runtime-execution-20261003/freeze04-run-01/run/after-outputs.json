@@ -1,0 +1,22 @@
+{
+  "schema": "veyviz.build-outputs.v1",
+  "products": [
+    {
+      "product": "veyviz-catalog",
+      "version": "0.1.0",
+      "releaseDigest": "c7bb2b3ea7c2e10a3b1e086439d5ef8faea3ca2420f3c0dd9c73638c88cb54e1",
+      "expectedFactoryDigest": "38def09232200128cf28907e92d2fa779f190ac148b73723458980cf9ae16a31"
+    },
+    {
+      "product": "veyviz-review",
+      "version": "0.1.0",
+      "releaseDigest": "b31e6c2c05feef4179d2fe138b97f16420d7664968649e37dfba7c5d11430d36",
+      "expectedFactoryDigest": "390ca25b8beb6bdbe40563bcadd64d3c99b1f26c23eeb043d372bbe6007c4d66"
+    }
+  ],
+  "tsconfigOutput": {
+    "bytes": 1222,
+    "sha256": "858cd1223fbf713a9877381cada8f39d19da37f4eb4d4aefbd955a912d1e7588"
+  },
+  "digest": "aa09cf58b642c64115f3789cdd0d292eed9a2ba3b4d592e47560314197601f97"
+}

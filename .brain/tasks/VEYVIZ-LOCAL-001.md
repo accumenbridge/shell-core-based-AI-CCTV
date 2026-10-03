@@ -26,3 +26,31 @@ User: "why the product looks very mediocre? can't we make a world standard produ
 ## Concept-led interface implementation (2026-10-03)
 
 User rejected the previous UI again and explicitly requested the working product match the generated concepts. Adopt docs/veyviz/CONCEPT_IMPLEMENTATION.md for a sidebar design system, real Command Center and System Health workspaces, and an image-led searchable investigation view. Root owns metadata and evidence; disjoint UI writers preserve the scoped backend and source owners. Prior UX acceptance is historical and does not qualify this candidate.
+
+## Audit repair: complete owner paging (2026-10-03)
+
+The user’s “fix all” authorizes the additive backend/query and UI repair in .brain/plans/veyviz-paging-work-order.json. Root freezes its exact 17 product-owned paths and new scoped source-query port before dispatch. Existing v1 lists, original identities, current design and source/analysis owner boundaries remain compatible. One product Brawn implements; an independent reader reviews. The framework writer operates in a separate maintained source worktree. Shared framework UX, adoption and qualification remain subsequent required work. Prior full-suite four failures and EPERM block remain unresolved until actual later evidence addresses them. Current implementation admission is not acceptance.
+
+## Observed startup cleanup repair (2026-10-03)
+
+Root delegates only tools/veyviz-start.mjs and tests/veyviz-lifecycle.test.mjs to the product Brawn under .brain/plans/veyviz-startup-close-work-order.json. An IPC control error must not bypass observation of the original child close. Preserve startup failure, token-bound UNKNOWN quarantine and all original identity/credential rules. This follows a real paging-test failure; it is not a generic process-hardening campaign. The historical diagnostic child final exit remains UNKNOWN. Build before focused lifecycle checks, then independent exact review; broader UI, adoption and full qualification remain required.
+
+## Fixed runtime adoption (2026-10-03)
+
+The default launcher currently reads mutable checkout assets. Root admits exactly four product-owned paths in .brain/plans/veyviz-immutable-runtime-work-order.json to reuse the existing factory export, verifier and runtime-copy APIs. A running child must serve a captured verified snapshot with separately fingerprinted data; source rebuilds cannot replace its files. Preserve original-child closure, credentials, grants, UNKNOWN quarantine and foreign Recording intelligence work. The prior wrong-root build and unknown old live impact remain recorded. Build and test only the new isolated source overlay, then independently review; this does not replace final framework/UI adoption or whole-product qualification.
+
+## Enforceable producer build qualification (2026-10-03)
+
+Independent review found a valid old release and new source fingerprint could still execute stale compiled output. Root admits the seven-owner union in .brain/plans/veyviz-build-qualification-amendment.json: the original four plus package.json, tools/veyviz-build.mjs and tools/veyviz-inventory.mjs. Root changes only the product build script; Brawn owns the fixed wrapper and shared inventory seam plus original four. Reuse the maintained builder without editing exported framework authority. Retire current qualification before each attempt; publish only after original close0, unchanged authored/toolchain inputs and verified release/export outputs. Default start verifies this receipt before enrollment and rechecks after preparation. Random attempt/time never changes stable generation identity. All builds/tests stay in isolated overlays; no active-root build. Prior failures and whole-product acceptance remain open.
+
+## Core-first isolated product UI (2026-10-03)
+
+The latest human steering prioritizes usable core delivery. Root admits the exact eleven product presentation/test owners in .brain/plans/veyviz-core-ui-work-order.json inside D:/CodexData/worktrees/veyviz-ui-core-20261003. Implement against reviewed UI02 experience and the preserved DOM API while the separate framework writer finishes essential UI03. Root imports only reviewed frozen upstream source before fresh build/tests. This brings the five actual screens forward; full remaining repairs, full npm, real browser/model/export/restart and final acceptance stay required. Active product and foreign changes remain preserved.
+
+## Core original-command recovery
+
+Root admits the exact ten writer files plus root lock in `.brain/plans/veyviz-core-command-recovery.json`. Preserve original identity and payload after a lost reply, show uncertainty and explicit retry, and prevent edited inputs or navigation from replacing unresolved intent. Existing Veyviz owners do not emit the reviewed matching terminal rejection proof; do not infer no effects or retrofit backend eligibility. Mutable catalog/profile checks can still prevent historical receipt replay and must remain visibly unresolved. This bounded correction precedes optional UI expansion and final product full qualification.
+
+## User-requested wrap
+
+The user requested commit and push, with work stopped for now. Writers are frozen and the current task is deferred without acceptance. See `.brain/handoffs/2026-10-03-user-wrap.md` for actual completed checks, unresolved failures and the next core work when resumed.

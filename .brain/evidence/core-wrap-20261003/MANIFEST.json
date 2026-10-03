@@ -1,0 +1,48 @@
+{
+  "recordedAt": "2026-10-03T17:58:32.670Z",
+  "entries": [
+    {
+      "path": "core-product-build-04/after.json",
+      "sha256": "86cd65207e90f17d94c7fc6839cf9e7c04255bc01da25b7ac1a442b4e799e879"
+    },
+    {
+      "path": "core-product-build-04/before.json",
+      "sha256": "86cd65207e90f17d94c7fc6839cf9e7c04255bc01da25b7ac1a442b4e799e879"
+    },
+    {
+      "path": "core-product-build-04/result.json",
+      "sha256": "97f1bb76f35aa13ba4b8713bb3390038f9e643dbd224705d8bf55e6f9b873c03"
+    },
+    {
+      "path": "core-product-build-04/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "core-product-build-04/stdout.txt",
+      "sha256": "261b2893ae2b9de175ae72f3f9a6859c03afdd08592f6f4bb8f2a285c7e43b96"
+    },
+    {
+      "path": "core-product-ui-03/after.json",
+      "sha256": "86cd65207e90f17d94c7fc6839cf9e7c04255bc01da25b7ac1a442b4e799e879"
+    },
+    {
+      "path": "core-product-ui-03/before.json",
+      "sha256": "86cd65207e90f17d94c7fc6839cf9e7c04255bc01da25b7ac1a442b4e799e879"
+    },
+    {
+      "path": "core-product-ui-03/result.json",
+      "sha256": "2cce40dbda072f8d82e8129840abcaef8ad2862848e530757fe8a69050b10831"
+    },
+    {
+      "path": "core-product-ui-03/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "core-product-ui-03/stdout.txt",
+      "sha256": "99c134c2d7046a178827f593d9e57ee9bf749613a27618902b410f48a1a87ed5"
+    }
+  ],
+  "limitations": [
+    "Final build and existing one-case mounted smoke only. New original-command recovery cases were not written. No final product full npm test, independent recovery review or browser qualification for build04."
+  ]
+}

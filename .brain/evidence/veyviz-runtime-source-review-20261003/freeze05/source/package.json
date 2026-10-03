@@ -1,0 +1,40 @@
+{
+  "name": "veyviz-quadbridge-product",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "workspaces": [
+    "packages/*",
+    "modules/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "node tools/veyviz-build.mjs",
+    "test": "npm run build && node --test --test-concurrency=1 --test-reporter=tap tests/*.test.mjs",
+    "test:compiled": "node --test tests/composition.test.mjs tests/data-worker.test.mjs tests/http-cross-product.test.mjs tests/hardening.test.mjs tests/shell-regressions.test.mjs",
+    "demo": "node tools/demo.mjs",
+    "start": "node apps/runtime/dist/main.js",
+    "worker": "node apps/runtime/dist/main.js --worker",
+    "factory": "node tools/factory.mjs",
+    "verify": "node tools/verify.mjs",
+    "test:browser": "python tools/browser_test.py",
+    "setup": "node tools/link-workspaces.mjs",
+    "studio": "node tools/studio.mjs",
+    "brain": "node tools/brain.mjs",
+    "test:studio-browser": "python tools/studio-browser-test.py",
+    "studio:full": "node apps/control-plane/dist/main.js",
+    "mobile:assemble": "node tools/mobile/assemble.mjs",
+    "test:platform": "npm run build && node --test tests/ai-core.test.mjs tests/control-plane.test.mjs",
+    "veyviz": "node tools/veyviz-start.mjs",
+    "veyviz:verify": "node tools/veyviz-verify.mjs",
+    "veyviz:e2e": "node tools/veyviz-e2e.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.7",
+    "esbuild": "0.28.2",
+    "typescript": "5.8.3"
+  }
+}

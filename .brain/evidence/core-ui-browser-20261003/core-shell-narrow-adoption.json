@@ -1,0 +1,10 @@
+{
+  "schema": "veyviz.reviewed-framework-delta-adoption.v1",
+  "recordedAt": "2026-10-03T16:35:59.739Z",
+  "base": "05084b287a383837b595f8c68a62f9524b86eacf",
+  "head": "c682ced7d17f3e88c74043db43ad7d45ebf6edda",
+  "path": "packages/web-shell/src/shell.css",
+  "beforeSha256": "709c35c92c9d5a3acd2ddc89652855ee90b1bb2dd57f756018323f27fe0b8433",
+  "afterSha256": "7bf725ad19eda4a75270946ec6bf0a0dbf6ecfd4975b55d4bd9c610f4ed55910",
+  "reviewSha256": "d27b31c7212559750e1fa9f88a49e46eeb9c614b79720e98cc3e973cfaf5ec7a"
+}

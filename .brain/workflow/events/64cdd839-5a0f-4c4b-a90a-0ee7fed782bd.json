@@ -1,0 +1,270 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "64cdd839-5a0f-4c4b-a90a-0ee7fed782bd",
+  "revision": 30,
+  "previousEventId": "85ef050d-ea9a-49b8-88fe-4f09df39f7c0",
+  "reportedActor": "/root records freeze06 source pass and actual focused failure",
+  "recordedAt": "2026-10-03T13:38:23.341Z",
+  "platformTask": {
+    "taskId": "VEYVIZ-LOCAL-001",
+    "status": "IMPLEMENTING",
+    "candidate": null,
+    "runIds": [
+      "56e9e9e0-ce48-44f2-bc0b-f8c429cd70d3",
+      "09fc206f-f261-45a2-a5b4-1e23414b1d76",
+      "0547b1fb-cfcc-4f8c-b32a-9ab68333cbc5",
+      "f9046e91-184d-4157-ae5c-0cee2b56b665",
+      "edf701de-a456-42df-b287-6f60eb254d45"
+    ],
+    "reviewIds": [
+      "96f7ad30-2aa6-4077-8342-25747338f69f"
+    ],
+    "blockers": [
+      "Required full npm test invocation failed four Windows worker startup/state deadlines. The isolated unchanged-source worker retry also failed four timing cases; root cause remains unresolved and was reported to the framework worker. No all-checks acceptance.",
+      "Required Windows file-symlink fixture could not be created due to EPERM; this remains blocked, not passed.",
+      "Historical failed-start diagnostic original child final close remains UNKNOWN; current two-owner cleanup defect repaired but new child evidence cannot settle historical ownership.",
+      "Default launcher uses mutable checkout assets: serving a fixed verified runtime snapshot is required before current product browser acceptance. Active release binding differs from recorded foreign generation; exact4494 impact remains unknown."
+    ],
+    "nextAction": "Brawn preserves freeze06 and makes only the precise trusted-factory-error vocabulary correction in its snapshot test. Capture freeze07, fresh isolated wrapper build and same three-file focused check with original-close/raw and before/after source/toolchain evidence; independent final review follows. Framework UI02 source implementation continues. No active product-root build or foreign-source resnapshot.",
+    "gates": [
+      {
+        "id": "independent-construction",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/f9046e91-184d-4157-ae5c-0cee2b56b665.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "real-model",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/09fc206f-f261-45a2-a5b4-1e23414b1d76.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "authority",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/f9046e91-184d-4157-ae5c-0cee2b56b665.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "browser",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/0547b1fb-cfcc-4f8c-b32a-9ab68333cbc5.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "restart-cleanup",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/f9046e91-184d-4157-ae5c-0cee2b56b665.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "second-variant",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/f9046e91-184d-4157-ae5c-0cee2b56b665.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "full-suite",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/edf701de-a456-42df-b287-6f60eb254d45.json"
+        ],
+        "limitations": [
+          "Only the selected local recorded profile; no production, detector-accuracy or bug-free qualification.",
+          "Actual full-suite worker startup/state deadline failures are retained. Isolated retries do not turn this full invocation into a pass. See diagnosis and retry artifacts.",
+          "Required Windows file-symlink fixture denied with EPERM, recorded BLOCKED_ENV rather than pass; security settings preserved."
+        ]
+      },
+      {
+        "id": "independent-review",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/96f7ad30-2aa6-4077-8342-25747338f69f.json"
+        ],
+        "limitations": [
+          "Source/visual acceptance does not override a failed full invocation or required host-blocked fixture.",
+          "Reported execution/reviewer identity is not authenticated attestation.",
+          "No user satisfaction, world-standard, production or detector-accuracy guarantee.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "live-camera",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "native-mobile",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "production",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "paging-review",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/evidence/product-paging-initial-review/independent-review.md",
+          ".brain/evidence/product-paging-repair-review/independent-repair-review.md"
+        ],
+        "limitations": [
+          "Only the two paging source blockers are resolved on captured overlay2437aeb7 with build0/13 focused passes; browser and whole-product acceptance remain open.",
+          "Original CHANGES_REQUESTED and failed attempts are preserved."
+        ]
+      },
+      {
+        "id": "startup-close-review",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/evidence/product-startup-close-review/independent-final-review.md",
+          ".brain/evidence/product-startup-close-review/execution-index-final.json"
+        ],
+        "limitations": [
+          "Only exact two-owner startup cleanup repair independently qualified: correct isolated build0 and focused8/8. Whole-product/browser/model/full-suite acceptance remains open.",
+          "Earlier failed tests and wrong active-root build are retained. Prior generated bytes and any impact on live4494 are unknown.",
+          "Historical diagnostic original child final close remains UNKNOWN; new tests do not resolve it.",
+          "Default product launcher reads mutable checkout assets: separate required immutable runtime repair remains open."
+        ]
+      },
+      {
+        "id": "immutable-runtime-draft-handoff",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/handoffs/2026-10-03-source-freeze.json"
+        ],
+        "limitations": [
+          "Only incomplete helper drafted; no isolated build/test or independent review. Preserve every other dirty product and foreign intelligence file."
+        ]
+      },
+      {
+        "id": "immutable-runtime-freeze02-source-review",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/evidence/veyviz-runtime-source-review-20261003/freeze02/independent-source-review.json",
+          ".brain/evidence/veyviz-runtime-source-review-20261003/freeze02/MANIFEST.json"
+        ],
+        "limitations": [
+          "Source-only CHANGES_REQUIRED; no build/test run claimed. Frozen seven owners matched; earlier manifest digest flaw closed at source level only. Four current blockers sent to implementer; repaired freeze not yet reviewed."
+        ]
+      },
+      {
+        "id": "immutable-runtime-freeze03-source-review",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/evidence/veyviz-runtime-source-review-20261003/freeze03/independent-source-review.json",
+          ".brain/evidence/veyviz-runtime-source-review-20261003/freeze03/MANIFEST.json"
+        ],
+        "limitations": [
+          "Source-only CHANGES_REQUIRED: v1 inventory link/nonregular refusal regression. Repaired later without relabeling this result. No build/test run."
+        ]
+      },
+      {
+        "id": "immutable-runtime-freeze04-source-review",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/evidence/veyviz-runtime-source-review-20261003/freeze04/independent-source-review.json",
+          ".brain/evidence/veyviz-runtime-source-review-20261003/freeze04/MANIFEST.json"
+        ],
+        "limitations": [
+          "Bounded seven-owner source-only readiness on the frozen360-file overlay. No build/test execution reviewed, no complete active-root match; foreign changes remain separately observed.",
+          "Fresh original wrapper build/focused checks and exact-candidate evidence review remain required. Product acceptance remains unbound."
+        ]
+      },
+      {
+        "id": "immutable-runtime-freeze04-focused",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/evidence/veyviz-runtime-execution-20261003/freeze04-run-01/MANIFEST.json",
+          ".brain/evidence/veyviz-runtime-execution-20261003/freeze04-run-01/independent-failure-diagnosis.json",
+          ".brain/evidence/veyviz-runtime-execution-20261003/freeze04-run-01/run/focused-tests.raw.txt",
+          ".brain/evidence/veyviz-runtime-execution-20261003/freeze04-run-01/run/focused-tests-close.json"
+        ],
+        "limitations": [
+          "Fresh isolated wrapper build0 with matched360 source/toolchain and verified builder original close0/null; focused original6904 closed1:20tests11pass9fail0skip.",
+          "Receipt fsync used read-only handle on Windows; clean fixture copy retained stale tsbuildinfo while excluding dist. Both require bounded source repair/new freeze and verification; no suppressed failures.",
+          "Postbuild equality is not relabeled as post-test proof. Earlier source-only review stays historical, not runtime acceptance. Whole active product/foreign intelligence/full-suite/browser/model/UI adoption unqualified."
+        ]
+      },
+      {
+        "id": "immutable-runtime-freeze05-source-review",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/evidence/veyviz-runtime-source-review-20261003/freeze05/independent-source-review.json",
+          ".brain/evidence/veyviz-runtime-source-review-20261003/freeze05/MANIFEST.json"
+        ],
+        "limitations": [
+          "Receipt same-writable-descriptor repair closes source finding only. Fixture incorrectly copied prebuilt dist/.artifacts/generated and asserted inherited declarations, so clean build proof is absent. No execution claimed.",
+          "Restore all generated exclusions plus tsbuildinfo exclusion, remove inherited-dist assertions, then freeze06 minimal delta review and actual fresh build/focus. Foreign drift remains preserved and excluded from overlay."
+        ]
+      },
+      {
+        "id": "immutable-runtime-freeze06-source-review",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/evidence/veyviz-runtime-source-review-20261003/freeze06/independent-source-review.json",
+          ".brain/evidence/veyviz-runtime-source-review-20261003/freeze06/MANIFEST.json"
+        ],
+        "limitations": [
+          "Bounded minimal source review only; no active-root or foreign-source qualification."
+        ]
+      },
+      {
+        "id": "immutable-runtime-freeze06-focused",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/evidence/veyviz-runtime-execution-20261003/freeze06-run-01/MANIFEST.json",
+          ".brain/evidence/veyviz-runtime-execution-20261003/freeze06-run-01/focused-tests.raw.txt",
+          ".brain/evidence/veyviz-runtime-execution-20261003/freeze06-run-01/post-test-capture.json"
+        ],
+        "limitations": [
+          "Fresh isolated wrapper build0; original focus2228 exit1,20tests19pass1fail0skip; exact360 source/toolchain match through post-focused capture.",
+          "Tampered factory plan was correctly refused before fork; assertion expected a different error vocabulary. Later subcases in that one test remain unexecuted. No refusal requirement is removed; ordinary exact-message repair and rebuilt rerun follow.",
+          "Whole product/full suite/browser/model/framework adoption remain required; prior failures and UNKNOWN history preserved."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "eed58c39f8b81b5a5ab8777db300eea897f3e990421aed8f807b68d609baba4d"
+}

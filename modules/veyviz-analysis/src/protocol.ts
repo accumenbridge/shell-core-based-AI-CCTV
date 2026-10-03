@@ -1,5 +1,5 @@
 import type { RequestContext } from '@quadbridge/contracts';
-import type { SourceView } from '@quadbridge/veyviz-sources/protocol';
+import type { SourceQueryRequest, SourceQueryResponse, SourceView } from '@quadbridge/veyviz-sources/protocol';
 
 export const REQUEST_SCHEMA = 'veyviz.recorded-analysis.request.v1' as const;
 export const RESULT_SCHEMA = 'veyviz.recorded-analysis.result.v1' as const;
@@ -57,6 +57,9 @@ export interface ScopedSourceReader {
   get(ctx: RequestContext, sourceId: string): SourceView;
   getForActor(identity: SourceIdentity, sourceId: string, signal: AbortSignal): SourceView;
 }
+export interface ScopedSourceQueryReader {
+  query(ctx: RequestContext, request: SourceQueryRequest): SourceQueryResponse;
+}
 export interface RunnerReadiness {
   status: 'READY' | 'UNAVAILABLE';
   profileId: typeof PROFILE_ID;
@@ -72,4 +75,4 @@ export interface RecordedRunner {
   run(request: AnalysisRequest, options: { signal: AbortSignal; assertCurrent(): void | Promise<void> }): Promise<AnalysisResult>;
   readiness(): Promise<RunnerReadiness>;
 }
-export interface AnalysisPorts { sources: ScopedSourceReader; runner: RecordedRunner }
+export interface AnalysisPorts { sources: ScopedSourceReader; sourcesQuery: ScopedSourceQueryReader; runner: RecordedRunner }

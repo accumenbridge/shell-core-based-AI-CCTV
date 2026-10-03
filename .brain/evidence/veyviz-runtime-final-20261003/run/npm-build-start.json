@@ -1,0 +1,7 @@
+{
+  "shell": "PowerShell",
+  "command": "npm run build",
+  "startedAtUtc": "2026-10-03T13:56:46.4425252Z",
+  "status": "RUNNING",
+  "cwd": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003"
+}

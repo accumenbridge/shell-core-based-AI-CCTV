@@ -1,0 +1,330 @@
+{
+  "schema": "veyviz.core-visible-milestone-evidence.v1",
+  "recordedAt": "2026-10-03T16:59:01.735Z",
+  "entries": [
+    {
+      "source": ".local/core-product-build-01/after.json",
+      "path": "core-product-build-01/after.json",
+      "bytes": 8556,
+      "sha256": "757a84d9f49b27b90995c9e0614c1aad025e30588f15c555d18f8f6a0b94c20f"
+    },
+    {
+      "source": ".local/core-product-build-01/before.json",
+      "path": "core-product-build-01/before.json",
+      "bytes": 8556,
+      "sha256": "df2e41812406184a88c1efd8d6b4937773cbc6b09959a8b06c2edd98f40af483"
+    },
+    {
+      "source": ".local/core-product-build-01/result.json",
+      "path": "core-product-build-01/result.json",
+      "bytes": 833,
+      "sha256": "4742fab6bd8623d391e74d7f2fbc6e4220137f3ab77b97c0fd39317af6eefc45"
+    },
+    {
+      "source": ".local/core-product-build-01/stderr.txt",
+      "path": "core-product-build-01/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".local/core-product-build-01/stdout.txt",
+      "path": "core-product-build-01/stdout.txt",
+      "bytes": 202,
+      "sha256": "083cef7997b31f8fd9b81b0c9727f731cf4aff4e046d59736787edefca34cf7e"
+    },
+    {
+      "source": ".local/core-product-build-02/after.json",
+      "path": "core-product-build-02/after.json",
+      "bytes": 8556,
+      "sha256": "96d0e4bf8ea440901ab27305e63e44d58fd99f54e1240843f7f0ebfe6d7ea7a6"
+    },
+    {
+      "source": ".local/core-product-build-02/before.json",
+      "path": "core-product-build-02/before.json",
+      "bytes": 8556,
+      "sha256": "96d0e4bf8ea440901ab27305e63e44d58fd99f54e1240843f7f0ebfe6d7ea7a6"
+    },
+    {
+      "source": ".local/core-product-build-02/result.json",
+      "path": "core-product-build-02/result.json",
+      "bytes": 832,
+      "sha256": "fcb9054eb8e7e42e5e7a6ed3e284d0412368d50bd9bdaecb873238d97025617d"
+    },
+    {
+      "source": ".local/core-product-build-02/stderr.txt",
+      "path": "core-product-build-02/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".local/core-product-build-02/stdout.txt",
+      "path": "core-product-build-02/stdout.txt",
+      "bytes": 202,
+      "sha256": "cbb2b2bdced1d584ad8088f65bbbc7e8297b7edadc9b7602ff3e3c5dc7c42cef"
+    },
+    {
+      "source": ".local/core-product-build-03/after.json",
+      "path": "core-product-build-03/after.json",
+      "bytes": 8556,
+      "sha256": "92c7915aa9588bdc5c6f65c3a28e9b596a2e7696f662b1d009f35f3655415536"
+    },
+    {
+      "source": ".local/core-product-build-03/before.json",
+      "path": "core-product-build-03/before.json",
+      "bytes": 8556,
+      "sha256": "92c7915aa9588bdc5c6f65c3a28e9b596a2e7696f662b1d009f35f3655415536"
+    },
+    {
+      "source": ".local/core-product-build-03/result.json",
+      "path": "core-product-build-03/result.json",
+      "bytes": 832,
+      "sha256": "e47d464eb80d34d1dcb4d29beb519f9412000fdd1bb937564aca2e8bb497ff95"
+    },
+    {
+      "source": ".local/core-product-build-03/stderr.txt",
+      "path": "core-product-build-03/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".local/core-product-build-03/stdout.txt",
+      "path": "core-product-build-03/stdout.txt",
+      "bytes": 202,
+      "sha256": "9b2948e4c3492c919083e377714796c950b6ffe5f8f355138826e57a6f5444cf"
+    },
+    {
+      "source": ".local/core-product-ui-01/after.json",
+      "path": "core-product-ui-01/after.json",
+      "bytes": 8556,
+      "sha256": "757a84d9f49b27b90995c9e0614c1aad025e30588f15c555d18f8f6a0b94c20f"
+    },
+    {
+      "source": ".local/core-product-ui-01/before.json",
+      "path": "core-product-ui-01/before.json",
+      "bytes": 8556,
+      "sha256": "757a84d9f49b27b90995c9e0614c1aad025e30588f15c555d18f8f6a0b94c20f"
+    },
+    {
+      "source": ".local/core-product-ui-01/result.json",
+      "path": "core-product-ui-01/result.json",
+      "bytes": 850,
+      "sha256": "430f30685076c0fd36f48b6f2d59cfee68603875777f69486053ae397d1b8d7b"
+    },
+    {
+      "source": ".local/core-product-ui-01/stderr.txt",
+      "path": "core-product-ui-01/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".local/core-product-ui-01/stdout.txt",
+      "path": "core-product-ui-01/stdout.txt",
+      "bytes": 234,
+      "sha256": "fd765f161ec2da3511b17357c0c41232f7e7871528e5efd16e11d445c9f03cd8"
+    },
+    {
+      "source": ".local/core-product-ui-02/after.json",
+      "path": "core-product-ui-02/after.json",
+      "bytes": 8556,
+      "sha256": "96d0e4bf8ea440901ab27305e63e44d58fd99f54e1240843f7f0ebfe6d7ea7a6"
+    },
+    {
+      "source": ".local/core-product-ui-02/before.json",
+      "path": "core-product-ui-02/before.json",
+      "bytes": 8556,
+      "sha256": "96d0e4bf8ea440901ab27305e63e44d58fd99f54e1240843f7f0ebfe6d7ea7a6"
+    },
+    {
+      "source": ".local/core-product-ui-02/result.json",
+      "path": "core-product-ui-02/result.json",
+      "bytes": 850,
+      "sha256": "3f5b9202ca92b9fd9150432dcdf3f5c9d4bd5391e5f3df88a861f5fc6a910508"
+    },
+    {
+      "source": ".local/core-product-ui-02/stderr.txt",
+      "path": "core-product-ui-02/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".local/core-product-ui-02/stdout.txt",
+      "path": "core-product-ui-02/stdout.txt",
+      "bytes": 237,
+      "sha256": "61f1db88e7db05d877e56ef817c62c43e145e4b5ef57f619fccd1f20dbf54841"
+    },
+    {
+      "source": ".local/core-product-snapshot-01/after.json",
+      "path": "core-product-snapshot-01/after.json",
+      "bytes": 8556,
+      "sha256": "757a84d9f49b27b90995c9e0614c1aad025e30588f15c555d18f8f6a0b94c20f"
+    },
+    {
+      "source": ".local/core-product-snapshot-01/before.json",
+      "path": "core-product-snapshot-01/before.json",
+      "bytes": 8556,
+      "sha256": "757a84d9f49b27b90995c9e0614c1aad025e30588f15c555d18f8f6a0b94c20f"
+    },
+    {
+      "source": ".local/core-product-snapshot-01/result.json",
+      "path": "core-product-snapshot-01/result.json",
+      "bytes": 925,
+      "sha256": "d7f0090b29604a5ed255c1ef59833f8a20f4f1b1967a55ac36e9984157d86ca8"
+    },
+    {
+      "source": ".local/core-product-snapshot-01/stderr.txt",
+      "path": "core-product-snapshot-01/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".local/core-product-snapshot-01/stdout.txt",
+      "path": "core-product-snapshot-01/stdout.txt",
+      "bytes": 1237,
+      "sha256": "27f66022e5fa1746b8ff406c041ed0bc11d87f5d502395b5f22851a45fab8eb2"
+    },
+    {
+      "source": ".local/core-ui-browser/accepted-result-browser-01.txt",
+      "path": "core-ui-browser/accepted-result-browser-01.txt",
+      "bytes": 5603,
+      "sha256": "b12a92bee3d31ac8af172174be3fdae4a4c21d6697788a2cb7059c899b2c9c99"
+    },
+    {
+      "source": ".local/core-ui-browser/accepted-result-phone-fixed.jpg",
+      "path": "core-ui-browser/accepted-result-phone-fixed.jpg",
+      "bytes": 56864,
+      "sha256": "2e2116690bb5acf1ae3b6a353e6a30758032236104fb6cb5e667a39b9efc0362"
+    },
+    {
+      "source": ".local/core-ui-browser/accepted-result-tablet-fixed.jpg",
+      "path": "core-ui-browser/accepted-result-tablet-fixed.jpg",
+      "bytes": 110032,
+      "sha256": "68a27705ae1348f91b759cd3d7ac045e6bca44a3280d4d8fe33d3c46d7d3d4f7"
+    },
+    {
+      "source": ".local/core-ui-browser/command-center-desktop-fixed.jpg",
+      "path": "core-ui-browser/command-center-desktop-fixed.jpg",
+      "bytes": 161096,
+      "sha256": "e4dfb7b40a0f96907a310af5736795a337af1f8e41cc17063948d9bc94455af1"
+    },
+    {
+      "source": ".local/core-ui-browser/command-center-final-desktop.jpg",
+      "path": "core-ui-browser/command-center-final-desktop.jpg",
+      "bytes": 161465,
+      "sha256": "bc4635335408c5c9894d3eae7a1832dd8b37309179366ac2b945c2d6cde6f546"
+    },
+    {
+      "source": ".local/core-ui-browser/command-center-phone-fixed.jpg",
+      "path": "core-ui-browser/command-center-phone-fixed.jpg",
+      "bytes": 34020,
+      "sha256": "ab857a9e558e8d58337365a7bb898a39bb4385bdbdaf0d36514284efe2cde734"
+    },
+    {
+      "source": ".local/core-ui-browser/intelligence-desktop.jpg",
+      "path": "core-ui-browser/intelligence-desktop.jpg",
+      "bytes": 79522,
+      "sha256": "e98e0a0e30b223ff0a02ca9c6ab9f8b85132ef8b9438614710350c2349f24b14"
+    },
+    {
+      "source": ".local/core-ui-browser/intelligence-phone-fixed.jpg",
+      "path": "core-ui-browser/intelligence-phone-fixed.jpg",
+      "bytes": 45373,
+      "sha256": "20639645d162643a22512f7f415725340fc8995e3ab6f4a78376cb43248bfce4"
+    },
+    {
+      "source": ".local/core-ui-browser/investigate-desktop-before-reflow.jpg",
+      "path": "core-ui-browser/investigate-desktop-before-reflow.jpg",
+      "bytes": 87683,
+      "sha256": "421e940db133506b066b6d7e675d8d741338c019dbcd9e62000b17be96425ebc"
+    },
+    {
+      "source": ".local/core-ui-browser/investigate-keyboard-1440.jpg",
+      "path": "core-ui-browser/investigate-keyboard-1440.jpg",
+      "bytes": 125998,
+      "sha256": "8209b316daea7650dfd65d4bc027ea999c201bcaf582ab8c3075fca6973bd72f"
+    },
+    {
+      "source": ".local/core-ui-browser/recordings-phone-fixed.jpg",
+      "path": "core-ui-browser/recordings-phone-fixed.jpg",
+      "bytes": 40147,
+      "sha256": "c7349f65b771475cb39535270e948ac5c85cafc2b3ed66b855fd76cf4dfedd1f"
+    },
+    {
+      "source": ".local/core-ui-browser/run-01.json",
+      "path": "core-ui-browser/run-01.json",
+      "bytes": 1647,
+      "sha256": "271e6bb2dabfd81664d51ba651d180bfb82cf0ff5eaa84b3bd20ba7ebab4c880"
+    },
+    {
+      "source": ".local/core-ui-browser/run-03-dom.json",
+      "path": "core-ui-browser/run-03-dom.json",
+      "bytes": 670,
+      "sha256": "45cb7020dbd80eb9846a77b845c9ece49f90edc80e19e1a0cfcec60230ad9da4"
+    },
+    {
+      "source": ".local/core-ui-browser/run-03.json",
+      "path": "core-ui-browser/run-03.json",
+      "bytes": 1953,
+      "sha256": "2c1cc323149271a0be11e9c7511ed8d027eb247f0c90ba0d290fe54c7e8c0eb4"
+    },
+    {
+      "source": ".local/core-ui-browser/system-health-desktop.jpg",
+      "path": "core-ui-browser/system-health-desktop.jpg",
+      "bytes": 71136,
+      "sha256": "ecb2b53dbae60a17d3f565d7db78a23d3bf0b96f81d83a1ec53c8c639e43b277"
+    },
+    {
+      "source": ".local/core-integration-review-01.json",
+      "path": "core-integration-review-01.json",
+      "bytes": 3069,
+      "sha256": "ed567c8933f25396a4743ebcdb65ea04b0227fc291246b6410c832b955a2801a"
+    },
+    {
+      "source": ".local/core-product-css-review-01.json",
+      "path": "core-product-css-review-01.json",
+      "bytes": 3782,
+      "sha256": "2e432420acd7d8b5b5e81f8a713094f97153d0fcceb757d755065e562c35692c"
+    },
+    {
+      "source": ".local/core-product-css-review-02.json",
+      "path": "core-product-css-review-02.json",
+      "bytes": 2942,
+      "sha256": "9e378fbea2209e500de316479cd7592f330b63a03cca6ec5499909122d9dbce2"
+    },
+    {
+      "source": ".local/core-shell-narrow-adoption.json",
+      "path": "core-shell-narrow-adoption.json",
+      "bytes": 517,
+      "sha256": "288cb6b7505cf72e29d671e3ddcc2cafad87cba4548a1746754c78c764176f63"
+    },
+    {
+      "source": ".local/core-product-install-01.json",
+      "path": "core-product-install-01.json",
+      "bytes": 257,
+      "sha256": "aa512d75811c425ace7b242d71843a857430934887aad4e20a0785d7e5110823"
+    },
+    {
+      "source": ".local/core-ui-python-base-02.json",
+      "path": "core-ui-python-base-02.json",
+      "bytes": 978,
+      "sha256": "34ce1fec84215119f685b33ff032d29acdffe194748409affae29754011ccacb"
+    },
+    {
+      "source": ".local/core-ui-python-temporal-01.json",
+      "path": "core-ui-python-temporal-01.json",
+      "bytes": 587,
+      "sha256": "10dc52764754fddcbd9741f054520345df699fb8ac8bc20bc173f9256dc36eee"
+    },
+    {
+      "source": ".local/framework-adoption-05084b287a38-apply.json",
+      "path": "framework-adoption-05084b287a38-apply.json",
+      "bytes": 51616,
+      "sha256": "266e867e94eb31f1ca1916ad09a25e5b9fa2dc4c01c6d101990c018478d676b1"
+    }
+  ],
+  "limits": [
+    "Bounded local developer workflow; no whole-product acceptance",
+    "Build02 phone/tablet/five-workspace checks and build03 desktop color recheck have separate receipts",
+    "Snapshot11/11 belongs to build01 source; later changes are narrow CSS only",
+    "Full product npm test and original-command retry correction remain open"
+  ]
+}

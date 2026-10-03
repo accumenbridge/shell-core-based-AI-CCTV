@@ -1,6 +1,6 @@
 {
   "id": "knowledge",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "abi": "quadbridge.module.v1",
   "dependencies": [],
   "provides": [

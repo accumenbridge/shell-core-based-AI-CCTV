@@ -1,0 +1,3 @@
+npm notice run veyviz-quadbridge-product@0.2.0 build
+npm notice run node tools/veyviz-build.mjs
+{"status":"QUALIFIED","digest":"4bbde64ef4f412817a82fc1461102126cfafdc6f1c9ae0d7870b923d5fffe218","attemptId":"42252269-9e85-4614-844d-7d997cd77d6b","outputProducts":["veyviz-catalog","veyviz-review"]}

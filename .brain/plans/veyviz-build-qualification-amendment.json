@@ -1,0 +1,100 @@
+{
+  "schema": "veyviz.immutable-runtime-build-amendment-proposal.v1",
+  "status": "ADMITTED_FOR_IMPLEMENTATION_NOT_ACCEPTED",
+  "reviewer": "/root/product_review",
+  "basis": "The admitted immutable-runtime contract requires stale/drifted producer refusal. A current source fingerprint plus valid old compiled-release digest does not prove those outputs were built from current source.",
+  "addedOwners": [
+    "package.json",
+    "tools/veyviz-build.mjs",
+    "tools/veyviz-inventory.mjs"
+  ],
+  "existingOwnersUsed": [
+    "tools/veyviz-start.mjs",
+    "tools/veyviz-snapshot.mjs",
+    "tests/veyviz-lifecycle.test.mjs",
+    "tests/veyviz-snapshot.test.mjs"
+  ],
+  "unchangedSourceAuthority": [
+    "tools/build.mjs",
+    "packages/*",
+    "apps/*",
+    "tools/factory.mjs"
+  ],
+  "operations": [
+    "Root package.json build script calls only the fixed product-owned tools/veyviz-build.mjs. No dependencies or package-lock change is needed for a script-only change.",
+    "The wrapper uses one shared reusable authored-build-input capture in tools/veyviz-inventory.mjs. Existing release-inventory v1 capture/verify behavior remains compatible.",
+    "Capture exact authored input path/length/hash inventory and admitted Node/compiler/bundler toolchain identity before spawn. Retain the executing wrapper, inventory helper and fixed core builder bytes in that identity.",
+    "Before spawning the fixed tools/build.mjs child, retire the current qualification pointer into unique history. Never leave a prior current receipt eligible after an unsuccessful build attempt.",
+    "Spawn only process.execPath plus the fixed tools/build.mjs path, shell disabled, explicit producer CWD and hidden Windows window. Observe the original child close, preserve spawn errors and raw output, and admit success only with code 0 and null signal.",
+    "After successful original close, repeat authored input/toolchain capture and require exact equality. Verify both existing Veyviz release identities and complete admitted export inventories using existing composition APIs. Capture exact post-build release identities and selected expectedFactoryInventory digests, including the generated root tsconfig bytes as an output identity.",
+    "Publish a bounded physical receipt atomically only after all checks. Bind exact inputs, toolchain, original build outcome, verified releases and factory-input digests. Keep attempt evidence and prior receipt history on every failure; no fallback receipt or checkout runtime.",
+    "The snapshot helper verifies the current qualification receipt and current source/toolchain/release/export identities before assembly or selection reuse, then repeats receipt verification after factory preparation and before enrollment. Receipt digest joins deterministic candidate and launch identities.",
+    "Current receipt labels/digests are local reported provenance, not authenticated execution or production acceptance. Runtime fixed-byte integrity remains independently checked by the existing snapshot/copy verifiers."
+  ],
+  "sharedInputCapture": {
+    "reuse": "Refactor the existing inventory path discovery once; do not duplicate source roots in the build and snapshot helpers.",
+    "authoredInputs": "Existing SOURCE_ROOTS and authored ROOT_FILES, plus exact visual/studio.js and visual/studio.css read by the core visual build. Include all workspace src, manifests, tsconfigs, solution wiring, module/product definitions, tools, tests, templates, profiles, package-lock and tsconfig.base.",
+    "declaredGeneratedExclusions": [
+      "root tsconfig.json",
+      "dist/**",
+      ".artifacts/**",
+      "generated/**",
+      "OPEN_PLATFORM.html",
+      "visual/data.json",
+      "*.tsbuildinfo",
+      "__pycache__/**",
+      "*.pyc",
+      ".local/**",
+      "node_modules/** as authored source"
+    ],
+    "rootTsconfig": "Core tools/build.mjs derives and rewrites root tsconfig.json; exclude it from pre/post authored equality and bind its actual post-build bytes as an output. Never exclude per-workspace authored tsconfig files.",
+    "toolchain": "Bind actual executing Node identity and the installed TypeScript/esbuild package/version and executed tooling bytes to the captured lockfile. A path/version label alone does not detect changed executable tooling. Do not change global configuration or install external tooling.",
+    "bounds": "Use explicit finite file-count/path/per-file/total-byte/serialized-receipt limits above the observed source closure, enforce physical regular files and paths, reject duplicates/links/unknown receipt fields, and compare exact paths, lengths and hashes. Node binary may need a separately declared larger per-file toolchain bound.",
+    "companion": "Build-input capture must not require unavailable private model/profile files for catalog compilation. Existing external profile/inventory verification and launcher companion fingerprints remain separate."
+  },
+  "meaningfulRegressions": [
+    "Missing receipt refuses before credentials, enrollment and runtime fork.",
+    "After a valid qualified build, modify selected module src TS while retaining old dist/release; start refuses before enrollment/fork. Restore bytes and receipt verification matches again.",
+    "Modify or omit compiled output, release identity, receipt identity/input inventory, or actual tooling; refuse before enrollment/fork.",
+    "Nonzero/spawn-error/signal build attempt leaves no current qualified receipt and preserves original attempt output/close facts. Input drift during fixed build likewise cannot publish qualification.",
+    "Perform a real explicit wrapper build after a valid authored profile/export input change, then prove a new verified snapshot/fingerprint/data generation. No direct receipt forging or mocked snapshot verifier supplies success.",
+    "Unchanged wrapper build and unchanged inputs preserve selected full snapshot digest and data fingerprint. A random receipt attempt ID/time must not rotate launch identity.",
+    "Keep actual fixed catalog HTTP bytes, backend row/revoked grant restart, IPC/occupied-port original closure and tamper/inventory/escape tests. Record filesystem blocks without weakening security."
+  ],
+  "limits": [
+    "This proposes three added owners; root must admit the amendment and reconcile Brain/atlas before implementation.",
+    "Receipt successful-build provenance is locally reported and cannot authenticate a hostile writer's execution claim. Exact current input/output checks prevent accidental stale reuse; this is not a third-party trust or sandbox boundary.",
+    "The wrapper reuses the maintained builder; it does not assert a new compiler correctness or arbitrary source-to-dist proof. Qualification must freshly construct the isolated source overlay and retain raw original close evidence.",
+    "No source, Brain, dependency, build, test, process or browser mutation was performed by the reviewer. Only this ignored review artifact was written.",
+    "Whole-product npm/Python/browser/model/adoption/production qualification remains separate. Historical original child close and foreign process/data impact remain UNKNOWN."
+  ],
+  "proposedRootRecords": "Admit the exact three-owner addition only after reviewing this proposal; record enforceable source/build receipt verification as part of the immutable-runtime contract, preserve all failed attempts, and keep product acceptance unbound until actual final qualification.",
+  "admission": {
+    "authority": "Existing human fix all; concrete independent review found stale authored source could select old compiled outputs despite the explicit refusal requirement.",
+    "owner": "/root",
+    "implementer": "/root/product_runtime",
+    "reviewer": "/root/product_review",
+    "proposalSha256": "70507e720ad468d9bfa7c1339f460d808d4422178818f4f51c5487919870c91a",
+    "boundedOwners": [
+      "tools/veyviz-start.mjs",
+      "tools/veyviz-snapshot.mjs",
+      "tests/veyviz-lifecycle.test.mjs",
+      "tests/veyviz-snapshot.test.mjs",
+      "package.json",
+      "tools/veyviz-build.mjs",
+      "tools/veyviz-inventory.mjs"
+    ],
+    "rootOwned": [
+      "package.json"
+    ],
+    "brawnOwned": [
+      "tools/veyviz-build.mjs",
+      "tools/veyviz-inventory.mjs",
+      "tools/veyviz-start.mjs",
+      "tools/veyviz-snapshot.mjs",
+      "tests/veyviz-lifecycle.test.mjs",
+      "tests/veyviz-snapshot.test.mjs"
+    ],
+    "coordination": "Source-only implementation while framework full suite runs; all product build/tests later in explicitly addressed isolated overlay. Preserve all foreign source/process/data and failed evidence."
+  }
+}

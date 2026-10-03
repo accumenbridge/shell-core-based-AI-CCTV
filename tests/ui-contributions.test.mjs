@@ -78,7 +78,7 @@ test('current source import preserves the captured old product identity and is i
     importSourceSnapshot(store, current);
     const currentDesk = current.sourcePlans.find(plan => plan.product.id === 'service-desk')?.product;
     assert.ok(currentDesk);
-    assert.equal(currentDesk.version, '0.2.2');
+    assert.equal(currentDesk.version, '0.2.3');
     assert.equal(canonical(store.product('service-desk', '0.2.0')), oldBefore,
       'importing changed module behavior does not rewrite the captured immutable product');
     assert.equal(canonical(store.product('service-desk', currentDesk.version)), canonical(currentDesk));

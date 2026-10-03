@@ -1,0 +1,241 @@
+{
+  "schema": "veyviz.startup-close-review-preservation.v1",
+  "candidate": "adf30c71e8d92a8603f3cc03de29b4e2968ea549ce4ae1dad940e905858dc930",
+  "verdict": "PASSED_BOUNDED_SOURCE_AND_FOCUSED_EVIDENCE",
+  "files": [
+    {
+      "source": ".local/product-startup-close-evidence/atlas-validate.txt",
+      "path": ".brain/evidence/product-startup-close-review/atlas-validate.txt",
+      "bytes": 393,
+      "sha256": "46f406d1f173b7a979de8500e251e8950d1c71d1b58157b435b9d76569de1244"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/build-attempt-1.txt",
+      "path": ".brain/evidence/product-startup-close-review/build-attempt-1.txt",
+      "bytes": 759,
+      "sha256": "0bb7c33046ce15da3d942aef017d3e05105652beb29c4a52203d83e78eadc273"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/build-attempt-2.txt",
+      "path": ".brain/evidence/product-startup-close-review/build-attempt-2.txt",
+      "bytes": 739,
+      "sha256": "4f6206a17e210ec4b1a00c2af76a26a0ae1d05ebebf646f5c46b93eb138ad7f5"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/build-attempt-3.txt",
+      "path": ".brain/evidence/product-startup-close-review/build-attempt-3.txt",
+      "bytes": 1104,
+      "sha256": "728f9c9fd09fe0c3cdea33d65844423b70db6fb955a438628897ee6794c3a8b1"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/capture-original-root-build-deviation.mjs",
+      "path": ".brain/evidence/product-startup-close-review/capture-original-root-build-deviation.mjs",
+      "bytes": 4241,
+      "sha256": "19c0759bbbc06feb1f031e843e1b6dba84dca208203664f86020e49843058907"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/capture-overlay-inventory.mjs",
+      "path": ".brain/evidence/product-startup-close-review/capture-overlay-inventory.mjs",
+      "bytes": 2567,
+      "sha256": "4b7a0b5734dc51e5d75cf78968b818c2a0882e625d7b25a3e013aed31a14ed50"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/capture-owner-files.mjs",
+      "path": ".brain/evidence/product-startup-close-review/capture-owner-files.mjs",
+      "bytes": 1208,
+      "sha256": "06a2186eb6d93f764d2e92c1985df8a4ca5a92f30ef515572a67a67e92eb9fa6"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/corrected-test-syntax-attempt-1.txt",
+      "path": ".brain/evidence/product-startup-close-review/corrected-test-syntax-attempt-1.txt",
+      "bytes": 67,
+      "sha256": "491cc1faef000574deedd9bca52714a5025d98887b8c6871616b77ed401a5d4c"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/create-startup-close-overlay.mjs",
+      "path": ".brain/evidence/product-startup-close-review/create-startup-close-overlay.mjs",
+      "bytes": 7436,
+      "sha256": "aee2fc2c313e05f15c65fccab192eabb1a88fa315dd9b909f7f7d66d499404b0"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/execution-index-final.json",
+      "path": ".brain/evidence/product-startup-close-review/execution-index-final.json",
+      "bytes": 10418,
+      "sha256": "7bd264d0c14ba4c20d1e767de01c718791aaa89fac2b7a9e66d9f94ef86a19cf"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/execution-index-final.txt",
+      "path": ".brain/evidence/product-startup-close-review/execution-index-final.txt",
+      "bytes": 2622,
+      "sha256": "f9236593974713c92f6ce3c600ee1d79d9e2fc476699ea51a9468a7be2e8597b"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/independent-final-review.md",
+      "path": ".brain/evidence/product-startup-close-review/independent-final-review.md",
+      "bytes": 4365,
+      "sha256": "cecf92e5a3a4548c2d0dcd1b55fb3e0de58e16a748aa11bfde614a8bf61b47f5"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/independent-listed-inventory-verification.json",
+      "path": ".brain/evidence/product-startup-close-review/independent-listed-inventory-verification.json",
+      "bytes": 551,
+      "sha256": "9b6645d3f7d4688defb5b353f423ebd49011ffa1e3dc8cdd97abfdf55f0af135"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/independent-review-after.json",
+      "path": ".brain/evidence/product-startup-close-review/independent-review-after.json",
+      "bytes": 1188,
+      "sha256": "82b09871a201a623ceb58492c1b48ffc068526a8df9386d7e6544435e3007b23"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/independent-review-before.json",
+      "path": ".brain/evidence/product-startup-close-review/independent-review-before.json",
+      "bytes": 1496,
+      "sha256": "b1e2c726feb91fe8c08c9ac122e903e9f5ac57528e89b14aab53a118f1b31d11"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/independent-setup-and-impact-diagnosis.md",
+      "path": ".brain/evidence/product-startup-close-review/independent-setup-and-impact-diagnosis.md",
+      "bytes": 3324,
+      "sha256": "91ae95e98430b85166f8691490e67bca7f364cfa51ad5f8f207dab5a2d2eeac5"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/lifecycle-attempt-1.txt",
+      "path": ".brain/evidence/product-startup-close-review/lifecycle-attempt-1.txt",
+      "bytes": 7337,
+      "sha256": "330ac1a2a1880d5eeff1434e91f2246818300600d429852c5d05d284c8ea3c15"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/lifecycle-attempt-2.txt",
+      "path": ".brain/evidence/product-startup-close-review/lifecycle-attempt-2.txt",
+      "bytes": 9192,
+      "sha256": "cc201a0f53578b07b77c983ea7a2bcd230a9524d9b4f3d5c00c6f8bf97db83ce"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/lifecycle-attempt-3.txt",
+      "path": ".brain/evidence/product-startup-close-review/lifecycle-attempt-3.txt",
+      "bytes": 1582,
+      "sha256": "5d5ea87e8220b9202eab3f04ba2ae2b86e24c48f1f36952d4922359b7a053006"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/original-root-build-deviation-capture.json",
+      "path": ".brain/evidence/product-startup-close-review/original-root-build-deviation-capture.json",
+      "bytes": 51961,
+      "sha256": "0665e1b2eab6afd3ab28aa18b645d120e2d1398061905080168e1c1aee1a79f0"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/original-root-build-deviation-capture.txt",
+      "path": ".brain/evidence/product-startup-close-review/original-root-build-deviation-capture.txt",
+      "bytes": 567,
+      "sha256": "49ee032264ad45ad5922f60ef44fb364bd5ac707f216683b84b26fff0850f9c0"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/overlay-after-focused-lifecycle-tests-inventory.json",
+      "path": ".brain/evidence/product-startup-close-review/overlay-after-focused-lifecycle-tests-inventory.json",
+      "bytes": 186567,
+      "sha256": "04a697cd3e910037f6060331e7e78f9292e81bacf1dadcd06900f1a9cd2824be"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/overlay-after-tests-attempt-1.txt",
+      "path": ".brain/evidence/product-startup-close-review/overlay-after-tests-attempt-1.txt",
+      "bytes": 448,
+      "sha256": "80641821dc193b6cd079d83133425fc82d80a9901e88c44d71b49def1bfb3d58"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/overlay-before-build-attempt-1.txt",
+      "path": ".brain/evidence/product-startup-close-review/overlay-before-build-attempt-1.txt",
+      "bytes": 426,
+      "sha256": "24791cedf85a3e62482afa2b1044bb25a200ee46e14b129dc254d9d33d012d00"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/overlay-before-build-attempt-2.txt",
+      "path": ".brain/evidence/product-startup-close-review/overlay-before-build-attempt-2.txt",
+      "bytes": 426,
+      "sha256": "4b989f8d26d590bf3c9d5299dd4e7963b04589ad43b64af0684a8a130a77b478"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/overlay-before-fresh-build-inventory.json",
+      "path": ".brain/evidence/product-startup-close-review/overlay-before-fresh-build-inventory.json",
+      "bytes": 186556,
+      "sha256": "24f4307a45dc43381fdca05e079b18b9143bd24667d93d593228aae53ca523e6"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/overlay-create-attempt-1.txt",
+      "path": ".brain/evidence/product-startup-close-review/overlay-create-attempt-1.txt",
+      "bytes": 540,
+      "sha256": "849c378f25c8f1c5c8fb56dfd8d4cfda490bb2b36d6b4e2ab6605bafcc087bc5"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/overlay-create-attempt-2.txt",
+      "path": ".brain/evidence/product-startup-close-review/overlay-create-attempt-2.txt",
+      "bytes": 540,
+      "sha256": "6aac83dd547a823f1bad296dad1570918732ad4abed4d2a607cb3c51f3642227"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/post-correction-active-owner-capture.json",
+      "path": ".brain/evidence/product-startup-close-review/post-correction-active-owner-capture.json",
+      "bytes": 700,
+      "sha256": "c42fec48c4e583876abd25e23f46f877b88e555a6ae5b50f387e50224895c3b0"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/post-correction-active-owner-capture.txt",
+      "path": ".brain/evidence/product-startup-close-review/post-correction-active-owner-capture.txt",
+      "bytes": 634,
+      "sha256": "41be17aa190fa5c60a57a22586f248f36dc210d129e3269aa87abe295c3fd31d"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/post-edit-active-owner-capture.json",
+      "path": ".brain/evidence/product-startup-close-review/post-edit-active-owner-capture.json",
+      "bytes": 694,
+      "sha256": "86d0e38403bfca554c93284658b42cccbef46e85975ec7a978b926e27610e3aa"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/post-edit-active-owner-capture.txt",
+      "path": ".brain/evidence/product-startup-close-review/post-edit-active-owner-capture.txt",
+      "bytes": 609,
+      "sha256": "d62554cdf0b40e19c5975da0e500fbf797495461e4d30c231a4505e7b9ba7adc"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/post-focused-tests-owner-capture.json",
+      "path": ".brain/evidence/product-startup-close-review/post-focused-tests-owner-capture.json",
+      "bytes": 696,
+      "sha256": "4f039f1347aa038cdb9c92c81fc919d9a9ceaae21d84e993f0c97b01adfb16ab"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/post-tests-active-owner-capture.txt",
+      "path": ".brain/evidence/product-startup-close-review/post-tests-active-owner-capture.txt",
+      "bytes": 626,
+      "sha256": "be610807c4b648ae497d52304426bb429449c6bdb5af8be322a423038ebf4d4d"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/pre-edit-active-owner-capture.json",
+      "path": ".brain/evidence/product-startup-close-review/pre-edit-active-owner-capture.json",
+      "bytes": 692,
+      "sha256": "8c2c91e1e83156610a85be2e895a37cdf04872955821c07b7397309f136793d6"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/pre-edit-active-owner-capture.txt",
+      "path": ".brain/evidence/product-startup-close-review/pre-edit-active-owner-capture.txt",
+      "bytes": 606,
+      "sha256": "7fc736a51af24c1139b4546ae1aa7f05a64452709edbc41f21e2ab064e49b8ad"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/preflight.txt",
+      "path": ".brain/evidence/product-startup-close-review/preflight.txt",
+      "bytes": 4354,
+      "sha256": "cbe791ed60e3044e329ef25aff1b2d2cb2321ce98e96f64c2e8f4c3b18eae5ae"
+    },
+    {
+      "source": ".local/product-startup-close-evidence/write-execution-index.mjs",
+      "path": ".brain/evidence/product-startup-close-review/write-execution-index.mjs",
+      "bytes": 7753,
+      "sha256": "41abced4630543061e6a471432c185147145d1b56909d800fe9bfb8bc8b091a8"
+    }
+  ],
+  "limitations": [
+    "Only exact two-owner startup cleanup repair independently qualified: correct isolated build0 and focused8/8. Whole-product/browser/model/full-suite acceptance remains open.",
+    "Earlier failed tests and wrong active-root build are retained. Prior generated bytes and any impact on live4494 are unknown.",
+    "Historical diagnostic original child final close remains UNKNOWN; new tests do not resolve it.",
+    "Default product launcher reads mutable checkout assets: separate required immutable runtime repair remains open."
+  ]
+}

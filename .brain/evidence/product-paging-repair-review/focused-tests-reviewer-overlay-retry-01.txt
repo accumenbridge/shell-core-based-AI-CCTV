@@ -1,0 +1,40 @@
+✔ Veyviz refuses a modified enrollment plan before creating identities or data (11.4455ms)
+✔ invalid port fails before creating a pending product enrollment (0.6596ms)
+✖ an unclean owned process exit remains quarantined on later launch (225.7544ms)
+✖ Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart (193.1434ms)
+✔ Veyviz operation SDK runs real owned operations with declared output schemas (144.6372ms)
+✔ analysis receipt replays unchanged client command after source rename; changed body conflicts (85.6251ms)
+✔ source version changed during inference prevents durable Product acceptance (83.9176ms)
+✔ analysis authority revoked after preparation is synchronously denied at owner commit (82.8852ms)
+✔ cancellation during inference fences an otherwise successful result (81.9399ms)
+✔ accepted result and review survive owner restart and stay tenant-scoped (90.5425ms)
+✔ strict AI proposal validator permits optional thumbnail but rejects altered identity, shape and cleanup (1.227ms)
+✔ source owner query traverses registrations beyond the v1 cap and binds every cursor to query scope (198.5909ms)
+✔ analysis owner query pages all matching history, filters owner rows and leaves the v1 list cap intact (120.4183ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 11
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1028.1112
+
+✖ failing tests:
+
+test at tests\veyviz-lifecycle.test.mjs:37:1
+✖ an unclean owned process exit remains quarantined on later launch (225.7544ms)
+  AggregateError: Startup and cleanup failed; the original owner remains available on error.owner.
+      at startProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-paging-evidence/snapshot-overlay-2437aeb7d7627763/source/tools/veyviz-start.mjs:138:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-paging-evidence/snapshot-overlay-2437aeb7d7627763/source/tests/veyviz-lifecycle.test.mjs:39:15)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests\veyviz-lifecycle.test.mjs:47:1
+✖ Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart (193.1434ms)
+  AggregateError: Startup and cleanup failed; the original owner remains available on error.owner.
+      at startProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-paging-evidence/snapshot-overlay-2437aeb7d7627763/source/tools/veyviz-start.mjs:138:23)
+      at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-paging-evidence/snapshot-overlay-2437aeb7d7627763/source/tests/veyviz-lifecycle.test.mjs:51:13)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

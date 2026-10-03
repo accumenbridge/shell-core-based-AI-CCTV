@@ -1,0 +1,25 @@
+{
+  "name": "@quadbridge/ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./components": {
+      "types": "./dist/components.d.ts",
+      "import": "./dist/components.js"
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./ui.css": "./dist/ui.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {},
+  "scripts": {
+    "build": "tsc -b"
+  }
+}

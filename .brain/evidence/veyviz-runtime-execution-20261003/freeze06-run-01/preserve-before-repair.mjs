@@ -1,0 +1,14 @@
+import { createHash } from 'node:crypto';
+import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { join, resolve } from 'node:path';
+const root=resolve(process.argv[2]), evidence=resolve(process.argv[3]);
+const src=join(root,'tests','veyviz-snapshot.test.mjs');
+const bytes=await readFile(src); const archive=join(evidence,'pre-repair-source');
+await mkdir(archive,{recursive:false});
+const archived=join(archive,'veyviz-snapshot.test.mjs'); await copyFile(src,archived);
+const h=createHash('sha256').update(bytes).digest('hex');
+const manifest={schema:'veyviz.pre-repair-source-preservation.v1',candidate:'freeze06',files:[{path:'tests/veyviz-snapshot.test.mjs',archivePath:archived,bytes:bytes.length,sha256:h}]};
+await writeFile(join(archive,'manifest.json'),JSON.stringify(manifest,null,2)+'\n',{flag:'wx'});
+const session={schema:'veyviz.original-exec-session-observation.v1',command:'node --test --test-concurrency=1 --test-reporter=tap tests/veyviz-lifecycle.test.mjs tests/veyviz-snapshot.test.mjs tests/veyviz-product.test.mjs',cwd:root,toolSessionId:2228,observedOriginalClose:{exitCode:1,closedAtUtc:'2026-10-03T13:34:21.3710512Z'},closeMetadataPath:join(evidence,'focused-tests-close.json'),closeMetadataRetainedUnmodified:true,note:'The close JSON records execSessionId=null; this adjacent observation records the actual exec session returned by the tool while the command was running.'};
+await writeFile(join(evidence,'focused-tests-session-observation.json'),JSON.stringify(session,null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify({archivedTest:{path:archived,bytes:bytes.length,sha256:h},session},null,2));

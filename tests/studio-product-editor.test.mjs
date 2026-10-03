@@ -11,6 +11,7 @@ import { browserCore, readCatalogue } from '../tools/studio-catalogue.mjs';
 const compiledStudioMain = new URL('../apps/studio-web/dist/main.js', import.meta.url);
 const sourceCatalogue=await readCatalogue(ROOT);
 const makeProduct=(version='2.4.0')=>composeDraft({id:'definition-editor',title:'Definition editor',version,selected:['handoff']},sourceCatalogue.modules,sourceCatalogue.solutions).product;
+const handoffExperience=()=>({schema:'quadbridge.product-experience.v1',designSystem:{id:'quadbridge.standard',version:'0.1.0'},browserProfile:'quadbridge.browser-profile.native-esm.v1',brand:{name:'Handoffs',tagline:'Keep source identity'},theme:{surface:'dark',text:'standard',accent:'teal',status:'semantic',density:'compact'},login:{title:'Handoffs',description:'Review handoffs.',help:'Contact support.'},navigation:[{id:'handoffs',workspaceId:'handoff.requests',label:'Handoffs',order:0,mobilePriority:0}],routes:[{id:'handoffs',workspaceId:'handoff.requests',kind:'workspace'}],layoutByWorkspace:[{workspaceId:'handoff.requests',mode:'operational'}]});
 
 const pause=()=>new Promise(resolve=>setImmediate(resolve));
 async function until(predicate,label){const deadline=Date.now()+3000;while(Date.now()<deadline){if(predicate())return;await pause();}assert.fail(`Timed out waiting for ${label}`);}
@@ -101,6 +102,7 @@ async function productEditorUiHarness({initialHash='#overview',catalogueReads=[]
 test('complete definition round-trip preserves description, exact versions, custom binding identity and wiring',()=>{
   const original=makeProduct();
   original.description='A retained product-owned summary.';
+  original.experience=handoffExperience();
   original.modules=[...original.modules].reverse();
   original.bindings=original.bindings.map((binding,index)=>({...binding,instanceId:index===0?'customer-owned-desk':'custom-knowledge-link'}));
   const serialized=serializeProductDefinition(original,sourceCatalogue.modules,sourceCatalogue.solutions);
@@ -109,6 +111,7 @@ test('complete definition round-trip preserves description, exact versions, cust
   assert.equal(inspected.product.description,original.description);
   assert.equal(inspected.product.version,original.version);
   assert.equal(inspected.product.wiring,original.wiring);
+  assert.deepEqual(inspected.product.experience,original.experience);
   assert.deepEqual(inspected.product.modules,[...original.modules].sort((a,b)=>a.id.localeCompare(b.id)));
   assert.deepEqual(inspected.product.bindings.map(binding=>binding.instanceId),original.bindings.map(binding=>binding.instanceId));
   assert.ok(inspected.graph.nodes.some(node=>node.id==='service-desk'&&node.version===sourceCatalogue.modules.find(m=>m.id==='service-desk').version));
@@ -133,6 +136,7 @@ test('editor helpers are present in the offline browser bundle and remain pure d
   new vm.Script(await browserCore(ROOT)).runInContext(context);
   const product=makeProduct('2.4.1');
   product.description='Offline file round trip';
+  product.experience=handoffExperience();
   product.bindings[0].instanceId='offline-instance-name';
   const fixture=parseInContext(context,{product,modules:sourceCatalogue.modules,solutions:sourceCatalogue.solutions});
   const text=context.QBComposer.serializeProductDefinition(fixture.product,fixture.modules,fixture.solutions);
@@ -141,6 +145,7 @@ test('editor helpers are present in the offline browser bundle and remain pure d
   assert.deepEqual(JSON.parse(JSON.stringify(result)),JSON.parse(JSON.stringify(expected)));
   assert.equal(result.valid,true,JSON.stringify(result.diagnostics));
   assert.equal(result.product.description,'Offline file round trip');
+  assert.deepEqual(JSON.parse(JSON.stringify(result.product.experience)),product.experience);
   assert.ok(result.product.bindings.some(binding=>binding.instanceId==='offline-instance-name'));
   assert.equal(typeof context.fetch,'undefined','the shared editor helpers do not acquire network authority');
 });

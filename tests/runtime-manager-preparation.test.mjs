@@ -9,7 +9,7 @@ import { syncBuiltinESMExports } from 'node:module';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { canonical } from '@quadbridge/contracts';
-import { adaptCanonicalLocalConfiguration, completedRuntimeEnrollment, copyVerifiedRuntimeSnapshot, enrollOrVerifyRuntimeAccess, linkCopiedRuntimeWorkspaces, ManagedRuntimeManager, prepareRuntimeEnrollment, RuntimePreparationError, runtimeDataDirectory, runtimePlanIdentity, runtimePrivateRoot } from '../apps/control-plane/dist/runtime-manager.js';
+import { adaptCanonicalLocalConfiguration, completedRuntimeEnrollment, copyVerifiedRuntimeSnapshot, enrollOrVerifyRuntimeAccess, linkCopiedRuntimeWorkspaces, ManagedRuntimeManager, MANAGED_RUNTIME_MODEL_PROFILE, parseManagedRuntimeModelProfile, prepareRuntimeEnrollment, resolveManagedRuntimeModelProfile, RuntimePreparationError, runtimeDataDirectory, runtimePlanIdentity, runtimePrivateRoot, runtimeSupportsManagedModelProfile } from '../apps/control-plane/dist/runtime-manager.js';
 
 const sha256=value=>createHash('sha256').update(value).digest('hex');
 const bytesEntry=(path,value)=>{const bytes=Buffer.from(canonical(value));return {path,bytes,digest:sha256(bytes),sizeBytes:bytes.length};};
@@ -32,7 +32,7 @@ function enrollmentInput(root,adapted,instanceId,artifactDigest){
   return {projectRoot:root,executionRoot:project,dataDirectory,identity,config,seedPrincipals,seedDigest};
 }
 
-async function canonicalFixture(root){
+async function canonicalFixture(root,modelProfile){
   const plan={product:{id:'sample-product',version:'1.2.3'},modules:[{id:'knowledge',provides:['desk.requests.create.v2'],permissions:['desk.create'],routes:[]}],
     bindings:[
       {instanceId:'local-desk',mode:'local',consumer:'knowledge',contract:'desk.requests.create.v2',implementation:'service-desk'},
@@ -43,7 +43,7 @@ async function canonicalFixture(root){
   const planIdentity=runtimePlanIdentity(snapshot,'sample-product','1.2.3');
   const instanceId=`runtime-${randomUUID()}`,artifactDigest='a'.repeat(64);
   const adaptedConfiguration=await adaptCanonicalLocalConfiguration({executionRoot:project,planIdentity,instanceId,
-    dataDirectory:runtimeDataDirectory(root,instanceId,artifactDigest),credentialReference:`${instanceId}:${artifactDigest}`});
+    dataDirectory:runtimeDataDirectory(root,instanceId,artifactDigest),credentialReference:`${instanceId}:${artifactDigest}`,modelProfile});
   return {planIdentity,configuration:adaptedConfiguration,instanceId,artifactDigest,snapshot};
 }
 
@@ -57,14 +57,67 @@ test('canonical runtime adapter accepts helper-omitted local document bindings a
   assert.ok(adapted.configuration.seedPrincipals.some(principal=>principal.id==='knowledge-link'&&principal.serviceToken));
 });
 
+test('managed model policy is a fixed bootstrap choice, captured before enrollment digest, and retained without reseeding',async t=>{
+  assert.equal(parseManagedRuntimeModelProfile(undefined),undefined);
+  assert.equal(resolveManagedRuntimeModelProfile(''),undefined);
+  assert.equal(parseManagedRuntimeModelProfile(MANAGED_RUNTIME_MODEL_PROFILE),MANAGED_RUNTIME_MODEL_PROFILE);
+  assert.throws(()=>resolveManagedRuntimeModelProfile('ollama-qwen3-4b'),/not supported/);
+
+  const {root}=fixture(t),adapted=await canonicalFixture(root,MANAGED_RUNTIME_MODEL_PROFILE);
+  assert.equal(adapted.configuration.config.modelAnswerProfile,MANAGED_RUNTIME_MODEL_PROFILE);
+  const withoutPolicy={...adapted.configuration.config};delete withoutPolicy.modelAnswerProfile;
+  assert.notEqual(adapted.configuration.configDigest,
+    sha256(canonical({config:withoutPolicy,seedDigest:adapted.configuration.seedDigest,profileDigest:adapted.planIdentity.profileDigest})),
+    'the selected policy participates in the immutable config digest');
+  const dataDirectory=runtimeDataDirectory(root,adapted.instanceId,adapted.artifactDigest);
+  const identity={instanceId:adapted.instanceId,productId:'sample-product',version:'1.2.3',artifactDigest:adapted.artifactDigest,
+    profileDigest:adapted.planIdentity.profileDigest,adapterDigest:'d'.repeat(64)};
+  const fresh=adapted.configuration;
+  const enrollment={projectRoot:root,executionRoot:project,dataDirectory,identity:{...identity,configDigest:fresh.configDigest},
+    config:fresh.config,seedPrincipals:fresh.seedPrincipals,seedDigest:fresh.seedDigest,authorize:()=>true};
+  assert.equal(await enrollOrVerifyRuntimeAccess(enrollment),'ENROLLED');
+  const intent=JSON.parse(fs.readFileSync(join(dataDirectory,'enrollment-intent.json'),'utf8'));
+  const storedConfig=JSON.parse(fs.readFileSync(join(dataDirectory,'runtime-config.json'),'utf8'));
+  assert.equal(storedConfig.modelAnswerProfile,MANAGED_RUNTIME_MODEL_PROFILE);
+  assert.equal(intent.configDigest,fresh.configDigest,'the selected config digest is frozen into enrollment intent');
+
+  const access=new DatabaseSync(join(dataDirectory,'access.sqlite'));
+  try{access.prepare("DELETE FROM principals WHERE id='viewer'").run();}
+  finally{access.close();}
+  const reopened=await prepareRuntimeEnrollment({projectRoot:root,executionRoot:project,dataDirectory,identity,planIdentity:adapted.planIdentity,
+    freshEnrollmentAllowed:false,modelProfile:undefined,authorize:()=>true});
+  assert.equal(reopened.freshEnrollment,false);
+  assert.equal(reopened.config.modelAnswerProfile,MANAGED_RUNTIME_MODEL_PROFILE,
+    'restart reads the completed selection instead of the current bootstrap default');
+  assert.equal(reopened.configDigest,fresh.configDigest);
+  assert.equal(await enrollOrVerifyRuntimeAccess({...enrollment,identity:{...identity,configDigest:reopened.configDigest},config:reopened.config,
+    seedPrincipals:reopened.seedPrincipals,seedDigest:reopened.seedDigest}),'VERIFIED_EXISTING');
+  const verify=new DatabaseSync(join(dataDirectory,'access.sqlite'),{readOnly:true});
+  try{assert.equal(verify.prepare("SELECT COUNT(*) AS count FROM principals WHERE id='viewer'").get().count,0,
+    'valid restart does not reseed a removed principal');}
+  finally{verify.close();}
+});
+
+test('managed model profile support comes only from the exact captured runtime manifest',()=>{
+  const snapshot=profiles=>({entries:[bytesEntry('apps/runtime/package.json',{name:'@quadbridge/runtime',...(profiles===undefined?{}:{quadbridgeRuntimeProfiles:profiles})})]});
+  assert.equal(runtimeSupportsManagedModelProfile(snapshot([MANAGED_RUNTIME_MODEL_PROFILE]),MANAGED_RUNTIME_MODEL_PROFILE),true);
+  assert.equal(runtimeSupportsManagedModelProfile(snapshot(undefined),MANAGED_RUNTIME_MODEL_PROFILE),false,
+    'a legacy artifact without the captured declaration is explicitly unsupported');
+  assert.equal(runtimeSupportsManagedModelProfile(snapshot(['another-profile']),MANAGED_RUNTIME_MODEL_PROFILE),false,
+    'a different declared profile does not authorize this fixed selection');
+  assert.throws(()=>runtimeSupportsManagedModelProfile(snapshot({malformed:true}),MANAGED_RUNTIME_MODEL_PROFILE),
+    error=>error instanceof RuntimePreparationError&&error.code==='RUNTIME_SOURCE_INVALID');
+});
+
 test('fresh manager preparation writes only bounded enrollment inputs and rechecks authorization after canonical import',async t=>{
   const {root}=fixture(t),adapted=await canonicalFixture(root),instanceId=adapted.instanceId,dataDirectory=runtimeDataDirectory(root,instanceId,adapted.artifactDigest);
   const identity={instanceId,productId:'sample-product',version:'1.2.3',artifactDigest:adapted.artifactDigest,
     profileDigest:adapted.planIdentity.profileDigest,adapterDigest:'d'.repeat(64)};
   let authorizations=0;
   const prepared=await prepareRuntimeEnrollment({projectRoot:root,executionRoot:project,identity,planIdentity:adapted.planIdentity,freshEnrollmentAllowed:true,
-    authorize:()=>{authorizations++;return true;}});
+    modelProfile:MANAGED_RUNTIME_MODEL_PROFILE,authorize:()=>{authorizations++;return true;}});
   assert.equal(prepared.freshEnrollment,true);
+  assert.equal(prepared.config.modelAnswerProfile,MANAGED_RUNTIME_MODEL_PROFILE);
   assert.ok(authorizations>=1,'the captured session must be rechecked after importing the canonical adapter');
   assert.deepEqual(readdirSync(dataDirectory).sort(),['credentials.json','enrollment-intent.json','enrollment-private.json','runtime-config.json']);
   assert.equal(existsSync(join(dataDirectory,'access.sqlite')),false,'canonical access storage is created only inside the owned supervisor job');
@@ -83,9 +136,9 @@ test('owned execution cleanup removes only exact copied-workspace junctions and 
       return {id:operationId,instanceId:value.instanceId,commandId:'test-command',stopCommandId:null,state:complete?'STOPPED':'UNKNOWN',commandState:complete?'SUCCEEDED':'UNKNOWN',
         physicalState:complete?'EMPTY':'UNKNOWN',emptyObserved:complete,helperClosed:complete,executionClean:complete};}};
   const manager=ManagedRuntimeManager.create(root,store,{});
-  const makeOperation=(suffix)=>{
+  const makeOperation=(suffix,snapshotDirectory='snapshot')=>{
     const operationRoot=join(root,'.local','platform-runtime-executions',`runtime-${randomUUID()}`,suffix);
-    const snapshotRoot=join(operationRoot,'snapshot'),workspace=join(snapshotRoot,'packages','local-access');
+    const snapshotRoot=join(operationRoot,snapshotDirectory),workspace=join(snapshotRoot,'packages','local-access');
     mkdirSync(workspace,{recursive:true});
     writeFileSync(join(workspace,'package.json'),JSON.stringify({name:'@quadbridge/local-access'}));
     assert.deepEqual(linkCopiedRuntimeWorkspaces(snapshotRoot),['@quadbridge/local-access']);
@@ -112,6 +165,21 @@ test('owned execution cleanup removes only exact copied-workspace junctions and 
   assert.equal(settlements.at(-1).executionClean,false,'a changed workspace target retains the owned execution as cleanup-unknown');
   assert.equal(existsSync(join(changed.operationRoot,'snapshot','node_modules','@quadbridge','local-access')),true);
   assert.equal(existsSync(join(external,'sentinel')),true,'cleanup never follows the substituted target');
+
+  const short=makeOperation('short','s');
+  const shortResult=await manager.finalizeRunner(runnerFor(short),'STOP',100);
+  assert.equal(shortResult.complete,true,'the shortened private snapshot root keeps the exact original-owner cleanup protocol');
+  assert.equal(existsSync(short.operationRoot),false,'the fixed short snapshot root is recognized and cleaned through the same verified link inventory');
+});
+
+test('the fixed short private snapshot root keeps selected long exported files below the Windows path limit',()=>{
+  const operationRoot=join(project,'.local','platform-runtime-executions',`runtime-${randomUUID()}`,randomUUID());
+  const selectedPaths=[
+    '.artifacts/core-app/m/assets/raw/60eb54f00e625752.css',
+    'modules/service-desk/dist/ui/recent-requests.js.map'
+  ];
+  const privatePaths=selectedPaths.map(path=>resolve(operationRoot,'s',...path.split('/')));
+  assert.ok(privatePaths.every(path=>path.length<240),'the copied snapshot uses the fixed short segment while retaining the complete registered file paths');
 });
 
 test('one-use runtime gate is published without a post-publication lookup that can race its consumer',async t=>{

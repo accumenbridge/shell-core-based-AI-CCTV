@@ -1,0 +1,63 @@
+{
+  "schema": "veyviz.isolated-source-freeze.v1",
+  "activeRoot": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+  "overlayRoot": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003",
+  "evidenceRoot": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-03",
+  "activeSourceDigest": "a1d070047a01d3c2b6984da8672736467007f991a1d3ac093c18ac76460c1723",
+  "overlaySourceDigest": "a1d070047a01d3c2b6984da8672736467007f991a1d3ac093c18ac76460c1723",
+  "sourceEqual": true,
+  "activeToolchainDigest": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+  "overlayToolchainDigest": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+  "toolchainEqual": true,
+  "sourceFiles": 360,
+  "toolPackages": [
+    {
+      "name": "typescript",
+      "version": "5.8.3",
+      "files": 130
+    },
+    {
+      "name": "esbuild",
+      "version": "0.28.2",
+      "files": 7
+    },
+    {
+      "name": "@types/node",
+      "version": "22.19.7",
+      "files": 73
+    },
+    {
+      "name": "undici-types",
+      "version": "6.21.0",
+      "files": 41
+    },
+    {
+      "name": "@esbuild/win32-x64",
+      "version": "0.28.2",
+      "files": 3
+    }
+  ],
+  "manifests": {
+    "source-active.json": {
+      "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-03\\source-active.json",
+      "bytes": 63696,
+      "sha256": "9bc172b95751d7866e0c76776713ab2950cc1ce04a4eeaa612ec316216fdb176"
+    },
+    "source-overlay.json": {
+      "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-03\\source-overlay.json",
+      "bytes": 63696,
+      "sha256": "9bc172b95751d7866e0c76776713ab2950cc1ce04a4eeaa612ec316216fdb176"
+    },
+    "toolchain-active.json": {
+      "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-03\\toolchain-active.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    "toolchain-overlay.json": {
+      "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-03\\toolchain-overlay.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    }
+  },
+  "capturedAt": "2026-10-03T12:08:08.503Z"
+}

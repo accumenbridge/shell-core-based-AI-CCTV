@@ -246,7 +246,7 @@ test('undispatched cleanup uncertainty cannot use JOB_EXIT and shutdown during S
 test('schema 4 additive dispatch migration treats legacy mutable uncertainty labels conservatively', t => {
   const directory=mkdtempSync(join(tmpdir(),'qbrt-'));
   const path=join(directory,'store.sqlite');
-  t.after(()=>rmSync(directory,{recursive:true,force:true}));
+  t.after(()=>rmSync(directory,{recursive:true,force:true,maxRetries:4,retryDelay:100}));
   const store=new ControlPlaneStore(path);
   try{
     seedPromotedRelease(store);

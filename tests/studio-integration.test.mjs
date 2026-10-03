@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {readFile,writeFile,mkdir,realpath,lstat} from 'node:fs/promises';
 import {randomUUID} from 'node:crypto';
 import {join} from 'node:path';
 import {spawnSync} from 'node:child_process';
@@ -8,6 +8,7 @@ import vm from 'node:vm';
 import {TextEncoder} from 'node:util';
 import {request} from 'node:http';
 import {validSourceDirectoryId} from '../packages/contracts/dist/index.js';
+import {defineModule} from '../packages/module-sdk/dist/index.js';
 import {ROOT} from '../apps/runtime/dist/index.js';
 import {readCatalogue,browserCore} from '../tools/studio-catalogue.mjs';
 import {composeDraft,validProductId,validateProduct} from '../packages/composition/dist/studio.js';
@@ -44,15 +45,108 @@ test('Runtime: missing destination authority is visible before new handoff submi
 
 async function pair(studio){const r=await fetch(studio.url+'/studio-api/session',{method:'POST',headers:{Origin:studio.url,'Content-Type':'application/json'},body:JSON.stringify({code:studio.code})});assert.equal(r.status,200);return r.headers.get('set-cookie').split(';')[0];}
 async function call(studio,cookie,path,method='GET',data){const r=await fetch(studio.url+'/studio-api'+path,{method,headers:{Cookie:cookie,Origin:studio.url,'Content-Type':'application/json'},...(data===undefined?{}:{body:JSON.stringify(data)})});return {status:r.status,body:await r.json()};}
+function deferredPost(studio,cookie,path,prefix){
+    const target=new URL(studio.url+'/studio-api'+path);let resolveResponse,rejectResponse,resolveStarted;
+    const response=new Promise((resolve,reject)=>{resolveResponse=resolve;rejectResponse=reject;});
+    const started=new Promise(resolve=>{resolveStarted=resolve;});
+    const onRequest=req=>{if(req.url===target.pathname&&req.headers.cookie===cookie){studio.server.off('request',onRequest);resolveStarted();}};
+    studio.server.on('request',onRequest);
+    const req=request(target,{method:'POST',headers:{Cookie:cookie,Origin:studio.url,'Content-Type':'application/json'}},res=>{
+        const chunks=[];res.on('data',chunk=>chunks.push(chunk));res.on('end',()=>{try{resolveResponse({status:res.statusCode,body:JSON.parse(Buffer.concat(chunks).toString('utf8'))});}catch(error){rejectResponse(error);}});
+    });
+    req.on('error',rejectResponse);req.write(prefix);
+    return {started,response,finish(suffix){req.end(suffix);}};
+}
+function gate(){let resolve;return {promise:new Promise(r=>{resolve=r;}),release(){resolve();}};}
 test('Studio server: pairing, exact origin/host, bounded routes and no filesystem or shell endpoint',async t=>{const copied=await copyRoot(t),{root,temp}=copied;const studio=await createStudio({root,stateRoot:join(temp,'operator'),port:0,quiet:true});copied.registerCleanup(()=>studio.close());assert.equal((await fetch(studio.url+'/studio-api/catalogue')).status,401);const cookie=await pair(studio);assert.equal((await call(studio,cookie,'/catalogue')).status,200);for(const path of ['/run','/exec','/files','/read'])assert.equal((await call(studio,cookie,path,'POST',{command:'ignored'})).status,404);const hostile=await fetch(studio.url+'/studio-api/products',{method:'POST',headers:{Origin:'https://unrelated.example',Cookie:cookie,'Content-Type':'application/json'},body:'{}'});assert.equal(hostile.status,403);const rebind=await new Promise((resolve,reject)=>{const req=request(studio.url+'/studio-api/catalogue',{headers:{Host:'evil.invalid',Cookie:cookie}},res=>{res.resume();resolve(res.statusCode);});req.on('error',reject);req.end();});assert.equal(rebind,403);assert.equal((await call(studio,cookie,'/products/neutral/build','POST',{})).status,400);assert.equal((await call(studio,cookie,'/products','POST',{...draft([]).product,id:'../escape'})).status,400);assert.equal((await call(studio,cookie,'/logout','POST',{})).status,200);assert.equal((await call(studio,cookie,'/catalogue')).status,401);});
+
+test('Studio server: original session is rechecked after deferred input and preparation; owned cleanup remains available',async t=>{
+    const copied=await copyRoot(t),{root,temp}=copied;
+    const studio=await createStudio({root,stateRoot:join(temp,'operator'),port:0,quiet:true});copied.registerCleanup(()=>studio.close());
+
+    let cookie=await pair(studio);
+    const pendingSave=deferredPost(studio,cookie,'/products','{"id":');
+    await pendingSave.started;
+    assert.equal((await call(studio,cookie,'/logout','POST',{})).status,200);
+    pendingSave.finish('"session-fenced"}');
+    const deniedSave=await pendingSave.response;
+    assert.equal(deniedSave.status,401);
+    await assert.rejects(readFile(join(root,'products/session-fenced/product.json')),error=>error.code==='ENOENT');
+    assert.equal(studio.manager.active,null);
+
+    const product=structuredClone(draft([]).product);product.id='import-fenced';
+    let admissionChecks=0;
+    const revokedAfterCatalogue=()=>{if(++admissionChecks===3){const error=Error('Original Studio session is no longer current');error.code='SESSION_REQUIRED';throw error;}};
+    await assert.rejects(studio.manager.save(product,revokedAfterCatalogue),error=>error.code==='SESSION_REQUIRED');
+    assert.equal(admissionChecks,3,'the importer rechecked after catalogue preparation');
+    assert.equal(studio.manager.active,null,'the rejected save releases its temporary manager reservation');
+    await assert.rejects(readFile(join(root,'products/import-fenced/product.json')),error=>error.code==='ENOENT');
+    await assert.rejects(lstat(join(root,'products/import-fenced')),error=>error.code==='ENOENT');
+
+    const cleanupProduct=structuredClone(product);cleanupProduct.id='import-cleanup';
+    admissionChecks=0;
+    const revokedBeforeWrite=()=>{if(++admissionChecks===6){const error=Error('Original Studio session is no longer current');error.code='SESSION_REQUIRED';throw error;}};
+    await assert.rejects(studio.manager.save(cleanupProduct,revokedBeforeWrite),error=>error.code==='SESSION_REQUIRED');
+    assert.equal(admissionChecks,6,'the importer rechecked after mkdir before writing the definition');
+    await assert.rejects(lstat(join(root,'products/import-cleanup')),error=>error.code==='ENOENT','an empty directory created by this rejected operation is removed');
+
+    cookie=await pair(studio);
+    const originalCatalogue=studio.manager.catalogue.bind(studio.manager),catalogueGate=gate();let catalogueStartedResolve;
+    const catalogueStarted=new Promise(resolve=>{catalogueStartedResolve=resolve;});
+    studio.manager.catalogue=async()=>{const value=await originalCatalogue();catalogueStartedResolve();await catalogueGate.promise;return value;};
+    const pendingBuild=call(studio,cookie,'/products/neutral/build','POST',{confirm:true});
+    await catalogueStarted;
+    assert.equal((await call(studio,cookie,'/logout','POST',{})).status,200);
+    catalogueGate.release();
+    const deniedBuild=await pendingBuild;
+    assert.equal(deniedBuild.status,401);
+    assert.equal(studio.manager.active,null);assert.equal(studio.manager.jobs.size,0);assert.equal(studio.manager.commands.size,0);
+    await assert.rejects(readFile(join(temp,'operator/jobs')),error=>error.code==='ENOENT');
+
+    cookie=await pair(studio);
+    const stageGate=gate();let stageStartedResolve;
+    const stageStarted=new Promise(resolve=>{stageStartedResolve=resolve;});
+    studio.manager.stage=async productId=>{stageStartedResolve();await stageGate.promise;return {productId,release:'a'.repeat(64),path:join(temp,'unpublished-assembly'),plan:{bindings:[]},builtAt:new Date().toISOString()};};
+    const pendingLaunch=call(studio,cookie,'/products/neutral/launch','POST',{confirm:true});
+    await stageStarted;
+    assert.equal(studio.manager.running.get('neutral')?.status,'STARTING');
+    assert.equal((await call(studio,cookie,'/logout','POST',{})).status,200);
+    stageGate.release();
+    const deniedLaunch=await pendingLaunch;
+    assert.equal(deniedLaunch.status,401);
+    assert.equal(studio.manager.running.has('neutral'),false);assert.equal(studio.manager.staging,0);
+    assert.equal(studio.manager.builds.has('neutral'),false);assert.equal(studio.manager.commands.size,0);
+
+    studio.manager.running.set('owned-cleanup',{productId:'owned-cleanup',status:'RUNNING',done:Promise.resolve()});
+    assert.deepEqual(await studio.manager.stop('owned-cleanup'),{productId:'owned-cleanup',status:'STOPPED'});
+    assert.equal(studio.manager.running.has('owned-cleanup'),false,'cleanup of an already owned instance does not depend on the expired browser session');
+});
 
 test('Acceptance: generate module → dynamic Studio → compose new name → build → launch → persistent record and real receipt',async t=>{
     const copied=await copyRoot(t),{root,temp}=copied;
     const original=await readFile(join(root,'packages/backend-host/src/index.ts'),'utf8');
     const initialCatalogue=await readCatalogue(root);
     run(root,'tools/factory.mjs','create-module','checklist');
+    const checklistPackage=join(root,'modules/checklist/package.json');
+    const checklistManifest=JSON.parse(await readFile(checklistPackage,'utf8'));
+    checklistManifest.dependencies['@quadbridge/module-sdk']='0.3.0';
+    await writeFile(checklistPackage,JSON.stringify(checklistManifest,null,2)+'\n');
+    const checklistTsconfigPath=join(root,'modules/checklist/tsconfig.json');
+    const checklistTsconfig=JSON.parse(await readFile(checklistTsconfigPath,'utf8'));
+    checklistTsconfig.references.push({path:'../../packages/module-sdk'});
+    await writeFile(checklistTsconfigPath,JSON.stringify(checklistTsconfig,null,2)+'\n');
+    const checklistSourcePath=join(root,'modules/checklist/src/index.ts');
+    const checklistSource=(await readFile(checklistSourcePath,'utf8'))
+        .replace("import { randomUUID } from 'node:crypto';", "import { randomUUID } from 'node:crypto';\nimport { defineModule } from '@quadbridge/module-sdk';")
+        .replace(' const store=new SqliteOwner(env.dataPath,env.manifest.id);', " const manifest=defineModule(env.manifest);\n if(manifest.id!==env.manifest.id||manifest.version!==env.manifest.version)throw new Error('Runtime module identity differs from the exported manifest');\n const store=new SqliteOwner(env.dataPath,manifest.id);")
+        .replace('],env.manifest.schema);', '],manifest.schema);')
+        .replace('return {manifest:env.manifest,services:{},routes:[', 'return {manifest,services:{},routes:[');
+    await writeFile(checklistSourcePath,checklistSource);
     const catalogue=await readCatalogue(root);assert.equal(catalogue.modules.length,initialCatalogue.modules.length+1);assert.ok(catalogue.modules.some(module=>module.id==='checklist'));
+    const sdkChecklist=defineModule(catalogue.modules.find(module=>module.id==='checklist'));
     const result=composeDraft({id:'facility-new',title:'Facility studio acceptance',selected:['checklist','handoff']},catalogue.modules,catalogue.solutions);
+    assert.deepEqual(result.plan.modules.find(module=>module.id==='checklist'),sdkChecklist,
+      'the official SDK declaration has the same canonical resolver result as module.json');
     const studio=await createStudio({root,stateRoot:join(temp,'operator'),port:0,quiet:true});copied.registerCleanup(()=>studio.close());const cookie=await pair(studio);
     const saved=await call(studio,cookie,'/products','POST',result.product);assert.equal(saved.status,201);assert.equal((await call(studio,cookie,'/products','POST',result.product)).status,409);
     const build=await call(studio,cookie,'/products/facility-new/build','POST',{confirm:true});assert.equal(build.status,202);
@@ -87,6 +181,13 @@ test('Acceptance: generate module → dynamic Studio → compose new name → bu
             stderrTruncated:facts.stderrTruncated===true,stderrSha256:/^[a-f0-9]{64}$/.test(facts.stderrSha256)?facts.stderrSha256:null,privateEvidenceSaved}));
     };
     let launched=await call(studio,cookie,'/products/facility-new/launch','POST',{confirm:true});await preserveLaunchFailure(launched);assert.equal(launched.status,200,JSON.stringify(launched.body));assert.equal(launched.body.status,'RUNNING');
+    const assembly=studio.manager.builds.get('facility-new').path;
+    assert.deepEqual(studio.manager.builds.get('facility-new').plan.modules.find(module=>module.id==='checklist'),sdkChecklist,
+      'the exported isolated plan preserves the canonical SDK manifest');
+    await readFile(join(assembly,'packages/module-sdk/dist/index.js'));
+    await readFile(join(assembly,'packages/studio-model/dist/index.js'));
+    assert.equal(await realpath(join(assembly,'node_modules/@quadbridge/module-sdk')),await realpath(join(assembly,'packages/module-sdk')),
+      'the runtime SDK resolves from the isolated exported snapshot, not the maintained checkout');
     let state=studio.manager.running.get('facility-new');const credentials=JSON.parse(await readFile(join(state.data,'developer-credentials.json'),'utf8'));
     const login=async(url)=>{const r=await fetch(url+'/api/session',{method:'POST',headers:{Origin:url,'Content-Type':'application/json'},body:JSON.stringify({username:'admin',password:credentials.admin})});assert.equal(r.status,200);return r.headers.get('set-cookie').split(';')[0];};
     let appUrl=launched.body.url,session=await login(appUrl);

@@ -1,0 +1,22 @@
+import { createHash } from 'node:crypto';
+import { readFile, writeFile } from 'node:fs/promises';
+import { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
+const root=resolve(process.argv[2]), evidence=resolve(process.argv[3]), phase=process.argv[4];
+const api=await import(pathToFileURL(join(root,'tools/veyviz-inventory.mjs')).href);
+const source=await api.captureAuthoredBuildInputs(root), toolchain=await api.captureBuildToolchain(root);
+const freezeDir=join(root,'evidence','freeze-run-06');
+const frozenSource=JSON.parse(await readFile(join(freezeDir,'source-overlay.json'),'utf8'));
+const frozenToolchain=JSON.parse(await readFile(join(freezeDir,'toolchain-overlay.json'),'utf8'));
+const priorName=phase==='pre-build' ? null : phase==='post-build' ? 'pre-build' : 'post-build';
+if(priorName){
+ const expectedSource=JSON.parse(await readFile(join(evidence,`${priorName}-source.json`),'utf8'));
+ const expectedToolchain=JSON.parse(await readFile(join(evidence,`${priorName}-toolchain.json`),'utf8'));
+ if(JSON.stringify(source)!==JSON.stringify(expectedSource)||JSON.stringify(toolchain)!==JSON.stringify(expectedToolchain)) throw new Error(`${phase} source/toolchain differ from ${priorName} capture`);
+}else if(JSON.stringify(source)!==JSON.stringify(frozenSource)||JSON.stringify(toolchain)!==JSON.stringify(frozenToolchain)) throw new Error('Pre-build overlay does not match the frozen freeze06 manifests');
+const stamp=new Date().toISOString();
+const put=async(name,value)=>{const b=Buffer.from(JSON.stringify(value,null,2)+'\n');await writeFile(join(evidence,name),b,{flag:'wx'});return {path:join(evidence,name),bytes:b.length,sha256:createHash('sha256').update(b).digest('hex')}};
+const sourceFile=await put(`${phase}-source.json`,source), toolchainFile=await put(`${phase}-toolchain.json`,toolchain);
+const meta={schema:'veyviz.isolated-run-source-capture.v1',phase,capturedAt:stamp,sourceDigest:source.digest,toolchainDigest:toolchain.digest,sourceFiles:source.files.length,sourceFile,toolchainFile};
+const metaFile=await put(`${phase}-capture.json`,meta);
+console.log(JSON.stringify(meta,null,2));

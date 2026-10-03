@@ -1,4 +1,5 @@
-import { PLATFORM_ABI, PlatformError, canonical, type Binding, type CompositionPlan, type ModuleManifest, type ProductDefinition } from '@quadbridge/contracts';
+import { PLATFORM_ABI, PlatformError, canonical, validateProductExperience, type Binding, type CompositionPlan, type ModuleManifest, type ProductDefinition } from '@quadbridge/contracts';
+import { validateModuleManifest } from '@quadbridge/contracts/module-manifest';
 import { validateOperationDescriptor } from '@quadbridge/contracts/operations';
 import { validateUiContributionDescriptors } from '@quadbridge/contracts/ui-contributions';
 const fail = (s: string): never => { throw new PlatformError('INCOMPATIBLE', s); };
@@ -10,9 +11,10 @@ const unique = (xs: string[], label: string) => {
 export function resolve(product: ProductDefinition, catalog: readonly ModuleManifest[]): CompositionPlan {
     if (product.platformAbi !== PLATFORM_ABI)
         fail('Unsupported platform ABI');
-    unique(catalog.map(m => m.id), 'catalog module');
+    const validatedCatalog = catalog.map(module => validateModuleManifest(module));
+    unique(validatedCatalog.map(m => m.id), 'catalog module');
     unique(product.modules.map(m => m.id), 'selection');
-    const all = new Map(catalog.map(m => [m.id, m]));
+    const all = new Map(validatedCatalog.map(m => [m.id, m]));
     const selected = new Map<string, ModuleManifest>();
     for (const ref of product.modules) {
         const m = all.get(ref.id);
@@ -101,7 +103,10 @@ export function resolve(product: ProductDefinition, catalog: readonly ModuleMani
         for (const c of m.requires)
             if (!product.bindings.some(b => b.consumer === m.id && b.contract === c))
                 fail(`Unbound required port ${m.id}:${c}`);
-    const normalizedProduct = { ...product, modules: [...product.modules].sort((a, b) => a.id.localeCompare(b.id)), bindings: [...product.bindings].sort((a, b) => `${a.consumer}:${a.contract}`.localeCompare(`${b.consumer}:${b.contract}`)) };
+    const experience = product.experience === undefined ? undefined : validateProductExperience(product.experience, {
+        workspaceIds: ordered.flatMap(module => module.workspaces.map(workspace => workspace.id))
+    });
+    const normalizedProduct = { ...product, ...(experience ? { experience } : {}), modules: [...product.modules].sort((a, b) => a.id.localeCompare(b.id)), bindings: [...product.bindings].sort((a, b) => `${a.consumer}:${a.contract}`.localeCompare(`${b.consumer}:${b.contract}`)) };
     return { product: normalizedProduct, modules: ordered, bindings: [...product.bindings].sort((a, b) => `${a.consumer}:${a.contract}`.localeCompare(`${b.consumer}:${b.contract}`)), permissions: ordered.flatMap(m => m.permissions).sort(), requiresWorker: ordered.some(m => m.background) };
 }
 /** Instance lifetime is separate from business data scope. Factories receive no request in longer scopes. */

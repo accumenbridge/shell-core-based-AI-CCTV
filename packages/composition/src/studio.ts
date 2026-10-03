@@ -1,12 +1,12 @@
 /** Product-definition drafting over reviewed catalogues. Browser and CLI use this same code.
  * This chooses declared wiring, never invents adapter implementations, grants or endpoints.
  */
-import { PLATFORM_ABI, PlatformError, object, validSourceDirectoryId, type Binding, type CompositionPlan, type ModuleManifest, type ProductDefinition } from '@quadbridge/contracts';
+import { PLATFORM_ABI, PlatformError, object, validSourceDirectoryId, type Binding, type CompositionPlan, type ModuleManifest, type ProductDefinition, type ProductExperience } from '@quadbridge/contracts';
 import { resolve } from './index.js';
 
 export interface StudioChoice { id: string; label: string; binding: Omit<Binding, 'consumer' | 'contract'>; prerequisites?: string[] }
 export interface StudioSolution { id: string; studio?: { consumer: string; label: string; ports: { contract: string; choices: StudioChoice[] }[] } }
-export interface StudioInput { id: string; title: string; selected: string[]; layout?: 'top' | 'sidebar'; choices?: Record<string, string>; version?: string }
+export interface StudioInput { id: string; title: string; selected: string[]; layout?: 'top' | 'sidebar'; choices?: Record<string, string>; version?: string; experience?: ProductExperience }
 export const STUDIO_PRODUCT_TEXT_LIMIT = 64 * 1024;
 export interface StudioProductGraph {
     nodes: { id: string; version: string; external: boolean }[];
@@ -22,7 +22,7 @@ export interface StudioProductInspection {
 const fail = (message: string): never => { throw new PlatformError('INCOMPATIBLE', message); };
 export const validProductId = (value: unknown): value is string => validSourceDirectoryId(value);
 export function composeDraft(input: StudioInput, catalog: readonly ModuleManifest[], solutions: readonly StudioSolution[], version = '0.2.0') {
-    object(input, ['id', 'title', 'selected', 'layout', 'choices', 'version']);
+    object(input, ['id', 'title', 'selected', 'layout', 'choices', 'version', 'experience']);
     if (!validProductId(input.id)) fail('Use a product ID of 2–48 lowercase letters, digits or hyphens, starting with a letter.');
     if (typeof input.title !== 'string' || !input.title.trim() || input.title.length > 80) fail('Provide a product title of 1–80 characters.');
     if (!Array.isArray(input.selected) || input.selected.length > 100 || input.selected.some(id => typeof id !== 'string')) fail('Select a bounded module list.');
@@ -71,7 +71,8 @@ export function composeDraft(input: StudioInput, catalog: readonly ModuleManifes
         id: input.id, title: input.title.trim(), description: 'Product-owned composition created by the Quadbridge Studio.',
         version: input.version ?? version, platformAbi: PLATFORM_ABI, layout: input.layout ?? 'sidebar',
         modules: [...selected].sort().map(id => ({ id, version: byId.get(id)!.version })), bindings,
-        ...(usedSolutions.size ? { wiring: [...usedSolutions][0]! } : {})
+        ...(usedSolutions.size ? { wiring: [...usedSolutions][0]! } : {}),
+        ...(input.experience === undefined ? {} : { experience: input.experience })
     };
     const plan = resolve(product, catalog);
     return { product: plan.product, plan, explanation, requirements, status: 'VALIDATED_DEFINITION_NOT_RUNNING' as const };
@@ -79,7 +80,7 @@ export function composeDraft(input: StudioInput, catalog: readonly ModuleManifes
 
 /** Imported definitions must remain bounded data; trusted catalogues supply executable identities. */
 export function validateProduct(value: unknown, catalog: readonly ModuleManifest[], solutions: readonly StudioSolution[]): ProductDefinition {
-    const p = object(value, ['id', 'title', 'description', 'version', 'platformAbi', 'layout', 'modules', 'bindings', 'wiring']);
+    const p = object(value, ['id', 'title', 'description', 'version', 'platformAbi', 'layout', 'modules', 'bindings', 'wiring', 'experience']);
     if (!validProductId(p.id) || typeof p.title !== 'string' || !p.title.trim() || p.title.length > 80 || typeof p.version !== 'string' || !/^\d+\.\d+\.\d+$/.test(p.version) || p.platformAbi !== PLATFORM_ABI || !['top', 'sidebar'].includes(String(p.layout))) fail('Invalid product identity, version or layout.');
     if (typeof p.description !== 'string' || p.description.length > 2000 || p.description.includes('\0')) fail('Invalid product description.');
     if (!Array.isArray(p.modules) || p.modules.length > 100 || !Array.isArray(p.bindings) || p.bindings.length > 300) fail('Invalid module/binding list.');

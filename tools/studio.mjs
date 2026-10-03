@@ -42,20 +42,36 @@ export async function createStudio({root=ROOT,port=4390,stateRoot,quiet=false,pa
                 res.setHeader('Set-Cookie',`qb_studio=${token}; HttpOnly; SameSite=Strict; Path=/studio-api; Max-Age=3600`);return send(200,{connected:true});
             }
             const token=(req.headers.cookie??'').split(';').map(s=>s.trim()).find(s=>s.startsWith('qb_studio='))?.slice(10);
-            if(!token||(sessions.get(token)??0)<Date.now())return send(401,{error:'Pair this browser using the code printed in the terminal'});
-            if(req.method==='POST'&&url.pathname==='/studio-api/logout'){sessions.delete(token);res.setHeader('Set-Cookie','qb_studio=; HttpOnly; SameSite=Strict; Path=/studio-api; Max-Age=0');return send(200,{connected:false});}
-            if(req.method==='GET'&&url.pathname==='/studio-api/catalogue')return send(200,await manager.catalogue());
+            const expiresAt=token?sessions.get(token):undefined;
+            if(!token||typeof expiresAt!=='number'||expiresAt<=Date.now())return send(401,{error:'Pair this browser using the code printed in the terminal'});
+            const originalSession=Object.freeze({token,expiresAt});
+            const requireOriginalSession=()=>{
+                if(sessions.get(originalSession.token)!==originalSession.expiresAt||originalSession.expiresAt<=Date.now()){
+                    const error=Error('Pair this browser using the code printed in the terminal');error.code='SESSION_REQUIRED';throw error;
+                }
+            };
+            if(req.method==='POST'&&url.pathname==='/studio-api/logout'){requireOriginalSession();sessions.delete(token);res.setHeader('Set-Cookie','qb_studio=; HttpOnly; SameSite=Strict; Path=/studio-api; Max-Age=0');return send(200,{connected:false});}
+            if(req.method==='GET'&&url.pathname==='/studio-api/catalogue'){
+                const catalogue=await manager.catalogue();requireOriginalSession();return send(200,catalogue);
+            }
             if(req.method==='GET'&&url.pathname==='/studio-api/status')return send(200,manager.status());
-            if(req.method==='POST'&&url.pathname==='/studio-api/preview'){const c=await manager.catalogue();return send(200,composeDraft(await body(),c.modules,c.solutions,c.sourceVersion));}
-            if(req.method==='POST'&&url.pathname==='/studio-api/products')return send(201,await manager.save(await body()));
+            if(req.method==='POST'&&url.pathname==='/studio-api/preview'){
+                const c=await manager.catalogue();requireOriginalSession();
+                const draft=await body();requireOriginalSession();
+                return send(200,composeDraft(draft,c.modules,c.solutions,c.sourceVersion));
+            }
+            if(req.method==='POST'&&url.pathname==='/studio-api/products'){
+                const value=await body();requireOriginalSession();
+                return send(201,await manager.save(value,requireOriginalSession));
+            }
             const op=/^\/studio-api\/products\/([a-z][a-z0-9-]{1,47})\/(build|launch|stop)$/.exec(url.pathname);
-            if(req.method==='POST'&&op){const b=await body();if(b.confirm!==true||Object.keys(b).length!==1)return send(400,{error:'Explicit confirmation is required'});
-                if(op[2]==='build')return send(202,manager.build(op[1]));
-                if(op[2]==='launch')return send(200,await manager.launch(op[1]));
-                return send(200,await manager.stop(op[1]));
+            if(req.method==='POST'&&op){const b=await body();requireOriginalSession();if(b.confirm!==true||Object.keys(b).length!==1)return send(400,{error:'Explicit confirmation is required'});
+                if(op[2]==='build')return send(202,await manager.build(op[1],requireOriginalSession));
+                if(op[2]==='launch')return send(200,await manager.launch(op[1],requireOriginalSession));
+                return send(200,await manager.stop(op[1],requireOriginalSession));
             }
             return send(404,{error:'No such Studio operation'});
-        }catch(e){send(e.code==='EEXIST'?409:400,{error:e.code==='EEXIST'?'Product already exists. No source was overwritten.':e.message});}
+        }catch(e){const status=e.code==='SESSION_REQUIRED'?401:e.code==='EEXIST'?409:400;send(status,{error:e.code==='SESSION_REQUIRED'?'Pair this browser using the code printed in the terminal':e.code==='EEXIST'?'Product already exists. No source was overwritten.':e.message});}
     });
     server.requestTimeout=20000;server.headersTimeout=15000;
     await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(port,'127.0.0.1',resolve);});origin=`http://127.0.0.1:${server.address().port}`;

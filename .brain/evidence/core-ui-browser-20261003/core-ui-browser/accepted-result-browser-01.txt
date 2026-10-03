@@ -1,0 +1,158 @@
+- complementary:
+  - generic: V
+  - generic: VEYVIZ
+  - generic: PRODUCT WORKSPACE
+  - generic: VEYVIZ
+  - paragraph: Local video review and analysis
+  - navigation "Workspaces":
+    - link "Command Center":
+      - /url: "#/command-center"
+    - link "Investigate":
+      - /url: "#/analysis"
+    - link "Recordings":
+      - /url: "#/recordings"
+    - link "System Health":
+      - /url: "#/system-health"
+    - link "Intelligence":
+      - /url: "#/intelligence"
+  - generic: LOCAL DEVELOPER PROFILE
+  - paragraph: 4 selected modules
+  - paragraph: veyviz-review-local
+- main:
+  - text: Tenant
+  - combobox "Tenant":
+    - option "alpha" [selected]
+    - option "beta"
+  - generic: admin
+  - button "Sign out"
+  - paragraph: EVIDENCE WORKSPACE
+  - heading "Investigate" [level=1]
+  - paragraph: Search analyses and inspect their accepted footage.
+  - generic "Current page analysis facts":
+    - strong: "1"
+    - generic: on this page
+    - strong: "1"
+    - generic: open reviews
+    - strong: "0"
+    - generic: active
+  - generic: Local analysis ready
+  - status: Accepted result loaded with 3 sampled frames.
+  - generic "New analysis"
+  - option "MIVIA core workflow · v1" [selected]
+  - region "Filter analyses":
+    - generic: Search analyses
+    - searchbox "Search analyses"
+    - generic: Find recording by name or ID
+    - searchbox "Find recording by name or ID"
+    - combobox "Filter by recording":
+      - option "All recordings" [selected]
+      - option "MIVIA core workflow"
+    - button "Previous recordings" [disabled]
+    - generic: Page 1
+    - button "Next recordings" [disabled]
+    - generic: State
+    - combobox "Filter by analysis state":
+      - option "All job states" [selected]
+      - option "Queued"
+      - option "Running"
+      - option "Cancellation requested"
+      - option "Cancelled"
+      - option "Succeeded"
+      - option "Failed"
+    - generic: Review state
+    - combobox "Filter by review state":
+      - option "All review states" [selected]
+      - option "Open review"
+      - option "Reviewed"
+      - option "Dismissed"
+    - generic: Date
+    - combobox "Filter by creation date":
+      - option "Any date" [selected]
+      - option "Today"
+      - option "Last 7 days"
+      - option "Last 30 days"
+    - button "Clear filters"
+    - paragraph: Search matches analysis, job or source IDs. Find recording names in the source picker. Page membership can shift as records change.
+  - heading "Results" [level=2]
+  - generic "Showing 1 analyses on page 1": 1 shown
+  - paragraph: 1 shown · page 1 of the filtered owner query
+  - list:
+    - button "MIVIA core workflow, Result ready, created Oct 3, 09:56 PM, analysis 672e9329, 3 samples, 0 observations, open" [pressed]:
+      - generic: MIVIA core workflow
+      - generic: Oct 3, 09:56 PM · Result ready
+      - generic: Open review
+      - generic: 3 sampled frames · 0 model observations
+  - navigation "Analysis pages":
+    - button "Previous" [disabled]
+    - status: Page 1
+    - button "Next" [disabled]
+  - status
+  - heading "MIVIA core workflow · v1" [level=2]
+  - generic: Result ready
+  - paragraph: Started Oct 3, 09:56 PM · 3 accepted samples
+  - paragraph: Sample 2 of 3 · frame 10
+  - paragraph: 333.3 ms from recording start
+  - group "Sample image. Use the Previous and Next sample buttons, or arrow keys while this area is focused.":
+    - img "Recorded frame 10, sample 2 of 3, at 333.3 milliseconds, with 0 person detections."
+  - button "Previous sample"
+  - generic: 2 / 3
+  - button "Next sample"
+  - navigation "Recorded samples":
+    - button "Sample 1, frame 0, 0.0 milliseconds, 0 person detections":
+      - generic: "01"
+      - generic: Frame 0 · 0 detections
+    - button "Sample 2, frame 10, 333.3 milliseconds, 0 person detections" [pressed]:
+      - generic: "02"
+      - generic: Frame 10 · 0 detections
+    - button "Sample 3, frame 20, 666.7 milliseconds, 0 person detections":
+      - generic: "03"
+      - generic: Frame 20 · 0 detections
+  - paragraph: HUMAN REVIEW
+  - paragraph: Awaiting human review
+  - paragraph: This records a human review decision for the selected analysis.
+  - button "Mark reviewed"
+  - button "Dismiss result"
+  - paragraph: MODEL OBSERVATIONS
+  - heading "Person detections" [level=2]
+  - generic: "0"
+  - paragraph: No person detections in this sampled frame. This does not establish absence from the recording.
+  - generic "Analysis provenance" [active]
+  - term: Model profile
+  - definition: rfdetr-small-cpu-v1
+  - term: Decoded frames
+  - definition: "21"
+  - term: Recording SHA-256
+  - definition: ea6b48e57c343027b169ee1357e6e85ea3b8d179ba70058c294d1b1ec8db2805
+  - term: Model SHA-256
+  - definition: 0e0817f4cafa479ccba17662a142092932b0b10c98947e7cf60f3badd0f5c219
+  - term: av
+  - definition: 18.0.0
+  - term: numpy
+  - definition: 2.3.5
+  - term: onnxruntime
+  - definition: 1.23.2
+  - term: opencv-python-headless
+  - definition: 5.0.0.93
+  - term: veyviz-execution-lifecycle
+  - definition: 0.1.0a1
+  - term: veyviz-inference-onnxruntime
+  - definition: 0.1.0a1
+  - term: veyviz-media
+  - definition: 0.1.0a1
+  - term: veyviz-model-rfdetr
+  - definition: 0.1.0a1
+  - term: veyviz-process-supervision
+  - definition: 0.1.0a1
+  - term: veyviz-source-recording
+  - definition: 0.1.0a1
+  - paragraph: RECORDING CONTEXT
+  - strong: MIVIA core workflow
+  - term: Captured source version
+  - definition: v1
+  - term: Current version
+  - definition: v1
+  - term: Input
+  - definition: Registered local recording
+  - generic "Analysis engine":
+    - generic: Analysis engine
+    - status: Verified · Local CPU

@@ -1,0 +1,53 @@
+{
+  "schema": "veyviz.isolated-source-freeze.v1",
+  "activeRoot": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+  "overlayRoot": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003",
+  "evidenceRoot": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-02",
+  "activeSourceDigest": "05f9db9b875be4f4d5531285ef8842a305ee5b8e1920b084394022a09224dd7d",
+  "overlaySourceDigest": "05f9db9b875be4f4d5531285ef8842a305ee5b8e1920b084394022a09224dd7d",
+  "sourceEqual": true,
+  "activeToolchainDigest": "e0b378e38c273df23b7d35d4bfa30702e7f43f2b5c86f3bb88e6001f1478b1f1",
+  "overlayToolchainDigest": "e0b378e38c273df23b7d35d4bfa30702e7f43f2b5c86f3bb88e6001f1478b1f1",
+  "toolchainEqual": true,
+  "sourceFiles": 358,
+  "toolPackages": [
+    {
+      "name": "typescript",
+      "version": "5.8.3",
+      "files": 130
+    },
+    {
+      "name": "esbuild",
+      "version": "0.28.2",
+      "files": 7
+    },
+    {
+      "name": "@esbuild/win32-x64",
+      "version": "0.28.2",
+      "files": 3
+    }
+  ],
+  "manifests": {
+    "source-active": {
+      "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-02\\source-active.json",
+      "bytes": 63354,
+      "sha256": "edb40e71186d742e0cdc053692bd521217aadf89a14cd4401e54c9f3e7f9fcde"
+    },
+    "source-overlay": {
+      "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-02\\source-overlay.json",
+      "bytes": 63354,
+      "sha256": "edb40e71186d742e0cdc053692bd521217aadf89a14cd4401e54c9f3e7f9fcde"
+    },
+    "toolchain-active": {
+      "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-02\\toolchain-active.json",
+      "bytes": 29496,
+      "sha256": "deaca89839b738805d69b0849e08b9de862146f5d091995cf7bdba8c5db7b963"
+    },
+    "toolchain-overlay": {
+      "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-02\\toolchain-overlay.json",
+      "bytes": 29496,
+      "sha256": "deaca89839b738805d69b0849e08b9de862146f5d091995cf7bdba8c5db7b963"
+    }
+  },
+  "capturedAt": "2026-10-03T12:00:50.249Z"
+}

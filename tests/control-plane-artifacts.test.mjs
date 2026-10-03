@@ -13,20 +13,33 @@ import { canonical } from '../packages/contracts/dist/index.js';
 import { ARTIFACT_REGISTRY_LIMITS, ControlPlaneStore } from '../packages/control-plane/dist/index.js';
 import { resolve as resolveProduct } from '../packages/composition/dist/index.js';
 import { composeDraft } from '../packages/composition/dist/studio.js';
+import { verifyRuntimeInitializerCapability } from '../packages/composition/dist/integrity.js';
 import { readBoundedSnapshot, verifyStoredEntryMetadata } from '../packages/composition/dist/snapshot-access.js';
 import { LocalArtifactStore, parseRegistryPublisherTranscript } from '../apps/control-plane/dist/artifact-store.js';
 import { LocalBuildWorker } from '../apps/control-plane/dist/build-worker.js';
-import { ManagedRuntimeManager, runtimeDataDirectory, copyVerifiedRuntimeSnapshot, runtimeSnapshotExpected, linkCopiedRuntimeWorkspaces } from '../apps/control-plane/dist/runtime-manager.js';
+import { ManagedRuntimeManager, MANAGED_RUNTIME_MODEL_PROFILE, runtimeSupportsManagedModelProfile, runtimeDataDirectory, copyVerifiedRuntimeSnapshot, runtimeSnapshotExpected, linkCopiedRuntimeWorkspaces } from '../apps/control-plane/dist/runtime-manager.js';
 import { createOperatorServer } from '../apps/control-plane/dist/operator-server.js';
 import { RuntimeRecoveryManager } from '../apps/control-plane/dist/runtime-recovery.js';
+import { RuntimeUpgradeManager } from '../apps/control-plane/dist/runtime-upgrade.js';
 import { copyPrivateToolchain, copyReviewedBuildInputs, reviewedBuildFingerprint } from '../apps/control-plane/dist/build-inputs.js';
 import { importSourceSnapshot, loadSourceSnapshot } from '../apps/control-plane/dist/source-import.js';
 import { startControlPlane } from '../apps/control-plane/dist/main.js';
-import { runtimePlanIdentity, prepareRuntimeEnrollment, completedRuntimeEnrollment } from '../apps/control-plane/dist/runtime-manager.js';
+import { runtimeEntryBytes, runtimePlanIdentity, prepareRuntimeEnrollment, completedRuntimeEnrollment } from '../apps/control-plane/dist/runtime-manager.js';
 import { assertWindowsBuildHost } from '../apps/control-plane/dist/build-host.js';
 
 const WINDOWS = process.platform === 'win32';
 const actor = 'system:artifact-acceptance';
+
+test('managed model support is taken from the captured runtime package manifest and refuses legacy targets',async()=>{
+  const runtimeManifest=await readFile(join(ROOT,'apps','runtime','package.json'));
+  const current={entries:[{path:'apps/runtime/package.json',bytes:runtimeManifest}]};
+  assert.equal(runtimeSupportsManagedModelProfile(current,MANAGED_RUNTIME_MODEL_PROFILE),true,
+    'the reviewed runtime source declares the exact fixed local profile in the bytes captured by builds');
+  const legacyBytes=Buffer.from(JSON.stringify({name:'@quadbridge/runtime',version:'0.2.0'}));
+  const legacy={entries:[{path:'apps/runtime/package.json',bytes:legacyBytes}]};
+  assert.equal(runtimeSupportsManagedModelProfile(legacy,MANAGED_RUNTIME_MODEL_PROFILE),false,
+    'an older target with no captured support declaration is refused instead of silently extracting');
+});
 
 test('the canonical local-access seed transaction rolls back earlier principals and grants after a later invalid seed',async t=>{
   const root=await mkdtemp(join(tmpdir(),'q4-seed-'));
@@ -145,10 +158,10 @@ async function waitForBuild(store,id,timeoutMs=90000) {
   throw new Error(`Build ${id} did not settle before the bounded fixture deadline`);
 }
 
-async function fixture(t,{binaryAsset=false,productId='service-desk',initialDeskProductVersion}={}) {
+async function fixture(t,{binaryAsset=false,productId='service-desk',initialDeskProductVersion,initializationStartSentinel=false}={}) {
   const temp=await mkdtemp(join(tmpdir(),'q3-'));
   const root=join(temp,'checkout'), dbPath=join(temp,'control-plane.sqlite');
-  let store,worker,artifacts,operator,runtimes,recovery;
+  let store,worker,artifacts,operator,runtimes,recovery,upgrades;
   let expectedUnknownQuarantine;
   let expectedPublicationUnknown;
   let expectedUnknownObserved=false;
@@ -216,7 +229,9 @@ async function fixture(t,{binaryAsset=false,productId='service-desk',initialDesk
       }
     }
     const unprovenOwners=[...externalOwners].filter(owner=>!owner.closed||!owner.safeCleanup);
-    let runtimeSettled=true,recoverySettled=true;
+    let runtimeSettled=true,recoverySettled=true,upgradeSettled=true;
+    try { await upgrades?.close(); }
+    catch(error) { upgradeSettled=false;cleanupErrors.push(new Error('Owned runtime upgrade close was not positively observed',{cause:error})); }
     try { await runtimes?.close(); }
     catch(error) {
       const expected=expectedUnknownQuarantine;
@@ -234,9 +249,9 @@ async function fixture(t,{binaryAsset=false,productId='service-desk',initialDesk
       try { await close(); }
       catch(error) { cleanupErrors.push(new Error(`Owned ${name} close was not positively observed`,{cause:error})); }
     }
-    try { await recovery?.close(); }
+    if(upgradeSettled)try { await recovery?.close(); }
     catch(error) { recoverySettled=false;cleanupErrors.push(new Error('Owned private recovery close was not positively observed',{cause:error})); }
-    if((runtimeSettled||expectedUnknownObserved)&&recoverySettled) {
+    if((runtimeSettled||expectedUnknownObserved)&&recoverySettled&&upgradeSettled) {
       let registrySettled=true;
       for(const [name,close] of [['worker',()=>worker?.close()],['registry',()=>artifacts?.close()]]) {
         try { await close(); }
@@ -268,6 +283,13 @@ async function fixture(t,{binaryAsset=false,productId='service-desk',initialDesk
     catch(error) { throw new Error(`Artifact fixture cleanup failed at ${temp}`,{cause:error}); }
   });
   await copyReviewedBuildInputs(ROOT,root);
+  if(initializationStartSentinel) {
+    const modulePath=join(root,'modules','service-desk','src','index.ts'),source=await readFile(modulePath,'utf8');
+    const marker='        ], close: () => store.close() };';
+    assert.equal(source.split(marker).length-1,1,'the opt-in fixture patch targets only the copied Service Desk module owner');
+    await writeFile(modulePath,source.replace(marker,
+      "        ], start: async () => { store.db.exec('CREATE TABLE IF NOT EXISTS qb_test_runtime_start_sentinel (id INTEGER PRIMARY KEY AUTOINCREMENT);'); store.db.prepare('INSERT INTO qb_test_runtime_start_sentinel DEFAULT VALUES').run(); }, close: () => store.close() };"));
+  }
   if(initialDeskProductVersion!==undefined) {
     const productPath=join(root,'products','service-desk','product.json');
     const product=JSON.parse(await readFile(productPath,'utf8'));
@@ -310,7 +332,7 @@ async function fixture(t,{binaryAsset=false,productId='service-desk',initialDesk
     get worker(){return worker;},set worker(value){worker=value;},
     get artifacts(){return artifacts;},set artifacts(value){artifacts=instrumentArtifactStore(value);},
     get operator(){return operator;},set operator(value){operator=value;},get runtimes(){return runtimes;},set runtimes(value){runtimes=value;},
-    get recovery(){return recovery;},set recovery(value){recovery=value;},binaryExpected,
+    get recovery(){return recovery;},set recovery(value){recovery=value;},get upgrades(){return upgrades;},set upgrades(value){upgrades=value;},binaryExpected,
     ownProcess(owner){externalOwners.add(owner);return owner;},
     retainExpectedUnknown(input){expectedUnknownQuarantine=input;},
     retainExpectedPublicationUnknown(input){expectedPublicationUnknown=input;return expectedPublicationUnknown;},
@@ -322,6 +344,12 @@ async function fixture(t,{binaryAsset=false,productId='service-desk',initialDesk
       return final;
     }
   };
+}
+
+function readInitializationStartCount(databasePath) {
+  const database=new DatabaseSync(databasePath,{readOnly:true});
+  try{return database.prepare('SELECT COUNT(*) AS count FROM qb_test_runtime_start_sentinel').get().count;}
+  finally{database.close();}
 }
 
 test('complete saved definition is the exact immutable plan admitted to a real local build', {skip:!WINDOWS}, async t=>{
@@ -966,7 +994,7 @@ test('real CP2 snapshot registers, reopens, retrieves exact attachment bytes, an
   assert.equal(promotedAfterRestart.artifactDigest,digest);
 });
 
-test('a positively stopped promoted runtime with a missing completion marker is quarantined for repair without reseeding or dispatch', {skip:!WINDOWS}, async t=>{
+test('a missing completion marker blocks restart before admission without reseeding or dispatch', {skip:!WINDOWS}, async t=>{
   const context=await fixture(t);
   const runtime=await prepareStoppedServiceDeskRuntime(context,'runtime-missing-marker');
   context.operator=await createOperatorServer({root:context.root,store:context.store,snapshot:context.snapshot,artifactStore:context.artifacts,
@@ -974,6 +1002,9 @@ test('a positively stopped promoted runtime with a missing completion marker is 
   const cookie=await pair(context.operator);
   const markerPath=join(runtime.dataDirectory,'enrollment-complete.json'),heldMarker=join(context.temp,'held-enrollment-complete.json');
   const markerBytes=await readFile(markerPath),privateBefore=await captureRuntimeEnrollmentFiles(runtime.dataDirectory);
+  const stoppedAttempt=context.store.managedRuntime(runtime.instanceId).currentAttempt;
+  const priorAttemptCount=context.store.db.prepare('SELECT COUNT(*) AS count FROM runtime_attempts WHERE instance_id=?').get(runtime.instanceId).count;
+  const priorCommandCount=context.store.db.prepare('SELECT COUNT(*) AS count FROM runtime_commands WHERE instance_id=?').get(runtime.instanceId).count;
   assert.equal(context.store.managedRuntimeCommand(runtime.started.command.id).state,'SUCCEEDED');
   assert.equal(context.store.managedRuntimeCommand(runtime.stopped.command.id).state,'SUCCEEDED');
   await rename(markerPath,heldMarker);
@@ -986,30 +1017,16 @@ test('a positively stopped promoted runtime with a missing completion marker is 
     assert.equal(context.store.managedRuntimeCommand(runtime.started.command.id).state,'SUCCEEDED','prior successful start history is preserved');
     assert.equal(context.store.managedRuntimeCommand(runtime.stopped.command.id).state,'SUCCEEDED','prior successful stop history is preserved');
     const identity=context.store.managedRuntime(runtime.instanceId);
-    assert.equal(identity.state,'REPAIR_REQUIRED');
-    assert.equal(identity.currentAttempt,2);
-    const attempt=context.store.db.prepare(`SELECT id,attempt_no AS attemptNo,state,physical_state AS physicalState,dispatch_begun AS dispatchBegun,
-      enrollment_authorized AS enrollmentAuthorized,launch_authorized AS launchAuthorized,api_ready AS apiReady,empty_observed AS emptyObserved,
-      helper_closed AS helperClosed,execution_clean AS executionClean,error_code AS errorCode
-      FROM runtime_attempts WHERE instance_id=? AND attempt_no=2`).get(runtime.instanceId);
-    assert.ok(attempt?.id);
-    assert.equal(attempt.state,'REPAIR_REQUIRED');
-    assert.equal(attempt.physicalState,'NOT_DISPATCHED');
-    assert.equal(attempt.dispatchBegun,0);
-    assert.equal(attempt.enrollmentAuthorized,0);
-    assert.equal(attempt.launchAuthorized,0);
-    assert.equal(attempt.apiReady,0);
-    assert.equal(attempt.emptyObserved,0);
-    assert.equal(attempt.helperClosed,0);
-    assert.equal(attempt.executionClean,1);
-    assert.equal(attempt.errorCode,'RUNTIME_REPAIR_REQUIRED');
-    const failedCommand=context.store.db.prepare(`SELECT c.kind,c.state FROM runtime_commands c JOIN runtime_attempts a ON a.command_id=c.id
-      WHERE a.instance_id=? AND a.attempt_no=2`).get(runtime.instanceId);
-    assert.deepEqual({...failedCommand},{kind:'RESTART',state:'FAILED'});
+    assert.equal(identity.state,'STOPPED','a missing completion marker is rejected before a new restart is admitted');
+    assert.equal(identity.currentAttempt,stoppedAttempt,'the original stopped attempt remains current');
+    assert.equal(context.store.db.prepare('SELECT COUNT(*) AS count FROM runtime_attempts WHERE instance_id=?').get(runtime.instanceId).count,priorAttemptCount,
+      'the pre-admission refusal creates no restart attempt');
+    assert.equal(context.store.db.prepare('SELECT COUNT(*) AS count FROM runtime_commands WHERE instance_id=?').get(runtime.instanceId).count,priorCommandCount,
+      'the pre-admission refusal creates no restart command');
+    assert.equal(context.store.managedRuntimeCommandForRequest('system:runtime-missing-marker-restart','runtime-missing-marker-restart-0001','RESTART',
+      {instanceId:runtime.instanceId}),undefined,'the refused request has no command receipt');
     const slot=context.store.db.prepare('SELECT instance_id AS instanceId,operation_id AS operationId,state FROM runtime_physical_slot WHERE singleton=1').get();
-    assert.deepEqual({...slot},{instanceId:null,operationId:null,state:'EMPTY'},'the exact positively cleaned undispatched attempt releases only its reservation');
-    assert.equal(existsSync(join(context.root,'.local','platform-runtime-executions',runtime.instanceId,attempt.id)),false,
-      'the private execution copy was cleaned without dispatch');
+    assert.deepEqual({...slot},{instanceId:null,operationId:null,state:'EMPTY'},'pre-admission refusal creates no runtime reservation');
     assert.equal(existsSync(markerPath),false,'the missing marker remains absent during the refused restart');
     assert.deepEqual(await captureRuntimeEnrollmentFiles(runtime.dataDirectory),privateBefore,
       'canonical configuration, credentials, seeds and access database are not rewritten or reseeded');
@@ -1406,6 +1423,12 @@ test('a promoted Service Desk release runs as an owned local runtime, preserves 
   const publicDetail=await pairedFetch(context.operator,`/platform-api/runtime-instances/${instanceId}`,{cookie:controlCookie});
   assert.equal(publicDetail.status,200);
   const publicDetailText=await publicDetail.text();
+  const publicDetailValue=JSON.parse(publicDetailText);
+  const credentialFile=join(dataDirectory,'credentials.json');
+  const {credentialFile:returnedCredentialFile,...privateSafeDetail}=publicDetailValue;
+  assert.equal(returnedCredentialFile,credentialFile,'Runtime Inspect intentionally returns only the verified private credentials-file location');
+  assert.equal(privateSafeDetail.dataDirectory,undefined,'the private data root is not exposed as a separate field');
+  const privateSafeDetailText=JSON.stringify(privateSafeDetail);
   assert.doesNotMatch(publicDetailText,/ownerToken|dataDirectory|serviceToken|password|private\.log/);
   const publicLog=await pairedFetch(context.operator,`/platform-api/runtime-instances/${instanceId}/log`,{cookie:controlCookie});
   assert.equal(publicLog.status,200);
@@ -1420,7 +1443,7 @@ test('a promoted Service Desk release runs as an owned local runtime, preserves 
     const isPath=value===dataDirectory||value.includes('platform-runtime-executions');
     const options=isPath?{normalizePath:true}:{};
     assert.equal(containsPublicValue(publicStart,value,options),false,'runtime start response excludes private credentials and paths');
-    assert.equal(containsPublicValue(publicDetailText,value,options),false,'runtime detail excludes private credentials and paths');
+    assert.equal(containsPublicValue(privateSafeDetailText,value,options),false,'runtime detail excluding its one documented credentials-file field contains no private credentials or paths');
     assert.equal(containsPublicValue(publicLogText,value,options),false,'runtime event output excludes private credentials and paths');
   }
 
@@ -1649,6 +1672,79 @@ test('a promoted Service Desk release runs as an owned local runtime, preserves 
   assert.equal(context.store.db.prepare('SELECT operation_id AS operationId FROM runtime_physical_slot WHERE singleton=1').get().operationId,
     unknownStarted.operationId,'reopening does not release or replace the original reservation');
   context.retainExpectedUnknown({instanceId,operationId:unknownStarted.operationId,runner:unknownRunner,callbacksSettled:true});
+});
+
+test('a real promoted upgrade uses the artifact-bound initializer and keeps stopped Service Desk owner data', {skip:!WINDOWS}, async t=>{
+  const context=await fixture(t,{initializationStartSentinel:true});
+  const operatorActor=`operator:${randomUUID()}`;
+  const [major,minor,patch]=context.product.version.split('.').map(Number);
+  const targetProduct={...context.product,version:`${major}.${minor}.${patch+1}`};
+  context.store.putProduct(targetProduct,'system:audit-initializer-target');
+  const targetPlan=resolveProduct(context.store.product(targetProduct.id,targetProduct.version),context.snapshot.modules);
+  const targetAdmission=await context.worker.admit(targetPlan.product,targetPlan,'audit-initializer-target-build-0001','system:audit-initializer-target');
+  const targetBuild=await waitForBuild(context.store,targetAdmission.id);
+  assert.equal(targetBuild.state,'SUCCEEDED',context.store.buildLog(targetBuild.id));
+  const targetRegistration=await context.artifacts.register(targetBuild.id,'system:audit-initializer-target-register',()=>undefined);
+  const targetDigest=targetRegistration.digest;
+  await context.artifacts.promote(targetProduct.id,targetProduct.version,targetDigest,'system:audit-initializer-target-promote',()=>undefined);
+  const targetArtifact=await context.artifacts.verifyArtifact(targetDigest);
+  const release=JSON.parse(runtimeEntryBytes(targetArtifact.snapshot,`.artifacts/${targetProduct.id}/release.json`).toString('utf8'));
+  const capability=verifyRuntimeInitializerCapability(release,runtimeEntryBytes(targetArtifact.snapshot,'apps/runtime/dist/index.js'));
+  assert.ok(capability,'the real locally built promoted export binds its fixed initializeRuntime entry');
+  assert.equal(capability.exportName,'initializeRuntime');
+
+  const sourceBuild=await context.build('audit-initializer-source-build');
+  const sourceRegistration=await context.artifacts.register(sourceBuild.id,'system:audit-initializer-source-register',()=>undefined);
+  await context.artifacts.promote(context.product.id,context.product.version,sourceRegistration.digest,'system:audit-initializer-source-promote',()=>undefined);
+  await context.worker.close();context.worker=undefined;
+  context.runtimes=ManagedRuntimeManager.create(context.root,context.store,context.artifacts);
+  const runtimeActor=operatorActor;
+  const started=await context.runtimes.start({productId:context.product.id,version:context.product.version,requestKey:'audit-initializer-start-0001'},runtimeActor,()=>undefined);
+  assert.equal(started.command.state,'SUCCEEDED');
+  const instanceId=started.instance.id,sourceData=runtimeDataDirectory(context.root,instanceId,sourceRegistration.digest);
+  const sourceDetail=context.runtimes.detail(instanceId),credentials=await readFile(join(sourceData,'credentials.json'));
+  const admin=JSON.parse(credentials.toString('utf8')).principals.find(row=>row.id==='admin');assert.ok(admin?.password);
+  const login=await fetch(`${sourceDetail.url}/api/session`,{method:'POST',headers:{Origin:sourceDetail.url,'Content-Type':'application/json'},
+    body:JSON.stringify({username:admin.id,password:admin.password})});
+  assert.equal(login.status,200);const applicationCookie=login.headers.get('set-cookie')?.split(';',1)[0];assert.ok(applicationCookie);
+  const createdResponse=await fetch(`${sourceDetail.url}/api/requests`,{method:'POST',headers:{Origin:sourceDetail.url,Cookie:applicationCookie,
+    'X-QB-Tenant':'customer-a','Content-Type':'application/json','Idempotency-Key':'audit-initializer-owner-record-0001'},
+    body:JSON.stringify({title:'Retained owner record',details:'This row must survive initialization-only migration.'})});
+  assert.equal(createdResponse.status,200);const created=await createdResponse.json();
+  await fetch(`${sourceDetail.url}/api/logout`,{method:'POST',headers:{Origin:sourceDetail.url,Cookie:applicationCookie}});
+  const stopped=await context.runtimes.stop({instanceId,requestKey:'audit-initializer-stop-0001'},runtimeActor,()=>undefined);
+  assert.equal(stopped.instance.state,'STOPPED');
+  assert.equal(readInitializationStartCount(join(sourceData,'modules','service-desk.sqlite')),1,'ordinary source startup invokes the real fixture module start hook once');
+
+  context.recovery=RuntimeRecoveryManager.create(context.root,context.store,context.artifacts);
+  const backup=await context.recovery.backup({instanceId,requestKey:'audit-initializer-backup-0001'},operatorActor,()=>undefined);
+  assert.equal(backup.state,'SUCCEEDED');assert.match(backup.backupDigest,/^[a-f0-9]{64}$/);
+  context.upgrades=RuntimeUpgradeManager.create(context.root,context.store,context.artifacts,context.recovery);
+  const upgraded=await context.upgrades.upgrade({instanceId,targetVersion:targetProduct.version,targetArtifactDigest:targetDigest,
+    sourceBackupDigest:backup.backupDigest,requestKey:'audit-initializer-upgrade-0001',confirm:true},operatorActor,()=>undefined);
+  assert.equal(upgraded.state,'SUCCEEDED');
+  assert.equal(context.store.managedRuntime(instanceId).version,targetProduct.version,'cutover records the exact verified target release');
+  const targetData=runtimeDataDirectory(context.root,instanceId,targetDigest);
+  assert.deepEqual(await readFile(join(targetData,'credentials.json')),credentials,'the actual target initializer preserves the original owner credentials');
+  assert.equal(readInitializationStartCount(join(targetData,'modules','service-desk.sqlite')),1,
+    'initialization-only target migration does not invoke normal module or host startup hooks');
+
+  const restarted=await context.runtimes.restart({instanceId,requestKey:'audit-initializer-restart-0001'},runtimeActor,()=>undefined);
+  assert.equal(restarted.command.state,'SUCCEEDED');assert.equal(restarted.instance.version,targetProduct.version);
+  const targetDetail=context.runtimes.detail(instanceId);
+  const targetLogin=await fetch(`${targetDetail.url}/api/session`,{method:'POST',headers:{Origin:targetDetail.url,'Content-Type':'application/json'},
+    body:JSON.stringify({username:admin.id,password:admin.password})});
+  assert.equal(targetLogin.status,200,'the preserved owner credentials authenticate after target restart');
+  const targetCookie=targetLogin.headers.get('set-cookie')?.split(';',1)[0];assert.ok(targetCookie);
+  const listed=await fetch(`${targetDetail.url}/api/requests`,{headers:{Cookie:targetCookie,'X-QB-Tenant':'customer-a'}});
+  assert.equal(listed.status,200);const rows=await listed.json();
+  assert.ok(rows.items.some(row=>row.id===created.id&&row.title==='Retained owner record'),
+    'the record created by the source owner remains readable after the actual promoted target initializer and restart');
+  await fetch(`${targetDetail.url}/api/logout`,{method:'POST',headers:{Origin:targetDetail.url,Cookie:targetCookie}});
+  const finalStop=await context.runtimes.stop({instanceId,requestKey:'audit-initializer-stop-0002'},runtimeActor,()=>undefined);
+  assert.equal(finalStop.instance.state,'STOPPED');
+  assert.equal(readInitializationStartCount(join(targetData,'modules','service-desk.sqlite')),2,
+    'the ordinary target restart invokes the target module start hook as a positive control');
 });
 
 test('a stopped Desk backup captures committed WAL data and restores the exact absent runtime instance', {skip:!WINDOWS}, async t=>{

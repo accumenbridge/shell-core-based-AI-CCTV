@@ -1,0 +1,20 @@
+Local workspace links prepared. No third-party packages were downloaded.
+packages/control-plane/src/index.ts(6,49): error TS2307: Cannot find module '@quadbridge/ai-core' or its corresponding type declarations.
+packages/module-sdk/src/index.ts(4,92): error TS2307: Cannot find module '@quadbridge/studio-model' or its corresponding type declarations.
+modules/knowledge/src/index.ts(5,104): error TS2307: Cannot find module '@quadbridge/ai-core' or its corresponding type declarations.
+modules/knowledge/src/index.ts(31,58): error TS7006: Parameter 'input' implicitly has an 'any' type.
+modules/knowledge/src/index.ts(31,67): error TS7031: Binding element 'signal' implicitly has an 'any' type.
+modules/knowledge/src/index.ts(34,41): error TS7006: Parameter 'item' implicitly has an 'any' type.
+modules/knowledge/src/index.ts(34,128): error TS7006: Parameter 'term' implicitly has an 'any' type.
+modules/knowledge/src/index.ts(35,17): error TS7006: Parameter 'item' implicitly has an 'any' type.
+modules/knowledge/src/index.ts(35,47): error TS7006: Parameter 'a' implicitly has an 'any' type.
+modules/knowledge/src/index.ts(35,49): error TS7006: Parameter 'b' implicitly has an 'any' type.
+modules/knowledge/src/index.ts(36,40): error TS7006: Parameter 'item' implicitly has an 'any' type.
+modules/knowledge/src/index.ts(97,50): error TS7006: Parameter 'term' implicitly has an 'any' type.
+modules/knowledge/src/index.ts(132,56): error TS7006: Parameter 'signal' implicitly has an 'any' type.
+modules/knowledge/src/index.ts(136,44): error TS7006: Parameter 'id' implicitly has an 'any' type.
+modules/knowledge/src/index.ts(138,56): error TS7006: Parameter 'id' implicitly has an 'any' type.
+modules/knowledge/src/index.ts(139,31): error TS7006: Parameter 'item' implicitly has an 'any' type.
+apps/control-plane/src/operator-server.ts(7,33): error TS2307: Cannot find module '@quadbridge/ai-core' or its corresponding type declarations.
+apps/control-plane/src/source-import.ts(5,49): error TS2307: Cannot find module '@quadbridge/ai-core' or its corresponding type declarations.
+apps/control-plane/src/source-import.ts(6,80): error TS2307: Cannot find module '@quadbridge/studio-model' or its corresponding type declarations.

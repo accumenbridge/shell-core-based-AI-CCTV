@@ -52,8 +52,12 @@ async function sourceTree(t, code) {
     t.after(() => rm(root, { recursive: true, force: true }));
     const put = async (p, s) => { await mkdir(join(root, p, '..'), { recursive: true }); await writeFile(join(root, p), s); };
     await put('packages/web-shell/dist/index.js', "import './dom.js';");
-    await put('packages/web-shell/dist/dom.js', 'export const el=1;');
+    await put('packages/web-shell/dist/dom.js', "export { el } from '@quadbridge/ui';");
     await put('packages/web-shell/dist/react-adapter.js', 'export const a=1;');
+    await put('packages/ui/dist/index.js', "export { el } from './components.js';");
+    await put('packages/ui/dist/components.js', 'export const el=1;');
+    await put('packages/ui/dist/tokens.css', '[data-qb-ui-boundary]{color-scheme:light}');
+    await put('packages/ui/dist/ui.css', '[data-qb-ui-boundary]{}');
     await put('modules/example/dist/ui.js', code);
     return { root, put, plan: { modules: [{ id: 'example', workspaces: [{}], dependencies: [], browserAssets: [] }] } };
 }
@@ -65,6 +69,18 @@ test('R05: closure includes static imports, literal lazy chunks and declared ass
     const c = await frontendClosure(x.root, x.plan);
     for (const f of ['nested/helpers.js', 'nested/lazy.js', 'images/a.svg'])
         assert.ok(c.files['/assets/modules/example/' + f]);
+});
+test('UI03: shared UI JS and CSS are explicit in desktop closure ahead of shell and owner styles', async t => {
+    const x = await sourceTree(t, 'export const load=()=>import(\'./nested/lazy.js\');');
+    await x.put('modules/example/dist/nested/lazy.js', 'export const lazy=1;');
+    const c = await frontendClosure(x.root, x.plan);
+    assert.equal(c.imports['@quadbridge/ui'], '/assets/packages/ui/index.js');
+    assert.equal(c.imports['@quadbridge/ui/components'], '/assets/packages/ui/components.js');
+    assert.deepEqual(c.styles, ['/assets/packages/ui/tokens.css', '/assets/packages/ui/ui.css', '/assets/shell.css']);
+    assert.equal(c.files['/assets/packages/ui/tokens.css'], 'packages/ui/dist/tokens.css');
+    assert.equal(c.files['/assets/packages/ui/ui.css'], 'packages/ui/dist/ui.css');
+    assert.ok(c.files['/assets/packages/ui/index.js']);
+    assert.ok(c.files['/assets/packages/ui/components.js']);
 });
 test('R05: missing dependency fails the build rather than making a broken release', async (t) => { const x = await sourceTree(t, "import './missing.js';"); await assert.rejects(frontendClosure(x.root, x.plan)); });
 test('R05: server-only package import fails before being publicly packaged', async (t) => { const x = await sourceTree(t, "import {DatabaseSync} from 'node:sqlite';"); await assert.rejects(frontendClosure(x.root, x.plan), /Unsupported browser import/); });
@@ -88,6 +104,10 @@ test('mobile preview assets survive an ordinary fixed product export and are ser
     const web = JSON.parse(await readFile(join(out, '.artifacts/service-desk/web.json'), 'utf8'));
     const release = JSON.parse(await readFile(join(out, '.artifacts/service-desk/release.json'), 'utf8'));
     assert.ok(web.mobile?.entry);
+    assert.deepEqual(web.mobile.sourceStyles, [
+        '/assets/packages/ui/tokens.css', '/assets/packages/ui/ui.css', '/assets/shell.css',
+        '/assets/mobile.css', '/assets/modules/service-desk/ui/overview.css'
+    ]);
     for (const url of [web.mobile.entry, ...web.mobile.styles]) {
         const path = web.files[url];
         assert.ok(path);

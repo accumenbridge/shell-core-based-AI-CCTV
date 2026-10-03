@@ -1,0 +1,34 @@
+/* Handoff-owned presentation; every selector stays inside its workspace root. */
+[data-handoff-module] .handoff-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--qb-space-3);
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  margin-bottom: var(--qb-space-5);
+  padding: var(--qb-space-4);
+  border: 1px solid var(--qb-border);
+  border-radius: var(--qb-radius-control);
+  background: var(--qb-surface-panel);
+}
+[data-handoff-module] .flow-node {
+  max-width: 100%;
+  padding: var(--qb-space-2) var(--qb-space-4);
+  border: 1px solid var(--qb-border);
+  border-radius: var(--qb-radius-control);
+  background: var(--qb-surface-raised);
+  color: var(--qb-text);
+  font-size: var(--qb-font-small);
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+[data-handoff-module] .flow-link { color: var(--qb-text-muted); }
+[data-handoff-module] .handoff-readiness,
+[data-handoff-module] .handoff-submit-status { min-width: 0; margin-block: var(--qb-space-3); }
+[data-handoff-module] .handoff-submit-status:empty { display: none; }
+@media (max-width: 600px) {
+  [data-handoff-module] .handoff-flow { justify-content: flex-start; }
+  [data-handoff-module] .flow-link { display: none; }
+  [data-handoff-module] .flow-node { flex: 1 1 8rem; }
+}

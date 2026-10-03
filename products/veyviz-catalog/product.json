@@ -1,10 +1,27 @@
 {
   "id": "veyviz-catalog",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "platformAbi": "quadbridge.module.v1",
   "title": "VEYVIZ",
-  "description": "Recording library · Local workspace",
+  "description": "Authorized recording library",
   "layout": "sidebar",
+  "experience": {
+    "schema": "quadbridge.product-experience.v1",
+    "designSystem": { "id": "quadbridge.standard", "version": "0.1.0" },
+    "browserProfile": "quadbridge.browser-profile.native-esm.v1",
+    "brand": { "name": "VEYVIZ", "tagline": "A clear library for recorded evidence." },
+    "theme": { "surface": "light", "text": "standard", "accent": "teal", "status": "semantic", "density": "comfortable" },
+    "login": { "title": "Sign in to VEYVIZ", "description": "Browse recordings available to your team.", "help": "Use the local account provided by your launcher." },
+    "navigation": [
+      { "id": "recordings", "workspaceId": "veyviz.sources", "label": "Recordings", "group": "Library", "order": 0, "mobilePriority": 0 }
+    ],
+    "routes": [
+      { "id": "recordings", "workspaceId": "veyviz.sources", "kind": "workspace" }
+    ],
+    "layoutByWorkspace": [
+      { "workspaceId": "veyviz.sources", "mode": "reading" }
+    ]
+  },
   "modules": [
     {
       "id": "veyviz-sources",

@@ -1,0 +1,12 @@
+{
+  "schema": "veyviz.paging-review-listed-inventory-verification.v1",
+  "capturedUtc": "2026-10-03T08:31:22.2573113Z",
+  "candidateIdentity": "2437aeb7d7627763afc3cba0081f33a2de4cac2c7ceacc31010fef1d518937a9",
+  "scope": "Rehashed the 917 manifest-listed overlay files; separate directory discovery was not rerun",
+  "count": 917,
+  "actualListedDigest": "48f2ae2618c23967146c1c8d6eb4f46425c678695506cd1d89bf4137ebe3389f",
+  "recordedDigest": "48f2ae2618c23967146c1c8d6eb4f46425c678695506cd1d89bf4137ebe3389f",
+  "digestMatches": true,
+  "allListedBytesMatch": true,
+  "differences": []
+}

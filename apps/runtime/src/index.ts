@@ -10,11 +10,17 @@ import { resolve as resolveProduct } from '@quadbridge/composition';
 import type { JobExecutionStore, Job } from '@quadbridge/contracts';
 import type { JobHandler } from '@quadbridge/contracts';
 import type { WorkerHost } from '@quadbridge/worker-host';
+import type { ModelAnswerCapability } from '@quadbridge/ai-core';
+import { createOllamaQwen3Provider, OLLAMA_QWEN3_IDENTITY } from '@quadbridge/ai-core/ollama';
 export const ROOT = fileURLToPath(new URL('../../../', import.meta.url));
 export interface RuntimeConfig {
     instanceId: string;
     dataDirectory: string;
     principals: PrincipalSeed[];
+    /** Explicit private developer opt-in. The endpoint and model remain fixed in the reviewed adapter. */
+    modelAnswerProfile?: 'local-ollama-qwen3-4b';
+    /** Captured only during explicit first enrollment; restarts consume the stored value. */
+    nativeApiProfile?: 'local-native-forwarded-v1';
     connections?: Record<string, {
         revision: string;
         mode: 'local' | 'http';
@@ -26,6 +32,16 @@ export interface RuntimeConfig {
         serviceActor: string;
     }>;
 }
+/** Existing runtime entry point; its startup, worker, HTTP, and close behavior remains unchanged. */
+export async function createRuntime(productId: string, config: RuntimeConfig, root = ROOT, options: { initializationOnly?: boolean } = {}) {
+    return constructRuntime(productId,config,root,options.initializationOnly === true);
+}
+
+/** Fixed v1 migration entry point. It never starts normal startup hooks or exposes runtime operations. */
+export async function initializeRuntime(productId: string, config: RuntimeConfig, root = ROOT) {
+    return constructRuntime(productId,config,root,true);
+}
+
 interface ExecutableModule extends HostedModule {
     queue?: JobExecutionStore;
     handlers?: JobHandler[];
@@ -36,12 +52,15 @@ interface CatalogItem {
         register: (env: ModuleEnvironment) => ExecutableModule;
     }>;
 }
-export async function createRuntime(productId: string, config: RuntimeConfig, root = ROOT, options: { initializationOnly?: boolean } = {}) {
+async function constructRuntime(productId: string, config: RuntimeConfig, root: string, initializationOnly: boolean) {
     if (process.env.NODE_ENV === 'production')
         throw new PlatformError('INCOMPATIBLE', 'This release implements the local developer profile, not a production deployment profile');
     if (!/^[a-z][a-z0-9-]*$/.test(productId) || !/^[a-z][a-z0-9-]*$/.test(config.instanceId))
         throw new PlatformError('INVALID', 'Invalid product/instance');
-    const initializationOnly = options.initializationOnly === true;
+    if (config.modelAnswerProfile !== undefined && config.modelAnswerProfile !== 'local-ollama-qwen3-4b')
+        throw new PlatformError('INVALID', 'Unsupported local model answer profile');
+    if (config.nativeApiProfile !== undefined && config.nativeApiProfile !== 'local-native-forwarded-v1')
+        throw new PlatformError('INVALID', 'Unsupported local native API profile');
     if (initializationOnly && (!Array.isArray(config.principals) || config.principals.length !== 0))
         throw new PlatformError('INVALID', 'Initialization-only runtime construction cannot seed principals');
     const release = JSON.parse(readFileSync(join(root, '.artifacts', productId, 'release.json'), 'utf8')) as {
@@ -72,6 +91,10 @@ export async function createRuntime(productId: string, config: RuntimeConfig, ro
     if (plan.product.wiring && !wiring)
         throw new PlatformError('INCOMPATIBLE', 'Solution is not in this release');
     const access = new LocalAccess(join(config.dataDirectory, 'access.sqlite'), { productId, instanceId: config.instanceId }, Date.now, config.principals);
+    const modelAnswer: ModelAnswerCapability | undefined = !initializationOnly && config.modelAnswerProfile === 'local-ollama-qwen3-4b'
+        ? Object.freeze({ contract: 'quadbridge.model-answer.v1', profile: 'local-ollama-qwen3-4b',
+            identity: OLLAMA_QWEN3_IDENTITY, answer: createOllamaQwen3Provider() })
+        : undefined;
     const modules: ExecutableModule[] = [];
     let host: ApplicationHost;
     const publicService = (contract: string, implementation: string) => {
@@ -90,7 +113,7 @@ export async function createRuntime(productId: string, config: RuntimeConfig, ro
             }
             const definition = catalog.find(c => c.manifest.id === manifest.id)!;
             const executable = await definition.load();
-            modules.push(executable.register({ manifest, dataPath: join(config.dataDirectory, 'modules', `${manifest.id}.sqlite`), bindings: Object.freeze(bindings) }));
+            modules.push(executable.register({ manifest, dataPath: join(config.dataDirectory, 'modules', `${manifest.id}.sqlite`), bindings: Object.freeze(bindings), modelAnswer }));
         }
         host = new ApplicationHost(plan, config.instanceId, modules, access);
         if (!initializationOnly)
@@ -149,8 +172,26 @@ export async function createRuntime(productId: string, config: RuntimeConfig, ro
             }
         });
     }
-    return { plan, host, access, modules, worker, http, async close() {
-        if (!initializationOnly) { await host.stop(); access.close(); return; }
+    const nativeListeners: { close: () => Promise<void> }[] = [];
+    async function nativeHttp(port = 4350) {
+        if (initializationOnly) throw new PlatformError('UNAVAILABLE', 'Initialization-only runtime cannot expose native HTTP');
+        if (config.nativeApiProfile !== undefined && config.nativeApiProfile !== 'local-native-forwarded-v1')
+            throw new PlatformError('UNAVAILABLE', 'This runtime contains an unsupported native API profile');
+        const { listenNative } = await import('@quadbridge/backend-host/native-http');
+        const listener = await listenNative({ host, access, port });
+        nativeListeners.push(listener);
+        return { url: listener.url };
+    }
+    return { plan, host, access, modules, worker, http, nativeHttp, async close() {
+        if (!initializationOnly) {
+            const failures: unknown[] = [];
+            for (const listener of nativeListeners.splice(0).reverse()) try { await listener.close(); } catch (error) { failures.push(error); }
+            try { await host.stop(); } catch (error) { failures.push(error); }
+            try { access.close(); } catch (error) { failures.push(error); }
+            if (failures.length === 1) throw failures[0];
+            if (failures.length > 1) throw new AggregateError(failures, 'Runtime and native API owners did not all close');
+            return;
+        }
         const failures: unknown[] = [];
         try { await host.stop(); } catch (error) { failures.push(error); }
         for (const module of [...modules].reverse()) try { await module.close(); } catch (error) { failures.push(error); }

@@ -1,0 +1,29 @@
+{
+  "recipe": "build",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "tools/veyviz-build.mjs"
+  ],
+  "startedAt": "2026-10-03T16:37:46.243Z",
+  "endedAt": "2026-10-03T16:37:49.327Z",
+  "closeObserved": true,
+  "code": 0,
+  "signal": null,
+  "spawnError": null,
+  "sourceUnchanged": true,
+  "logs": [
+    {
+      "name": "stdout.txt",
+      "sha256": "cbb2b2bdced1d584ad8088f65bbbc7e8297b7edadc9b7602ff3e3c5dc7c42cef",
+      "bytes": 202
+    },
+    {
+      "name": "stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "limitations": [
+    "Wrapper observed original direct child close; this is not independent descendant process-tree proof. Authored build inputs/toolchain are additionally bound by the existing product build receipt."
+  ]
+}

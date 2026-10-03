@@ -1,0 +1,18 @@
+{
+  "schema": "veyviz.isolated-run-source-capture.v1",
+  "phase": "post-build",
+  "capturedAt": "2026-10-03T13:40:38.908Z",
+  "sourceDigest": "b0ffd9896f0e59c22bddc61018b7a21609db4bb81f698b1600d5989a8a9d58f9",
+  "toolchainDigest": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+  "sourceFiles": 360,
+  "sourceFile": {
+    "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze07-run-01\\post-build-source.json",
+    "bytes": 63696,
+    "sha256": "44271ac5862942829736433fe708015d0dffbd1183f41cf181942e430dde52d9"
+  },
+  "toolchainFile": {
+    "path": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze07-run-01\\post-build-toolchain.json",
+    "bytes": 52108,
+    "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+  }
+}

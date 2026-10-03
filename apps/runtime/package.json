@@ -3,6 +3,12 @@
   "version": "0.2.0",
   "private": true,
   "type": "module",
+  "quadbridgeRuntimeProfiles": [
+    "local-ollama-qwen3-4b"
+  ],
+  "quadbridgeRuntimeNativeProfiles": [
+    "local-native-forwarded-v1"
+  ],
   "dependencies": {
     "@quadbridge/contracts": "0.2.0",
     "@quadbridge/composition": "0.2.0",
@@ -13,8 +19,8 @@
     "@quadbridge/web-shell": "0.2.0",
     "@quadbridge/connections": "0.2.0",
     "@quadbridge/service-desk": "0.2.2",
-    "@quadbridge/knowledge": "0.2.3",
-    "@quadbridge/handoff": "0.2.3",
+    "@quadbridge/knowledge": "0.2.4",
+    "@quadbridge/handoff": "0.2.4",
     "@quadbridge/ai-core": "0.3.0"
   }
 }

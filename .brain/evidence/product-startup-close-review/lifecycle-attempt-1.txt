@@ -1,0 +1,88 @@
+COMMAND=node --test tests/veyviz-lifecycle.test.mjs
+CWD=D:\Veyviz-code\veyviz-quadbridge-product\.local\product-startup-close-evidence\snapshot-overlay-395412a9e32bba43\source
+TEMP=D:\Veyviz-code\veyviz-quadbridge-product\.local\vp-sc1
+VEYVIZ_AI_PROFILE=unset
+NODE_OPTIONS=unset
+NODE_PATH=unset
+✔ Veyviz refuses a modified enrollment plan before creating identities or data (10.0144ms)
+✔ invalid port fails before creating a pending product enrollment (0.7056ms)
+✔ an unclean owned process exit remains quarantined on later launch (183.6437ms)
+▶ IPC control errors cannot settle the original child close observation
+  ✖ sync stop-send failure waits for original close (8.1931ms)
+  ✖ async stop-send failure waits for original close (6.4632ms)
+✖ IPC control errors cannot settle the original child close observation (15.427ms)
+✔ fixed catalog occupied-port startup failure observes original close and preserves quarantine (182.8594ms)
+✔ Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart (547.3876ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 5
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1011.4606
+
+✖ failing tests:
+
+test at tests\veyviz-lifecycle.test.mjs:115:13
+✖ sync stop-send failure waits for original close (8.1931ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /cleanup is unconfirmed/. Input:
+  
+  'Error: Existing generation enrollment or access owner is incomplete; refusing to reseed identities.'
+  
+      at async file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:145:11
+      at async withForkReplacement (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:68:16)
+      at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:119:7)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:115:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Existing generation enrollment or access owner is incomplete; refusing to reseed identities.
+        at prepareProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tools/veyviz-start.mjs:54:13)
+        at async startProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tools/veyviz-start.mjs:80:20)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:145:11
+        at async withForkReplacement (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:68:16)
+        at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:119:7)
+        at async Test.run (node:internal/test_runner/test:1389:7)
+        at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:115:5)
+        at async Test.run (node:internal/test_runner/test:1389:7),
+    expected: /cleanup is unconfirmed/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\veyviz-lifecycle.test.mjs:115:13
+✖ async stop-send failure waits for original close (6.4632ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /cleanup is unconfirmed/. Input:
+  
+  'Error: Existing generation enrollment or access owner is incomplete; refusing to reseed identities.'
+  
+      at async file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:145:11
+      at async withForkReplacement (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:68:16)
+      at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:119:7)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:115:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Existing generation enrollment or access owner is incomplete; refusing to reseed identities.
+        at prepareProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tools/veyviz-start.mjs:54:13)
+        at async startProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tools/veyviz-start.mjs:80:20)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:145:11
+        at async withForkReplacement (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:68:16)
+        at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:119:7)
+        at async Test.run (node:internal/test_runner/test:1389:7)
+        at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-395412a9e32bba43/source/tests/veyviz-lifecycle.test.mjs:115:5)
+        at async Test.run (node:internal/test_runner/test:1389:7),
+    expected: /cleanup is unconfirmed/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+EXIT_CODE=1

@@ -19,7 +19,8 @@
   ],
   "dependencies": {
     "@quadbridge/client-core": "0.2.0",
-    "@quadbridge/contracts": "0.2.0"
+    "@quadbridge/contracts": "0.2.0",
+    "@quadbridge/ui": "0.1.0"
   },
   "scripts": {
     "build": "tsc -b"

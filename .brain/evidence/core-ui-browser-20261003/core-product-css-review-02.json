@@ -1,0 +1,64 @@
+{
+  "schema": "veyviz.core-product-css-review-addendum.v1",
+  "createdAt": "2026-10-03T16:50:17.732Z",
+  "reviewer": "/root/core_integration_review",
+  "status": "PASSED_BOUNDED_SOURCE_ONLY",
+  "priorReview": {
+    "path": ".local/core-product-css-review-01.json",
+    "sha256": "2e432420acd7d8b5b5e81f8a713094f97153d0fcceb757d755065e562c35692c",
+    "cssSha256": "a29ad51170abb72454bfaed1ebcb894fb45a6bb6728925d6d85d483ecabbe575"
+  },
+  "scope": {
+    "path": "modules/veyviz-analysis/src/styles.css",
+    "sha256": "b1f5f80e879400e4a756634cfd8d046c30c22b40d6c210db5e2b63eb4da21dee",
+    "delta": "Only Command Center review primary-action background changes from #087f72 to var(--qb-accent,#087f72). Reversing exactly this single replacement reproduces the prior reviewed CSS digest."
+  },
+  "blockers": [],
+  "findings": [
+    "The later Command Center review override now uses the same public accent token as the primary-action foreground pairing. It preserves the inherited --qb-accent-text foreground and stops overriding the shared theme with a fixed darker background.",
+    "No layout, behavior, other selector or color changed relative to review01. Current CSS matches the build03 before/after captured hashes."
+  ],
+  "buildContext": {
+    "reportedCode": 0,
+    "sourceUnchanged": true,
+    "qualificationDigest": "317e28b72ee68dba3c97441281b9a2c5d9c7f5c77953b7e6f2b8eac1c427e562",
+    "startedAt": "2026-10-03T16:44:49.387Z",
+    "endedAt": "2026-10-03T16:44:52.419Z",
+    "meaning": "Reviewed captured root run metadata/output only; reviewer did not execute the build or observe original process close."
+  },
+  "references": [
+    {
+      "path": ".local/core-product-css-review-01.json",
+      "sha256": "2e432420acd7d8b5b5e81f8a713094f97153d0fcceb757d755065e562c35692c"
+    },
+    {
+      "path": ".local/core-product-build-03/before.json",
+      "sha256": "92c7915aa9588bdc5c6f65c3a28e9b596a2e7696f662b1d009f35f3655415536"
+    },
+    {
+      "path": ".local/core-product-build-03/after.json",
+      "sha256": "92c7915aa9588bdc5c6f65c3a28e9b596a2e7696f662b1d009f35f3655415536"
+    },
+    {
+      "path": ".local/core-product-build-03/result.json",
+      "sha256": "e47d464eb80d34d1dcb4d29beb519f9412000fdd1bb937564aca2e8bb497ff95"
+    },
+    {
+      "path": ".local/core-product-build-03/stdout.txt",
+      "sha256": "9b2948e4c3492c919083e377714796c950b6ffe5f8f355138826e57a6f5444cf"
+    },
+    {
+      "path": ".local/core-product-build-03/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "limits": {
+    "computedFinalButtonContrast": "PENDING_ROOT_BROWSER03_RECHECK",
+    "browserAndWholeProduct": "NOT_ACCEPTED_BY_SOURCE_REVIEW",
+    "tests": "NOT_RUN_BY_REVIEWER"
+  },
+  "proposedRecordUpdate": {
+    "gate": "product-review-button-token-source-review=PASSED",
+    "next": "Root verifies final rendered review button against this exact build03 snapshot."
+  }
+}

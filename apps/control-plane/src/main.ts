@@ -7,7 +7,8 @@ import { BuildExecutorUnavailable, LocalBuildWorker } from './build-worker.js';
 import { createOperatorServer } from './operator-server.js';
 import { importSourceSnapshot, loadSourceSnapshot } from './source-import.js';
 import { LocalArtifactStore } from './artifact-store.js';
-import { ManagedRuntimeManager } from './runtime-manager.js';
+import { ManagedRuntimeManager, parseManagedRuntimeModelProfile, resolveManagedRuntimeModelProfile, parseManagedRuntimeNativeApiProfile, resolveManagedRuntimeNativeApiProfile,
+  type ManagedRuntimeModelProfile, type ManagedRuntimeNativeApiProfile } from './runtime-manager.js';
 import { RuntimeRecoveryManager } from './runtime-recovery.js';
 import { RuntimeUpgradeManager } from './runtime-upgrade.js';
 
@@ -54,8 +55,18 @@ function checkDefaultDatabaseParents(root: string, databasePath: string) {
   }
 }
 
-export async function startControlPlane(options: { root?: string; databasePath?: string; port?: number } = {}) {
+export async function startControlPlane(options: { root?: string; databasePath?: string; port?: number; modelProfile?: ManagedRuntimeModelProfile; nativeApiProfile?:ManagedRuntimeNativeApiProfile } = {}) {
   if (process.env.NODE_ENV === 'production') throw new Error('The local platform operator cannot run in production mode');
+  const environmentProfile = resolveManagedRuntimeModelProfile(process.env.QB_MANAGED_MODEL_PROFILE);
+  const optionProfile = parseManagedRuntimeModelProfile(options.modelProfile);
+  if (environmentProfile && optionProfile && environmentProfile !== optionProfile)
+    throw new Error('The process-local managed model profile selection conflicts with the explicit startup option');
+  const modelProfile = optionProfile ?? environmentProfile;
+  const environmentNativeProfile=resolveManagedRuntimeNativeApiProfile(process.env.QB_MANAGED_NATIVE_API_PROFILE);
+  const optionNativeProfile=parseManagedRuntimeNativeApiProfile(options.nativeApiProfile);
+  if(environmentNativeProfile&&optionNativeProfile&&environmentNativeProfile!==optionNativeProfile)
+    throw new Error('The process-local managed native API profile conflicts with the explicit startup option');
+  const nativeApiProfile=optionNativeProfile??environmentNativeProfile;
   const root = options.root ?? ROOT;
   const databasePath = options.databasePath ?? process.env.QB_CONTROL_PLANE_DB ?? join(root, '.local', 'control-plane.sqlite');
   if (options.databasePath === undefined && process.env.QB_CONTROL_PLANE_DB === undefined) checkDefaultDatabaseParents(root,databasePath);
@@ -72,7 +83,7 @@ export async function startControlPlane(options: { root?: string; databasePath?:
     artifacts = await LocalArtifactStore.create(root,store);
     // Runtime startup is independent of optional compiler availability. The
     // manager remains attached even when its selected native host is unavailable.
-    runtimes = ManagedRuntimeManager.create(root,store,artifacts);
+    runtimes = ManagedRuntimeManager.create(root,store,artifacts,{modelProfile,nativeApiProfile});
     recovery = RuntimeRecoveryManager.create(root,store,artifacts);
     upgrades = RuntimeUpgradeManager.create(root,store,artifacts,recovery);
     try { worker = await LocalBuildWorker.create({root,store,snapshot}); }

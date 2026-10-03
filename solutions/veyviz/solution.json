@@ -15,6 +15,14 @@
         }]
       },
       {
+        "contract": "veyviz.sources.query.v1",
+        "choices": [{
+          "id": "local",
+          "label": "Search recordings in this product",
+          "binding": { "instanceId": "local-veyviz-sources", "implementation": "veyviz-sources", "scope": "application", "mode": "local" }
+        }]
+      },
+      {
         "contract": "veyviz.recorded-analysis.run.v1",
         "choices": [{
           "id": "local",

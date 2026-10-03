@@ -1,0 +1,326 @@
+{
+  "schema": "veyviz.bounded-runtime-final-preservation.v1",
+  "recordedAt": "2026-10-03T14:12:26.603Z",
+  "entries": [
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\package.json",
+      "path": "source/package.json",
+      "bytes": 1539,
+      "sha256": "f0738ec1b03bd4f59b1a05f88815ce6e7f4d7b6104113f6d5a21b62278c31887"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tools\\veyviz-build.mjs",
+      "path": "source/tools/veyviz-build.mjs",
+      "bytes": 14348,
+      "sha256": "f00694386527f5e73c8fab5b4ce056fe8df6c6c918bd85913b1ab3320f22c71c"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tools\\veyviz-inventory.mjs",
+      "path": "source/tools/veyviz-inventory.mjs",
+      "bytes": 24575,
+      "sha256": "a94720f5a252a5d02c7cc3c3d381530b74cdc58715983c965a69155d5c9fb2cd"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tools\\veyviz-start.mjs",
+      "path": "source/tools/veyviz-start.mjs",
+      "bytes": 15913,
+      "sha256": "c7f9c30c5e11458fbe0f6291abc6254650be93a70ad7f730297ca4e4e2382662"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tools\\veyviz-snapshot.mjs",
+      "path": "source/tools/veyviz-snapshot.mjs",
+      "bytes": 23318,
+      "sha256": "d5833ee0807fc435c695019ac17d882ce345e6c3983aad66543227a8848858c9"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tests\\veyviz-lifecycle.test.mjs",
+      "path": "source/tests/veyviz-lifecycle.test.mjs",
+      "bytes": 14898,
+      "sha256": "1493fab0aa8c97afbd8224dad5262fb0c113ae16c8d5fd220e4919881d716249"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tests\\veyviz-snapshot.test.mjs",
+      "path": "source/tests/veyviz-snapshot.test.mjs",
+      "bytes": 26168,
+      "sha256": "3718b744103dbf0b9d7f9d0f467f851dfa0bb9d9ed573558d0cf383c96e602ce"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-09\\capture-freeze.mjs",
+      "path": "freeze/capture-freeze.mjs",
+      "bytes": 4171,
+      "sha256": "4efa0c3549bacbc8fc809356dabbf289bee0e4111fe267966245d58a2d0f8b19"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-09\\freeze.json",
+      "path": "freeze/freeze.json",
+      "bytes": 5803,
+      "sha256": "aeb10b64dc0c64197a3e9a6af7d50f727fd61ec5e95482585002ba8c18e6288b"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-09\\source-active-observed.json",
+      "path": "freeze/source-active-observed.json",
+      "bytes": 64732,
+      "sha256": "7040e41a92fb7b70e029272fab7788bd1ad56a4df7b25f67cf9439fec248458d"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-09\\source-overlay.json",
+      "path": "freeze/source-overlay.json",
+      "bytes": 63696,
+      "sha256": "691176e57becac392edbfd86f685b2410211615b117945cb13ae0ba87e5ca7a7"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-09\\toolchain-active-observed.json",
+      "path": "freeze/toolchain-active-observed.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-09\\toolchain-overlay.json",
+      "path": "freeze/toolchain-overlay.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\MANIFEST.json",
+      "path": "run/MANIFEST.json",
+      "bytes": 16102,
+      "sha256": "b1febccb465bb1f2af76af3bc4b252b5806a6585945e5e574be6a953abeb47fe"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\attempt-42252269-9e85-4614-844d-7d997cd77d6b-stderr.bin",
+      "path": "run/attempt-42252269-9e85-4614-844d-7d997cd77d6b-stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\attempt-42252269-9e85-4614-844d-7d997cd77d6b-stdout.bin",
+      "path": "run/attempt-42252269-9e85-4614-844d-7d997cd77d6b-stdout.bin",
+      "bytes": 440,
+      "sha256": "d7f89847eb7ea19edf23783104c791df85dc960843d8b379ab62a62d63e9a0d8"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\attempt-42252269-9e85-4614-844d-7d997cd77d6b.json",
+      "path": "run/attempt-42252269-9e85-4614-844d-7d997cd77d6b.json",
+      "bytes": 1382,
+      "sha256": "721fdf63442d2d0e5b006b49e245cb699980626d52eafc872fcd8c9ba07dd980"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\capture-phase.mjs",
+      "path": "run/capture-phase.mjs",
+      "bytes": 1789,
+      "sha256": "f215f6cc2ad9686574d9294a62b01080a1ca769ff08c09f48ee11012f0ccd844"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\correct-manifest-prior-failure-hash.mjs",
+      "path": "run/correct-manifest-prior-failure-hash.mjs",
+      "bytes": 943,
+      "sha256": "291e7d34a1e79821e2d047e82800ba89042fea64383a92ff32f61e427e025dd8"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\fix-manifest-writer.mjs",
+      "path": "run/fix-manifest-writer.mjs",
+      "bytes": 804,
+      "sha256": "016c07e8166e97f0aa68bafd8f8661b0c971e262c0fed7daf5649fd4cf7f8c04"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\focused-tests-close.json",
+      "path": "run/focused-tests-close.json",
+      "bytes": 644,
+      "sha256": "c3637b347204392598dde90d79c0b2df1e5bc6394c27257c49901c51bf8d83a3"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\focused-tests-session-observation.json",
+      "path": "run/focused-tests-session-observation.json",
+      "bytes": 755,
+      "sha256": "048973f48cc209fee43c96e596457a20c0a75da654737098ec3e740ca52db9b1"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\focused-tests-start.json",
+      "path": "run/focused-tests-start.json",
+      "bytes": 342,
+      "sha256": "8974bf983f19bfe796280f958c3e54c46d88cf8bb3838e968684fac4607ceb38"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\focused-tests.raw.txt",
+      "path": "run/focused-tests.raw.txt",
+      "bytes": 4942,
+      "sha256": "a3328446f4381c5a7f4de43bec659e4b4be66db390469da960fb769f3dd7b778"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\npm-build-close.json",
+      "path": "run/npm-build-close.json",
+      "bytes": 507,
+      "sha256": "744f4b8994c75dcb825e566b2b516aef34bcfccfdf5835fbde705a2e1559286b"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\npm-build-start.json",
+      "path": "run/npm-build-start.json",
+      "bytes": 210,
+      "sha256": "5ee0c3104a6b026a262bb548b49626dada680ae06daef5d15fdcab809ab34d92"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\npm-build.raw.txt",
+      "path": "run/npm-build.raw.txt",
+      "bytes": 301,
+      "sha256": "20bb05ea787353f2fb023a9010413932842dd980b2d62a349c25780d68c0ae4b"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\post-build-capture.json",
+      "path": "run/post-build-capture.json",
+      "bytes": 828,
+      "sha256": "121a5d7f7ebcf3fc48b0f67cbc4c0fd4ea25dd706ee637ed95b13ce27da36f42"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\post-build-qualification.json",
+      "path": "run/post-build-qualification.json",
+      "bytes": 4359,
+      "sha256": "29ba6201a41e15f3acd5765b11fa52cda5b9f9df352fda394bdea850a9dd877e"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\post-build-source.json",
+      "path": "run/post-build-source.json",
+      "bytes": 63696,
+      "sha256": "691176e57becac392edbfd86f685b2410211615b117945cb13ae0ba87e5ca7a7"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\post-build-toolchain.json",
+      "path": "run/post-build-toolchain.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\post-test-capture.json",
+      "path": "run/post-test-capture.json",
+      "bytes": 825,
+      "sha256": "4652d3c97049831918fb2cdae8dbfaa0a597e32dfa02ddf9f672c5b1f585509e"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\post-test-qualification.json",
+      "path": "run/post-test-qualification.json",
+      "bytes": 1332,
+      "sha256": "e9f4ed8136b752db6499313b0445b3fff8b0f08d1f570feb97c0e1651ba6a7a3"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\post-test-source.json",
+      "path": "run/post-test-source.json",
+      "bytes": 63696,
+      "sha256": "691176e57becac392edbfd86f685b2410211615b117945cb13ae0ba87e5ca7a7"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\post-test-toolchain.json",
+      "path": "run/post-test-toolchain.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\pre-build-capture.json",
+      "path": "run/pre-build-capture.json",
+      "bytes": 825,
+      "sha256": "4d140bb4bf545fff5cd1edc86b029591e5df6eb1aafda94855cd597becaaad4a"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\pre-build-source.json",
+      "path": "run/pre-build-source.json",
+      "bytes": 63696,
+      "sha256": "691176e57becac392edbfd86f685b2410211615b117945cb13ae0ba87e5ca7a7"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\pre-build-toolchain.json",
+      "path": "run/pre-build-toolchain.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\prebuild-current-receipt.json",
+      "path": "run/prebuild-current-receipt.json",
+      "bytes": 131769,
+      "sha256": "f2b25284c60b7c99ff148c4f533828ae9624ed003c68942e7adc1e4c6a774ca1"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\qualification-after-build.json",
+      "path": "run/qualification-after-build.json",
+      "bytes": 4421,
+      "sha256": "7440379d818a3b18883c49d476b81b20ecb731107c8f40768989f6547988f85c"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\qualification-after-test.json",
+      "path": "run/qualification-after-test.json",
+      "bytes": 4421,
+      "sha256": "7440379d818a3b18883c49d476b81b20ecb731107c8f40768989f6547988f85c"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\qualification-before-build.json",
+      "path": "run/qualification-before-build.json",
+      "bytes": 3526,
+      "sha256": "58e2c419e6a80d03d6b4f5c6294ab2d3a70fff3c190f292398db2e6c9d4decae"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\qualified-current-receipt.json",
+      "path": "run/qualified-current-receipt.json",
+      "bytes": 131769,
+      "sha256": "aff8257e4e701042f5cd1f5d31a9d15e9596de5aee8babd61fdb0fc57a956fcc"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\snapshot-fixture-directories-after.json",
+      "path": "run/snapshot-fixture-directories-after.json",
+      "bytes": 1773,
+      "sha256": "cf416aee1a35813de7fdcaefaec662bf43352b2f755d53be13ea737709e9b1e7"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\verify-post-build.mjs",
+      "path": "run/verify-post-build.mjs",
+      "bytes": 2344,
+      "sha256": "ce19859b1fbf60e478d829dc6106129c79eab1d1bd77eb6b1eb1f7966af9482e"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\verify-post-test.mjs",
+      "path": "run/verify-post-test.mjs",
+      "bytes": 1264,
+      "sha256": "e808f3be00f6a9060583bef1fbf09bfdcdd9eb08ffe16ebc4f18843732a53b7e"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\write-manifest.mjs",
+      "path": "run/write-manifest.mjs",
+      "bytes": 7867,
+      "sha256": "5c5443e948d6069b5e4710d5319fc2b2ef7510f31d443dc742294c1777c662a7"
+    },
+    {
+      "source": ".local/product-immutable-runtime-evidence/review/freeze09-final-bounded-runtime-review-20261003-01.json",
+      "path": "independent-final-review.json",
+      "bytes": 11120,
+      "sha256": "1b89407c5552840c2320d0def7bd1a1e1897f3f9c21bad8ebb253d862a4bbb59"
+    },
+    {
+      "source": "root clarification of observed tool attribution",
+      "path": "attribution-clarification.json",
+      "bytes": 785,
+      "sha256": "f0386be4f3fd1d8f89ad1032c3caee1d34c542cd0cbab56f13dcc7ebd6ded789"
+    }
+  ],
+  "verdict": "PASS_BOUNDED_SEVEN_OWNER_SOURCE_AND_ISOLATED_BUILD_FOCUSED_EVIDENCE",
+  "candidate": {
+    "overlayRoot": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003",
+    "freezePath": "evidence/freeze-run-09/freeze.json",
+    "freezeSha256": "aeb10b64dc0c64197a3e9a6af7d50f727fd61ec5e95482585002ba8c18e6288b",
+    "authoredFiles": 360,
+    "authoredDigest": "98af08dbd6d531916c9a0e6f07ca141891fce8b30dcabc3006374f1a57ebe67e",
+    "toolchainDigest": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+    "ownerHashes": {
+      "package.json": "f0738ec1b03bd4f59b1a05f88815ce6e7f4d7b6104113f6d5a21b62278c31887",
+      "tools/veyviz-build.mjs": "f00694386527f5e73c8fab5b4ce056fe8df6c6c918bd85913b1ab3320f22c71c",
+      "tools/veyviz-inventory.mjs": "a94720f5a252a5d02c7cc3c3d381530b74cdc58715983c965a69155d5c9fb2cd",
+      "tools/veyviz-start.mjs": "c7f9c30c5e11458fbe0f6291abc6254650be93a70ad7f730297ca4e4e2382662",
+      "tools/veyviz-snapshot.mjs": "d5833ee0807fc435c695019ac17d882ce345e6c3983aad66543227a8848858c9",
+      "tests/veyviz-lifecycle.test.mjs": "1493fab0aa8c97afbd8224dad5262fb0c113ae16c8d5fd220e4919881d716249",
+      "tests/veyviz-snapshot.test.mjs": "3718b744103dbf0b9d7f9d0f467f851dfa0bb9d9ed573558d0cf383c96e602ce"
+    }
+  },
+  "priorEvidence": [
+    ".brain/evidence/veyviz-runtime-execution-20261003/freeze04-run-01",
+    ".brain/evidence/veyviz-runtime-source-review-20261003/freeze05",
+    ".brain/evidence/veyviz-runtime-execution-20261003/freeze06-run-01",
+    ".brain/evidence/veyviz-runtime-execution-20261003/freeze07-run-01",
+    ".brain/evidence/veyviz-runtime-execution-20261003/freeze08-run-01"
+  ],
+  "meaning": "Exact seven-owner bounded source and actual isolated build/focused result only. Product full/model/browser/framework adoption and active foreign source remain unqualified."
+}

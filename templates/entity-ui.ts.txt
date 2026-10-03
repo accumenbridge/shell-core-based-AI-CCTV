@@ -1,4 +1,5 @@
 import type { Workspace } from '@quadbridge/contracts';
+import { createCommandState, trustedCommandErrorDetails, type CapturedCommandIntent } from '@quadbridge/client-core';
 import { el, button, heading, section, emptyState } from '@quadbridge/web-shell/dom';
 
 type FieldSpec = { id: string; label: string; type: 'text' | 'integer' | 'boolean' | 'enum'; required: boolean; default?: string | number | boolean; minLength?: number; maxLength?: number; minimum?: number; maximum?: number; values?: string[] };
@@ -37,7 +38,6 @@ function control(spec: FieldSpec) {
     input = element;
   }
   input.name = spec.id; input.required = spec.type !== 'boolean' && spec.required;
-  if (spec.type === 'text' && spec.maxLength !== undefined) (input as HTMLInputElement | HTMLTextAreaElement).maxLength = spec.maxLength;
   if (spec.type === 'boolean') {
     if (!spec.required) input.value = spec.default === undefined ? '' : String(spec.default);
     else (input as HTMLInputElement).checked = spec.default === true;
@@ -59,17 +59,31 @@ function captureValues(inputs: Map<string, ReturnType<typeof control>>) {
       continue;
     }
     const raw = input.value;
-    if (!raw.trim()) { if (spec.required) throw new Error(`${spec.label} is required`); continue; }
+    if (spec.type === 'text' && raw.includes('\0')) throw new Error(`${spec.label} cannot contain a NUL character`);
+    const normalized = raw.trim();
+    if (!normalized) { if (spec.required) throw new Error(`${spec.label} is required`); continue; }
     if (spec.type === 'integer') {
-      if (!/^-?(?:0|[1-9]\d*)$/.test(raw.trim())) throw new Error(`${spec.label} must be a whole number`);
+      if (!/^-?(?:0|[1-9]\d*)$/.test(normalized)) throw new Error(`${spec.label} must be a whole number`);
       const number = Number(raw); if (!Number.isSafeInteger(number)) throw new Error(`${spec.label} is outside the supported range`);
       values[spec.id] = number;
-    } else values[spec.id] = raw;
+    } else if (spec.type === 'enum') {
+      if (!(spec.values ?? []).includes(normalized)) throw new Error(`${spec.label} is not an allowed value`);
+      values[spec.id] = normalized;
+    } else {
+      const codePoints = Array.from(normalized).length;
+      if (codePoints < (spec.minLength ?? 1) || codePoints > (spec.maxLength ?? Number.MAX_SAFE_INTEGER))
+        throw new Error(`${spec.label} must be ${spec.minLength ?? 1}–${spec.maxLength ?? 'bounded'} Unicode code points after trimming`);
+      values[spec.id] = normalized;
+    }
   }
   return values;
 }
 
 export const workspace: Workspace = { mount(ctx) {
+  let disposed = false;
+  const lifetime = new AbortController();
+  const isCurrent = () => !disposed && !ctx.signal.aborted && !lifetime.signal.aborted;
+  const commandState = createCommandState({ scope: ctx.scope, actor: ctx.actor, signal: lifetime.signal, isCurrent });
   ctx.root.append(heading(recordLabel, 'Tenant-scoped records. Reads and writes stay with this module’s owner.'));
   const grid = el('div', 'grid'), createCard = section(), browseCard = section();
   grid.append(createCard, browseCard); ctx.root.append(grid);
@@ -85,29 +99,59 @@ export const workspace: Workspace = { mount(ctx) {
   const list = el('div'), detail = el('div', 'entity-detail'), status = el('p', 'small muted');
   browseCard.append(list, detail, status);
   let listGeneration = 0, detailGeneration = 0, selectedId: string | undefined, selectedRecord: EntityRecord | undefined;
-  let pendingIntent: { kind: 'create' | 'edit'; path: string; payload: unknown; commandId: string; recordId?: string; selectionGeneration: number } | undefined;
-  let busy = false;
+  let pendingIntent: { kind: 'create' | 'edit'; path: string; command: CapturedCommandIntent; recordId?: string; selectionGeneration: number; localStatus: HTMLElement; onConflict?: (intent: CapturedCommandIntent) => void } | undefined;
+  let busy = false, capturing = false, activeEditSubmit: HTMLButtonElement | undefined;
+  let activeEditInputs: Map<string, ReturnType<typeof control>> | undefined;
   const retryPanel = section('entity-retry');
   const retryText = el('p', 'small muted');
-  const retryButton = button('Retry the exact command', () => { if (pendingIntent) void send(pendingIntent); }, 'button secondary small');
-  const newIntentButton = button('Start a new command', () => {
-    pendingIntent = undefined; retryPanel.hidden = true;
-    status.textContent = 'The previous result remains unresolved. A new command will use a different identity.';
-    updateCreateButton();
-  }, 'button secondary small');
-  retryPanel.append(retryText, retryButton, newIntentButton); retryPanel.hidden = true; browseCard.append(retryPanel);
+  const retryButton = button('Retry the exact command', () => { if (pendingIntent) void send(pendingIntent, true); }, 'button secondary small');
+  retryPanel.append(retryText, retryButton); retryPanel.hidden = true; browseCard.append(retryPanel);
 
-  function updateCreateButton() { createSubmit.disabled = busy || !!pendingIntent || ctx.signal.aborted; }
+  const setCommandError = (target: HTMLElement, error: unknown, command?: CapturedCommandIntent) => {
+    target.textContent = error instanceof Error ? error.message : 'The command result is unknown.';
+    const details = trustedCommandErrorDetails(error);
+    if (command && commandState.state(command) === 'REJECTED_NO_BUSINESS_EFFECTS' && details?.fieldErrors.length) {
+      const errors = el('ul', 'field-errors');
+      for (const item of details.fieldErrors) errors.append(el('li', '', `${item.path}: ${item.message}`));
+      target.append(errors);
+    }
+  };
+  function updateCreateButton() {
+    const disabled = busy || capturing || !!pendingIntent || !isCurrent();
+    createSubmit.disabled = disabled;
+    if (activeEditSubmit) activeEditSubmit.disabled = disabled;
+  }
+  function clearInputs(inputs: Map<string, ReturnType<typeof control>>) {
+    for (const { input } of inputs.values()) {
+      input.value = '';
+      if ('checked' in input) input.checked = false;
+    }
+  }
+  function dispose() {
+    if (disposed) return;
+    disposed = true;
+    lifetime.abort();
+    commandState.dispose();
+    listGeneration++; detailGeneration++;
+    selectedId = undefined; selectedRecord = undefined; pendingIntent = undefined;
+    busy = false; capturing = false; activeEditSubmit = undefined;
+    clearInputs(createInputs); createInputs.clear();
+    if (activeEditInputs) { clearInputs(activeEditInputs); activeEditInputs.clear(); activeEditInputs = undefined; }
+    retryPanel.hidden = true; retryText.textContent = '';
+    list.replaceChildren(); detail.replaceChildren();
+    status.textContent = ''; createStatus.textContent = '';
+  }
+  ctx.signal.addEventListener('abort', dispose, { once: true });
   async function loadList() {
     const generation = ++listGeneration;
     try {
-      const response = await ctx.api.get('/api/__MODULE__', ctx.signal) as { items: { id: string; version: number; label: string }[]; limit: number };
-      if (ctx.signal.aborted || generation !== listGeneration) return;
+      const response = await ctx.api.get('/api/__MODULE__', lifetime.signal) as { items: { id: string; version: number; label: string }[]; limit: number };
+      if (!isCurrent() || generation !== listGeneration) return;
       list.replaceChildren();
       if (!response.items.length) list.append(emptyState('No records yet.', `Create the first ${recordLabel.toLowerCase()} record.`));
       for (const item of response.items) list.append(button(`${item.label} · v${item.version}`, () => void loadDetail(item.id), 'button secondary entity-row'));
       status.textContent = `Showing ${response.items.length} records (maximum ${response.limit}).`;
-    } catch (error) { if (!ctx.signal.aborted && generation === listGeneration) status.textContent = error instanceof Error ? error.message : 'Records could not be loaded.'; }
+    } catch (error) { if (isCurrent() && generation === listGeneration) status.textContent = error instanceof Error ? error.message : 'Records could not be loaded.'; }
   }
   function renderDetail(record: EntityRecord) {
     detail.replaceChildren(el('h4', '', `${recordLabel} · v${record.version}`));
@@ -120,72 +164,118 @@ export const workspace: Workspace = { mount(ctx) {
     const beginEdit = button('Edit record', () => beginEditForm(record), 'button secondary small'); detail.append(beginEdit);
   }
   async function loadDetail(recordId: string) {
+    if (!isCurrent()) return;
     selectedId = recordId; selectedRecord = undefined;
     const generation = ++detailGeneration; detail.replaceChildren(el('p', 'muted', 'Loading record…'));
     try {
-      const response = await ctx.api.get(`/api/__MODULE__/record?id=${encodeURIComponent(recordId)}`, ctx.signal) as EntityRecord;
-      if (ctx.signal.aborted || generation !== detailGeneration || selectedId !== recordId) return;
+      const response = await ctx.api.get(`/api/__MODULE__/record?id=${encodeURIComponent(recordId)}`, lifetime.signal) as EntityRecord;
+      if (!isCurrent() || generation !== detailGeneration || selectedId !== recordId) return;
       if (response.id !== recordId || !Number.isSafeInteger(response.version) || response.version < 1) throw new Error('The selected record response did not match the current selection.');
       selectedRecord = response; renderDetail(response);
-    } catch (error) { if (!ctx.signal.aborted && generation === detailGeneration && selectedId === recordId) detail.replaceChildren(el('p', 'error', error instanceof Error ? error.message : 'Record could not be loaded.')); }
+    } catch (error) { if (isCurrent() && generation === detailGeneration && selectedId === recordId) detail.replaceChildren(el('p', 'error', error instanceof Error ? error.message : 'Record could not be loaded.')); }
   }
   function beginEditForm(record: EntityRecord) {
-    if (selectedId !== record.id || selectedRecord?.version !== record.version) return;
+    if (!isCurrent() || selectedId !== record.id || selectedRecord?.version !== record.version) return;
     const form = el('form', 'entity-edit'), inputs = new Map<string, ReturnType<typeof control>>(), generation = detailGeneration;
-    form.append(el('h4', '', `Edit ${recordLabel} · expected version ${record.version}`));
+    activeEditInputs = inputs;
+    let expectedVersion = record.version;
+    const title = el('h4', '', `Edit ${recordLabel} · expected version ${expectedVersion}`);
+    form.append(title);
+    let comparisonPanel: HTMLElement | undefined;
     for (const spec of fields) { const item = control(spec); const value = record.fields[spec.id]; if (value !== undefined) { if (spec.type === 'boolean' && !spec.required) item.input.value = String(value); else if (spec.type === 'boolean') (item.input as HTMLInputElement).checked = value === true; else item.input.value = String(value); } inputs.set(spec.id, item); form.append(item.wrap); }
-    const submit = el('button', 'button', 'Save version'); submit.type = 'submit'; form.append(submit);
+    const submit = el('button', 'button', 'Save version'); submit.type = 'submit'; activeEditSubmit = submit; form.append(submit);
     const editStatus = el('p', 'small muted'); form.append(editStatus); detail.replaceChildren(form);
+    const compareLatest = async (intent: CapturedCommandIntent) => {
+      try {
+        const current = await ctx.api.get(`/api/__MODULE__/record?id=${encodeURIComponent(record.id)}`, lifetime.signal) as EntityRecord;
+        if (!isCurrent() || generation !== detailGeneration || selectedId !== record.id || current.id !== record.id) return;
+        let submitted: Record<string, unknown> = {};
+        try { submitted = captureValues(inputs); } catch { /* Keep comparing the visible draft even when it is locally incomplete. */ }
+        if (!comparisonPanel) { comparisonPanel = section('entity-comparison'); form.append(comparisonPanel); }
+        const panel = comparisonPanel;
+        panel.replaceChildren();
+        panel.append(el('h5', '', `Current version ${current.version} · compare with your draft`));
+        for (const spec of fields) {
+          const draftValue = Object.hasOwn(submitted, spec.id) ? String(submitted[spec.id]) : '(not set or invalid)';
+          const currentValue = Object.hasOwn(current.fields, spec.id) ? String(current.fields[spec.id]) : '(not set)';
+          panel.append(el('p', 'entity-value', `${spec.label} · draft: ${draftValue} · current: ${currentValue}`));
+        }
+        panel.append(button('Use current version for this draft', () => {
+          if (!isCurrent()) return;
+          expectedVersion = current.version;
+          title.textContent = `Edit ${recordLabel} · expected version ${expectedVersion}`;
+          editStatus.textContent = 'Your draft is preserved and will now target the version you compared.';
+        }, 'button secondary small'));
+      } catch (error) {
+        if (isCurrent() && generation === detailGeneration) editStatus.textContent = `Your draft is preserved. Current version could not be loaded: ${error instanceof Error ? error.message : 'unavailable'}`;
+      }
+    };
     form.addEventListener('submit', event => {
-      event.preventDefault(); if (busy || ctx.signal.aborted || selectedId !== record.id || generation !== detailGeneration) return;
+      event.preventDefault(); if (busy || capturing || pendingIntent || !isCurrent() || selectedId !== record.id || generation !== detailGeneration) return;
       let fieldsValue: Record<string, unknown>;
       try { fieldsValue = captureValues(inputs); } catch (error) { editStatus.textContent = error instanceof Error ? error.message : 'Check the entered values.'; return; }
-      void submitIntent('edit', `/api/__MODULE__/edit`, { id: record.id, expectedVersion: record.version, fields: fieldsValue }, record.id, generation, editStatus);
-    }, { signal: ctx.signal });
+      void submitIntent('edit', `/api/__MODULE__/edit`, __EDIT_OPERATION__, { id: record.id, expectedVersion, fields: fieldsValue }, record.id, generation, editStatus, compareLatest);
+    }, { signal: lifetime.signal });
   }
-  async function send(intent: NonNullable<typeof pendingIntent>) {
-    if (busy || ctx.signal.aborted) return;
-    busy = true; updateCreateButton(); retryButton.disabled = true; createStatus.textContent = 'Sending the captured command…';
+  async function send(intent: NonNullable<typeof pendingIntent>, retry = false) {
+    if (busy || !isCurrent()) return;
+    busy = true; updateCreateButton(); retryButton.disabled = true; intent.localStatus.textContent = 'Sending the captured command…';
     try {
-      const result = await ctx.api.post(intent.path, intent.payload, intent.commandId, ctx.signal) as { id?: string; version?: number };
-      if (ctx.signal.aborted) return;
+      const dispatch = (commandId: string, payload: unknown) => ctx.api.post(intent.path, payload, commandId, lifetime.signal);
+      const result = await (retry ? commandState.retry(intent.command, dispatch) : commandState.send(intent.command, dispatch)) as { id?: string; version?: number };
+      if (!isCurrent()) return;
       if (pendingIntent === intent) { pendingIntent = undefined; retryPanel.hidden = true; }
-      createStatus.textContent = `Saved${Number.isSafeInteger(result.version) ? ` as version ${result.version}` : ''}.`;
+      intent.localStatus.textContent = `Saved${Number.isSafeInteger(result.version) ? ` as version ${result.version}` : ''}.`;
       await loadList();
       if (intent.kind === 'edit' && intent.recordId && selectedId === intent.recordId && detailGeneration === intent.selectionGeneration) await loadDetail(intent.recordId);
       else if (intent.kind === 'create' && result.id && detailGeneration === intent.selectionGeneration) await loadDetail(result.id);
     } catch (error) {
-      if (ctx.signal.aborted) return;
-      const code = error && typeof error === 'object' && 'code' in error ? (error as { code?: unknown }).code : undefined;
-      if (intent.kind === 'edit' && code === 'CONFLICT' && intent.recordId && selectedId === intent.recordId && detailGeneration === intent.selectionGeneration) {
+      if (!isCurrent()) return;
+      if (commandState.state(intent.command) === 'REJECTED_NO_BUSINESS_EFFECTS') {
         if (pendingIntent === intent) pendingIntent = undefined;
         retryPanel.hidden = true;
-        createStatus.textContent = 'This record changed after you loaded it. Reload the selected record before editing.';
-        const recordId = intent.recordId;
-        const reload = button('Reload selected record', () => { if (selectedId === recordId) void loadDetail(recordId); }, 'button secondary small');
-        detail.replaceChildren(el('p', 'error', 'This version is no longer current. Your edit was not applied.'), reload);
+        setCommandError(intent.localStatus, error, intent.command);
+        if (intent.kind === 'edit' && error instanceof Error && 'code' in error && (error as { code?: unknown }).code === 'CONFLICT' &&
+            intent.recordId && selectedId === intent.recordId && detailGeneration === intent.selectionGeneration) void intent.onConflict?.(intent.command);
         return;
       }
-      pendingIntent = intent; retryText.textContent = 'The response was not confirmed. Retry keeps the original payload and command identity.';
-      retryPanel.hidden = false; createStatus.textContent = error instanceof Error ? error.message : 'The command result is unknown.';
+      pendingIntent = intent; retryText.textContent = 'The result is unknown. Retry sends the original captured payload with the same command identity; a new intent stays locked until the original is confirmed or its owner certifies terminal rejection.';
+      retryPanel.hidden = false; setCommandError(intent.localStatus, error, intent.command);
     } finally {
-      busy = false; retryButton.disabled = false; updateCreateButton();
+      busy = false;
+      if (isCurrent()) { retryButton.disabled = false; updateCreateButton(); }
     }
   }
-  async function submitIntent(kind: 'create' | 'edit', path: string, payload: unknown, recordId: string | undefined, generation: number, localStatus: HTMLElement) {
-    if (pendingIntent) { localStatus.textContent = 'Resolve the previous command or explicitly start a new command first.'; return; }
-    const intent = { kind, path, payload: JSON.parse(JSON.stringify(payload)), commandId: crypto.randomUUID(), recordId, selectionGeneration: generation };
-    pendingIntent = intent; updateCreateButton(); await send(intent);
+  async function submitIntent(kind: 'create' | 'edit', path: string, operation: string, payload: unknown, recordId: string | undefined, generation: number, localStatus: HTMLElement, onConflict?: (intent: CapturedCommandIntent) => void) {
+    if (!isCurrent()) return;
+    if (pendingIntent || busy || capturing) { localStatus.textContent = 'Resolve the earlier command before starting another.'; return; }
+    capturing = true; updateCreateButton(); localStatus.textContent = 'Capturing the command identity…';
+    try {
+      const slot = kind === 'create' ? 'entity:create' : `entity:edit:${recordId}`;
+      const command = await commandState.capture(slot, operation, payload);
+      if (!isCurrent()) return;
+      if (kind === 'edit' && (selectedId !== recordId || detailGeneration !== generation)) { commandState.discardPrepared(command); return; }
+      const intent = { kind, path, command, recordId, selectionGeneration: generation, localStatus, onConflict };
+      pendingIntent = intent;
+      updateCreateButton();
+      await send(intent);
+    } catch (error) {
+      if (isCurrent()) setCommandError(localStatus, error);
+    } finally {
+      capturing = false;
+      if (isCurrent()) updateCreateButton();
+    }
   }
   if (ctx.permissions.includes('__WRITE_PERMISSION__')) {
-    createForm.addEventListener('input', () => { if (pendingIntent) retryText.textContent = 'The draft changed, but the earlier command identity and payload remain available for exact retry.'; }, { signal: ctx.signal });
+    createForm.addEventListener('input', () => { if (isCurrent() && pendingIntent) retryText.textContent = 'The draft changed, but the earlier command identity and payload remain available for exact retry.'; }, { signal: lifetime.signal });
     createForm.addEventListener('submit', event => {
-      event.preventDefault(); if (busy || ctx.signal.aborted || pendingIntent) return;
+      event.preventDefault(); if (busy || !isCurrent() || pendingIntent) return;
       let fieldsValue: Record<string, unknown>;
       try { fieldsValue = captureValues(createInputs); } catch (error) { createStatus.textContent = error instanceof Error ? error.message : 'Check the entered values.'; return; }
-      void submitIntent('create', '/api/__MODULE__', { fields: fieldsValue }, undefined, detailGeneration, createStatus);
-    }, { signal: ctx.signal });
+      void submitIntent('create', '/api/__MODULE__', __CREATE_OPERATION__, { fields: fieldsValue }, undefined, detailGeneration, createStatus);
+    }, { signal: lifetime.signal });
   }
-  void loadList();
-  return () => { listGeneration++; detailGeneration++; selectedId = undefined; selectedRecord = undefined; };
+  if (ctx.signal.aborted) dispose();
+  else void loadList();
+  return () => { dispose(); ctx.signal.removeEventListener('abort', dispose); };
 } };

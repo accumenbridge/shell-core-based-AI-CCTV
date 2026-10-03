@@ -1,0 +1,197 @@
+{
+  "schema": "veyviz.failed-runtime-run-preservation.v1",
+  "recordedAt": "2026-10-03T13:07:31.539Z",
+  "entries": [
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/after-outputs.json",
+      "path": "run/after-outputs.json",
+      "bytes": 794,
+      "sha256": "53bced6a9451b62b40662d92d1a621ebcf6647e87dbff6278a62a26bf759a0c7"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/after-source.json",
+      "path": "run/after-source.json",
+      "bytes": 63696,
+      "sha256": "e9992a9539df4a34c73b7d664d568589d7e3c1dbe0a7baedf629bf97007717e9"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/after-toolchain.json",
+      "path": "run/after-toolchain.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/before-source.json",
+      "path": "run/before-source.json",
+      "bytes": 63696,
+      "sha256": "e9992a9539df4a34c73b7d664d568589d7e3c1dbe0a7baedf629bf97007717e9"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/before-toolchain.json",
+      "path": "run/before-toolchain.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/build-close.json",
+      "path": "run/build-close.json",
+      "bytes": 409,
+      "sha256": "8f18c80da72b15ebbc5502faae82025b1e436a7def7816659c7ca035cac7deac"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/build-command.json",
+      "path": "run/build-command.json",
+      "bytes": 737,
+      "sha256": "a8bcf2e5e578ba3893af36195e152e46a363fc174d92646cdf90926b07a04614"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/build-qualification.json",
+      "path": "run/build-qualification.json",
+      "bytes": 131666,
+      "sha256": "8f6ce8f66a60ec76e157086e81a45517c4d1a753a5748146f0dcfb3c9bbfccb8"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/build.raw.txt",
+      "path": "run/build.raw.txt",
+      "bytes": 301,
+      "sha256": "0b53f174b5710de9561f5445834e99d64594dcfdce32cd457bb714da145a4f93"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/builder-attempt.json",
+      "path": "run/builder-attempt.json",
+      "bytes": 1279,
+      "sha256": "75293a4503788aa251abedfcdf34f896fcf6aa5c08e3e99ec60a1c1cfc479da4"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/builder-stderr.bin",
+      "path": "run/builder-stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/builder-stdout.bin",
+      "path": "run/builder-stdout.bin",
+      "bytes": 440,
+      "sha256": "d7f89847eb7ea19edf23783104c791df85dc960843d8b379ab62a62d63e9a0d8"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/focused-tests-close.json",
+      "path": "run/focused-tests-close.json",
+      "bytes": 551,
+      "sha256": "36a0896d4398d2ee802b0087f428ce54827161365ad62ddffc7ca92d4e53e5f3"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/focused-tests.raw.txt",
+      "path": "run/focused-tests.raw.txt",
+      "bytes": 14391,
+      "sha256": "b16841e8c8d7f1097bdd4b8fc2f14fb1c831ac7fbcc2d7ab9f32d94050f32191"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze04-run-01/postbuild-verification.json",
+      "path": "run/postbuild-verification.json",
+      "bytes": 3698,
+      "sha256": "75caa262f735908d97413fabe001c862f9e54ae0c9609ffa1e7bbf78dc1c765b"
+    },
+    {
+      "source": ".local/product-immutable-runtime-evidence/review/freeze04-failed-focus-diagnosis-20261003-01.json",
+      "path": "independent-failure-diagnosis.json",
+      "bytes": 5936,
+      "sha256": "bf8fe0fd97a22ccfd793e6e9f2338f36c2c23c95b378a88b091bd3028db3c205"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-mAd6Qk/producer/.local/veyviz-build-qualification/attempts/ba6d3e41-8664-40b1-8ba2-b457ac11efb1/attempt.json",
+      "path": "failed-producers/ba6d3e41-8664-40b1-8ba2-b457ac11efb1/attempt.json",
+      "bytes": 1439,
+      "sha256": "158b9b8dc5346cf3897e087f2edf70b04daacde5c04d9938a7d2b29114423e0e"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-mAd6Qk/producer/.local/veyviz-build-qualification/attempts/ba6d3e41-8664-40b1-8ba2-b457ac11efb1/stdout.bin",
+      "path": "failed-producers/ba6d3e41-8664-40b1-8ba2-b457ac11efb1/stdout.bin",
+      "bytes": 2243,
+      "sha256": "d8a6f6ed625f32e7f6ce3023df06faddd20f3f44725ec65c3edb5c7c2a643bf9"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-mAd6Qk/producer/.local/veyviz-build-qualification/attempts/ba6d3e41-8664-40b1-8ba2-b457ac11efb1/stderr.bin",
+      "path": "failed-producers/ba6d3e41-8664-40b1-8ba2-b457ac11efb1/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-mAd6Qk/producer/packages/ai-core/tsconfig.tsbuildinfo",
+      "path": "failed-producers/ba6d3e41-8664-40b1-8ba2-b457ac11efb1/ai-core.tsbuildinfo",
+      "bytes": 31432,
+      "sha256": "9ec8d72ef46da850c5dfa324812b4e52b740b82dac93a735b327c1ca385d026a"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-mAd6Qk/producer/packages/studio-model/tsconfig.tsbuildinfo",
+      "path": "failed-producers/ba6d3e41-8664-40b1-8ba2-b457ac11efb1/studio-model.tsbuildinfo",
+      "bytes": 31408,
+      "sha256": "cf3fe8613a2a7163e698dc0a1d1cf537e29291510b85044f87035f3050ec5c8e"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-DQnpJB/producer/.local/veyviz-build-qualification/attempts/02a5fd46-98cf-4536-bc10-bc569ad63f3a/attempt.json",
+      "path": "failed-producers/02a5fd46-98cf-4536-bc10-bc569ad63f3a/attempt.json",
+      "bytes": 1439,
+      "sha256": "9cf2a61653079929e1bf344c7bab9fed3e18675a221f4ba154d7148945f5dec9"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-DQnpJB/producer/.local/veyviz-build-qualification/attempts/02a5fd46-98cf-4536-bc10-bc569ad63f3a/stdout.bin",
+      "path": "failed-producers/02a5fd46-98cf-4536-bc10-bc569ad63f3a/stdout.bin",
+      "bytes": 2243,
+      "sha256": "d8a6f6ed625f32e7f6ce3023df06faddd20f3f44725ec65c3edb5c7c2a643bf9"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-DQnpJB/producer/.local/veyviz-build-qualification/attempts/02a5fd46-98cf-4536-bc10-bc569ad63f3a/stderr.bin",
+      "path": "failed-producers/02a5fd46-98cf-4536-bc10-bc569ad63f3a/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-DQnpJB/producer/packages/ai-core/tsconfig.tsbuildinfo",
+      "path": "failed-producers/02a5fd46-98cf-4536-bc10-bc569ad63f3a/ai-core.tsbuildinfo",
+      "bytes": 31432,
+      "sha256": "9ec8d72ef46da850c5dfa324812b4e52b740b82dac93a735b327c1ca385d026a"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-DQnpJB/producer/packages/studio-model/tsconfig.tsbuildinfo",
+      "path": "failed-producers/02a5fd46-98cf-4536-bc10-bc569ad63f3a/studio-model.tsbuildinfo",
+      "bytes": 31408,
+      "sha256": "cf3fe8613a2a7163e698dc0a1d1cf537e29291510b85044f87035f3050ec5c8e"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-xjJnAO/producer/.local/veyviz-build-qualification/attempts/75f5e5d3-294c-4019-9a3c-6b27e7fb554b/attempt.json",
+      "path": "failed-producers/75f5e5d3-294c-4019-9a3c-6b27e7fb554b/attempt.json",
+      "bytes": 1439,
+      "sha256": "57b36aea459fc796e354c43a09c2d17c1df3e2a5eb72d9ba81a200a3fc9ecbe4"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-xjJnAO/producer/.local/veyviz-build-qualification/attempts/75f5e5d3-294c-4019-9a3c-6b27e7fb554b/stdout.bin",
+      "path": "failed-producers/75f5e5d3-294c-4019-9a3c-6b27e7fb554b/stdout.bin",
+      "bytes": 2243,
+      "sha256": "d8a6f6ed625f32e7f6ce3023df06faddd20f3f44725ec65c3edb5c7c2a643bf9"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-xjJnAO/producer/.local/veyviz-build-qualification/attempts/75f5e5d3-294c-4019-9a3c-6b27e7fb554b/stderr.bin",
+      "path": "failed-producers/75f5e5d3-294c-4019-9a3c-6b27e7fb554b/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-xjJnAO/producer/packages/ai-core/tsconfig.tsbuildinfo",
+      "path": "failed-producers/75f5e5d3-294c-4019-9a3c-6b27e7fb554b/ai-core.tsbuildinfo",
+      "bytes": 31432,
+      "sha256": "9ec8d72ef46da850c5dfa324812b4e52b740b82dac93a735b327c1ca385d026a"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-snapshot-test-xjJnAO/producer/packages/studio-model/tsconfig.tsbuildinfo",
+      "path": "failed-producers/75f5e5d3-294c-4019-9a3c-6b27e7fb554b/studio-model.tsbuildinfo",
+      "bytes": 31408,
+      "sha256": "cf3fe8613a2a7163e698dc0a1d1cf537e29291510b85044f87035f3050ec5c8e"
+    }
+  ],
+  "limitations": [
+    "Build0/focus1,20tests11pass9fail0skip; no passing focus or product acceptance.",
+    "after-source/toolchain in this run are post-build captures. No post-test source equality is asserted by this preservation.",
+    "Original metadata and failed producer cache/attempt bytes retained exactly; source fixes and new run remain separate."
+  ]
+}

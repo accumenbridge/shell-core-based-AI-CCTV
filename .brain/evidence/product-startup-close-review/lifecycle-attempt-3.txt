@@ -1,0 +1,28 @@
+COMMAND=node --test tests/veyviz-lifecycle.test.mjs
+CWD=D:\Veyviz-code\veyviz-quadbridge-product\.local\product-startup-close-evidence\snapshot-overlay-adf30c71e8d92a86\source
+TEMP=D:\Veyviz-code\veyviz-quadbridge-product\.local\vp-sc2
+VEYVIZ_AI_PROFILE=unset
+NODE_OPTIONS=unset
+NODE_PATH=unset
+FRESH_BUILD_LOG=D:\Veyviz-code\veyviz-quadbridge-product\.local\product-startup-close-evidence\build-attempt-3.txt
+CANDIDATE=adf30c71e8d92a8603f3cc03de29b4e2968ea549ce4ae1dad940e905858dc930
+CATALOG_PLAN_SHA256=0028623126e3fcccc81e55c591eef42d8a7f152446085589e5851688e98fa254
+CATALOG_RELEASE_SHA256=c85b953179d39e1223e0aa16da087e807cc374ae96e502c95e654522e9621c91
+✔ Veyviz refuses a modified enrollment plan before creating identities or data (13.2036ms)
+✔ invalid port fails before creating a pending product enrollment (0.8566ms)
+✔ an unclean owned process exit remains quarantined on later launch (206.1805ms)
+▶ IPC control errors cannot settle the original child close observation
+  ✔ sync stop-send failure waits for original close (180.4955ms)
+  ✔ async stop-send failure waits for original close (222.746ms)
+✔ IPC control errors cannot settle the original child close observation (403.7657ms)
+✔ fixed catalog occupied-port startup failure observes original close and preserves quarantine (233.5918ms)
+✔ Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart (471.9837ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1399.2536
+EXIT_CODE=0

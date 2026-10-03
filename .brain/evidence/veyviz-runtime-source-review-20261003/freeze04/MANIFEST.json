@@ -1,0 +1,89 @@
+{
+  "schema": "veyviz.preserved-source-review.v1",
+  "recordedUtc": "2026-10-03T12:25:31.902Z",
+  "verdict": "BOUNDED_SOURCE_PASS_READY_FOR_ADMITTED_ISOLATED_CHECKS",
+  "entries": [
+    {
+      "source": "D:/Veyviz-code/veyviz-quadbridge-product/.local/product-immutable-runtime-evidence/review/seven-owner-source-review-freeze04-20261003-01.json",
+      "destination": "independent-source-review.json",
+      "bytes": 6469,
+      "sha256": "0577d7523d2f6adadc598016a07658eca2c932af32914d4f6e91f4b4544cc705"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-04/freeze.json",
+      "destination": "capture/freeze.json",
+      "bytes": 3882,
+      "sha256": "05d303d4ee1e9bf885167c752e191f2da1610f3eeee0646019a964a752323318"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-04/source-active-observed.json",
+      "destination": "capture/source-active-observed.json",
+      "bytes": 64045,
+      "sha256": "181ee85718cf8cf430bf50b4e4d53049d039112893fb2f2b1eff2d950007f160"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-04/source-overlay.json",
+      "destination": "capture/source-overlay.json",
+      "bytes": 63696,
+      "sha256": "e9992a9539df4a34c73b7d664d568589d7e3c1dbe0a7baedf629bf97007717e9"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-04/toolchain-active-observed.json",
+      "destination": "capture/toolchain-active-observed.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-04/toolchain-overlay.json",
+      "destination": "capture/toolchain-overlay.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/package.json",
+      "destination": "source/package.json",
+      "bytes": 1539,
+      "sha256": "f0738ec1b03bd4f59b1a05f88815ce6e7f4d7b6104113f6d5a21b62278c31887"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tools/veyviz-build.mjs",
+      "destination": "source/tools/veyviz-build.mjs",
+      "bytes": 14348,
+      "sha256": "f00694386527f5e73c8fab5b4ce056fe8df6c6c918bd85913b1ab3320f22c71c"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tools/veyviz-inventory.mjs",
+      "destination": "source/tools/veyviz-inventory.mjs",
+      "bytes": 24575,
+      "sha256": "a94720f5a252a5d02c7cc3c3d381530b74cdc58715983c965a69155d5c9fb2cd"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tools/veyviz-start.mjs",
+      "destination": "source/tools/veyviz-start.mjs",
+      "bytes": 15913,
+      "sha256": "c7f9c30c5e11458fbe0f6291abc6254650be93a70ad7f730297ca4e4e2382662"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tools/veyviz-snapshot.mjs",
+      "destination": "source/tools/veyviz-snapshot.mjs",
+      "bytes": 22874,
+      "sha256": "1b20b45a86f781e2c482fd6f80b2092dfc35d390733f6defb01c4bb806448388"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tests/veyviz-lifecycle.test.mjs",
+      "destination": "source/tests/veyviz-lifecycle.test.mjs",
+      "bytes": 14898,
+      "sha256": "1493fab0aa8c97afbd8224dad5262fb0c113ae16c8d5fd220e4919881d716249"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tests/veyviz-snapshot.test.mjs",
+      "destination": "source/tests/veyviz-snapshot.test.mjs",
+      "bytes": 24999,
+      "sha256": "cfa0c46ecd72597d925926e4817ac73c1c27785ec89ee30a3bdb440e34d9dfcb"
+    }
+  ],
+  "limitations": [
+    "Exact source and source-only review preservation; no build/test or active-product qualification.",
+    "Earlier rejected freezes and concurrent foreign active source remain unchanged."
+  ]
+}

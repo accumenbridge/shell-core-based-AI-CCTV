@@ -1,0 +1,7 @@
+Atlas structure: VALID
+Planning gaps: 0 identified by limited checks; informational, not a readiness gate.
+Source inspection: DEGRADED
+WARNING source-module: pinned digest differs from current file
+WARNING analysis-module: pinned digest differs from current file
+WARNING recording-ui: pinned digest differs from current file
+WARNING analysis-ui: pinned digest differs from current file

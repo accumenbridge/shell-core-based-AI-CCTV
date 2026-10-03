@@ -1,0 +1,12 @@
+{
+  "schema": "veyviz.pre-repair-source-preservation.v1",
+  "candidate": "freeze07",
+  "files": [
+    {
+      "path": "tests/veyviz-snapshot.test.mjs",
+      "archivePath": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze07-run-01\\pre-repair-source\\veyviz-snapshot.test.mjs",
+      "bytes": 25797,
+      "sha256": "514b162f954417f309772b567ddb29e744b90a012412729d299dd4bf90b048ef"
+    }
+  ]
+}

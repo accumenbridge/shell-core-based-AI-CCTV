@@ -1,0 +1,13 @@
+{
+  "schema": "veyviz.freeze04-run-command.v1",
+  "run": "freeze04-run-01",
+  "root": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003",
+  "evidenceRoot": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze04-run-01",
+  "freezePath": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-04\\freeze.json",
+  "freezeSha256": "05d303d4ee1e9bf885167c752e191f2da1610f3eeee0646019a964a752323318",
+  "sourceDigest": "f21db5d1a9971ee5d60ababe601d87bdcdaf400c085c5d13e6b1ae5f1eb5f117",
+  "toolchainDigest": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+  "command": "npm run build",
+  "recordedAt": "2026-10-03T12:52:56.474Z",
+  "previousReceipt": null
+}

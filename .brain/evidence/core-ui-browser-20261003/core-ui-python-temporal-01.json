@@ -1,0 +1,11 @@
+{
+  "schema": "veyviz.private-python-temporal-run.v1",
+  "startedAt": "2026-10-03T15:37:18.3730133Z",
+  "endedAt": "2026-10-03T15:37:23.7924473Z",
+  "exitCode": 0,
+  "output": ".local/core-ui-python-temporal-01.txt",
+  "outputSha256": "ebe34a431f149b19437a71a9f0587b2fdb32f87a24790121a115003788923360",
+  "outputFormat": "PowerShell combined text; not native stream byte capture",
+  "sourceInputs": ".local/core-ui-python-temporal-inputs.json",
+  "scope": "Captured installed temporal Python snapshot and native cancellation only; integrated product UI remains unqualified"
+}

@@ -1,10 +1,39 @@
 {
   "id": "veyviz-review",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "platformAbi": "quadbridge.module.v1",
   "title": "VEYVIZ",
-  "description": "Video intelligence · Local workspace",
+  "description": "Local video review and analysis",
   "layout": "sidebar",
+  "experience": {
+    "schema": "quadbridge.product-experience.v1",
+    "designSystem": { "id": "quadbridge.standard", "version": "0.1.0" },
+    "browserProfile": "quadbridge.browser-profile.native-esm.v1",
+    "brand": { "name": "VEYVIZ", "tagline": "See the evidence. Make the call." },
+    "theme": { "surface": "dark", "text": "standard", "accent": "teal", "status": "semantic", "density": "compact" },
+    "login": { "title": "Sign in to VEYVIZ", "description": "Review recorded video and the analysis attached to each source.", "help": "Use the local account provided by your launcher." },
+    "navigation": [
+      { "id": "command-center", "workspaceId": "veyviz.command", "label": "Command Center", "group": "Review", "order": 0, "mobilePriority": 0 },
+      { "id": "investigate", "workspaceId": "veyviz.analysis", "label": "Investigate", "group": "Review", "order": 1, "mobilePriority": 1 },
+      { "id": "recordings", "workspaceId": "veyviz.sources", "label": "Recordings", "group": "Library", "order": 2, "mobilePriority": 2 },
+      { "id": "system-health", "workspaceId": "veyviz.health", "label": "System Health", "group": "System", "order": 3, "mobilePriority": 3 },
+      { "id": "intelligence", "workspaceId": "veyviz.intelligence", "label": "Intelligence", "group": "Extensions", "order": 4, "mobilePriority": 4 }
+    ],
+    "routes": [
+      { "id": "command-center", "workspaceId": "veyviz.command", "kind": "workspace" },
+      { "id": "investigate", "workspaceId": "veyviz.analysis", "kind": "workspace" },
+      { "id": "recordings", "workspaceId": "veyviz.sources", "kind": "workspace" },
+      { "id": "system-health", "workspaceId": "veyviz.health", "kind": "workspace" },
+      { "id": "intelligence", "workspaceId": "veyviz.intelligence", "kind": "workspace" }
+    ],
+    "layoutByWorkspace": [
+      { "workspaceId": "veyviz.command", "mode": "operational" },
+      { "workspaceId": "veyviz.analysis", "mode": "operational" },
+      { "workspaceId": "veyviz.sources", "mode": "reading" },
+      { "workspaceId": "veyviz.health", "mode": "operational" },
+      { "workspaceId": "veyviz.intelligence", "mode": "operational" }
+    ]
+  },
   "modules": [
     {
       "id": "veyviz-sources",
@@ -16,6 +45,10 @@
     },
     {
       "id": "veyviz-rfdetr",
+      "version": "0.1.0"
+    },
+    {
+      "id": "veyviz-intelligence",
       "version": "0.1.0"
     }
   ],
@@ -29,11 +62,27 @@
       "mode": "local"
     },
     {
+      "contract": "veyviz.sources.query.v1",
+      "instanceId": "local-veyviz-source-query",
+      "implementation": "veyviz-sources",
+      "scope": "application",
+      "consumer": "veyviz-analysis",
+      "mode": "local"
+    },
+    {
       "contract": "veyviz.recorded-analysis.run.v1",
       "instanceId": "local-veyviz-rfdetr",
       "implementation": "veyviz-rfdetr",
       "scope": "application",
       "consumer": "veyviz-analysis",
+      "mode": "local"
+    },
+    {
+      "contract": "veyviz.product-authority.v1",
+      "instanceId": "local-intelligence-authority",
+      "implementation": "veyviz-sources",
+      "scope": "application",
+      "consumer": "veyviz-intelligence",
       "mode": "local"
     }
   ],

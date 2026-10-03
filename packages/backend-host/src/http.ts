@@ -1,6 +1,7 @@
 import { createServer, type Server, type IncomingMessage, type ServerResponse } from 'node:http';
 import { randomBytes, randomUUID } from 'node:crypto';
 import { PlatformError, object, text, id, type Actor, type Mode } from '@quadbridge/contracts';
+import { trustedCommandErrorDetails } from '@quadbridge/contracts/ui-state';
 import { ApplicationHost } from './index.js';
 export interface HttpAccess {
     login(name: string, password: string): {
@@ -44,6 +45,17 @@ async function jsonBody(req: IncomingMessage): Promise<unknown> {
     }
 }
 function respond(res: ServerResponse, code: number, value: unknown) { res.statusCode = code; res.setHeader('Content-Type', 'application/json; charset=utf-8'); res.end(JSON.stringify(value)); }
+function serializedError(error: PlatformError, requestId: string) {
+    const body: Record<string, unknown> = { code: error.code, message: error.message, requestId };
+    if (['INVALID', 'CONFLICT', 'NOT_FOUND'].includes(error.code)) {
+        const details = trustedCommandErrorDetails(error);
+        if (details) {
+            body.commandOutcome = details.commandOutcome;
+            if (details.fieldErrors.length) body.fieldErrors = details.fieldErrors;
+        }
+    }
+    return { error: body };
+}
 /** Thin adapter over Node's HTTP server. Local developer profile only; not a production identity gateway. */
 export async function listen(options: HttpOptions): Promise<{
     server: Server;
@@ -88,6 +100,20 @@ export async function listen(options: HttpOptions): Promise<{
                 throw new PlatformError('DENIED', 'Same-origin mutation required');
             const cookies = (req.headers.cookie ?? '').split(';').map(x => x.trim().split('='));
             const token = cookies.find(([k]) => k === cookie)?.[1];
+            if (req.method === 'POST' && url.pathname === '/api/logout' && !bearer) {
+                if (req.headers.authorization !== undefined)
+                    throw new PlatformError('UNAUTHENTICATED', 'Invalid authorization for human sign-out');
+                const expectedInstance = req.headers['x-qb-destination-instance'];
+                const expectedProduct = req.headers['x-qb-destination-product'];
+                const expectedPrincipal = req.headers['x-qb-destination-principal'];
+                if ((expectedInstance !== undefined && expectedInstance !== host.instanceId) ||
+                    (expectedProduct !== undefined && expectedProduct !== host.plan.product.id) || expectedPrincipal !== undefined)
+                    throw new PlatformError('INCOMPATIBLE', 'Destination identity differs from the human session');
+                if (token) access.logout(token);
+                res.setHeader('Set-Cookie', `${cookie}=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0`);
+                respond(res, 200, { signedOut: true });
+                return;
+            }
             if (req.method === 'GET' && url.pathname === '/') {
                 const nonce = randomBytes(18).toString('base64url');
                 res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -180,7 +206,7 @@ export async function listen(options: HttpOptions): Promise<{
             try { recheckOriginalAuth?.(); } catch (authError) { effective = authError; }
             const e = effective instanceof PlatformError ? effective : new PlatformError('UNAVAILABLE', 'Operation could not be completed');
             if (!res.headersSent)
-                respond(res, status[e.code] ?? 500, { error: { code: e.code, message: e.message, requestId } });
+                respond(res, status[e.code] ?? 500, serializedError(e, requestId));
             else
                 res.end();
         }

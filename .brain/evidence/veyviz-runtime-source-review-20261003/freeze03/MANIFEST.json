@@ -1,0 +1,89 @@
+{
+  "schema": "veyviz.preserved-source-review.v1",
+  "recordedUtc": "2026-10-03T12:25:31.898Z",
+  "verdict": "CHANGES_REQUIRED",
+  "entries": [
+    {
+      "source": "D:/Veyviz-code/veyviz-quadbridge-product/.local/product-immutable-runtime-evidence/review/seven-owner-source-review-freeze03-20261003-01.json",
+      "destination": "independent-source-review.json",
+      "bytes": 5466,
+      "sha256": "176c1be955efb48815c6c2066cd235d0ef022287941b0dd792ebb420d63ce0d1"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-03/freeze.json",
+      "destination": "capture/freeze.json",
+      "bytes": 2336,
+      "sha256": "975d760c03b3b4c0efd3bd7a1904fae9ef30248078423baa5d93505724f89002"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-03/source-active.json",
+      "destination": "capture/source-active.json",
+      "bytes": 63696,
+      "sha256": "9bc172b95751d7866e0c76776713ab2950cc1ce04a4eeaa612ec316216fdb176"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-03/source-overlay.json",
+      "destination": "capture/source-overlay.json",
+      "bytes": 63696,
+      "sha256": "9bc172b95751d7866e0c76776713ab2950cc1ce04a4eeaa612ec316216fdb176"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-03/toolchain-active.json",
+      "destination": "capture/toolchain-active.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-03/toolchain-overlay.json",
+      "destination": "capture/toolchain-overlay.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": "D:/Veyviz-code/veyviz-quadbridge-product/.local/product-immutable-runtime-evidence/review/independent-freeze03-source-snapshot-01/package.json",
+      "destination": "source/package.json",
+      "bytes": 1539,
+      "sha256": "f0738ec1b03bd4f59b1a05f88815ce6e7f4d7b6104113f6d5a21b62278c31887"
+    },
+    {
+      "source": "D:/Veyviz-code/veyviz-quadbridge-product/.local/product-immutable-runtime-evidence/review/independent-freeze03-source-snapshot-01/tools/veyviz-build.mjs",
+      "destination": "source/tools/veyviz-build.mjs",
+      "bytes": 14348,
+      "sha256": "f00694386527f5e73c8fab5b4ce056fe8df6c6c918bd85913b1ab3320f22c71c"
+    },
+    {
+      "source": "D:/Veyviz-code/veyviz-quadbridge-product/.local/product-immutable-runtime-evidence/review/independent-freeze03-source-snapshot-01/tools/veyviz-inventory.mjs",
+      "destination": "source/tools/veyviz-inventory.mjs",
+      "bytes": 24663,
+      "sha256": "06231111915da8d5acd4366e97c1cee3893827bdc8875cf37ac704c1dec875db"
+    },
+    {
+      "source": "D:/Veyviz-code/veyviz-quadbridge-product/.local/product-immutable-runtime-evidence/review/independent-freeze03-source-snapshot-01/tools/veyviz-start.mjs",
+      "destination": "source/tools/veyviz-start.mjs",
+      "bytes": 15913,
+      "sha256": "c7f9c30c5e11458fbe0f6291abc6254650be93a70ad7f730297ca4e4e2382662"
+    },
+    {
+      "source": "D:/Veyviz-code/veyviz-quadbridge-product/.local/product-immutable-runtime-evidence/review/independent-freeze03-source-snapshot-01/tools/veyviz-snapshot.mjs",
+      "destination": "source/tools/veyviz-snapshot.mjs",
+      "bytes": 22874,
+      "sha256": "1b20b45a86f781e2c482fd6f80b2092dfc35d390733f6defb01c4bb806448388"
+    },
+    {
+      "source": "D:/Veyviz-code/veyviz-quadbridge-product/.local/product-immutable-runtime-evidence/review/independent-freeze03-source-snapshot-01/tests/veyviz-lifecycle.test.mjs",
+      "destination": "source/tests/veyviz-lifecycle.test.mjs",
+      "bytes": 14898,
+      "sha256": "1493fab0aa8c97afbd8224dad5262fb0c113ae16c8d5fd220e4919881d716249"
+    },
+    {
+      "source": "D:/Veyviz-code/veyviz-quadbridge-product/.local/product-immutable-runtime-evidence/review/independent-freeze03-source-snapshot-01/tests/veyviz-snapshot.test.mjs",
+      "destination": "source/tests/veyviz-snapshot.test.mjs",
+      "bytes": 24999,
+      "sha256": "cfa0c46ecd72597d925926e4817ac73c1c27785ec89ee30a3bdb440e34d9dfcb"
+    }
+  ],
+  "limitations": [
+    "Exact source and source-only review preservation; no build/test or active-product qualification.",
+    "Earlier rejected freezes and concurrent foreign active source remain unchanged."
+  ]
+}

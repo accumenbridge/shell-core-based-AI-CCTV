@@ -1,18 +1,38 @@
 {
   "id": "knowledge",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "platformAbi": "quadbridge.module.v1",
   "title": "Knowledge Library",
   "description": "Documents, background indexing and connected-product action.",
   "layout": "top",
+  "experience": {
+    "schema": "quadbridge.product-experience.v1",
+    "designSystem": { "id": "quadbridge.standard", "version": "0.1.0" },
+    "browserProfile": "quadbridge.browser-profile.native-esm.v1",
+    "brand": { "name": "Knowledge Library", "tagline": "Find the source. Keep the context." },
+    "theme": { "surface": "dark", "text": "standard", "accent": "teal", "status": "semantic", "density": "compact" },
+    "login": { "title": "Welcome to Knowledge Library", "description": "Search trusted documents and inspect their sources.", "help": "Sign in with the local account provided by your launcher." },
+    "navigation": [
+      { "id": "library", "workspaceId": "knowledge.library", "label": "Library", "group": "Knowledge", "order": 0, "mobilePriority": 0 },
+      { "id": "handoffs", "workspaceId": "handoff.requests", "label": "Handoffs", "group": "Connected work", "order": 1, "mobilePriority": 1 }
+    ],
+    "routes": [
+      { "id": "library", "workspaceId": "knowledge.library", "kind": "workspace" },
+      { "id": "handoffs", "workspaceId": "handoff.requests", "kind": "workspace" }
+    ],
+    "layoutByWorkspace": [
+      { "workspaceId": "knowledge.library", "mode": "reading" },
+      { "workspaceId": "handoff.requests", "mode": "operational" }
+    ]
+  },
   "modules": [
     {
       "id": "knowledge",
-      "version": "0.2.3"
+      "version": "0.2.4"
     },
     {
       "id": "handoff",
-      "version": "0.2.3"
+      "version": "0.2.4"
     }
   ],
   "bindings": [

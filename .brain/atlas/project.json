@@ -2,8 +2,8 @@
   "schema": "brain.atlas.v1",
   "projectId": "veyviz-quadbridge-product",
   "title": "Veyviz local video-analysis product",
-  "planRevision": 12,
-  "updatedAt": "2026-10-03T05:24:12.990Z",
+  "planRevision": 24,
+  "updatedAt": "2026-10-03T17:59:22.383Z",
   "intentBasis": "User request 2026-10-03: analyze latest worker/framework/Veyviz state and build an independent new full-stack modular, plugin-capable product using Quadbridge; original repositories remain preserved. Root adopts local recorded-video scope and proposed new target.",
   "vision": {
     "destination": "A usable modular local Product/UI plus separately owned AI/media implementation, proven by actual construction, inference, browser and restart.",
@@ -48,7 +48,7 @@
       "id": "task",
       "path": ".brain/tasks/VEYVIZ-LOCAL-001.md",
       "role": "task",
-      "sha256": "ddb5db9a102badc4ac317a35cb5e31025e347815548d6b1c9497612f718c5142"
+      "sha256": "a296c407a979858aa194654f30c5d50ce0e080034dcbc5acfa8f69224d4f5b75"
     },
     {
       "id": "architecture",
@@ -66,7 +66,7 @@
       "id": "provenance",
       "path": "docs/veyviz/PROVENANCE.md",
       "role": "provenance",
-      "sha256": "52c8c6a8d73d9934fa060c5169fae29b1f1a3add308c39405ecde29675813195"
+      "sha256": "c2544b8f9444e07332c952a8c3a3fde2c39a0ae340c226d4189ead2809f6eaf0"
     },
     {
       "id": "protocol",
@@ -229,6 +229,54 @@
       "path": ".brain/workflow/runs/96f7ad30-2aa6-4077-8342-25747338f69f.json",
       "role": "Immutable actual concept-led UI candidate evidence",
       "sha256": "afd8e042ad80e6aa48c507695129b3b7c8e7cda217e8e4d834ff08e61435e093"
+    },
+    {
+      "id": "paging-order",
+      "path": ".brain/plans/veyviz-paging-work-order.json",
+      "role": "Explicit user-authorized owner query protocol and finite implementation manifest; not acceptance",
+      "sha256": "cc44d96d7a9bf717e9144392989f4e08c8fe31cc78cbacd831d9538f03e3df30"
+    },
+    {
+      "id": "startup-close-repair-order",
+      "path": ".brain/plans/veyviz-startup-close-work-order.json",
+      "role": "admitted bounded repair for observed original-close obligation",
+      "sha256": "eccf3dd9ac5910876fb29c450b58684c93888a1df926ba816318ba4e5cd48855"
+    },
+    {
+      "id": "immutable-runtime-order",
+      "path": ".brain/plans/veyviz-immutable-runtime-work-order.json",
+      "role": "admitted four-owner fixed-runtime repair",
+      "sha256": "85955630f42628c43bff82d356d29a035a81329617e8a3f994ae29c887da2ba8"
+    },
+    {
+      "id": "build-qualification-amendment",
+      "path": ".brain/plans/veyviz-build-qualification-amendment.json",
+      "role": "Admitted product-owned source/build freshness refusal",
+      "sha256": "9765cd6d4f1c3e65d82e9b17d4fab76aab39b62119076954f62a88e387a8c107"
+    },
+    {
+      "id": "core-ui-order",
+      "path": ".brain/plans/veyviz-core-ui-work-order.json",
+      "role": "Finite isolated core UI work brought forward by current human steering; not acceptance",
+      "sha256": "e7ef332b0318fcb5ad200ed2827780dbd36e427e5c79a6d20cf65ac92b96d1d1"
+    },
+    {
+      "id": "core-visible-milestone",
+      "path": ".brain/evidence/core-ui-browser-20261003/MANIFEST.json",
+      "role": "Actual isolated upstream adoption, fresh build/focused and five-workspace browser evidence with separate snapshot identities",
+      "sha256": "8a05ccb51b1e41b7e367eb99d70959c7c0fadc9fb0309b177ff840a4d04a6783"
+    },
+    {
+      "id": "core-command-recovery",
+      "path": ".brain/plans/veyviz-core-command-recovery.json",
+      "role": "Core lost-reply UI recovery with explicit existing owner limitations",
+      "sha256": "a2d61223ce0d2656e5070cd64e731d9fba1e3858572dba409ea882856e719140"
+    },
+    {
+      "id": "user-wrap-20261003",
+      "path": ".brain/handoffs/2026-10-03-user-wrap.md",
+      "role": "User-requested stop, actual saved state and unfinished core checks; no acceptance",
+      "sha256": "fd4179399ae1be580c80759382efdee8cdd8e736ed48e91a363701aa6a5643c8"
     }
   ],
   "nodes": [
@@ -275,7 +323,15 @@
         "provenance",
         "protocol",
         "experience",
-        "concept-implementation"
+        "concept-implementation",
+        "paging-order",
+        "startup-close-repair-order",
+        "immutable-runtime-order",
+        "build-qualification-amendment",
+        "core-ui-order",
+        "core-visible-milestone",
+        "core-command-recovery",
+        "user-wrap-20261003"
       ],
       "acceptance": [
         "Clean independent source/dependency construction and correct owner boundaries.",

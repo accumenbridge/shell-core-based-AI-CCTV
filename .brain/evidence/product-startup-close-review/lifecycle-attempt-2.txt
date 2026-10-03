@@ -1,0 +1,122 @@
+COMMAND=node --test tests/veyviz-lifecycle.test.mjs
+CWD=D:\Veyviz-code\veyviz-quadbridge-product\.local\product-startup-close-evidence\snapshot-overlay-adf30c71e8d92a86\source
+TEMP=D:\Veyviz-code\veyviz-quadbridge-product\.local\vp-sc2
+VEYVIZ_AI_PROFILE=unset
+NODE_OPTIONS=unset
+NODE_PATH=unset
+FRESH_BUILD_LOG=D:\Veyviz-code\veyviz-quadbridge-product\.local\product-startup-close-evidence\build-attempt-2.txt
+CANDIDATE=adf30c71e8d92a8603f3cc03de29b4e2968ea549ce4ae1dad940e905858dc930
+✖ Veyviz refuses a modified enrollment plan before creating identities or data (4.1369ms)
+✔ invalid port fails before creating a pending product enrollment (1.2784ms)
+✖ an unclean owned process exit remains quarantined on later launch (0.7886ms)
+▶ IPC control errors cannot settle the original child close observation
+  ✖ sync stop-send failure waits for original close (0.726ms)
+  ✖ async stop-send failure waits for original close (0.6472ms)
+✖ IPC control errors cannot settle the original child close observation (2.0124ms)
+✖ fixed catalog occupied-port startup failure observes original close and preserves quarantine (10.5676ms)
+✖ Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart (0.7215ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 1
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 90.6082
+
+✖ failing tests:
+
+test at tests\veyviz-lifecycle.test.mjs:85:1
+✖ Veyviz refuses a modified enrollment plan before creating identities or data (4.1369ms)
+  Error: ENOENT: no such file or directory, open 'D:\Veyviz-code\veyviz-quadbridge-product\.local\product-startup-close-evidence\snapshot-overlay-adf30c71e8d92a86\source\.artifacts\veyviz-catalog\plan.json'
+      at async open (node:internal/fs/promises:697:25)
+      at async readFile (node:internal/fs/promises:1348:14)
+      at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tests/veyviz-lifecycle.test.mjs:89:27)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-startup-close-evidence\\snapshot-overlay-adf30c71e8d92a86\\source\\.artifacts\\veyviz-catalog\\plan.json'
+  }
+
+test at tests\veyviz-lifecycle.test.mjs:103:1
+✖ an unclean owned process exit remains quarantined on later launch (0.7886ms)
+  Error: ENOENT: no such file or directory, open 'D:\Veyviz-code\veyviz-quadbridge-product\.local\product-startup-close-evidence\snapshot-overlay-adf30c71e8d92a86\source\.artifacts\veyviz-catalog\release.json'
+      at async open (node:internal/fs/promises:697:25)
+      at async readFile (node:internal/fs/promises:1348:14)
+      at async prepareProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tools/veyviz-start.mjs:17:24)
+      at async startProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tools/veyviz-start.mjs:80:20)
+      at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tests/veyviz-lifecycle.test.mjs:105:15)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-startup-close-evidence\\snapshot-overlay-adf30c71e8d92a86\\source\\.artifacts\\veyviz-catalog\\release.json'
+  }
+
+test at tests\veyviz-lifecycle.test.mjs:115:13
+✖ sync stop-send failure waits for original close (0.726ms)
+  Error: ENOENT: no such file or directory, open 'D:\Veyviz-code\veyviz-quadbridge-product\.local\product-startup-close-evidence\snapshot-overlay-adf30c71e8d92a86\source\.artifacts\veyviz-catalog\release.json'
+      at async open (node:internal/fs/promises:697:25)
+      at async readFile (node:internal/fs/promises:1348:14)
+      at async prepareProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tools/veyviz-start.mjs:17:24)
+      at async startProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tools/veyviz-start.mjs:80:20)
+      at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tests/veyviz-lifecycle.test.mjs:117:24)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tests/veyviz-lifecycle.test.mjs:115:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-startup-close-evidence\\snapshot-overlay-adf30c71e8d92a86\\source\\.artifacts\\veyviz-catalog\\release.json'
+  }
+
+test at tests\veyviz-lifecycle.test.mjs:115:13
+✖ async stop-send failure waits for original close (0.6472ms)
+  Error: ENOENT: no such file or directory, open 'D:\Veyviz-code\veyviz-quadbridge-product\.local\product-startup-close-evidence\snapshot-overlay-adf30c71e8d92a86\source\.artifacts\veyviz-catalog\release.json'
+      at async open (node:internal/fs/promises:697:25)
+      at async readFile (node:internal/fs/promises:1348:14)
+      at async prepareProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tools/veyviz-start.mjs:17:24)
+      at async startProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tools/veyviz-start.mjs:80:20)
+      at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tests/veyviz-lifecycle.test.mjs:117:24)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tests/veyviz-lifecycle.test.mjs:115:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-startup-close-evidence\\snapshot-overlay-adf30c71e8d92a86\\source\\.artifacts\\veyviz-catalog\\release.json'
+  }
+
+test at tests\veyviz-lifecycle.test.mjs:157:1
+✖ fixed catalog occupied-port startup failure observes original close and preserves quarantine (10.5676ms)
+  AssertionError [ERR_ASSERTION]: occupied port remains a failed startup with the original owner attached
+      at TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tests/veyviz-lifecycle.test.mjs:170:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\veyviz-lifecycle.test.mjs:187:1
+✖ Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart (0.7215ms)
+  Error: ENOENT: no such file or directory, open 'D:\Veyviz-code\veyviz-quadbridge-product\.local\product-startup-close-evidence\snapshot-overlay-adf30c71e8d92a86\source\.artifacts\veyviz-catalog\plan.json'
+      at async open (node:internal/fs/promises:697:25)
+      at async readFile (node:internal/fs/promises:1348:14)
+      at async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-startup-close-evidence/snapshot-overlay-adf30c71e8d92a86/source/tests/veyviz-lifecycle.test.mjs:188:34)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-startup-close-evidence\\snapshot-overlay-adf30c71e8d92a86\\source\\.artifacts\\veyviz-catalog\\plan.json'
+  }
+EXIT_CODE=1

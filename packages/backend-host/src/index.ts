@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { PlatformError, id, type Actor, type CompositionPlan, type Json, type Mode, type ModuleManifest, type RequestContext, type RouteDefinition } from '@quadbridge/contracts';
 import { sameOperationDescriptor, validateOperationDescriptor, validateOperationValue, type OperationDescriptor, type OperationRegistration } from '@quadbridge/contracts/operations';
 import { validateUiContributionDescriptors } from '@quadbridge/contracts/ui-contributions';
+import type { ModelAnswerCapability } from '@quadbridge/ai-core';
 export interface AccessPort {
     assertModule(actor: Actor, tenant: string, module: string, permission: string, kind: 'read' | 'write'): void;
     permissions(actor: Actor, tenant: string): string[];
@@ -13,6 +14,8 @@ export interface ModuleEnvironment {
     dataPath: string;
     /** Only the selected, explicitly bound ports required by this module. */
     bindings: Readonly<Record<string, unknown>>;
+    /** Server-created optional local inference capability; never selected by a request. */
+    modelAnswer?: ModelAnswerCapability;
 }
 export interface HostedModule {
     manifest: ModuleManifest;
@@ -124,8 +127,8 @@ export class ApplicationHost {
             return result;
         }
         catch (error) {
-            // A revoked original HTTP session takes priority over a delayed handler error.
-            assertOriginalAuth?.();
+            // Recheck the original principal and current permission before surfacing a late result.
+            ctx.assertAllowed(found.route.permission, found.route.kind);
             throw error;
         }
     }
@@ -182,7 +185,8 @@ export class ApplicationHost {
         const disallowed = new Set(this.plan.modules.flatMap(m => m.routes.filter(r => this.access.mode(tenantId, m.id) === 'off' || (this.access.mode(tenantId, m.id) === 'read-only' && r.kind === 'write')).map(r => r.permission)));
         const permissions = grants.filter(p => !disallowed.has(p));
         return { scope: { productId: this.plan.product.id, instanceId: this.instanceId, tenantId }, actor, tenants, permissions,
-            product: { id: this.plan.product.id, title: this.plan.product.title, description: this.plan.product.description, layout: this.plan.product.layout, version: this.plan.product.version },
+            product: { id: this.plan.product.id, title: this.plan.product.title, description: this.plan.product.description, layout: this.plan.product.layout, version: this.plan.product.version,
+                ...(this.plan.product.experience ? { experience: this.plan.product.experience } : {}) },
             modules: modules.map(m => ({ id: m.id, version: m.version, mode: this.access.mode(tenantId, m.id) })),
             workspaces: modules.flatMap(m => m.workspaces.filter(w => permissions.includes(w.permission)).map(w => ({ ...w, moduleId: m.id }))),
             uiContributions: modules.flatMap(m => validateUiContributionDescriptors(m).filter(item => permissions.includes(item.permission)).map(item => ({ ...item, moduleId: m.id }))),

@@ -1,0 +1,30 @@
+{
+  "schema": "veyviz.startup-close-independent-review-capture.v1",
+  "phase": "after",
+  "capturedUtc": "2026-10-03T09:00:07.1202975Z",
+  "candidateIdentity": "adf30c71e8d92a8603f3cc03de29b4e2968ea549ce4ae1dad940e905858dc930",
+  "all3Stable": true,
+  "files": [
+    {
+      "path": "tools/veyviz-start.mjs",
+      "snapshotSha256": "23a42e9536fcf0e59b37153e60e15b954d2ad7099aac633ea7900a3520d32959",
+      "activeSha256": "23a42e9536fcf0e59b37153e60e15b954d2ad7099aac633ea7900a3520d32959",
+      "stable": true,
+      "activeMatchesSnapshot": true
+    },
+    {
+      "path": "tests/veyviz-lifecycle.test.mjs",
+      "snapshotSha256": "60f72380771304b0debf33721bb0e8155f59a7d2ef7565ea473c64d8fc800e33",
+      "activeSha256": "60f72380771304b0debf33721bb0e8155f59a7d2ef7565ea473c64d8fc800e33",
+      "stable": true,
+      "activeMatchesSnapshot": true
+    },
+    {
+      "path": "tools/veyviz-runtime.mjs",
+      "snapshotSha256": "7bf19c54a83ab16784083762c0c0555281ac44e903403825fa67d99ea12233ca",
+      "activeSha256": "7bf19c54a83ab16784083762c0c0555281ac44e903403825fa67d99ea12233ca",
+      "stable": true,
+      "activeMatchesSnapshot": true
+    }
+  ]
+}

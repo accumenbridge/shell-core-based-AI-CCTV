@@ -1,0 +1,162 @@
+TAP version 13
+# Subtest: Veyviz refuses a modified enrollment plan before creating identities or data
+ok 1 - Veyviz refuses a modified enrollment plan before creating identities or data
+  ---
+  duration_ms: 11.0374
+  type: 'test'
+  ...
+# Subtest: invalid port fails before creating a pending product enrollment
+ok 2 - invalid port fails before creating a pending product enrollment
+  ---
+  duration_ms: 1.5041
+  type: 'test'
+  ...
+# Subtest: an unclean owned process exit remains quarantined on later launch
+ok 3 - an unclean owned process exit remains quarantined on later launch
+  ---
+  duration_ms: 4335.1112
+  type: 'test'
+  ...
+# Subtest: IPC control errors cannot settle the original child close observation
+    # Subtest: sync stop-send failure waits for original close
+    ok 1 - sync stop-send failure waits for original close
+      ---
+      duration_ms: 4438.9352
+      type: 'test'
+      ...
+    # Subtest: async stop-send failure waits for original close
+    ok 2 - async stop-send failure waits for original close
+      ---
+      duration_ms: 4382.6756
+      type: 'test'
+      ...
+    1..2
+ok 4 - IPC control errors cannot settle the original child close observation
+  ---
+  duration_ms: 8823.4353
+  type: 'test'
+  ...
+# Subtest: fixed catalog occupied-port startup failure observes original close and preserves quarantine
+ok 5 - fixed catalog occupied-port startup failure observes original close and preserves quarantine
+  ---
+  duration_ms: 2573.9934
+  type: 'test'
+  ...
+# Subtest: Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart
+ok 6 - Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart
+  ---
+  duration_ms: 7381.9181
+  type: 'test'
+  ...
+# Subtest: Veyviz operation SDK runs real owned operations with declared output schemas
+ok 7 - Veyviz operation SDK runs real owned operations with declared output schemas
+  ---
+  duration_ms: 118.0237
+  type: 'test'
+  ...
+# Subtest: analysis receipt replays unchanged client command after source rename; changed body conflicts
+ok 8 - analysis receipt replays unchanged client command after source rename; changed body conflicts
+  ---
+  duration_ms: 88.8278
+  type: 'test'
+  ...
+# Subtest: source version changed during inference prevents durable Product acceptance
+ok 9 - source version changed during inference prevents durable Product acceptance
+  ---
+  duration_ms: 84.8176
+  type: 'test'
+  ...
+# Subtest: analysis authority revoked after preparation is synchronously denied at owner commit
+ok 10 - analysis authority revoked after preparation is synchronously denied at owner commit
+  ---
+  duration_ms: 86.1877
+  type: 'test'
+  ...
+# Subtest: cancellation during inference fences an otherwise successful result
+ok 11 - cancellation during inference fences an otherwise successful result
+  ---
+  duration_ms: 85.754
+  type: 'test'
+  ...
+# Subtest: accepted result and review survive owner restart and stay tenant-scoped
+ok 12 - accepted result and review survive owner restart and stay tenant-scoped
+  ---
+  duration_ms: 95.7784
+  type: 'test'
+  ...
+# Subtest: strict AI proposal validator permits optional thumbnail but rejects altered identity, shape and cleanup
+ok 13 - strict AI proposal validator permits optional thumbnail but rejects altered identity, shape and cleanup
+  ---
+  duration_ms: 1.2724
+  type: 'test'
+  ...
+# Subtest: source owner query traverses registrations beyond the v1 cap and binds every cursor to query scope
+ok 14 - source owner query traverses registrations beyond the v1 cap and binds every cursor to query scope
+  ---
+  duration_ms: 215.1224
+  type: 'test'
+  ...
+# Subtest: analysis owner query pages all matching history, filters owner rows and leaves the v1 list cap intact
+ok 15 - analysis owner query pages all matching history, filters owner rows and leaves the v1 list cap intact
+  ---
+  duration_ms: 128.6697
+  type: 'test'
+  ...
+# Subtest: the running catalog serves captured web bytes and backend state after its producer asset changes
+ok 16 - the running catalog serves captured web bytes and backend state after its producer asset changes
+  ---
+  duration_ms: 18191.6245
+  type: 'test'
+  ...
+# Subtest: unchanged snapshot restart retains data while a changed valid export gets isolated storage
+ok 17 - unchanged snapshot restart retains data while a changed valid export gets isolated storage
+  ---
+  duration_ms: 35637.8226
+  type: 'test'
+  ...
+# Subtest: tampered, incomplete, forged, stale and escaped snapshot inputs are refused before fork
+not ok 18 - tampered, incomplete, forged, stale and escaped snapshot inputs are refused before fork
+  ---
+  duration_ms: 23422.9696
+  type: 'test'
+  location: 'D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tests\\veyviz-snapshot.test.mjs:329:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /digest mismatch|release|digest/i. Input:
+    
+    'Error: Artifact drift: modules/veyviz-sources/dist/index.js'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Artifact drift: modules/veyviz-sources/dist/index.js'
+  stack: |-
+    digestMap (file:///D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/packages/composition/dist/integrity.js:44:19)
+    verifyReleaseArtifactsUsing (file:///D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/packages/composition/dist/integrity.js:130:5)
+    verifyReleaseArtifacts (file:///D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/packages/composition/dist/integrity.js:135:12)
+    captureBuildOutputs (file:///D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tools/veyviz-inventory.mjs:282:22)
+    async verifyBuildQualification (file:///D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tools/veyviz-inventory.mjs:381:19)
+    async collectInputs (file:///D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tools/veyviz-snapshot.mjs:75:25)
+    async prepareVerifiedSnapshot (file:///D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tools/veyviz-snapshot.mjs:284:18)
+    async prepareProduct (file:///D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tools/veyviz-start.mjs:30:20)
+    async startProduct (file:///D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tools/veyviz-start.mjs:123:20)
+    async waitForActual (node:assert:646:5)
+  operator: 'rejects'
+  stack: |-
+    async file:///D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tests/veyviz-snapshot.test.mjs:158:5
+    async assertRefusedBeforeFork (file:///D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tests/veyviz-snapshot.test.mjs:154:3)
+    async TestContext.<anonymous> (file:///D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/tests/veyviz-snapshot.test.mjs:403:3)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Snapshot fixture retained after failure: D:\\CodexData\\worktrees\\veyviz-snapshot-test-8kLskh
+1..18
+# tests 20
+# suites 0
+# pass 19
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 101565.6667

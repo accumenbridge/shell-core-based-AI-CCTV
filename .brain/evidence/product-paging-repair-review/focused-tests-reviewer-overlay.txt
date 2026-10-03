@@ -1,0 +1,107 @@
+TAP version 13
+# Subtest: Veyviz refuses a modified enrollment plan before creating identities or data
+ok 1 - Veyviz refuses a modified enrollment plan before creating identities or data
+  ---
+  duration_ms: 10.0728
+  type: 'test'
+  ...
+# Subtest: invalid port fails before creating a pending product enrollment
+ok 2 - invalid port fails before creating a pending product enrollment
+  ---
+  duration_ms: 1.1553
+  type: 'test'
+  ...
+# Subtest: an unclean owned process exit remains quarantined on later launch
+not ok 3 - an unclean owned process exit remains quarantined on later launch
+  ---
+  duration_ms: 157.6636
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-overlay-2437aeb7d7627763\\source\\tests\\veyviz-lifecycle.test.mjs:37:1'
+  failureType: 'testCodeFailure'
+  error: 'Startup and cleanup failed; the original owner remains available on error.owner.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    startProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-paging-evidence/snapshot-overlay-2437aeb7d7627763/source/tools/veyviz-start.mjs:138:23)
+    process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-paging-evidence/snapshot-overlay-2437aeb7d7627763/source/tests/veyviz-lifecycle.test.mjs:39:15)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart
+not ok 4 - Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart
+  ---
+  duration_ms: 169.925
+  type: 'test'
+  location: 'D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-paging-evidence\\snapshot-overlay-2437aeb7d7627763\\source\\tests\\veyviz-lifecycle.test.mjs:47:1'
+  failureType: 'testCodeFailure'
+  error: 'Startup and cleanup failed; the original owner remains available on error.owner.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    startProduct (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-paging-evidence/snapshot-overlay-2437aeb7d7627763/source/tools/veyviz-start.mjs:138:23)
+    async TestContext.<anonymous> (file:///D:/Veyviz-code/veyviz-quadbridge-product/.local/product-paging-evidence/snapshot-overlay-2437aeb7d7627763/source/tests/veyviz-lifecycle.test.mjs:51:13)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Veyviz operation SDK runs real owned operations with declared output schemas
+ok 5 - Veyviz operation SDK runs real owned operations with declared output schemas
+  ---
+  duration_ms: 108.8534
+  type: 'test'
+  ...
+# Subtest: analysis receipt replays unchanged client command after source rename; changed body conflicts
+ok 6 - analysis receipt replays unchanged client command after source rename; changed body conflicts
+  ---
+  duration_ms: 82.8655
+  type: 'test'
+  ...
+# Subtest: source version changed during inference prevents durable Product acceptance
+ok 7 - source version changed during inference prevents durable Product acceptance
+  ---
+  duration_ms: 79.4562
+  type: 'test'
+  ...
+# Subtest: analysis authority revoked after preparation is synchronously denied at owner commit
+ok 8 - analysis authority revoked after preparation is synchronously denied at owner commit
+  ---
+  duration_ms: 79.5117
+  type: 'test'
+  ...
+# Subtest: cancellation during inference fences an otherwise successful result
+ok 9 - cancellation during inference fences an otherwise successful result
+  ---
+  duration_ms: 80.6354
+  type: 'test'
+  ...
+# Subtest: accepted result and review survive owner restart and stay tenant-scoped
+ok 10 - accepted result and review survive owner restart and stay tenant-scoped
+  ---
+  duration_ms: 89.8415
+  type: 'test'
+  ...
+# Subtest: strict AI proposal validator permits optional thumbnail but rejects altered identity, shape and cleanup
+ok 11 - strict AI proposal validator permits optional thumbnail but rejects altered identity, shape and cleanup
+  ---
+  duration_ms: 1.2657
+  type: 'test'
+  ...
+# Subtest: source owner query traverses registrations beyond the v1 cap and binds every cursor to query scope
+ok 12 - source owner query traverses registrations beyond the v1 cap and binds every cursor to query scope
+  ---
+  duration_ms: 199.547
+  type: 'test'
+  ...
+# Subtest: analysis owner query pages all matching history, filters owner rows and leaves the v1 list cap intact
+ok 13 - analysis owner query pages all matching history, filters owner rows and leaves the v1 list cap intact
+  ---
+  duration_ms: 123.2327
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 11
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1330.5645

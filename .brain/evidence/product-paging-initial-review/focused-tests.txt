@@ -1,0 +1,21 @@
+✔ Veyviz refuses a modified enrollment plan before creating identities or data (11.4215ms)
+✔ invalid port fails before creating a pending product enrollment (0.661ms)
+✔ an unclean owned process exit remains quarantined on later launch (193.2287ms)
+✔ Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart (811.2524ms)
+✔ Veyviz operation SDK runs real owned operations with declared output schemas (113.0799ms)
+✔ analysis receipt replays unchanged client command after source rename; changed body conflicts (89.5756ms)
+✔ source version changed during inference prevents durable Product acceptance (83.6553ms)
+✔ analysis authority revoked after preparation is synchronously denied at owner commit (85.1187ms)
+✔ cancellation during inference fences an otherwise successful result (85.8717ms)
+✔ accepted result and review survive owner restart and stay tenant-scoped (92.6384ms)
+✔ strict AI proposal validator permits optional thumbnail but rejects altered identity, shape and cleanup (1.3259ms)
+✔ source owner query traverses registrations beyond the v1 cap and binds every cursor to query scope (225.0865ms)
+✔ analysis owner query pages all matching history, filters owner rows and leaves the v1 list cap intact (129.3809ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1082.2148

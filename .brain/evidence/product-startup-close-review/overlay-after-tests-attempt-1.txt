@@ -1,0 +1,2 @@
+{"candidateIdentity":"adf30c71e8d92a8603f3cc03de29b4e2968ea549ce4ae1dad940e905858dc930","phase":"after-focused-lifecycle-tests","maintainedFileCount":917,"maintainedDigest":"942dc5efa2c36e6fbde46069c8d66b4150ee1b4fe5adde30c0bb0d3eaa306d73","ownerPathCount":2,"readonlyPathCount":1,"outputPath":"D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-startup-close-evidence\\overlay-after-focused-lifecycle-tests-inventory.json"}
+EXIT_CODE=0

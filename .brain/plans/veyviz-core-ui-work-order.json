@@ -1,0 +1,33 @@
+{
+  "schema": "veyviz.core-ui-work-order.v1",
+  "status": "ADMITTED_ISOLATED_SOURCE_IMPLEMENTATION_NOT_ACCEPTED",
+  "basis": "Human fix-all authorization and latest core-first steering: deliver working five-workspace product before optional framework variants.",
+  "root": "D:/CodexData/worktrees/veyviz-ui-core-20261003",
+  "owners": [
+    "modules/veyviz-sources/src/ui.ts",
+    "modules/veyviz-sources/src/styles.css",
+    "modules/veyviz-analysis/src/ui.ts",
+    "modules/veyviz-analysis/src/styles.css",
+    "modules/veyviz-rfdetr/src/ui.ts",
+    "modules/veyviz-rfdetr/src/styles.css",
+    "modules/veyviz-intelligence/src/ui.ts",
+    "modules/veyviz-intelligence/src/styles.css",
+    "products/veyviz-review/product.json",
+    "products/veyviz-catalog/product.json",
+    "tests/veyviz-ui-core.test.mjs"
+  ],
+  "upstream": {
+    "reviewedExperienceCommit": "73f35ee519213fd1c6b6ddb023566fbd48700fa7",
+    "uiFoundation": "UI03 core in separate maintained authority; root imports only after frozen source/checks and independent review"
+  },
+  "sequence": "Implement product-owned presentation now against the reviewed UI02 descriptor and preserved web-shell DOM helper API. Public UI03 theme boundary must be confirmed by its owner before use. Build/tests wait for reviewed upstream adoption; no in-progress framework copies.",
+  "behavior": [
+    "Use new product versions and closed product-owned experience metadata; review defaults Command Center, catalogue Recordings. All five existing authorized workspaces remain available with source-derived permission filtering.",
+    "Remove body:has and private shell/login/global CSS overrides. Scope each stylesheet to its own root. Consume public tokens and explicit nested light/dark boundaries; preserve domain video wells and canvas coordinates.",
+    "Improve existing controls, labels, spacing, focused evidence layout and narrow reflow. Preserve video, inference, temporal, paging, authority and original command behavior. No invented data or new backend semantics.",
+    "Use existing web-shell DOM imports delegated by UI03; no new package dependency or optional component prerequisite. Root owns all dependency integration.",
+    "Add finite mounted-UI regressions for actual affected behaviors; CSS string assertions alone are not browser qualification. Root performs real exported-product CUA checks."
+  ],
+  "deferred": "Unknown-command correctness amendments remain required and explicitly separate if they require outcome contracts; optional variants and UI04-07 remain final scope. This early presentation increment does not accept whole product.",
+  "boundaries": "Sole product writer owns only these11 paths. Root owns Brain/Git/upstream adoption/lock/build-toolchain/native/model/browser. Active product, foreign source, data and original repositories remain untouched."
+}

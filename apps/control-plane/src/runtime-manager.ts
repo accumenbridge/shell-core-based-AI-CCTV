@@ -19,6 +19,7 @@ const RUNTIME_ID = /^runtime-[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9
 const PRODUCT_ID = /^[a-z][a-z0-9-]{1,47}$/;
 const VERSION = /^\d{1,6}\.\d{1,6}\.\d{1,6}$/;
 const SNAPSHOT_LIMITS: SnapshotAccessLimits = ARTIFACT_REGISTRY_LIMITS;
+const PRIVATE_RUNTIME_SNAPSHOT_DIRECTORY = 's';
 const HEX256 = /^[a-f0-9]{64}$/;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const NODE_VERSION_PIN = 'v24.19.0';
@@ -26,10 +27,36 @@ const NODE_SHA256_PIN = '3602f2bb1a10f2cbab4c36886218a33c1ab3db87290e73b033c46c7
 const POWERSHELL_SHA256_PIN = '362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139';
 const RUNTIME_RECIPE = 'managed-local-runtime-supervisor-v1';
 
+export const MANAGED_RUNTIME_MODEL_PROFILE = 'local-ollama-qwen3-4b' as const;
+export type ManagedRuntimeModelProfile = typeof MANAGED_RUNTIME_MODEL_PROFILE;
+export const MANAGED_RUNTIME_NATIVE_API_PROFILE = 'local-native-forwarded-v1' as const;
+export type ManagedRuntimeNativeApiProfile = typeof MANAGED_RUNTIME_NATIVE_API_PROFILE;
+
 export class RuntimePreparationError extends Error {
   constructor(readonly code: 'RUNTIME_UNAVAILABLE'|'RUNTIME_REPAIR_REQUIRED'|'RUNTIME_SOURCE_INVALID'|'RUNTIME_IDENTITY_CHANGED', message: string) {
     super(message); this.name = 'RuntimePreparationError';
   }
+}
+
+/** Parses a persisted or explicit selection. Absence is distinct from an invalid value. */
+export function parseManagedRuntimeModelProfile(value: unknown): ManagedRuntimeModelProfile | undefined {
+  if (value === undefined) return undefined;
+  if (value === MANAGED_RUNTIME_MODEL_PROFILE) return MANAGED_RUNTIME_MODEL_PROFILE;
+  throw new RuntimePreparationError('RUNTIME_UNAVAILABLE', 'The selected managed model profile is not supported');
+}
+
+/** Environment bootstrap treats an empty variable as no opt-in, but accepts no other spelling. */
+export function resolveManagedRuntimeModelProfile(value: unknown): ManagedRuntimeModelProfile | undefined {
+  return value === '' ? undefined : parseManagedRuntimeModelProfile(value);
+}
+
+export function parseManagedRuntimeNativeApiProfile(value:unknown):ManagedRuntimeNativeApiProfile|undefined{
+  if(value===undefined)return undefined;
+  if(value===MANAGED_RUNTIME_NATIVE_API_PROFILE)return MANAGED_RUNTIME_NATIVE_API_PROFILE;
+  throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The selected native API profile is not supported');
+}
+export function resolveManagedRuntimeNativeApiProfile(value:unknown):ManagedRuntimeNativeApiProfile|undefined{
+  return value===''?undefined:parseManagedRuntimeNativeApiProfile(value);
 }
 
 export interface RuntimePlanIdentity {
@@ -39,6 +66,7 @@ export interface RuntimePlanIdentity {
   plan: Record<string, any>;
   profile: Record<string, any>;
   profileDigest: string;
+  planDigest:string;
 }
 
 export interface AdaptedRuntimeConfiguration {
@@ -241,6 +269,32 @@ function objectAt(snapshot: BoundedSnapshot, path: string): { value: Record<stri
   return { value: value as Record<string, any>, bytes: entry.bytes };
 }
 
+/** Reads only the fixed support declaration captured in the verified runtime export. */
+export function runtimeSupportsManagedModelProfile(snapshot: BoundedSnapshot, profile: ManagedRuntimeModelProfile): boolean {
+  if (parseManagedRuntimeModelProfile(profile) !== MANAGED_RUNTIME_MODEL_PROFILE)
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'The managed model profile identity is invalid');
+  const { value } = objectAt(snapshot, 'apps/runtime/package.json');
+  if (value.name !== '@quadbridge/runtime')
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'The captured runtime package identity is invalid');
+  if (!Object.hasOwn(value, 'quadbridgeRuntimeProfiles')) return false;
+  const declared = value.quadbridgeRuntimeProfiles;
+  if (!Array.isArray(declared) || declared.some((item: unknown) => typeof item !== 'string'))
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'The captured runtime profile declaration is malformed');
+  return declared.includes(profile);
+}
+
+export function runtimeSupportsManagedNativeApiProfile(snapshot:BoundedSnapshot,profile:ManagedRuntimeNativeApiProfile):boolean{
+  if(parseManagedRuntimeNativeApiProfile(profile)!==MANAGED_RUNTIME_NATIVE_API_PROFILE)
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The managed native API profile identity is invalid');
+  const {value}=objectAt(snapshot,'apps/runtime/package.json');
+  if(value.name!=='@quadbridge/runtime')throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The captured runtime package identity is invalid');
+  if(!Object.hasOwn(value,'quadbridgeRuntimeNativeProfiles'))return false;
+  const declared=value.quadbridgeRuntimeNativeProfiles;
+  if(!Array.isArray(declared)||declared.some((item:unknown)=>typeof item!=='string'))
+    throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The captured native API profile declaration is malformed');
+  return declared.includes(profile);
+}
+
 export function runtimePlanIdentity(snapshot: BoundedSnapshot, productId: string, version: string): RuntimePlanIdentity {
   if (!PRODUCT_ID.test(productId) || !VERSION.test(version)) throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Runtime release identity is invalid');
   const { value: plan } = objectAt(snapshot, `.artifacts/${productId}/plan.json`);
@@ -254,7 +308,7 @@ export function runtimePlanIdentity(snapshot: BoundedSnapshot, productId: string
   if (profile.id !== 'quadbridge.local-developer.v1' || profile.profile !== 'loopback-developer-only' ||
       !Array.isArray(profile.defaultTenants) || !Array.isArray(profile.providerSeeds) || !Array.isArray(profile.connections))
     throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Promoted local developer profile is not supported');
-  return { productId, version, workerRequired: plan.requiresWorker, plan, profile, profileDigest: sha256(profileBytes) };
+  return { productId, version, workerRequired: plan.requiresWorker, plan, profile, profileDigest: sha256(profileBytes), planDigest:sha256(canonical(plan)) };
 }
 
 /** Resolves schema descriptors only from the exact selected module manifests in a verified snapshot. */
@@ -279,7 +333,11 @@ export async function adaptCanonicalLocalConfiguration(input: {
   instanceId: string;
   dataDirectory: string;
   credentialReference: string;
+  modelProfile?: ManagedRuntimeModelProfile;
+  nativeApiProfile?:ManagedRuntimeNativeApiProfile;
 }): Promise<AdaptedRuntimeConfiguration> {
+  const modelProfile = parseManagedRuntimeModelProfile(input.modelProfile);
+  const nativeApiProfile=parseManagedRuntimeNativeApiProfile(input.nativeApiProfile);
   if (!RUNTIME_ID.test(input.instanceId) || !PRODUCT_ID.test(input.planIdentity.productId))
     throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID', 'Generated local runtime identity is invalid');
   const helper = join(assertPhysicalRoot(input.executionRoot), 'tools', 'local-profile.mjs');
@@ -321,6 +379,8 @@ export async function adaptCanonicalLocalConfiguration(input: {
   const seedDigest = sha256(canonical(seedPrincipals));
   config.instanceId = input.instanceId;
   config.principals = [];
+  if (modelProfile) config.modelAnswerProfile = modelProfile;
+  if(nativeApiProfile)config.nativeApiProfile=nativeApiProfile;
   const configDigest = sha256(canonical({ config, seedDigest, profileDigest: input.planIdentity.profileDigest }));
   return { config, seedPrincipals, seedDigest, configDigest, credentialReference: input.credentialReference };
 }
@@ -404,6 +464,7 @@ function validateEnrollmentIdentity(identity: RuntimeEnrollmentIdentity, project
   const actualSeedDigest = sha256(canonical(seeds));
   if (!HEX256.test(seedDigest) || actualSeedDigest !== seedDigest || !config || typeof config !== 'object' || Array.isArray(config) ||
       config.instanceId !== identity.instanceId || config.dataDirectory !== resolve(dataDirectory) || !Array.isArray(config.principals) || config.principals.length !== 0 ||
+      config.nativeApiProfile!==undefined&&config.nativeApiProfile!==MANAGED_RUNTIME_NATIVE_API_PROFILE ||
       !config.connections || typeof config.connections !== 'object' || Array.isArray(config.connections) ||
       sha256(canonical({ config, seedDigest, profileDigest: identity.profileDigest })) !== identity.configDigest)
     throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED', 'Canonical runtime configuration does not match its immutable enrollment identity');
@@ -615,6 +676,8 @@ export async function prepareRuntimeEnrollment(input: {
   planIdentity: RuntimePlanIdentity;
   freshEnrollmentAllowed: boolean;
   authorize: RuntimeAuthorize;
+  modelProfile?: ManagedRuntimeModelProfile;
+  nativeApiProfile?:ManagedRuntimeNativeApiProfile;
 }): Promise<PreparedRuntimeEnrollment> {
   const dataDirectory=runtimeDataDirectory(input.projectRoot,input.identity.instanceId,input.identity.artifactDigest);
   const existing=completedRuntimeEnrollment({projectRoot:input.projectRoot,dataDirectory,identity:input.identity});
@@ -626,7 +689,7 @@ export async function prepareRuntimeEnrollment(input: {
   // Any extant directory, even empty, can be residue from a failed first enrollment.
   if(optionalLstat(dataDirectory))throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Existing runtime data is incomplete; it will not be reseeded');
   const adapted=await adaptCanonicalLocalConfiguration({executionRoot:input.executionRoot,planIdentity:input.planIdentity,instanceId:input.identity.instanceId,
-    dataDirectory,credentialReference:`${input.identity.instanceId}:${input.identity.artifactDigest}`});
+    dataDirectory,credentialReference:`${input.identity.instanceId}:${input.identity.artifactDigest}`,modelProfile:input.modelProfile,nativeApiProfile:input.nativeApiProfile});
   assertRuntimeAuthorization(input.authorize);
   const fullIdentity:RuntimeEnrollmentIdentity={...input.identity,configDigest:adapted.configDigest};
   validateEnrollmentIdentity(fullIdentity,input.projectRoot,dataDirectory,adapted.config,adapted.seedPrincipals,adapted.seedDigest);
@@ -690,10 +753,12 @@ type RuntimeExitObservation={complete:boolean;emptyObserved:boolean;helperClosed
 type RuntimeRunner = {
   instanceId:string; operationId:string; ownerToken:string; nonce:string; commandId:string; attempt:number;
   dataDirectory:string; executionRoot:string; operationRoot:string; enrollmentDigest:string; workerRequired:boolean;
+  nativeApiIdentity?:{productId:string;productVersion:string;instanceId:string;planDigest:string;modules:{id:string;version:string}[]};
   child:ChildProcess; closed:Promise<{code:number|null;signal:NodeJS.Signals|null}>; closeValue?:{code:number|null;signal:NodeJS.Signals|null};
   closeError?:Error; stdoutBuffer:string; stdoutBytes:number; stderrBytes:number; ready:boolean; exitMarker?:{code:number|null;empty:boolean};
   eventOffset:number; eventBytes:number; eventRemainder:string; eventDev?:number; eventIno?:number;
-  phase:number; url?:string; port?:number; stopping:boolean; stopReason?:'STOP'|'OPERATOR_SHUTDOWN'|'START_FAILED'|'REQUIRED_ROLE_EXIT'; controlLines:Set<string>;
+  phase:number; url?:string; port?:number; nativeApiProfile?:ManagedRuntimeNativeApiProfile; nativeApiUrl?:string;
+  stopping:boolean; stopReason?:'STOP'|'OPERATOR_SHUTDOWN'|'START_FAILED'|'REQUIRED_ROLE_EXIT'; controlLines:Set<string>;
   protocolError?:Error; controlError?:Error; operationalError?:'RUNTIME_EVENT_INVALID'|'RUNTIME_SETTLEMENT_FAILED';
   terminalEventsRead?:boolean; terminalEventInvalid?:boolean; executionCleanObserved?:boolean; terminalSettlement?:boolean; terminalResult?:RuntimeExitObservation;
   pendingEvents?:Record<string,any>[]; terminalRoleFailure?:'web-backend'|'worker'; terminalSupervisorFailure?:boolean;
@@ -702,6 +767,12 @@ type RuntimeRunner = {
 type RuntimeRequest = { productId:string; version:string; requestKey:string };
 type RuntimeStopRequest = { instanceId:string; requestKey:string };
 type RuntimeAuthorize = () => unknown;
+
+type NativeChildClose = { code:number|null; signal:NodeJS.Signals|null };
+type NativeChildCloseSource = { once(event:'close',listener:(code:number|null,signal:NodeJS.Signals|null)=>void):unknown };
+export function registerNativeChildClosure<T>(child:NativeChildCloseSource,register:<V>(promise:Promise<V>)=>Promise<V>,onClose?:(value:NativeChildClose)=>void):Promise<NativeChildClose>{
+  return register(new Promise<NativeChildClose>(resolveClose=>child.once('close',(code,signal)=>{const value={code,signal};onClose?.(value);resolveClose(value);} )));
+}
 
 function assertRuntimeAuthorization(authorize:RuntimeAuthorize):void{
   if(typeof authorize!=='function'||authorize.constructor.name==='AsyncFunction')
@@ -792,11 +863,11 @@ export interface ManagedRuntimeNativeJobProof {
 export async function runManagedRuntimeOwnedNativeJob(input:{
   projectRoot:string;operationRoot:string;helperPath:string;scriptPath:string;logPath:string;scriptDigest:string;args:readonly string[];
   expectedHost:{hostPath:string;nodePath:string;toolchainDigest:string;buildJobDigest:string};
-  timeoutMs:number;authorize:()=>unknown;
+  timeoutMs:number;authorize:()=>unknown;registerOwnedClosure:<T>(promise:Promise<T>)=>Promise<T>;
 }):Promise<ManagedRuntimeNativeJobProof>{
   if(!input||typeof input!=='object'||!Array.isArray(input.args)||input.args.length>16||input.args.some(arg=>typeof arg!=='string'||arg.length>2048||/[\0\r\n]/.test(arg))||
      typeof input.scriptDigest!=='string'||!HEX256.test(input.scriptDigest)||!Number.isSafeInteger(input.timeoutMs)||input.timeoutMs<1||input.timeoutMs>600000||
-     typeof input.authorize!=='function'||!input.expectedHost||!HEX256.test(input.expectedHost.toolchainDigest)||!HEX256.test(input.expectedHost.buildJobDigest))
+     typeof input.authorize!=='function'||typeof input.registerOwnedClosure!=='function'||!input.expectedHost||!HEX256.test(input.expectedHost.toolchainDigest)||!HEX256.test(input.expectedHost.buildJobDigest))
     throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The fixed managed native job request is invalid');
   const project=assertPhysicalRoot(input.projectRoot),local=physicalDirectoryUnder(project,join(project,'.local'),false),operationRoot=resolve(input.operationRoot);
   assertWithin(local,operationRoot);physicalDirectoryUnder(local,operationRoot,false);
@@ -818,9 +889,9 @@ export async function runManagedRuntimeOwnedNativeJob(input:{
     '-WorkingDirectory',operationRoot,'-ScriptPath',scriptPath,'-ArgumentsJson',argsJson,'-LogPath',logPath,'-RuntimeProtocol'],
     {cwd:operationRoot,env:privateRuntimeEnvironment(),shell:false,windowsHide:true,stdio:['pipe','pipe','pipe']});}
   catch{return {started:false,readyObserved:false,closeObserved:false,exitCode:null,signal:null,markerCode:null,helperClosed:false,emptyObserved:false,errorCode:'NATIVE_JOB_SPAWN_FAILED'};}
-  let resolveReady!:()=>void,resolveClose!:(value:{code:number|null;signal:NodeJS.Signals|null})=>void;
+  let resolveReady!:()=>void;
   const ready=new Promise<void>(resolvePromise=>{resolveReady=resolvePromise;});
-  const closed=new Promise<{code:number|null;signal:NodeJS.Signals|null}>(resolvePromise=>{resolveClose=resolvePromise;});
+  const closed=registerNativeChildClosure(child,input.registerOwnedClosure);
   let stdout='',stdoutBytes=0,readyObserved=false,markerCode:number|null=null,markerUnknown=false,transcriptInvalid=false,controlFailed=false,spawnFailed=false;
   child.once('error',()=>{spawnFailed=true;});
   child.stdout?.on('data',(chunk:Buffer)=>{
@@ -836,7 +907,7 @@ export async function runManagedRuntimeOwnedNativeJob(input:{
   child.stderr?.on('data',()=>{});
   child.stdin?.on('error',()=>{controlFailed=true;});
   let closeValue:{code:number|null;signal:NodeJS.Signals|null}|undefined;
-  child.once('close',(code,signal)=>{closeValue={code,signal};if(stdout.length)transcriptInvalid=true;resolveClose(closeValue);});
+  void closed.then(value=>{closeValue=value;if(stdout.length)transcriptInvalid=true;});
   const sent=new Set<string>();
   const send=(verb:'RESUME'|'STOP')=>{
     const line=`${verb}:${nonce}`;if(sent.has(line)||child.exitCode!==null||child.signalCode!==null||!child.stdin){controlFailed=true;return;}
@@ -888,7 +959,10 @@ function cleanupDirectoryNames(path:string,scan:RuntimeCleanupScan):string[]{
 }
 function removeCopiedWorkspaceLinks(operationRoot:string,scan:RuntimeCleanupScan):void{
   cleanupScanCheck(scan);
-  const snapshotRoot=join(operationRoot,'snapshot'),scope=join(snapshotRoot,'node_modules','@quadbridge');
+  const copiedRoots=['snapshot',PRIVATE_RUNTIME_SNAPSHOT_DIRECTORY].filter(name=>optionalLstat(join(operationRoot,name))!==undefined);
+  if(copiedRoots.length>1)throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime contains multiple copied workspace roots');
+  if(!copiedRoots.length)return;
+  const snapshotRoot=join(operationRoot,copiedRoots[0]!),scope=join(snapshotRoot,'node_modules','@quadbridge');
   const nodeModules=join(snapshotRoot,'node_modules');
   const nodeInfo=optionalLstat(nodeModules);if(!nodeInfo)return;
   if(!nodeInfo.isDirectory()||nodeInfo.isSymbolicLink()||realpathSync(nodeModules).toLowerCase()!==nodeModules.toLowerCase())
@@ -960,11 +1034,12 @@ export class ManagedRuntimeManager {
   private readonly operations=new Set<Promise<unknown>>();
   private closing=false;
   private closePromise?:Promise<void>;
-  private constructor(private readonly root:string,private readonly store:ControlPlaneStore,private readonly artifacts:LocalArtifactStore){
+  private constructor(private readonly root:string,private readonly store:ControlPlaneStore,private readonly artifacts:LocalArtifactStore,
+    private readonly modelProfile?:ManagedRuntimeModelProfile,private readonly nativeApiProfile?:ManagedRuntimeNativeApiProfile){
     assertPhysicalRoot(root);
   }
-  static create(root:string,store:ControlPlaneStore,artifacts:LocalArtifactStore):ManagedRuntimeManager {
-    return new ManagedRuntimeManager(resolve(root),store,artifacts);
+  static create(root:string,store:ControlPlaneStore,artifacts:LocalArtifactStore,options:{modelProfile?:ManagedRuntimeModelProfile;nativeApiProfile?:ManagedRuntimeNativeApiProfile}={}):ManagedRuntimeManager {
+    return new ManagedRuntimeManager(resolve(root),store,artifacts,parseManagedRuntimeModelProfile(options.modelProfile),parseManagedRuntimeNativeApiProfile(options.nativeApiProfile));
   }
   private track<T>(promise:Promise<T>):Promise<T>{
     this.operations.add(promise);
@@ -983,10 +1058,121 @@ export class ManagedRuntimeManager {
     const value=this.store.managedRuntime(instanceId) as Record<string,any>|undefined;if(!value)return undefined;
     const runner=this.active.get(instanceId);
     const live=!!runner&&!runner.stopping&&runner.closeValue===undefined&&runner.child.exitCode===null&&runner.child.signalCode===null;
+    const enrollment=completedRuntimeEnrollment({projectRoot:this.root,dataDirectory:runtimeDataDirectory(this.root,value.id,value.artifactDigest),identity:{
+      instanceId:value.id,productId:value.productId,version:value.version,artifactDigest:value.artifactDigest,profileDigest:value.profileDigest,adapterDigest:value.adapterDigest}});
+    const credentialFile=enrollment?join(runtimeDataDirectory(this.root,value.id,value.artifactDigest),'credentials.json'):undefined;
     return {...value,processObservation:live?'owned-in-this-process':value.state==='STOPPED'?'positively-stopped':'not-observed-in-this-process',
-      ...(live&&runner?.phase>0&&runner.url?{url:runner.url}:{}),...(runner?.operationalError?{operationalError:runner.operationalError}:{}),
+      ...(live&&runner?.phase>0&&runner.url?{url:runner.url}:{}),
+      ...(live&&runner?.nativeApiProfile&&runner.nativeApiUrl?{nativeApi:{profile:runner.nativeApiProfile,url:runner.nativeApiUrl}}:{}),
+      ...(enrollment?.config.nativeApiProfile?{nativeApiProfile:enrollment.config.nativeApiProfile}:{}),
+      ...(enrollment?.config.modelAnswerProfile?{modelAnswerProfile:enrollment.config.modelAnswerProfile}:{}),
+      ...(credentialFile?{credentialFile}:{}),
+      ...(runner?.operationalError?{operationalError:runner.operationalError}:{}),
       ...(runner?.controlError?{controlWarning:'RUNTIME_CONTROL_CHANNEL_ERROR'}:{}),
       events:this.store.managedRuntimeEvents(instanceId)};
+  }
+  async createAndroidClient(instanceId:string,authorize:RuntimeAuthorize):Promise<Record<string,unknown>>{
+    this.authorizeCurrent(authorize);
+    if(!RUNTIME_ID.test(instanceId))throw new PlatformError('INVALID','Invalid managed runtime reference');
+    const instance=this.store.managedRuntime(instanceId) as Record<string,any>|undefined;
+    if(!instance)throw new PlatformError('NOT_FOUND','Managed runtime instance not found');
+    if(!['RUNNING','STOPPED'].includes(instance.state)||typeof instance.activeGenerationId!=='string')
+      throw new PlatformError('CONFLICT','An Android client requires the exact active runtime generation');
+    const generation=this.store.managedRuntimeGenerations(instanceId).find((row:any)=>row.id===instance.activeGenerationId) as Record<string,any>|undefined;
+    if(!generation||generation.instanceId!==instanceId||generation.productId!==instance.productId||generation.version!==instance.version||
+        generation.artifactDigest!==instance.artifactDigest||generation.profileDigest!==instance.profileDigest||generation.configDigest!==instance.configDigest||
+        generation.adapterDigest!==instance.adapterDigest||generation.toolchainDigest!==instance.toolchainDigest||generation.recipeDigest!==instance.recipeDigest||
+        generation.originatingActorId!==instance.originatingActorId)
+      throw new RuntimePreparationError('RUNTIME_IDENTITY_CHANGED','The active managed generation no longer matches its captured runtime identity');
+    const capturedInstance={id:instance.id,currentAttempt:instance.currentAttempt,activeGenerationId:generation.id,productId:instance.productId,
+      version:instance.version,artifactDigest:instance.artifactDigest,profileDigest:instance.profileDigest,configDigest:instance.configDigest,
+      adapterDigest:instance.adapterDigest,toolchainDigest:instance.toolchainDigest,recipeDigest:instance.recipeDigest,
+      originatingActorId:instance.originatingActorId};
+    const generationFields=['id','instanceId','generation','productId','version','artifactDigest','profileDigest','configDigest','adapterDigest',
+      'toolchainDigest','recipeDigest','originatingActorId'];
+    const capturedGeneration=Object.fromEntries(generationFields.map(key=>[key,generation[key]]));
+    const authorizeCapturedGeneration=()=>{
+      this.authorizeCurrent(authorize);
+      const current=this.store.managedRuntime(instanceId) as Record<string,any>|undefined;
+      if(!current||!['RUNNING','STOPPED'].includes(current.state)||current.id!==capturedInstance.id||
+          current.currentAttempt!==capturedInstance.currentAttempt||current.activeGenerationId!==capturedInstance.activeGenerationId||
+          current.productId!==capturedInstance.productId||current.version!==capturedInstance.version||current.artifactDigest!==capturedInstance.artifactDigest||
+          current.profileDigest!==capturedInstance.profileDigest||current.configDigest!==capturedInstance.configDigest||
+          current.adapterDigest!==capturedInstance.adapterDigest||current.toolchainDigest!==capturedInstance.toolchainDigest||
+          current.recipeDigest!==capturedInstance.recipeDigest||current.originatingActorId!==capturedInstance.originatingActorId)
+        throw new RuntimePreparationError('RUNTIME_IDENTITY_CHANGED','The captured managed generation changed during Android client packaging');
+      const active=this.store.managedRuntimeGenerations(instanceId).find((row:any)=>row.id===capturedGeneration.id) as Record<string,any>|undefined;
+      if(!active||generationFields.some(key=>active[key]!==capturedGeneration[key]))
+        throw new RuntimePreparationError('RUNTIME_IDENTITY_CHANGED','The captured managed generation changed during Android client packaging');
+    };
+    authorizeCapturedGeneration();
+    const dataDirectory=runtimeDataDirectory(this.root,instanceId,instance.artifactDigest);
+    const enrollment=completedRuntimeEnrollment({projectRoot:this.root,dataDirectory,identity:{instanceId,productId:instance.productId,version:instance.version,
+      artifactDigest:instance.artifactDigest,profileDigest:instance.profileDigest,adapterDigest:instance.adapterDigest}});
+    if(!enrollment||enrollment.configDigest!==instance.configDigest||parseManagedRuntimeNativeApiProfile(enrollment.config.nativeApiProfile)!==MANAGED_RUNTIME_NATIVE_API_PROFILE)
+      throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The active completed enrollment does not include the fixed native API profile');
+    const release=this.store.artifactReleases().find((row:any)=>row.productId===instance.productId&&row.version===instance.version&&row.artifactDigest===instance.artifactDigest);
+    if(!release)throw new PlatformError('NOT_FOUND','The exact active runtime release is no longer promoted');
+    const verified=await this.artifacts.verifyArtifact(instance.artifactDigest) as {artifact:Record<string,any>;snapshot:BoundedSnapshot};
+    authorizeCapturedGeneration();
+    if(verified.artifact.digest!==instance.artifactDigest||verified.artifact.productId!==instance.productId||verified.artifact.version!==instance.version||
+      verified.artifact.originatingActorId!==instance.originatingActorId||verified.snapshot.snapshotDigest!==instance.artifactDigest)
+      throw new RuntimePreparationError('RUNTIME_IDENTITY_CHANGED','The captured promoted artifact differs from the active managed generation');
+    const planIdentity=runtimePlanIdentity(verified.snapshot,instance.productId,instance.version);
+    if(planIdentity.profileDigest!==instance.profileDigest||!runtimeSupportsManagedNativeApiProfile(verified.snapshot,MANAGED_RUNTIME_NATIVE_API_PROFILE))
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The captured artifact no longer matches the active fixed native API profile');
+    const planModules=planIdentity.plan.modules.map((module:any)=>({id:module.id,version:module.version}));
+    const releasePath=`.artifacts/${instance.productId}/release.json`,releaseEntry=verified.snapshot.entries.find(entry=>entry.path===releasePath);
+    if(!releaseEntry)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The registered runtime snapshot has no release manifest');
+    let releaseManifest:any;try{releaseManifest=JSON.parse(releaseEntry.bytes.toString('utf8'));}catch{throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The registered runtime release manifest is malformed');}
+    const reference=releaseManifest?.mobileSeed;
+    const seedPath=`.artifacts/${instance.productId}/n/seed.json`;
+    if(!reference||reference.schema!=='quadbridge.managed-mobile-seed-reference.v1'||reference.path!==seedPath||!HEX256.test(reference.sha256)||
+      !reference.files||typeof reference.files!=='object'||Array.isArray(reference.files))
+      throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','This promoted release has no captured managed Android client seed');
+    const seedEntry=verified.snapshot.entries.find(entry=>entry.path===seedPath);
+    if(!seedEntry||seedEntry.digest!==reference.sha256||sha256(seedEntry.bytes)!==reference.sha256)
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The captured managed Android seed differs from its immutable release reference');
+    let seedManifest:any;try{seedManifest=JSON.parse(seedEntry.bytes.toString('utf8'));}catch{throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The captured managed Android seed is malformed');}
+    const webEntry=verified.snapshot.entries.find(entry=>entry.path===`.artifacts/${instance.productId}/web.json`);
+    let webManifest:any;try{if(!webEntry)throw new Error();webManifest=JSON.parse(webEntry.bytes.toString('utf8'));}catch{throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The registered runtime web manifest is malformed');}
+    if(seedManifest.schema!=='quadbridge.managed-mobile-seed.v1'||seedManifest.productId!==instance.productId||seedManifest.productVersion!==instance.version||
+      seedManifest.planDigest!==planIdentity.planDigest||canonical(seedManifest.modules)!==canonical(planModules)||
+      canonical(seedManifest.uiBindings)!==canonical(webManifest.mobile?.uiBindings??[]))
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The captured managed Android seed differs from its exact promoted plan');
+    const payloads=new Map(verified.snapshot.entries.map(entry=>[entry.path,entry.bytes]));
+    if(!seedManifest.files||typeof seedManifest.files!=='object'||Array.isArray(seedManifest.files)||Object.keys(seedManifest.files).length>1024||
+       !reference.files||typeof reference.files!=='object'||Array.isArray(reference.files))
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The captured managed Android payload map is malformed');
+    const seedLeaves=new Map<string,{path:string;digest:string;sizeBytes:number}>(),expectedSeedFiles:Record<string,string>={};
+    for(const [target,value] of Object.entries(seedManifest.files as Record<string,any>)){
+      if(!value||typeof value.blob!=='string'||! /^(?:t\/[a-z]|f\/[0-9]{3})$/.test(value.blob)||!HEX256.test(value.sha256)||!Number.isSafeInteger(value.sizeBytes)||value.sizeBytes<0||value.sizeBytes>8*1024*1024||
+        seedLeaves.has(value.blob))throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The captured managed Android leaf inventory is malformed');
+      const path=`.artifacts/${instance.productId}/n/${value.blob}`,bytes=payloads.get(path);
+      if(!bytes||bytes.length!==value.sizeBytes||sha256(bytes)!==value.sha256)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','A captured managed Android payload differs from its immutable registry bytes');
+      seedLeaves.set(value.blob,{path,digest:value.sha256,sizeBytes:value.sizeBytes});expectedSeedFiles[path]=value.sha256;
+    }
+    if(canonical(reference.files)!==canonical(expectedSeedFiles))throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The managed Android release map differs from its captured seed');
+    const seedFile=async(blob:string)=>{
+      const leaf=seedLeaves.get(blob),bytes=leaf&&payloads.get(leaf.path);
+      if(!leaf||!bytes||bytes.length!==leaf.sizeBytes||sha256(bytes)!==leaf.digest||reference.files[leaf.path]!==leaf.digest)
+        throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','A captured managed Android payload differs from its immutable registry bytes');
+      authorizeCapturedGeneration();
+      return bytes;
+    };
+    const assemblerPath=join(this.root,'tools','mobile','assemble.mjs'),assemblerBytes=readPhysicalBytes(assemblerPath);
+    if(seedManifest.assemblyInputs?.['tools/mobile/assemble.mjs']!==sha256(assemblerBytes))
+      throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The managed Android packager differs from the build-captured identity');
+    const imported=await import(pathToFileURL(assemblerPath).href) as {assembleManagedMobile?:Function};
+    authorizeCapturedGeneration();
+    if(typeof imported.assembleManagedMobile!=='function')throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','The fixed managed Android packager is unavailable');
+    const result=await imported.assembleManagedMobile({projectRoot:this.root,seedManifest,readSeedFile:seedFile,authorize:authorizeCapturedGeneration,
+      identity:{productId:instance.productId,productVersion:instance.version,instanceId,generationId:generation.id,artifactDigest:instance.artifactDigest,
+        planDigest:planIdentity.planDigest,modules:planModules,nativeApiProfile:MANAGED_RUNTIME_NATIVE_API_PROFILE}});
+    authorizeCapturedGeneration();
+    return {instanceId,generationId:generation.id,productId:instance.productId,productVersion:instance.version,artifactDigest:instance.artifactDigest,
+      planDigest:planIdentity.planDigest,clientReference:result.clientReference,outputDir:result.outputDir,reused:result.reused,
+      status:'LOCAL_CLIENT_PACKAGE_NOT_NATIVE_QUALIFICATION'};
   }
   start(input:RuntimeRequest,actorId:string,authorize:RuntimeAuthorize){
     if(this.closing)throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The local runtime manager is closing');
@@ -1053,11 +1239,21 @@ export class ManagedRuntimeManager {
        verified.artifact.originatingActorId!==release.originatingActorId||verified.snapshot.snapshotDigest!==release.artifactDigest)
       throw new RuntimePreparationError('RUNTIME_IDENTITY_CHANGED','Promoted artifact identity changed during runtime preparation');
     const planIdentity=runtimePlanIdentity(verified.snapshot,input.productId,input.version);
+    const modelProfile=input.kind==='START'?this.modelProfile:undefined;
+    if(modelProfile&&!runtimeSupportsManagedModelProfile(verified.snapshot,modelProfile))
+      throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The promoted runtime export does not support the selected managed model profile');
     if(input.existing&&input.existing.profileDigest!==planIdentity.profileDigest)
       throw new RuntimePreparationError('RUNTIME_IDENTITY_CHANGED','The stopped runtime profile no longer matches its promoted release');
     const adapterDigest=MANAGED_RUNTIME_ADAPTER_DIGEST;
     const operationId=randomUUID(),ownerId=randomUUID(),ownerToken=randomBytes(32).toString('base64url');
     const dataDirectory=runtimeDataDirectory(this.root,input.instanceId,release.artifactDigest);
+    const existingEnrollment=input.kind==='RESTART'?completedRuntimeEnrollment({projectRoot:this.root,dataDirectory,identity:{instanceId:input.instanceId,
+      productId:input.productId,version:input.version,artifactDigest:release.artifactDigest,profileDigest:planIdentity.profileDigest,adapterDigest}}):undefined;
+    if(input.kind==='RESTART'&&!existingEnrollment)
+      throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','The exact completed runtime enrollment is required for restart');
+    const nativeApiProfile=input.kind==='START'?this.nativeApiProfile:parseManagedRuntimeNativeApiProfile(existingEnrollment?.config.nativeApiProfile);
+    if(nativeApiProfile&&!runtimeSupportsManagedNativeApiProfile(verified.snapshot,nativeApiProfile))
+      throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The promoted runtime export does not support the captured native API profile');
     let privateEnrollment:PreparedRuntimeEnrollment|undefined,operationRoot:string|undefined,runner:RuntimeRunner|undefined,dispatched=false,prepared=false,admitted=false;
     const executionBase=join(this.root,'.local','platform-runtime-executions'),instanceExecutionRoot=join(executionBase,input.instanceId);
     const executionRoot=join(instanceExecutionRoot,operationId);
@@ -1094,13 +1290,13 @@ export class ManagedRuntimeManager {
       operationRoot=executionRoot;
       if(!lstatSync(executionRoot).isDirectory()||lstatSync(executionRoot).isSymbolicLink()||realpathSync(executionRoot).toLowerCase()!==executionRoot.toLowerCase())
         throw new RuntimePreparationError('RUNTIME_REPAIR_REQUIRED','Managed runtime execution root is not a physical private directory');
-      const snapshotRoot=join(operationRoot,'snapshot');
+      const snapshotRoot=join(operationRoot,PRIVATE_RUNTIME_SNAPSHOT_DIRECTORY);
       const copied=copyVerifiedRuntimeSnapshot(verified.snapshot,snapshotRoot,runtimeSnapshotExpected(verified.snapshot));
       linkCopiedRuntimeWorkspaces(snapshotRoot);
       const enrollmentIdentity={instanceId:input.instanceId,productId:input.productId,version:input.version,artifactDigest:release.artifactDigest,
         profileDigest:planIdentity.profileDigest,adapterDigest};
       privateEnrollment=await prepareRuntimeEnrollment({projectRoot:this.root,executionRoot:snapshotRoot,identity:enrollmentIdentity,planIdentity,
-        freshEnrollmentAllowed:input.kind==='START',authorize});
+        freshEnrollmentAllowed:input.kind==='START',authorize,modelProfile,nativeApiProfile});
       prepared=true;
       if(privateEnrollment.configDigest!== (input.existing?.configDigest??privateEnrollment.configDigest))
         throw new RuntimePreparationError('RUNTIME_IDENTITY_CHANGED','Completed runtime enrollment differs from its exact stopped identity');
@@ -1116,7 +1312,10 @@ export class ManagedRuntimeManager {
       const supervisorConfig={schema:'quadbridge.managed-runtime-supervisor.v1',attemptId:operationId,operationId,nonce,instanceId:input.instanceId,
         productId:input.productId,version:input.version,artifactDigest:release.artifactDigest,profileDigest:planIdentity.profileDigest,
         configDigest:privateEnrollment.configDigest,adapterDigest,enrollmentDigest:privateEnrollment.enrollmentDigest,freshEnrollment:privateEnrollment.freshEnrollment,
-        projectRoot:this.root,snapshotRoot,dataDirectory,nodePath,nodeVersion:process.version,nodeDigest:NODE_SHA256_PIN,workerRequired:planIdentity.workerRequired};
+        projectRoot:this.root,snapshotRoot,dataDirectory,nodePath,nodeVersion:process.version,nodeDigest:NODE_SHA256_PIN,workerRequired:planIdentity.workerRequired,
+        planDigest:planIdentity.planDigest,...(privateEnrollment.config.nativeApiProfile?{nativeApiProfile:privateEnrollment.config.nativeApiProfile,
+          nativeApiIdentity:{productId:input.productId,productVersion:input.version,instanceId:input.instanceId,planDigest:planIdentity.planDigest,
+            modules:planIdentity.plan.modules.map((module:any)=>({id:module.id,version:module.version}))}}:{})};
       writePrivateCanonical(join(operationRoot,'supervisor-config.json'),supervisorConfig);
       // Recheck every captured executable identity immediately before the irreversible dispatch write.
       const checked=capturedToolchain(this.root);
@@ -1130,7 +1329,10 @@ export class ManagedRuntimeManager {
       const helperArgs=['-NoLogo','-NoProfile','-NonInteractive','-File',copiedHelper,'-RunnerNonce',nonce,'-NodeExe',nodePath,'-WorkingDirectory',operationRoot,
         '-ScriptPath',copiedSupervisor,'-ArgumentsJson',JSON.stringify(['--config',join(operationRoot,'supervisor-config.json')]),'-LogPath',join(operationRoot,'private.log'),'-RuntimeProtocol'];
       runner=this.spawnRunner({instanceId:input.instanceId,operationId,ownerToken,nonce,commandId:result.command.id,attempt:Number(result.instance.currentAttempt),
-        dataDirectory,executionRoot,operationRoot,enrollmentDigest:privateEnrollment.enrollmentDigest,workerRequired:planIdentity.workerRequired,hostPath:commandPath,args:helperArgs,deadline:startupDeadline});
+        dataDirectory,executionRoot,operationRoot,enrollmentDigest:privateEnrollment.enrollmentDigest,workerRequired:planIdentity.workerRequired,hostPath:commandPath,args:helperArgs,deadline:startupDeadline,
+        nativeApiProfile:privateEnrollment.config.nativeApiProfile,
+        nativeApiIdentity:privateEnrollment.config.nativeApiProfile?{productId:input.productId,productVersion:input.version,instanceId:input.instanceId,
+          planDigest:planIdentity.planDigest,modules:planIdentity.plan.modules.map((module:any)=>({id:module.id,version:module.version}))}:undefined});
       this.active.set(input.instanceId,runner);
       const runnerAuthorize=()=>this.authorizeCurrent(input.authorize,runner);
       await this.driveStartup(runner,runnerAuthorize);
@@ -1161,7 +1363,8 @@ export class ManagedRuntimeManager {
     }
   }
   private spawnRunner(input:{instanceId:string;operationId:string;ownerToken:string;nonce:string;commandId:string;attempt:number;dataDirectory:string;
-    executionRoot:string;operationRoot:string;enrollmentDigest:string;workerRequired:boolean;hostPath:string;args:string[];deadline:number}):RuntimeRunner{
+    executionRoot:string;operationRoot:string;enrollmentDigest:string;workerRequired:boolean;hostPath:string;args:string[];deadline:number;
+    nativeApiProfile?:ManagedRuntimeNativeApiProfile;nativeApiIdentity?:RuntimeRunner['nativeApiIdentity']}):RuntimeRunner{
     let child:ChildProcess;
     try{child=spawn(input.hostPath,input.args,{cwd:input.operationRoot,env:privateRuntimeEnvironment(),shell:false,windowsHide:true,stdio:['pipe','pipe','pipe']});}
     catch{throw new RuntimePreparationError('RUNTIME_UNAVAILABLE','The fixed native runtime helper could not be started');}
@@ -1323,10 +1526,19 @@ export class ManagedRuntimeManager {
     }
     if(event.type==='ROLE_READY'){
       if(runner.phase===3&&event.role==='web-backend'){
-        this.exactEvent(event,['role','url','port']);
+        this.exactEvent(event,runner.nativeApiProfile?['role','url','port','nativeApiUrl','nativeApiProfile','nativeApiIdentity']:['role','url','port']);
         const port=event.port;let url:URL;try{url=new URL(event.url);}catch{throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime web readiness URL is invalid');}
         if(url.protocol!=='http:'||url.hostname!=='127.0.0.1'||url.port!==String(port)||url.pathname!=='/'||url.username||url.password||url.search||url.hash||
            !Number.isInteger(port)||port<1||port>65535)throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed runtime web readiness identity is invalid');
+        if(runner.nativeApiProfile){
+          const expected=runner.nativeApiIdentity,reported=event.nativeApiIdentity;
+          let native:URL;try{native=new URL(event.nativeApiUrl);}catch{throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed native API readiness URL is invalid');}
+          if(event.nativeApiProfile!==runner.nativeApiProfile||native.protocol!=='http:'||native.hostname!=='127.0.0.1'||native.port!=='4350'||native.pathname!=='/'||native.username||native.password||native.search||native.hash||
+            !expected||!reported||reported.productId!==expected.productId||reported.productVersion!==expected.productVersion||reported.instanceId!==expected.instanceId||reported.planDigest!==expected.planDigest||
+            !Array.isArray(reported.modules)||canonical(reported.modules)!==canonical(expected.modules))
+            throw new RuntimePreparationError('RUNTIME_SOURCE_INVALID','Managed native API readiness identity differs from its captured enrollment');
+          runner.nativeApiUrl=native.origin;
+        }
         runner.url=url.origin;runner.port=port;runner.phase=4;
         this.store.recordManagedRuntimeEvent(runner.instanceId,runner.operationId,runner.ownerToken,{type:'ROLE_READY',role:'web-backend'});return;
       }

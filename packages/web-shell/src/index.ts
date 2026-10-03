@@ -1,13 +1,12 @@
-import { PlatformError, type Scope, type Workspace, type WorkspaceContext } from '@quadbridge/contracts';
-import { createScopedWorkspaceApi, requestJson } from '@quadbridge/client-core';
+import { PlatformError, validateProductExperience, type Actor, type ProductExperience, type Scope, type Workspace, type WorkspaceContext, type WorkspaceNavigationInput, type WorkspaceRouteContext } from '@quadbridge/contracts';
+import { createScopedWorkspaceApi, requestJson, type RequestTransport } from '@quadbridge/client-core';
+import { applyUiBoundary } from '@quadbridge/ui';
 import { UI_CONTRIBUTION_SLOTS, type UiContribution, type UiContributionBinding, type UiContributionContext, type UiContributionDescriptor, type UiContributionSlot } from '@quadbridge/contracts/ui-contributions';
 import { el, button, field } from './dom.js';
+import { createWorkspaceNavigation, type WorkspaceNavigationController } from './navigation.js';
 export interface ShellSnapshot {
     scope: Scope;
-    actor: {
-        id: string;
-        kind: string;
-    };
+    actor: Actor;
     tenants: string[];
     permissions: string[];
     product: {
@@ -16,6 +15,7 @@ export interface ShellSnapshot {
         description: string;
         layout: string;
         version: string;
+        experience?: ProductExperience;
     };
     abi: string;
     modules: {
@@ -43,6 +43,7 @@ export interface ShellPresentationOptions {
     snapshot: ShellSnapshot;
     onTenantChange(tenantId: string): void;
     onSignOut(): void;
+    onNavigate(routeId: string, input?: WorkspaceNavigationInput): Promise<boolean>;
 }
 export interface ShellPresentationElements {
     content: HTMLElement;
@@ -65,20 +66,61 @@ export interface ShellOptions {
     loaders: Readonly<Record<string, () => Promise<Record<string, unknown>>>>;
     /** Literal bindings validated from the selected product's reviewed solution source. */
     uiBindings?: readonly UiContributionBinding[];
+    /** Fixed caller-owned transport; omitted for the existing same-origin web session. */
+    request?: RequestTransport;
     presentation?: ShellPresentation;
     lifecycle?: ShellLifecyclePort;
+    /** Fixed source-validated product presentation supplied by the selected build before login. */
+    experience?: ProductExperience;
 }
-function renderDesktopPresentation({ root, snapshot: snap, onTenantChange, onSignOut }: ShellPresentationOptions): ShellPresentationElements {
+/** A native adapter may return to sign-in only after it has removed its local credential. */
+export interface NativeLogoutOutcome {
+    kind: 'quadbridge.native-logout.v1';
+    remoteRevocation: 'confirmed' | 'unknown';
+    localCredentials: 'removed' | 'unresolved';
+    recovery: 'return-to-sign-in' | 'retry-local-cleanup';
+}
+function isNativeLogoutOutcome(value: unknown): value is NativeLogoutOutcome {
+    if (!value || typeof value !== 'object') return false;
+    const result = value as Partial<NativeLogoutOutcome>;
+    return result.kind === 'quadbridge.native-logout.v1' &&
+        (result.remoteRevocation === 'confirmed' || result.remoteRevocation === 'unknown') &&
+        (result.localCredentials === 'removed' || result.localCredentials === 'unresolved') &&
+        ((result.localCredentials === 'removed' && result.recovery === 'return-to-sign-in') ||
+            (result.localCredentials === 'unresolved' && result.recovery === 'retry-local-cleanup'));
+}
+function applyExperienceBoundary(root: HTMLElement, experience?: ProductExperience) {
+    applyUiBoundary(root, experience?.theme);
+    root.setAttribute('data-qb-ui-host', '');
+}
+function gateWorkspaceApi(api: WorkspaceContext['api'], available: () => boolean): WorkspaceContext['api'] {
+    const assertAvailable = () => { if (!available()) throw new DOMException('Workspace access is paused until session access is revalidated', 'AbortError'); };
+    return Object.freeze({
+        get: async (path: string, signal?: AbortSignal) => { assertAvailable(); return api.get(path, signal); },
+        post: async (path: string, body: unknown, commandId?: string, signal?: AbortSignal) => { assertAvailable(); return api.post(path, body, commandId, signal); }
+    });
+}
+function workspacePresentation(snapshot: ShellSnapshot): { workspace: ShellSnapshot['workspaces'][number]; routeId: string; label: string; order: number; mobilePriority: number }[] {
+    const experience = snapshot.product.experience;
+    if (!experience) return snapshot.workspaces.map((workspace, index) => ({ workspace, routeId: workspace.id, label: workspace.label, order: index, mobilePriority: index }));
+    return experience.navigation.map(item => {
+        const workspace = snapshot.workspaces.find(candidate => candidate.id === item.workspaceId);
+        return workspace ? { workspace, routeId: item.id, label: item.label, order: item.order, mobilePriority: item.mobilePriority } : undefined;
+    }).filter((item): item is NonNullable<typeof item> => !!item).sort((a, b) => a.order - b.order || a.routeId.localeCompare(b.routeId));
+}
+function renderDesktopPresentation({ root, snapshot: snap, onTenantChange, onSignOut, onNavigate }: ShellPresentationOptions): ShellPresentationElements {
+    applyExperienceBoundary(root, snap.product.experience);
     const shell = el('div', `shell ${snap.product.layout === 'top' ? 'top-layout' : ''}`), side = el('aside', 'sidebar');
     const brand = el('div', 'brand-row');
-    brand.append(el('span', 'brand-symbol', 'Q'), el('span', 'brand', 'Quadbridge'));
+    brand.append(el('span', 'brand-symbol', snap.product.experience?.brand.name.slice(0, 1).toUpperCase() ?? 'Q'), el('span', 'brand', snap.product.experience?.brand.name ?? 'Quadbridge'));
     side.append(brand, el('span', 'eyebrow product-eyebrow', 'PRODUCT WORKSPACE'), el('span', 'product-name', snap.product.title), el('p', 'muted small', snap.product.description));
     const nav = el('nav');
     nav.setAttribute('aria-label', 'Workspaces');
-    for (const workspace of snap.workspaces) {
-        const link = el('a', 'nav-item', workspace.label);
-        link.setAttribute('data-workspace-path', workspace.path);
-        link.href = `#${workspace.path}`;
+    for (const item of workspacePresentation(snap)) {
+        const link = el('a', 'nav-item', item.label);
+        link.setAttribute('data-workspace-path', item.workspace.path);
+        link.href = `#${item.workspace.path}`;
+        link.addEventListener('click', event => { event.preventDefault(); void onNavigate(item.routeId); });
         nav.append(link);
     }
     side.append(nav);
@@ -112,14 +154,18 @@ function renderDesktopPresentation({ root, snapshot: snap, onTenantChange, onSig
     return { content, noticeArea, contributionLayout, contributionSlots: { 'workspace.aside': asideSlot, 'workspace.footer': footerSlot } };
 }
 /** Maintained shell. Requested scope is never the active workspace's request scope. */
-export function startShell({ root, title, loaders, uiBindings = [], presentation = renderDesktopPresentation, lifecycle }: ShellOptions) {
+export function startShell({ root, title, loaders, uiBindings = [], request: requestTransport, presentation = renderDesktopPresentation, lifecycle, experience: configuredExperience }: ShellOptions) {
+    let productExperience = configuredExperience === undefined ? undefined : validateProductExperience(configuredExperience);
     let bootstrap: Bootstrap | undefined, requestedTenant: string | undefined;
     let generation = 0, active: AbortController | undefined, cleanup: (() => void) | undefined;
     let contributionSlots: ShellPresentationElements['contributionSlots'], contributionLayout: HTMLElement | undefined;
     let contributionControllers: AbortController[] = [], contributionCleanups: (() => void)[] = [];
+    let shellNavigation: WorkspaceNavigationController | undefined, activeRoute: WorkspaceRouteContext | undefined;
+    let mountedWorkspaceId: string | undefined;
+    const providerNavigationDisposers: (() => void)[] = [];
     let bootstrapAbort: AbortController | undefined, refreshEpoch = 0, refreshing = false;
     let content: HTMLElement | undefined, noticeArea: HTMLElement | undefined;
-    let stopped = false, suspended = false, logoutInProgress = false, loggedOut = false, signature = '', sessionKnown = false, needsRender = true;
+    let stopped = false, suspended = false, resumePending = false, logoutInProgress = false, logoutUnresolved = false, logoutRetryLocalOnly = false, logoutRecoveryMessage = 'The server did not confirm sign-out. Retry to reconcile this session.', logoutRecoveryLabel = 'Retry sign out', loggedOut = false, logoutNotice: string | undefined, signature = '', sessionKnown = false, needsRender = true;
     function clearContributionViews() {
         for (const controller of contributionControllers.splice(0)) controller.abort();
         for (const dispose of contributionCleanups.splice(0).reverse()) {
@@ -141,10 +187,32 @@ export function startShell({ root, title, loaders, uiBindings = [], presentation
         }
         catch { /* one provider cannot prevent shell cleanup */ }
         cleanup = undefined;
+        mountedWorkspaceId = undefined;
+        for (const dispose of providerNavigationDisposers.splice(0).reverse()) { try { dispose(); } catch { /* provider cleanup remains isolated */ } }
         clearContributionViews();
         content?.replaceChildren();
     }
+    function disposeShellNavigation() {
+        shellNavigation?.dispose();
+        shellNavigation = undefined;
+        activeRoute = undefined;
+    }
+    function scopedNavigation(controller: WorkspaceNavigationController, isCurrent: () => boolean): NonNullable<WorkspaceContext['navigation']> {
+        const retain = (dispose: () => void) => {
+            let live = true;
+            const release = () => { if (!live) return; live = false; dispose(); };
+            providerNavigationDisposers.push(release);
+            return release;
+        };
+        return Object.freeze({
+            current: () => controller.port.current(),
+            subscribe: (listener: (route: WorkspaceRouteContext) => void) => retain(controller.port.subscribe(route => { if (isCurrent()) listener(route); })),
+            navigate: (routeId: string, input?: WorkspaceNavigationInput) => isCurrent() ? controller.port.navigate(routeId, input) : Promise.resolve(false),
+            registerUnsavedGuard: (guard: (route: WorkspaceRouteContext) => boolean | Promise<boolean>) => retain(controller.port.registerUnsavedGuard(route => isCurrent() ? guard(route) : false))
+        });
+    }
     function invalidateScope() {
+        disposeShellNavigation();
         bootstrap = undefined;
         signature = '';
         needsRender = true;
@@ -156,17 +224,18 @@ export function startShell({ root, title, loaders, uiBindings = [], presentation
             noticeArea.hidden = false;
         }
     }
-    const request = (path: string, init: RequestInit = {}, signal?: AbortSignal, tenantId?: string) => requestJson(path, init, signal, tenantId);
+    const request: RequestTransport = (path, init = {}, signal, tenantId) => (requestTransport ?? requestJson)(path, init, signal, tenantId);
     function renderLogin() {
         invalidateScope();
         root.replaceChildren();
+        applyExperienceBoundary(root, productExperience);
         content = undefined;
         noticeArea = undefined;
         contributionSlots = undefined;
         contributionLayout = undefined;
         const welcome = el('section', 'login-story');
         const monogram = el('div', 'brand-symbol', 'Q');
-        welcome.append(monogram, el('span', 'eyebrow', 'QUADBRIDGE PRODUCT PLATFORM'), el('h2', '', 'One foundation.\nYour next product.'), el('p', 'muted', 'A shared application shell. Your selected modules. Separate business ownership.'));
+        welcome.append(monogram, el('span', 'eyebrow', productExperience?.brand.name ?? 'QUADBRIDGE PRODUCT PLATFORM'), el('h2', '', productExperience?.login.title ?? 'One foundation.\nYour next product.'), el('p', 'muted', productExperience?.login.description ?? 'A shared application shell. Your selected modules. Separate business ownership.'));
         const stack = el('div', 'foundation-stack');
         for (const [name, detail] of [['Web shell', 'Session · navigation · workspace'], ['Product modules', 'Your operations and business rules'], ['Owner stores', 'Scoped records and durable receipts']]) {
             const row = el('div', 'foundation-layer');
@@ -176,13 +245,14 @@ export function startShell({ root, title, loaders, uiBindings = [], presentation
         welcome.append(stack, el('p', 'small muted', 'LOCAL DEVELOPER PROFILE · No cloud account required'));
         const loginLayout = el('div', 'login-layout');
         const card = el('main', 'login-card');
-        card.append(el('span', 'eyebrow', 'QUADBRIDGE / PRODUCT PLATFORM'), el('h1', '', title), el('p', 'muted', 'Local developer profile. Use the credentials generated by the launcher.'));
+        card.append(el('span', 'eyebrow', productExperience?.brand.name ?? 'QUADBRIDGE / PRODUCT PLATFORM'), el('h1', '', productExperience?.login.title ?? title), el('p', 'muted', productExperience?.login.help ?? 'Local developer profile. Use the credentials generated by the launcher.'));
         const form = el('form'), name = field('Username', 'username'), password = field('Password', 'password');
         password.input.setAttribute('type', 'password');
         password.input.setAttribute('autocomplete', 'current-password');
         name.input.setAttribute('autocomplete', 'username');
         const error = el('p', 'error');
         error.setAttribute('role', 'alert');
+        if (logoutNotice) error.textContent = logoutNotice;
         const submit = el('button', 'button', 'Sign in');
         submit.type = 'submit';
         form.append(name.wrap, password.wrap, submit, error);
@@ -199,6 +269,7 @@ export function startShell({ root, title, loaders, uiBindings = [], presentation
                     return;
                 requestedTenant = undefined;
                 loggedOut = false;
+                logoutNotice = undefined;
                 sessionKnown = true;
                 await refresh(true);
             }
@@ -231,7 +302,84 @@ export function startShell({ root, title, loaders, uiBindings = [], presentation
         content.append(el('h2', '', 'Workspace unavailable'), el('p', 'muted', message), button('Retry access', () => void refresh(true)));
         notice('Access could not be confirmed. The previous workspace has been cleared.');
     }
-    async function mountContributions(selected: ShellSnapshot['workspaces'][number], snap: Bootstrap, parent: AbortController, current: () => boolean) {
+    function renderLogoutRecovery(message: string, retryLabel: string, retryLocalOnly = false) {
+        if (stopped || suspended) return;
+        root.replaceChildren();
+        content = el('main', 'login-card');
+        content.append(el('span', 'eyebrow', 'SESSION RECOVERY'), el('h1', '', 'Sign-out unresolved'), el('p', 'muted', message),
+            button(retryLabel, () => { void performLogout(retryLocalOnly); }));
+        root.append(content);
+        noticeArea = undefined;
+        contributionSlots = undefined;
+        contributionLayout = undefined;
+    }
+    async function performLogout(retryLocalOnly = false) {
+        if (logoutInProgress || stopped) return;
+        logoutInProgress = true;
+        logoutUnresolved = false;
+        logoutRetryLocalOnly = retryLocalOnly;
+        loggedOut = false;
+        bootstrapAbort?.abort();
+        refreshEpoch++;
+        sessionKnown = false;
+        invalidateScope();
+        root.replaceChildren(el('p', 'muted', retryLocalOnly ? 'Removing saved sign-in…' : 'Signing out…'));
+        content = undefined;
+        noticeArea = undefined;
+        contributionSlots = undefined;
+        contributionLayout = undefined;
+        try {
+            const result = await request('/api/logout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+            if (result && typeof result === 'object' && (result as { signedOut?: unknown }).signedOut === true) {
+                logoutInProgress = false;
+                loggedOut = true;
+                logoutRetryLocalOnly = false;
+                logoutNotice = undefined;
+                requestedTenant = undefined;
+                if (!stopped && !suspended) renderLogin();
+                return;
+            }
+            if (isNativeLogoutOutcome(result)) {
+                if (result.localCredentials === 'removed') {
+                    logoutInProgress = false;
+                    loggedOut = true;
+                    logoutNotice = result.remoteRevocation === 'confirmed' ? undefined :
+                        'This device removed its saved sign-in, but the server could not confirm that the session was revoked.';
+                    requestedTenant = undefined;
+                    if (!stopped && !suspended) renderLogin();
+                    return;
+                }
+                logoutInProgress = false;
+                logoutUnresolved = true;
+                logoutNotice = undefined;
+                const message = result.remoteRevocation === 'confirmed'
+                    ? 'The server confirmed sign-out, but this device has not confirmed removal of its saved sign-in.'
+                    : 'Neither server revocation nor removal of this device’s saved sign-in is confirmed.';
+                logoutRetryLocalOnly = true;
+                logoutRecoveryMessage = message;
+                logoutRecoveryLabel = 'Retry local credential cleanup';
+                if (!stopped && !suspended) renderLogoutRecovery(message, 'Retry local credential cleanup', true);
+                return;
+            }
+            logoutInProgress = false;
+            logoutUnresolved = true;
+            logoutRetryLocalOnly = false;
+            logoutNotice = undefined;
+            logoutRecoveryMessage = 'The server did not confirm sign-out. Retry to reconcile this session.';
+            logoutRecoveryLabel = 'Retry sign out';
+            if (!stopped && !suspended) renderLogoutRecovery(logoutRecoveryMessage, logoutRecoveryLabel);
+        }
+        catch {
+            logoutInProgress = false;
+            logoutUnresolved = true;
+            logoutRetryLocalOnly = false;
+            logoutNotice = undefined;
+            logoutRecoveryMessage = 'The server did not confirm sign-out. Retry to reconcile this session.';
+            logoutRecoveryLabel = 'Retry sign out';
+            if (!stopped && !suspended) renderLogoutRecovery(logoutRecoveryMessage, logoutRecoveryLabel);
+        }
+    }
+    async function mountContributions(selected: ShellSnapshot['workspaces'][number], snap: Bootstrap, parent: AbortController, current: () => boolean, available: () => boolean) {
         for (const binding of uiBindings) {
             if (!current()) return;
             if (binding.workspaceId !== selected.id || !UI_CONTRIBUTION_SLOTS.includes(binding.slot)) continue;
@@ -247,7 +395,7 @@ export function startShell({ root, title, loaders, uiBindings = [], presentation
             parent.signal.addEventListener('abort', abortFromParent, { once: true });
             contributionControllers.push(controller);
             const contributionCurrent = () => current() && !controller.signal.aborted;
-            const scoped = createScopedWorkspaceApi({
+            const scoped = gateWorkspaceApi(createScopedWorkspaceApi({
                 operations: snap.operations,
                 moduleId: descriptor.moduleId,
                 tenantId: snap.scope.tenantId,
@@ -256,7 +404,7 @@ export function startShell({ root, title, loaders, uiBindings = [], presentation
                 origin: () => location.origin,
                 onAccessFailure: accessFailure,
                 request
-            });
+            }), () => available() && contributionCurrent());
             const contributionRoot = el('section', 'workspace-contribution-item');
             slot.append(contributionRoot);
             slot.hidden = false;
@@ -277,7 +425,7 @@ export function startShell({ root, title, loaders, uiBindings = [], presentation
                     locale: 'en',
                     permissions: Object.freeze([descriptor.permission]),
                     api: Object.freeze({ get: (path: string, signal?: AbortSignal) => scoped.get(path, signal) }),
-                    notice: message => { if (contributionCurrent()) notice(message); }
+                    notice: message => { if (available() && contributionCurrent()) notice(message); }
                 };
                 const dispose = contribution.mount(context);
                 if (dispose && typeof (dispose as unknown as { then?: unknown }).then === 'function') {
@@ -294,26 +442,54 @@ export function startShell({ root, title, loaders, uiBindings = [], presentation
             }
         }
     }
-    async function mountSelected() {
+    function setCurrentWorkspace(snap: Bootstrap, route: WorkspaceRouteContext) {
+        const workspace = snap.workspaces.find(item => item.id === route.workspaceId);
+        const path = workspace?.path;
+        for (const anchor of Array.from(root.querySelectorAll?.('[data-workspace-path]') ?? []))
+            anchor.setAttribute('aria-current', anchor.getAttribute('data-workspace-path') === path ? 'page' : 'false');
+    }
+    function showRouteRecovery() {
+        if (!bootstrap || !content || stopped) return;
+        const first = workspacePresentation(bootstrap)[0];
+        if (mountedWorkspaceId !== undefined && active && !active.signal.aborted) {
+            const status = el('div', 'notice route-recovery');
+            status.setAttribute('role', 'status');
+            status.append(el('span', '', 'This URL is not an available product route. The current workspace and its unsaved work are still open.'));
+            if (first) status.append(button('Return to an available workspace', () => { void shellNavigation?.port.navigate(first.routeId); }));
+            if (!content.querySelector('.route-recovery')) content.prepend(status);
+            return;
+        }
+        clearView();
+        activeRoute = undefined;
+        content.append(el('h2', '', 'This page is unavailable'), el('p', 'muted', 'The route is not part of this product or is not available to your current workspace. Choose an available workspace to continue.'));
+        if (first) content.append(button('Go to an available workspace', () => { void shellNavigation?.port.navigate(first.routeId); }));
+    }
+    async function mountSelected(requestedRoute?: WorkspaceRouteContext) {
         // A hash event during a scope replacement cannot use the obsolete bootstrap.
         if (!bootstrap || stopped || suspended || logoutInProgress || !content)
             return;
+        const route = requestedRoute ?? shellNavigation?.port.current();
+        if (!route) { showRouteRecovery(); return; }
+        if (mountedWorkspaceId === route.workspaceId && active && !active.signal.aborted) {
+            activeRoute = route;
+            setCurrentWorkspace(bootstrap, route);
+            return;
+        }
         clearView();
+        activeRoute = route;
         const ownGeneration = generation, controller = new AbortController();
         active = controller;
         const snap = bootstrap;
-        const current = () => !stopped && !controller.signal.aborted && ownGeneration === generation && bootstrap === snap;
-        const path = location.hash.slice(1) || snap.workspaces[0]?.path;
-        // Presentation only: navigation never changes the accepted request scope.
-        for (const a of Array.from(root.querySelectorAll?.('[data-workspace-path]') ?? [])) {
-            a.setAttribute('aria-current', a.getAttribute('data-workspace-path') === path ? 'page' : 'false');
-        }
-        const selected = snap.workspaces.find(w => w.path === path);
+        const live = () => !stopped && !controller.signal.aborted && ownGeneration === generation && bootstrap === snap;
+        const current = () => live() && !suspended && !resumePending;
+        setCurrentWorkspace(snap, route);
+        const selected = snap.workspaces.find(w => w.id === route.workspaceId);
         if (!selected && snap.modules.length) {
             content.append(el('h2', '', 'Choose an available workspace'), el('p', 'muted', 'This route is not selected or not permitted. Use the workspace navigation.'));
             return;
         }
         if (!selected) {
+            mountedWorkspaceId = route.workspaceId;
             const welcome = el('section', 'card empty-state');
             welcome.append(el('span', 'eyebrow', 'NEUTRAL HOST'), el('h2', '', 'The shell is running without a domain.'), el('p', 'muted', 'This product has no selected business workspaces. Add a reviewed module through its product definition; do not edit the shell.'), el('p', 'muted', `${snap.modules.length} selected modules · ${snap.abi}`));
             const blocks = el('div', 'neutral-blocks');
@@ -332,49 +508,77 @@ export function startShell({ root, title, loaders, uiBindings = [], presentation
             return;
         }
         const stage = el('div', 'workspace');
+        const workspaceLayout = snap.product.experience?.layoutByWorkspace.find(item => item.workspaceId === selected.id)?.mode;
+        if (workspaceLayout) stage.setAttribute('data-qb-layout-mode', workspaceLayout);
         content.append(stage);
         stage.append(el('p', 'muted', 'Opening workspace…'));
         try {
             const loaded = await loader();
-            if (!current())
+            if (!live())
                 return;
             const provider = Object.hasOwn(loaded, selected.export) ? loaded[selected.export] as Workspace | undefined : undefined;
             if (!provider || typeof provider.mount !== 'function')
                 throw new PlatformError('INCOMPATIBLE', `Workspace export ${selected.export} is unavailable`);
             stage.replaceChildren();
-            const api = createScopedWorkspaceApi({
+            const api = gateWorkspaceApi(createScopedWorkspaceApi({
                 operations: snap.operations,
                 moduleId: selected.moduleId,
                 tenantId: snap.scope.tenantId,
                 signal: controller.signal,
-                isCurrent: current,
+                isCurrent: live,
                 origin: () => location.origin,
                 onAccessFailure: accessFailure,
                 request
-            });
+            }), current);
+            const contextNavigation = shellNavigation;
             const ctx: WorkspaceContext = {
-                root: stage, scope: Object.freeze({ ...snap.scope }), signal: controller.signal, locale: 'en', permissions: Object.freeze([...snap.permissions]),
+                root: stage, scope: Object.freeze({ ...snap.scope }), actor: Object.freeze({ ...snap.actor }), signal: controller.signal, locale: 'en', permissions: Object.freeze([...snap.permissions]),
                 notice: message => { if (current())
                     notice(message); },
-                api
+                api,
+                route,
+                navigation: shellNavigation ? scopedNavigation(shellNavigation, current) : undefined
             };
+            Object.defineProperty(ctx, 'route', { enumerable: true, configurable: false, get: () => current() ? contextNavigation?.port.current() : undefined });
             cleanup = provider.mount(ctx) || undefined;
-            await mountContributions(selected, snap, controller, current);
+            mountedWorkspaceId = route.workspaceId;
+            await mountContributions(selected, snap, controller, live, current);
         }
         catch (e) {
-            if (current())
+            if (live()) {
+                mountedWorkspaceId = undefined;
                 stage.replaceChildren(el('h2', '', 'Workspace unavailable'), el('p', 'muted', e instanceof Error ? e.message : 'Provider failed'), button('Try again', () => void mountSelected()));
+            }
         }
     }
     function renderShell() {
         if (!bootstrap)
             return;
+        applyExperienceBoundary(root, bootstrap.product.experience);
+        disposeShellNavigation();
         clearView();
         needsRender = false;
         const snap = bootstrap;
+        const navigableWorkspaceIds = snap.product.experience ? new Set(snap.product.experience.navigation.map(item => item.workspaceId)) : undefined;
+        const navigableWorkspaces = navigableWorkspaceIds ? snap.workspaces.filter(item => navigableWorkspaceIds.has(item.id)) : snap.workspaces;
+        shellNavigation = createWorkspaceNavigation({
+            workspaces: navigableWorkspaces,
+            experience: snap.product.experience,
+            canNavigate: () => !stopped && !suspended && !resumePending && !logoutInProgress && !logoutUnresolved && !loggedOut,
+            onRoute: (next, previous) => {
+                activeRoute = next;
+                content?.querySelector?.('.route-recovery')?.remove();
+                setCurrentWorkspace(snap, next);
+                if (previous.workspaceId === next.workspaceId && mountedWorkspaceId === next.workspaceId) return;
+                return mountSelected(next);
+            },
+            onInvalidRoute: showRouteRecovery,
+            onGuardError: () => notice('The page could not be changed because unsaved work needs attention.')
+        });
         const view = presentation({
             root,
             snapshot: snap,
+            onNavigate: (routeId, input) => shellNavigation?.port.navigate(routeId, input) ?? Promise.resolve(false),
             onTenantChange: tenantId => {
                 if (stopped || !snap.tenants.includes(tenantId)) return;
                 requestedTenant = tenantId;
@@ -382,36 +586,17 @@ export function startShell({ root, title, loaders, uiBindings = [], presentation
                 notice('Loading authorized tenant context…');
                 void refresh(true);
             },
-            onSignOut: () => {
-                if (logoutInProgress || stopped) return;
-                logoutInProgress = true;
-                loggedOut = false;
-                bootstrapAbort?.abort();
-                refreshEpoch++;
-                sessionKnown = false;
-                invalidateScope();
-                root.replaceChildren(el('p', 'muted', 'Signing out…'));
-                content = undefined;
-                noticeArea = undefined;
-                void request('/api/logout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })
-                    .catch(() => undefined)
-                    .finally(() => {
-                        logoutInProgress = false;
-                        loggedOut = true;
-                        sessionKnown = false;
-                        requestedTenant = undefined;
-                        if (!stopped && !suspended) renderLogin();
-                    });
-            }
+            onSignOut: () => { void performLogout(); }
         });
         content = view.content;
         noticeArea = view.noticeArea;
         contributionSlots = view.contributionSlots;
         contributionLayout = view.contributionLayout;
-        void mountSelected();
+        if (!shellNavigation.initialValid) showRouteRecovery();
+        else void mountSelected(shellNavigation.port.current());
     }
     async function refresh(force = false) {
-        if (stopped || suspended || logoutInProgress || loggedOut || (refreshing && !force))
+        if (stopped || suspended || logoutInProgress || logoutUnresolved || loggedOut || (refreshing && !force))
             return;
         bootstrapAbort?.abort();
         const controller = new AbortController();
@@ -422,21 +607,32 @@ export function startShell({ root, title, loaders, uiBindings = [], presentation
             const next = await request('/api/bootstrap', {}, controller.signal, requested) as Bootstrap;
             if (stopped || controller.signal.aborted || epoch !== refreshEpoch)
                 return;
+            const receivedExperience = next.product?.experience;
+            if (productExperience && !receivedExperience) throw new PlatformError('INCOMPATIBLE', 'Bootstrap omitted the selected product presentation');
+            if (productExperience && receivedExperience && JSON.stringify(validateProductExperience(receivedExperience)) !== JSON.stringify(productExperience)) throw new PlatformError('INCOMPATIBLE', 'Bootstrap product presentation does not match this fixed build');
+            if (!productExperience && receivedExperience) productExperience = validateProductExperience(receivedExperience);
+            if (productExperience && receivedExperience) next.product = { ...next.product, experience: productExperience };
             if (!next.scope || (requested && next.scope.tenantId !== requested) || !next.tenants.includes(next.scope.tenantId))
                 throw new PlatformError('INCOMPATIBLE', 'Bootstrap scope does not match the requested tenant');
             const nextSignature = JSON.stringify(next);
+            const revealAfterResume = resumePending;
+            resumePending = false;
             sessionKnown = true;
             requestedTenant = next.scope.tenantId;
             // Keep the accepted immutable instance on unchanged refreshes; do not invalidate its clients.
-            if (force || needsRender || !bootstrap || nextSignature !== signature) {
+            if (needsRender || !bootstrap || nextSignature !== signature) {
                 bootstrap = next;
                 signature = nextSignature;
                 renderShell();
             }
+            if (revealAfterResume) root.hidden = false;
         }
         catch (e) {
-            if (!controller.signal.aborted && epoch === refreshEpoch && !stopped)
+            if (!controller.signal.aborted && epoch === refreshEpoch && !stopped) {
+                resumePending = false;
+                root.hidden = false;
                 accessFailure(e);
+            }
         }
         finally {
             if (epoch === refreshEpoch)
@@ -449,34 +645,42 @@ export function startShell({ root, title, loaders, uiBindings = [], presentation
         bootstrapAbort?.abort();
         refreshEpoch++;
         sessionKnown = false;
-        invalidateScope();
-        content = undefined;
-        noticeArea = undefined;
-        root.replaceChildren(el('p', 'muted', 'Workspace paused. Reopen the app to check access.'));
+        resumePending = true;
+        if (!bootstrap && !active) {
+            root.replaceChildren(el('p', 'muted', 'Workspace paused. Reopen the app to check access.'));
+            content = undefined;
+            noticeArea = undefined;
+            contributionSlots = undefined;
+            contributionLayout = undefined;
+        }
+        root.hidden = true;
     };
     const resume = () => {
         if (stopped || !suspended) return;
         suspended = false;
         if (logoutInProgress) {
+            root.hidden = false;
             root.replaceChildren(el('p', 'muted', 'Signing out…'));
             content = undefined;
             noticeArea = undefined;
             return;
         }
+        if (logoutUnresolved) {
+            root.hidden = false;
+            renderLogoutRecovery(logoutRecoveryMessage, logoutRecoveryLabel, logoutRetryLocalOnly);
+            return;
+        }
         if (loggedOut) {
+            root.hidden = false;
             renderLogin();
             return;
         }
-        root.replaceChildren(el('p', 'muted', 'Checking access…'));
-        content = undefined;
-        noticeArea = undefined;
+        root.hidden = true;
         void refresh(true);
     };
     const unbindLifecycle = lifecycle?.bind({ suspend, resume });
-    const hash = () => { if (!suspended) void mountSelected(); };
-    window.addEventListener('hashchange', hash);
     const timer = setInterval(() => { if (sessionKnown)
         void refresh(); }, 15000);
     void refresh();
-    return () => { stopped = true; unbindLifecycle?.(); bootstrapAbort?.abort(); refreshEpoch++; clearInterval(timer); window.removeEventListener('hashchange', hash); invalidateScope(); root.replaceChildren(); };
+    return () => { stopped = true; unbindLifecycle?.(); bootstrapAbort?.abort(); refreshEpoch++; clearInterval(timer); invalidateScope(); root.replaceChildren(); };
 }

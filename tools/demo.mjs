@@ -9,6 +9,12 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const args = process.argv.slice(2);
 const arg = (name, fallback) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : fallback; };
 const single = arg('--product'), basePort = Number(arg('--base-port', '4300'));
+const nativeApiEnabled = args.includes('--native-api');
+const modelAnswerProfile = arg('--model-profile');
+if (nativeApiEnabled && !single) throw new Error('--native-api requires exactly one selected --product.');
+if (nativeApiEnabled && Number(arg('--port', String(basePort))) === 4350) throw new Error('The selected web port must differ from the fixed native API port 4350.');
+if (args.includes('--model-profile') && modelAnswerProfile !== 'ollama-qwen3-4b')
+    throw new Error('Unsupported local model profile');
 const data = resolve(arg('--data-root', join(root, '.local')));
 if (!Number.isSafeInteger(basePort) || basePort < 1024 || basePort > 65500)
     throw new Error('Invalid base port');
@@ -70,6 +76,7 @@ for (const product of selected) {
         throw new Error('Invalid product');
     const plan = JSON.parse(await readFile(join(root, '.artifacts', product, 'plan.json'), 'utf8'));
     const { config } = localConfiguration(plan, profile, { credentials, dataDirectory: join(data, product, 'data'), basePort, deskUrl: arg('--desk-url') });
+    if (modelAnswerProfile === 'ollama-qwen3-4b') config.modelAnswerProfile = 'local-ollama-qwen3-4b';
     // Reusing a local store must not recreate a removed identity or widen existing grants.
     if (existsSync(join(config.dataDirectory, 'access.sqlite'))) config.principals = [];
     const configPath = join(data, `${product}.json`);
@@ -99,6 +106,7 @@ for (const product of selected) {
     try {
         const webFlags = ['--port', String(portFor(product))];
         if (args.includes('--mobile-preview')) webFlags.push('--mobile-preview');
+        if (nativeApiEnabled) webFlags.push('--native-api');
         const web = launch(webFlags, 'web-backend');
         await waitForWebReady(web, product, portFor(product));
         if (plan.requiresWorker) {
@@ -118,4 +126,8 @@ for (const product of selected) {
     }
     console.log(`${plan.product.title}: http://127.0.0.1:${portFor(product)}`);
 }
-console.log(`\nLOCAL ACCOUNTS (generated once; keep private)\nadmin: ${credentials.admin}\nviewer: ${credentials.viewer}\nCredentials: ${credentialsPath}\nCtrl+C stops the local processes; records remain on disk.\n`);
+if (nativeApiEnabled) {
+    console.log(`\nNative local profile: http://127.0.0.1:4350\nCredentials are stored in the private file ${credentialsPath}.\nCtrl+C stops the local processes; records remain on disk.\n`);
+} else {
+    console.log(`\nLOCAL ACCOUNTS (generated once; keep private)\nadmin: ${credentials.admin}\nviewer: ${credentials.viewer}\nCredentials: ${credentialsPath}\nCtrl+C stops the local processes; records remain on disk.\n`);
+}

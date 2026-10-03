@@ -1,0 +1,98 @@
+{
+  "schema": "veyviz.startup-original-close-repair-proposal.v1",
+  "status": "ADMITTED_FOR_IMPLEMENTATION_NOT_ACCEPTED",
+  "scope": "Known startup failure must retain and observe the original owned child close despite an IPC/control error. No generic native/process hardening.",
+  "owners": [
+    "tools/veyviz-start.mjs",
+    "tests/veyviz-lifecycle.test.mjs"
+  ],
+  "source": {
+    "tools/veyviz-start.mjs": {
+      "sha256": "05bcc9a77a290e94228c7fc461547a2ac7142d446efcd46b94e74e9532cb16f7",
+      "bytes": 11758
+    },
+    "tools/veyviz-runtime.mjs": {
+      "sha256": "7bf19c54a83ab16784083762c0c0555281ac44e903403825fa67d99ea12233ca",
+      "bytes": 3132,
+      "readOnlyDependency": true
+    },
+    "tests/veyviz-lifecycle.test.mjs": {
+      "sha256": "c30ca69d7aa1840c84f22f11d616fb48645a97166aba195310e0ab57bdebb075",
+      "bytes": 5911
+    }
+  },
+  "evidence": {
+    "diagnostic": {
+      "path": ".local/product-paging-evidence/diagnose-reviewer-overlay-start-test.txt",
+      "sha256": "15003ef7c6845565b749efd7885e8bf89cec3a80afa25c73c2d71978d7c206b6",
+      "bytes": 3326
+    },
+    "index": {
+      "path": ".local/product-paging-evidence/execution-index-reviewer-overlay.json",
+      "sha256": "ba271b0bbc423f1d7573cf5847b65d35c4a38451739f1f8e562cb0f1870c7605",
+      "bytes": 10573
+    },
+    "observedCandidate": "2437aeb7d7627763afc3cba0081f33a2de4cac2c7ceacc31010fef1d518937a9",
+    "failure": "Fixed product runtime reported unable to open database file. stop() then threw EPIPE before awaiting close; diagnostic captured childExited=false and rethrew without final owner observation.",
+    "historicalOriginalClosure": "UNKNOWN: no later original-child close or cleanup proof exists in this index. New tests or different children cannot resolve it.",
+    "databaseCause": "Long temporary path correlates with failures; short temporary path checks passed. Exact OS/path/database cause is not established and is outside this repair."
+  },
+  "defects": [
+    {
+      "path": "tools/veyviz-start.mjs",
+      "line": 117,
+      "detail": "child.connected is a snapshot; child.send may throw or fail after that check. The request precedes the close wait and stopRequested assignment, so EPIPE bypasses original-close observation."
+    },
+    {
+      "path": "tools/veyviz-start.mjs",
+      "line": 96,
+      "detail": "completion rejects on any child error, including an IPC/control error, before the original close event. Catching send alone therefore cannot fix the ownership obligation."
+    }
+  ],
+  "design": [
+    "Keep startup-ready error handling separate from original-close observation. A lifetime child error listener records control/child error diagnostics but does not settle the original-close obligation. Only the original child close event supplies code/signal/cleanup facts; marker publication may still report its own error after close.",
+    "Mark a stop request before attempting IPC. Use a guarded send with an error callback and a synchronous catch; retain bounded diagnostics for either control failure. Regardless of send success, disconnection, or control error, await the same original completion with the existing 120-second deadline. No PID adoption, fallback kill, invented close, or new timeout policy.",
+    "Preserve token-checked marker publication and claim provenance. CLOSED requires cleanup=true, exit code 0 and null signal exactly as today. A real close with exit code 1 is an observed close but remains UNKNOWN/quarantined; it must not authorize relaunch or credential reseeding.",
+    "Retain the original startup error and owner on the aggregate failure. After observed non-successful close, owner.completion remains available with the original close facts even though start/stop correctly rejects. Expose no arbitrary child script/import option."
+  ],
+  "regressions": [
+    {
+      "owner": "tests/veyviz-lifecycle.test.mjs",
+      "purpose": "Deterministic control-error versus close ordering through the actual startProduct path.",
+      "fixture": "Scoped node:child_process fork mock plus syncBuiltinESMExports, restored in finally and nonconcurrent; return a test-owned EventEmitter child with stdout/stderr streams. Production fork target/options remain fixed.",
+      "assertions": [
+        "Emit a startup failed message, then force stop send to throw EPIPE or report callback/error-event EPIPE before a delayed close; cover both synchronous and asynchronous control failures as finite subcases.",
+        "Startup cleanup must remain pending until that exact child close; a child error alone cannot discharge completion.",
+        "After original close code 1, original owner completion reports code/signal/cleanup facts; startup still rejects, owner marker UNKNOWN and claim retained. No cleanup success inferred from control error."
+      ]
+    },
+    {
+      "owner": "tests/veyviz-lifecycle.test.mjs",
+      "purpose": "Actual fixed-runtime startup failure and original-close binding without AI or historical child adoption.",
+      "fixture": "Start a test-owned loopback listener on an ephemeral port and request veyviz-catalog on that already-bound port, using the ordinary reviewed built artifact and a short test-owned temporary data root. Close only this test listener in finally.",
+      "assertions": [
+        "The fixed child fails startup after runtime creation and follows its cleanup path; startProduct rejects with its original owner.",
+        "Await that owner's original completion and inspect the token-bound persisted marker; nonzero close remains UNKNOWN with claim retained even if partial runtime cleanup was reported.",
+        "A subsequent launch cannot reseed or silently reuse that quarantined generation. No claim that this new child proves closure of the old database-failure diagnostic."
+      ]
+    }
+  ],
+  "validationProposal": [
+    "Capture these two owners and launcher identity before/after execution.",
+    "Build current admitted product source before focused lifecycle tests; preserve raw logs and all failed attempts.",
+    "Run the bounded lifecycle regression and existing lifecycle cases; coordinator records the eventual required full npm test and wider product qualification separately."
+  ],
+  "compatibility": "Launcher changes are fingerprint inputs, so they create a new reviewed generation. Existing credential/enrollment and UNKNOWN-generation refusal rules remain intact.",
+  "reviewLimitations": "Read-only source and recorded-evidence inspection. No commands/tests/browser/child manipulation executed by reviewer, no new acceptance or admission asserted. Root owns exact implementation admission and shared Brain.",
+  "admission": {
+    "authority": "User fix all; root delegates the two already-contracted product owners to product Brawn for the concrete observed cleanup defect.",
+    "proposalSha256": "cd7f1cb5f87ee04f4e73c35ad0e57bbb4182716b41133b3e47be663316ff37d1",
+    "implementer": "/root/product_paging_brawn",
+    "reviewer": "/root/product_paging_review",
+    "rules": [
+      "Preserve all other product and foreign intelligence edits. Do not edit maintained framework source, original Veyviz repositories or private profiles.",
+      "Use a new bounded two-file overlay of the already verified snapshot; do not mutate its preserved baseline. Fresh build and lifecycle tests use short test-owned temp roots.",
+      "No full suite/model/browser execution until root integration. Historical unknown original child closure cannot be resolved by new tests."
+    ]
+  }
+}

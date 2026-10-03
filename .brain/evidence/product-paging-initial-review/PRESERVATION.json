@@ -1,0 +1,54 @@
+{
+  "schema": "veyviz.paging-review-preservation.v1",
+  "candidate": "b6a3ed725d39ad1e2d77cf6f2e2aa4b07a78e72df53f0427b08f578975489663",
+  "verdict": "CHANGES_REQUESTED",
+  "files": [
+    {
+      "path": ".brain/evidence/product-paging-initial-review/independent-review.md",
+      "source": ".local/product-paging-evidence/independent-review.md",
+      "bytes": 6144,
+      "sha256": "c895b394d2814ddb25e604def3e2dadc0bf230564efdea8b9aca714593d69b17"
+    },
+    {
+      "path": ".brain/evidence/product-paging-initial-review/independent-review-capture-before.json",
+      "source": ".local/product-paging-evidence/independent-review-capture-before.json",
+      "bytes": 4913,
+      "sha256": "53a4bb593b6046141afcfdbff914e075ab7ca5a8adfbd2504aaa3d100b5ebc17"
+    },
+    {
+      "path": ".brain/evidence/product-paging-initial-review/independent-review-capture-after.json",
+      "source": ".local/product-paging-evidence/independent-review-capture-after.json",
+      "bytes": 4931,
+      "sha256": "24c232f16401593aad283ffc7e927f5996f061c394378807973a7279ad271cfb"
+    },
+    {
+      "path": ".brain/evidence/product-paging-initial-review/snapshot-manifest.json",
+      "source": ".local/product-paging-evidence/snapshot-manifest.json",
+      "bytes": 802151,
+      "sha256": "1c2c99f6c963369139b883293c92c46e25ba25d847bba83785b6a033f143706c"
+    },
+    {
+      "path": ".brain/evidence/product-paging-initial-review/fresh-build-corrected.txt",
+      "source": ".local/product-paging-evidence/fresh-build-corrected.txt",
+      "bytes": 539,
+      "sha256": "ee85b5d4b4461db34813d969511736c6f848d8207233d270fa2a7b1864b7afd6"
+    },
+    {
+      "path": ".brain/evidence/product-paging-initial-review/focused-tests.txt",
+      "source": ".local/product-paging-evidence/focused-tests.txt",
+      "bytes": 1433,
+      "sha256": "7151d48c5957448ee1d8a4446377ae139b664bde61534b3542d5ffbd4b41c230"
+    },
+    {
+      "path": ".brain/evidence/product-paging-initial-review/execution-index.json",
+      "source": ".local/product-paging-evidence/execution-index.json",
+      "bytes": 7076,
+      "sha256": "4746e0d2ab88bafaf57a486ddf95fd871795f1996307d0adc62a79bc7dea3294"
+    }
+  ],
+  "limitations": [
+    "13 focused backend/lifecycle passes did not exercise the changing-date UI request or accented source name.",
+    "The two source-reasoned blockers require corrected-source regressions and independent repaired-diff review.",
+    "Recorded intelligence foreign work remains preserved and separately attributed."
+  ]
+}

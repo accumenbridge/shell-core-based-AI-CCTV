@@ -1,0 +1,2 @@
+{"status":"READY","product":"veyviz-catalog"}
+{"status":"STOPPED","code":0,"signal":null,"cleanup":true}

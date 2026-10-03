@@ -1,0 +1,164 @@
+:where([data-qb-ui-boundary]) {
+  box-sizing: border-box;
+  display: block;
+  min-width: 0;
+  min-height: 100%;
+  color: var(--qb-text);
+  background: var(--qb-surface-page);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: var(--qb-font-body);
+  line-height: 1.5;
+  font-synthesis: none;
+}
+
+/* A maintained shell root fills the viewport even when its document body has default margins. */
+:where([data-qb-ui-host]) {
+  position: fixed;
+  inset: 0;
+  overflow: auto;
+}
+
+:where([data-qb-ui-boundary]),
+:where([data-qb-ui-boundary]) *,
+:where([data-qb-ui-boundary]) *::before,
+:where([data-qb-ui-boundary]) *::after {
+  box-sizing: border-box;
+}
+
+:where([data-qb-ui-boundary]) button,
+:where([data-qb-ui-boundary]) input,
+:where([data-qb-ui-boundary]) textarea,
+:where([data-qb-ui-boundary]) select {
+  font: inherit;
+}
+
+:where([data-qb-ui-boundary]) button,
+:where([data-qb-ui-boundary]) a,
+:where([data-qb-ui-boundary]) input,
+:where([data-qb-ui-boundary]) select,
+:where([data-qb-ui-boundary]) textarea {
+  outline-offset: 3px;
+}
+
+:where([data-qb-ui-boundary]) button:focus-visible,
+:where([data-qb-ui-boundary]) a:focus-visible,
+:where([data-qb-ui-boundary]) input:focus-visible,
+:where([data-qb-ui-boundary]) select:focus-visible,
+:where([data-qb-ui-boundary]) textarea:focus-visible,
+:where([data-qb-ui-boundary]) [tabindex="-1"]:focus-visible {
+  outline: 3px solid var(--qb-focus);
+}
+
+:where([data-qb-ui-boundary]) a { color: var(--qb-accent); }
+:where([data-qb-ui-boundary]) button { cursor: pointer; }
+:where([data-qb-ui-boundary]) button:disabled { cursor: not-allowed; }
+:where([data-qb-ui-boundary]) [hidden] { display: none !important; }
+:where([data-qb-ui-boundary]) h1,
+:where([data-qb-ui-boundary]) h2,
+:where([data-qb-ui-boundary]) h3,
+:where([data-qb-ui-boundary]) p { overflow-wrap: anywhere; }
+
+:where([data-qb-ui-boundary]) .qb-field-help,
+:where([data-qb-ui-boundary]) .qb-field-error {
+  display: block;
+  font-size: var(--qb-font-small);
+  line-height: 1.45;
+}
+
+:where([data-qb-ui-boundary]) .qb-field-help { color: var(--qb-text-muted); }
+:where([data-qb-ui-boundary]) .qb-field-error { color: var(--qb-status-danger-text); }
+:where([data-qb-ui-boundary]) .qb-field-error[hidden] { display: none; }
+:where([data-qb-ui-boundary]) .field.qb-field.qb-field input[aria-invalid="true"],
+:where([data-qb-ui-boundary]) .field.qb-field.qb-field textarea[aria-invalid="true"],
+:where([data-qb-ui-boundary]) .field.qb-field.qb-field select[aria-invalid="true"] {
+  border-color: var(--qb-status-danger-text);
+}
+
+:where([data-qb-ui-boundary]) .qb-action-button { min-height: var(--qb-density-control-height); }
+:where([data-qb-ui-boundary]) button.button.qb-action-button.qb-action-button-secondary {
+  color: var(--qb-text);
+  background: var(--qb-surface-panel);
+  border-color: var(--qb-border-strong);
+}
+:where([data-qb-ui-boundary]) button.button.qb-action-button.qb-action-button-quiet {
+  color: var(--qb-accent);
+  background: transparent;
+  border-color: transparent;
+}
+:where([data-qb-ui-boundary]) button.button.qb-action-button.qb-action-button-danger {
+  color: var(--qb-accent-text);
+  background: var(--qb-status-danger-text);
+  border-color: var(--qb-status-danger-text);
+}
+:where([data-qb-ui-boundary]) button.qb-action-button:disabled { opacity: 0.72; }
+:where([data-qb-ui-boundary]) .qb-action-pending,
+:where([data-qb-ui-boundary]) .qb-action-reason { font-size: var(--qb-font-small); }
+
+:where([data-qb-ui-boundary]) .qb-status-notice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--qb-space-1) var(--qb-space-2);
+  align-items: baseline;
+  min-width: 0;
+  padding: var(--qb-space-3) var(--qb-space-4);
+  border: 1px solid var(--qb-border);
+  border-radius: var(--qb-radius-control);
+  color: var(--qb-text);
+  background: var(--qb-surface-raised);
+}
+:where([data-qb-ui-boundary]) .qb-status-label { font-weight: 700; }
+:where([data-qb-ui-boundary]) .qb-status-message { min-width: 0; overflow-wrap: anywhere; }
+:where([data-qb-ui-boundary]) .qb-status-notice[data-qb-status="pending"],
+:where([data-qb-ui-boundary]) .qb-status-notice[data-qb-status="info"] {
+  color: var(--qb-status-info-text);
+  background: var(--qb-status-info-surface);
+  border-color: var(--qb-status-info-border);
+}
+:where([data-qb-ui-boundary]) .qb-status-notice[data-qb-status="success"] {
+  color: var(--qb-status-success-text);
+  background: var(--qb-status-success-surface);
+  border-color: var(--qb-status-success-border);
+}
+:where([data-qb-ui-boundary]) .qb-status-notice[data-qb-status="warning"],
+:where([data-qb-ui-boundary]) .qb-status-notice[data-qb-status="unknown"],
+:where([data-qb-ui-boundary]) .qb-status-notice[data-qb-status="conflict"] {
+  color: var(--qb-status-warning-text);
+  background: var(--qb-status-warning-surface);
+  border-color: var(--qb-status-warning-border);
+}
+:where([data-qb-ui-boundary]) .qb-status-notice[data-qb-status="danger"] {
+  color: var(--qb-status-danger-text);
+  background: var(--qb-status-danger-surface);
+  border-color: var(--qb-status-danger-border);
+}
+
+:where([data-qb-ui-boundary]) [data-qb-layout-mode="reading"] {
+  width: min(100%, 72ch);
+  max-width: 72ch;
+  margin-inline: auto;
+}
+:where([data-qb-ui-boundary]) [data-qb-layout-mode="operational"] {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin-inline: 0;
+}
+:where([data-qb-ui-boundary]) .qb-scroll-region {
+  max-width: 100%;
+  overflow: auto;
+  overscroll-behavior-inline: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-qb-ui-boundary]) *,
+  :where([data-qb-ui-boundary]) *::before,
+  :where([data-qb-ui-boundary]) *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 600px) {
+  :where([data-qb-ui-boundary]) .qb-status-notice { align-items: flex-start; }
+  :where([data-qb-ui-boundary]) .qb-action-button { min-height: 44px; }
+}

@@ -8,21 +8,52 @@ export async function frontendClosure(root, plan, { includeMobile = false } = {}
         '@quadbridge/contracts': '/assets/packages/contracts/index.js',
         '@quadbridge/contracts/ui-contributions': '/assets/packages/contracts/ui-contributions.js',
         '@quadbridge/client-core': '/assets/packages/client-core/index.js',
+        '@quadbridge/ui': '/assets/packages/ui/index.js',
+        '@quadbridge/ui/components': '/assets/packages/ui/components.js',
         '@quadbridge/web-shell': '/assets/packages/web-shell/index.js',
         '@quadbridge/web-shell/dom': '/assets/packages/web-shell/dom.js',
         '@quadbridge/web-shell/react-adapter': '/assets/packages/web-shell/react-adapter.js'
-    }, styles = ['/assets/shell.css'];
+    }, styles = ['/assets/packages/ui/tokens.css', '/assets/packages/ui/ui.css', '/assets/shell.css'];
     const modules = new Map(plan.modules.map(m => [m.id, m]));
     const absoluteRoot = await realpath(root);
-    const roots = [...['contracts', 'client-core', 'web-shell', ...(includeMobile ? ['mobile-shell'] : [])].map(p => `packages/${p}/dist`), ...plan.modules.map(m => `modules/${m.id}/dist`)];
-    if (includeMobile) imports['@quadbridge/mobile-shell'] = '/assets/packages/mobile-shell/index.js';
+    if (includeMobile) {
+        const workspace = JSON.parse(await readFile(join(root, 'packages/mobile-shell/package.json'), 'utf8'));
+        const lock = JSON.parse(await readFile(join(root, 'package-lock.json'), 'utf8'));
+        for (const [name, version] of [['@capacitor/core', '8.5.2'], ['@capacitor/app', '8.1.1']]) {
+            const packageRoot = join(root, 'node_modules', ...name.split('/'));
+            const manifestPath = join(packageRoot, 'package.json');
+            if (await realpath(manifestPath) !== resolve(manifestPath))
+                throw Error(`Selected native vendor manifest is not physical: ${name}`);
+            const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+            const lockPath = `node_modules/${name}`;
+            if (workspace.dependencies?.[name] !== version || lock.packages?.['packages/mobile-shell']?.dependencies?.[name] !== version ||
+                manifest.name !== name || manifest.version !== version || lock.packages?.[lockPath]?.version !== version)
+                throw Error(`Selected native vendor ${name} does not match its fixed package and lock identity`);
+        }
+    }
+    const nativeVendorRoots = includeMobile ? new Map([
+        ['node_modules/@capacitor/core/dist', 'core'],
+        ['node_modules/@capacitor/app/dist/esm', 'app']
+    ]) : new Map();
+    const roots = [...['contracts', 'client-core', 'ui', 'web-shell', ...(includeMobile ? ['mobile-shell'] : [])].map(p => `packages/${p}/dist`), ...plan.modules.map(m => `modules/${m.id}/dist`), ...nativeVendorRoots.keys()];
+    if (includeMobile) {
+        imports['@quadbridge/mobile-shell'] = '/assets/packages/mobile-shell/index.js';
+        imports['@capacitor/core'] = '/assets/vendor/capacitor/core/index.js';
+        imports['@capacitor/app'] = '/assets/vendor/capacitor/app/index.js';
+    }
     function owner(file) { return roots.find(r => file.startsWith(r + '/')); }
     function url(file) { const r = owner(file); if (!r)
-        throw Error(`Unselected browser source ${file}`); return '/assets/' + r.replace('/dist', '') + '/' + file.slice(r.length + 1); }
+        throw Error(`Unselected browser source ${file}`);
+        const vendor = nativeVendorRoots.get(r);
+        return vendor ? `/assets/vendor/capacitor/${vendor}/${file.slice(r.length + 1)}` : '/assets/' + r.replace('/dist', '') + '/' + file.slice(r.length + 1); }
     for (const m of plan.modules)
         if (m.workspaces.length || m.uiContributions?.length)
             imports[`@quadbridge/${m.id}/ui`] = url(`modules/${m.id}/dist/ui.js`);
     const toFile = url => {
+        const vendor = /^\/assets\/vendor\/capacitor\/(core|app)\/(.+)$/.exec(url);
+        if (vendor) return vendor[1] === 'core'
+            ? `node_modules/@capacitor/core/dist/${vendor[2]}`
+            : `node_modules/@capacitor/app/dist/esm/${vendor[2]}`;
         const match = /^\/assets\/(packages|modules)\/([^/]+)\/(.+)$/.exec(url);
         if (!match)
             throw Error(`No browser file for ${url}`);
@@ -46,12 +77,22 @@ export async function frontendClosure(root, plan, { includeMobile = false } = {}
         const code = await readFile(real, 'utf8');
         async function dependency(spec, moduleImport = false) {
             let target;
+            let extensionlessVendorUrl;
             if (spec.startsWith('./') || spec.startsWith('../')) {
                 if (/[?#\\]/.test(spec))
                     throw Error(`Unsupported dependency URL ${spec}`);
                 target = posix.normalize(posix.join(posix.dirname(file), spec));
                 if (!target.startsWith(boundary + '/'))
                     throw Error(`Relative browser import leaves its owner: ${file} -> ${spec}`);
+                // The two pinned Capacitor browser entrypoints use standard extensionless
+                // relative ESM imports. Resolve only those imports to their adjacent .js file
+                // and retain the exact extensionless URL alias needed by the unchanged preview
+                // import. All other selected sources must declare an explicit JavaScript extension.
+                if (moduleImport && !target.endsWith('.js') &&
+                    [...nativeVendorRoots.keys()].some(vendorRoot => target.startsWith(vendorRoot + '/'))) {
+                    extensionlessVendorUrl = url(target);
+                    target += '.js';
+                }
             }
             else {
                 if (!Object.hasOwn(imports, spec))
@@ -65,6 +106,12 @@ export async function frontendClosure(root, plan, { includeMobile = false } = {}
                 throw Error(`Native ESM imports require JavaScript; declare styles/assets separately: ${target}`);
             if (!target.endsWith('.js') && !ASSET.test(target))
                 throw Error(`Unsupported browser file ${target}`);
+            if (extensionlessVendorUrl) {
+                const previous = files[extensionlessVendorUrl];
+                if (previous && previous !== target)
+                    throw Error(`Pinned native vendor extensionless URL is ambiguous: ${extensionlessVendorUrl}`);
+                files[extensionlessVendorUrl] = target;
+            }
             await visit(target);
         }
         if (file.endsWith('.js')) {
@@ -126,7 +173,9 @@ export async function frontendClosure(root, plan, { includeMobile = false } = {}
         }
     }
     files['/assets/shell.css'] = 'packages/web-shell/dist/shell.css';
-    const mobileStyles = includeMobile ? ['/assets/shell.css', '/assets/mobile.css', ...styles.slice(1)] : undefined;
+    files['/assets/packages/ui/tokens.css'] = 'packages/ui/dist/tokens.css';
+    files['/assets/packages/ui/ui.css'] = 'packages/ui/dist/ui.css';
+    const mobileStyles = includeMobile ? [...styles.slice(0, 3), '/assets/mobile.css', ...styles.slice(3)] : undefined;
     if (includeMobile) files['/assets/mobile.css'] = 'packages/mobile-shell/dist/mobile.css';
     return { files, imports, styles, ...(mobileStyles ? { mobileStyles } : {}) };
 }

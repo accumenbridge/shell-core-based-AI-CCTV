@@ -1,0 +1,2 @@
+{"status":"OVERLAY_READY","candidateIdentity":"395412a9e32bba43a1de65e4b218294da9c10b8e99738ac17be3180d3ae69bff","snapshotRoot":"D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\product-startup-close-evidence\\snapshot-overlay-395412a9e32bba43\\source","maintainedFiles":917,"sourceDigest":"38d8c86c9446fca58a543658d44943c05a9c36733c782af83ed2cec3b3699f19","changedPaths":["tests/veyviz-lifecycle.test.mjs","tools/veyviz-start.mjs"],"publicProfileSha256":"7278cc2167b302b326d0c4412474e75c03d75f7268d71594948069d9af8cd9a1"}
+EXIT_CODE=0

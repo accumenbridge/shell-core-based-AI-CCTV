@@ -49,9 +49,139 @@ function ownRecord(value: unknown, label: string, allowed: readonly string[]): R
   return value;
 }
 
+function codePointLength(value: string): number {
+  return Array.from(value).length;
+}
+
 function boundedText(value: unknown, label: string, max: number): string {
-  if (typeof value !== 'string' || !value.trim() || value.length > max || value.includes('\0')) invalid(`Invalid operation ${label}`);
+  if (typeof value !== 'string' || !value.trim() || codePointLength(value) > max || value.includes('\0')) invalid(`Invalid operation ${label}`);
   return value.trim();
+}
+
+type PatternAtom =
+  | { readonly kind: 'literal'; readonly codePoint: number }
+  | { readonly kind: 'class'; readonly ranges: readonly (readonly [number, number])[]; readonly negated: boolean };
+type PatternToken = PatternAtom & { readonly count: number };
+
+const escapedPatternLiterals = new Set(Array.from('.^$*+?{}[]()|\\-'));
+const unescapedPatternTokens = new Set(Array.from('.^$*+?{}[]()|'));
+
+function readEscapedLiteral(points: readonly string[], index: number, end: number): { point: string; next: number } | undefined {
+  if (points[index] !== '\\' || index + 1 >= end) return undefined;
+  const point = points[index + 1]!;
+  if (!escapedPatternLiterals.has(point) || point === '\0') return undefined;
+  return { point, next: index + 2 };
+}
+
+function readClassPoint(points: readonly string[], index: number, end: number): { point: number; next: number } | undefined {
+  if (index >= end || points[index] === ']') return undefined;
+  const escaped = readEscapedLiteral(points, index, end);
+  const point = escaped?.point ?? (points[index] === '\\' ? undefined : points[index]);
+  if (point === undefined || point === '\0') return undefined;
+  return { point: point.codePointAt(0)!, next: escaped?.next ?? index + 1 };
+}
+
+/**
+ * Parse the deliberately small anchored pattern grammar used by operation schemas.
+ * Each atom has an exact repetition count, so matching walks the input once and
+ * never invokes the JavaScript regular-expression engine.
+ */
+function compilePattern(pattern: string): PatternToken[] | undefined {
+  const points = Array.from(pattern);
+  if (points.length > OPERATION_LIMITS.patternLength || points.length < 2 || points[0] !== '^' || points.at(-1) !== '$') return undefined;
+  const end = points.length - 1;
+  const tokens: PatternToken[] = [];
+  let index = 1, expandedLength = 0;
+
+  while (index < end) {
+    let token: PatternAtom;
+    if (points[index] === '[') {
+      index++;
+      const negated = points[index] === '^';
+      if (negated) index++;
+      const ranges: [number, number][] = [];
+      let closed = false;
+      while (index < end) {
+        if (points[index] === ']') { index++; closed = true; break; }
+        const first = readClassPoint(points, index, end);
+        if (!first) return undefined;
+        index = first.next;
+        if (points[index] === '-' && index + 1 < end && points[index + 1] !== ']') {
+          const last = readClassPoint(points, index + 1, end);
+          if (!last || first.point > last.point) return undefined;
+          ranges.push([first.point, last.point]);
+          index = last.next;
+        } else ranges.push([first.point, first.point]);
+      }
+      if (!closed || !ranges.length) return undefined;
+      ranges.sort((left, right) => left[0] - right[0] || left[1] - right[1]);
+      const merged: [number, number][] = [];
+      for (const range of ranges) {
+        const prior = merged.at(-1);
+        if (prior && range[0] <= prior[1] + 1) prior[1] = Math.max(prior[1], range[1]);
+        else merged.push(range);
+      }
+      token = { kind: 'class', ranges: merged, negated };
+    } else {
+      let point: string | undefined;
+      if (points[index] === '\\') {
+        const escaped = readEscapedLiteral(points, index, end);
+        if (!escaped) return undefined;
+        point = escaped.point;
+        index = escaped.next;
+      } else {
+        const current = points[index]!;
+        if (unescapedPatternTokens.has(current) || current === '\0') return undefined;
+        point = current;
+        index++;
+      }
+      token = { kind: 'literal', codePoint: point.codePointAt(0)! };
+    }
+
+    let count = 1;
+    if (points[index] === '{') {
+      index++;
+      const start = index;
+      while (index < end && /^[0-9]$/u.test(points[index]!)) index++;
+      const digits = points.slice(start, index).join('');
+      if (!digits || points[index] !== '}' || (digits.length > 1 && digits.startsWith('0'))) return undefined;
+      index++;
+      count = Number(digits);
+      if (!Number.isSafeInteger(count) || count > OPERATION_LIMITS.inputBytes) return undefined;
+    }
+    expandedLength += count;
+    if (expandedLength > OPERATION_LIMITS.inputBytes) return undefined;
+    tokens.push({ ...token, count });
+  }
+  return tokens;
+}
+
+function matchesPattern(pattern: string, value: string): boolean {
+  const tokens = compilePattern(pattern);
+  if (!tokens) return false;
+  const points = Array.from(value);
+  const expectedLength = tokens.reduce((length, token) => length + token.count, 0);
+  if (points.length !== expectedLength) return false;
+  let inputIndex = 0;
+  for (const token of tokens) {
+    for (let repeat = 0; repeat < token.count; repeat++) {
+      const point = points[inputIndex++]!.codePointAt(0)!;
+      if (token.kind === 'literal') {
+        if (point !== token.codePoint) return false;
+        continue;
+      }
+      let low = 0, high = token.ranges.length - 1, inClass = false;
+      while (low <= high) {
+        const middle = (low + high) >>> 1;
+        const [first, last] = token.ranges[middle]!;
+        if (point < first) high = middle - 1;
+        else if (point > last) low = middle + 1;
+        else { inClass = true; break; }
+      }
+      if (token.negated ? inClass : !inClass) return false;
+    }
+  }
+  return true;
 }
 
 function safeJson(value: unknown, label: string, maxBytes: number): Json {
@@ -94,6 +224,7 @@ function assertSchema(schema: unknown, depth = 0): OperationSchema {
   if (typeof type !== 'string' || !['object', 'string', 'integer', 'boolean', 'array'].includes(type)) invalid('Unsupported operation schema type');
   if (fields.enum !== undefined) {
     if (!Array.isArray(fields.enum) || fields.enum.length === 0 || fields.enum.length > 32) invalid('Invalid operation enum');
+    if (fields.enum.some(value => typeof value === 'string' && value.includes('\0'))) invalid('Invalid operation enum');
     const values = fields.enum.map(value => canonical(safeJson(value, 'enum value', OPERATION_LIMITS.schemaBytes)));
     if (new Set(values).size !== values.length) invalid('Duplicate operation enum value');
   }
@@ -119,8 +250,7 @@ function assertSchema(schema: unknown, depth = 0): OperationSchema {
     }
     if (fields.minLength !== undefined && fields.maxLength !== undefined && (fields.minLength as number) > (fields.maxLength as number)) invalid('Invalid operation string bounds');
     if (fields.pattern !== undefined) {
-      if (typeof fields.pattern !== 'string' || !fields.pattern || fields.pattern.length > OPERATION_LIMITS.patternLength || /[()|]/.test(fields.pattern) || /\\[1-9]/.test(fields.pattern)) invalid('Unsupported operation pattern');
-      try { new RegExp(fields.pattern, 'u'); } catch { invalid('Invalid operation pattern'); }
+      if (typeof fields.pattern !== 'string' || !compilePattern(fields.pattern)) invalid('Unsupported operation pattern');
     }
   }
   if (type === 'integer') {
@@ -187,9 +317,9 @@ function matches(schema: OperationSchema, value: Json, depth = 0): boolean {
       return keys.every(key => matches(properties[key]!, value[key]!, depth + 1));
     }
     case 'string':
-      return typeof value === 'string' && (fields.minLength === undefined || value.length >= (fields.minLength as number)) &&
-        (fields.maxLength === undefined || value.length <= (fields.maxLength as number)) &&
-        (fields.pattern === undefined || new RegExp(fields.pattern as string, 'u').test(value));
+      return typeof value === 'string' && !value.includes('\0') && (fields.minLength === undefined || codePointLength(value) >= (fields.minLength as number)) &&
+        (fields.maxLength === undefined || codePointLength(value) <= (fields.maxLength as number)) &&
+        (fields.pattern === undefined || matchesPattern(fields.pattern as string, value));
     case 'integer':
       return typeof value === 'number' && Number.isSafeInteger(value) &&
         (fields.minimum === undefined || value >= (fields.minimum as number)) &&

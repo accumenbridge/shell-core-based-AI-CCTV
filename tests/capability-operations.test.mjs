@@ -102,3 +102,29 @@ test('ApplicationHost reconciles the original session and cancellation around an
   permitted = false;
   assert.equal(host.operationCatalogue(actor, 'tenant-a', originalAuth).length, 0);
 });
+
+test('operation strings count Unicode code points, reject NUL, and use the bounded anchored pattern grammar', () => {
+  const stringSchema = { type: 'string', minLength: 2, maxLength: 2 };
+  assert.deepEqual(validateOperationValue('😀a', stringSchema, 'input'), '😀a');
+  assert.throws(() => validateOperationValue('😀', stringSchema, 'input'), error => error.code === 'INVALID');
+  assert.throws(() => validateOperationValue('a\0', stringSchema, 'input'), error => error.code === 'INVALID');
+
+  const patterned = { type: 'string', minLength: 2, maxLength: 2, pattern: '^[A-F0-9]{2}$' };
+  assert.deepEqual(validateOperationValue('AF', patterned, 'input'), 'AF');
+  assert.throws(() => validateOperationValue('AG', patterned, 'input'), error => error.code === 'INVALID');
+  const escapedLiteral = { type: 'string', minLength: 3, maxLength: 3, pattern: '^a\\.b$' };
+  assert.deepEqual(validateOperationValue('a.b', escapedLiteral, 'input'), 'a.b');
+  assert.throws(() => validateOperationValue('axb', escapedLiteral, 'input'), error => error.code === 'INVALID');
+  assert.throws(() => validateOperationDescriptor({
+    id: 'probe.pattern.read', version: 1, title: 'Pattern', description: 'Bounded pattern test.', permission: 'probe.read', kind: 'read',
+    inputSchema: { type: 'string', pattern: '^a+a+a+a+$' }, outputSchema: { type: 'string' }
+  }), error => error.code === 'INVALID');
+  assert.throws(() => validateOperationDescriptor({
+    id: 'probe.enum.read', version: 1, title: 'Enum', description: 'NUL-free values.', permission: 'probe.read', kind: 'read',
+    inputSchema: { type: 'string', enum: ['a\0'] }, outputSchema: { type: 'string' }
+  }), error => error.code === 'INVALID');
+
+  const bounded = { type: 'string', minLength: 1001, maxLength: 1001, pattern: '^a{1000}b$' };
+  assert.deepEqual(validateOperationValue(`${'a'.repeat(1000)}b`, bounded, 'input'), `${'a'.repeat(1000)}b`);
+  assert.throws(() => validateOperationValue(`${'a'.repeat(1000)}c`, bounded, 'input'), error => error.code === 'INVALID');
+});

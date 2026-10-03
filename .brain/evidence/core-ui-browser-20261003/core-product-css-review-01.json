@@ -1,0 +1,75 @@
+{
+  "schema": "veyviz.core-product-css-review.v1",
+  "createdAt": "2026-10-03T16:40:28.426Z",
+  "reviewer": "/root/core_integration_review",
+  "status": "PASSED_BOUNDED_SOURCE_ONLY",
+  "scope": {
+    "path": "modules/veyviz-analysis/src/styles.css",
+    "sha256": "a29ad51170abb72454bfaed1ebcb894fb45a6bb6728925d6d85d483ecabbe575",
+    "baseline": {
+      "path": ".local/product-analysis-style-before-core-fix.css",
+      "sha256": "1eb207ffb1020dc451269fd251e0782a86c1d15a6a3c0dc0c433e2dd57beb9da"
+    },
+    "meaning": "Contrast replacements and appended header/form/pager reflow only; no whole-module or product review."
+  },
+  "blockers": [],
+  "findings": [
+    "Shared neutral surfaces now use the public panel token, primary actions use accent-text, and readonly notices use accent-soft. Light Investigate and dark Command Center share correctly paired semantic colors.",
+    "New selectors stay inside the two product-owned roots. Expanded native details/form remains in normal flow; own-root :has() gives its header/action/toolbar a complete wrapped row with bounded width. No absolute or fixed open-form positioning remains.",
+    "Recording pagers use two minmax(0,1fr) button columns with the status on its own row. Actual markup places previous button first and next button last, matching the rules. Labels use normal word wrapping, 11px text and 44px minimum target height.",
+    "Existing native summary disclosure, focus styles, video/canvas and owner operations are untouched. All four root before/after run captures contain the current exact CSS digest."
+  ],
+  "references": [
+    {
+      "path": ".local/product-analysis-style-before-core-fix.css",
+      "sha256": "1eb207ffb1020dc451269fd251e0782a86c1d15a6a3c0dc0c433e2dd57beb9da"
+    },
+    {
+      "path": ".local/core-product-build-02/before.json",
+      "sha256": "96d0e4bf8ea440901ab27305e63e44d58fd99f54e1240843f7f0ebfe6d7ea7a6"
+    },
+    {
+      "path": ".local/core-product-build-02/after.json",
+      "sha256": "96d0e4bf8ea440901ab27305e63e44d58fd99f54e1240843f7f0ebfe6d7ea7a6"
+    },
+    {
+      "path": ".local/core-product-ui-02/before.json",
+      "sha256": "96d0e4bf8ea440901ab27305e63e44d58fd99f54e1240843f7f0ebfe6d7ea7a6"
+    },
+    {
+      "path": ".local/core-product-ui-02/after.json",
+      "sha256": "96d0e4bf8ea440901ab27305e63e44d58fd99f54e1240843f7f0ebfe6d7ea7a6"
+    },
+    {
+      "path": ".local/core-product-build-02/result.json",
+      "sha256": "fcb9054eb8e7e42e5e7a6ed3e284d0412368d50bd9bdaecb873238d97025617d"
+    },
+    {
+      "path": ".local/core-product-build-02/stdout.txt",
+      "sha256": "cbb2b2bdced1d584ad8088f65bbbc7e8297b7edadc9b7602ff3e3c5dc7c42cef"
+    },
+    {
+      "path": ".local/core-product-ui-02/result.json",
+      "sha256": "3f5b9202ca92b9fd9150432dcdf3f5c9d4bd5391e5f3df88a861f5fc6a910508"
+    },
+    {
+      "path": ".local/core-product-ui-02/stdout.txt",
+      "sha256": "61f1db88e7db05d877e56ef817c62c43e145e4b5ef57f619fccd1f20dbf54841"
+    }
+  ],
+  "runContext": {
+    "build": "Root captured product build02 reports code0 and QUALIFIED; not reviewer execution.",
+    "ui": "Root captured UI02 stdout reports 1 passing mounted-boundary/experience test covering the five workspaces, 0 failures/skips; not five separate tests.",
+    "qualification": "This record remains source-only; captured runs provide candidate provenance, not visual acceptance."
+  },
+  "limits": {
+    "browser3907681440": "PENDING_ROOT_RECHECK",
+    "computedStylesAndOverlap": "NOT_VERIFIED_BY_THIS_REVIEW",
+    "fullSuite": "NOT_RUN_BY_REVIEWER",
+    "wholeProduct": "OPEN"
+  },
+  "proposedRecordUpdate": {
+    "gate": "product-header-pager-contrast-source-review=PASSED",
+    "next": "Continue root actual browser recheck against this exact built isolated candidate."
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schema": "veyviz.build-attempt.v1",
+  "id": "02a5fd46-98cf-4536-bc10-bc569ad63f3a",
+  "startedAt": "2026-10-03T12:55:16.512Z",
+  "finishedAt": "2026-10-03T12:55:23.040Z",
+  "stage": "builder-close",
+  "command": {
+    "exe": "C:\\Program Files\\nodejs\\node.exe",
+    "argv": [
+      "D:\\CodexData\\worktrees\\veyviz-snapshot-test-DQnpJB\\producer\\tools\\build.mjs"
+    ],
+    "cwd": "D:\\CodexData\\worktrees\\veyviz-snapshot-test-DQnpJB\\producer",
+    "shell": false,
+    "windowsHide": true
+  },
+  "original": {
+    "closeObserved": true,
+    "code": 2,
+    "signal": null,
+    "spawnError": null
+  },
+  "stdout": {
+    "path": ".local/veyviz-build-qualification/attempts/02a5fd46-98cf-4536-bc10-bc569ad63f3a/stdout.bin",
+    "bytes": 2243,
+    "sha256": "d8a6f6ed625f32e7f6ce3023df06faddd20f3f44725ec65c3edb5c7c2a643bf9",
+    "receivedBytes": 2243,
+    "truncatedBytes": 0,
+    "captureError": null
+  },
+  "stderr": {
+    "path": ".local/veyviz-build-qualification/attempts/02a5fd46-98cf-4536-bc10-bc569ad63f3a/stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receivedBytes": 0,
+    "truncatedBytes": 0,
+    "captureError": null
+  },
+  "captureError": null,
+  "qualificationError": {
+    "name": "Error",
+    "code": null,
+    "message": "The fixed core builder did not close with code 0 and null signal (code 2, signal null)."
+  },
+  "retiredReceipt": null
+}

@@ -1,5 +1,5 @@
 /** Source-grounded business feature derivation over the canonical Studio composer. */
-import type { CompositionPlan, ModuleManifest, ProductDefinition } from '@quadbridge/contracts';
+import type { CompositionPlan, ModuleManifest, ProductDefinition, ProductExperience } from '@quadbridge/contracts';
 import { resolve } from './index.js';
 import { composeDraft, validateProduct, type StudioSolution } from './studio.js';
 
@@ -27,6 +27,7 @@ export interface FamilyProductIdentity {
   version: string;
   description: string;
   layout: 'sidebar' | 'top';
+  experience?: ProductExperience;
 }
 export interface FamilyReason { featureId: string; label: string; reason: string; moduleIds: string[] }
 export interface FamilyDerivation {
@@ -107,7 +108,7 @@ export function deriveFamily(familyInput: unknown, selectionInput: unknown, iden
   const family = validateProductFamily(familyInput);
   if (!record(identityInput)) fail('FAMILY_INVALID_IDENTITY', 'Provide a valid exact product identity, version and layout.');
   const identity=identityInput,identityId=identity.id,identityTitle=identity.title,identityVersion=identity.version,identityDescription=identity.description,identityLayout=identity.layout;
-  if (Object.keys(identity).some(key => !['id','title','version','description','layout'].includes(key)) ||
+  if (Object.keys(identity).some(key => !['id','title','version','description','layout','experience'].includes(key)) ||
       !safeId(identityId) || typeof identityTitle !== 'string' || !identityTitle.trim() || identityTitle.length > 80 ||
       typeof identityVersion !== 'string' || !/^\d{1,6}\.\d{1,6}\.\d{1,6}$/.test(identityVersion) ||
       typeof identityDescription !== 'string' || identityDescription.length > 2000 ||
@@ -141,7 +142,7 @@ export function deriveFamily(familyInput: unknown, selectionInput: unknown, iden
   let composed;
   try {
     composed = composeDraft({ id: identityId as string, title: identityTitle as string, version: identityVersion as string,
-      layout: identityLayout as 'sidebar'|'top', selected: [...moduleIds].sort(), ...(Object.keys(choices).length ? { choices } : {}) }, catalogue, solutions, identityVersion as string);
+      layout: identityLayout as 'sidebar'|'top', selected: [...moduleIds].sort(), ...(Object.keys(choices).length ? { choices } : {}), ...(identity.experience === undefined ? {} : { experience: identity.experience as ProductExperience }) }, catalogue, solutions, identityVersion as string);
   } catch (error) {
     fail('FAMILY_BINDING_UNAVAILABLE', error instanceof Error ? error.message.slice(0, 240) : 'The selected family has no reviewed implementation.');
   }

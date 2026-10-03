@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash, randomUUID } from 'node:crypto';
-import { mkdir, mkdtemp, readFile, readdir, rm, symlink, writeFile } from 'node:fs/promises';
+import { appendFile, mkdir, mkdtemp, open, readFile, readdir, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { readBoundedHandle } from '../tools/brain-core.mjs';
 
 const CLI = fileURLToPath(new URL('../tools/brain.mjs', import.meta.url));
 const REPO = fileURLToPath(new URL('../', import.meta.url));
@@ -340,6 +341,117 @@ test('required records, copied evidence, independent review, and observation-onl
     const brokenContext = await cli(root, ['context', '--task', 'TOOLS-001']);
     assert.equal(brokenContext.status, 1);
     assert.equal(output(brokenContext).error.code, 'ARTIFACT_INTEGRITY');
+});
+
+test('Brain evidence reads and publication enforce finite artifact and record byte bounds', async t => {
+    const { root, project } = await fixture(t);
+    await seedCheckpoint(root);
+    await adoptFixtureMap(root, project);
+    const candidate = output(await cli(root, ['context', '--task', 'TOOLS-001'])).candidate;
+    const maxArtifactBytes = 32 * 1024 * 1024;
+    const maxJsonBytes = 2 * 1024 * 1024;
+    const permittedPath = '.brain/evidence/permitted-boundary.bin';
+    const permittedBytes = Buffer.alloc(maxArtifactBytes, 0x5a);
+    await writeFile(join(root, ...permittedPath.split('/')), permittedBytes);
+    const permitted = await recordInput(root, {
+        kind: 'run', taskId: 'TOOLS-001', recipeId: 'required-check', status: 'NOT_RUN', exitCode: null,
+        environment: {}, artifactPaths: [permittedPath],
+        provenance: { kind: 'reported', reference: 'Isolated artifact-boundary fixture.' }, limitations: [], candidate
+    }, 'permitted-boundary.json');
+    const permittedArtifact = permitted.record.artifacts[0];
+    assert.equal(permittedArtifact.bytes, maxArtifactBytes);
+    assert.equal(sha(await readFile(join(root, ...permittedArtifact.path.split('/')))), sha(permittedBytes));
+    assert.equal(output(await cli(root, ['validate'])).status, 'VALID');
+
+    const oversizedPath = '.brain/evidence/over-limit.bin';
+    const oversizedBytes = Buffer.alloc(maxArtifactBytes + 1, 0x33);
+    await writeFile(join(root, ...oversizedPath.split('/')), oversizedBytes);
+    const oversizedInput = {
+        schema: 'brain.record-input.v1', kind: 'run', taskId: 'TOOLS-001', recipeId: 'required-check',
+        status: 'NOT_RUN', exitCode: null, environment: {}, artifactPaths: [oversizedPath],
+        provenance: { kind: 'reported', reference: 'Oversized isolated artifact fixture.' }, limitations: [], candidate
+    };
+    await putJson(root, '.brain/inputs/over-limit.json', oversizedInput);
+    const runsBeforeOversize = await readdir(join(root, '.brain/workflow/runs'));
+    const artifactsBeforeOversize = await readdir(join(root, '.brain/workflow/artifacts'));
+    const oversizedResult = await cli(root, ['record', '--input', '.brain/inputs/over-limit.json']);
+    assert.equal(oversizedResult.status, 1);
+    assert.equal(output(oversizedResult).error.code, 'INPUT_TOO_LARGE');
+    assert.deepEqual(await readdir(join(root, '.brain/workflow/runs')), runsBeforeOversize);
+    assert.deepEqual(await readdir(join(root, '.brain/workflow/artifacts')), artifactsBeforeOversize);
+    assert.equal(sha(await readFile(join(root, ...oversizedPath.split('/')))), sha(oversizedBytes), 'the original oversized evidence is preserved');
+    assert.equal(output(await cli(root, ['context', '--task', 'TOOLS-001'])).selectedTaskId, 'TOOLS-001');
+    assert.equal(output(await cli(root, ['preflight'])).status, 'VALID');
+
+    const candidateDirectory = ['src', '甲'.repeat(220), '乙'.repeat(220), '丙'.repeat(220)].join('/');
+    await mkdir(join(root, ...candidateDirectory.split('/')), { recursive: true });
+    const allowedPaths = Array.from({ length: 256 }, (_, index) =>
+        `${candidateDirectory}/candidate-${String(index).padStart(3, '0')}.bin`);
+    await Promise.all(allowedPaths.map((path, index) =>
+        writeFile(join(root, ...path.split('/')), `candidate fixture ${index}\n`)));
+    const contractPath = '.brain/workflow/contracts/TOOLS-001.json';
+    const contract = JSON.parse(await readFile(join(root, ...contractPath.split('/')), 'utf8'));
+    contract.allowedPaths = allowedPaths;
+    await putJson(root, contractPath, contract);
+
+    const recipesPath = '.brain/workflow/recipes.json';
+    const recipes = JSON.parse(await readFile(join(root, ...recipesPath.split('/')), 'utf8'));
+    recipes.recipes.find(recipe => recipe.id === 'required-check').argv = Array.from({ length: 64 }, () => String.fromCharCode(1).repeat(2048));
+    await putJson(root, recipesPath, recipes);
+
+    const evidenceDirectory = ['.brain', 'evidence', '甲'.repeat(200), '乙'.repeat(200), '丙'.repeat(200), '丁'.repeat(200)].join('/');
+    await mkdir(join(root, ...evidenceDirectory.split('/')), { recursive: true });
+    const artifactPaths = Array.from({ length: 64 }, (_, index) =>
+        `${evidenceDirectory}/artifact-${String(index).padStart(2, '0')}.bin`);
+    await Promise.all(artifactPaths.map((path, index) =>
+        writeFile(join(root, ...path.split('/')), `artifact fixture ${index}\n`)));
+
+    const overflowCandidate = output(await cli(root, ['context', '--task', 'TOOLS-001'])).candidate;
+    assert.equal(overflowCandidate.files.length, 256);
+    const overflowInput = {
+        schema: 'brain.record-input.v1', kind: 'run', taskId: 'TOOLS-001', recipeId: 'required-check',
+        status: 'NOT_RUN', exitCode: null,
+        environment: Object.fromEntries(Array.from({ length: 32 }, (_, index) => [`FIXTURE_${index}`, '漢'.repeat(1024)])),
+        artifactPaths,
+        provenance: { kind: 'reported', reference: '漢'.repeat(2048) },
+        limitations: Array.from({ length: 128 }, (_, index) => `${'漢'.repeat(2040)}${String(index).padStart(8, '0')}`),
+        candidate: overflowCandidate
+    };
+    const overflowInputBytes = Buffer.byteLength(`${JSON.stringify(overflowInput, null, 2)}\n`);
+    assert.ok(overflowInputBytes <= maxJsonBytes, `record input must fit its own bound (${overflowInputBytes} bytes)`);
+    await putJson(root, '.brain/inputs/record-overflow.json', overflowInput);
+    assert.ok((await readFile(join(root, '.brain/inputs/record-overflow.json'))).length <= maxJsonBytes);
+    const runsBeforeOverflow = await readdir(join(root, '.brain/workflow/runs'));
+    const artifactsBeforeOverflow = await readdir(join(root, '.brain/workflow/artifacts'));
+    const overflowResult = await cli(root, ['record', '--input', '.brain/inputs/record-overflow.json']);
+    const overflowOutput = output(overflowResult);
+    const serializedRecordBytes = overflowOutput.record
+        ? Buffer.byteLength(`${JSON.stringify(overflowOutput.record, null, 2)}\n`)
+        : null;
+    assert.equal(overflowResult.status, 1,
+        `expected bounded publication rejection; status=${overflowResult.status}, error=${overflowOutput.error?.code ?? 'none'}, serializedRecordBytes=${serializedRecordBytes ?? 'unavailable'}`);
+    assert.equal(overflowOutput.error.code, 'RECORD_TOO_LARGE');
+    assert.deepEqual(await readdir(join(root, '.brain/workflow/runs')), runsBeforeOverflow);
+    assert.deepEqual(await readdir(join(root, '.brain/workflow/artifacts')), artifactsBeforeOverflow, 'rejected publication leaves no orphan capture directory');
+    assert.equal(output(await cli(root, ['preflight'])).status, 'VALID');
+
+    const growthPath = join(root, '.brain/evidence/growing-read.bin');
+    await writeFile(growthPath, 'abc');
+    const handle = await open(growthPath, 'r');
+    try {
+        const initial = await handle.stat();
+        let appended = false;
+        const growingHandle = {
+            stat: () => handle.stat(),
+            async read(buffer, offset, length, position) {
+                const result = await handle.read(buffer, offset, length, position);
+                if (!appended) { appended = true; await appendFile(growthPath, 'd'); }
+                return result;
+            }
+        };
+        await assert.rejects(readBoundedHandle(growingHandle, 'growing-read.bin', initial, 3), error => error.code === 'INPUT_TOO_LARGE');
+        assert.equal(await readFile(growthPath, 'utf8'), 'abcd');
+    } finally { await handle.close(); }
 });
 
 test('stale candidate evidence and stale scoped source cannot qualify after a source edit', async t => {

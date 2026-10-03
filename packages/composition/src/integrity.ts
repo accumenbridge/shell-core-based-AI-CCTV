@@ -6,6 +6,43 @@ import { deriveRuntimeWorkspaceClosure } from './workspace-closure.js';
 
 const hash = (value: Uint8Array | string) => createHash('sha256').update(value).digest('hex');
 const record = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === 'object' && !Array.isArray(value);
+export const RUNTIME_INITIALIZER_CAPABILITY_SCHEMA = 'quadbridge.runtime-initializer.v1' as const;
+export const RUNTIME_INITIALIZER_ENTRY_PATH = 'apps/runtime/dist/index.js' as const;
+export const RUNTIME_INITIALIZER_EXPORT_NAME = 'initializeRuntime' as const;
+export interface RuntimeInitializerCapability {
+    schema: typeof RUNTIME_INITIALIZER_CAPABILITY_SCHEMA;
+    entryPath: typeof RUNTIME_INITIALIZER_ENTRY_PATH;
+    exportName: typeof RUNTIME_INITIALIZER_EXPORT_NAME;
+    sha256: string;
+}
+
+/** Validates the optional upgrade capability against its fixed compiled entry bytes; absence preserves legacy verification. */
+export function verifyRuntimeInitializerCapability(release: unknown, entryBytes: Uint8Array): RuntimeInitializerCapability | undefined {
+    if (!record(release)) throw new Error('Malformed release metadata');
+    if (!Object.hasOwn(release,'runtimeInitializerCapability')) return undefined;
+    const capability = release.runtimeInitializerCapability;
+    if (!record(capability) || Object.keys(capability).sort().join('\0') !== ['entryPath','exportName','schema','sha256'].sort().join('\0') ||
+        capability.schema !== RUNTIME_INITIALIZER_CAPABILITY_SCHEMA || capability.entryPath !== RUNTIME_INITIALIZER_ENTRY_PATH ||
+        capability.exportName !== RUNTIME_INITIALIZER_EXPORT_NAME || typeof capability.sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(capability.sha256) ||
+        !record(release.backend) || release.backend[RUNTIME_INITIALIZER_ENTRY_PATH] !== capability.sha256 || hash(entryBytes) !== capability.sha256)
+        throw new Error('Runtime initializer capability does not match its fixed verified release entry');
+    return { schema: RUNTIME_INITIALIZER_CAPABILITY_SCHEMA, entryPath: RUNTIME_INITIALIZER_ENTRY_PATH,
+        exportName: RUNTIME_INITIALIZER_EXPORT_NAME, sha256: capability.sha256 };
+}
+const managedClientTemplates: readonly [string,string,string][] = [
+    ['p','templates/mobile/package.json','package.json'],['l','templates/mobile/package-lock.json','package-lock.json'],
+    ['r','templates/mobile/README.md','README.md'],['n','templates/mobile/native-session/package.json','native-session/package.json'],
+    ['g','templates/mobile/native-session/android/build.gradle','native-session/android/build.gradle'],
+    ['m','templates/mobile/native-session/android/src/main/AndroidManifest.xml','native-session/android/src/main/AndroidManifest.xml'],
+    ['j','templates/mobile/native-session/android/src/main/java/com/quadbridge/nativesession/NativeSessionPlugin.java','native-session/android/src/main/java/com/quadbridge/nativesession/NativeSessionPlugin.java'],
+    ['w','templates/mobile/native-session/Package.swift','native-session/Package.swift'],
+    ['s','templates/mobile/native-session/ios/Sources/NativeSessionPlugin/NativeSessionPlugin.swift','native-session/ios/Sources/NativeSessionPlugin/NativeSessionPlugin.swift'],
+    ['d','templates/mobile/android-debug/AndroidManifest.xml','android-debug/AndroidManifest.xml'],
+    ['c','templates/mobile/android-debug/network_security_config.xml','android-debug/network_security_config.xml'],
+    ['q','templates/mobile/qualification/android-test.gradle','qualification/android-test.gradle'],
+    ['k','templates/mobile/qualification/src/androidTest/java/com/quadbridge/qualification/NativeCoreJourneyTest.java','qualification/src/androidTest/java/com/quadbridge/qualification/NativeCoreJourneyTest.java'],
+    ['x','tools/mobile/prepare-native.mjs','tools/prepare-native.mjs']
+];
 function validatePortablePath(path: string) {
     if (typeof path !== 'string' || !path || path.includes('\\') || path.startsWith('/') || path.split('/').some(part => !part || part === '.' || part === '..' || /[\x00-\x1f\x7f:]/.test(part) || /[. ]$/.test(part) || /^(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\.|$)/i.test(part)))
         throw new Error('Unsafe artifact path');
@@ -88,6 +125,90 @@ function safeDirectory(root: string, path: string): string {
     return current;
 }
 
+function physicalFilesBelow(root: string, prefix: string): string[] {
+    const directory=safeDirectory(root,prefix),files:string[]=[];
+    const walk=(current:string,relativePath:string)=>{
+        for(const entry of readdirSync(current,{withFileTypes:true}).sort((a,b)=>a.name.localeCompare(b.name))){
+            const full=join(current,entry.name),path=`${relativePath}/${entry.name}`,info=lstatSync(full);
+            if(info.isSymbolicLink())throw new Error('Managed client seed contains a symbolic link');
+            if(info.isDirectory())walk(full,path);
+            else if(info.isFile())files.push(path);
+            else throw new Error('Managed client seed contains a non-regular file');
+        }
+    };
+    walk(directory,prefix);
+    return files.sort();
+}
+
+function verifyManagedClientSeed(root:string,productId:string,version:string,planDigest:string,plan:Record<string,any>,web:Record<string,any>,
+    release:Record<string,any>,readBytes:ArtifactBytesReader,inventory?:readonly string[]):void{
+    const ref=release.mobileSeed;
+    if(!record(ref)||ref.schema!=='quadbridge.managed-mobile-seed-reference.v1'||ref.path!==`.artifacts/${productId}/n/seed.json`||
+        typeof ref.sha256!=='string'||!/^[a-f0-9]{64}$/.test(ref.sha256)||!record(ref.files))throw new Error('Malformed managed mobile seed reference');
+    const bytes=readBytes(ref.path);
+    if(hash(bytes)!==ref.sha256)throw new Error('Managed mobile seed manifest digest mismatch');
+    let seed:unknown;try{seed=JSON.parse(bytes.toString('utf8'));}catch{throw new Error('Malformed managed mobile seed manifest');}
+    if(!record(seed)||seed.schema!=='quadbridge.managed-mobile-seed.v1'||seed.productId!==productId||seed.productVersion!==version||
+        seed.planDigest!==planDigest||seed.title!==plan.product.title||!Array.isArray(seed.modules)||!record(seed.files)||!Array.isArray(seed.uiBindings)||
+        !Array.isArray(seed.styles)||typeof seed.entry!=='string')throw new Error('Managed mobile seed identity mismatch');
+    const modules=plan.modules.map((item:any)=>({id:item.id,version:item.version}));
+    if(canonical(seed.modules)!==canonical(modules)||canonical(seed.uiBindings)!==canonical(web.mobile?.uiBindings??[])||
+        canonical(seed.styles.map((path:string)=>`/${path}`))!==canonical(web.mobile?.styles??[])||
+        !/^\/assets\/mobile-preview\/assets\/app-[A-Za-z0-9]{8}\.js$/.test(seed.entry)||
+        seed.styles.some((path:unknown)=>typeof path!=='string'||!/^assets\/mobile-preview\/assets\/raw\/[a-f0-9]{16}\.css$/.test(path)))
+        throw new Error('Managed mobile seed client identity differs from the selected plan');
+    const entries=Object.entries(seed.files as Record<string,unknown>);
+    if(entries.length<managedClientTemplates.length+2||entries.length>1024)throw new Error('Managed mobile seed inventory exceeds its fixed bounds');
+    const templates:Array<[string,string,string]>=[];
+    for(const [target,entry] of entries){
+        if(record(entry)&&entry.template!==undefined){
+            if(typeof entry.blob!=='string'||typeof entry.template!=='string')throw new Error('Malformed managed mobile template entry');
+            templates.push([entry.blob,entry.template,target]);
+        }
+    }
+    templates.sort((a,b)=>a[2].localeCompare(b[2]));
+    const wanted:Array<[string,string,string]>=managedClientTemplates.map(([blob,source,target])=>[`t/${blob}`,source,target]);
+    wanted.sort((a,b)=>a[2].localeCompare(b[2]));
+    if(canonical(templates)!==canonical(wanted))throw new Error('Managed mobile native template closure differs from the reviewed fixed inputs');
+    if(!record(seed.templateInputs)||!record(seed.assemblyInputs)||!Array.isArray(seed.bundleInputs)||!record(seed.toolchain)||
+        typeof seed.toolchain.esbuild!=='string'||!/^\d+\.\d+\.\d+$/.test(seed.toolchain.esbuild))
+        throw new Error('Managed mobile captured preparation metadata is malformed');
+    const expectedTemplateInputs=[...new Set(managedClientTemplates.map(([,source])=>source).filter(source=>source.startsWith('templates/mobile/')))].sort();
+    if(canonical(Object.keys(seed.templateInputs).sort())!==canonical(expectedTemplateInputs)||
+        canonical(Object.keys(seed.assemblyInputs).sort())!==canonical(['tools/mobile/assemble.mjs','tools/mobile/prepare-native.mjs']))
+        throw new Error('Managed mobile captured preparation identity maps differ from fixed inputs');
+    for(const [blob,source,target] of managedClientTemplates){
+        const item=seed.files[target] as Record<string,unknown>;
+        const declared=source.startsWith('templates/mobile/')?(seed.templateInputs as Record<string,unknown>)[source]:(seed.assemblyInputs as Record<string,unknown>)[source];
+        if(declared!==item.sha256||canonical(Object.keys(item).sort())!==canonical(['blob','sha256','sizeBytes','template']))
+            throw new Error('Managed mobile template bytes differ from their captured source identity');
+        if(item.blob!==`t/${blob}`)throw new Error('Managed mobile template blob identity changed');
+    }
+    const templateTargets=new Set(managedClientTemplates.map(([, ,target])=>target));
+    const expectedFiles:Record<string,string>={};let total=0;
+    for(const [target,raw] of entries){
+        validatePortablePath(target);
+        if(!templateTargets.has(target)&&target!=='www/index.html'&&!target.startsWith('www/assets/mobile-preview/'))
+            throw new Error('Managed mobile seed contains an unreviewed output path');
+        if(!record(raw)||typeof raw.blob!=='string'||!/^(?:t\/[a-z]|f\/[0-9]{3})$/.test(raw.blob)||typeof raw.sha256!=='string'||
+            !/^[a-f0-9]{64}$/.test(raw.sha256)||!Number.isSafeInteger(raw.sizeBytes)||Number(raw.sizeBytes)<0||Number(raw.sizeBytes)>8*1024*1024)
+            throw new Error('Malformed managed mobile seed file entry');
+        total+=Number(raw.sizeBytes);if(total>64*1024*1024)throw new Error('Managed mobile seed exceeds its fixed byte bound');
+        const path=`.artifacts/${productId}/n/${raw.blob}`;
+        if(Object.hasOwn(expectedFiles,path))throw new Error('Managed mobile seed has duplicate payload paths');
+        expectedFiles[path]=raw.sha256;
+        const payload=readBytes(path);
+        if(payload.length!==raw.sizeBytes||hash(payload)!==raw.sha256)throw new Error(`Managed mobile seed payload changed: ${target}`);
+    }
+    const seedFiles=seed.files as Record<string,unknown>;
+    if(!Object.hasOwn(seedFiles,'www/index.html')||!Object.hasOwn(seedFiles,`www${seed.entry}`)||
+        seed.styles.some((style:unknown)=>typeof style!=='string'||!Object.hasOwn(seedFiles,`www/${style}`)))throw new Error('Managed mobile seed entry or styles are missing');
+    if(canonical(ref.files)!==canonical(expectedFiles))throw new Error('Managed mobile seed digest map differs from its fixed manifest');
+    const actual=inventory?inventory.filter(path=>path.startsWith(`.artifacts/${productId}/n/`)):physicalFilesBelow(root,`.artifacts/${productId}/n`);
+    const expected=[ref.path,...Object.keys(expectedFiles)].sort();
+    if(canonical(actual.sort())!==canonical(expected))throw new Error('Managed mobile seed subtree contains missing or unreviewed files');
+}
+
 export interface VerifiedRelease {
     productId: string;
     version: string;
@@ -95,6 +216,7 @@ export interface VerifiedRelease {
     releaseDigest: string;
     plan: Record<string, any>;
     release: Record<string, any>;
+    runtimeInitializerCapability?: RuntimeInitializerCapability;
 }
 
 /** Verify a fixed locally assembled release without constructing or starting its runtime. */
@@ -121,7 +243,10 @@ function verifyReleaseArtifactsUsing(root: string, productId: string, version: s
     assertExactMapKeys(web, [...Object.values(webFile.files) as string[], `.artifacts/${productId}/composition.js`], 'Web');
     digestMap(root, backend,readBytes);
     digestMap(root, web,readBytes);
-    return { productId, version, planDigest: release.planDigest, releaseDigest: hash(releaseBytes), plan, release };
+    const runtimeInitializerCapability=verifyRuntimeInitializerCapability(release,readBytes(RUNTIME_INITIALIZER_ENTRY_PATH));
+    if(Object.hasOwn(release,'mobileSeed'))verifyManagedClientSeed(root,productId,version,release.planDigest,plan,webFile as Record<string,any>,release,readBytes,inventory);
+    return { productId, version, planDigest: release.planDigest, releaseDigest: hash(releaseBytes), plan, release,
+        ...(runtimeInitializerCapability?{runtimeInitializerCapability}:{}) };
 }
 
 export function verifyReleaseArtifacts(root: string, productId: string, version: string): VerifiedRelease {

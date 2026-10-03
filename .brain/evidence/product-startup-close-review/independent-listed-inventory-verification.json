@@ -1,0 +1,11 @@
+{
+  "schema": "veyviz.startup-close-independent-listed-inventory.v1",
+  "candidateIdentity": "adf30c71e8d92a8603f3cc03de29b4e2968ea549ce4ae1dad940e905858dc930",
+  "capturedUtc": "2026-10-03T09:00:07.0933856Z",
+  "count": 917,
+  "digest": "942dc5efa2c36e6fbde46069c8d66b4150ee1b4fe5adde30c0bb0d3eaa306d73",
+  "expectedDigest": "942dc5efa2c36e6fbde46069c8d66b4150ee1b4fe5adde30c0bb0d3eaa306d73",
+  "digestMatches": true,
+  "allListedBytesMatch": true,
+  "scope": "917 manifest-listed files rehashed; separate directory discovery not rerun"
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "veyviz.immutable-runtime-adoption-proposal.v1",
+  "status": "ADMITTED_FOR_IMPLEMENTATION_NOT_ACCEPTED",
+  "basis": "Root explicitly requires verified fixed default runtimes after the accepted two-owner cleanup repair and before final usable-product/browser qualification.",
+  "predecessor": {
+    "candidate": "adf30c71e8d92a8603f3cc03de29b4e2968ea549ce4ae1dad940e905858dc930",
+    "report": ".local/product-startup-close-evidence/independent-final-review.md",
+    "verdict": "PASSED bounded two-owner source/evidence",
+    "historicalOriginalChildClose": "UNKNOWN",
+    "exact4494Association": "UNKNOWN",
+    "wrongRootBuildImpact": ".local/product-startup-close-evidence/independent-setup-and-impact-diagnosis.md"
+  },
+  "owners": [
+    "tools/veyviz-start.mjs",
+    "tools/veyviz-snapshot.mjs",
+    "tests/veyviz-lifecycle.test.mjs",
+    "tests/veyviz-snapshot.test.mjs"
+  ],
+  "ownerBaselines": {
+    "tools/veyviz-start.mjs": "23a42e9536fcf0e59b37153e60e15b954d2ad7099aac633ea7900a3520d32959",
+    "tests/veyviz-lifecycle.test.mjs": "60f72380771304b0debf33721bb0e8155f59a7d2ef7565ea473c64d8fc800e33",
+    "tools/veyviz-snapshot.mjs": "NEW",
+    "tests/veyviz-snapshot.test.mjs": "NEW"
+  },
+  "readOnlyDependencies": [
+    "tools/factory.mjs",
+    "packages/composition/src/integrity.ts",
+    "packages/composition/src/snapshot-access.ts",
+    "packages/composition/src/workspace-closure.ts",
+    "apps/control-plane/src/runtime-manager.ts",
+    "tools/veyviz-runtime.mjs",
+    "tools/link-workspaces.mjs",
+    "tools/workspace-identities.mjs",
+    "tools/veyviz-inventory.mjs",
+    "modules/veyviz-rfdetr/src/bridge.ts",
+    "modules/veyviz-intelligence/src/runner.ts"
+  ],
+  "reuseApis": [
+    "expectedFactoryInventory",
+    "assertExpectedFactoryInventory",
+    "verifyReleaseArtifacts",
+    "createSnapshotManifest",
+    "verifySnapshotManifest",
+    "readBoundedSnapshot",
+    "copyVerifiedRuntimeSnapshot",
+    "linkCopiedRuntimeWorkspaces"
+  ],
+  "contract": [
+    "Default npm run veyviz and every startProduct caller including intelligence facade use verified fixed snapshots; no checkout runtime fallback or bypass option.",
+    "ROOT and options.root continue identifying the producer checkout. Data/profile defaults remain anchored there. Record producerRoot and runtimeRoot separately; the child artifact root and cwd are the verified execution copy.",
+    "Use only the existing fixed factory assemble product fresh-directory command from the producer root. Do not invent another selected-workspace copier/exporter or copy arbitrary generated output after a failed build.",
+    "Before assembly verify the producer release, capture the exact expectedFactoryInventory from its admitted plan, and capture recipe/launcher/toolchain identity. After the original factory child closes successfully recheck the same inputs, assert exact expected inventory, verify exported release/plan identity, create the existing snapshot manifest and verify its full identity/inventory. Source/output drift, nonzero/signal/unknown factory close or incomplete destination cannot publish a usable snapshot.",
+    "Use bounded physical private paths under a short product .local area, fresh exclusive destinations, exact candidate keys and durable selection receipts. Bind receipt to full expected identity, snapshot digest, release digest and factory-input digest; never accept a path label or a self-declared manifest alone. Same unchanged export inputs reuse the already verified selected manifest/build identity. Random build UUID must not rotate unchanged generation data on every start.",
+    "Keep canonical export free of node_modules and operational state. Read it with readBoundedSnapshot using existing reviewed registry limits; use copyVerifiedRuntimeSnapshot to create a fresh per-launch physical execution copy from captured verified bytes and verify it before adding only linkCopiedRuntimeWorkspaces in-copy links. Do not weaken snapshot inventory/exclusion rules to accommodate setup links. Never place checkout-targeting junctions in the child dependency path.",
+    "Capture the unchanged fixed tools/veyviz-runtime.mjs bytes and verify their hash. Write those exact captured bytes to a fixed owned execution-sidecar filename outside the canonical export and fork that sidecar with the copied runtime root. Do not fork the mutable checkout wrapper. Runtime wrapper source changes are not required for this increment.",
+    "Fingerprint includes selected verified snapshot identity/digest, release, companion profile/inventory, start/snapshot-helper/runtime-wrapper recipe bytes and admitted toolchain identity. Preserve product/instance/tenant/actor/command scopes, completed enrollment checks, original live-child handle, token claims, original-close cleanup logic and UNKNOWN quarantine. Changed export/recipe fingerprint starts separate generation storage; no old-data migration, reseeding, process adoption or inferred closure.",
+    "Do snapshot validation/preparation before creating credentials or seeding grants. Keep execution-copy failure honest with retained preparation evidence; it cannot publish CLOSED for a child that was never owned or bypass a prior active/unknown claim.",
+    "Keep AI assets/environments external under the existing profile/inventory verifier; temporal.py remains pinned by the module RUNNER_SHA256 check. No model/media/temporal algorithm, catalog semantics, companion setup, credential or foreign Recording intelligence edits. Distinguish these external profile checks from fixed Node runtime export acceptance.",
+    "Default start need not compile mutable source. Require an already freshly qualified built producer; report stale/drifted/incomplete build or export failure and require the explicit build workflow. Factory child ownership/close evidence remains separate from runtime ownership; no generic new process supervisor or forced termination fallback."
+  ],
+  "regressions": [
+    "Use a complete test-owned built producer fixture in the isolated qualification overlay, not the active checkout or existing foreign fixture. Start catalog on port 0. Capture actual shell-linked web asset response and backend source result; mutate that fixture producer asset after readiness. The live response must retain original exported bytes/digest and backend state, and its runtimeRoot must differ from producerRoot with all package junctions resolving inside the execution copy.",
+    "Stop normally and restart the unchanged exact snapshot with the same dedicated data root; retain fingerprint, source row and removed grant, and assert no principals reseed. Change valid export input bytes in a separate fixture, publish a new verified selection, and prove a different fingerprint/generation without using old database rows.",
+    "Reject stale/drifted producer release, incomplete or tampered canonical export, forged identity receipt, extra/missing inventory entries and linked execution escape before runtime fork/enrollment. Failures retain honest evidence; no checkout fallback.",
+    "Preserve all actual original-close sync/async IPC and occupied-port regressions. Update their fixed-fork assertions to the verified owned sidecar/root and keep UNKNOWN claims/denied restart assertions. Do not mock snapshot verification away to recover a passing test."
+  ],
+  "qualification": [
+    "Root admits finite owners and reconciles current Brain/atlas/preflight before implementation.",
+    "Freeze exact owners and read-only API/runtime baselines; capture complete maintained source inventory before creating an isolated overlay.",
+    "Build in the explicit overlay CWD, then run focused snapshot/lifecycle/product checks and independent frozen diff/evidence review. Preserve failed attempts.",
+    "After this increment and reviewed framework/UI adoption, execute required full npm test and fresh actual current-product/export/browser/model/authority/restart/second-variant gates against the selected snapshot. This proposal and cleanup tests do not satisfy them."
+  ],
+  "nonAcceptance": [
+    "No source implementation or tests/build/browser/process operation was executed by this reviewer for this proposal.",
+    "Original diagnostic child final close remains UNKNOWN. Foreign recorded ACTIVE generation is not current-live-process proof; release mismatch remains and exact4494 association/served bytes remain unknown.",
+    "No stop/control/adopt/migrate old fixtures, external deployment or original/framework repository writes.",
+    "Four historical full-suite Windows timing failures and EPERM blocked coverage remain open; root owns all actual evidence/checkpoint updates."
+  ],
+  "proposedRootRecords": "Record cleanup exact source/evidence as PASSED; admit this separately after reviewing finite owners/API baselines. Add the immutable-runtime requirement to canonical task/atlas contract and leave whole-product acceptance unbound until actual qualification.",
+  "admission": {
+    "authority": "User fix all; root admits the concrete default-launcher mutable-assets repair.",
+    "proposalSha256": "9ced1ce694881f3dc5adaeeb81d183e2b0b15996a1d8580f4b61107822a3ac64",
+    "implementer": "/root/product_paging_brawn",
+    "reviewer": "/root/product_paging_review",
+    "rules": [
+      "Only these four product source/test owners; preserve all foreign intelligence and prior repairs. No maintained framework source authority edits.",
+      "Fresh isolated overlay build with explicit workdir; never build the active product root. Preserve baseline and use short test-owned paths.",
+      "No historical process adoption, cleanup or old-data migration. No broad suite/model/native/browser until root integration."
+    ]
+  }
+}

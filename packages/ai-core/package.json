@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "private": true,
   "type": "module",
-  "exports": {".": {"types": "./dist/index.d.ts", "import": "./dist/index.js"}},
+  "exports": {".": {"types": "./dist/index.d.ts", "import": "./dist/index.js"}, "./ollama": {"types": "./dist/ollama.d.ts", "import": "./dist/ollama.js"}},
   "dependencies": {"@quadbridge/contracts": "0.2.0"},
   "scripts": {"build": "tsc -b"}
 }

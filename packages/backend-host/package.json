@@ -18,6 +18,7 @@
     "module.json"
   ],
   "dependencies": {
+    "@quadbridge/ai-core": "0.3.0",
     "@quadbridge/contracts": "0.2.0",
     "@quadbridge/composition": "0.2.0"
   },

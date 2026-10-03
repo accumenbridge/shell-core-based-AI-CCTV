@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { copyFile, lstat, mkdir, readFile, readdir } from 'node:fs/promises';
 import { existsSync, lstatSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
+import { canonical } from '@quadbridge/contracts';
 
 const ROOTS = new Set(['apps','families','modules','packages','products','solutions','tools','profiles','templates','visual']);
 const ROOT_FILES = new Set(['package.json','package-lock.json','tsconfig.base.json']);
@@ -9,8 +10,24 @@ const EXCLUDED = new Set(['.git','.brain','.codex','analysis','artifacts','.arti
 const SECRET = (name: string) => /^\.env(?:\.|$)/i.test(name) || /(?:^|[._-])(private|secret|credential|token)(?:[._-]|$)/i.test(name) || /\.(?:pem|key|p12|pfx|sqlite|db)$/i.test(name);
 const PORTABLE = (path: string) => path.split('/').every(part => Boolean(part) && part !== '.' && part !== '..' && !/[\x00-\x1f\x7f:]/.test(part) && !/[. ]$/.test(part) && !/^(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\.|$)/i.test(part));
 const sha = (value: Uint8Array | string) => createHash('sha256').update(value).digest('hex');
+export const BUILD_FINGERPRINT_FORMAT_VERSION = 2 as const;
 
-const TOOL_FILES = new Set(['build-host-preflight.ps1','build-job.ps1','build.mjs','build-visual.mjs','construction-clean-install.mjs','demo.mjs','entity-builder.mjs','factory.mjs','frontend-closure.mjs','generation-preflight.mjs','link-workspaces.mjs','local-profile.mjs','product-source.mjs','studio-catalogue.mjs','workspace-identities.mjs']);
+type InventoryRow = { path: string; byteLength: number; contentSha256: string };
+function inventoryRow(path: string, bytes: Uint8Array): InventoryRow {
+  return { path: path.replaceAll('\\','/'), byteLength: bytes.byteLength, contentSha256: sha(bytes) };
+}
+function comparePath(left: InventoryRow, right: InventoryRow): number {
+  return left.path < right.path ? -1 : left.path > right.path ? 1 : 0;
+}
+function digestInventory(domain: 'source-tree'|'toolchain-tree', identity: unknown, rows: readonly InventoryRow[]): string {
+  const inventory = [...rows].sort(comparePath);
+  if (inventory.some(row => !row.path || row.path.includes('\\') || !Number.isSafeInteger(row.byteLength) || row.byteLength < 0 ||
+      !/^[a-f0-9]{64}$/.test(row.contentSha256)) || new Set(inventory.map(row => row.path)).size !== inventory.length)
+    throw new Error('Build fingerprint inventory is malformed');
+  return sha(canonical({ schema: `quadbridge.build-fingerprint.v${BUILD_FINGERPRINT_FORMAT_VERSION}`, domain, identity, inventory }));
+}
+
+const TOOL_FILES = new Set(['build-host-preflight.ps1','build-job.ps1','build.mjs','build-visual.mjs','construction-clean-install.mjs','demo.mjs','entity-builder.mjs','factory.mjs','frontend-closure.mjs','generation-preflight.mjs','link-workspaces.mjs','local-profile.mjs','local-session.mjs','product-source.mjs','studio-catalogue.mjs','workspace-identities.mjs']);
 const TEMPLATE_FILES = new Set(['entity-backend.ts.txt','entity-ui.ts.txt','entity.css.txt','module-backend.ts.txt','module-ui.ts.txt']);
 const STATIC_WEB_FILES = new Set(['index.html','studio.css']);
 function declaredModuleAssets(root: string): Set<string> {
@@ -45,18 +62,55 @@ function included(relativePath: string, directory: boolean, moduleAssets: Set<st
   if (normalized === 'packages/mobile-shell/src/mobile.css' && !directory) return true;
   if (normalized === 'tools/mobile' && directory) return true;
   if (normalized === 'tools/mobile/assemble.mjs' && !directory) return true;
+  if (normalized === 'tools/mobile/prepare-native.mjs' && !directory) return true;
   if (normalized.startsWith('tools/mobile/')) throw new Error('Unreviewed mobile build tool input is not allowed: ' + relativePath);
   if (normalized === 'templates/mobile' && directory) return true;
   if (!directory && ['templates/mobile/package.json','templates/mobile/package-lock.json','templates/mobile/README.md'].includes(normalized)) return true;
+  const mobileNativeDirectories = new Set([
+    'templates/mobile/native-session',
+    'templates/mobile/native-session/android',
+    'templates/mobile/native-session/android/src',
+    'templates/mobile/native-session/android/src/main',
+    'templates/mobile/native-session/android/src/main/java',
+    'templates/mobile/native-session/android/src/main/java/com',
+    'templates/mobile/native-session/android/src/main/java/com/quadbridge',
+    'templates/mobile/native-session/android/src/main/java/com/quadbridge/nativesession',
+    'templates/mobile/native-session/ios',
+    'templates/mobile/native-session/ios/Sources',
+    'templates/mobile/native-session/ios/Sources/NativeSessionPlugin',
+    'templates/mobile/android-debug',
+    'templates/mobile/qualification',
+    'templates/mobile/qualification/src',
+    'templates/mobile/qualification/src/androidTest',
+    'templates/mobile/qualification/src/androidTest/java',
+    'templates/mobile/qualification/src/androidTest/java/com',
+    'templates/mobile/qualification/src/androidTest/java/com/quadbridge',
+    'templates/mobile/qualification/src/androidTest/java/com/quadbridge/qualification'
+  ]);
+  const mobileNativeFiles = new Set([
+    'templates/mobile/native-session/package.json',
+    'templates/mobile/native-session/android/build.gradle',
+    'templates/mobile/native-session/android/src/main/AndroidManifest.xml',
+    'templates/mobile/native-session/android/src/main/java/com/quadbridge/nativesession/NativeSessionPlugin.java',
+    'templates/mobile/native-session/Package.swift',
+    'templates/mobile/native-session/ios/Sources/NativeSessionPlugin/NativeSessionPlugin.swift',
+    'templates/mobile/android-debug/AndroidManifest.xml',
+    'templates/mobile/android-debug/network_security_config.xml',
+    'templates/mobile/qualification/android-test.gradle',
+    'templates/mobile/qualification/src/androidTest/java/com/quadbridge/qualification/NativeCoreJourneyTest.java'
+  ]);
+  if (directory && mobileNativeDirectories.has(normalized)) return true;
+  if (!directory && mobileNativeFiles.has(normalized)) return true;
   if (normalized.startsWith('templates/mobile/')) throw new Error('Unreviewed mobile template input is not allowed: ' + relativePath);
   if (['apps','packages','modules'].includes(top)) {
     if (parts.length === 2) return directory;
     if (parts.length === 3 && !directory && (leaf === 'package.json' || leaf === 'tsconfig.json' || (top === 'modules' && ['module.json','entity-spec.json','generation.json','README.md'].includes(leaf)))) return true;
-    if (parts[2] === 'src') {
-      if (directory) return true;
-      if (/\.ts$/i.test(leaf)) return true;
-      if (top === 'modules' && moduleAssets.has(relativePath.replaceAll('\\','/'))) return true;
-      if (top === 'packages' && parts[1] === 'web-shell' && relativePath === 'packages/web-shell/src/shell.css') return true;
+      if (parts[2] === 'src') {
+        if (directory) return true;
+        if (/\.ts$/i.test(leaf)) return true;
+        if (top === 'modules' && moduleAssets.has(relativePath.replaceAll('\\','/'))) return true;
+        if (top === 'packages' && parts[1] === 'ui' && ['packages/ui/src/tokens.css', 'packages/ui/src/ui.css'].includes(relativePath.replaceAll('\\','/'))) return true;
+        if (top === 'packages' && parts[1] === 'web-shell' && relativePath === 'packages/web-shell/src/shell.css') return true;
     }
     if (top === 'apps' && parts[1] === 'studio-web' && parts[2] === 'static') {
       if (directory) return true;
@@ -87,6 +141,7 @@ export function reviewedBuildFiles(root: string): { fullPath: string; relativePa
   const files: { fullPath: string; relativePath: string }[] = [];
   const visit = (dir: string) => {
     for (const entry of readdirSync(dir,{withFileTypes:true}).sort((a,b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0)) {
+      if (entry.name.includes('\\')) throw new Error('Build source path contains a non-portable separator: ' + entry.name);
       const fullPath = join(dir,entry.name), relativePath = relative(root,fullPath).replaceAll('\\','/');
       const stat = lstatSync(fullPath);
       const parts=relativePath.split('/');
@@ -107,9 +162,8 @@ export function reviewedBuildFiles(root: string): { fullPath: string; relativePa
 }
 
 export function reviewedBuildFingerprint(root: string): string {
-  const hash = createHash('sha256');
-  for (const file of reviewedBuildFiles(root)) { hash.update(file.relativePath); hash.update('\0'); hash.update(readFileSync(file.fullPath)); }
-  return hash.digest('hex');
+  const inventory = reviewedBuildFiles(root).map(file => inventoryRow(file.relativePath,readFileSync(file.fullPath)));
+  return digestInventory('source-tree',{formatVersion:BUILD_FINGERPRINT_FORMAT_VERSION},inventory);
 }
 
 export async function copyReviewedBuildInputs(root: string,destination: string): Promise<void> {
@@ -123,31 +177,35 @@ export async function copyReviewedBuildInputs(root: string,destination: string):
   if (before !== reviewedBuildFingerprint(root) || before !== reviewedBuildFingerprint(destination)) throw new Error('Reviewed source changed during its private copy');
 }
 
-async function completeTreeDigest(root: string): Promise<string> {
-  const hash = createHash('sha256');
+async function completeTreeInventory(root: string): Promise<InventoryRow[]> {
+  const inventory: InventoryRow[] = [];
   const rootInfo = await lstat(root);
   if(rootInfo.isSymbolicLink()||!rootInfo.isDirectory())throw new Error(`Private toolchain root is not a regular directory: ${root}`);
   async function visit(dir: string) {
     const entries = await readdir(dir,{withFileTypes:true}); entries.sort((a,b)=>a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
     for (const entry of entries) {
+      if (entry.name.includes('\\')) throw new Error(`Private toolchain path contains a non-portable separator: ${entry.name}`);
       const full=join(dir,entry.name), relativePath=relative(root,full).replaceAll('\\','/'), info=await lstat(full);
       if(info.isSymbolicLink())throw new Error(`Private toolchain link refused: ${relativePath}`);
       if(info.isDirectory())await visit(full);
-      else if(info.isFile()){hash.update(relativePath);hash.update('\0');hash.update(await readFile(full));}
+      else if(info.isFile())inventory.push(inventoryRow(relativePath,await readFile(full)));
       else throw new Error(`Private toolchain entry is not a regular file: ${relativePath}`);
     }
   }
-  await visit(root); return hash.digest('hex');
+  await visit(root); return inventory;
 }
 
 export async function privateToolchainDigest(root: string): Promise<string> {
-  const packages=await selectPrivateToolchain(root), hash=createHash('sha256');
-  const nodeHash=sha(await readFile(process.execPath));
-  hash.update(process.version);hash.update('\0');hash.update(nodeHash);
+  const packages=await selectPrivateToolchain(root), inventory:InventoryRow[]=[];
+  const nodeBytes=await readFile(process.execPath);
   for(const item of packages){
-    hash.update(item.name);hash.update('\0');hash.update(item.version);hash.update('\0');hash.update(await completeTreeDigest(join(root,item.packagePath)));
+    for(const row of await completeTreeInventory(join(root,item.packagePath)))
+      inventory.push({...row,path:`${item.packagePath}/${row.path}`});
   }
-  return hash.digest('hex');
+  const packageIdentity=packages.map(item=>({name:item.name,path:item.packagePath,version:item.version}))
+    .sort((a,b)=>a.path < b.path ? -1 : a.path > b.path ? 1 : 0);
+  const nodeIdentity={version:process.version,executableByteLength:nodeBytes.byteLength,executableSha256:sha(nodeBytes)};
+  return digestInventory('toolchain-tree',{formatVersion:BUILD_FINGERPRINT_FORMAT_VERSION,node:nodeIdentity,packages:packageIdentity},inventory);
 }
 
 export async function copyPrivateToolchain(root: string,destination: string): Promise<void> {
@@ -178,6 +236,7 @@ async function selectPrivateToolchain(root: string): Promise<PrivateToolchainPac
   if(process.env.ESBUILD_BINARY_PATH)throw new Error('ESBUILD_BINARY_PATH overrides the selected private toolchain');
   const rootPackage=await readRegularJson(join(root,'package.json'));
   const lock=await readRegularJson(join(root,'package-lock.json'));
+  const mobilePackage=await readRegularJson(join(root,'packages/mobile-shell/package.json'));
   const packages: PrivateToolchainPackage[]=[];
   const compilerNames=['typescript','@types/node','undici-types'];
   for(const name of compilerNames){
@@ -188,6 +247,18 @@ async function selectPrivateToolchain(root: string): Promise<PrivateToolchainPac
     if(typeof installed.version!=='string'||installed.version!==locked||typeof spec!=='string'||spec.replace(/^[^0-9]*/,'')!==locked)
       throw new Error(`Installed compiler package ${name} does not match the pinned lockfile`);
     packages.push({name,packagePath,version:locked});
+  }
+
+  for(const [name,version] of [['@capacitor/core','8.5.2'],['@capacitor/app','8.1.1']] as const){
+    const packagePath=`node_modules/${name}`;
+    const installed=await readRegularJson(join(root,packagePath,'package.json'));
+    const workspaceSpec=mobilePackage.dependencies?.[name];
+    const lockedWorkspace=lock.packages?.['packages/mobile-shell']?.dependencies?.[name];
+    const lockedPackage=lock.packages?.[packagePath];
+    if(mobilePackage.name!=='@quadbridge/mobile-shell'||workspaceSpec!==version||lockedWorkspace!==version||
+        installed.name!==name||installed.version!==version||lockedPackage?.version!==version)
+      throw new Error(`Installed native package ${name} does not match the pinned mobile workspace and lockfile`);
+    packages.push({name,packagePath,version});
   }
 
   const esbuildPath='node_modules/esbuild', esbuildName='esbuild';

@@ -1,0 +1,169 @@
+{
+  "schema": "veyviz.paging-repair-review-preservation.v1",
+  "candidate": "2437aeb7d7627763afc3cba0081f33a2de4cac2c7ceacc31010fef1d518937a9",
+  "verdict": "PASSED_BOUNDED_SOURCE_AND_FOCUSED_EVIDENCE",
+  "files": [
+    {
+      "source": ".local/product-paging-evidence/capture-reviewer-overlay-inventory.mjs",
+      "path": ".brain/evidence/product-paging-repair-review/capture-reviewer-overlay-inventory.mjs",
+      "bytes": 3621,
+      "sha256": "917d894d492734f2b6dbec6d2d9a8258cb8d14ce1526cfbc246a1ca3d16bd69f"
+    },
+    {
+      "source": ".local/product-paging-evidence/compare-reviewer-overlay-inventories.mjs",
+      "path": ".brain/evidence/product-paging-repair-review/compare-reviewer-overlay-inventories.mjs",
+      "bytes": 2050,
+      "sha256": "1e8524c22e96431c392ac59ea6ac8ce1619fd90b64b28c6e2e0457485e0e1953"
+    },
+    {
+      "source": ".local/product-paging-evidence/create-reviewer-overlay.mjs",
+      "path": ".brain/evidence/product-paging-repair-review/create-reviewer-overlay.mjs",
+      "bytes": 6285,
+      "sha256": "5b033239184dc310302287e67eb952e239bc975e04671f51572bd8c7225d783f"
+    },
+    {
+      "source": ".local/product-paging-evidence/create-reviewer-overlay.txt",
+      "path": ".brain/evidence/product-paging-repair-review/create-reviewer-overlay.txt",
+      "bytes": 474,
+      "sha256": "63cc35384329cca6cee19c6b5a18ef701b977adb214a7a7b3af3acc758930ff4"
+    },
+    {
+      "source": ".local/product-paging-evidence/diagnose-reviewer-overlay-start-local-temp.txt",
+      "path": ".brain/evidence/product-paging-repair-review/diagnose-reviewer-overlay-start-local-temp.txt",
+      "bytes": 107,
+      "sha256": "8bbf5104d25c36053b6a35baef392c776a2852c437e6d3a9311c6d36a963cceb"
+    },
+    {
+      "source": ".local/product-paging-evidence/diagnose-reviewer-overlay-start-test.txt",
+      "path": ".brain/evidence/product-paging-repair-review/diagnose-reviewer-overlay-start-test.txt",
+      "bytes": 3326,
+      "sha256": "15003ef7c6845565b749efd7885e8bf89cec3a80afa25c73c2d71978d7c206b6"
+    },
+    {
+      "source": ".local/product-paging-evidence/diagnose-reviewer-overlay-start.mjs",
+      "path": ".brain/evidence/product-paging-repair-review/diagnose-reviewer-overlay-start.mjs",
+      "bytes": 1269,
+      "sha256": "1993ec35ec064edfd7c240bd906be0af4edfd664e6f3333671e1c87c654110ba"
+    },
+    {
+      "source": ".local/product-paging-evidence/diagnose-reviewer-overlay-start.test.mjs",
+      "path": ".brain/evidence/product-paging-repair-review/diagnose-reviewer-overlay-start.test.mjs",
+      "bytes": 1023,
+      "sha256": "680a26b7531dd4238711a342a9d9a0ae9c4ce4814a5471f500793368724aeee1"
+    },
+    {
+      "source": ".local/product-paging-evidence/diagnose-reviewer-overlay-start.txt",
+      "path": ".brain/evidence/product-paging-repair-review/diagnose-reviewer-overlay-start.txt",
+      "bytes": 107,
+      "sha256": "8bbf5104d25c36053b6a35baef392c776a2852c437e6d3a9311c6d36a963cceb"
+    },
+    {
+      "source": ".local/product-paging-evidence/execution-index-reviewer-overlay.json",
+      "path": ".brain/evidence/product-paging-repair-review/execution-index-reviewer-overlay.json",
+      "bytes": 10573,
+      "sha256": "ba271b0bbc423f1d7573cf5847b65d35c4a38451739f1f8e562cb0f1870c7605"
+    },
+    {
+      "source": ".local/product-paging-evidence/focused-lifecycle-isolated-reviewer-overlay.txt",
+      "path": ".brain/evidence/product-paging-repair-review/focused-lifecycle-isolated-reviewer-overlay.txt",
+      "bytes": 1267,
+      "sha256": "fa8cd288b35618c055ca42570b55cb34199b7a7419b7ca430f24a957f84b9326"
+    },
+    {
+      "source": ".local/product-paging-evidence/focused-tests-reviewer-overlay-retry-01.txt",
+      "path": ".brain/evidence/product-paging-repair-review/focused-tests-reviewer-overlay-retry-01.txt",
+      "bytes": 3091,
+      "sha256": "945e2c035b6802211175afd09343891d453fae6d3fb662a8aa1c80fb9146cb4f"
+    },
+    {
+      "source": ".local/product-paging-evidence/focused-tests-reviewer-overlay-retry-02.txt",
+      "path": ".brain/evidence/product-paging-repair-review/focused-tests-reviewer-overlay-retry-02.txt",
+      "bytes": 1434,
+      "sha256": "e5d64e1cb6ac2eca7ae4121d136174d38ef2e73caf4a3aee77a60ecc44f9e440"
+    },
+    {
+      "source": ".local/product-paging-evidence/focused-tests-reviewer-overlay.txt",
+      "path": ".brain/evidence/product-paging-repair-review/focused-tests-reviewer-overlay.txt",
+      "bytes": 5051,
+      "sha256": "5a3489d5e9b0a16f032c2855b344f6bfd66fd919f2907576fbcdf45074765f58"
+    },
+    {
+      "source": ".local/product-paging-evidence/fresh-build-reviewer-overlay.txt",
+      "path": ".brain/evidence/product-paging-repair-review/fresh-build-reviewer-overlay.txt",
+      "bytes": 539,
+      "sha256": "ee85b5d4b4461db34813d969511736c6f848d8207233d270fa2a7b1864b7afd6"
+    },
+    {
+      "source": ".local/product-paging-evidence/independent-repair-inventory-verification.json",
+      "path": ".brain/evidence/product-paging-repair-review/independent-repair-inventory-verification.json",
+      "bytes": 602,
+      "sha256": "237c92f354b7410d4e61640a581183f0664a8ef4367ce1ca54726d16040f79bc"
+    },
+    {
+      "source": ".local/product-paging-evidence/independent-repair-review-after.json",
+      "path": ".brain/evidence/product-paging-repair-review/independent-repair-review-after.json",
+      "bytes": 6218,
+      "sha256": "7c397c3ca13b27247f8569a1326b2572ee6586ea999d5587cb4a5c33a7882453"
+    },
+    {
+      "source": ".local/product-paging-evidence/independent-repair-review-before.json",
+      "path": ".brain/evidence/product-paging-repair-review/independent-repair-review-before.json",
+      "bytes": 7500,
+      "sha256": "60d9e22976f201671d03474971e8c8b7daeb752fe0ebd8e65f15f244683c36a3"
+    },
+    {
+      "source": ".local/product-paging-evidence/independent-repair-review.md",
+      "path": ".brain/evidence/product-paging-repair-review/independent-repair-review.md",
+      "bytes": 6079,
+      "sha256": "ac302cfeb1ddce0e88f157b81fa429888edf1210a946b2ee520f6fc4370e9b78"
+    },
+    {
+      "source": ".local/product-paging-evidence/overlay-after-focused-tests-inventory.json",
+      "path": ".brain/evidence/product-paging-repair-review/overlay-after-focused-tests-inventory.json",
+      "bytes": 189780,
+      "sha256": "6883803cdb19679919a6965c18d3b293bf0413b9c8c2d0b134938fafc9c69c23"
+    },
+    {
+      "source": ".local/product-paging-evidence/overlay-after-focused-tests-inventory.txt",
+      "path": ".brain/evidence/product-paging-repair-review/overlay-after-focused-tests-inventory.txt",
+      "bytes": 534,
+      "sha256": "461b163c994cb98d4ff3c98493e41c1a8c996af558c37eb2ac5dec0d2cca7219"
+    },
+    {
+      "source": ".local/product-paging-evidence/overlay-before-fresh-build-inventory.json",
+      "path": ".brain/evidence/product-paging-repair-review/overlay-before-fresh-build-inventory.json",
+      "bytes": 189779,
+      "sha256": "f48df14d31249b15b5a79330b5341f4622957ab01024bb3b18434580bb4c7abe"
+    },
+    {
+      "source": ".local/product-paging-evidence/overlay-before-fresh-build-inventory.txt",
+      "path": ".brain/evidence/product-paging-repair-review/overlay-before-fresh-build-inventory.txt",
+      "bytes": 532,
+      "sha256": "864dfe2728ea7821d9d293f62cab1b7c47bb7526fca71200fd1c8aadad240db0"
+    },
+    {
+      "source": ".local/product-paging-evidence/overlay-build-test-source-comparison.json",
+      "path": ".brain/evidence/product-paging-repair-review/overlay-build-test-source-comparison.json",
+      "bytes": 6469,
+      "sha256": "18a6ed272ad9a9ac921e22b43ddb7238a41e1ed005a4c01eecf1ef3f760e1ca5"
+    },
+    {
+      "source": ".local/product-paging-evidence/overlay-build-test-source-comparison.txt",
+      "path": ".brain/evidence/product-paging-repair-review/overlay-build-test-source-comparison.txt",
+      "bytes": 332,
+      "sha256": "b930e5524f2ca4476da3c8e0b20ae361edde8293076ed916d68742fce6ae04df"
+    },
+    {
+      "source": ".local/product-paging-evidence/test-temp-path-lengths.txt",
+      "path": ".brain/evidence/product-paging-repair-review/test-temp-path-lengths.txt",
+      "bytes": 224,
+      "sha256": "bf66ff7f175ce977a9bcd2162e55544b73ed35c2ed0230aeb2aee77271a866dd"
+    }
+  ],
+  "limitations": [
+    "Final fresh build0 and13/13 focused tests use deterministic inference; actual browser and full current-tree qualification remain open.",
+    "Both earlier11pass/2fail runs and diagnostics remain failed evidence. Short TEMP correlated with passing startup; exact OS limit and full cause are not established.",
+    "Original failed diagnostic child final exit remains unknown. Later passes do not prove that child closed.",
+    "Foreign intelligence and eventual framework adoption are not accepted by this paging review."
+  ]
+}

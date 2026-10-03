@@ -1,0 +1,92 @@
+{
+  "schema": "veyviz.source-review-preservation.v1",
+  "recordedAt": "2026-10-03T13:28:38.723Z",
+  "verdict": "BOUNDED_SOURCE_PASS_READY_FOR_ADMITTED_ISOLATED_CHECKS",
+  "entries": [
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\package.json",
+      "path": "source/package.json",
+      "bytes": 1539,
+      "sha256": "f0738ec1b03bd4f59b1a05f88815ce6e7f4d7b6104113f6d5a21b62278c31887"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tools\\veyviz-build.mjs",
+      "path": "source/tools/veyviz-build.mjs",
+      "bytes": 14348,
+      "sha256": "f00694386527f5e73c8fab5b4ce056fe8df6c6c918bd85913b1ab3320f22c71c"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tools\\veyviz-inventory.mjs",
+      "path": "source/tools/veyviz-inventory.mjs",
+      "bytes": 24575,
+      "sha256": "a94720f5a252a5d02c7cc3c3d381530b74cdc58715983c965a69155d5c9fb2cd"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tools\\veyviz-start.mjs",
+      "path": "source/tools/veyviz-start.mjs",
+      "bytes": 15913,
+      "sha256": "c7f9c30c5e11458fbe0f6291abc6254650be93a70ad7f730297ca4e4e2382662"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tools\\veyviz-snapshot.mjs",
+      "path": "source/tools/veyviz-snapshot.mjs",
+      "bytes": 23318,
+      "sha256": "d5833ee0807fc435c695019ac17d882ce345e6c3983aad66543227a8848858c9"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tests\\veyviz-lifecycle.test.mjs",
+      "path": "source/tests/veyviz-lifecycle.test.mjs",
+      "bytes": 14898,
+      "sha256": "1493fab0aa8c97afbd8224dad5262fb0c113ae16c8d5fd220e4919881d716249"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tests\\veyviz-snapshot.test.mjs",
+      "path": "source/tests/veyviz-snapshot.test.mjs",
+      "bytes": 25710,
+      "sha256": "fee3b59643c5ddaadc4a667f094514b15386688db55458beb4166c5fc1db44f8"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-06\\capture-freeze.mjs",
+      "path": "capture/capture-freeze.mjs",
+      "bytes": 6132,
+      "sha256": "20d5aef1897b7cb025a32b86a62e7f03de3229d1f02dabe873a9d426a4542e1c"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-06\\freeze.json",
+      "path": "capture/freeze.json",
+      "bytes": 5687,
+      "sha256": "2b38b42832b55d071a5ac7e4a901937a6945b427586931eb5635b4adf01e8bff"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-06\\source-active-observed.json",
+      "path": "capture/source-active-observed.json",
+      "bytes": 64550,
+      "sha256": "86043e9f849d85c91add68f153dc0e9b65419f7bd8af9bbe78a0cf61dac83a5b"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-06\\source-overlay.json",
+      "path": "capture/source-overlay.json",
+      "bytes": 63696,
+      "sha256": "3af05ba71748d1c501244306c78b92bc27ff9626df75a17d953b9b4596b449bc"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-06\\toolchain-active-observed.json",
+      "path": "capture/toolchain-active-observed.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-06\\toolchain-overlay.json",
+      "path": "capture/toolchain-overlay.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "source": ".local/product-immutable-runtime-evidence/review/freeze06-minimal-delta-source-review-20261003-01.json",
+      "path": "independent-source-review.json",
+      "bytes": 3073,
+      "sha256": "53845a050d1592ca9835104179f8cc469d53a81683ea02011934ee05443a420b"
+    }
+  ],
+  "meaning": "Exact freeze06 seven-owner source and reviewed manifests before execution results. Source readiness only; runtime, full product and active foreign source remain unqualified."
+}

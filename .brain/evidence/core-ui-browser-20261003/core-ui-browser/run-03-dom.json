@@ -1,0 +1,37 @@
+{
+  "observedAt": "2026-10-03T16:55:06.737Z",
+  "url": "http://127.0.0.1:49152/#/command-center",
+  "background": "rgb(118, 214, 177)",
+  "color": "rgb(7, 28, 19)",
+  "contrast": 10.150615809988915,
+  "hostWidth": 1425,
+  "images": [
+    {
+      "complete": true,
+      "height": 360,
+      "width": 640
+    },
+    {
+      "complete": true,
+      "height": 360,
+      "width": 640
+    },
+    {
+      "complete": true,
+      "height": 360,
+      "width": 640
+    },
+    {
+      "complete": true,
+      "height": 360,
+      "width": 640
+    },
+    {
+      "complete": true,
+      "height": 360,
+      "width": 640
+    }
+  ],
+  "text": "Mark reviewed",
+  "viewport": 1440
+}

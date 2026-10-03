@@ -1,0 +1,142 @@
+/* Public semantic tokens. Values live at explicit UI boundaries and never on :root. */
+[data-qb-ui-boundary] {
+  color-scheme: light;
+  --qb-surface-page: #f5f7f5;
+  --qb-surface-panel: #ffffff;
+  --qb-surface-raised: #f8faf8;
+  --qb-surface-overlay: #ffffffed;
+  --qb-text: #1c2924;
+  --qb-text-muted: #596a61;
+  --qb-border: #dbe3de;
+  --qb-border-strong: #a7b5ac;
+  --qb-accent: #17664d;
+  --qb-accent-text: #ffffff;
+  --qb-accent-soft: #e8f3ed;
+  --qb-focus: #1269cb;
+  --qb-status-success-surface: #eaf5ed;
+  --qb-status-success-text: #285c39;
+  --qb-status-success-border: #bad8c1;
+  --qb-status-warning-surface: #fff3d8;
+  --qb-status-warning-text: #73500b;
+  --qb-status-warning-border: #e9cf8f;
+  --qb-status-danger-surface: #fff0ef;
+  --qb-status-danger-text: #8c2f2a;
+  --qb-status-danger-border: #e7b7b3;
+  --qb-status-info-surface: #edf4fc;
+  --qb-status-info-text: #244f7a;
+  --qb-status-info-border: #c4d9f0;
+  --qb-space-1: 0.25rem;
+  --qb-space-2: 0.5rem;
+  --qb-space-3: 0.75rem;
+  --qb-space-4: 1rem;
+  --qb-space-5: 1.5rem;
+  --qb-space-6: 2rem;
+  --qb-font-body: 0.9375rem;
+  --qb-font-small: 0.8125rem;
+  --qb-font-label: 0.875rem;
+  --qb-radius-control: 0.5rem;
+  --qb-radius-panel: 0.75rem;
+  --qb-density-control-height: 2.75rem;
+  --qb-motion-fast: 140ms;
+  --qb-layer-sticky: 4;
+  --qb-layer-navigation: 6;
+  --qb-surface-page-translucent: #f5f7f5ed;
+
+  /* Temporary aliases for maintained legacy class names. */
+  --ink: var(--qb-text);
+  --muted: var(--qb-text-muted);
+  --line: var(--qb-border);
+  --canvas: var(--qb-surface-page);
+  --accent: var(--qb-accent);
+  --accent-soft: var(--qb-accent-soft);
+}
+
+[data-qb-ui-boundary][data-qb-surface="dark"] {
+  color-scheme: dark;
+  --qb-surface-page: #101715;
+  --qb-surface-panel: #19221e;
+  --qb-surface-raised: #222d27;
+  --qb-surface-overlay: #19221eed;
+  --qb-text: #f1f6f2;
+  --qb-text-muted: #bac7bf;
+  --qb-border: #3b4a42;
+  --qb-border-strong: #82948a;
+  --qb-accent-text: #071c13;
+  --qb-accent-soft: #203b2e;
+  --qb-status-success-surface: #183324;
+  --qb-status-success-text: #b6e5c1;
+  --qb-status-success-border: #416b4d;
+  --qb-status-warning-surface: #3a301a;
+  --qb-status-warning-text: #f4d99a;
+  --qb-status-warning-border: #786339;
+  --qb-status-danger-surface: #3b2221;
+  --qb-status-danger-text: #ffc4bd;
+  --qb-status-danger-border: #794441;
+  --qb-status-info-surface: #1c2c3c;
+  --qb-status-info-text: #c4ddfb;
+  --qb-status-info-border: #405d78;
+  --qb-surface-page-translucent: #101715ed;
+  --ink: var(--qb-text);
+  --muted: var(--qb-text-muted);
+  --line: var(--qb-border);
+  --canvas: var(--qb-surface-page);
+  --accent-soft: var(--qb-accent-soft);
+}
+
+[data-qb-ui-boundary][data-qb-text="high-contrast"] {
+  --qb-text: #101713;
+  --qb-text-muted: #33453b;
+  --qb-border: #728279;
+}
+
+[data-qb-ui-boundary][data-qb-surface="dark"][data-qb-text="high-contrast"] {
+  --qb-text: #ffffff;
+  --qb-text-muted: #e0e9e3;
+  --qb-border: #a4b4aa;
+}
+
+[data-qb-ui-boundary][data-qb-accent="blue"] {
+  --qb-accent: #145bb8;
+  --qb-accent-soft: #e9f1fd;
+  --qb-focus: #145bb8;
+}
+
+[data-qb-ui-boundary][data-qb-surface="dark"][data-qb-accent="blue"] {
+  --qb-accent: #87baff;
+  --qb-accent-soft: #203653;
+  --qb-focus: #a7ceff;
+}
+
+[data-qb-ui-boundary][data-qb-accent="teal"] {
+  --qb-accent: #17664d;
+  --qb-accent-soft: #e8f3ed;
+  --qb-focus: #1269cb;
+}
+
+[data-qb-ui-boundary][data-qb-surface="dark"][data-qb-accent="teal"] {
+  --qb-accent: #76d6b1;
+  --qb-accent-soft: #203b2e;
+  --qb-focus: #8dc7ff;
+}
+
+[data-qb-ui-boundary][data-qb-accent="amber"] {
+  --qb-accent: #8a5700;
+  --qb-accent-text: #ffffff;
+  --qb-accent-soft: #fff1d2;
+  --qb-focus: #845400;
+}
+
+[data-qb-ui-boundary][data-qb-surface="dark"][data-qb-accent="amber"] {
+  --qb-accent: #ffd27a;
+  --qb-accent-text: #261700;
+  --qb-accent-soft: #493719;
+  --qb-focus: #ffe09c;
+}
+
+[data-qb-ui-boundary][data-qb-density="compact"] {
+  --qb-space-3: 0.5rem;
+  --qb-space-4: 0.75rem;
+  --qb-space-5: 1rem;
+  --qb-density-control-height: 2.5rem;
+  --qb-font-body: 0.875rem;
+}

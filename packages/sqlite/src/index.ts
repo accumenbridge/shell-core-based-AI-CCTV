@@ -3,11 +3,35 @@ import { createHash, randomUUID } from 'node:crypto';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { PlatformError, canonical, id, type RequestContext, type PreparedJob, type Job, type JobState, type JobExecutionStore } from '@quadbridge/contracts';
+import { COMMAND_REJECTION_RECEIPT, markTrustedCommandError, safeCommandFieldErrors, validateCommandFieldErrors, validateCommandOutcome, type CommandFieldError, type CommandOutcome } from '@quadbridge/contracts/ui-state';
 export interface Migration {
     version: number;
     sql: string;
 }
 export const hash = (value: unknown) => createHash('sha256').update(canonical(value)).digest('hex');
+export type CommandReceiptLookup<T> = { readonly found: false } | { readonly found: true; readonly result: T };
+type TerminalRejection = { code: 'INVALID' | 'CONFLICT' | 'NOT_FOUND'; message: string; fieldErrors: readonly CommandFieldError[]; commandOutcome: CommandOutcome };
+type OwnerCommandResult<T> = { readonly kind: 'committed'; readonly result: T } | { readonly kind: 'rejected'; readonly rejection: TerminalRejection };
+const hasReservedRejectionTag = (serialized: string) => {
+    try {
+        const value = JSON.parse(serialized) as Record<string, unknown>;
+        return !!value && typeof value === 'object' && value.$quadbridge === COMMAND_REJECTION_RECEIPT;
+    } catch { return false; }
+};
+function readTerminalRejection(serialized: string): TerminalRejection | undefined {
+    let value: unknown;
+    try { value = JSON.parse(serialized); } catch { return undefined; }
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return undefined;
+    const record = value as Record<string, unknown>;
+    if (record.$quadbridge !== COMMAND_REJECTION_RECEIPT || Object.keys(record).sort().join(',') !== '$quadbridge,code,commandOutcome,fieldErrors,message') return undefined;
+    if (record.code !== 'INVALID' && record.code !== 'CONFLICT' && record.code !== 'NOT_FOUND') return undefined;
+    if (typeof record.message !== 'string' || !record.message.trim() || record.message.length > 256 || record.message.includes('\0')) return undefined;
+    const commandOutcome = validateCommandOutcome(record.commandOutcome);
+    if (!commandOutcome) return undefined;
+    const fieldErrors = validateCommandFieldErrors(record.fieldErrors);
+    if (!fieldErrors) return undefined;
+    return Object.freeze({ code: record.code, message: record.message, fieldErrors: Object.freeze(fieldErrors), commandOutcome });
+}
 /** A concrete local-profile adapter. The composition root supplies ONE owner-specific connection.
  * It is not an all-domain repository and is never given to browser contributions. */
 export class SqliteOwner {
@@ -96,6 +120,8 @@ export class SqliteOwner {
             if (old) {
                 if (old.digest !== digest)
                     throw new PlatformError('CONFLICT', 'Command identity was reused with a different payload');
+                if (hasReservedRejectionTag(old.result))
+                    throw new PlatformError('CONFLICT', 'This command identity was terminally rejected by its owner');
                 return JSON.parse(old.result) as T;
             }
             const result = fn();
@@ -103,6 +129,117 @@ export class SqliteOwner {
             this.db.prepare('INSERT INTO _receipts VALUES(?,?,?,?,?,?,?)').run(ctx.tenantId, actor, operation, key, digest, json, Date.now());
             this.db.prepare('INSERT INTO _audit(tenant,actor,operation,command_id,at) VALUES(?,?,?,?,?)').run(ctx.tenantId, actor, operation, key, Date.now());
             return result;
+        });
+    }
+    /**
+     * Explicit receipt-first path for generated entity create/edit operations whose complete
+     * business effect is synchronous SQL in this owner. Other modules keep using command().
+     */
+    generatedEntityCommand<T, N>(ctx: RequestContext, operation: string, key: string | undefined, submittedInput: unknown,
+        permission: string, normalize: () => N, execute: (normalized: N) => T): T {
+        if (!key) throw new PlatformError('INVALID', 'Idempotency-Key is required');
+        id(key);
+        if (permission !== `${this.owner}.write` || !operation.startsWith(`${this.owner}.`) || !/\.(?:create|edit)$/.test(operation))
+            throw new PlatformError('DENIED', 'Owner-atomic command is not a generated entity write');
+        ctx.assertAllowed(permission, 'write');
+        const rawDigest = hash(submittedInput);
+        const actor = `${ctx.actor.kind}:${ctx.actor.id}`;
+        const result = this.transaction<OwnerCommandResult<T>>(() => {
+            ctx.assertAllowed(permission, 'write');
+            const old = this.db.prepare('SELECT digest,result FROM _receipts WHERE tenant=? AND actor=? AND operation=? AND command_id=?').get(ctx.tenantId, actor, operation, key) as {
+                digest: string;
+                result: string;
+            } | undefined;
+            if (old) {
+                if (hasReservedRejectionTag(old.result)) {
+                    const rejection = readTerminalRejection(old.result);
+                    if (!rejection || old.digest !== rawDigest || rejection.commandOutcome.command.submittedPayloadDigest !== rawDigest ||
+                        rejection.commandOutcome.command.id !== key || rejection.commandOutcome.command.operation !== operation ||
+                        rejection.commandOutcome.command.productId !== ctx.productId || rejection.commandOutcome.command.instanceId !== ctx.instanceId ||
+                        rejection.commandOutcome.command.tenantId !== ctx.tenantId || rejection.commandOutcome.command.actor.id !== ctx.actor.id ||
+                        rejection.commandOutcome.command.actor.kind !== ctx.actor.kind)
+                        throw new PlatformError('CONFLICT', 'Command identity was reused with a different payload');
+                    return { kind: 'rejected', rejection };
+                }
+                const normalized = normalize();
+                if (normalized && typeof (normalized as { then?: unknown }).then === 'function')
+                    throw new PlatformError('UNAVAILABLE', 'Owner normalization must be synchronous');
+                if (old.digest !== hash(normalized))
+                    throw new PlatformError('CONFLICT', 'Command identity was reused with a different payload');
+                return { kind: 'committed', result: JSON.parse(old.result) as T };
+            }
+
+            this.db.exec('SAVEPOINT qb_generated_entity_command');
+            let normalized: N;
+            let value: T;
+            try {
+                normalized = normalize();
+                if (normalized && typeof (normalized as { then?: unknown }).then === 'function')
+                    throw new PlatformError('UNAVAILABLE', 'Owner normalization must be synchronous');
+                value = execute(normalized);
+                if (value && typeof (value as { then?: unknown }).then === 'function')
+                    throw new PlatformError('UNAVAILABLE', 'Owner command must be synchronous');
+            } catch (error) {
+                if (!(error instanceof PlatformError) || (error.code !== 'INVALID' && error.code !== 'CONFLICT' && error.code !== 'NOT_FOUND') ||
+                    !error.message.trim() || error.message.length > 256 || error.message.includes('\0')) throw error;
+                this.db.exec('ROLLBACK TO SAVEPOINT qb_generated_entity_command');
+                this.db.exec('RELEASE SAVEPOINT qb_generated_entity_command');
+                ctx.assertAllowed(permission, 'write');
+                const fieldErrors = safeCommandFieldErrors(error) ?? [];
+                const commandOutcome: CommandOutcome = Object.freeze({
+                    schema: 'quadbridge.command-outcome.v1',
+                    state: 'REJECTED_NO_BUSINESS_EFFECTS',
+                    scope: 'ORIGINAL_COMMAND',
+                    terminal: true,
+                    command: Object.freeze({
+                        id: key,
+                        operation,
+                        productId: ctx.productId,
+                        instanceId: ctx.instanceId,
+                        tenantId: ctx.tenantId,
+                        actor: Object.freeze({ id: ctx.actor.id, kind: ctx.actor.kind }),
+                        submittedPayloadDigest: rawDigest
+                    })
+                });
+                const saved: TerminalRejection = Object.freeze({ code: error.code, message: error.message, fieldErrors, commandOutcome });
+                this.db.prepare('INSERT INTO _receipts VALUES(?,?,?,?,?,?,?)').run(ctx.tenantId, actor, operation, key, rawDigest,
+                    canonical({ $quadbridge: COMMAND_REJECTION_RECEIPT, code: saved.code, message: saved.message, fieldErrors: saved.fieldErrors, commandOutcome }), Date.now());
+                this.db.prepare('INSERT INTO _audit(tenant,actor,operation,command_id,at) VALUES(?,?,?,?,?)').run(ctx.tenantId, actor, operation, key, Date.now());
+                return { kind: 'rejected', rejection: saved };
+            }
+
+            this.db.exec('RELEASE SAVEPOINT qb_generated_entity_command');
+            const normalizedDigest = hash(normalized);
+            const json = canonical(value);
+            this.db.prepare('INSERT INTO _receipts VALUES(?,?,?,?,?,?,?)').run(ctx.tenantId, actor, operation, key, normalizedDigest, json, Date.now());
+            this.db.prepare('INSERT INTO _audit(tenant,actor,operation,command_id,at) VALUES(?,?,?,?,?)').run(ctx.tenantId, actor, operation, key, Date.now());
+            return { kind: 'committed', result: value };
+        });
+        if (result.kind === 'committed') return result.result;
+        const error = new PlatformError(result.rejection.code, result.rejection.message);
+        if (!markTrustedCommandError(error, result.rejection.commandOutcome, result.rejection.fieldErrors))
+            throw new PlatformError('UNAVAILABLE', 'Owner command outcome could not be safely restored');
+        throw error;
+    }
+    lookupCommand<T>(ctx: RequestContext, operation: string, key: string | undefined, input: unknown, permission: string): CommandReceiptLookup<T> {
+        if (!key)
+            throw new PlatformError('INVALID', 'Idempotency-Key is required');
+        id(key);
+        const actor = `${ctx.actor.kind}:${ctx.actor.id}`;
+        const digest = hash(input);
+        return this.transaction(() => {
+            ctx.assertAllowed(permission, 'write');
+            const old = this.db.prepare('SELECT digest,result FROM _receipts WHERE tenant=? AND actor=? AND operation=? AND command_id=?').get(ctx.tenantId, actor, operation, key) as {
+                digest: string;
+                result: string;
+            } | undefined;
+            if (!old)
+                return { found: false } as const;
+            if (old.digest !== digest)
+                throw new PlatformError('CONFLICT', 'Command identity was reused with a different payload');
+            if (hasReservedRejectionTag(old.result))
+                throw new PlatformError('CONFLICT', 'This command identity was terminally rejected by its owner');
+            return { found: true, result: JSON.parse(old.result) as T } as const;
         });
     }
     close() { this.db.close(); }

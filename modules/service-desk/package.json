@@ -21,7 +21,8 @@
     "@quadbridge/contracts": "0.2.0",
     "@quadbridge/sqlite": "0.2.0",
     "@quadbridge/backend-host": "0.2.0",
-    "@quadbridge/web-shell": "0.2.0"
+    "@quadbridge/web-shell": "0.2.0",
+    "@quadbridge/ui": "0.1.0"
   },
   "scripts": {
     "build": "tsc -b"

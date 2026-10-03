@@ -23,6 +23,9 @@
     },
     {
       "path": "../../packages/ai-core"
+    },
+    {
+      "path": "../../packages/ui"
     }
   ]
 }

@@ -9,9 +9,9 @@ import { ControlPlaneStore, type BuildClaim, type FrozenBuildInput } from '@quad
 import { assertExpectedFactoryInventory, createSnapshotManifest, expectedFactoryInventory, verifyReleaseArtifacts, verifySnapshotManifest } from '@quadbridge/composition/integrity';
 import { assertWindowsBuildHost, type WindowsBuildHostProfile } from './build-host.js';
 import { maintainedSourceFingerprint, type SourceSnapshot } from './source-import.js';
-import { copyPrivateToolchain, copyReviewedBuildInputs, privateToolchainDigest, reviewedBuildFingerprint } from './build-inputs.js';
+import { BUILD_FINGERPRINT_FORMAT_VERSION, copyPrivateToolchain, copyReviewedBuildInputs, privateToolchainDigest, reviewedBuildFingerprint } from './build-inputs.js';
 
-const RECIPE = 'local-compiled-export-v1';
+const RECIPE = `local-compiled-export-v2-fingerprint-v${BUILD_FINGERPRINT_FORMAT_VERSION}`;
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 type BuildHostIdentity = { kind: string; sha256: string; version: string; policy: string };
 function publicBuildHostIdentity(profile: WindowsBuildHostProfile | undefined): BuildHostIdentity {
@@ -19,7 +19,8 @@ function publicBuildHostIdentity(profile: WindowsBuildHostProfile | undefined): 
     { kind:`native-node-${process.platform}`,sha256:'',version:process.version,policy:'not-applicable' };
 }
 function frozenToolchainDigest(compilerDigest: string, identity: BuildHostIdentity): string {
-  return createHash('sha256').update(canonical({compilerDigest,executionHost:identity})).digest('hex');
+  return createHash('sha256').update(canonical({schema:`quadbridge.build-toolchain.v${BUILD_FINGERPRINT_FORMAT_VERSION}`,
+    compilerDigest,executionHost:identity})).digest('hex');
 }
 
 function childEnvironment(): NodeJS.ProcessEnv {
@@ -289,6 +290,7 @@ export class LocalBuildWorker {
       if (status === 'lost' && snapshotPath && await this.exists(snapshotPath)) this.options.store.recordBuildOrphan(claim,`snapshots/${outputId}`,'A stale attempt left an unadvertised snapshot for quarantine');
     };
     try {
+      if (claim.input.recipeVersion !== RECIPE) throw Object.assign(new Error('This frozen build admission uses an incompatible fingerprint recipe'),{code:'BUILD_RECIPE_UNSUPPORTED'});
       if (!await this.options.store.updateBuildPhase(claim,'Checking reviewed source and private toolchain')) throw new Error('Build claim is no longer current');
       const beforeCopy = await checkpoint(); if (beforeCopy) { await settleWithoutProcess(beforeCopy); return; }
       if (maintainedSourceFingerprint(this.root) !== claim.input.sourceFingerprint) throw Object.assign(new Error('Reviewed source changed since this build was admitted'),{code:'SOURCE_DRIFT'});

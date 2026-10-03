@@ -1,7 +1,8 @@
 import type { Workspace } from '@quadbridge/contracts';
-import { el, button, field, heading, section, formAction, statistic, emptyState } from '@quadbridge/web-shell/dom';
+import { actionButton, el, fieldControl, heading, section, formAction, statistic, emptyState, statusNotice } from '@quadbridge/ui/components';
 export { recentRequestsPanel } from './ui/recent-requests.js';
 export const workspace: Workspace = { mount(ctx) {
+        ctx.root.setAttribute('data-service-desk-module', '');
         ctx.root.append(heading('Service requests', 'Manage requests in your current tenant. Changes are saved by Service Desk.'));
         const stats = el('div', 'stat-grid');
         ctx.root.append(stats);
@@ -9,7 +10,8 @@ export const workspace: Workspace = { mount(ctx) {
         grid.append(create, list);
         ctx.root.append(grid);
         create.append(el('h3', '', 'Create a request'));
-        const form = el('form'), title = field('Title', 'title'), details = field('Details', 'details', true);
+        const form = el('form'), title = fieldControl('Title', el('input'), { required: true, maxLength: 200, help: 'Use a short title that identifies the work.' }), details = fieldControl('Details', el('textarea'), { required: true, maxLength: 64000, help: 'Describe the request for the current Service Desk owner.' });
+        title.input.name = 'title'; details.input.name = 'details';
         form.append(title.wrap, details.wrap);
         const refresh = async () => {
             const data = await ctx.api.get('/api/requests') as {
@@ -25,7 +27,7 @@ export const workspace: Workspace = { mount(ctx) {
             if (ctx.signal.aborted)
                 return;
             stats.replaceChildren(statistic('Loaded requests', data.items.length, 'Current response · current tenant'), statistic('Open in this list', data.items.filter(x => x.state === 'OPEN').length, 'Ready for review'), statistic('Closed in this list', data.items.filter(x => x.state !== 'OPEN').length, 'Owner-confirmed state'));
-            list.replaceChildren(el('h3', '', 'Requests'), button('Refresh', () => void refresh().catch(e => ctx.notice(e.message)), 'button secondary small'));
+            list.replaceChildren(el('h3', '', 'Requests'), actionButton('Refresh', () => void refresh().catch(e => ctx.notice(e.message)), { variant: 'secondary', size: 'small' }));
             if (!data.items.length)
                 list.append(emptyState('No requests in this tenant.', 'Create a request to begin. Only this tenant’s records will appear here.'));
             for (const item of data.items) {
@@ -34,7 +36,7 @@ export const workspace: Workspace = { mount(ctx) {
                 if (item.source)
                     node.append(el('p', 'receipt', `Linked source: ${item.source}`));
                 if (item.state === 'OPEN' && ctx.permissions.includes('desk.close'))
-                    node.append(button('Close request', () => { void ctx.api.post('/api/requests/close', { id: item.id, expectedVersion: item.version }).then(() => refresh()).catch(e => ctx.notice(e.message)); }, 'button secondary small'));
+                    node.append(actionButton('Close request', () => { void ctx.api.post('/api/requests/close', { id: item.id, expectedVersion: item.version }).then(() => refresh()).catch(e => ctx.notice(e.message)); }, { variant: 'secondary', size: 'small' }));
                 list.append(node);
             }
         };
@@ -43,7 +45,7 @@ export const workspace: Workspace = { mount(ctx) {
             create.append(form);
         }
         else
-            create.append(el('p', 'muted', 'Read access only. New requests are not permitted.'));
+            create.append(statusNotice('read-only', 'New requests are not permitted for this session.'));
         void refresh().catch(e => {
             if (!ctx.signal.aborted)
                 ctx.notice(e.message);
@@ -53,6 +55,7 @@ export const workspace: Workspace = { mount(ctx) {
 /** Separate named workspace entry; the shell must not substitute `workspace`. */
 export const overviewWorkspace: import('@quadbridge/contracts').Workspace = {
     mount(ctx) {
+        ctx.root.setAttribute('data-service-desk-module', '');
         void import('./ui/overview.js').then(({ renderOverview }) => {
             if (!ctx.signal.aborted)
                 return renderOverview(ctx);

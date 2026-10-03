@@ -1,6 +1,6 @@
 {
   "id": "combined",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "platformAbi": "quadbridge.module.v1",
   "title": "Operations + Knowledge",
   "description": "Two domain families composed into one application.",
@@ -12,11 +12,11 @@
     },
     {
       "id": "knowledge",
-      "version": "0.2.3"
+      "version": "0.2.4"
     },
     {
       "id": "handoff",
-      "version": "0.2.3"
+      "version": "0.2.4"
     }
   ],
   "bindings": [

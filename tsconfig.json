@@ -38,6 +38,9 @@
       "path": "packages/studio-model"
     },
     {
+      "path": "packages/ui"
+    },
+    {
       "path": "packages/web-shell"
     },
     {
@@ -54,6 +57,9 @@
     },
     {
       "path": "modules/veyviz-analysis"
+    },
+    {
+      "path": "modules/veyviz-intelligence"
     },
     {
       "path": "modules/veyviz-rfdetr"

@@ -1,0 +1,57 @@
+{
+  "schema": "veyviz.core-browser-observation.v1",
+  "observedAt": "2026-10-03T16:57:19.791Z",
+  "url": "http://127.0.0.1:49152/#/command-center",
+  "buildQualification": "317e28b72ee68dba3c97441281b9a2c5d9c7f5c77953b7e6f2b8eac1c427e562",
+  "runtimeGeneration": "9abd0cb76c58fe8c9f65085a81ca18c0012de7b6de310e4d24fed430678c170d",
+  "sourceCssSha256": "b1f5f80e879400e4a756634cfd8d046c30c22b40d6c210db5e2b63eb4da21dee",
+  "observations": [
+    "Normal admin sign-in using private generated local credentials",
+    "Registered MIVIA core review through Recordings UI",
+    "Started real RF-DETR CPU analysis; UI displays Result ready and3accepted samples for analysis a995f485",
+    "Human review remains awaiting: no review decision submitted",
+    "Loaded images and final review control contrast observed from DOM"
+  ],
+  "rendered": {
+    "background": "rgb(118, 214, 177)",
+    "color": "rgb(7, 28, 19)",
+    "contrast": 10.150615809988915,
+    "hostWidth": 1425,
+    "images": [
+      {
+        "complete": true,
+        "height": 360,
+        "width": 640
+      },
+      {
+        "complete": true,
+        "height": 360,
+        "width": 640
+      },
+      {
+        "complete": true,
+        "height": 360,
+        "width": 640
+      },
+      {
+        "complete": true,
+        "height": 360,
+        "width": 640
+      },
+      {
+        "complete": true,
+        "height": 360,
+        "width": 640
+      }
+    ],
+    "text": "Mark reviewed",
+    "viewport": 1440
+  },
+  "relatedEarlierEvidence": "Phone390 and tablet768 reflow/keyboard and five workspace checks were performed on build02. Build03 changes exactly one review-button color property; do not relabel earlier screenshots as build03.",
+  "limitations": [
+    "Local developer product only",
+    "No complete product npm test or native acceptance from browser",
+    "Zero sampled detections do not prove absence",
+    "Original command uncertain-retry corrections remain open"
+  ]
+}

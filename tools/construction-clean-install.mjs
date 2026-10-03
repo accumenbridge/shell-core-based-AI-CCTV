@@ -1,31 +1,17 @@
 import { createHash, randomUUID } from 'node:crypto';
-import { spawn } from 'node:child_process';
 import { access, lstat, mkdir, mkdtemp, readFile, realpath, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { basename, dirname, join, relative, resolve, sep } from 'node:path';
+import { basename, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { copyReviewedBuildInputs, reviewedBuildFingerprint } from '../apps/control-plane/dist/build-inputs.js';
+import { ConstructionCommandOwner } from './construction-command.mjs';
 
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
-const MAX_CAPTURE = 1024 * 1024;
 const MAX_GENERATION_SPEC = 256 * 1024;
 const NPM_TIMEOUT = 15 * 60_000;
 const BUILD_TIMEOUT = 5 * 60_000;
 const sha = value => createHash('sha256').update(value).digest('hex');
 async function physicalWorkspace(label) { return mkdtemp(join(tmpdir(), `qb-construction-${label}-`)); }
-
-async function npmInvocation() {
-  if (process.platform !== 'win32') return { command: 'npm', prefix: [] };
-  const candidates = [process.env.npm_execpath, join(dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npm-cli.js')]
-    .filter(value => typeof value === 'string' && value.length > 0);
-  for (const candidate of candidates) {
-    try {
-      const info = await lstat(candidate);
-      if (info.isFile() && !info.isSymbolicLink()) return { command: process.execPath, prefix: [candidate] };
-    } catch (error) { if (error?.code !== 'ENOENT') throw error; }
-  }
-  throw new Error('The installed npm CLI could not be resolved for direct child ownership');
-}
 
 async function assertOwnedWorkspace(path, role) {
   const resolved = resolve(path), actual = await realpath(resolved), tempRoot = await realpath(tmpdir());
@@ -85,62 +71,34 @@ async function copyGenerationSpecs(sourceRoot, report) {
   return specs;
 }
 
-async function run(command, args, cwd, timeoutMs) {
-  const child = spawn(command, args, {
-    cwd,
-    stdio: ['ignore', 'pipe', 'pipe'],
-    windowsHide: true
-  });
-  const startedAt = Date.now();
-  const hash = createHash('sha256');
-  let stdoutBytes = 0, stderrBytes = 0, capturedBytes = 0, timedOut = false, spawnError;
-  const captured = [];
-  const consume = (stream, chunk) => {
-    const bytes = Buffer.from(chunk);
-    if (stream === 'stdout') stdoutBytes += bytes.length; else stderrBytes += bytes.length;
-    hash.update(stream); hash.update(bytes);
-    const remaining = MAX_CAPTURE - capturedBytes;
-    if (remaining > 0) { const part = bytes.subarray(0, remaining); captured.push(Buffer.from(part)); capturedBytes += part.length; }
-  };
-  child.stdout.on('data', chunk => consume('stdout', chunk));
-  child.stderr.on('data', chunk => consume('stderr', chunk));
-  child.on('error', error => { spawnError = error; });
-  const timer = setTimeout(() => { timedOut = true; try { child.kill(); } catch { /* keep the original close observation */ } }, timeoutMs);
-  const [exitCode, signal] = await new Promise(resolve => child.once('close', (code, closeSignal) => resolve([code, closeSignal])));
-  clearTimeout(timer);
-  return {
-    command: basename(command), args,
-    exitCode, signal: signal ?? null, timedOut, spawnErrorCode: typeof spawnError?.code === 'string' ? spawnError.code : null,
-    closeObserved: true, elapsedMs: Date.now() - startedAt,
-    stdoutBytes, stderrBytes, capturedBytes, truncated: stdoutBytes + stderrBytes > capturedBytes,
-    outputSha256: hash.digest('hex'), captured: Buffer.concat(captured)
-  };
-}
-
 async function exists(path) { try { await access(path); return true; } catch (error) { if (error?.code === 'ENOENT') return false; throw error; } }
 async function hashFile(path) { return sha(await readFile(path)); }
-async function runStep(report, label, command, args, cwd, timeout, logDirectory) {
-  const result = await run(command, args, cwd, timeout);
-  const logName = `${String(report.steps.length + 1).padStart(2, '0')}-${label}.log`;
-  await writeFile(join(logDirectory, logName), result.captured, { flag: 'wx', mode: 0o600 });
-  delete result.captured;
-  Object.assign(result, { label, logName });
-  report.steps.push(result);
-  if (result.exitCode !== 0 || result.signal !== null || result.timedOut || !result.closeObserved || result.spawnErrorCode !== null)
+async function runStep(report, label, cwd, timeout, logDirectory, commandOwner) {
+  const result = await commandOwner.run(label, cwd, { timeoutMs: timeout, label });
+  const stepNumber = report.steps.length + 1;
+  const outputCaptures = result.closeObserved
+    ? await commandOwner.captureLogs(result.ownerId, logDirectory, `${String(stepNumber).padStart(2, '0')}-${label}`)
+    : {};
+  Object.assign(result, { stepNumber });
+  const output = { stdout: outputCaptures.stdout?.logName ?? null, stderr: outputCaptures.stderr?.logName ?? null };
+  if (!result.closeObserved) {
+    output.retainedOperationRoot = relative(ROOT, result.operationRoot).replaceAll('\\', '/');
+    output.stdoutPath = result.stdoutLogPath ? relative(ROOT, result.stdoutLogPath).replaceAll('\\', '/') : null;
+    output.stderrPath = result.stderrLogPath ? relative(ROOT, result.stderrLogPath).replaceAll('\\', '/') : null;
+  }
+  const step = {
+    command: result.commandKind, args: result.commandArgs, recipe: label, exitCode: result.exitCode, signal: result.signal ?? null,
+    timedOut: result.timedOut === true, spawnErrorCode: result.spawnErrorCode ?? null, closeObserved: result.closeObserved === true,
+    helperClosed: result.helperClosed === true, emptyObserved: result.emptyObserved === true,
+    errorCode: result.errorCode ?? null, controlFailed: result.controlFailed === true,
+    physicalState: result.physicalState, elapsedMs: result.elapsedMs, outputCaptures: output, retainedOnFailure: !result.emptyObserved
+  };
+  report.steps.push(step);
+  if (result.emptyObserved) await commandOwner.cleanup(result.ownerId);
+  if (result.exitCode !== 0 || result.signal !== null || result.timedOut || !result.closeObserved || !result.helperClosed || !result.emptyObserved ||
+      result.spawnErrorCode !== null || result.errorCode !== null || result.controlFailed)
     throw new Error(`Construction proof step failed: ${label}`);
-  return result;
-}
-
-async function runNpm(report, label, args, cwd, logs, timeout = NPM_TIMEOUT) {
-  const invocation = await npmInvocation();
-  const result = await runStep(report, label, invocation.command, [...invocation.prefix, ...args], cwd, timeout, logs);
-  result.command = 'npm';
-  result.args = args;
-  return result;
-}
-
-async function factory(report, label, cwd, logs, ...args) {
-  return runStep(report, label, process.execPath, ['tools/factory.mjs', ...args], cwd, 120_000, logs);
+  return step;
 }
 
 async function assertProducts(sourceRoot) {
@@ -176,6 +134,7 @@ async function main() {
   await mkdir(logs, { mode: 0o700 });
   const sourceA = await physicalWorkspace('source-a-');
   const sourceB = await physicalWorkspace('source-b-');
+  const commandOwner = new ConstructionCommandOwner({ projectRoot: ROOT, operationRootBase: join(logs, 'owned-commands') });
   const report = {
     schema: 'quadbridge.construction-clean-install.v1', evidenceId, status: 'RUNNING',
     node: process.version, npmCommand: 'npm', platform: process.platform, architecture: process.arch,
@@ -189,27 +148,27 @@ async function main() {
     report.sourceFingerprintBeforeA = originalFingerprint;
     report.sourceFingerprintCopiedA = reviewedBuildFingerprint(sourceA);
     if (report.sourceFingerprintCopiedA !== originalFingerprint) throw new Error('Source A does not match the reviewed input identity');
-    await runNpm(report, 'a-npm-ci', ['ci'], sourceA, logs);
-    await runNpm(report, 'a-base-build', ['run', 'build'], sourceA, logs, BUILD_TIMEOUT);
+    await runStep(report, 'a-npm-ci', sourceA, NPM_TIMEOUT, logs, commandOwner);
+    await runStep(report, 'a-base-build', sourceA, BUILD_TIMEOUT, logs, commandOwner);
 
     const generationSpecs = await copyGenerationSpecs(sourceA, report);
     for (const spec of generationSpecs)
-      await factory(report, `a-generate-${spec.moduleId}`, sourceA, logs, 'generate-entity', `.local/construction-specs/${spec.name}`);
-    await factory(report, 'a-create-checklist', sourceA, logs, 'create-module', 'checklist');
+      await runStep(report, `a-generate-${spec.moduleId}`, sourceA, 120_000, logs, commandOwner);
+    await runStep(report, 'a-create-checklist', sourceA, 120_000, logs, commandOwner);
     for (const [product, modules, version] of [
       ['construction-assets', 'asset-register', '1.0.0'],
       ['construction-rooms', 'room-inspection', '2.1.0'],
       ['construction-suite', 'asset-register,room-inspection', '1.0.0'],
       ['construction-checklist', 'checklist', '1.2.0']
-    ]) await factory(report, `a-create-${product}`, sourceA, logs, 'create-product', product, '--modules', modules, '--version', version);
+    ]) await runStep(report, `a-create-${product}`, sourceA, 120_000, logs, commandOwner);
 
     const lockPathA = join(sourceA, 'package-lock.json');
     const beforeReconcile = await hashFile(lockPathA);
-    await runNpm(report, 'a-reconcile-lock', ['install', '--package-lock-only', '--ignore-scripts'], sourceA, logs, 180_000);
+    await runStep(report, 'a-reconcile-lock', sourceA, 180_000, logs, commandOwner);
     const reconciledLock = await hashFile(lockPathA);
     report.lock.changedByExplicitReconcile = beforeReconcile !== reconciledLock;
     if (!report.lock.changedByExplicitReconcile) throw new Error('Explicit lock reconciliation did not add the generated workspaces');
-    await runNpm(report, 'a-generated-build', ['run', 'build'], sourceA, logs, BUILD_TIMEOUT);
+    await runStep(report, 'a-generated-build', sourceA, BUILD_TIMEOUT, logs, commandOwner);
     const lockAfterBuildA = await hashFile(lockPathA);
     if (lockAfterBuildA !== reconciledLock) throw new Error('Build changed the explicitly reconciled lockfile');
     report.sourceFingerprintA = reviewedBuildFingerprint(sourceA);
@@ -233,13 +192,13 @@ async function main() {
       throw new Error('Source B inherited temporary generation-spec inputs');
     const lockPathB = join(sourceB, 'package-lock.json'), lockBeforeCiB = await hashFile(lockPathB);
     if (lockBeforeCiB !== reconciledLock) throw new Error('Source B did not receive the reconciled lockfile bytes');
-    await runNpm(report, 'b-npm-ci', ['ci'], sourceB, logs);
-    await runNpm(report, 'b-build', ['run', 'build'], sourceB, logs, BUILD_TIMEOUT);
+    await runStep(report, 'b-npm-ci', sourceB, NPM_TIMEOUT, logs, commandOwner);
+    await runStep(report, 'b-build', sourceB, BUILD_TIMEOUT, logs, commandOwner);
     report.sourceFingerprintAfterBBuild = reviewedBuildFingerprint(sourceB);
     if (report.sourceFingerprintAfterBBuild !== report.sourceFingerprintCopiedB)
       throw new Error('Fresh install or build changed the reviewed source identity');
-    await runStep(report, 'b-link-idempotence-1', process.execPath, ['tools/link-workspaces.mjs'], sourceB, 120_000, logs);
-    await runStep(report, 'b-link-idempotence-2', process.execPath, ['tools/link-workspaces.mjs'], sourceB, 120_000, logs);
+    await runStep(report, 'b-link-idempotence-1', sourceB, 120_000, logs, commandOwner);
+    await runStep(report, 'b-link-idempotence-2', sourceB, 120_000, logs, commandOwner);
     const lockAfterCiBuildB = await hashFile(lockPathB);
     if (lockAfterCiBuildB !== lockBeforeCiB) throw new Error('Fresh install or build mutated the reconciled source lockfile');
     report.productsB = await assertProducts(sourceB);
@@ -263,8 +222,8 @@ async function main() {
     try {
       await assertOwnedWorkspace(sourceB, 'source-b');
       await assertOwnedWorkspace(sourceA, 'source-a');
-      await rm(sourceB, { recursive: true, force: false, maxRetries: 10, retryDelay: 100 });
-      await rm(sourceA, { recursive: true, force: false, maxRetries: 10, retryDelay: 100 });
+      await commandOwner.cleanupWorkspace(sourceB);
+      await commandOwner.cleanupWorkspace(sourceA);
       complete = true;
       report.status = 'PASSED';
       report.retainedOnFailure = false;

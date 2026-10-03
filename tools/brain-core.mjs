@@ -1,5 +1,6 @@
 import { createHash, randomUUID } from 'node:crypto';
-import { lstat, mkdir, readFile, readdir, rename, rm, unlink, writeFile } from 'node:fs/promises';
+import { constants as fsConstants } from 'node:fs';
+import { lstat, mkdir, open, readFile, readdir, rename, rm, unlink, writeFile } from 'node:fs/promises';
 import { basename, dirname, isAbsolute, join, relative, resolve, sep, win32 } from 'node:path';
 import { inspectAtlas } from './brain-atlas.mjs';
 import { assessReadiness } from './brain-readiness.mjs';
@@ -139,11 +140,53 @@ async function checkedStat(root, rel, { kind, optional = false } = {}) {
     return { absolute, info: await lstat(absolute) };
 }
 
+function sameFileVersion(left, right) {
+    if (!left?.isFile?.() || !right?.isFile?.() || left.dev !== right.dev) return false;
+    if (left.ino && right.ino && left.ino !== right.ino) return false;
+    return left.size === right.size && left.mode === right.mode && left.mtimeMs === right.mtimeMs &&
+        left.ctimeMs === right.ctimeMs && left.birthtimeMs === right.birthtimeMs;
+}
+
+/** Bounded same-handle primitive exposed for deterministic mutation-boundary tests; this tool is not a package API. */
+export async function readBoundedHandle(handle, rel, initialStat, maxBytes) {
+    if (initialStat.size > maxBytes) problem('INPUT_TOO_LARGE', `${rel} exceeds the ${maxBytes}-byte file limit.`);
+    const readLimit = maxBytes + 1;
+    const chunks = [];
+    let total = 0;
+    while (total < readLimit) {
+        const buffer = Buffer.allocUnsafe(Math.min(64 * 1024, readLimit - total));
+        const { bytesRead } = await handle.read(buffer, 0, buffer.length, total);
+        if (bytesRead === 0) break;
+        total += bytesRead;
+        if (total > maxBytes) problem('INPUT_TOO_LARGE', `${rel} exceeds the ${maxBytes}-byte file limit.`);
+        chunks.push(Buffer.from(buffer.subarray(0, bytesRead)));
+    }
+    const after = await handle.stat();
+    if (total !== initialStat.size || !sameFileVersion(initialStat, after))
+        problem('INPUT_CHANGED', `${rel} changed while it was being read.`);
+    return Buffer.concat(chunks, total);
+}
+
 async function safeRead(root, rel, { optional = false, maxBytes = MAX_JSON_BYTES } = {}) {
     const found = await checkedStat(root, rel, { kind: 'file', optional });
     if (!found) return null;
     if (found.info.size > maxBytes) problem('INPUT_TOO_LARGE', `${rel} exceeds the ${maxBytes}-byte file limit.`);
-    return readFile(found.absolute);
+    const flags = fsConstants.O_RDONLY | (fsConstants.O_NOFOLLOW ?? 0);
+    const handle = await open(found.absolute, flags);
+    try {
+        const opened = await handle.stat();
+        if (!sameFileVersion(found.info, opened)) problem('INPUT_CHANGED', `${rel} changed before it could be read.`);
+        const current = await checkedStat(root, rel, { kind: 'file' });
+        if (!sameFileVersion(found.info, current.info) || !sameFileVersion(opened, current.info))
+            problem('INPUT_CHANGED', `${rel} changed before it could be read.`);
+        if (opened.size > maxBytes) problem('INPUT_TOO_LARGE', `${rel} exceeds the ${maxBytes}-byte file limit.`);
+        const bytes = await readBoundedHandle(handle, rel, opened, maxBytes);
+        const after = await checkedStat(root, rel, { kind: 'file' });
+        if (!sameFileVersion(opened, after.info)) problem('INPUT_CHANGED', `${rel} changed after it was read.`);
+        return bytes;
+    } finally {
+        await handle.close();
+    }
 }
 
 async function readJson(root, rel, { optional = false } = {}) {
@@ -408,7 +451,7 @@ function validateEmittedRecord(record, id, definitions) {
         safeRelative(artifact.path, `record ${id}.artifacts.path`);
         if (!artifact.path.startsWith(`${ARTIFACTS}/${id}/`)) problem('INVALID_RECORD', `Record ${id} artifact path is outside its immutable artifact directory.`);
         sha(artifact.sha256, `record ${id}.artifacts.sha256`);
-        number(artifact.bytes, `record ${id}.artifacts.bytes`);
+        number(artifact.bytes, `record ${id}.artifacts.bytes`, { max: MAX_ARTIFACT_BYTES });
         if (artPaths.has(artifact.path)) problem('INVALID_RECORD', `Record ${id} has duplicate artifact paths.`);
         artPaths.add(artifact.path);
     }
@@ -865,20 +908,29 @@ async function readInputFile(root, inputPath) {
 
 async function captureArtifacts(root, recordId, paths) {
     if (!paths.length) return [];
+    const names = new Set();
+    const sources = [];
+    for (const sourceRef of paths) {
+        const name = basename(sourceRef);
+        if (!name || names.has(name)) problem('INVALID_ARTIFACT', `Artifact basenames must be unique within one record: ${name}`);
+        names.add(name);
+        const found = await checkedStat(root, sourceRef, { kind: 'file' });
+        if (found.info.size > MAX_ARTIFACT_BYTES)
+            problem('INPUT_TOO_LARGE', `${sourceRef} exceeds the ${MAX_ARTIFACT_BYTES}-byte artifact limit.`);
+        sources.push({ sourceRef, name });
+    }
     const destDirRel = `${ARTIFACTS}/${recordId}`;
     await ensureDirectory(root, ARTIFACTS);
     await mkdir(assertWithin(root, destDirRel));
     const result = [];
-    const names = new Set();
     try {
-        for (const sourceRef of paths) {
-            const name = basename(sourceRef);
-            if (!name || names.has(name)) problem('INVALID_ARTIFACT', `Artifact basenames must be unique within one record: ${name}`);
-            names.add(name);
-            const found = await checkedStat(root, sourceRef, { kind: 'file' });
-            const bytes = await readFile(found.absolute);
+        for (const { sourceRef, name } of sources) {
+            const bytes = await safeRead(root, sourceRef, { maxBytes: MAX_ARTIFACT_BYTES });
             const path = `${destDirRel}/${name}`;
             await writeFile(assertWithin(root, path), bytes, { flag: 'wx' });
+            const copied = await safeRead(root, path, { maxBytes: MAX_ARTIFACT_BYTES });
+            if (!copied || copied.length !== bytes.length || digest(copied) !== digest(bytes))
+                problem('ARTIFACT_INTEGRITY', `Copied evidence failed integrity validation: ${path}`);
             result.push({ sourceRef, path, sha256: digest(bytes), bytes: bytes.length });
         }
         return result;
@@ -937,7 +989,11 @@ export async function record(rootInput, inputPath) {
         if (input.kind === 'review' && contract.reviewRequirement.required && input.independence !== contract.reviewRequirement.independence)
             problem('REVIEW_REQUIREMENT_MISMATCH', `Review independence must be ${contract.reviewRequirement.independence} for ${input.taskId}.`);
         record.integritySha256 = digestJson(record);
+        validateEmittedRecord(record, id, definitions);
         const bytes = Buffer.from(serialize(record), 'utf8');
+        if (bytes.length > MAX_JSON_BYTES)
+            problem('RECORD_TOO_LARGE', `Serialized evidence record exceeds the ${MAX_JSON_BYTES}-byte record limit.`);
+        await validateRecordArtifacts(root, record);
         await writeFile(assertWithin(root, `${RECORDS}/${id}.json`), bytes, { flag: 'wx' });
         return { record, recordPath: `${RECORDS}/${id}.json`, contractDigest: contractDigestValue, currentCandidate: currentCandidate.digest, candidateIsCurrent: candidate.digest === currentCandidate.digest };
     } catch (error) {

@@ -1,0 +1,12 @@
+{
+  "command": "npm run build",
+  "cwd": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003",
+  "shell": "PowerShell",
+  "startedAtUtc": "2026-10-03T13:49:01.7984645Z",
+  "closedAtUtc": "2026-10-03T13:49:04.3166563Z",
+  "exitCode": 0,
+  "rawPath": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze08-run-01\\npm-build.raw.txt",
+  "rawBytes": 301,
+  "rawSha256": "a4df3650a63e3955fdc2709b53720c9400bd920dcbf1f89fe4a86f26e5d56f17",
+  "execSessionId": null
+}

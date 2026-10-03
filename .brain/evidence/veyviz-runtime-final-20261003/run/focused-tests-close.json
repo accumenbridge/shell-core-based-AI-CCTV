@@ -1,0 +1,12 @@
+{
+  "command": "node --test --test-concurrency=1 --test-reporter=tap tests/veyviz-lifecycle.test.mjs tests/veyviz-snapshot.test.mjs tests/veyviz-product.test.mjs",
+  "cwd": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003",
+  "shell": "PowerShell",
+  "startedAtUtc": "2026-10-03T13:57:24.9921566Z",
+  "closedAtUtc": "2026-10-03T14:00:58.3684658Z",
+  "exitCode": 0,
+  "rawPath": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\focused-tests.raw.txt",
+  "rawBytes": 4942,
+  "rawSha256": "a3328446f4381c5a7f4de43bec659e4b4be66db390469da960fb769f3dd7b778",
+  "execSessionId": null
+}

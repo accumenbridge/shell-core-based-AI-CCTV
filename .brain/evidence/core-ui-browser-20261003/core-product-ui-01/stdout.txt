@@ -1,0 +1,9 @@
+✔ Veyviz workspaces mount their public theme/layout boundaries and products declare ordered closed experiences (11.1ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 74.9533

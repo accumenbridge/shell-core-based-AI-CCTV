@@ -4,7 +4,7 @@
   "title": "Usable local scoped Veyviz video-analysis product",
   "authorization": {
     "kind": "authorized",
-    "reference": "User request 2026-10-03: analyze latest worker/framework/Veyviz state and build an independent new full-stack modular, plugin-capable product using Quadbridge; original repositories remain preserved. Root adopts local recorded-video scope and proposed new target. User further requested a substantially better product experience on 2026-10-03; bounded UX design in docs/veyviz/EXPERIENCE.md. User explicitly authorized concept-led working UI implementation after rejecting the prior design on 2026-10-03; see docs/veyviz/CONCEPT_IMPLEMENTATION.md."
+    "reference": "User request 2026-10-03: analyze latest worker/framework/Veyviz state and build an independent new full-stack modular, plugin-capable product using Quadbridge; original repositories remain preserved. Root adopts local recorded-video scope and proposed new target. User further requested a substantially better product experience on 2026-10-03; bounded UX design in docs/veyviz/EXPERIENCE.md. User explicitly authorized concept-led working UI implementation after rejecting the prior design on 2026-10-03; see docs/veyviz/CONCEPT_IMPLEMENTATION.md. User fix all 2026-10-03 additionally authorizes the frozen product-owner pagination plan. User fix all also authorizes the independently diagnosed fixed-snapshot default launcher repair; exact four-owner plan is .brain/plans/veyviz-immutable-runtime-work-order.json. Latest user core-priority steering brings the finite isolated eleven-owner presentation increment forward without changing final acceptance."
   },
   "sourceTaskRef": ".brain/tasks/VEYVIZ-LOCAL-001.md",
   "owners": {
@@ -16,9 +16,12 @@
     ".brain/tasks/VEYVIZ-LOCAL-001.md",
     ".gitignore",
     "AGENTS.md",
+    "README.md",
     "contracts/veyviz-product-ai/v1/README.md",
     "docs/veyviz/ACCEPTANCE.md",
     "docs/veyviz/ARCHITECTURE.md",
+    "docs/veyviz/CONCEPT_IMPLEMENTATION.md",
+    "docs/veyviz/EXPERIENCE.md",
     "docs/veyviz/PROVENANCE.md",
     "docs/veyviz/README.md",
     "docs/veyviz/RELEASE_INPUTS.json",
@@ -30,6 +33,8 @@
     "modules/veyviz-analysis/src/styles.css",
     "modules/veyviz-analysis/src/ui.ts",
     "modules/veyviz-analysis/tsconfig.json",
+    "modules/veyviz-intelligence/src/styles.css",
+    "modules/veyviz-intelligence/src/ui.ts",
     "modules/veyviz-rfdetr/module.json",
     "modules/veyviz-rfdetr/package.json",
     "modules/veyviz-rfdetr/src/bridge.ts",
@@ -50,7 +55,6 @@
     "package.json",
     "products/veyviz-catalog/product.json",
     "products/veyviz-review/product.json",
-    "README.md",
     "services/veyviz-ai/README.md",
     "services/veyviz-ai/runner.py",
     "services/veyviz-ai/setup.py",
@@ -61,15 +65,19 @@
     "tests/studio-integration.test.mjs",
     "tests/veyviz-lifecycle.test.mjs",
     "tests/veyviz-product.test.mjs",
+    "tests/veyviz-snapshot.test.mjs",
+    "tests/veyviz-ui-core.test.mjs",
+    "tools/veyviz-build.mjs",
     "tools/veyviz-e2e.mjs",
     "tools/veyviz-inventory.mjs",
     "tools/veyviz-runtime.mjs",
+    "tools/veyviz-snapshot.mjs",
     "tools/veyviz-start.mjs",
     "tools/veyviz-verify.mjs",
     "tsconfig.json",
     "vendor/veyviz-ai/PROVENANCE.json",
-    "docs/veyviz/EXPERIENCE.md",
-    "docs/veyviz/CONCEPT_IMPLEMENTATION.md"
+    "modules/veyviz-intelligence/package.json",
+    "modules/veyviz-intelligence/tsconfig.json"
   ],
   "excludedActions": [
     "Editing maintained packages/apps/framework construction tools",
@@ -79,7 +87,8 @@
   ],
   "prerequisites": [
     "Root-frozen pipe protocol is adopted; complete exact source/test manifests or verified full release-input inventory must be frozen before qualifying implementation evidence.",
-    "Selected Veyviz source and asset closure captured with hashes before qualification."
+    "Selected Veyviz source and asset closure captured with hashes before qualification.",
+    "Default runtime verifies the bounded product-owned successful-build input/output receipt under .brain/plans/veyviz-build-qualification-amendment.json; no stale compiled-output or checkout fallback."
   ],
   "criteria": [
     {
@@ -116,6 +125,11 @@
       "id": "REGRESSION",
       "description": "Fresh build, required npm test and installed Python regressions.",
       "evidenceScope": "Candidate-specific actual local evidence; no inherited or production acceptance."
+    },
+    {
+      "id": "PAGING",
+      "description": "Authorized owner queries and analysis source picker reach beyond legacy limits, preserve v1 contracts and reject scope/query cursor confusion.",
+      "evidenceScope": "Fresh build, exact owner regressions and actual exported UI checks; no inference or production claim from doubles."
     }
   ],
   "requiredRecipeIds": [
@@ -123,7 +137,8 @@
     "product-full-suite",
     "product-python",
     "product-browser",
-    "product-construction"
+    "product-construction",
+    "product-paging-focused"
   ],
   "reviewRequirement": {
     "required": true,

@@ -1,0 +1,6 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": { "rootDir": "src", "outDir": "dist", "tsBuildInfoFile": "dist/.tsbuildinfo" },
+  "include": ["src/**/*.ts"],
+  "references": [{ "path": "../../packages/client-core" }, { "path": "../../packages/contracts" }, { "path": "../../packages/sqlite" }, { "path": "../../packages/backend-host" }, { "path": "../../packages/web-shell" }, { "path": "../veyviz-rfdetr" }]
+}

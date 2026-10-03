@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { PlatformError, canonical, type JobState, type ModuleManifest } from '@quadbridge/contracts';
 import { SqliteOwner, JobQueue } from '@quadbridge/sqlite';
 import type { HostedModule, ModuleEnvironment } from '@quadbridge/backend-host';
@@ -21,6 +22,116 @@ interface QueuePayload {
   fixtureId: 'mivia-vid0062'; profileId: typeof PROFILE_ID; frameCount: number; sampleStride: number;
 }
 
+const analysisItemProjection = { type: 'object', properties: {
+  id: { type: 'string', minLength: 1, maxLength: 128 }, jobId: { type: 'string', minLength: 1, maxLength: 128 }, sourceId: { type: 'string', minLength: 1, maxLength: 128 }, sourceVersion: { type: 'integer', minimum: 1 },
+  jobState: { type: 'string', enum: ['QUEUED', 'RUNNING', 'CANCEL_REQUESTED', 'CANCELLED', 'SUCCEEDED', 'FAILED'] }, reviewState: { type: 'string', enum: ['OPEN', 'REVIEWED', 'DISMISSED'] },
+  created: { type: 'integer', minimum: 0 }, sampleCount: { type: 'integer', minimum: 0, maximum: 6 }, detectionCount: { type: 'integer', minimum: 0, maximum: 600 },
+  coverage: { type: 'string', enum: ['UNCOMMISSIONED_RECORDING', 'UNKNOWN'] }, occupancy: { type: 'string', enum: ['UNKNOWN'] }
+}, required: ['id', 'jobId', 'sourceId', 'sourceVersion', 'jobState', 'reviewState', 'created', 'sampleCount', 'detectionCount', 'coverage', 'occupancy'], additionalProperties: false };
+const pageProjection = { type: 'object', properties: { limit: { type: 'integer', minimum: 1, maximum: 100 }, nextCursor: { type: 'string', minLength: 1, maxLength: 512 }, coverage: { type: 'string', enum: ['filtered-owner-query'] } }, required: ['limit', 'coverage'], additionalProperties: false };
+
+interface NormalizedAnalysisQuery {
+  q?: string; sourceId?: string; jobState?: JobState; reviewState?: AnalysisRow['review_state'];
+  createdAfter?: number; createdBefore?: number; limit: number; cursor?: string;
+}
+interface AnalysisCursor { v: 1; b: string; created: number; id: string }
+
+function normalizeAnalysisQuery(value: unknown): NormalizedAnalysisQuery {
+  const body = object(value, ['q', 'sourceId', 'jobState', 'reviewState', 'createdAfter', 'createdBefore', 'limit', 'cursor']);
+  let q: string | undefined;
+  if (body.q !== undefined) {
+    if (typeof body.q !== 'string' || body.q.length > 200 || body.q.includes('\0')) throw new PlatformError('INVALID', 'Invalid analysis search');
+    q = body.q.trim().toLowerCase() || undefined;
+  }
+  const sourceId = body.sourceId === undefined ? undefined : id(body.sourceId);
+  const states: JobState[] = ['QUEUED', 'RUNNING', 'CANCEL_REQUESTED', 'CANCELLED', 'SUCCEEDED', 'FAILED'];
+  const reviews: AnalysisRow['review_state'][] = ['OPEN', 'REVIEWED', 'DISMISSED'];
+  if (body.jobState !== undefined && !states.includes(body.jobState as JobState)) throw new PlatformError('INVALID', 'Invalid job state filter');
+  if (body.reviewState !== undefined && !reviews.includes(body.reviewState as AnalysisRow['review_state'])) throw new PlatformError('INVALID', 'Invalid review state filter');
+  const createdAfter = body.createdAfter === undefined ? undefined : integer(body.createdAfter, 0);
+  const createdBefore = body.createdBefore === undefined ? undefined : integer(body.createdBefore, 0);
+  if (createdAfter !== undefined && createdBefore !== undefined && createdAfter > createdBefore) throw new PlatformError('INVALID', 'Analysis date range is inverted');
+  const limit = body.limit === undefined ? 20 : integer(body.limit, 1, 100);
+  let cursor: string | undefined;
+  if (body.cursor !== undefined) {
+    if (typeof body.cursor !== 'string' || body.cursor.length < 1 || body.cursor.length > 512) throw new PlatformError('INVALID', 'Invalid page cursor');
+    cursor = body.cursor;
+  }
+  return { q, sourceId, jobState: body.jobState as JobState | undefined, reviewState: body.reviewState as AnalysisRow['review_state'] | undefined, createdAfter, createdBefore, limit, cursor };
+}
+
+function routeQuery(query: URLSearchParams): Record<string, unknown> {
+  const allowed = new Set(['q', 'sourceId', 'jobState', 'reviewState', 'createdAfter', 'createdBefore', 'limit', 'cursor']);
+  for (const key of query.keys()) if (!allowed.has(key) || query.getAll(key).length !== 1) throw new PlatformError('INVALID', 'Invalid analysis query parameter');
+  const result: Record<string, unknown> = {};
+  for (const key of ['q', 'sourceId', 'jobState', 'reviewState', 'cursor']) { const value = query.get(key); if (value !== null) result[key] = value; }
+  for (const key of ['createdAfter', 'createdBefore', 'limit']) {
+    const value = query.get(key);
+    if (value === null) continue;
+    if (!/^[0-9]+$/.test(value)) throw new PlatformError('INVALID', `Invalid ${key}`);
+    result[key] = Number(value);
+  }
+  return result;
+}
+
+function sourceQueryInput(value: unknown): { q?: string; renamedOnly?: boolean; limit?: number; cursor?: string } {
+  const body = object(value, ['search', 'renamedOnly', 'limit', 'cursor']);
+  let q: string | undefined;
+  if (body.search !== undefined) {
+    if (typeof body.search !== 'string' || body.search.length > 200 || body.search.includes('\0')) throw new PlatformError('INVALID', 'Invalid source search');
+    q = body.search.trim().toLowerCase() || undefined;
+  }
+  if (body.renamedOnly !== undefined && typeof body.renamedOnly !== 'boolean') throw new PlatformError('INVALID', 'Invalid renamedOnly filter');
+  const limit = body.limit === undefined ? undefined : integer(body.limit, 1, 100);
+  let cursor: string | undefined;
+  if (body.cursor !== undefined) {
+    if (typeof body.cursor !== 'string' || body.cursor.length < 1 || body.cursor.length > 512) throw new PlatformError('INVALID', 'Invalid page cursor');
+    cursor = body.cursor;
+  }
+  return { q, renamedOnly: body.renamedOnly as boolean | undefined, limit, cursor };
+}
+
+function sourceRouteQuery(query: URLSearchParams) {
+  const allowed = new Set(['search', 'renamedOnly', 'limit', 'cursor']);
+  for (const key of query.keys()) if (!allowed.has(key) || query.getAll(key).length !== 1) throw new PlatformError('INVALID', 'Invalid source query parameter');
+  const result: Record<string, unknown> = {};
+  const search = query.get('search'), renamedOnly = query.get('renamedOnly'), limit = query.get('limit'), cursor = query.get('cursor');
+  if (search !== null) result.search = search;
+  if (renamedOnly !== null) {
+    if (renamedOnly !== 'true' && renamedOnly !== 'false') throw new PlatformError('INVALID', 'Invalid renamedOnly filter');
+    result.renamedOnly = renamedOnly === 'true';
+  }
+  if (limit !== null) {
+    if (!/^[0-9]+$/.test(limit)) throw new PlatformError('INVALID', 'Invalid page limit');
+    result.limit = Number(limit);
+  }
+  if (cursor !== null) result.cursor = cursor;
+  return sourceQueryInput(result);
+}
+
+function queryBinding(ctx: RequestContext, query: NormalizedAnalysisQuery): string {
+  const binding = JSON.stringify(['veyviz-analysis', ctx.tenantId, ctx.productId, ctx.instanceId, query.q ?? '', query.sourceId ?? '', query.jobState ?? '', query.reviewState ?? '', query.createdAfter ?? null, query.createdBefore ?? null, query.limit]);
+  return createHash('sha256').update(binding).digest('hex');
+}
+
+function decodeCursor(token: string | undefined, ctx: RequestContext, query: NormalizedAnalysisQuery): AnalysisCursor | undefined {
+  if (token === undefined) return undefined;
+  try {
+    if (!/^[A-Za-z0-9_-]+$/.test(token)) throw new Error('format');
+    const decoded = Buffer.from(token, 'base64url').toString('utf8');
+    if (Buffer.from(decoded, 'utf8').toString('base64url') !== token) throw new Error('encoding');
+    const value = JSON.parse(decoded) as Record<string, unknown>;
+    if (Object.keys(value).sort().join(',') !== 'b,created,id,v' || value.v !== 1 || value.b !== queryBinding(ctx, query) ||
+        !Number.isSafeInteger(value.created) || (value.created as number) < 0 || typeof value.id !== 'string' || id(value.id) !== value.id)
+      throw new Error('binding');
+    return value as unknown as AnalysisCursor;
+  } catch { throw new PlatformError('INVALID', 'Page cursor is invalid or does not match this analysis query'); }
+}
+
+function encodeCursor(ctx: RequestContext, query: NormalizedAnalysisQuery, row: AnalysisRow): string {
+  return Buffer.from(JSON.stringify({ v: 1, b: queryBinding(ctx, query), created: row.created, id: row.id }), 'utf8').toString('base64url');
+}
+
 export const operationDescriptors: OperationDescriptor[] = [
   { id: 'veyviz-analysis.analysis.list', version: 1, title: 'List analyses', description: 'List analysis jobs and accepted-result summaries for the current tenant.', permission: 'veyviz.analysis.read', kind: 'read',
     inputSchema: { type: 'object', properties: {}, additionalProperties: false },
@@ -38,7 +149,21 @@ export const operationDescriptors: OperationDescriptor[] = [
     outputSchema: { type: 'object', properties: { id: { type: 'string', minLength: 1, maxLength: 128 }, jobState: { type: 'string', enum: ['QUEUED', 'RUNNING', 'CANCEL_REQUESTED', 'CANCELLED', 'SUCCEEDED', 'FAILED'] } }, required: ['id', 'jobState'], additionalProperties: false } },
   { id: 'veyviz-analysis.analysis.review', version: 1, title: 'Record result review', description: 'Record a human review state for an already accepted analysis result.', permission: 'veyviz.analysis.write', kind: 'write',
     inputSchema: { type: 'object', properties: { analysisId: { type: 'string', minLength: 1, maxLength: 128 }, decision: { type: 'string', enum: ['REVIEWED', 'DISMISSED'] } }, required: ['analysisId', 'decision'], additionalProperties: false },
-    outputSchema: { type: 'object', properties: { id: { type: 'string', minLength: 1, maxLength: 128 }, decision: { type: 'string', enum: ['REVIEWED', 'DISMISSED'] }, reviewedAt: { type: 'integer', minimum: 0 } }, required: ['id', 'decision', 'reviewedAt'], additionalProperties: false } }
+    outputSchema: { type: 'object', properties: { id: { type: 'string', minLength: 1, maxLength: 128 }, decision: { type: 'string', enum: ['REVIEWED', 'DISMISSED'] }, reviewedAt: { type: 'integer', minimum: 0 } }, required: ['id', 'decision', 'reviewedAt'], additionalProperties: false } },
+  { id: 'veyviz-analysis.analysis.query', version: 1, title: 'Search analyses', description: 'Search a bounded owner page using analysis, job and source identifiers and declared state/date filters.', permission: 'veyviz.analysis.read', kind: 'read',
+    inputSchema: { type: 'object', properties: {
+      q: { type: 'string', maxLength: 200 }, sourceId: { type: 'string', minLength: 1, maxLength: 128 },
+      jobState: { type: 'string', enum: ['QUEUED', 'RUNNING', 'CANCEL_REQUESTED', 'CANCELLED', 'SUCCEEDED', 'FAILED'] },
+      reviewState: { type: 'string', enum: ['OPEN', 'REVIEWED', 'DISMISSED'] },
+      createdAfter: { type: 'integer', minimum: 0 }, createdBefore: { type: 'integer', minimum: 0 },
+      limit: { type: 'integer', minimum: 1, maximum: 100 }, cursor: { type: 'string', minLength: 1, maxLength: 512 }
+    }, additionalProperties: false },
+    outputSchema: { type: 'object', properties: { items: { type: 'array', maxItems: 100, items: analysisItemProjection }, page: pageProjection }, required: ['items', 'page'], additionalProperties: false } },
+  { id: 'veyviz-analysis.sources.query', version: 1, title: 'Search recordings for analysis', description: 'Search a bounded source-owner page for the current authorized actor.', permission: 'veyviz.analysis.read', kind: 'read',
+    inputSchema: { type: 'object', properties: { search: { type: 'string', maxLength: 200 }, renamedOnly: { type: 'boolean' }, limit: { type: 'integer', minimum: 1, maximum: 100 }, cursor: { type: 'string', minLength: 1, maxLength: 512 } }, additionalProperties: false },
+    outputSchema: { type: 'object', properties: { items: { type: 'array', maxItems: 100, items: { type: 'object', properties: {
+      id: { type: 'string', minLength: 1, maxLength: 128 }, name: { type: 'string', minLength: 1, maxLength: 160 }, fixtureId: { type: 'string', enum: ['mivia-vid0062'] }, version: { type: 'integer', minimum: 1 }, created: { type: 'integer', minimum: 0 }
+    }, required: ['id', 'name', 'fixtureId', 'version', 'created'], additionalProperties: false } }, page: pageProjection }, required: ['items', 'page'], additionalProperties: false } }
 ];
 
 function boundedResult(value: unknown): AnalysisResult {
@@ -163,17 +288,49 @@ export function createAnalysis(manifest: ModuleManifest, store: SqliteOwner, por
   } }];
 
   const operationItems = (ctx: RequestContext) => listItems(store, queue, ctx, (current, sourceId) => ports.sources.get(current, sourceId)).map(({ sourceChanged: _private, ...item }) => item);
+  const queryItems = (ctx: RequestContext, value: unknown) => {
+    ctx.assertAllowed('veyviz.analysis.read', 'read');
+    const query = normalizeAnalysisQuery(value);
+    const after = decodeCursor(query.cursor, ctx, query);
+    const conditions = ['tenant=?', 'product_id=?', 'instance_id=?'];
+    const parameters: Array<string | number> = [ctx.tenantId, ctx.productId, ctx.instanceId];
+    if (query.q) { conditions.push('(instr(lower(id),?)>0 OR instr(lower(job_id),?)>0 OR instr(lower(source_id),?)>0)'); parameters.push(query.q, query.q, query.q); }
+    if (query.sourceId) { conditions.push('source_id=?'); parameters.push(query.sourceId); }
+    if (query.jobState) { conditions.push('job_id IN (SELECT id FROM _jobs WHERE tenant=? AND state=?)'); parameters.push(ctx.tenantId, query.jobState); }
+    if (query.reviewState) { conditions.push('review_state=?'); parameters.push(query.reviewState); }
+    if (query.createdAfter !== undefined) { conditions.push('created>=?'); parameters.push(query.createdAfter); }
+    if (query.createdBefore !== undefined) { conditions.push('created<=?'); parameters.push(query.createdBefore); }
+    if (after) { conditions.push('(created<? OR (created=? AND id>?))'); parameters.push(after.created, after.created, after.id); }
+    parameters.push(query.limit + 1);
+    const rows = store.db.prepare(`SELECT * FROM analysis_requests WHERE ${conditions.join(' AND ')} ORDER BY created DESC,id ASC LIMIT ?`).all(...parameters) as unknown as AnalysisRow[];
+    const hasNext = rows.length > query.limit;
+    const pageRows = rows.slice(0, query.limit);
+    const items = pageRows.map(row => {
+      const job = queue.get(row.job_id);
+      if (!job || job.tenant !== ctx.tenantId) throw new PlatformError('INCOMPATIBLE', 'Analysis job ownership record is missing');
+      const result = row.result_json ? JSON.parse(row.result_json) as AnalysisResult : undefined;
+      return { id: row.id, jobId: row.job_id, sourceId: row.source_id, sourceVersion: row.source_version, jobState: job.state, reviewState: row.review_state, created: row.created,
+        sampleCount: result?.samples.length ?? 0, detectionCount: result?.samples.reduce((sum, sample) => sum + sample.detections.length, 0) ?? 0,
+        coverage: result?.coverage ?? 'UNKNOWN' as const, occupancy: 'UNKNOWN' as const };
+    });
+    const last = pageRows.at(-1);
+    return { items, page: { limit: query.limit, ...(hasNext && last ? { nextCursor: encodeCursor(ctx, query, last) } : {}), coverage: 'filtered-owner-query' as const } };
+  };
   const operations: OperationRegistration[] = [
     { descriptor: operationDescriptors[0]!, handle(ctx) { return { items: operationItems(ctx) }; } },
     { descriptor: operationDescriptors[1]!, handle(ctx, input, key) { return submit(ctx, input, key); } },
     { descriptor: operationDescriptors[2]!, handle(ctx, input, key) { return cancel(ctx, input, key); } },
-    { descriptor: operationDescriptors[3]!, handle(ctx, input, key) { return review(ctx, input, key); } }
+    { descriptor: operationDescriptors[3]!, handle(ctx, input, key) { return review(ctx, input, key); } },
+    { descriptor: operationDescriptors[4]!, handle(ctx, input) { return queryItems(ctx, input); } },
+    { descriptor: operationDescriptors[5]!, handle(ctx, input) { ctx.assertAllowed('veyviz.analysis.read', 'read'); return ports.sourcesQuery.query(ctx, sourceQueryInput(input)); } }
   ];
 
   return { manifest, queue, handlers, services: {}, operations, routes: [
     { method: 'GET', path: '/api/analysis/sources', permission: 'veyviz.analysis.read', kind: 'read', handle(ctx) { return { items: ports.sources.list(ctx) }; } },
+    { method: 'GET', path: '/api/analysis/sources/query', permission: 'veyviz.analysis.read', kind: 'read', handle(ctx, _input, query) { ctx.assertAllowed('veyviz.analysis.read', 'read'); return ports.sourcesQuery.query(ctx, sourceRouteQuery(query)); } },
     { method: 'GET', path: '/api/analysis/readiness', permission: 'veyviz.analysis.read', kind: 'read', async handle(ctx) { ctx.assertAllowed('veyviz.analysis.read', 'read'); return ports.runner.readiness(); } },
     { method: 'GET', path: '/api/analysis', permission: 'veyviz.analysis.read', kind: 'read', handle(ctx) { return { items: listItems(store, queue, ctx, (current, sourceId) => ports.sources.get(current, sourceId)), limit: 25 }; } },
+    { method: 'GET', path: '/api/analysis/query', permission: 'veyviz.analysis.read', kind: 'read', handle(ctx, _input, query) { return queryItems(ctx, routeQuery(query)); } },
     { method: 'POST', path: '/api/analysis', permission: 'veyviz.analysis.write', kind: 'write', handle(ctx, input, _query, key) { return submit(ctx, input, key); } },
     { method: 'GET', path: '/api/analysis/result', permission: 'veyviz.analysis.read', kind: 'read', handle(ctx, _input, query) {
       const analysisId = id(query.get('analysisId')), row = rowFor(store, ctx, analysisId), job = queue.get(row.job_id);
@@ -188,8 +345,9 @@ export function createAnalysis(manifest: ModuleManifest, store: SqliteOwner, por
 
 export function register(env: ModuleEnvironment) {
   const sources = env.bindings['veyviz.sources.read.v1'] as AnalysisPorts['sources'] | undefined;
+  const sourcesQuery = env.bindings['veyviz.sources.query.v1'] as AnalysisPorts['sourcesQuery'] | undefined;
   const runner = env.bindings['veyviz.recorded-analysis.run.v1'] as AnalysisPorts['runner'] | undefined;
-  if (!sources || !runner) throw new PlatformError('INCOMPATIBLE', 'Analysis source and runner ports must be explicitly bound');
-  const ports: AnalysisPorts = { sources, runner };
+  if (!sources || !sourcesQuery || !runner) throw new PlatformError('INCOMPATIBLE', 'Analysis source, source query and runner ports must be explicitly bound');
+  const ports: AnalysisPorts = { sources, sourcesQuery, runner };
   return createAnalysis(env.manifest, new SqliteOwner(env.dataPath, env.manifest.id), ports);
 }

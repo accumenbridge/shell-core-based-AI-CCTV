@@ -78,6 +78,22 @@
         "EXTENSIBILITY"
       ],
       "evidenceScope": "Actual invoked local check; recipe metadata never executes or proves the check."
+    },
+    {
+      "id": "product-paging-focused",
+      "argv": [
+        "node",
+        "--test",
+        "tests/veyviz-product.test.mjs",
+        "tests/veyviz-lifecycle.test.mjs"
+      ],
+      "cwd": ".",
+      "description": "Actual owner paging/authority regressions with test-only inference double.",
+      "criterionIds": [
+        "PAGING",
+        "AUTHORITY"
+      ],
+      "evidenceScope": "Actual output on freshly built source; no real inference qualification."
     }
   ]
 }

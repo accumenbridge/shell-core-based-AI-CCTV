@@ -1,0 +1,9 @@
+{
+  "schema": "veyviz.review-attribution-clarification.v1",
+  "recordedAt": "2026-10-03T14:12:26.602Z",
+  "reportPath": "independent-final-review.json",
+  "reportSha256": "1b89407c5552840c2320d0def7bd1a1e1897f3f9c21bad8ebb253d862a4bbb59",
+  "field": "actualFocusedChecks.originalExecSessionClosedByRoot",
+  "correction": "Original session87591 was observed closed by /root/product_runtime through its original exec/write_stdin calls. Root received that direct report and read the retained raw/close/session records; root did not itself call write_stdin for this session. The original report bytes remain unchanged.",
+  "limits": "Original top-level command and stdio close is reported; no independent every-descendant process-tree proof or hostile-writer authentication is claimed."
+}

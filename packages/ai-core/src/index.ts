@@ -122,6 +122,17 @@ export interface EvidenceChunk { id: string; text: string }
 export interface EvidenceAnswerInput { question: string; evidence: readonly EvidenceChunk[] }
 export interface EvidenceAnswerSelection { evidenceIds: readonly string[] }
 export type EvidenceProvider = (input: EvidenceAnswerInput, options: ProviderCallOptions) => Promise<EvidenceAnswerSelection>;
+export interface GeneratedAnswerSegment { text: string; evidenceIds: readonly string[] }
+export interface GeneratedEvidenceAnswer { segments: readonly GeneratedAnswerSegment[] }
+export interface ModelAnswerIdentity { adapter: 'ollama'; model: 'qwen3:4b'; label: 'Ollama · qwen3:4b' }
+/** A fixed, server-created capability. Business requests never select its endpoint or model. */
+export interface ModelAnswerCapability {
+  readonly contract: 'quadbridge.model-answer.v1';
+  readonly profile: 'local-ollama-qwen3-4b';
+  readonly identity: ModelAnswerIdentity;
+  readonly answer: GeneratedEvidenceProvider;
+}
+export type GeneratedEvidenceProvider = (input: EvidenceAnswerInput, options: ProviderCallOptions) => Promise<GeneratedEvidenceAnswer>;
 export function lexicalTerms(question: string): string[] {
   const stop = new Set(['a','an','and','are','as','at','be','been','being','by','can','could','did','do','does','for','from','had','has','have','how','i','in','is','it','may','might','of','on','or','should','the','to','was','were','what','when','where','which','who','why','will','with','would']);
   return [...new Set(question.toLowerCase().match(/[\p{L}\p{N}]{2,}/gu) ?? [])].filter(term => !stop.has(term)).slice(0, 32);
@@ -130,15 +141,18 @@ export interface ProviderCallOptions { signal: AbortSignal }
 /** Bounds actual provider promises; cancellation returns promptly but keeps its slot until settlement. */
 export class BoundedProviderExecutor {
   private active = 0;
-  constructor(readonly maxInFlight = 4, readonly defaultTimeoutMs = 5000) {
-    if (!Number.isInteger(maxInFlight) || maxInFlight !== 4 || !Number.isInteger(defaultTimeoutMs) || defaultTimeoutMs < 1 || defaultTimeoutMs > 5000)
-      throw new PlatformError('INVALID', 'Invalid bounded provider profile');
+  readonly maxInFlight: number;
+  readonly defaultTimeoutMs: number;
+  constructor(readonly profile: 'extractive' | 'local-inference' = 'extractive') {
+    if (profile !== 'extractive' && profile !== 'local-inference') throw new PlatformError('INVALID', 'Invalid bounded provider profile');
+    this.maxInFlight = profile === 'extractive' ? 4 : 1;
+    this.defaultTimeoutMs = profile === 'extractive' ? 5000 : 60000;
   }
   get inFlight(): number { return this.active; }
   async run<T>(provider: (options: ProviderCallOptions) => Promise<T>, options: { signal?: AbortSignal; timeoutMs?: number } = {}): Promise<T> {
     if (this.active >= this.maxInFlight) throw new PlatformError('EXHAUSTED', 'Provider concurrency limit reached');
     const timeoutMs = options.timeoutMs ?? this.defaultTimeoutMs;
-    if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 5000) throw new PlatformError('INVALID', 'Provider timeout exceeds local bound');
+    if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > this.defaultTimeoutMs) throw new PlatformError('INVALID', 'Provider timeout exceeds local bound');
     if (options.signal?.aborted) throw new PlatformError('UNAVAILABLE', 'Provider request cancelled');
     this.active++;
     const controller = new AbortController();

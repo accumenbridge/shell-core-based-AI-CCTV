@@ -1,0 +1,360 @@
+{
+  "schema": "veyviz.immutable-runtime-isolated-run.v1",
+  "capturedAt": "2026-10-03T14:08:52.495Z",
+  "candidate": {
+    "freezeManifest": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze-run-09\\freeze.json",
+    "freezeManifestSha256": "aeb10b64dc0c64197a3e9a6af7d50f727fd61ec5e95482585002ba8c18e6288b",
+    "sourceDigest": "98af08dbd6d531916c9a0e6f07ca141891fce8b30dcabc3006374f1a57ebe67e",
+    "toolchainDigest": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+    "sourceFiles": 360,
+    "ownerHashes": {
+      "package.json": "f0738ec1b03bd4f59b1a05f88815ce6e7f4d7b6104113f6d5a21b62278c31887",
+      "tools/veyviz-build.mjs": "f00694386527f5e73c8fab5b4ce056fe8df6c6c918bd85913b1ab3320f22c71c",
+      "tools/veyviz-inventory.mjs": "a94720f5a252a5d02c7cc3c3d381530b74cdc58715983c965a69155d5c9fb2cd",
+      "tools/veyviz-start.mjs": "c7f9c30c5e11458fbe0f6291abc6254650be93a70ad7f730297ca4e4e2382662",
+      "tools/veyviz-snapshot.mjs": "d5833ee0807fc435c695019ac17d882ce345e6c3983aad66543227a8848858c9",
+      "tests/veyviz-lifecycle.test.mjs": "1493fab0aa8c97afbd8224dad5262fb0c113ae16c8d5fd220e4919881d716249",
+      "tests/veyviz-snapshot.test.mjs": "3718b744103dbf0b9d7f9d0f467f851dfa0bb9d9ed573558d0cf383c96e602ce"
+    },
+    "activeRoot": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+    "isolatedOverlay": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003"
+  },
+  "isolation": {
+    "buildAndTestsRanOnlyInOverlay": true,
+    "activeProductRootBuildOrTest": false,
+    "foreignActiveDriftCopied": false
+  },
+  "sourceEquality": {
+    "preBuild": "98af08dbd6d531916c9a0e6f07ca141891fce8b30dcabc3006374f1a57ebe67e",
+    "postBuild": "98af08dbd6d531916c9a0e6f07ca141891fce8b30dcabc3006374f1a57ebe67e",
+    "postFocused": "98af08dbd6d531916c9a0e6f07ca141891fce8b30dcabc3006374f1a57ebe67e",
+    "toolchainPreBuild": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+    "toolchainPostBuild": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+    "toolchainPostFocused": "9927465054fb1a77d23d4d9e4de9b789678b9fe899051dceed2b19294fbe3d9b",
+    "allAuthoredManifestsByteEqual": true,
+    "allToolchainManifestsByteEqual": true
+  },
+  "build": {
+    "command": "npm run build",
+    "cwd": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003",
+    "startedAtUtc": "2026-10-03T13:56:46.4425252Z",
+    "closedAtUtc": "2026-10-03T13:56:48.9194934Z",
+    "outerExitCode": 0,
+    "rawPath": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\npm-build.raw.txt",
+    "rawBytes": 301,
+    "rawSha256": "20bb05ea787353f2fb023a9010413932842dd980b2d62a349c25780d68c0ae4b",
+    "execSessionId": null,
+    "wrapperStableDigest": "4bbde64ef4f412817a82fc1461102126cfafdc6f1c9ae0d7870b923d5fffe218",
+    "verificationAfterBuild": "MATCHED",
+    "outputDigest": "aa09cf58b642c64115f3789cdd0d292eed9a2ba3b4d592e47560314197601f97",
+    "products": [
+      {
+        "product": "veyviz-catalog",
+        "version": "0.1.0",
+        "releaseDigest": "c7bb2b3ea7c2e10a3b1e086439d5ef8faea3ca2420f3c0dd9c73638c88cb54e1",
+        "expectedFactoryDigest": "38def09232200128cf28907e92d2fa779f190ac148b73723458980cf9ae16a31"
+      },
+      {
+        "product": "veyviz-review",
+        "version": "0.1.0",
+        "releaseDigest": "b31e6c2c05feef4179d2fe138b97f16420d7664968649e37dfba7c5d11430d36",
+        "expectedFactoryDigest": "390ca25b8beb6bdbe40563bcadd64d3c99b1f26c23eeb043d372bbe6007c4d66"
+      }
+    ],
+    "tsconfigOutput": {
+      "bytes": 1222,
+      "sha256": "858cd1223fbf713a9877381cada8f39d19da37f4eb4d4aefbd955a912d1e7588"
+    },
+    "attemptId": "42252269-9e85-4614-844d-7d997cd77d6b",
+    "attemptStartedAtUtc": "2026-10-03T13:56:46.812Z",
+    "attemptClosedAtUtc": "2026-10-03T13:56:48.895Z",
+    "originalBuilderClose": {
+      "closeObserved": true,
+      "code": 0,
+      "signal": null,
+      "spawnError": null
+    },
+    "attemptRecord": {
+      "path": ".local/veyviz-build-qualification/attempts/42252269-9e85-4614-844d-7d997cd77d6b/attempt.json",
+      "bytes": 1382,
+      "sha256": "721fdf63442d2d0e5b006b49e245cb699980626d52eafc872fcd8c9ba07dd980"
+    },
+    "stdout": {
+      "path": ".local/veyviz-build-qualification/attempts/42252269-9e85-4614-844d-7d997cd77d6b/stdout.bin",
+      "bytes": 440,
+      "sha256": "d7f89847eb7ea19edf23783104c791df85dc960843d8b379ab62a62d63e9a0d8",
+      "receivedBytes": 440,
+      "truncatedBytes": 0,
+      "captureError": null
+    },
+    "stderr": {
+      "path": ".local/veyviz-build-qualification/attempts/42252269-9e85-4614-844d-7d997cd77d6b/stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "receivedBytes": 0,
+      "truncatedBytes": 0,
+      "captureError": null
+    }
+  },
+  "focusedTests": {
+    "command": "node --test --test-concurrency=1 --test-reporter=tap tests/veyviz-lifecycle.test.mjs tests/veyviz-snapshot.test.mjs tests/veyviz-product.test.mjs",
+    "cwd": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003",
+    "startedAtUtc": "2026-10-03T13:57:24.9921566Z",
+    "closedAtUtc": "2026-10-03T14:00:58.3684658Z",
+    "outerExitCode": 0,
+    "rawPath": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\focused-tests.raw.txt",
+    "rawBytes": 4942,
+    "rawSha256": "a3328446f4381c5a7f4de43bec659e4b4be66db390469da960fb769f3dd7b778",
+    "execSessionId": 87591,
+    "originalCloseObservation": {
+      "exitCode": 0,
+      "closedAtUtc": "2026-10-03T14:00:58.3684658Z"
+    },
+    "totals": {
+      "tests": 20,
+      "pass": 20,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "topLevelTests": [
+      "Veyviz refuses a modified enrollment plan before creating identities or data",
+      "invalid port fails before creating a pending product enrollment",
+      "an unclean owned process exit remains quarantined on later launch",
+      "IPC control errors cannot settle the original child close observation",
+      "fixed catalog occupied-port startup failure observes original close and preserves quarantine",
+      "Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart",
+      "Veyviz operation SDK runs real owned operations with declared output schemas",
+      "analysis receipt replays unchanged client command after source rename; changed body conflicts",
+      "source version changed during inference prevents durable Product acceptance",
+      "analysis authority revoked after preparation is synchronously denied at owner commit",
+      "cancellation during inference fences an otherwise successful result",
+      "accepted result and review survive owner restart and stay tenant-scoped",
+      "strict AI proposal validator permits optional thumbnail but rejects altered identity, shape and cleanup",
+      "source owner query traverses registrations beyond the v1 cap and binds every cursor to query scope",
+      "analysis owner query pages all matching history, filters owner rows and leaves the v1 list cap intact",
+      "the running catalog serves captured web bytes and backend state after its producer asset changes",
+      "unchanged snapshot restart retains data while a changed valid export gets isolated storage",
+      "tampered, incomplete, forged, stale and escaped snapshot inputs are refused before fork"
+    ],
+    "selectedRegressionCases": [
+      "IPC control errors cannot settle the original child close observation",
+      "fixed catalog occupied-port startup failure observes original close and preserves quarantine",
+      "Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart",
+      "source owner query traverses registrations beyond the v1 cap and binds every cursor to query scope",
+      "analysis owner query pages all matching history, filters owner rows and leaves the v1 list cap intact",
+      "the running catalog serves captured web bytes and backend state after its producer asset changes",
+      "unchanged snapshot restart retains data while a changed valid export gets isolated storage",
+      "tampered, incomplete, forged, stale and escaped snapshot inputs are refused before fork"
+    ],
+    "verificationAfterFocus": "MATCHED",
+    "postFocusDigest": "4bbde64ef4f412817a82fc1461102126cfafdc6f1c9ae0d7870b923d5fffe218",
+    "postFocusOutputDigest": "aa09cf58b642c64115f3789cdd0d292eed9a2ba3b4d592e47560314197601f97",
+    "postFocusMatchesPostBuild": true
+  },
+  "cleanup": {
+    "successfulFixtureRunsCompletedTheirRegisteredAfterHooks": true,
+    "remainingSnapshotFixtureDirectoriesEvidence": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\evidence\\freeze09-run-01\\snapshot-fixture-directories-after.json",
+    "earlierFailedFixtureDirectoriesWerePreserved": true,
+    "processTreeEnumeration": "Not claimed; outer command and product lifecycle assertions are recorded."
+  },
+  "priorFailuresPreserved": [
+    {
+      "run": "freeze04-run-01",
+      "raw": "evidence/freeze04-run-01/focused-tests.raw.txt",
+      "sha256": "b16841e8c8d7f1097bdd4b8fc2f14fb1c831ac7fbcc2d7ab9f32d94050f32191",
+      "result": "11 pass / 9 fail; fsync access mode and copied incremental/build fixture issues diagnosed and repaired."
+    },
+    {
+      "run": "freeze06-run-01",
+      "raw": "evidence/freeze06-run-01/focused-tests.raw.txt",
+      "sha256": "b30e6ff94ac4eced3c5467c765a7213327c8dec19ac466f8ad54ed6ec9b62c0f",
+      "result": "19 pass / 1 fail; trusted factory plan error vocabulary mismatch; original test bytes/session observation preserved."
+    },
+    {
+      "run": "freeze07-run-01",
+      "raw": "evidence/freeze07-run-01/focused-tests.raw.txt",
+      "sha256": "3f93ec0f74dacaed3e8f68297a73c10f63c31f26f11e1cb37315f3ad64eaa3dc",
+      "result": "19 pass / 1 fail; tampering first release entry selected JSON and produced syntax error; original test bytes/session observation preserved."
+    },
+    {
+      "run": "freeze08-run-01",
+      "raw": "evidence/freeze08-run-01/focused-tests.raw.txt",
+      "sha256": "f58f22243eeb22d9e03ede68f7ec03239426fa1458bf0ab891201bddd0db5a8f",
+      "result": "19 pass / 1 fail; valid JS tamper returned exact Artifact drift message not included in assertion vocabulary; original test bytes/session observation preserved."
+    }
+  ],
+  "limits": [
+    "This was an isolated local wrapper build and fixture-backed focused test run.",
+    "The catalog-child test performs local HTTP requests and inspects copied product bytes; it is not browser acceptance.",
+    "No live model, production, full-suite, or process-tree acceptance is claimed."
+  ],
+  "files": [
+    {
+      "path": "attempt-42252269-9e85-4614-844d-7d997cd77d6b-stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "attempt-42252269-9e85-4614-844d-7d997cd77d6b-stdout.bin",
+      "bytes": 440,
+      "sha256": "d7f89847eb7ea19edf23783104c791df85dc960843d8b379ab62a62d63e9a0d8"
+    },
+    {
+      "path": "attempt-42252269-9e85-4614-844d-7d997cd77d6b.json",
+      "bytes": 1382,
+      "sha256": "721fdf63442d2d0e5b006b49e245cb699980626d52eafc872fcd8c9ba07dd980"
+    },
+    {
+      "path": "capture-phase.mjs",
+      "bytes": 1789,
+      "sha256": "f215f6cc2ad9686574d9294a62b01080a1ca769ff08c09f48ee11012f0ccd844"
+    },
+    {
+      "path": "correct-manifest-prior-failure-hash.mjs",
+      "bytes": 943,
+      "sha256": "291e7d34a1e79821e2d047e82800ba89042fea64383a92ff32f61e427e025dd8"
+    },
+    {
+      "path": "fix-manifest-writer.mjs",
+      "bytes": 804,
+      "sha256": "016c07e8166e97f0aa68bafd8f8661b0c971e262c0fed7daf5649fd4cf7f8c04"
+    },
+    {
+      "path": "focused-tests-close.json",
+      "bytes": 644,
+      "sha256": "c3637b347204392598dde90d79c0b2df1e5bc6394c27257c49901c51bf8d83a3"
+    },
+    {
+      "path": "focused-tests-session-observation.json",
+      "bytes": 755,
+      "sha256": "048973f48cc209fee43c96e596457a20c0a75da654737098ec3e740ca52db9b1"
+    },
+    {
+      "path": "focused-tests-start.json",
+      "bytes": 342,
+      "sha256": "8974bf983f19bfe796280f958c3e54c46d88cf8bb3838e968684fac4607ceb38"
+    },
+    {
+      "path": "focused-tests.raw.txt",
+      "bytes": 4942,
+      "sha256": "a3328446f4381c5a7f4de43bec659e4b4be66db390469da960fb769f3dd7b778"
+    },
+    {
+      "path": "npm-build-close.json",
+      "bytes": 507,
+      "sha256": "744f4b8994c75dcb825e566b2b516aef34bcfccfdf5835fbde705a2e1559286b"
+    },
+    {
+      "path": "npm-build-start.json",
+      "bytes": 210,
+      "sha256": "5ee0c3104a6b026a262bb548b49626dada680ae06daef5d15fdcab809ab34d92"
+    },
+    {
+      "path": "npm-build.raw.txt",
+      "bytes": 301,
+      "sha256": "20bb05ea787353f2fb023a9010413932842dd980b2d62a349c25780d68c0ae4b"
+    },
+    {
+      "path": "post-build-capture.json",
+      "bytes": 828,
+      "sha256": "121a5d7f7ebcf3fc48b0f67cbc4c0fd4ea25dd706ee637ed95b13ce27da36f42"
+    },
+    {
+      "path": "post-build-qualification.json",
+      "bytes": 4359,
+      "sha256": "29ba6201a41e15f3acd5765b11fa52cda5b9f9df352fda394bdea850a9dd877e"
+    },
+    {
+      "path": "post-build-source.json",
+      "bytes": 63696,
+      "sha256": "691176e57becac392edbfd86f685b2410211615b117945cb13ae0ba87e5ca7a7"
+    },
+    {
+      "path": "post-build-toolchain.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "path": "post-test-capture.json",
+      "bytes": 825,
+      "sha256": "4652d3c97049831918fb2cdae8dbfaa0a597e32dfa02ddf9f672c5b1f585509e"
+    },
+    {
+      "path": "post-test-qualification.json",
+      "bytes": 1332,
+      "sha256": "e9f4ed8136b752db6499313b0445b3fff8b0f08d1f570feb97c0e1651ba6a7a3"
+    },
+    {
+      "path": "post-test-source.json",
+      "bytes": 63696,
+      "sha256": "691176e57becac392edbfd86f685b2410211615b117945cb13ae0ba87e5ca7a7"
+    },
+    {
+      "path": "post-test-toolchain.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "path": "pre-build-capture.json",
+      "bytes": 825,
+      "sha256": "4d140bb4bf545fff5cd1edc86b029591e5df6eb1aafda94855cd597becaaad4a"
+    },
+    {
+      "path": "pre-build-source.json",
+      "bytes": 63696,
+      "sha256": "691176e57becac392edbfd86f685b2410211615b117945cb13ae0ba87e5ca7a7"
+    },
+    {
+      "path": "pre-build-toolchain.json",
+      "bytes": 52108,
+      "sha256": "1e33a843aa334757e155571b8b03363e0216214a030bbd46dcae1454a74eb659"
+    },
+    {
+      "path": "prebuild-current-receipt.json",
+      "bytes": 131769,
+      "sha256": "f2b25284c60b7c99ff148c4f533828ae9624ed003c68942e7adc1e4c6a774ca1"
+    },
+    {
+      "path": "qualification-after-build.json",
+      "bytes": 4421,
+      "sha256": "7440379d818a3b18883c49d476b81b20ecb731107c8f40768989f6547988f85c"
+    },
+    {
+      "path": "qualification-after-test.json",
+      "bytes": 4421,
+      "sha256": "7440379d818a3b18883c49d476b81b20ecb731107c8f40768989f6547988f85c"
+    },
+    {
+      "path": "qualification-before-build.json",
+      "bytes": 3526,
+      "sha256": "58e2c419e6a80d03d6b4f5c6294ab2d3a70fff3c190f292398db2e6c9d4decae"
+    },
+    {
+      "path": "qualified-current-receipt.json",
+      "bytes": 131769,
+      "sha256": "aff8257e4e701042f5cd1f5d31a9d15e9596de5aee8babd61fdb0fc57a956fcc"
+    },
+    {
+      "path": "snapshot-fixture-directories-after.json",
+      "bytes": 1773,
+      "sha256": "cf416aee1a35813de7fdcaefaec662bf43352b2f755d53be13ea737709e9b1e7"
+    },
+    {
+      "path": "verify-post-build.mjs",
+      "bytes": 2344,
+      "sha256": "ce19859b1fbf60e478d829dc6106129c79eab1d1bd77eb6b1eb1f7966af9482e"
+    },
+    {
+      "path": "verify-post-test.mjs",
+      "bytes": 1264,
+      "sha256": "e808f3be00f6a9060583bef1fbf09bfdcdd9eb08ffe16ebc4f18843732a53b7e"
+    },
+    {
+      "path": "write-manifest.mjs",
+      "bytes": 7867,
+      "sha256": "5c5443e948d6069b5e4710d5319fc2b2ef7510f31d443dc742294c1777c662a7"
+    }
+  ]
+}

@@ -78,17 +78,19 @@ function readConfig() {
   if (args.length !== 2 || args[0] !== '--config' || typeof args[1] !== 'string' || args[1].length > 240) fail('RUNTIME_ARGUMENTS_INVALID');
   const configPath = physicalFile(args[1]), operationRoot = dirname(configPath);
   const value = readPrivateJson(configPath, 1024 * 1024);
+  const hasNativeProfile = Object.hasOwn(value,'nativeApiProfile');
   const keys = ['schema','attemptId','operationId','nonce','instanceId','productId','version','artifactDigest','profileDigest','configDigest','adapterDigest','enrollmentDigest','freshEnrollment',
-    'projectRoot','snapshotRoot','dataDirectory','nodePath','nodeVersion','nodeDigest','workerRequired'];
+    'projectRoot','snapshotRoot','dataDirectory','nodePath','nodeVersion','nodeDigest','workerRequired','planDigest',...(hasNativeProfile?['nativeApiProfile','nativeApiIdentity']:[])];
   if (!exactKeys(value, keys)) fail('RUNTIME_CONFIG_INVALID');
   const projectRoot = physicalDirectory(value.projectRoot), expectedOperationRoot = resolve(projectRoot,'.local','platform-runtime-executions',value.instanceId,value.operationId);
   if (value.schema !== 'quadbridge.managed-runtime-supervisor.v1' || !UUID.test(value.attemptId) || value.operationId !== value.attemptId ||
       typeof value.nonce !== 'string' || !/^[A-Za-z0-9_-]{32,64}$/.test(value.nonce) || !RUNTIME_ID.test(value.instanceId) ||
       !PRODUCT_ID.test(value.productId) || !VERSION.test(value.version) || !HASH.test(value.artifactDigest) || !HASH.test(value.profileDigest) ||
       !HASH.test(value.configDigest) || !HASH.test(value.adapterDigest) || !HASH.test(value.enrollmentDigest) || typeof value.freshEnrollment!=='boolean' || typeof value.workerRequired !== 'boolean' ||
-      !isAbsoluteString(value.nodePath) || typeof value.nodeVersion !== 'string' || !/^v?\d+\.\d+\.\d+$/.test(value.nodeVersion) || !HASH.test(value.nodeDigest) ||
+      !isAbsoluteString(value.nodePath) || typeof value.nodeVersion !== 'string' || !/^v?\d+\.\d+\.\d+$/.test(value.nodeVersion) || !HASH.test(value.nodeDigest) || !HASH.test(value.planDigest) ||
+      hasNativeProfile&&(value.nativeApiProfile!=='local-native-forwarded-v1'||!value.nativeApiIdentity||typeof value.nativeApiIdentity!=='object'||Array.isArray(value.nativeApiIdentity)) ||
       resolve(operationRoot) !== expectedOperationRoot || configPath !== resolve(operationRoot,'supervisor-config.json') ||
-      resolve(value.snapshotRoot) !== resolve(operationRoot,'snapshot') ||
+      ![resolve(operationRoot,'snapshot'),resolve(operationRoot,'s')].includes(resolve(value.snapshotRoot)) ||
       resolve(value.dataDirectory) !== resolve(projectRoot,'.local','platform-runtime-data',value.instanceId,value.artifactDigest)) fail('RUNTIME_CONFIG_INVALID');
   physicalDirectory(operationRoot);
   const snapshotRoot = physicalDirectory(value.snapshotRoot), dataDirectory = physicalDirectory(value.dataDirectory);
@@ -97,6 +99,14 @@ function readConfig() {
   if (!runtimeConfig || typeof runtimeConfig !== 'object' || Array.isArray(runtimeConfig) || runtimeConfig.instanceId !== value.instanceId ||
       typeof runtimeConfig.dataDirectory!=='string' || resolve(runtimeConfig.dataDirectory) !== dataDirectory || !Array.isArray(runtimeConfig.principals) || runtimeConfig.principals.length !== 0 ||
       !runtimeConfig.connections || typeof runtimeConfig.connections !== 'object' || Array.isArray(runtimeConfig.connections)) fail('RUNTIME_CONFIG_INVALID');
+  if ((runtimeConfig.nativeApiProfile ?? undefined) !== (value.nativeApiProfile ?? undefined)) fail('RUNTIME_CONFIG_INVALID');
+  if (hasNativeProfile) {
+    const native = value.nativeApiIdentity;
+    if (!exactKeys(native,['productId','productVersion','instanceId','planDigest','modules']) || native.productId!==value.productId || native.productVersion!==value.version ||
+        native.instanceId!==value.instanceId || native.planDigest!==value.planDigest || !Array.isArray(native.modules) || native.modules.length>64 ||
+        native.modules.some(item=>!exactKeys(item,['id','version'])||typeof item.id!=='string'||!PRODUCT_ID.test(item.id)||typeof item.version!=='string'||!VERSION.test(item.version)))
+      fail('RUNTIME_CONFIG_INVALID');
+  }
   for (const connection of Object.values(runtimeConfig.connections)) {
     if (!connection || typeof connection !== 'object' || connection.mode !== 'local' || connection.destinationProduct !== value.productId ||
         connection.destinationInstance !== value.instanceId || 'baseUrl' in connection || 'serviceToken' in connection) fail('RUNTIME_CONFIG_INVALID');
@@ -326,11 +336,28 @@ function parseReadyLine(role,line) {
   if (!value || typeof value!=='object' || Array.isArray(value) || value.role!==role || value.product!==identity.productId ||
       value.instance!==identity.instanceId || value.state!=='READY') return undefined;
   if (role==='web-backend') {
+    const expectedKeys=identity.nativeApiProfile?['role','product','instance','url','nativeApiUrl','nativeApiProfile','nativeApiIdentity','state']:['role','product','instance','url','state'];
+    if(Object.keys(value).sort().join('\0')!==expectedKeys.sort().join('\0'))return undefined;
     if (typeof value.url!=='string') return undefined;
     let url;
     try { url=new URL(value.url); } catch { return undefined; }
     if (url.protocol!=='http:'||url.hostname!=='127.0.0.1'||url.username||url.password||url.pathname!=='/'||url.search||url.hash||
         !Number.isInteger(Number(url.port))||Number(url.port)<1||Number(url.port)>65535) return undefined;
+    if(identity.nativeApiProfile) {
+      const native=value.nativeApiUrl;
+      let nativeUrl;
+      try { nativeUrl=new URL(native); } catch { return undefined; }
+      if (value.nativeApiProfile!==identity.nativeApiProfile || nativeUrl.protocol!=='http:' || nativeUrl.hostname!=='127.0.0.1' || nativeUrl.port!=='4350' ||
+          nativeUrl.pathname!=='/' || nativeUrl.username || nativeUrl.password || nativeUrl.search || nativeUrl.hash ||
+          !identity.nativeApiIdentity || !value.nativeApiIdentity ||
+          value.nativeApiIdentity.productId!==identity.nativeApiIdentity.productId || value.nativeApiIdentity.productVersion!==identity.nativeApiIdentity.productVersion ||
+          value.nativeApiIdentity.instanceId!==identity.nativeApiIdentity.instanceId || value.nativeApiIdentity.planDigest!==identity.nativeApiIdentity.planDigest ||
+          Object.keys(value.nativeApiIdentity).sort().join('\0')!==['productId','productVersion','instanceId','planDigest','modules'].sort().join('\0') ||
+          !Array.isArray(value.nativeApiIdentity.modules) || value.nativeApiIdentity.modules.length!==identity.nativeApiIdentity.modules.length ||
+          value.nativeApiIdentity.modules.some((module,index)=>module?.id!==identity.nativeApiIdentity.modules[index]?.id||module?.version!==identity.nativeApiIdentity.modules[index]?.version)) return undefined;
+      return {role,url:url.origin,port:Number(url.port),nativeApiUrl:nativeUrl.origin,nativeApiProfile:identity.nativeApiProfile,nativeApiIdentity:value.nativeApiIdentity};
+    }
+    if (Object.hasOwn(value,'nativeApiUrl')||Object.hasOwn(value,'nativeApiProfile')||Object.hasOwn(value,'nativeApiIdentity')) return undefined;
     return {role,url:url.origin,port:Number(url.port)};
   }
   return {role};
@@ -411,9 +438,10 @@ async function main() {
   const readinessDeadline=Date.now()+ROLE_READY_LIMIT_MS,readinessAbort=new AbortController();
   const runtimeMain=join(identity.snapshotRoot,'apps','runtime','dist','main.js');
   assertRuntimeConfigBound(enrollment);
-  const web=startRole('web-backend',[runtimeMain,'--product',identity.productId,'--config',identity.roleConfigPath,'--port','0']);
+  const web=startRole('web-backend',[runtimeMain,'--product',identity.productId,'--config',identity.roleConfigPath,'--port','0',...(identity.nativeApiProfile?['--native-api']:[])]);
   const webReady=await withinReadiness(web.ready,readinessDeadline);
-  emit('ROLE_READY',{role:'web-backend',url:webReady.url,port:webReady.port});
+  emit('ROLE_READY',{role:'web-backend',url:webReady.url,port:webReady.port,
+    ...(webReady.nativeApiProfile?{nativeApiUrl:webReady.nativeApiUrl,nativeApiProfile:webReady.nativeApiProfile,nativeApiIdentity:webReady.nativeApiIdentity}:{})});
   try{await withinReadiness(requireApiReady(webReady.url,identity.workerRequired,readinessDeadline,readinessAbort.signal),readinessDeadline);}
   catch(error){readinessAbort.abort();throw error;}
   emit('API_READY',{url:webReady.url,background:identity.workerRequired?'SEPARATE_WORKER_REQUIRED':'NOT_REQUIRED'});

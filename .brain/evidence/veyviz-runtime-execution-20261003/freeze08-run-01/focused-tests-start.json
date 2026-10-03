@@ -1,0 +1,7 @@
+{
+  "cwd": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003",
+  "command": "node --test --test-concurrency=1 --test-reporter=tap tests/veyviz-lifecycle.test.mjs tests/veyviz-snapshot.test.mjs tests/veyviz-product.test.mjs",
+  "shell": "PowerShell",
+  "startedAtUtc": "2026-10-03T13:49:47.9030584Z",
+  "status": "RUNNING"
+}

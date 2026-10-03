@@ -3,6 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Node, json, boot, flush, harness } from './support/shell-harness.mjs';
 const deferred = () => { let resolve; const promise = new Promise(r => resolve = r); return { promise, resolve }; };
+async function until(predicate, label) { const deadline = Date.now() + 3000; while (Date.now() < deadline) { if (predicate()) return; await flush(); } assert.fail(`Timed out waiting for ${label}`); }
 test('R01: pending tenant change cannot mount or write under obsolete context', () => harness(async (env, start) => {
     const pending = deferred(), mounted = [], sent = [];
     globalThis.fetch = async (path, opts = {}) => {
@@ -114,6 +115,22 @@ test('R06: two named workspace exports mount exactly their declarations', () => 
     await flush();
     assert.deepEqual(mounted, ['list', 'detail']);
 }));
+test('failed initial workspace load can be retried and mounts only after the next success', () => harness(async (env, start) => {
+    globalThis.fetch = async () => json(boot());
+    let loads = 0, mounts = 0;
+    start({ loaders: { example: async () => {
+        if (++loads === 1) throw new Error('temporary loader failure');
+        return { workspace: { mount(ctx) { mounts++; ctx.root.append(new Node('retry-success')); } } };
+    } } });
+    await flush();
+    assert.equal(loads, 1);
+    assert.equal(mounts, 0);
+    assert.match(env.root.textContent, /temporary loader failure/);
+    env.all().find(node => node.tag === 'button' && node.textContent === 'Try again').emit('click');
+    await until(() => mounts === 1, 'the retried workspace mount');
+    assert.equal(loads, 2);
+    assert.ok(env.all().some(node => node.tag === 'retry-success'));
+}));
 for (const bad of [undefined, {}, { mount: 1 }])
     test(`R06: invalid named export ${JSON.stringify(bad)} never substitutes default`, () => harness(async (env, start) => {
         const b = boot();
@@ -136,6 +153,8 @@ test('R01: stale workspace notifications cannot overwrite current UI', () => har
     await flush();
     contexts[1].notice('new');
     contexts[0].notice('old secret');
+    assert.equal(contexts[0].route, undefined, 'a stale tenant context cannot read the replacement shell route');
+    assert.equal(contexts[1].route.workspaceId, 'example.main');
     assert.match(env.root.textContent, /new/);
     assert.doesNotMatch(env.root.textContent, /old secret/);
 }));
@@ -195,4 +214,168 @@ test('fixed UI contribution uses its declaring module read API and is disposed w
     assert.deepEqual(disposed, ['tenant-a']);
     await assert.rejects(prior.api.get('/api/documents/search?q=late'), error => error.name === 'AbortError');
     assert.equal(contexts.length, 2);
+}));
+
+test('F06: web logout failure stays concealed and retry requires exact signedOut confirmation', () => harness(async (env, start) => {
+    let logoutAttempts = 0, bootstrapCalls = 0, mounts = 0;
+    globalThis.fetch = async path => {
+        if (path === '/api/bootstrap') { bootstrapCalls++; return json(boot()); }
+        if (path === '/api/logout') return ++logoutAttempts === 1
+            ? json({ error: { code: 'UNAVAILABLE', message: 'temporary failure' } }, 503)
+            : json({ signedOut: true });
+        throw new Error(`Unexpected route ${path}`);
+    };
+    start({ loaders: { example: async () => ({ workspace: { mount(ctx) { mounts++; ctx.root.append(new Node('protected')); } } }) } });
+    await flush();
+    env.all().find(node => node.textContent === 'Sign out').emit('click');
+    await flush();
+    assert.equal(mounts, 1);
+    assert.ok(!env.all().some(node => node.tag === 'protected'));
+    assert.match(env.root.textContent, /Sign-out unresolved/);
+    assert.doesNotMatch(env.root.textContent, /Sign in/);
+    await env.refresh();
+    env.win.emit('hashchange');
+    await flush();
+    assert.equal(bootstrapCalls, 1, 'an unresolved logout cannot start a bootstrap or remount protected content');
+    env.all().find(node => node.textContent === 'Retry sign out').emit('click');
+    await flush();
+    assert.equal(logoutAttempts, 2);
+    assert.match(env.root.textContent, /Sign in/);
+    assert.equal(mounts, 1);
+}));
+
+test('F06: suspension fences failed logout and a late bootstrap cannot remount protected content', () => harness(async (env, start) => {
+    const lateBootstrap = deferred(), logout = deferred();
+    let lifecycle, bootstrapCalls = 0, mounts = 0;
+    globalThis.fetch = async path => {
+        if (path === '/api/bootstrap') return ++bootstrapCalls === 1 ? json(boot()) : lateBootstrap.promise;
+        if (path === '/api/logout') return logout.promise;
+        throw new Error(`Unexpected route ${path}`);
+    };
+    start({
+        lifecycle: { bind(handlers) { lifecycle = handlers; return () => {}; } },
+        loaders: { example: async () => ({ workspace: { mount(ctx) { mounts++; ctx.root.append(new Node('protected')); } } }) }
+    });
+    await flush();
+    await env.refresh();
+    assert.equal(bootstrapCalls, 2);
+    env.all().find(node => node.textContent === 'Sign out').emit('click');
+    await flush();
+    assert.ok(!env.all().some(node => node.tag === 'protected'));
+    lifecycle.suspend();
+    logout.resolve(json({ error: { code: 'UNAVAILABLE', message: 'lost confirmation' } }, 503));
+    lateBootstrap.resolve(json(boot()));
+    await flush();
+    assert.doesNotMatch(env.root.textContent, /Sign in/);
+    assert.equal(mounts, 1);
+    lifecycle.resume();
+    await flush();
+    assert.match(env.root.textContent, /Sign-out unresolved/);
+    assert.equal(bootstrapCalls, 2, 'resume retains the retry-only state instead of trusting late bootstrap');
+    assert.equal(mounts, 1);
+}));
+
+test('UI01 Handoff keeps the source submission key on exact retry and separates confirmed submission from list refresh failure', () => harness(async env => {
+    const { workspace } = await import('../modules/handoff/dist/ui.js');
+    const signal = new AbortController().signal;
+    const attempts = [], notices = [];
+    let listReads = 0;
+    const ctx = {
+        root: env.root,
+        scope: { productId: 'combined', instanceId: 'combined-test', tenantId: 'tenant-a' },
+        actor: { id: 'admin', kind: 'user' }, signal,
+        permissions: ['handoff.create', 'handoff.reconcile'],
+        notice: message => notices.push(message),
+        api: {
+            async get(path) {
+                if (path === '/api/handoffs/options') return { documents: [{ id: 'doc-a', title: 'Source procedure', version: 1 }], connection: { state: 'READY' } };
+                if (path === '/api/handoffs') {
+                    listReads++;
+                    if (listReads === 2) throw new Error('list refresh unavailable');
+                    return { items: [] };
+                }
+                throw new Error(`Unexpected GET ${path}`);
+            },
+            async post(path, payload, commandId) {
+                attempts.push({ path, payload: structuredClone(payload), commandId });
+                if (attempts.length === 1) throw new Error('source reply lost');
+                return { id: 'handoff-a', state: 'QUEUED' };
+            }
+        }
+    };
+    const dispose = workspace.mount(ctx);
+    await flush();
+    const form = env.all().find(node => node.tag === 'form');
+    form.reset = () => { env.all().find(node => node.name === 'documentId').value = ''; env.all().find(node => node.name === 'reason').value = ''; };
+    env.all().find(node => node.name === 'documentId').value = 'doc-a';
+    env.all().find(node => node.name === 'reason').value = 'Inspect the guarded connector';
+    form.emit('submit');
+    await until(() => attempts.length === 1, 'the first captured Handoff command dispatch');
+    assert.equal(attempts.length, 1);
+    await until(() => env.root.textContent.includes('Source submission is unconfirmed'), 'the unresolved original submission state');
+    const retry = env.all().find(node => node.tag === 'button' && node.textContent === 'Retry the exact source submission');
+    assert.equal(retry.hidden, false);
+    retry.emit('click');
+    await until(() => attempts.length === 2, 'the exact Handoff retry dispatch');
+    await until(() => env.root.textContent.includes('Source submission confirmed'), 'the confirmed Handoff source response');
+    assert.equal(attempts.length, 2);
+    assert.equal(attempts[1].path, '/api/handoffs');
+    assert.equal(attempts[1].commandId, attempts[0].commandId);
+    assert.deepEqual(attempts[1].payload, attempts[0].payload);
+    assert.match(env.root.textContent, /Source submission confirmed/);
+    assert.match(env.root.textContent, /handoff list could not be refreshed/);
+    assert.equal(retry.hidden, true);
+    env.all().find(node => node.tag === 'button' && node.textContent === 'Refresh handoffs').emit('click');
+    await flush();
+    assert.equal(listReads, 3);
+    assert.match(env.root.textContent, /Source submission confirmed/);
+    assert.doesNotMatch(env.root.textContent, /handoff list could not be refreshed/);
+    assert.deepEqual(notices, []);
+    dispose();
+}));
+
+test('UI01 Handoff reconciliation retry keeps its original per-item key and only the refreshed owner row confirms the destination', () => harness(async env => {
+    const { workspace } = await import('../modules/handoff/dist/ui.js');
+    const signal = new AbortController().signal;
+    const attempts = [], notices = [];
+    const items = [{ id: 'handoff-unknown', title: 'Original request', outcome: 'ACCEPTANCE_UNKNOWN', state: 'QUEUED', target_ref: null,
+        delivery: { state: 'FAILED', error: 'UNAVAILABLE' } }];
+    const ctx = {
+        root: env.root,
+        scope: { productId: 'knowledge', instanceId: 'knowledge-test', tenantId: 'tenant-a' },
+        actor: { id: 'admin', kind: 'user' }, signal,
+        permissions: ['handoff.create', 'handoff.reconcile'],
+        notice: message => notices.push(message),
+        api: {
+            async get(path) {
+                if (path === '/api/handoffs/options') return { documents: [], connection: { state: 'READY' } };
+                if (path === '/api/handoffs') return { items };
+                throw new Error(`Unexpected GET ${path}`);
+            },
+            async post(path, payload, commandId) {
+                attempts.push({ path, payload: structuredClone(payload), commandId });
+                if (attempts.length === 1) throw new Error('receipt response lost');
+                items[0] = { ...items[0], outcome: 'DESTINATION_COMMITTED', state: 'ACCEPTED', target_ref: { resourceId: 'request-a' } };
+                return { id: payload.id, outcome: 'DESTINATION_COMMITTED' };
+            }
+        }
+    };
+    const dispose = workspace.mount(ctx);
+    await flush();
+    assert.match(env.root.textContent, /Confirmation needed/);
+    env.all().find(node => node.tag === 'button' && node.textContent === 'Check original receipt').emit('click');
+    await until(() => attempts.length === 1, 'the first reconciliation dispatch');
+    assert.equal(attempts.length, 1);
+    assert.match(env.root.textContent, /Confirmation needed/);
+    assert.ok(notices.some(message => /Retry keeps its original reconciliation identity/.test(message)));
+    env.all().find(node => node.tag === 'button' && node.textContent === 'Check original receipt').emit('click');
+    await until(() => attempts.length === 2, 'the exact reconciliation retry dispatch');
+    await until(() => env.root.textContent.includes('Destination confirmed'), 'the refreshed owner receipt state');
+    assert.equal(attempts.length, 2);
+    assert.equal(attempts[0].path, '/api/handoffs/reconcile');
+    assert.equal(attempts[1].commandId, attempts[0].commandId);
+    assert.deepEqual(attempts[1].payload, attempts[0].payload);
+    assert.deepEqual(attempts[0].payload, { id: 'handoff-unknown' });
+    assert.match(env.root.textContent, /Destination confirmed/, 'the refreshed owner row reports the durable destination receipt');
+    dispose();
 }));

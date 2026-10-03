@@ -1,13 +1,31 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { installShutdownHandlers, observeCloseOutcome } from '../apps/control-plane/dist/main.js';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { installShutdownHandlers, observeCloseOutcome, startControlPlane } from '../apps/control-plane/dist/main.js';
 
 function deferred() {
   let resolve, reject;
   const promise = new Promise((yes, no) => { resolve = yes; reject = no; });
   return { promise, resolve, reject };
 }
+
+test('control-plane startup rejects an unknown managed model selection before opening local state',async()=>{
+  const previous=process.env.QB_MANAGED_MODEL_PROFILE;
+  const root=join(tmpdir(),`quadbridge-invalid-model-profile-${process.pid}-${Date.now()}`);
+  try{
+    delete process.env.QB_MANAGED_MODEL_PROFILE;
+    await assert.rejects(startControlPlane({root,databasePath:join(root,'control-plane.sqlite'),modelProfile:'other-profile'}),
+      /selected managed model profile is not supported/);
+    process.env.QB_MANAGED_MODEL_PROFILE='other-profile';
+    await assert.rejects(startControlPlane({root,databasePath:join(root,'control-plane.sqlite')}),
+      /selected managed model profile is not supported/);
+  }finally{
+    if(previous===undefined)delete process.env.QB_MANAGED_MODEL_PROFILE;
+    else process.env.QB_MANAGED_MODEL_PROFILE=previous;
+  }
+});
 
 test('runtime close rejection is observed before a delayed HTTP drain settles', async () => {
   const pendingClose = deferred();

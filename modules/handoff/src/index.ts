@@ -124,9 +124,13 @@ CREATE TABLE handoff_delivery(tenant TEXT NOT NULL,handoff_id TEXT NOT NULL,comm
                 } },
             { method: 'POST', path: '/api/handoffs', permission: 'handoff.create', kind: 'write', async handle(ctx, input, _q, key) {
                     const b = object(input, ['documentId', 'reason']), documentId = id(b.documentId), reason = text(b.reason, 'reason', 8000);
+                    const normalizedInput = { documentId, reason };
+                    const original = store.lookupCommand<{ id: string; state: 'QUEUED'; jobId: string }>(ctx, 'handoff.create', key, normalizedInput, 'handoff.create');
+                    if (original.found)
+                        return original.result;
                     if(ports.ready)await ports.ready(ctx);
                     const doc = await ports.document.read(ctx, documentId), destination = ports.destination.target(ctx.tenantId);
-                    return store.command(ctx, 'handoff.create', key, { documentId, reason }, 'handoff.create', () => {
+                    return store.command(ctx, 'handoff.create', key, normalizedInput, 'handoff.create', () => {
                         const handoffId = randomUUID();
                         const job = queue.enqueue(ctx, 'handoff.deliver.v1', `send.${handoffId}`, { handoffId, sourceProduct: ctx.productId, sourceInstance: ctx.instanceId }, 'handoff.create');
                         store.db.prepare('INSERT INTO handoffs(id,tenant,document_id,document_version,title,reason,binding_revision,state,target_ref,job_id,created,protocol_version) VALUES(?,?,?,?,?,?,?,?,?,?,?,2)').run(handoffId, ctx.tenantId, documentId, doc.version, doc.title, reason, ports.bindingRevision, 'QUEUED', null, job.id, Date.now());

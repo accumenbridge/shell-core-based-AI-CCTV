@@ -3,7 +3,7 @@ import {startShell} from '../../packages/web-shell/dist/index.js';
 export class Node {constructor(tag){this.tag=tag;this.children=[];this.listeners=new Map();this.attributes={};this.className='';this.value='';this.hidden=false;this._text='';this.visibilityState='visible';}
  set textContent(s){this._text=String(s);this.children=[];}get textContent(){return this._text+this.children.map(c=>c.textContent??String(c)).join('');}
  append(...xs){this.children.push(...xs);}replaceChildren(...xs){this._text='';this.children=[...xs];}
- setAttribute(k,v){this.attributes[k]=v;}getAttribute(k){return this.attributes[k];}
+ setAttribute(k,v){this.attributes[k]=v;}getAttribute(k){return this.attributes[k];}removeAttribute(k){delete this.attributes[k];}
  querySelectorAll(selector){return selector==='[data-workspace-path]'?all(this).filter(n=>n.getAttribute('data-workspace-path')!==undefined):[];}
  addEventListener(k,fn){const a=this.listeners.get(k)??[];a.push(fn);this.listeners.set(k,a);}removeEventListener(k,fn){this.listeners.set(k,(this.listeners.get(k)??[]).filter(x=>x!==fn));}
  emit(k,e={}){for(const fn of this.listeners.get(k)??[])fn({preventDefault(){},target:this,...e});}

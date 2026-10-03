@@ -1,0 +1,14 @@
+{
+  "name": "@quadbridge/native-session",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "files": ["android", "ios", "Package.swift"],
+  "peerDependencies": {
+    "@capacitor/core": "8.5.2"
+  },
+  "capacitor": {
+    "android": { "src": "android" },
+    "ios": { "src": "ios" }
+  }
+}

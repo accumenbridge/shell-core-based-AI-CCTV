@@ -505,6 +505,15 @@ export async function createOperatorServer(options: ServerOptions): Promise<Oper
           :options.runtimeManager.restart({instanceId:runtimeAction[1]!,requestKey:request.requestKey},actorId,()=>recheckSession(req,sessions,session,now));
         const value=await awaitOriginalSession(operation);return sendJson(res,202,value);
       }
+      const androidClient=/^\/platform-api\/runtime-instances\/(runtime-[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})\/android-client$/i.exec(url.pathname);
+      if(androidClient){
+        const request=exact(body,['confirm']);
+        if(request.confirm!==true)throw new HttpFailure(400,'CONFIRMATION_REQUIRED','Explicit confirmation to package this exact managed runtime generation is required');
+        if(!options.runtimeManager)throw new HttpFailure(503,'RUNTIME_UNAVAILABLE','Managed local runtime control is not attached');
+        recheckSession(req,sessions,session,now);
+        const value=await awaitOriginalSession(options.runtimeManager.createAndroidClient(androidClient[1]!,()=>recheckSession(req,sessions,session,now)));
+        return sendJson(res,201,value);
+      }
       const runtimeUpgrade=/^\/platform-api\/runtime-instances\/(runtime-[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})\/upgrades$/i.exec(url.pathname);
       if(runtimeUpgrade){
         const request=exact(body,['confirm','targetVersion','targetArtifactDigest','sourceBackupDigest','requestKey']);

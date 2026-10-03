@@ -53,7 +53,8 @@ class FakeApp {
 }
 
 async function uiHarness(t, { initial = runtimeInstance(), runtimeReads = [], detailReads = [], startReplies = [], stopReply,
-  recoveryList, backupReply, verifyReply, restoreReply, upgradeList, upgradeReply, upgradeReleases, restartReply, onUpgrade, onRestart } = {}) {
+  recoveryList, backupReply, verifyReply, restoreReply, upgradeList, upgradeReply, upgradeReplies, upgradeReleases, restartReply, onUpgrade, onRestart,
+  androidClientReply, onAndroidClient } = {}) {
   const source = (await readFile(mainPath, 'utf8')).replace(/^export \{\};?\s*$/m,'').replace(/^\/\/# sourceMappingURL=.*$/m,'')+
     '\nglobalThis.__runtimeUiDebug=()=>({route,connected,navigationGeneration,runtimeOverviewSequence,runtimeOverview,runtimeLoadError,actionError});';
   const app = new FakeApp();
@@ -63,6 +64,7 @@ async function uiHarness(t, { initial = runtimeInstance(), runtimeReads = [], de
   const releases = upgradeReleases ?? [{productId:'service-desk',version:'1.0.0',artifactDigest:initial.artifactDigest}];
   const overview = { platform:{version:'0.3',mode:'local'},modules:[],products:[],productVersions:[],coverage:[],builds:[],environments:[],deployments:[],aiPipelines:[],audit:[],capabilities:[] };
   const runtimeQueue=[...runtimeReads];
+  const upgradeQueue=[...(upgradeReplies??[])];
   let detailIndex = 0, runtimeIndex = 0, startIndex = 0;
   const runtimeResponseTrace=[];
   const fetch = async (path, options = {}) => {
@@ -82,12 +84,23 @@ async function uiHarness(t, { initial = runtimeInstance(), runtimeReads = [], de
     }
     if (path.endsWith('/stop') && options.method === 'POST') return response(stopReply ?? {command:{state:'UNKNOWN'},instance:runtimeInstance({state:'UNKNOWN',processObservation:'not-observed-in-this-process'})});
     if (path.endsWith('/restart') && options.method === 'POST') { onRestart?.(options.body?JSON.parse(options.body):undefined,runtime);return response(restartReply ?? {command:{state:'SUCCEEDED'},instance:runtimeInstance({currentAttempt:2})}); }
+    if (/^\/platform-api\/runtime-instances\/[^/]+\/android-client$/.test(path) && options.method === 'POST') {
+      onAndroidClient?.(options.body?JSON.parse(options.body):undefined);
+      return response(androidClientReply ?? {instanceId:initial.id,generationId:'generation:current',artifactDigest:initial.artifactDigest,
+        productVersion:initial.version,clientReference:'managed-mobile-0123456789abcdefabcd',outputDir:'C:/private/.local/managed-mobile/client'});
+    }
     if (path.endsWith('/backups') && options.method === 'GET') return response(recoveryList ?? {capability:{status:'ready',detail:'Private local recovery is ready'},instanceId:initial.id,backups:[],operations:[]});
     if (path.endsWith('/backups') && options.method === 'POST') return response(backupReply ?? {id:'recovery-op-1',kind:'BACKUP',state:'SUCCEEDED',physicalState:'CLEAN',errorCode:null});
     if (path.startsWith('/platform-api/runtime-backups/')) return response(verifyReply ?? {digest:'b'.repeat(64),instanceId:initial.id,sizeBytes:1234,fileCount:4,capturedAt:1700000000000,verified:true});
     if (path.endsWith('/restore') && options.method === 'POST') return response(restoreReply ?? {id:'recovery-op-2',kind:'RESTORE',state:'SUCCEEDED',physicalState:'CLEAN',errorCode:null});
     if (/^\/platform-api\/runtime-instances\/[^/]+\/upgrades$/.test(path) && options.method !== 'POST') return response(upgradeList ?? {instanceId:initial.id,generations:[],operations:[]});
-    if (path.endsWith('/upgrades') && options.method === 'POST') { onUpgrade?.(options.body?JSON.parse(options.body):undefined,runtime,upgradeList);return response(upgradeReply ?? {id:'upgrade-op-1',state:'SUCCEEDED',physicalState:'CLEAN'}); }
+    if (path.endsWith('/upgrades') && options.method === 'POST') {
+      onUpgrade?.(options.body?JSON.parse(options.body):undefined,runtime,upgradeList);
+      const next=upgradeQueue.length?upgradeQueue.shift():upgradeReply;
+      if(next instanceof Error)throw next;
+      if(next?.promise)return response(await next.promise);
+      return response(next ?? {id:'upgrade-op-1',state:'SUCCEEDED',physicalState:'CLEAN'});
+    }
     if (path.startsWith('/platform-api/runtime-instances/')) {
       const next = detailReads[detailIndex++];
       return next ? await next.promise : response(runtimeInstance({events:'current events'}));
@@ -159,6 +172,68 @@ test('runtime action success messages require proof in the exact current-attempt
   stale.dispatch('[data-runtime-stop]',{runtimeStop:'runtime-123e4567-e89b-42d3-a456-426614174000',attempt:'1',artifactDigest:'a'.repeat(64)});
   await stale.until(()=>stale.app.innerHTML.includes('Stop result: command SUCCEEDED; runtime STOPPED.'),'stale attempt facts rejected');
   assert.doesNotMatch(stale.app.innerHTML,/runtime is STOPPED with an empty process tree/);
+});
+
+test('Android packaging requires inspecting and confirming the exact selected generation', async t=>{
+  const id='runtime-123e4567-e89b-42d3-a456-426614174000',artifactDigest='a'.repeat(64),generationId='generation:runtime-123:1';
+  const summary=runtimeInstance({id,productId:'combined',version:'0.2.4',artifactDigest,state:'RUNNING'});
+  const detail=deferred(),requestBodies=[];
+  const ui=await uiHarness(t,{initial:summary,detailReads:[detail],androidClientReply:{instanceId:id,generationId,artifactDigest,productVersion:'0.2.4',
+    clientReference:'managed-mobile-0123456789abcdefabcd',outputDir:'C:/private/.local/managed-mobile/managed-mobile-0123456789abcdefabcd'},
+    onAndroidClient:body=>requestBodies.push(body)});
+  ui.dispatch('[data-runtime-detail]',{runtimeDetail:id});
+  await ui.until(()=>ui.calls.some(call=>call.path===`/platform-api/runtime-instances/${id}`),'inspect exact runtime generation');
+  detail.resolve(response({...summary,activeGenerationId:generationId,nativeApiProfile:'local-native-forwarded-v1',modelAnswerProfile:'local-ollama-qwen3-4b',
+    credentialFile:'C:/private/.local/platform-runtime-data/runtime/credentials.json',events:'runtime events'}));
+  await ui.until(()=>ui.app.innerHTML.includes('Create Android client'),'native client action');
+  assert.match(ui.app.innerHTML,/Open this file on this computer/);
+  assert.doesNotMatch(ui.app.innerHTML,/\b(?:password|serviceToken|ownerToken)\s*[:=]/i);
+  ui.dispatch('[data-runtime-android-client]',{runtimeAndroidClient:id,generation:generationId,artifactDigest},false);
+  await ui.until(()=>ui.app.innerHTML.includes('Confirm packaging this exact managed runtime generation first.'),'unchecked packaging denied');
+  assert.equal(requestBodies.length,0);
+  ui.dispatch('[data-runtime-android-client]',{runtimeAndroidClient:id,generation:generationId,artifactDigest},true);
+  await ui.until(()=>ui.app.innerHTML.includes('managed-mobile-0123456789abcdefabcd'),'exact managed client returned');
+  assert.deepEqual(requestBodies,[{confirm:true}]);
+  assert.match(ui.app.innerHTML,/npm run local:android:build -- --client managed-mobile-0123456789abcdefabcd/);
+});
+
+test('Android packaging confirmation survives a same-generation poll and does not carry to a successor', async t=>{
+  const id='runtime-123e4567-e89b-42d3-a456-426614174000',artifactDigest='a'.repeat(64),generationId='generation:runtime-123:1';
+  const summary=runtimeInstance({id,productId:'combined',version:'0.2.4',artifactDigest,state:'RUNNING'});
+  const firstDetail=deferred(),successorDetail=deferred(),samePoll=deferred(),successorPoll=deferred();
+  const details=[firstDetail,successorDetail];
+  const ui=await uiHarness(t,{initial:summary,detailReads:details});
+  ui.dispatch('[data-runtime-detail]',{runtimeDetail:id});
+  await ui.until(()=>ui.calls.some(call=>call.path===`/platform-api/runtime-instances/${id}`),'inspect Android generation');
+  firstDetail.resolve(response({...summary,activeGenerationId:generationId,nativeApiProfile:'local-native-forwarded-v1',events:'runtime events'}));
+  await ui.until(()=>ui.app.inputs.some(input=>input.dataset.runtimeAndroidClientConfirm!==undefined),'Android confirmation control');
+  const confirmationKey=`ANDROID_CLIENT:${id}:${generationId}:1:${artifactDigest}`;
+  let confirmation=ui.app.inputs.find(input=>input.dataset.runtimeConfirmation===confirmationKey);
+  assert.ok(confirmation,'Android packaging confirmation is keyed to the full captured generation identity');
+  confirmation.checked=true;
+
+  ui.runtimeReads.push(samePoll);ui.timerCallback();
+  await ui.until(()=>ui.calls.filter(call=>call.path==='/platform-api/runtime-instances'&&call.options.method!=='POST').length>=2,'same-generation poll');
+  samePoll.resolve(response({...ui.runtime,instances:[summary]}));
+  await ui.until(()=>ui.runtimeResponseTrace.length===1,'same-generation poll rendered');
+  confirmation=ui.app.inputs.find(input=>input.dataset.runtimeConfirmation===confirmationKey);
+  assert.equal(confirmation?.checked,true,'ordinary polling preserves the explicit confirmation for the same generation');
+
+  ui.runtimeReads.push(successorPoll);ui.timerCallback();
+  await ui.until(()=>ui.calls.filter(call=>call.path==='/platform-api/runtime-instances'&&call.options.method!=='POST').length>=3,'successor-generation poll');
+  const successor=runtimeInstance({id,productId:'combined',version:'0.2.4',artifactDigest,state:'RUNNING',currentAttempt:2});
+  successorPoll.resolve(response({...ui.runtime,instances:[successor]}));
+  await ui.until(()=>ui.app.innerHTML.includes('attempt 2'),'successor attempt rendered');
+  assert.equal(ui.app.inputs.some(input=>input.dataset.runtimeConfirmation===confirmationKey),false,'the prior generation confirmation is discarded');
+  ui.dispatch('[data-runtime-detail]',{runtimeDetail:id});
+  await ui.until(()=>ui.calls.filter(call=>call.path===`/platform-api/runtime-instances/${id}`).length>=2,'inspect successor generation');
+  const successorGeneration='generation:runtime-123:2';
+  successorDetail.resolve(response({...successor,activeGenerationId:successorGeneration,nativeApiProfile:'local-native-forwarded-v1',events:'successor events'}));
+  await ui.until(()=>ui.app.inputs.some(input=>input.dataset.runtimeAndroidClientConfirm!==undefined),'successor confirmation control');
+  const successorKey=`ANDROID_CLIENT:${id}:${successorGeneration}:2:${artifactDigest}`;
+  const successorConfirmation=ui.app.inputs.find(input=>input.dataset.runtimeConfirmation===successorKey);
+  assert.ok(successorConfirmation,'the successor has its own confirmation identity');
+  assert.equal(successorConfirmation.checked,false,'confirmation is not inherited by the successor generation');
 });
 
 test('runtime overview and detail responses cannot restore stale routes, attempts, or application addresses', async t => {
@@ -316,20 +391,21 @@ test('upgrade UI requires the exact stopped generation, verified backup, target 
   const history={instanceId:id,generations:[{id:sourceGenerationId,instanceId:id,generation:1,productId:'combined',version:'0.2.3',artifactDigest:sourceDigest,
     profileDigest:'1'.repeat(64),configDigest:'2'.repeat(64),adapterDigest:'3'.repeat(64),toolchainDigest:'4'.repeat(64),recipeDigest:'5'.repeat(64),originatingActorId:'operator-source',created:1}],operations:[]};
   const targetRelease={productId:'combined',version:'0.2.4',artifactDigest:targetDigest};
+  const otherTargetRelease={productId:'combined',version:'0.2.5',artifactDigest:'d'.repeat(64)};
   const targetReady={...initial,version:targetRelease.version,artifactDigest:targetDigest,state:'UPGRADE_READY',processObservation:'not-observed-in-this-process',activeGenerationId:targetGenerationId};
   const targetSummary={...targetReady};delete targetSummary.activeGenerationId;delete targetSummary.attempts;
   const restartOperationId='123e4567-e89b-42d3-a456-000000000002';
   const runningTarget={...targetReady,state:'RUNNING',processObservation:'owned-in-this-process',currentAttempt:2,url:'http://127.0.0.1:43210',
     attempts:[{id:restartOperationId,attempt:2,state:'RUNNING',apiReady:true,workerAttached:true}]};
   const runningSummary={...runningTarget};delete runningSummary.activeGenerationId;delete runningSummary.attempts;
-  const sourceDetail=deferred(),targetDetail=deferred();
-  const ui=await uiHarness(t,{initial:initialSummary,detailReads:[sourceDetail,targetDetail],upgradeList:history,upgradeReleases:[{productId:'combined',version:'0.2.3',artifactDigest:sourceDigest},targetRelease],
+  const sourceDetail=deferred(),targetDetail=deferred(),upgradePending=deferred();
+  let upgradeDispatches=0;
+  const ui=await uiHarness(t,{initial:initialSummary,detailReads:[sourceDetail,targetDetail],upgradeList:history,upgradeReleases:[{productId:'combined',version:'0.2.3',artifactDigest:sourceDigest},targetRelease,otherTargetRelease],
     recoveryList:{capability:{status:'ready',detail:'Private recovery is ready'},instanceId:id,backups:[{digest:backupDigest,instanceId:id,generationId:sourceGenerationId,
       attemptId:sourceAttemptId,attempt:1,productId:'combined',version:'0.2.3',artifactDigest:sourceDigest,capturedAt:1700000000000,sizeBytes:2048,fileCount:6}],operations:[]},
     verifyReply:{digest:backupDigest,instanceId:id,sizeBytes:2048,fileCount:6,capturedAt:1700000000000,verified:true},
-    upgradeReply:{id:'upgrade-op-1',instanceId:id,sourceGenerationId,targetGenerationId,state:'SUCCEEDED',physicalState:'CLEAN',destinationPublished:true,destinationVerified:true,
-      driverEmpty:true,driverClosed:true,publisherResultObserved:true,publisherClosed:true,stagingClean:true},
-    onUpgrade:(_body,runtimeState)=>{runtimeState.instances=[targetSummary];history.generations.push({...history.generations[0],id:targetGenerationId,generation:2,version:'0.2.4',artifactDigest:targetDigest,
+    upgradeReplies:[new Error('connection reset after dispatch'),upgradePending],
+    onUpgrade:(_body,runtimeState)=>{upgradeDispatches++;if(upgradeDispatches!==2)return;runtimeState.instances=[targetSummary];history.generations.push({...history.generations[0],id:targetGenerationId,generation:2,version:'0.2.4',artifactDigest:targetDigest,
       originatingActorId:'operator-target',sourceGenerationId,upgradeOperationId:'upgrade-op-1',created:2});history.operations.push({id:'upgrade-op-1',instanceId:id,
       sourceGenerationId,targetGenerationId,sourceAttemptId,sourceAttempt:1,sourceCommandId:'source-command',targetVersion:'0.2.4',targetArtifactDigest:targetDigest,
       sourceBackupDigest:backupDigest,state:'SUCCEEDED',physicalState:'CLEAN',driverEmpty:true,driverClosed:true,stagingClean:true,publisherResultObserved:true,
@@ -352,10 +428,24 @@ test('upgrade UI requires the exact stopped generation, verified backup, target 
   ui.dispatch('[data-runtime-upgrade]',{runtimeUpgrade:id,backupDigest},false,{target:targetValue});
   assert.equal(ui.calls.filter(call=>call.path.endsWith('/upgrades')&&call.options.method==='POST').length,0,'upgrade is denied until the exact source, verified backup and target are confirmed');
   ui.dispatch('[data-runtime-upgrade]',{runtimeUpgrade:id,backupDigest},true,{target:targetValue});
-  await ui.until(()=>ui.calls.some(call=>call.path.endsWith('/upgrades')&&call.options.method==='POST'),'confirmed exact-generation upgrade');
-  const upgrade=ui.calls.find(call=>call.path.endsWith('/upgrades')&&call.options.method==='POST');
+  await ui.until(()=>ui.calls.filter(call=>call.path.endsWith('/upgrades')&&call.options.method==='POST').length===1,'first ambiguous upgrade attempt');
+  const firstUpgrade=ui.calls.find(call=>call.path.endsWith('/upgrades')&&call.options.method==='POST');
+  await ui.until(()=>ui.app.innerHTML.includes('Local runtime upgrade did not return a result'),'ambiguous upgrade response');
+  ui.dispatch('[data-runtime-upgrade]',{runtimeUpgrade:id,backupDigest},true,{target:targetValue});
+  await ui.until(()=>ui.calls.filter(call=>call.path.endsWith('/upgrades')&&call.options.method==='POST').length===2,'retry of the exact upgrade intent');
+  const upgrade=ui.calls.filter(call=>call.path.endsWith('/upgrades')&&call.options.method==='POST')[1];
+  assert.equal(upgrade.body.requestKey,firstUpgrade.body.requestKey,'ambiguous retries retain the idempotency key for the complete source/backup/target intent');
   assert.deepEqual(upgrade.body,{confirm:true,targetVersion:'0.2.4',targetArtifactDigest:targetDigest,sourceBackupDigest:backupDigest,requestKey:upgrade.body.requestKey});
   assert.match(upgrade.body.requestKey,/^runtime:/);
+  await ui.until(()=>ui.app.innerHTML.includes('Upgrading…'),'pending upgrade controls');
+  assert.match(ui.app.innerHTML,/data-runtime-upgrade-target="[^"]+" disabled/,'the target selector is frozen while this instance upgrade is pending');
+  assert.match(ui.app.innerHTML,/data-runtime-upgrade-confirm disabled/,'the confirmation control is disabled while pending');
+  ui.dispatch('[data-runtime-upgrade]',{runtimeUpgrade:id,backupDigest},true,{target:targetValue});
+  ui.dispatch('[data-runtime-upgrade]',{runtimeUpgrade:id,backupDigest},true,{target:`${otherTargetRelease.version}|${otherTargetRelease.artifactDigest}`});
+  await pause();await pause();
+  assert.equal(ui.calls.filter(call=>call.path.endsWith('/upgrades')&&call.options.method==='POST').length,2,'duplicate and conflicting target clicks cannot dispatch while this instance is locked');
+  upgradePending.resolve({id:'upgrade-op-1',instanceId:id,sourceGenerationId,targetGenerationId,state:'SUCCEEDED',physicalState:'CLEAN',destinationPublished:true,destinationVerified:true,
+    driverEmpty:true,driverClosed:true,publisherResultObserved:true,publisherClosed:true,stagingClean:true});
   await ui.until(()=>ui.app.innerHTML.includes('UPGRADE_READY'),'target cutover summary');
   ui.dispatch('[data-runtime-detail]',{runtimeDetail:id});
   await ui.until(()=>ui.calls.filter(call=>call.path===`/platform-api/runtime-instances/${id}`).length===2,'inspect target generation detail');

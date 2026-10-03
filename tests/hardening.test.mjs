@@ -112,11 +112,11 @@ test('R07: reentrant ticks do not consume simultaneous work accidentally', async
         s.close();
     }
 });
-const m = id => ({ id, version: '1', abi: 'quadbridge.module.v1', dependencies: [], provides: [], requires: [], permissions: [], routes: [], workspaces: [], schema: { current: 0, readMin: 0, readMax: 0 }, background: false });
+const m = id => ({ id, version: '1.0.0', abi: 'quadbridge.module.v1', dependencies: [], provides: [], requires: [], permissions: [], routes: [], workspaces: [], schema: { current: 0, readMin: 0, readMax: 0 }, background: false });
 const product = (modules, bindings) => ({ id: 'example', version: '1', platformAbi: 'quadbridge.module.v1', title: 'Example', description: '', layout: 'top', modules: modules.map(m => ({ id: m.id, version: m.version })), bindings });
 const b = (consumer, implementation, contract) => ({ consumer, implementation, contract, instanceId: contract, mode: 'local', scope: 'application' });
 test('R09: eager local bindings produce provider-before-consumer construction', () => { const a = m('a-consumer'), z = m('z-provider'); a.requires = ['lookup.v1']; z.provides = ['lookup.v1']; assert.deepEqual(resolve(product([a, z], [b(a.id, z.id, 'lookup.v1')]), [a, z]).modules.map(m => m.id), [z.id, a.id]); });
-test('R09: binding-only construction cycles are rejected', () => { const a = m('a'), z = m('z'); a.requires = ['z']; a.provides = ['a']; z.requires = ['a']; z.provides = ['z']; assert.throws(() => resolve(product([a, z], [b('a', 'z', 'z'), b('z', 'a', 'a')]), [a, z]), /cycle/); });
+test('R09: binding-only construction cycles are rejected', () => { const a = m('a'), z = m('z'); a.requires = ['z.v1']; a.provides = ['a.v1']; z.requires = ['a.v1']; z.provides = ['z.v1']; assert.throws(() => resolve(product([a, z], [b('a', 'z', 'z.v1'), b('z', 'a', 'a.v1')]), [a, z]), /cycle/); });
 test('R09: remote binding does not import or order an absent provider', () => { const a = m('a'); a.requires = ['remote']; const ref = { ...b('a', 'remote-not-installed', 'remote'), mode: 'http' }; assert.equal(resolve(product([a], [ref]), [a]).modules.length, 1); });
 test('R03: wrong destination configuration is rejected before any target write', async (t) => {
     const target = await fixture(t), s = await target.server();
@@ -169,6 +169,31 @@ async function preparedSource(t, onPost) {
     await source.tick();
     return { source, target, request };
 }
+test('F04: handoff retries reconcile the original source receipt before current destination and document prerequisites', async (t) => {
+    const target = await fixture(t), server = await target.server();
+    const source = await fixture(t, 'knowledge', { baseUrl: server.url, destinationInstance: target.runtime.host.instanceId });
+    const document = await source.call('POST', '/api/documents', { title: 'Original procedure', body: 'The original source evidence remains owner-scoped.' }, 'receipt-first-document');
+    const input = { documentId: document.id, reason: 'Inspect the guarded connector' };
+    const commandId = 'receipt-first-handoff';
+    const original = await source.call('POST', '/api/handoffs', input, commandId);
+    assert.equal(await source.tick(), true);
+    await source.tick();
+    assert.equal((await target.call('GET', '/api/requests')).items.length, 1);
+
+    target.runtime.access.revoke('link', 'tenant-a', 'desk.create');
+    source.runtime.access.revoke('admin', 'tenant-a', 'knowledge.read');
+    const replay = await source.call('POST', '/api/handoffs', input, commandId);
+    assert.deepEqual(replay, original, 'the source owner returns its exact original receipt without needing destination or document reads');
+    assert.equal(source.runtime.modules.find(module => module.manifest.id === 'handoff').queue.store.db.prepare('SELECT COUNT(*) AS count FROM handoffs').get().count, 1);
+    assert.equal((await target.call('GET', '/api/requests')).items.length, 1, 'receipt replay does not create a second destination row');
+
+    await assert.rejects(source.call('POST', '/api/handoffs', { ...input, reason: 'Changed payload' }, commandId), error => error.code === 'CONFLICT');
+    await assert.rejects(source.call('POST', '/api/handoffs', { ...input, reason: 'Fresh command' }, 'receipt-first-fresh-command'), error => error.code === 'DENIED',
+        'a new command still requires the current source document permission');
+    source.runtime.access.revoke('admin', 'tenant-a', 'handoff.create');
+    await assert.rejects(source.call('POST', '/api/handoffs', input, commandId), error => error.code === 'DENIED',
+        'source write permission is checked inside original-receipt lookup');
+});
 for (const cause of ['revoke', 'cancel', 'lease-loss'])
     test(`R02: receipt survives ${cause} after actual destination commit`, async (t) => {
         const f = await preparedSource(t, async ({ source, response }) => {
@@ -200,6 +225,12 @@ test('R02: unknown acceptance survives expiration, restart, and explicit lookup 
     let row = (await f.source.call('GET', '/api/handoffs')).items[0];
     assert.equal(row.outcome, 'ACCEPTANCE_UNKNOWN');
     const q = f.source.runtime.modules.find(m => m.manifest.id === 'handoff').queue;
+    const sourceReceipt = q.store.db.prepare('SELECT result FROM _receipts WHERE tenant=? AND actor=? AND operation=? AND command_id=?')
+        .get('tenant-a', 'user:admin', 'handoff.create', 'handoff');
+    assert.ok(sourceReceipt, 'the source submission has its own durable receipt');
+    const submitted = JSON.parse(sourceReceipt.result);
+    assert.equal(submitted.$quadbridge, undefined, 'external destination uncertainty is never sealed as a source no-effects rejection');
+    assert.equal(submitted.commandOutcome, undefined);
     q.store.db.prepare('UPDATE _jobs SET deadline=? WHERE id=?').run(Date.now() - 1, row.job_id);
     q.claim('cleanup', 1000, () => true);
     row = (await f.source.call('GET', '/api/handoffs')).items[0];

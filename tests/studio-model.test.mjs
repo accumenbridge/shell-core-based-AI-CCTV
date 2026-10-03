@@ -23,6 +23,11 @@ test('Studio metadata validation accepts maintained source manifests through the
   }
 });
 
+test('Studio base validation shares supported exact manifest rules without generator-only ID limits',()=>{
+  const manifest={id:'a',version:'1.0.0',abi:'quadbridge.module.v1',dependencies:[],provides:[],requires:[],permissions:[],routes:[],workspaces:[],schema:{current:1,readMin:1,readMax:1},background:false};
+  assert.equal(validateStudioModule(manifest),manifest);
+});
+
 test('Studio metadata validation rejects malformed nested shapes, enums, identifiers and numeric bounds', () => {
   const base = JSON.parse(readFileSync(join(moduleRoot, 'service-desk', 'module.json'), 'utf8'));
   const invalid = [

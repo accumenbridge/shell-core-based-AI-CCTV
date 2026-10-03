@@ -1,0 +1,2 @@
+COMMAND=node --check tests/veyviz-lifecycle.test.mjs
+EXIT_CODE=0

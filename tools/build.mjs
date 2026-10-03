@@ -39,7 +39,7 @@ async function clearGeneratedMobileTrees(productId, productArtifactRoot) {
     const product = await physicalChildDirectory(artifacts.path, artifacts.real, productId);
     if (!product || product.path !== productArtifactRoot)
         throw new Error('The selected product artifact root changed during the build.');
-    for (const name of ['mobile-preview', 'm']) {
+    for (const name of ['mobile-preview', 'm', 'n']) {
         const generated = await physicalChildDirectory(product.path, product.real, name);
         if (!generated) continue;
         await rm(generated.path, { recursive: true, force: false });
@@ -59,13 +59,16 @@ await writeFile(join(root, 'tsconfig.json'), JSON.stringify({ files: [], referen
 const compilation = spawnSync(process.execPath, [compiler, '-b', '--pretty', 'false'], { cwd: root, stdio: 'inherit' });
 if (compilation.status !== 0)
     process.exit(compilation.status ?? 1);
-const { buildMobileBundle } = await import('./mobile/assemble.mjs');
+const { buildMobileBundle, buildManagedClientSeed } = await import('./mobile/assemble.mjs');
+await copyFile(join(root, 'packages/ui/src/tokens.css'), join(root, 'packages/ui/dist/tokens.css'));
+await copyFile(join(root, 'packages/ui/src/ui.css'), join(root, 'packages/ui/dist/ui.css'));
 await copyFile(join(root, 'packages/web-shell/src/shell.css'), join(root, 'packages/web-shell/dist/shell.css'));
 await copyFile(join(root, 'packages/mobile-shell/src/mobile.css'), join(root, 'packages/mobile-shell/dist/mobile.css'));
 const { resolve } = await import('../packages/composition/dist/index.js');
 const { canonical } = await import('../packages/contracts/dist/index.js');
 const { resolveUiContributionBindings } = await import('../packages/contracts/dist/ui-contributions.js');
 const { deriveRuntimeWorkspaceClosure } = await import('../packages/composition/dist/workspace-closure.js');
+const { RUNTIME_INITIALIZER_CAPABILITY_SCHEMA, RUNTIME_INITIALIZER_ENTRY_PATH, RUNTIME_INITIALIZER_EXPORT_NAME } = await import('../packages/composition/dist/integrity.js');
 const catalog = [];
 for (const name of moduleNames) {
     if (!/^[a-z][a-z0-9-]*$/.test(name))
@@ -97,6 +100,7 @@ for (const directory of await readdir(join(root, 'products'), { withFileTypes: t
         throw new Error('Product directory/identity mismatch');
     const plan = resolve(product, catalog.map(c => c.manifest));
     let uiBindings = [];
+    let uiMapping = null;
     if (product.wiring !== undefined) {
         if (typeof product.wiring !== 'string' || !/^[a-z][a-z0-9-]{1,47}$/.test(product.wiring))
             throw new Error('Product wiring is not a reviewed solution identity');
@@ -111,6 +115,7 @@ for (const directory of await readdir(join(root, 'products'), { withFileTypes: t
             if (Buffer.byteLength(mappingText, 'utf8') > 131072) throw new Error('Reviewed UI mapping exceeds its bound');
             const resolution = resolveUiContributionBindings(plan, JSON.parse(mappingText), catalog.map(item => item.manifest));
             uiBindings = resolution.bindings;
+            uiMapping = { path: `solutions/${product.wiring}/ui.json`, sha256: createHash('sha256').update(mappingText).digest('hex') };
         }
     }
     const workspace = deriveRuntimeWorkspaceClosure(plan, relativePath => JSON.parse(readFileSync(join(root, relativePath), 'utf8')));
@@ -118,7 +123,7 @@ for (const directory of await readdir(join(root, 'products'), { withFileTypes: t
     const { files: desktopFiles, imports, styles } = await frontendClosure(root, plan);
     const mobileClosure = await frontendClosure(root, plan, { includeMobile: true });
     const mobileRoot = join(out, 'm');
-    const mobileBundle = await buildMobileBundle({ sourceRoot: root, plan, closure: mobileClosure, bundleRoot: mobileRoot, mode: 'preview' });
+    const mobileBundle = await buildMobileBundle({ sourceRoot: root, plan, closure: mobileClosure, bundleRoot: mobileRoot, mode: 'preview', uiBindings });
     await clearGeneratedMobileTrees(name, out);
     const mobileFiles = {};
     for (const output of mobileBundle.outputs) {
@@ -134,16 +139,33 @@ for (const directory of await readdir(join(root, 'products'), { withFileTypes: t
         await writeFile(target, asset.contents);
         mobileFiles[`/assets/mobile-preview/${asset.path}`] = `.artifacts/${name}/m/${asset.path}`;
     }
+    const planDigest = createHash('sha256').update(canonical(plan)).digest('hex');
+    const managedSeed = await buildManagedClientSeed({ sourceRoot: root, plan, closure: mobileClosure, uiBindings, planDigest });
+    const seedRoot = join(out, 'n');
+    await mkdir(seedRoot, { recursive: true });
+    const seedFiles = {};
+    for (const [blob, contents] of managedSeed.payloads) {
+        const target = join(seedRoot, ...blob.split('/'));
+        await mkdir(dirname(target), { recursive: true });
+        await writeFile(target, contents, { flag: 'wx' });
+        seedFiles[`.artifacts/${name}/n/${blob}`] = createHash('sha256').update(contents).digest('hex');
+    }
+    const seedManifestPath = `.artifacts/${name}/n/seed.json`;
+    await writeFile(join(seedRoot, 'seed.json'), managedSeed.manifestBytes, { flag: 'wx' });
+    const managedSeedReference = { schema: 'quadbridge.managed-mobile-seed-reference.v1', path: seedManifestPath,
+        sha256: createHash('sha256').update(managedSeed.manifestBytes).digest('hex'), files: seedFiles };
     const mobile = {
         entry: `/assets/mobile-preview/${mobileBundle.entry.startsWith('/') ? mobileBundle.entry.slice(1) : mobileBundle.entry}`,
         styles: mobileBundle.css.map(path => `/assets/mobile-preview/${path}`),
         files: mobileFiles,
         imports: mobileClosure.imports,
+        uiBindings,
+        uiMapping,
         sourceStyles: mobileClosure.mobileStyles,
         sourceFiles: Object.fromEntries(await Promise.all([...new Set(Object.values(mobileClosure.files))].sort().map(async source => [source, createHash('sha256').update(await readFile(join(root, source))).digest('hex')]))),
         builderInputs: {}
     };
-    for (const path of ['tools/mobile/assemble.mjs', 'tools/frontend-closure.mjs', 'tools/build.mjs', 'package.json', 'package-lock.json'])
+    for (const path of ['tools/mobile/assemble.mjs', 'tools/mobile/prepare-native.mjs', 'tools/frontend-closure.mjs', 'tools/build.mjs', 'package.json', 'package-lock.json'])
         mobile.builderInputs[path] = createHash('sha256').update(await readFile(join(root, path))).digest('hex');
     mobile.toolchain = { esbuild: (await import('esbuild')).version };
     const files = { ...desktopFiles, ...mobileFiles };
@@ -152,7 +174,8 @@ for (const directory of await readdir(join(root, 'products'), { withFileTypes: t
     await writeFile(join(out, 'backend-catalog.mjs'), backendCatalog);
     await writeFile(join(out, 'solution.mjs'), plan.product.wiring ? `export const load=()=>import('../../solutions/${plan.product.wiring}/wiring.mjs');\n` : 'export const load=null;\n');
     const loaders = plan.modules.filter(m => m.workspaces.length || m.uiContributions?.length).map(m => `${JSON.stringify(m.id)}:()=>import(${JSON.stringify(`@quadbridge/${m.id}/ui`)})`).join(',');
-    const startup = `import {startShell} from '@quadbridge/web-shell';\nstartShell({root:document.getElementById('app'),title:${JSON.stringify(plan.product.title)},loaders:{${loaders}},uiBindings:${JSON.stringify(uiBindings)}});\n`;
+    const experience = plan.product.experience ? `experience:${JSON.stringify(plan.product.experience)},` : '';
+    const startup = `import {startShell} from '@quadbridge/web-shell';\nstartShell({root:document.getElementById('app'),title:${JSON.stringify(plan.product.title)},${experience}loaders:{${loaders}},uiBindings:${JSON.stringify(uiBindings)}});\n`;
     await writeFile(join(out, 'composition.js'), startup);
     await writeFile(join(out, 'plan.json'), JSON.stringify(plan, null, 2) + '\n');
     await writeFile(join(out, 'web.json'), JSON.stringify({ imports, files, styles, mobile }, null, 2) + '\n');
@@ -175,7 +198,10 @@ for (const directory of await readdir(join(root, 'products'), { withFileTypes: t
     const backend = {};
     for (const file of backendFiles)
         backend[file] = createHash('sha256').update(await readFile(join(root, file))).digest('hex');
-    await writeFile(join(out, 'release.json'), JSON.stringify({ product: name, version: product.version, abi: product.platformAbi, planDigest: createHash('sha256').update(canonical(plan)).digest('hex'), backend, web: digests, status: 'LOCAL_BUILD_NOT_PRODUCTION_ACCEPTANCE' }, null, 2) + '\n');
+    const runtimeInitializerCapability = { schema: RUNTIME_INITIALIZER_CAPABILITY_SCHEMA, entryPath: RUNTIME_INITIALIZER_ENTRY_PATH,
+        exportName: RUNTIME_INITIALIZER_EXPORT_NAME, sha256: backend[RUNTIME_INITIALIZER_ENTRY_PATH] };
+    await writeFile(join(out, 'release.json'), JSON.stringify({ product: name, version: product.version, abi: product.platformAbi, planDigest, backend, web: digests,
+        runtimeInitializerCapability, mobileSeed: managedSeedReference, status: 'LOCAL_BUILD_NOT_PRODUCTION_ACCEPTANCE' }, null, 2) + '\n');
     console.log(`Assembled ${name}: ${plan.modules.length} modules, worker=${plan.requiresWorker}`);
 }
 

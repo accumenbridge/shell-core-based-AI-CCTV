@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { ControlPlaneStore } from '../packages/control-plane/dist/index.js';
+import { LocalBuildWorker } from '../apps/control-plane/dist/build-worker.js';
 
 const actor = 'system:lifecycle-test';
 const product = { id: 'lifecycle-product', version: '1.0.0', platformAbi: 'quadbridge.module.v1', title: 'Lifecycle product', description: '', layout: 'sidebar', modules: [], bindings: [] };
@@ -27,6 +28,22 @@ async function stores(t) {
     return { dir, first, second, open, close };
 }
 function admit(store, requestKey) { return store.admitBuild(product.id, product.version, requestKey, frozen, actor); }
+test('the build worker refuses a frozen claim from an incompatible fingerprint recipe before copying or launching tools', async t => {
+    const { dir, first } = await stores(t);
+    const admitted = admit(first, 'lifecycle-old-recipe-0001');
+    const claim = first.claimBuild(randomUUID(), 10000);
+    assert.equal(claim?.id, admitted.id);
+    assert.equal(claim.input.recipeVersion, 'lifecycle-test-v1');
+    const worker = new LocalBuildWorker({root:dir,store:first,snapshot:{modules:[],solutions:[],sourcePlans:[],sourceFingerprint:'not-used'}},
+        'a'.repeat(64),'b'.repeat(64),{kind:'fixture-host',sha256:'',version:process.version,policy:'not-applicable'});
+    await worker.execute(claim);
+    const settled = first.build(admitted.id);
+    assert.equal(settled.state, 'FAILED');
+    assert.equal(settled.failureCode, 'BUILD_RECIPE_UNSUPPORTED');
+    assert.equal(settled.cleanupState, 'CLEAN');
+    assert.equal(settled.attemptDetail.errorCode, 'BUILD_RECIPE_UNSUPPORTED');
+});
+
 function waitForOutput(child, expected, timeoutMs = 5000) {
     return new Promise((resolve, reject) => {
         let output = '';

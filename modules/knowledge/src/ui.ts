@@ -1,8 +1,9 @@
 import type { Workspace } from '@quadbridge/contracts';
-import { el, field, heading, section, formAction, statistic, emptyState } from '@quadbridge/web-shell/dom';
+import { actionButton, el, fieldControl, heading, section, formAction, statistic, emptyState, statusNotice } from '@quadbridge/ui/components';
 import { mountReferenceSearch } from './ui/reference-search.js';
 export { referenceSearchPanel } from './ui/reference-search.js';
 export const workspace: Workspace = { mount(ctx) {
+        ctx.root.setAttribute('data-knowledge-module', '');
         ctx.root.append(heading('Knowledge library', 'Save reference text, follow indexing progress and search your tenant’s library.'));
         const stats = el('div', 'stat-grid');
         ctx.root.append(stats);
@@ -10,24 +11,19 @@ export const workspace: Workspace = { mount(ctx) {
         grid.append(upload, results);
         ctx.root.append(grid);
         upload.append(el('h3', '', 'Add text'));
-        const form = el('form'), title = field('Document title', 'title'), body = field('Document text', 'body', true);
+        const form = el('form'), title = fieldControl('Document title', el('input'), { required: true, maxLength: 200, help: 'Use the title readers will recognize in search results.' }), body = fieldControl('Document text', el('textarea'), { required: true, maxLength: 64000, help: 'Indexing uses the text saved to this tenant’s Knowledge library.' });
+        title.input.name = 'title'; body.input.name = 'body';
         form.append(title.wrap, body.wrap);
         const list = el('div');
         const disposeSearch = mountReferenceSearch({ root: results, signal: ctx.signal, api: ctx.api, notice: ctx.notice });
         results.append(list);
         const answerPanel = section();
-        answerPanel.append(el('h3', '', 'Ask from indexed documents'), el('p', 'small muted', 'Local extractive answer · indexed documents only · no model inference'));
-        const answerForm = el('form'), question = el('textarea'), ask = el('button', 'button', 'Answer from sources'), cancelAnswer = el('button', 'button secondary', 'Cancel');
-        question.setAttribute('aria-label', 'Question');
-        question.maxLength = 1000;
-        question.required = true;
-        question.rows = 3;
-        question.placeholder = 'Ask a question about indexed documents';
+        answerPanel.append(el('h3', '', 'Ask from indexed documents'), el('p', 'small muted', 'Answers use indexed tenant documents. Local model inference is an explicit server-side option.'));
+        const answerForm = el('form'), questionField = fieldControl('Question', el('textarea'), { required: true, maxLength: 1000, rows: 3, placeholder: 'Ask a question about indexed documents', help: 'Answers use indexed tenant documents and return source citations.' }), question = questionField.input;
+        const ask = actionButton('Answer from sources', () => {}), cancelAnswer = actionButton('Cancel', () => {}, { variant: 'secondary', disabled: true });
         ask.type = 'submit';
-        cancelAnswer.type = 'button';
-        cancelAnswer.disabled = true;
-        answerForm.append(question, ask, cancelAnswer);
-        const answerStatus = el('div', 'small muted');
+        answerForm.append(questionField.wrap, ask, cancelAnswer);
+        const answerStatus = el('div', 'qb-answer-status');
         answerStatus.setAttribute('aria-live', 'polite');
         answerPanel.append(answerForm, answerStatus);
         results.append(answerPanel);
@@ -38,17 +34,29 @@ export const workspace: Workspace = { mount(ctx) {
             const ownGeneration = ++answerGeneration, controller = new AbortController();
             answerController = controller;
             ask.disabled = true;
+            ask.setAttribute('aria-busy', 'true');
             cancelAnswer.disabled = false;
-            answerStatus.replaceChildren(el('p', 'muted', 'Checking indexed sources…'));
+            answerStatus.replaceChildren(statusNotice('pending', 'Checking indexed sources…'));
             try {
                 const result = await ctx.api.post('/api/documents/answer', { question: question.value }, undefined, controller.signal) as {
-                    label: string; state: string; coverage: string; answer: string;
+                    label: string; mode?: string; state: string; coverage: string; answer: string;
+                    identity?: { label: string };
                     citations: { title: string; version: number; excerpt: string; start: number; end: number }[];
+                    segments?: { text: string; citations: { title: string; version: number; excerpt: string; start: number; end: number }[] }[];
                 };
                 if (controller.signal.aborted || ownGeneration !== answerGeneration || ctx.signal.aborted) return;
                 answerStatus.replaceChildren(el('p', 'eyebrow', result.label));
-                answerStatus.append(el('p', 'small muted', 'Coverage: indexed documents only.'));
-                if (result.state === 'NO_EVIDENCE') answerStatus.append(el('p', 'muted', 'No indexed evidence matched this question.'));
+                answerStatus.append(statusNotice('info', 'Coverage: indexed documents only.'));
+                if (result.mode === 'generated' && result.identity?.label)
+                    answerStatus.append(el('p', 'small muted', `${result.state === 'ANSWERED' ? 'Model' : 'Selected model'}: ${result.identity.label}`));
+                if (result.state === 'NO_EVIDENCE') answerStatus.append(statusNotice('empty', 'No indexed evidence matched this question.'));
+                else if (result.mode === 'generated' && result.segments) {
+                    for (const segment of result.segments) {
+                        answerStatus.append(el('p', 'answer-segment', segment.text));
+                        for (const citation of segment.citations)
+                            answerStatus.append(el('blockquote', 'list-item', `${citation.title} · v${citation.version} · characters ${citation.start}–${citation.end}: “${citation.excerpt}”`));
+                    }
+                }
                 else {
                     answerStatus.append(el('p', '', result.answer));
                     for (const citation of result.citations) answerStatus.append(el('blockquote', 'list-item', `${citation.title} · v${citation.version} · characters ${citation.start}–${citation.end}: “${citation.excerpt}”`));
@@ -56,11 +64,12 @@ export const workspace: Workspace = { mount(ctx) {
             }
             catch (error) {
                 if (!controller.signal.aborted && ownGeneration === answerGeneration && !ctx.signal.aborted)
-                    answerStatus.replaceChildren(el('p', 'error', error instanceof Error ? error.message : 'Answer could not be completed'));
+                    answerStatus.replaceChildren(statusNotice('unknown', error instanceof Error ? error.message : 'The answer could not be confirmed.'));
             }
             finally {
                 if (ownGeneration === answerGeneration) {
                     ask.disabled = false;
+                    ask.removeAttribute('aria-busy');
                     cancelAnswer.disabled = true;
                     answerController = undefined;
                 }
@@ -71,16 +80,18 @@ export const workspace: Workspace = { mount(ctx) {
             answerController?.abort();
             answerController = undefined;
             ask.disabled = false;
+            ask.removeAttribute('aria-busy');
             cancelAnswer.disabled = true;
-            answerStatus.replaceChildren(el('p', 'muted', 'Answer cancelled.'));
+            answerStatus.replaceChildren(statusNotice('info', 'Answer cancelled.'));
         }, { signal: ctx.signal });
         question.addEventListener('input', () => {
             answerGeneration++;
             answerController?.abort();
             answerController = undefined;
             ask.disabled = false;
+            ask.removeAttribute('aria-busy');
             cancelAnswer.disabled = true;
-            answerStatus.replaceChildren(el('p', 'muted', 'Question changed. Ask again to refresh the cited answer.'));
+            answerStatus.replaceChildren(statusNotice('info', 'Question changed. Ask again to refresh the cited answer.'));
         }, { signal: ctx.signal });
         async function refresh() {
             const data = await ctx.api.get('/api/documents') as {

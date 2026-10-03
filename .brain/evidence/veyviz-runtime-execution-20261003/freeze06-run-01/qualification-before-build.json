@@ -1,0 +1,22 @@
+[
+  {
+    "path": ".local/veyviz-build-qualification/current.json",
+    "bytes": 131666,
+    "sha256": "8f6ce8f66a60ec76e157086e81a45517c4d1a753a5748146f0dcfb3c9bbfccb8"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/df1a9754-8c85-4928-81f8-ee8401c0890d/attempt.json",
+    "bytes": 1279,
+    "sha256": "75293a4503788aa251abedfcdf34f896fcf6aa5c08e3e99ec60a1c1cfc479da4"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/df1a9754-8c85-4928-81f8-ee8401c0890d/stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/df1a9754-8c85-4928-81f8-ee8401c0890d/stdout.bin",
+    "bytes": 440,
+    "sha256": "d7f89847eb7ea19edf23783104c791df85dc960843d8b379ab62a62d63e9a0d8"
+  }
+]

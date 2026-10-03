@@ -1,0 +1,20 @@
+✔ Veyviz refuses a modified enrollment plan before creating identities or data (11.8504ms)
+✔ invalid port fails before creating a pending product enrollment (1.2912ms)
+✔ an unclean owned process exit remains quarantined on later launch (8148.0901ms)
+▶ IPC control errors cannot settle the original child close observation
+  ✔ sync stop-send failure waits for original close (5441.5534ms)
+  ✔ async stop-send failure waits for original close (5178.5636ms)
+✔ IPC control errors cannot settle the original child close observation (10621.8664ms)
+✔ fixed catalog occupied-port startup failure observes original close and preserves quarantine (3260.3284ms)
+✔ Veyviz catalog runs independently, scopes records, and retains them through observed graceful restart (8873.4703ms)
+✔ the running catalog serves captured web bytes and backend state after its producer asset changes (23159.7567ms)
+✔ unchanged snapshot restart retains data while a changed valid export gets isolated storage (48268.028ms)
+✔ tampered, incomplete, forged, stale and escaped snapshot inputs are refused before fork (30252.8071ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 132757.3597

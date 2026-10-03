@@ -1,0 +1,34 @@
+{
+  "observedAt": "2026-10-03T16:31:35.129Z",
+  "url": "http://127.0.0.1:58113/",
+  "runtimeSession": 16251,
+  "generation": "dbfaa4de3b2f329db33106d3364b9ae469fe94fe977ae4f48bea58c121ed0887",
+  "producerReceipt": "9f0ce34bc320e4837f46acbdbd38a4efa0e73ff876d578822c19e426361a6e72",
+  "frameworkCommit": "05084b287a383837b595f8c68a62f9524b86eacf",
+  "verified": [
+    "Normal admin sign-in; product-owned Command Center default and five workspace navigation",
+    "Browser recording registration and queued analysis returned three accepted sampled frames",
+    "Displayed exact admitted recording/model SHA256 and 21 decoded frames",
+    "Keyboard Enter on Next sample moved to sample2; visible focus outline and44pxCSS target",
+    "System Health verified installed profile",
+    "Intelligence admitted recording registration produced actual1920x1080 video,16.2seconds,readyState4,no media error"
+  ],
+  "issues": [
+    {
+      "status": "FAILED_PENDING_REPAIR",
+      "viewport": 390,
+      "hostScrollWidth": 688,
+      "reason": "Shell intrinsic minimum expands whole page; source repair in maintained framework underway"
+    },
+    {
+      "status": "FAILED_PENDING_REPAIR",
+      "reason": "Expanded analysis header alignment and source pager wrapping; productCSS repair underway"
+    }
+  ],
+  "limits": [
+    "No advanced intelligence inference profile selected",
+    "Three sampled frames with zero detections do not establish occupancy or absence",
+    "No whole product/full npm/native acceptance"
+  ],
+  "sourceChangesDuringRun": "Running immutable snapshot preserved while writers repair source; this run will not qualify changed CSS"
+}

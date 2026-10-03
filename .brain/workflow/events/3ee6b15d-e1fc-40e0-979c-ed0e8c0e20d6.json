@@ -1,0 +1,159 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "3ee6b15d-e1fc-40e0-979c-ed0e8c0e20d6",
+  "revision": 21,
+  "previousEventId": "20d3634f-2a92-4f64-a7a1-3b02aad3bf33",
+  "reportedActor": "/root admits two-owner startup original-close repair after independent source diagnosis",
+  "recordedAt": "2026-10-03T08:38:09.196Z",
+  "platformTask": {
+    "taskId": "VEYVIZ-LOCAL-001",
+    "status": "IMPLEMENTING",
+    "candidate": null,
+    "runIds": [
+      "56e9e9e0-ce48-44f2-bc0b-f8c429cd70d3",
+      "09fc206f-f261-45a2-a5b4-1e23414b1d76",
+      "0547b1fb-cfcc-4f8c-b32a-9ab68333cbc5",
+      "f9046e91-184d-4157-ae5c-0cee2b56b665",
+      "edf701de-a456-42df-b287-6f60eb254d45"
+    ],
+    "reviewIds": [
+      "96f7ad30-2aa6-4077-8342-25747338f69f"
+    ],
+    "blockers": [
+      "Required full npm test invocation failed four Windows worker startup/state deadlines. The isolated unchanged-source worker retry also failed four timing cases; root cause remains unresolved and was reported to the framework worker. No all-checks acceptance.",
+      "Required Windows file-symlink fixture could not be created due to EPERM; this remains blocked, not passed.",
+      "Product diagnostic startup failure returned cleanup EPIPE before original child closure was observed; original final exit remains unknown. Bounded source review is assessing the cleanup path."
+    ],
+    "nextAction": "Product Brawn repairs only the two admitted launcher/lifecycle owners; IPC/control failure cannot settle original closure. Use captured overlay, fresh build and focused lifecycle tests, then independent review. Historical unknown closure remains preserved. Framework/UI adoption and final full current-product browser/model/regression qualification continue afterward.",
+    "gates": [
+      {
+        "id": "independent-construction",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/f9046e91-184d-4157-ae5c-0cee2b56b665.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "real-model",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/09fc206f-f261-45a2-a5b4-1e23414b1d76.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "authority",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/f9046e91-184d-4157-ae5c-0cee2b56b665.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "browser",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/0547b1fb-cfcc-4f8c-b32a-9ab68333cbc5.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "restart-cleanup",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/f9046e91-184d-4157-ae5c-0cee2b56b665.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "second-variant",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/f9046e91-184d-4157-ae5c-0cee2b56b665.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "full-suite",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/edf701de-a456-42df-b287-6f60eb254d45.json"
+        ],
+        "limitations": [
+          "Only the selected local recorded profile; no production, detector-accuracy or bug-free qualification.",
+          "Actual full-suite worker startup/state deadline failures are retained. Isolated retries do not turn this full invocation into a pass. See diagnosis and retry artifacts.",
+          "Required Windows file-symlink fixture denied with EPERM, recorded BLOCKED_ENV rather than pass; security settings preserved."
+        ]
+      },
+      {
+        "id": "independent-review",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/96f7ad30-2aa6-4077-8342-25747338f69f.json"
+        ],
+        "limitations": [
+          "Source/visual acceptance does not override a failed full invocation or required host-blocked fixture.",
+          "Reported execution/reviewer identity is not authenticated attestation.",
+          "No user satisfaction, world-standard, production or detector-accuracy guarantee.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "live-camera",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "native-mobile",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "production",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "paging-review",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/evidence/product-paging-initial-review/independent-review.md",
+          ".brain/evidence/product-paging-repair-review/independent-repair-review.md"
+        ],
+        "limitations": [
+          "Only the two paging source blockers are resolved on captured overlay2437aeb7 with build0/13 focused passes; browser and whole-product acceptance remain open.",
+          "Original CHANGES_REQUESTED and failed attempts are preserved."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "4470f3534968c7d081ad6e0f762360c77b0f4ac0c2888b492ac20ad1361ee290"
+}

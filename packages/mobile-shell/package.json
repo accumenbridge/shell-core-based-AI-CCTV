@@ -7,10 +7,16 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./native": {
+      "types": "./dist/native.d.ts",
+      "import": "./dist/native.js"
     }
   },
   "files": ["dist"],
   "dependencies": {
+    "@capacitor/app": "8.1.1",
+    "@capacitor/core": "8.5.2",
     "@quadbridge/web-shell": "0.2.0"
   },
   "scripts": { "build": "tsc -b" }

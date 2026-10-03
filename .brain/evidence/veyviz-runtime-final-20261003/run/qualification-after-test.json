@@ -1,0 +1,102 @@
+[
+  {
+    "path": ".local/veyviz-build-qualification/current.json",
+    "bytes": 131769,
+    "sha256": "aff8257e4e701042f5cd1f5d31a9d15e9596de5aee8babd61fdb0fc57a956fcc"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/1690b0ec-6711-4a89-8f6c-9fe6cff39841/attempt.json",
+    "bytes": 1382,
+    "sha256": "dfb204781c735c13133380527cdeb84bc725d65dfffe6154c647919a3133d262"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/1690b0ec-6711-4a89-8f6c-9fe6cff39841/stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/1690b0ec-6711-4a89-8f6c-9fe6cff39841/stdout.bin",
+    "bytes": 440,
+    "sha256": "d7f89847eb7ea19edf23783104c791df85dc960843d8b379ab62a62d63e9a0d8"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/42252269-9e85-4614-844d-7d997cd77d6b/attempt.json",
+    "bytes": 1382,
+    "sha256": "721fdf63442d2d0e5b006b49e245cb699980626d52eafc872fcd8c9ba07dd980"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/42252269-9e85-4614-844d-7d997cd77d6b/stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/42252269-9e85-4614-844d-7d997cd77d6b/stdout.bin",
+    "bytes": 440,
+    "sha256": "d7f89847eb7ea19edf23783104c791df85dc960843d8b379ab62a62d63e9a0d8"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/75f82622-09e6-4296-9e84-3a1da42e2c79/attempt.json",
+    "bytes": 1382,
+    "sha256": "2621f701943700300a55e99ddb88b31fcd8866ba42edab81cddb988b5d3529f5"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/75f82622-09e6-4296-9e84-3a1da42e2c79/stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/75f82622-09e6-4296-9e84-3a1da42e2c79/stdout.bin",
+    "bytes": 440,
+    "sha256": "d7f89847eb7ea19edf23783104c791df85dc960843d8b379ab62a62d63e9a0d8"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/b473c7df-f151-4d32-97a4-c33e791ed507/attempt.json",
+    "bytes": 1382,
+    "sha256": "9d6fc77039c01142e655e35c4f0f9ced4d0a0158f990d95f655ee13aec53c698"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/b473c7df-f151-4d32-97a4-c33e791ed507/stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/b473c7df-f151-4d32-97a4-c33e791ed507/stdout.bin",
+    "bytes": 440,
+    "sha256": "d7f89847eb7ea19edf23783104c791df85dc960843d8b379ab62a62d63e9a0d8"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/df1a9754-8c85-4928-81f8-ee8401c0890d/attempt.json",
+    "bytes": 1279,
+    "sha256": "75293a4503788aa251abedfcdf34f896fcf6aa5c08e3e99ec60a1c1cfc479da4"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/df1a9754-8c85-4928-81f8-ee8401c0890d/stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/attempts/df1a9754-8c85-4928-81f8-ee8401c0890d/stdout.bin",
+    "bytes": 440,
+    "sha256": "d7f89847eb7ea19edf23783104c791df85dc960843d8b379ab62a62d63e9a0d8"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/history/current-1791034206460-b473c7df-f151-4d32-97a4-c33e791ed507.json",
+    "bytes": 131666,
+    "sha256": "8f6ce8f66a60ec76e157086e81a45517c4d1a753a5748146f0dcfb3c9bbfccb8"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/history/current-1791034801712-75f82622-09e6-4296-9e84-3a1da42e2c79.json",
+    "bytes": 131769,
+    "sha256": "cd9eab0ed89f8e4c9691e18002862aa37c72765481b77e6918b2faa4395415e7"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/history/current-1791035342178-1690b0ec-6711-4a89-8f6c-9fe6cff39841.json",
+    "bytes": 131769,
+    "sha256": "17fb3d22569fa90d1198fd01a90be5a7a9012ebd690c8dbe6baf5d49072646c0"
+  },
+  {
+    "path": ".local/veyviz-build-qualification/history/current-1791035806809-42252269-9e85-4614-844d-7d997cd77d6b.json",
+    "bytes": 131769,
+    "sha256": "f2b25284c60b7c99ff148c4f533828ae9624ed003c68942e7adc1e4c6a774ca1"
+  }
+]

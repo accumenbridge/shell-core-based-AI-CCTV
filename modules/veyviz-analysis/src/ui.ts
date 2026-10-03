@@ -1,10 +1,45 @@
 import type { Workspace, WorkspaceContext } from '@quadbridge/contracts';
+import { createCommandState, type CapturedCommandIntent } from '@quadbridge/client-core';
 import { button, el, emptyState, field, section } from '@quadbridge/web-shell/dom';
 import type { AnalysisResult, AnalysisSample } from './protocol.js';
 import type { SourceView } from '@quadbridge/veyviz-sources/protocol';
 
+const MAX_CURSOR_HISTORY = 100;
+
 type JobState = 'QUEUED' | 'RUNNING' | 'CANCEL_REQUESTED' | 'CANCELLED' | 'SUCCEEDED' | 'FAILED';
 type ReviewState = 'OPEN' | 'REVIEWED' | 'DISMISSED';
+type AnalysisDateFilter = 'all' | 'today' | '7d' | '30d';
+interface AnalysisQueryFilters { q?: string; sourceId?: string; jobState?: string; reviewState?: string }
+
+function analysisCreatedAfter(filter: AnalysisDateFilter, capturedAt: number): number | undefined {
+  const now = new Date(capturedAt);
+  if (filter === 'today') return new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  if (filter === '7d') return capturedAt - 7 * 24 * 60 * 60 * 1000;
+  if (filter === '30d') return capturedAt - 30 * 24 * 60 * 60 * 1000;
+  return undefined;
+}
+
+/** Keep a rolling date bound stable while paging or refreshing one active query. */
+export function createAnalysisQueryState(initialFilter: AnalysisDateFilter, capturedAt = Date.now()) {
+  let createdAfter = analysisCreatedAfter(initialFilter, capturedAt);
+  return {
+    reset(nextFilter: AnalysisDateFilter, resetAt = Date.now()) {
+      createdAfter = analysisCreatedAfter(nextFilter, resetAt);
+    },
+    url(filters: AnalysisQueryFilters, cursor?: string): string {
+      const parameters = new URLSearchParams();
+      const query = filters.q?.trim();
+      if (query) parameters.set('q', query);
+      if (filters.sourceId && filters.sourceId !== 'all') parameters.set('sourceId', filters.sourceId);
+      if (filters.jobState && filters.jobState !== 'all') parameters.set('jobState', filters.jobState);
+      if (filters.reviewState && filters.reviewState !== 'all') parameters.set('reviewState', filters.reviewState);
+      if (createdAfter !== undefined) parameters.set('createdAfter', String(Math.max(0, Math.floor(createdAfter))));
+      parameters.set('limit', '20');
+      if (cursor) parameters.set('cursor', cursor);
+      return '/api/analysis/query?' + parameters.toString();
+    }
+  };
+}
 interface AnalysisItem {
   id: string;
   jobId: string;
@@ -17,9 +52,10 @@ interface AnalysisItem {
   detectionCount: number;
   coverage: 'UNCOMMISSIONED_RECORDING' | 'UNKNOWN';
   occupancy: 'UNKNOWN';
-  sourceChanged: boolean;
+  sourceChanged?: boolean;
 }
-interface AnalysisList { items: AnalysisItem[]; limit: number }
+interface AnalysisList { items: AnalysisItem[]; page: { limit: number; nextCursor?: string; coverage: 'filtered-owner-query' } }
+interface SourcePage { items: SourceView[]; page: { limit: number; nextCursor?: string; coverage: 'filtered-owner-query' } }
 interface ResultResponse {
   analysisId: string;
   jobState: JobState;
@@ -99,6 +135,12 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
   const canWrite = ctx.permissions.includes('veyviz.analysis.write');
   const root = ctx.root;
   root.classList.add(commandCenterMode ? 'veyviz-command' : 'veyviz-analysis');
+  root.setAttribute('data-qb-ui-boundary', '');
+  root.setAttribute('data-qb-surface', commandCenterMode ? 'dark' : 'light');
+  root.setAttribute('data-qb-text', 'standard');
+  root.setAttribute('data-qb-accent', 'teal');
+  root.setAttribute('data-qb-density', commandCenterMode ? 'compact' : 'comfortable');
+  root.setAttribute('data-qb-layout-mode', 'operational');
 
   let sourceRecords: SourceView[] = [];
   let items: AnalysisItem[] = [];
@@ -112,12 +154,27 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
   let sampleEpoch = 0;
   let sampleButtons: HTMLButtonElement[] = [];
   let closed = false;
+  const commandState = createCommandState({ scope: ctx.scope, actor: ctx.actor, signal: ctx.signal, isCurrent: () => !closed && !ctx.signal.aborted });
+  const commandIntents = new Map<string, CapturedCommandIntent>();
+  const commandTargets = new Map<string, string | null>();
+  const capturesInProgress = new Set<string>();
+  const submitSlot = 'analysis.submit';
+  const reviewSlot = (id: string) => `analysis.review:${id}`;
+  const cancelSlot = (id: string) => `analysis.cancel:${id}`;
+  const commandStateFor = (slot: string) => { const intent = commandIntents.get(slot); return intent ? commandState.state(intent) : undefined; };
+  const hasUnresolvedCommand = () => capturesInProgress.size > 0 || [...commandIntents.values()].some(intent => ['PREPARED', 'PENDING', 'UNKNOWN'].includes(commandState.state(intent) ?? ''));
   let listRequest: LinkedController | null = null;
   let resultRequest: LinkedController | null = null;
   let listEpoch = 0;
   let listBusy = false;
   let listQueued = false;
-  let listLimit = 25;
+  let analysisPageIndex = 0, analysisPageBase = 0;
+  let analysisNextCursor: string | undefined;
+  let analysisCursors: Array<string | undefined> = [undefined];
+  let filterSourcePageIndex = 0, submitSourcePageIndex = 0, filterSourcePageBase = 0, submitSourcePageBase = 0;
+  let filterSourceNextCursor: string | undefined, submitSourceNextCursor: string | undefined;
+  let filterSourceCursors: Array<string | undefined> = [undefined], submitSourceCursors: Array<string | undefined> = [undefined];
+  let filterSourceEpoch = 0, submitSourceEpoch = 0;
   let loadingId: string | null = null;
   const previewCache = new Map<string, AnalysisResult>();
   const previewFailed = new Set<string>();
@@ -125,11 +182,8 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
   const previewRequests = new Map<string, LinkedController>();
   const previewQueue: string[] = [];
   let previewWanted = new Set<string>();
-  let pendingSubmission: { commandId: string; sourceId: string; frameCount: number; sampleStride: number } | null = null;
-  const pendingReviews = new Map<string, { commandId: string; decision: ReviewState }>();
   const rows = new Map<string, RunRow>();
   const cancelBusy = new Set<string>();
-  const pendingCancellations = new Map<string, string>();
   const reviewBusy = new Set<string>();
 
   const header = el('header', 'analysis-page-header');
@@ -139,7 +193,7 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
     el('h1', '', commandCenterMode ? 'Command Center' : 'Investigate'),
     el('p', 'analysis-intro', commandCenterMode
       ? 'Review accepted frames and the work that needs attention.'
-      : 'Search the latest analyses and inspect their accepted footage.')
+      : 'Search analyses and inspect their accepted footage.')
   );
   header.append(headingCopy);
   const headerActions = el('div', 'analysis-header-actions');
@@ -150,8 +204,8 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
     node.append(value, el('span', '', label));
     return node;
   };
-  summary.setAttribute('aria-label', 'Current tenant analysis facts');
-  summary.append(metric('latest analyses', totalCount), metric('open reviews', openCount), metric('active', activeCount));
+  summary.setAttribute('aria-label', 'Current page analysis facts');
+  summary.append(metric('on this page', totalCount), metric('open reviews', openCount), metric('active', activeCount));
   headerActions.append(summary);
   header.append(headerActions);
 
@@ -169,32 +223,49 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
 
   const filterBar = el('section', 'analysis-filter-bar');
   filterBar.hidden = commandCenterMode;
-  filterBar.setAttribute('aria-label', 'Filter latest analyses');
+  filterBar.setAttribute('aria-label', 'Filter analyses');
   const searchLabel = el('label', 'analysis-search-field');
-  searchLabel.append(el('span', 'analysis-filter-label', 'Search latest analyses'));
+  searchLabel.append(el('span', 'analysis-filter-label', 'Search analyses'));
   const searchInput = el('input');
   searchInput.type = 'search';
   searchInput.name = 'analysisSearch';
-  searchInput.placeholder = 'Source name, status or analysis ID';
+  searchInput.placeholder = 'Analysis, job or source ID';
+  searchInput.maxLength = 200;
   searchInput.autocomplete = 'off';
   searchInput.setAttribute('aria-describedby', 'analysis-filter-scope');
   searchLabel.append(searchInput);
-  const sourceFilterLabel = el('label', 'analysis-filter-select');
-  sourceFilterLabel.append(el('span', 'analysis-filter-label', 'Recording'));
+  const sourceFilterLabel = el('div', 'analysis-filter-select analysis-source-filter');
+  const sourceFilterSearchLabel = el('label', 'analysis-filter-label', 'Find recording by name or ID');
+  const sourceFilterSearch = el('input');
+  sourceFilterSearch.id = 'analysis-source-filter-search'; sourceFilterSearchLabel.htmlFor = sourceFilterSearch.id;
+  sourceFilterSearch.type = 'search'; sourceFilterSearch.maxLength = 200; sourceFilterSearch.placeholder = 'Find recording by name or ID'; sourceFilterSearch.autocomplete = 'off';
   const sourceFilter = el('select');
   sourceFilter.setAttribute('aria-label', 'Filter by recording');
   const allSourcesOption = el('option', '', 'All recordings');
   allSourcesOption.value = 'all';
   sourceFilter.append(allSourcesOption);
-  sourceFilterLabel.append(sourceFilter);
+  const filterSourcePager = el('span', 'analysis-source-pager');
+  const filterSourcePrevious = button('Previous recordings', () => moveSourcePage('filter', -1), 'analysis-source-page-button');
+  const filterSourceStatus = el('span', 'analysis-source-page-status', 'Page 1');
+  const filterSourceNext = button('Next recordings', () => moveSourcePage('filter', 1), 'analysis-source-page-button');
+  filterSourcePrevious.disabled = true; filterSourceNext.disabled = true;
+  filterSourcePager.append(filterSourcePrevious, filterSourceStatus, filterSourceNext);
+  sourceFilterLabel.append(sourceFilterSearchLabel, sourceFilterSearch, sourceFilter, filterSourcePager);
   const stateFilterLabel = el('label', 'analysis-filter-select');
   stateFilterLabel.append(el('span', 'analysis-filter-label', 'State'));
   const stateFilter = el('select');
   stateFilter.setAttribute('aria-label', 'Filter by analysis state');
-  for (const [value, label] of [['all', 'All states'], ['open', 'Open review'], ['ready', 'Result ready'], ['active', 'In progress'], ['failed', 'Failed']] as const) {
+  for (const [value, label] of [['all', 'All job states'], ['QUEUED', 'Queued'], ['RUNNING', 'Running'], ['CANCEL_REQUESTED', 'Cancellation requested'], ['CANCELLED', 'Cancelled'], ['SUCCEEDED', 'Succeeded'], ['FAILED', 'Failed']] as const) {
     const option = el('option', '', label); option.value = value; stateFilter.append(option);
   }
   stateFilterLabel.append(stateFilter);
+  const reviewFilterLabel = el('label', 'analysis-filter-select');
+  reviewFilterLabel.append(el('span', 'analysis-filter-label', 'Review state'));
+  const reviewFilter = el('select'); reviewFilter.setAttribute('aria-label', 'Filter by review state');
+  for (const [value, label] of [['all', 'All review states'], ['OPEN', 'Open review'], ['REVIEWED', 'Reviewed'], ['DISMISSED', 'Dismissed']] as const) {
+    const option = el('option', '', label); option.value = value; reviewFilter.append(option);
+  }
+  reviewFilterLabel.append(reviewFilter);
   const dateFilterLabel = el('label', 'analysis-filter-select');
   dateFilterLabel.append(el('span', 'analysis-filter-label', 'Date'));
   const dateFilter = el('select');
@@ -203,35 +274,59 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
     const option = el('option', '', label); option.value = value; dateFilter.append(option);
   }
   dateFilterLabel.append(dateFilter);
+  const analysisQueryState = createAnalysisQueryState(dateFilter.value as AnalysisDateFilter);
   const clearFilters = button('Clear filters', () => {
     searchInput.value = '';
     sourceFilter.value = 'all';
     stateFilter.value = 'all';
+    reviewFilter.value = 'all';
     dateFilter.value = 'all';
-    updateRows();
-    schedulePreviewLoads();
+    sourceFilterSearch.value = '';
+    filterSourceCursors = [undefined]; filterSourcePageIndex = 0; filterSourcePageBase = 0;
+    filterSourceNextCursor = undefined; filterSourcePrevious.disabled = true; filterSourceNext.disabled = true; filterSourceStatus.textContent = 'Page 1';
+    void loadSourceChoices('filter');
+    resetAnalysisPage();
   }, 'analysis-filter-clear');
-  const filterScope = el('p', 'analysis-filter-scope', 'Filters match only the latest 25 analyses returned for this tenant.');
+  const filterScope = el('p', 'analysis-filter-scope', 'Search matches analysis, job or source IDs. Find recording names in the source picker. Page membership can shift as records change.');
   filterScope.id = 'analysis-filter-scope';
-  filterBar.append(searchLabel, sourceFilterLabel, stateFilterLabel, dateFilterLabel, clearFilters, filterScope);
+  filterBar.append(searchLabel, sourceFilterLabel, stateFilterLabel, reviewFilterLabel, dateFilterLabel, clearFilters, filterScope);
 
   let setSubmitState = () => {};
+  let frameCountInputRef: HTMLInputElement | null = null;
+  let strideInputRef: HTMLInputElement | null = null;
   let sourceSelectRef: HTMLSelectElement | null = null;
   let sourceHelpRef: HTMLElement | null = null;
+  let sourceSubmitSearchRef: HTMLInputElement | null = null;
+  let submitSourcePreviousRef: HTMLButtonElement | null = null;
+  let submitSourceNextRef: HTMLButtonElement | null = null;
+  let submitSourceStatusRef: HTMLElement | null = null;
   let newRunDisclosure: HTMLDetailsElement | null = null;
   if (canWrite) {
     const disclosure = el('details', 'analysis-new-run');
     newRunDisclosure = disclosure;
     disclosure.append(el('summary', '', 'New analysis'));
     const form = el('form', 'analysis-form');
-    const sourceField = el('label', 'analysis-source-field');
-    sourceField.append(el('span', 'analysis-field-label', 'Recording'));
+    const sourceField = el('div', 'analysis-source-field');
     const sourceSelect = el('select');
     sourceSelectRef = sourceSelect;
     sourceSelect.name = 'sourceId';
+    sourceSelect.id = 'analysis-run-source';
     sourceSelect.required = true;
     sourceSelect.setAttribute('aria-describedby', 'analysis-source-help');
-    sourceField.append(sourceSelect);
+    const sourceFieldLabel = el('label', 'analysis-field-label', 'Recording');
+    sourceFieldLabel.htmlFor = sourceSelect.id;
+    const sourceSubmitSearch = el('input');
+    sourceSubmitSearchRef = sourceSubmitSearch;
+    sourceSubmitSearch.type = 'search'; sourceSubmitSearch.maxLength = 200; sourceSubmitSearch.placeholder = 'Search recording names or IDs'; sourceSubmitSearch.autocomplete = 'off';
+    sourceSubmitSearch.setAttribute('aria-label', 'Search recordings by name or ID for analysis');
+    const submitSourcePager = el('span', 'analysis-source-pager');
+    const submitSourcePrevious = button('Previous recordings', () => moveSourcePage('submit', -1), 'analysis-source-page-button');
+    const submitSourceStatus = el('span', 'analysis-source-page-status', 'Page 1');
+    const submitSourceNext = button('Next recordings', () => moveSourcePage('submit', 1), 'analysis-source-page-button');
+    submitSourcePreviousRef = submitSourcePrevious; submitSourceNextRef = submitSourceNext; submitSourceStatusRef = submitSourceStatus;
+    submitSourcePrevious.disabled = true; submitSourceNext.disabled = true;
+    submitSourcePager.append(submitSourcePrevious, submitSourceStatus, submitSourceNext);
+    sourceField.append(sourceFieldLabel, sourceSubmitSearch, sourceSelect, submitSourcePager);
     const sourceHelp = el('span', 'analysis-field-help');
     sourceHelp.id = 'analysis-source-help';
     sourceField.append(sourceHelp);
@@ -242,6 +337,7 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
     const frameCount = field('Sampled frames (1–6)', 'frameCount');
     const frameCountInput = frameCount.wrap.querySelector('input');
     if (frameCountInput) {
+      frameCountInputRef = frameCountInput;
       frameCountInput.type = 'number';
       frameCountInput.min = '1';
       frameCountInput.max = '6';
@@ -250,6 +346,7 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
     const stride = field('Frame stride (1–30)', 'sampleStride');
     const strideInput = stride.wrap.querySelector('input');
     if (strideInput) {
+      strideInputRef = strideInput;
       strideInput.type = 'number';
       strideInput.min = '1';
       strideInput.max = '30';
@@ -266,52 +363,86 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
     toolbar.append(disclosure);
     let submitting = false;
     setSubmitState = () => {
-      submit.disabled = submitting || sourceRecords.length === 0 || !sourceSelect.value || ctx.signal.aborted;
+      const state = commandStateFor(submitSlot), unresolved = state === 'PREPARED' || state === 'PENDING' || state === 'UNKNOWN';
+      const intent = commandIntents.get(submitSlot);
+      if (state === 'UNKNOWN' && intent?.payload && typeof intent.payload === 'object' && !Array.isArray(intent.payload)) {
+        const payload = intent.payload;
+        if (typeof payload.sourceId === 'string') sourceSelect.value = payload.sourceId;
+        if (frameCountInputRef && typeof payload.frameCount === 'number') frameCountInputRef.value = String(payload.frameCount);
+        if (strideInputRef && typeof payload.sampleStride === 'number') strideInputRef.value = String(payload.sampleStride);
+        setText(formFeedback, 'Request outcome unknown. Retry the original analysis before editing its settings or leaving this workspace.');
+      }
+      sourceSelect.disabled = unresolved;
+      if (frameCountInputRef) frameCountInputRef.disabled = unresolved;
+      if (strideInputRef) strideInputRef.disabled = unresolved;
+      const unknown = state === 'UNKNOWN';
+      submit.disabled = submitting || (!unknown && (sourceRecords.length === 0 || !sourceSelect.value)) || ctx.signal.aborted;
+      setText(submit, submitting ? 'Queueing…' : unknown ? 'Retry original analysis' : 'Start analysis');
     };
+    sourceSubmitSearch.addEventListener('input', () => {
+      submitSourceCursors = [undefined]; submitSourcePageIndex = 0; submitSourcePageBase = 0; submitSourceNextCursor = undefined;
+      if (submitSourcePreviousRef) submitSourcePreviousRef.disabled = true;
+      if (submitSourceNextRef) submitSourceNextRef.disabled = true;
+      if (submitSourceStatusRef) submitSourceStatusRef.textContent = 'Page 1';
+      void loadSourceChoices('submit');
+    }, { signal: ctx.signal });
     sourceSelect.addEventListener('change', setSubmitState, { signal: ctx.signal });
     form.addEventListener('submit', event => {
       event.preventDefault();
-      if (submitting || closed || ctx.signal.aborted || !sourceSelect.value) return;
-      const requestBody = {
-        sourceId: sourceSelect.value,
-        frameCount: Number(frameCount.input.value),
-        sampleStride: Number(stride.input.value)
-      };
-      if (!pendingSubmission || pendingSubmission.sourceId !== requestBody.sourceId ||
-        pendingSubmission.frameCount !== requestBody.frameCount || pendingSubmission.sampleStride !== requestBody.sampleStride) {
-        pendingSubmission = { commandId: crypto.randomUUID(), ...requestBody };
-      }
+      if (submitting || closed || ctx.signal.aborted) return;
+      const previousIntent = commandIntents.get(submitSlot);
+      const previousState = previousIntent ? commandState.state(previousIntent) : undefined;
+      const requestBody = previousState === 'UNKNOWN' && previousIntent?.payload && typeof previousIntent.payload === 'object' && !Array.isArray(previousIntent.payload)
+        ? previousIntent.payload as { sourceId: string; frameCount: number; sampleStride: number }
+        : { sourceId: sourceSelect.value, frameCount: Number(frameCount.input.value), sampleStride: Number(stride.input.value) };
+      if (!requestBody.sourceId || (!sourceSelect.value && previousState !== 'UNKNOWN')) return;
+      if (previousState !== 'UNKNOWN' && !commandTargets.has(submitSlot)) commandTargets.set(submitSlot, selectedId);
+      const selectionAtSubmit = commandTargets.get(submitSlot) ?? null;
       submitting = true;
       submit.disabled = true;
       setText(formFeedback, 'Queueing the selected recording…');
-      void ctx.api.post('/api/analysis', requestBody, pendingSubmission.commandId, ctx.signal).then(async raw => {
+      void (async () => {
+        try {
+        const raw = await postCommand<{ id?: unknown; state?: unknown }>(submitSlot, 'veyviz.analysis.submit', requestBody, '/api/analysis');
         if (closed || ctx.signal.aborted) return;
         const queued = raw as { id?: unknown; state?: unknown };
         if (typeof queued.id !== 'string' || queued.state !== 'QUEUED') throw Error('The request did not return a queued analysis identity.');
         // A list read started before this committed command cannot replace its newer state.
         listEpoch++;
-        selectedId = queued.id;
-        selectedResult = null;
-        selectedResponse = null;
-        selectedLoadedId = null;
-        selectedResultFailedId = null;
-        pendingSubmission = null;
+        if (selectedId === selectionAtSubmit) {
+          selectedId = queued.id;
+          selectedResult = null;
+          selectedResponse = null;
+          selectedLoadedId = null;
+          selectedResultFailedId = null;
+          selectionEpoch++;
+        }
+        commandTargets.delete(submitSlot);
         searchInput.value = '';
         sourceFilter.value = 'all';
         stateFilter.value = 'all';
+        reviewFilter.value = 'all';
         dateFilter.value = 'all';
-        selectionEpoch++;
+        sourceFilterSearch.value = '';
+        filterSourceCursors = [undefined]; filterSourcePageIndex = 0; filterSourcePageBase = 0;
+        filterSourceNextCursor = undefined; filterSourcePrevious.disabled = true; filterSourceNext.disabled = true; filterSourceStatus.textContent = 'Page 1';
+        void loadSourceChoices('filter');
         disclosure.open = false;
         setText(formFeedback, 'Analysis was queued. Its actual sampled results will appear when accepted.');
         setLive('Analysis queued. Worker state: queued.', true);
-        updateSelectedPanel();
-        if (document.activeElement === document.body || form.contains(document.activeElement)) selectedTitle.focus();
-        await refresh();
-      }).catch(error => {
-        if (closed || ctx.signal.aborted) return;
-        setText(formFeedback, error instanceof Error ? error.message : 'Analysis could not be queued.');
-        setLive('Analysis could not be queued.', true);
-      }).finally(() => {
+        if (selectedId === queued.id) {
+          updateSelectedPanel();
+          if (document.activeElement === document.body || form.contains(document.activeElement)) selectedTitle.focus();
+        }
+        resetAnalysisPage();
+        } catch (error) {
+          if (closed || ctx.signal.aborted) return;
+          if (commandStateFor(submitSlot) !== 'UNKNOWN' && commandStateFor(submitSlot) !== 'PREPARED' && commandStateFor(submitSlot) !== 'PENDING') commandTargets.delete(submitSlot);
+          const message = mutationError(submitSlot, error, 'Analysis request');
+          setText(formFeedback, message);
+          setLive(message, true);
+        }
+      })().finally(() => {
         submitting = false;
         if (!closed && !ctx.signal.aborted) setSubmitState();
       });
@@ -328,19 +459,25 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
   const runCount = el('span', 'analysis-panel-count', '0');
   runHeading.append(runHeadingTitle, runCount);
   const runScope = el('p', 'analysis-run-scope', commandCenterMode
-    ? 'Open reviews and active work in the latest 25 analyses.'
-    : 'Latest 25 analyses · newest first');
+    ? 'Open reviews and active work on this owner-query page.'
+    : 'Owner-query page · newest first');
   const runEmpty = emptyState(commandCenterMode ? 'Nothing needs attention' : 'No matching analyses', commandCenterMode
-    ? 'There are no open reviews, active jobs or failed jobs in the latest 25 analyses.'
+    ? 'There are no open reviews, active jobs or failed jobs on this page.'
     : canWrite ? 'Register a recording, then start a new analysis to create your first review.' : 'No analyses match these filters in this tenant.');
   const runEmptyTitle = runEmpty.querySelector('h3');
   const runEmptyCopy = runEmpty.querySelector('p');
   const runList = el('ol', 'analysis-run-list');
   runList.classList.add(commandCenterMode ? 'analysis-queue-list' : 'analysis-result-grid');
+  const analysisPager = el('nav', 'analysis-page-controls'); analysisPager.setAttribute('aria-label', 'Analysis pages');
+  const analysisPrevious = button('Previous', () => moveAnalysisPage(-1), 'analysis-secondary-action');
+  const analysisPageStatus = el('span', 'analysis-page-status', 'Page 1'); analysisPageStatus.setAttribute('role', 'status'); analysisPageStatus.setAttribute('aria-live', 'polite');
+  const analysisNext = button('Next', () => moveAnalysisPage(1), 'analysis-secondary-action');
+  analysisPrevious.disabled = true; analysisNext.disabled = true;
+  analysisPager.append(analysisPrevious, analysisPageStatus, analysisNext);
   const cancelFeedback = el('p', 'analysis-inline-status');
   cancelFeedback.setAttribute('role', 'status');
   cancelFeedback.setAttribute('aria-live', 'polite');
-  runsPanel.append(runHeading, runScope, runEmpty, runList, cancelFeedback);
+  runsPanel.append(runHeading, runScope, runEmpty, runList, analysisPager, cancelFeedback);
 
   const reviewPanel = section('analysis-panel analysis-review-room');
   const selectedHeader = el('div', 'analysis-selected-heading');
@@ -444,12 +581,40 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
     setText(liveStatus, message);
     liveStatus.classList.toggle('is-visible', visible);
   }
+  const unregisterNavigationGuard = ctx.navigation?.registerUnsavedGuard(() => {
+    if (!hasUnresolvedCommand()) return true;
+    setLive('Resolve the original command in this workspace before navigating away.', true);
+    return false;
+  });
+  async function postCommand<T>(slot: string, operation: string, payload: unknown, path: string): Promise<T> {
+    if (closed || ctx.signal.aborted) throw new DOMException('Workspace closed', 'AbortError');
+    capturesInProgress.add(slot);
+    let intent: CapturedCommandIntent;
+    try {
+      intent = await commandState.capture(slot, operation, payload);
+      commandIntents.set(slot, intent);
+    } finally { capturesInProgress.delete(slot); }
+    const dispatch = (id: string, body: import('@quadbridge/contracts').Json) => ctx.api.post(path, body, id, ctx.signal) as Promise<T>;
+    try {
+      const result = commandState.state(intent) === 'UNKNOWN'
+        ? await commandState.retry(intent, dispatch)
+        : await commandState.send(intent, dispatch);
+      if (commandState.state(intent) === 'COMMITTED' && commandIntents.get(slot) === intent) commandIntents.delete(slot);
+      return result;
+    } catch (error) {
+      if (commandState.state(intent) === 'REJECTED_NO_BUSINESS_EFFECTS' && commandIntents.get(slot) === intent) commandIntents.delete(slot);
+      throw error;
+    }
+  }
+  const mutationError = (slot: string, error: unknown, label: string) => commandStateFor(slot) === 'UNKNOWN'
+    ? `${label} outcome is unknown. Retry the exact original request before changing its values or leaving this workspace.`
+    : error instanceof Error ? error.message : `${label} could not be completed.`;
   function setRunCount(value: number) {
-    setText(runCount, value + ' / ' + listLimit);
-    runCount.setAttribute('aria-label', 'Showing ' + value + ' of the latest ' + listLimit + ' analyses');
+    setText(runCount, value + ' shown');
+    runCount.setAttribute('aria-label', 'Showing ' + value + ' analyses on page ' + (analysisPageBase + analysisPageIndex + 1));
     setText(runScope, commandCenterMode
-      ? 'Open reviews and active or failed jobs · latest ' + listLimit
-      : value + ' shown · filters apply to latest ' + listLimit);
+      ? 'Open reviews and active or failed jobs · page ' + (analysisPageBase + analysisPageIndex + 1)
+      : value + ' shown · page ' + (analysisPageBase + analysisPageIndex + 1) + ' of the filtered owner query');
   }
   function displayedItems(): AnalysisItem[] {
     if (commandCenterMode) {
@@ -457,37 +622,16 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
         (item.jobState === 'SUCCEEDED' && item.sampleCount > 0 && item.reviewState === 'OPEN') ||
         activeStates.has(item.jobState) || item.jobState === 'FAILED');
     }
-    const query = searchInput.value.trim().toLocaleLowerCase();
-    const sourceId = sourceFilter.value;
-    const status = stateFilter.value;
-    const now = new Date();
-    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-    const dateValue = dateFilter.value;
-    const after = dateValue === 'today' ? todayStart
-      : dateValue === '7d' ? Date.now() - 7 * 24 * 60 * 60 * 1000
-      : dateValue === '30d' ? Date.now() - 30 * 24 * 60 * 60 * 1000 : 0;
-    return items.filter(item => {
-      if (sourceId !== 'all' && item.sourceId !== sourceId) return false;
-      if (status === 'open' && !(item.jobState === 'SUCCEEDED' && item.sampleCount > 0 && item.reviewState === 'OPEN')) return false;
-      if (status === 'ready' && !(item.jobState === 'SUCCEEDED' && item.sampleCount > 0)) return false;
-      if (status === 'active' && !activeStates.has(item.jobState)) return false;
-      if (status === 'failed' && item.jobState !== 'FAILED') return false;
-      if (after && item.created < after) return false;
-      if (query) {
-        const haystack = [sourceName(sourceRecords, item.sourceId), item.id, item.jobId, stateLabel(item.jobState), item.reviewState]
-          .join(' ').toLocaleLowerCase();
-        if (!haystack.includes(query)) return false;
-      }
-      return true;
-    });
+    return items;
   }
   function setCancelState(row: RunRow, item: AnalysisItem) {
     if (!row.cancel) return;
     const active = item.jobState === 'QUEUED' || item.jobState === 'RUNNING';
     if (!active && document.activeElement === row.cancel) row.select.focus();
     row.cancel.hidden = !active;
+    const state = commandStateFor(cancelSlot(item.id));
     row.cancel.disabled = cancelBusy.has(item.id) || ctx.signal.aborted;
-    setText(row.cancel, cancelBusy.has(item.id) ? 'Requesting…' : 'Cancel');
+    setText(row.cancel, cancelBusy.has(item.id) ? 'Requesting…' : state === 'UNKNOWN' ? 'Retry cancellation' : 'Cancel');
     row.cancel.setAttribute('aria-label', 'Cancel analysis from ' + sourceName(sourceRecords, item.sourceId));
   }
   function createRow(item: AnalysisItem): RunRow {
@@ -555,13 +699,13 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
     if (!visible.length && runEmptyTitle && runEmptyCopy) {
       if (commandCenterMode) {
         setText(runEmptyTitle, 'Nothing needs attention');
-        setText(runEmptyCopy, 'There are no open reviews, active jobs or failed jobs in the latest 25 analyses.');
+        setText(runEmptyCopy, 'There are no open reviews, active jobs or failed jobs on this page.');
       } else if (!items.length) {
         setText(runEmptyTitle, 'No analyses yet');
         setText(runEmptyCopy, canWrite ? 'Register a recording, then start a new analysis to create your first review.' : 'No analyses are available in this tenant.');
       } else {
         setText(runEmptyTitle, 'No matching analyses');
-        setText(runEmptyCopy, 'Try clearing the filters. Search and filters cover only the latest ' + listLimit + ' analyses.');
+        setText(runEmptyCopy, 'Try clearing a filter or moving to another page. Search and filters run in the analysis owner.');
       }
     }
     setRunCount(visible.length);
@@ -602,7 +746,7 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
         : item.sampleCount === 0 ? 'No accepted frame'
         : loadingId === item.id || previewRequests.has(item.id) || previewQueue.includes(item.id) ? 'Loading preview'
         : 'Open to load sample');
-      row.warning.hidden = !item.sourceChanged;
+      row.warning.hidden = item.sourceChanged !== true;
       row.select.setAttribute('aria-pressed', item.id === selectedId ? 'true' : 'false');
       row.select.setAttribute('aria-label', sourceName(sourceRecords, item.sourceId) + ', ' + stateLabel(item.jobState) +
         ', created ' + formatDate(item.created) + ', analysis ' + item.id.slice(0, 8) +
@@ -731,9 +875,14 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
     setText(reviewState, current === 'OPEN' ? 'Awaiting human review' : current === 'REVIEWED' ? 'Reviewed' : 'Dismissed');
     reviewState.className = 'analysis-review-state review-' + current.toLowerCase();
     if (canWrite) {
+      const slot = reviewSlot(item.id), state = commandStateFor(slot), intent = commandIntents.get(slot);
+      const originalDecision = state === 'UNKNOWN' && intent?.payload && typeof intent.payload === 'object' && !Array.isArray(intent.payload)
+        ? intent.payload.decision : undefined;
       const busy = reviewBusy.has(item.id) || ctx.signal.aborted;
-      markReviewed.disabled = busy;
-      dismiss.disabled = busy;
+      markReviewed.disabled = busy || (state === 'UNKNOWN' && originalDecision !== 'REVIEWED');
+      dismiss.disabled = busy || (state === 'UNKNOWN' && originalDecision !== 'DISMISSED');
+      setText(markReviewed, state === 'UNKNOWN' && originalDecision === 'REVIEWED' ? 'Retry original review' : 'Mark reviewed');
+      setText(dismiss, state === 'UNKNOWN' && originalDecision === 'DISMISSED' ? 'Retry original review' : 'Dismiss result');
       markReviewed.setAttribute('aria-pressed', current === 'REVIEWED' ? 'true' : 'false');
       dismiss.setAttribute('aria-pressed', current === 'DISMISSED' ? 'true' : 'false');
     }
@@ -948,30 +1097,27 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
     reviewBusy.add(id);
     syncReviewPanel(item);
     setLive('Saving review decision…', true);
-    let intent = pendingReviews.get(id);
-    if (!intent || intent.decision !== decision) {
-      intent = { commandId: crypto.randomUUID(), decision };
-      pendingReviews.set(id, intent);
-    }
-    void ctx.api.post('/api/analysis/review', { analysisId: id, decision }, intent.commandId, ctx.signal).then(raw => {
-      if (closed || ctx.signal.aborted) return;
-      const result = raw as { decision?: ReviewState };
-      const saved = result.decision === 'REVIEWED' || result.decision === 'DISMISSED' ? result.decision : decision;
-      listEpoch++;
-      pendingReviews.delete(id);
-      items = items.map(current => current.id === id ? { ...current, reviewState: saved } : current);
-      updateSummary();
-      updateRows();
-      const selected = items.find(current => current.id === selectedId);
-      if (selected) syncReviewPanel(selected);
-      setLive('Review decision saved: ' + (saved === 'REVIEWED' ? 'Reviewed.' : 'Dismissed.'), true);
-      void refresh();
-    }).catch(error => {
-      if (!closed && !ctx.signal.aborted) {
-        setLive('Review decision could not be saved.', true);
-        ctx.notice(error instanceof Error ? error.message : 'Review decision could not be saved.');
+    void (async () => {
+      try {
+        const result = await postCommand<{ decision?: ReviewState }>(reviewSlot(id), 'veyviz.analysis.review', { analysisId: id, decision }, '/api/analysis/review');
+        if (closed || ctx.signal.aborted) return;
+        const saved = result.decision === 'REVIEWED' || result.decision === 'DISMISSED' ? result.decision : decision;
+        listEpoch++;
+        items = items.map(current => current.id === id ? { ...current, reviewState: saved } : current);
+        updateSummary();
+        updateRows();
+        const selected = items.find(current => current.id === selectedId);
+        if (selected) syncReviewPanel(selected);
+        setLive('Review decision saved: ' + (saved === 'REVIEWED' ? 'Reviewed.' : 'Dismissed.'), true);
+        void refresh();
+      } catch (error) {
+        if (!closed && !ctx.signal.aborted) {
+          const message = mutationError(reviewSlot(id), error, 'Review decision');
+          setLive(message, true);
+          ctx.notice(message);
+        }
       }
-    }).finally(() => {
+    })().finally(() => {
       reviewBusy.delete(id);
       const selected = items.find(current => current.id === selectedId);
       if (selected) syncReviewPanel(selected);
@@ -985,26 +1131,164 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
     cancelBusy.add(id);
     updateRows();
     setText(cancelFeedback, 'Cancellation requested. The worker still needs to report its final state.');
-    let commandId = pendingCancellations.get(id);
-    if (!commandId) {
-      commandId = crypto.randomUUID();
-      pendingCancellations.set(id, commandId);
-    }
-    void ctx.api.post('/api/analysis/cancel', { analysisId: id }, commandId, ctx.signal).then(() => {
-      if (closed || ctx.signal.aborted) return;
-      pendingCancellations.delete(id);
-      listEpoch++;
-      setLive('Cancellation request recorded. Owned work closure is still pending.', true);
-      void refresh();
-    }).catch(error => {
-      if (!closed && !ctx.signal.aborted) {
-        setText(cancelFeedback, error instanceof Error ? error.message : 'Cancellation could not be requested.');
-        ctx.notice(error instanceof Error ? error.message : 'Cancellation could not be requested.');
+    const slot = cancelSlot(id);
+    void (async () => {
+      try {
+        await postCommand(slot, 'veyviz.analysis.cancel', { analysisId: id }, '/api/analysis/cancel');
+        if (closed || ctx.signal.aborted) return;
+        listEpoch++;
+        setLive('Cancellation request recorded. Owned work closure is still pending.', true);
+        void refresh();
+      } catch (error) {
+        if (!closed && !ctx.signal.aborted) {
+          const message = mutationError(slot, error, 'Cancellation request');
+          setText(cancelFeedback, message);
+          ctx.notice(message);
+        }
       }
-    }).finally(() => {
+    })().finally(() => {
       cancelBusy.delete(id);
       if (!closed) updateRows();
     });
+  }
+  function analysisQueryUrl() {
+    return analysisQueryState.url({
+      q: searchInput.value,
+      sourceId: sourceFilter.value,
+      jobState: stateFilter.value,
+      reviewState: reviewFilter.value
+    }, analysisCursors[analysisPageIndex]);
+  }
+  function resetAnalysisPage() {
+    analysisQueryState.reset(dateFilter.value as AnalysisDateFilter);
+    analysisCursors = [undefined]; analysisPageIndex = 0; analysisPageBase = 0; analysisNextCursor = undefined;
+    analysisPrevious.disabled = true; analysisNext.disabled = true; analysisPageStatus.textContent = 'Page 1';
+    listEpoch++;
+    if (listBusy) listQueued = true;
+    else void refresh();
+  }
+  function moveAnalysisPage(delta: -1 | 1) {
+    if (closed || ctx.signal.aborted) return;
+    if (delta < 0) {
+      if (analysisPageIndex === 0) return;
+      analysisPageIndex--;
+    } else {
+      if (!analysisNextCursor) return;
+      analysisCursors = analysisCursors.slice(0, analysisPageIndex + 1);
+      analysisCursors.push(analysisNextCursor);
+      analysisPageIndex++;
+      if (analysisCursors.length > MAX_CURSOR_HISTORY) { analysisCursors.shift(); analysisPageIndex--; analysisPageBase++; }
+    }
+    analysisNextCursor = undefined;
+    analysisPrevious.disabled = analysisPageIndex === 0; analysisNext.disabled = true;
+    analysisPageStatus.textContent = `Loading page ${analysisPageBase + analysisPageIndex + 1}`;
+    listEpoch++;
+    if (listBusy) listQueued = true;
+    else void refresh();
+  }
+  function rememberSources(sources: SourceView[]) {
+    const known = new Map(sourceRecords.map(source => [source.id, source]));
+    for (const source of sources) known.set(source.id, source);
+    while (known.size > 200) {
+      const oldest = known.keys().next().value as string | undefined;
+      if (!oldest) break;
+      known.delete(oldest);
+    }
+    sourceRecords = [...known.values()];
+  }
+  async function loadSourceChoices(target: 'filter' | 'submit') {
+    const search = target === 'filter' ? sourceFilterSearch : sourceSubmitSearchRef;
+    if (!search || closed || ctx.signal.aborted) return;
+    const epoch = target === 'filter' ? ++filterSourceEpoch : ++submitSourceEpoch;
+    const pageIndex = target === 'filter' ? filterSourcePageIndex : submitSourcePageIndex;
+    const pageBase = target === 'filter' ? filterSourcePageBase : submitSourcePageBase;
+    const cursors = target === 'filter' ? filterSourceCursors : submitSourceCursors;
+    if (target === 'filter') {
+      filterSourcePrevious.disabled = pageIndex === 0; filterSourceNext.disabled = true; filterSourceStatus.textContent = `Loading page ${pageBase + pageIndex + 1}`;
+    } else {
+      if (submitSourcePreviousRef) submitSourcePreviousRef.disabled = pageIndex === 0;
+      if (submitSourceNextRef) submitSourceNextRef.disabled = true;
+      if (submitSourceStatusRef) submitSourceStatusRef.textContent = `Loading page ${pageBase + pageIndex + 1}`;
+    }
+    const parameters = new URLSearchParams();
+    const term = search.value.trim();
+    if (term) parameters.set('search', term);
+    parameters.set('limit', '20');
+    const cursor = cursors[pageIndex];
+    if (cursor) parameters.set('cursor', cursor);
+    try {
+      const raw = await ctx.api.get('/api/analysis/sources/query?' + parameters.toString(), ctx.signal);
+      if (closed || ctx.signal.aborted || (target === 'filter' ? epoch !== filterSourceEpoch : epoch !== submitSourceEpoch)) return;
+      const response = raw as SourcePage;
+      if (!Array.isArray(response.items) || !response.page || response.page.limit !== 20 || response.page.coverage !== 'filtered-owner-query') throw Error('The recording query response is invalid.');
+      rememberSources(response.items);
+      const sourceById = new Map(sourceRecords.map(source => [source.id, source]));
+      if (target === 'filter') {
+        const selected = sourceFilter.value || 'all';
+        const selectedName = [...sourceFilter.options].find(option => option.value === selected)?.textContent;
+        const all = el('option', '', 'All recordings'); all.value = 'all';
+        sourceFilter.replaceChildren(all);
+        if (selected !== 'all' && !response.items.some(source => source.id === selected)) {
+          const prior = sourceById.get(selected);
+          if (prior || selectedName) { const option = el('option', '', prior?.name ?? selectedName ?? 'Selected recording'); option.value = selected; sourceFilter.append(option); }
+        }
+        for (const source of response.items) { const option = el('option', '', source.name); option.value = source.id; sourceFilter.append(option); }
+        sourceFilter.value = [...sourceFilter.options].some(option => option.value === selected) ? selected : 'all';
+        filterSourceNextCursor = response.page.nextCursor;
+        filterSourcePrevious.disabled = filterSourcePageIndex === 0;
+        filterSourceNext.disabled = !filterSourceNextCursor;
+        filterSourceStatus.textContent = `Page ${filterSourcePageBase + filterSourcePageIndex + 1}${filterSourceNextCursor ? ' · More' : ''}`;
+      } else if (sourceSelectRef) {
+        const selected = sourceSelectRef.value;
+        const selectedName = [...sourceSelectRef.options].find(option => option.value === selected)?.textContent;
+        sourceSelectRef.replaceChildren();
+        if (selected && !response.items.some(source => source.id === selected)) {
+          const prior = sourceById.get(selected);
+          if (prior || selectedName) { const option = el('option', '', prior ? prior.name + ' · v' + prior.version : selectedName ?? 'Selected recording'); option.value = selected; sourceSelectRef.append(option); }
+        }
+        for (const source of response.items) { const option = el('option', '', source.name + ' · v' + source.version); option.value = source.id; sourceSelectRef.append(option); }
+        if (sourceSelectRef.options.length) sourceSelectRef.value = [...sourceSelectRef.options].some(option => option.value === selected) ? selected : sourceSelectRef.options[0]!.value;
+        else { const option = el('option', '', 'No recording matches this search'); option.value = ''; sourceSelectRef.append(option); }
+        submitSourceNextCursor = response.page.nextCursor;
+        if (submitSourcePreviousRef) submitSourcePreviousRef.disabled = submitSourcePageIndex === 0;
+        if (submitSourceNextRef) submitSourceNextRef.disabled = !submitSourceNextCursor;
+        if (submitSourceStatusRef) submitSourceStatusRef.textContent = `Page ${submitSourcePageBase + submitSourcePageIndex + 1}${submitSourceNextCursor ? ' · More' : ''}`;
+        if (sourceHelpRef) setText(sourceHelpRef, response.items.length ? 'Only recordings returned by the authorized source owner can be selected.' : 'Try another name or source ID.');
+        setSubmitState();
+      }
+      updateRows(); updateSelectedPanel();
+    } catch (error) {
+      if (!closed && !ctx.signal.aborted && (target === 'filter' ? epoch === filterSourceEpoch : epoch === submitSourceEpoch)) {
+        if (target === 'filter') filterSourceStatus.textContent = `Page ${pageBase + pageIndex + 1} unavailable`;
+        else if (submitSourceStatusRef) submitSourceStatusRef.textContent = `Page ${pageBase + pageIndex + 1} unavailable`;
+        setLive('Recording query unavailable. Analysis history remains readable.', true);
+        ctx.notice(error instanceof Error ? error.message : 'Recording query could not be loaded.');
+      }
+    }
+  }
+  function moveSourcePage(target: 'filter' | 'submit', delta: -1 | 1) {
+    if (closed || ctx.signal.aborted) return;
+    if (target === 'filter') {
+      if (delta < 0) { if (filterSourcePageIndex === 0) return; filterSourcePageIndex--; }
+      else {
+        if (!filterSourceNextCursor) return;
+        filterSourceCursors = filterSourceCursors.slice(0, filterSourcePageIndex + 1); filterSourceCursors.push(filterSourceNextCursor); filterSourcePageIndex++;
+        if (filterSourceCursors.length > MAX_CURSOR_HISTORY) { filterSourceCursors.shift(); filterSourcePageIndex--; filterSourcePageBase++; }
+      }
+      filterSourceNextCursor = undefined; filterSourcePrevious.disabled = filterSourcePageIndex === 0; filterSourceNext.disabled = true;
+      void loadSourceChoices('filter');
+    } else {
+      if (delta < 0) { if (submitSourcePageIndex === 0) return; submitSourcePageIndex--; }
+      else {
+        if (!submitSourceNextCursor) return;
+        submitSourceCursors = submitSourceCursors.slice(0, submitSourcePageIndex + 1); submitSourceCursors.push(submitSourceNextCursor); submitSourcePageIndex++;
+        if (submitSourceCursors.length > MAX_CURSOR_HISTORY) { submitSourceCursors.shift(); submitSourcePageIndex--; submitSourcePageBase++; }
+      }
+      submitSourceNextCursor = undefined;
+      if (submitSourcePreviousRef) submitSourcePreviousRef.disabled = submitSourcePageIndex === 0;
+      if (submitSourceNextRef) submitSourceNextRef.disabled = true;
+      void loadSourceChoices('submit');
+    }
   }
   async function refresh() {
     if (listBusy) {
@@ -1016,25 +1300,29 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
     listRequest = request;
     const epoch = ++listEpoch;
     try {
-      const raw = await ctx.api.get('/api/analysis', request.signal);
+      const raw = await ctx.api.get(analysisQueryUrl(), request.signal);
       if (closed || request.signal.aborted || epoch !== listEpoch) return;
       const response = raw as AnalysisList;
-      if (!Array.isArray(response.items)) throw Error('The analysis list response is invalid.');
+      if (!Array.isArray(response.items) || !response.page || response.page.coverage !== 'filtered-owner-query' || response.page.limit < 1 || response.page.limit > 100) throw Error('The analysis query response is invalid.');
       const previous = new Map(items.map(item => [item.id, item.jobState]));
       items = response.items;
-      listLimit = Number.isSafeInteger(response.limit) && response.limit > 0 ? response.limit : 25;
+      analysisNextCursor = response.page.nextCursor;
+      analysisPrevious.disabled = analysisPageIndex === 0;
+      analysisNext.disabled = !analysisNextCursor;
+      analysisPageStatus.textContent = `Page ${analysisPageBase + analysisPageIndex + 1}${analysisNextCursor ? ' · More results' : ''}`;
+      const hadSelection = selectedId;
+      if (!selectedId || !items.some(item => item.id === selectedId)) {
+        const next = (commandCenterMode ? items.find(item => item.jobState === 'SUCCEEDED' && item.sampleCount > 0 && item.reviewState === 'OPEN') : undefined)
+          ?? items.find(item => item.jobState === 'SUCCEEDED' && item.sampleCount > 0) ?? items[0];
+        selectedId = next?.id ?? null;
+      }
+      if (selectedId !== hadSelection) {
+        selectionEpoch++;
+        resultRequest?.abort(); resultRequest?.dispose(); resultRequest = null;
+        loadingId = null; selectedResult = null; selectedResponse = null; selectedLoadedId = null; selectedResultFailedId = null;
+      }
       updateSummary();
       updateRows();
-      if (!selectedId) {
-        const newest = (commandCenterMode
-          ? items.find(item => item.jobState === 'SUCCEEDED' && item.sampleCount > 0 && item.reviewState === 'OPEN')
-          : undefined) ?? items.find(item => item.jobState === 'SUCCEEDED' && item.sampleCount > 0) ?? items[0];
-        if (newest) {
-          selectedId = newest.id;
-          selectionEpoch++;
-          updateRows();
-        }
-      }
       if (!items.length && newRunDisclosure) newRunDisclosure.open = true;
       updateSelectedPanel();
       const selected = items.find(item => item.id === selectedId);
@@ -1066,55 +1354,6 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
       }
     }
   }
-  async function loadSources() {
-    try {
-      const raw = await ctx.api.get('/api/analysis/sources', ctx.signal);
-      if (closed || ctx.signal.aborted) return;
-      const response = raw as { items: SourceView[] };
-      sourceRecords = Array.isArray(response.items) ? response.items : [];
-      const selectedFilter = sourceFilter.value || 'all';
-      sourceFilter.replaceChildren();
-      const allSources = el('option', '', 'All recordings');
-      allSources.value = 'all';
-      sourceFilter.append(allSources);
-      for (const source of sourceRecords) {
-        const option = el('option', '', source.name);
-        option.value = source.id;
-        sourceFilter.append(option);
-      }
-      sourceFilter.value = sourceRecords.some(source => source.id === selectedFilter) ? selectedFilter : 'all';
-      if (canWrite) setSubmitState();
-      updateRows();
-      updateSelectedPanel();
-      const select = sourceSelectRef;
-      if (canWrite && select) {
-        const old = select.value;
-        select.replaceChildren();
-        if (!sourceRecords.length) {
-          const option = el('option', '', 'No recording is registered');
-          option.value = '';
-          select.append(option);
-          if (sourceHelpRef) setText(sourceHelpRef, 'Register the supported local sample in Recordings first.');
-        } else {
-          const firstSource = sourceRecords[0];
-          if (!firstSource) return;
-          for (const source of sourceRecords) {
-            const option = el('option', '', source.name + ' · v' + source.version);
-            option.value = source.id;
-            select.append(option);
-          }
-          select.value = sourceRecords.some(source => source.id === old) ? old : firstSource.id;
-          if (sourceHelpRef) setText(sourceHelpRef, 'Only recordings registered in this tenant are available.');
-        }
-        setSubmitState();
-      }
-    } catch (error) {
-      if (!closed && !ctx.signal.aborted) {
-        setLive('Recording list unavailable. Analysis history remains readable.', true);
-        ctx.notice(error instanceof Error ? error.message : 'Recording list could not be loaded.');
-      }
-    }
-  }
   async function loadReadiness() {
     try {
       const raw = await ctx.api.get('/api/analysis/readiness', ctx.signal);
@@ -1132,14 +1371,16 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
     }
   }
 
-  const refreshFilters = () => {
-    updateRows();
-    schedulePreviewLoads();
-  };
-  searchInput.addEventListener('input', refreshFilters, { signal: ctx.signal });
-  sourceFilter.addEventListener('change', refreshFilters, { signal: ctx.signal });
-  stateFilter.addEventListener('change', refreshFilters, { signal: ctx.signal });
-  dateFilter.addEventListener('change', refreshFilters, { signal: ctx.signal });
+  searchInput.addEventListener('input', resetAnalysisPage, { signal: ctx.signal });
+  sourceFilterSearch.addEventListener('input', () => {
+    sourceFilter.value = 'all'; filterSourceCursors = [undefined]; filterSourcePageIndex = 0; filterSourcePageBase = 0;
+    filterSourceNextCursor = undefined; filterSourcePrevious.disabled = true; filterSourceNext.disabled = true; filterSourceStatus.textContent = 'Page 1';
+    void loadSourceChoices('filter'); resetAnalysisPage();
+  }, { signal: ctx.signal });
+  sourceFilter.addEventListener('change', resetAnalysisPage, { signal: ctx.signal });
+  stateFilter.addEventListener('change', resetAnalysisPage, { signal: ctx.signal });
+  reviewFilter.addEventListener('change', resetAnalysisPage, { signal: ctx.signal });
+  dateFilter.addEventListener('change', resetAnalysisPage, { signal: ctx.signal });
 
   function moveToSampleFromKey(event: KeyboardEvent) {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
@@ -1152,10 +1393,12 @@ function mountAnalysisWorkspace(ctx: WorkspaceContext, mode: WorkspaceMode): () 
   imageRegion.addEventListener('keydown', moveToSampleFromKey, { signal: ctx.signal });
   if (!canWrite) root.insertBefore(el('p', 'analysis-readonly-note', 'Read-only access. You can inspect saved analyses and review decisions.'), workbench);
 
-  void Promise.all([loadSources(), loadReadiness(), refresh()]);
+  void Promise.all([loadSourceChoices('filter'), ...(canWrite ? [loadSourceChoices('submit')] : []), loadReadiness(), refresh()]);
   const timer = setInterval(() => { if (!closed) void refresh(); }, 1500);
   return () => {
     closed = true;
+    unregisterNavigationGuard?.();
+    commandState.dispose();
     clearInterval(timer);
     listEpoch++;
     listRequest?.abort();

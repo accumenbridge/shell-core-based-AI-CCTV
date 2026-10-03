@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { ROOT } from '../apps/runtime/dist/index.js';
 import { startControlPlane } from '../apps/control-plane/dist/main.js';
-import { copyPrivateToolchain, copyReviewedBuildInputs, privateToolchainDigest, reviewedBuildFiles, reviewedBuildFingerprint } from '../apps/control-plane/dist/build-inputs.js';
+import { BUILD_FINGERPRINT_FORMAT_VERSION, copyPrivateToolchain, copyReviewedBuildInputs, privateToolchainDigest, reviewedBuildFiles, reviewedBuildFingerprint } from '../apps/control-plane/dist/build-inputs.js';
 
 async function copiedBuildSource(t) {
     const temp = await mkdtemp(join(tmpdir(), 'qb-build-inputs-'));
@@ -112,6 +112,37 @@ test('unknown siblings beside the exact mobile build inputs remain rejected', as
     }
 });
 
+test('v2 build inventories distinguish path and byte boundaries and ignore traversal order', async t => {
+    assert.equal(BUILD_FINGERPRINT_FORMAT_VERSION, 2);
+    const temp = await mkdtemp(join(tmpdir(), 'qb-build-inventory-v2-'));
+    t.after(() => rm(temp, { recursive: true, force: true, maxRetries: 4, retryDelay: 100 }));
+    const makeRoot = async (name, rows) => {
+        const root = join(temp, name);
+        await mkdir(join(root, 'tools'), { recursive: true });
+        for (const [path, bytes] of rows) await writeFile(join(root, ...path.split('/')), bytes);
+        return root;
+    };
+    const first = await makeRoot('first', [['tools/build.mjs', Buffer.from('x')], ['tools/factory.mjs', Buffer.from('y')]]);
+    const reverseCreation = await makeRoot('reverse', [['tools/factory.mjs', Buffer.from('y')], ['tools/build.mjs', Buffer.from('x')]]);
+    const ambiguousSingleEntry = await makeRoot('single', [['tools/build.mjs', Buffer.from('xtools/factory.mjs\0y')]]);
+    const firstDigest = reviewedBuildFingerprint(first);
+    assert.equal(reviewedBuildFingerprint(reverseCreation), firstDigest, 'the inventory digest is independent of filesystem creation order');
+    assert.notEqual(reviewedBuildFingerprint(ambiguousSingleEntry), firstDigest, 'path and byte-length framing separates formerly ambiguous concatenations');
+
+});
+
+test('reviewed source inventory rejects POSIX backslash separator aliases', {
+    skip: process.platform === 'win32' ? 'Windows filesystems cannot create a filename containing a literal backslash' : false
+}, async t => {
+    const temp = await mkdtemp(join(tmpdir(), 'qb-build-source-backslash-'));
+    t.after(() => rm(temp, { recursive: true, force: true, maxRetries: 4, retryDelay: 100 }));
+    const source = join(temp, 'apps', 'example-app', 'src');
+    await mkdir(source, { recursive: true });
+    await writeFile(join(source, 'literal\\separator.ts'), 'export const value = 1;');
+    assert.throws(() => reviewedBuildFingerprint(temp), /non-portable separator/u,
+        'a POSIX filename containing backslash cannot alias a portable nested path');
+});
+
 test('private toolchain copy matches its digest and a test-owned native binary drift changes it', async t => {
     const { root } = await copiedBuildSource(t);
     await copyPrivateToolchain(ROOT, root);
@@ -122,6 +153,17 @@ test('private toolchain copy matches its digest and a test-owned native binary d
     const original = await readFile(executable);
     await writeFile(executable, Buffer.concat([original, Buffer.from('\n// private fixture drift\n')]));
     assert.notEqual(await privateToolchainDigest(root), expected);
+});
+
+test('private toolchain inventory rejects POSIX backslash separator aliases', {
+    skip: process.platform === 'win32' ? 'Windows filesystems cannot create a filename containing a literal backslash' : false
+}, async t => {
+    const { root } = await copiedBuildSource(t);
+    await copyPrivateToolchain(ROOT, root);
+    const alias = join(root, 'node_modules', 'esbuild', 'literal\\separator.js');
+    await writeFile(alias, 'toolchain filename fixture');
+    await assert.rejects(privateToolchainDigest(root), /non-portable separator/u,
+        'private toolchain inventory rejects a physical filename that aliases a nested portable path');
 });
 
 test('private toolchain rejects native package version mismatch and binary override', async t => {

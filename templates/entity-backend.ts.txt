@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { SqliteOwner } from '@quadbridge/sqlite';
 import { PlatformError, object, id, integer, type ModuleManifest, type RequestContext } from '@quadbridge/contracts';
+import { markSafeCommandFieldErrors } from '@quadbridge/contracts/ui-state';
 import { validateOperationValue, type OperationDescriptor, type OperationRegistration } from '@quadbridge/contracts/operations';
 import type { HostedModule } from '@quadbridge/backend-host';
 
@@ -11,7 +12,11 @@ const [listDescriptor, getDescriptor, createDescriptor, editDescriptor] = descri
 const table = __TABLE__;
 const displayColumn = '__DISPLAY_COLUMN__';
 
-function invalid(message: string): never { throw new PlatformError('INVALID', message); }
+function invalid(message: string, path?: string): never {
+  const error = new PlatformError('INVALID', message);
+  if (path) markSafeCommandFieldErrors(error, [{ path, code: 'INVALID', message }]);
+  throw error;
+}
 function normalizeFields(input: unknown): EntityFields {
   const source = object(input, __FIELD_KEYS__);
   const fields: Record<string, unknown> = {};
@@ -52,9 +57,10 @@ __ROW_FIELDS__
     }
     function create(ctx: RequestContext, input: unknown, commandId?: string) {
       ctx.assertAllowed('__WRITE_PERMISSION__', 'write');
-      const body = object(input, ['fields']);
-      const fields = normalizeFields(body.fields);
-      return store.command(ctx, createDescriptor.id, commandId, { fields }, '__WRITE_PERMISSION__', () => {
+      return store.generatedEntityCommand(ctx, createDescriptor.id, commandId, input, '__WRITE_PERMISSION__', () => {
+        const body = object(input, ['fields']);
+        return { fields: normalizeFields(body.fields) };
+      }, ({ fields }) => {
         const recordId = randomUUID();
         store.db.prepare(`INSERT INTO ${table} (tenant,id,version,__COLUMN_NAMES__) VALUES(?,?,1,__INSERT_MARKS__)`)
           .run(ctx.tenantId, recordId,__INSERT_VALUES__);
@@ -63,10 +69,10 @@ __ROW_FIELDS__
     }
     function edit(ctx: RequestContext, input: unknown, commandId?: string) {
       ctx.assertAllowed('__WRITE_PERMISSION__', 'write');
-      const body = object(input, ['id', 'expectedVersion', 'fields']);
-      const recordId = id(body.id), expectedVersion = integer(body.expectedVersion, 1);
-      const fields = normalizeFields(body.fields);
-      return store.command(ctx, editDescriptor.id, commandId, { id: recordId, expectedVersion, fields }, '__WRITE_PERMISSION__', () => {
+      return store.generatedEntityCommand(ctx, editDescriptor.id, commandId, input, '__WRITE_PERMISSION__', () => {
+        const body = object(input, ['id', 'expectedVersion', 'fields']);
+        return { id: id(body.id), expectedVersion: integer(body.expectedVersion, 1), fields: normalizeFields(body.fields) };
+      }, ({ id: recordId, expectedVersion, fields }) => {
         const current = store.db.prepare(`SELECT version FROM ${table} WHERE tenant=? AND id=?`).get(ctx.tenantId, recordId) as { version: number } | undefined;
         if (!current) throw new PlatformError('NOT_FOUND', 'Record not found in the current tenant');
         if (current.version !== expectedVersion) throw new PlatformError('CONFLICT', 'Record changed; reload before editing');

@@ -1,0 +1,184 @@
+{
+  "schema": "brain.checkpoint-event.v1",
+  "id": "1b5954dd-170a-411b-8c0c-61e4ef904170",
+  "revision": 25,
+  "previousEventId": "2e66c68b-559f-493e-9ec1-f4597c4b8f95",
+  "reportedActor": "/root admits seven-owner fixed runtime build-qualification boundary after independent finding",
+  "recordedAt": "2026-10-03T10:51:55.474Z",
+  "platformTask": {
+    "taskId": "VEYVIZ-LOCAL-001",
+    "status": "IMPLEMENTING",
+    "candidate": null,
+    "runIds": [
+      "56e9e9e0-ce48-44f2-bc0b-f8c429cd70d3",
+      "09fc206f-f261-45a2-a5b4-1e23414b1d76",
+      "0547b1fb-cfcc-4f8c-b32a-9ab68333cbc5",
+      "f9046e91-184d-4157-ae5c-0cee2b56b665",
+      "edf701de-a456-42df-b287-6f60eb254d45"
+    ],
+    "reviewIds": [
+      "96f7ad30-2aa6-4077-8342-25747338f69f"
+    ],
+    "blockers": [
+      "Required full npm test invocation failed four Windows worker startup/state deadlines. The isolated unchanged-source worker retry also failed four timing cases; root cause remains unresolved and was reported to the framework worker. No all-checks acceptance.",
+      "Required Windows file-symlink fixture could not be created due to EPERM; this remains blocked, not passed.",
+      "Historical failed-start diagnostic original child final close remains UNKNOWN; current two-owner cleanup defect repaired but new child evidence cannot settle historical ownership.",
+      "Default launcher uses mutable checkout assets: serving a fixed verified runtime snapshot is required before current product browser acceptance. Active release binding differs from recorded foreign generation; exact4494 impact remains unknown."
+    ],
+    "nextAction": "Brawn implements only seven-owner immutable runtime union; root owns package build-script edit. Fresh isolated overlay captures/build/focused tests after framework full suite closes, then independent exact seven-owner review. Preserve all raw failures and foreign work; actual framework UI adoption and whole-product npm/Python/model/browser/native qualification remain required.",
+    "gates": [
+      {
+        "id": "independent-construction",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/f9046e91-184d-4157-ae5c-0cee2b56b665.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "real-model",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/09fc206f-f261-45a2-a5b4-1e23414b1d76.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "authority",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/f9046e91-184d-4157-ae5c-0cee2b56b665.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "browser",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/0547b1fb-cfcc-4f8c-b32a-9ab68333cbc5.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "restart-cleanup",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/f9046e91-184d-4157-ae5c-0cee2b56b665.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "second-variant",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/f9046e91-184d-4157-ae5c-0cee2b56b665.json"
+        ],
+        "limitations": [
+          "Selected local recorded profile only. See immutable evidence limitations.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "full-suite",
+        "status": "FAILED",
+        "evidenceRefs": [
+          ".brain/workflow/runs/edf701de-a456-42df-b287-6f60eb254d45.json"
+        ],
+        "limitations": [
+          "Only the selected local recorded profile; no production, detector-accuracy or bug-free qualification.",
+          "Actual full-suite worker startup/state deadline failures are retained. Isolated retries do not turn this full invocation into a pass. See diagnosis and retry artifacts.",
+          "Required Windows file-symlink fixture denied with EPERM, recorded BLOCKED_ENV rather than pass; security settings preserved."
+        ]
+      },
+      {
+        "id": "independent-review",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/workflow/runs/96f7ad30-2aa6-4077-8342-25747338f69f.json"
+        ],
+        "limitations": [
+          "Source/visual acceptance does not override a failed full invocation or required host-blocked fixture.",
+          "Reported execution/reviewer identity is not authenticated attestation.",
+          "No user satisfaction, world-standard, production or detector-accuracy guarantee.",
+          "Historical pass belongs to an earlier immutable candidate. Current paging/framework-adoption candidate is not qualified by that old pass."
+        ]
+      },
+      {
+        "id": "live-camera",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "native-mobile",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "production",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "paging-review",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/evidence/product-paging-initial-review/independent-review.md",
+          ".brain/evidence/product-paging-repair-review/independent-repair-review.md"
+        ],
+        "limitations": [
+          "Only the two paging source blockers are resolved on captured overlay2437aeb7 with build0/13 focused passes; browser and whole-product acceptance remain open.",
+          "Original CHANGES_REQUESTED and failed attempts are preserved."
+        ]
+      },
+      {
+        "id": "startup-close-review",
+        "status": "PASSED",
+        "evidenceRefs": [
+          ".brain/evidence/product-startup-close-review/independent-final-review.md",
+          ".brain/evidence/product-startup-close-review/execution-index-final.json"
+        ],
+        "limitations": [
+          "Only exact two-owner startup cleanup repair independently qualified: correct isolated build0 and focused8/8. Whole-product/browser/model/full-suite acceptance remains open.",
+          "Earlier failed tests and wrong active-root build are retained. Prior generated bytes and any impact on live4494 are unknown.",
+          "Historical diagnostic original child final close remains UNKNOWN; new tests do not resolve it.",
+          "Default product launcher reads mutable checkout assets: separate required immutable runtime repair remains open."
+        ]
+      },
+      {
+        "id": "immutable-runtime-draft-handoff",
+        "status": "NOT_RUN",
+        "evidenceRefs": [
+          ".brain/handoffs/2026-10-03-source-freeze.json"
+        ],
+        "limitations": [
+          "Only incomplete helper drafted; no isolated build/test or independent review. Preserve every other dirty product and foreign intelligence file."
+        ]
+      }
+    ]
+  },
+  "integritySha256": "3eaa466a09784ab0377d5f82c35b0d9c71ede19c76c98476a54715af9b34aed6"
+}

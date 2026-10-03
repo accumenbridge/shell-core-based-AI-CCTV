@@ -1,0 +1,37 @@
+{
+  "schema": "veyviz.source-handoff.v1",
+  "capturedAt": "2026-10-03T09:42:22.870Z",
+  "root": "D:/Veyviz-code/veyviz-quadbridge-product",
+  "head": "818097ee4ca6d89270f0f5d6c5dace08bae44fa2",
+  "status": "FROZEN_FOR_USER_REQUESTED_FRESH_CHAT_CONTINUATION",
+  "files": [
+    {
+      "path": "tools/veyviz-start.mjs",
+      "bytes": 12450,
+      "sha256": "23a42e9536fcf0e59b37153e60e15b954d2ad7099aac633ea7900a3520d32959"
+    },
+    {
+      "path": "tools/veyviz-snapshot.mjs",
+      "bytes": 20239,
+      "sha256": "a5db802201364f522df5bea2e3059401b62702f1eeef0d0985c9a09d3fe62277"
+    },
+    {
+      "path": "tests/veyviz-lifecycle.test.mjs",
+      "bytes": 12854,
+      "sha256": "60f72380771304b0debf33721bb0e8155f59a7d2ef7565ea473c64d8fc800e33"
+    },
+    {
+      "path": "tests/veyviz-snapshot.test.mjs",
+      "exists": false
+    },
+    {
+      "path": "tools/veyviz-runtime.mjs",
+      "bytes": 3132,
+      "sha256": "7bf19c54a83ab16784083762c0c0555281ac44e903403825fa67d99ea12233ca"
+    }
+  ],
+  "helperState": "Incomplete untested draft; missing openSync/fsyncSync/closeSync imports. Launcher integration and snapshot tests not implemented.",
+  "ownedProcesses": "Implementer reported no child/session commands started or remaining for this increment.",
+  "fullHandoff": "D:\\CodexData\\worktrees\\audit-experience-repairs\\CORE-FRAMEWORKS\\.brain\\handoffs\\2026-10-03-fix-all-continuation.md",
+  "plan": ".brain/plans/veyviz-immutable-runtime-work-order.json"
+}

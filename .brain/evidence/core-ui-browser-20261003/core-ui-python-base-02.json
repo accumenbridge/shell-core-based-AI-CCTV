@@ -1,0 +1,20 @@
+{
+  "schema": "veyviz.private-python-base-run.v1",
+  "command": [
+    "D:/CodexData/worktrees/veyviz-ui-core-20261003/.local/veyviz-ai/venv313/Scripts/python.exe",
+    "-I",
+    "services/veyviz-ai/test_runner.py",
+    "--profile",
+    "D:/CodexData/worktrees/veyviz-ui-core-20261003/.local/veyviz-ai/profile.json",
+    "-v"
+  ],
+  "cwd": "D:\\CodexData\\worktrees\\veyviz-ui-core-20261003",
+  "startedAt": "2026-10-03T15:17:07.0925165Z",
+  "endedAt": "2026-10-03T15:17:33.3154435Z",
+  "exitCode": 0,
+  "outputFormat": "PowerShell redirected combined text, not independent native stdout/stderr byte captures",
+  "output": ".local/core-ui-python-base-02.txt",
+  "outputSha256": "4bd3563e0208f84512cc553302997f7e74ffcec8d6b0df80613405a494cc0b03",
+  "priorFailure": "Run01 relative profile argument correctly rejected; no source edit",
+  "scope": "Captured installed Python base/runner only; no new framework UI adoption, browser or whole-product acceptance"
+}

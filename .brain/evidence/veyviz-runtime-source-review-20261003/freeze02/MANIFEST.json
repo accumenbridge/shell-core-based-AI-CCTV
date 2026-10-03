@@ -1,0 +1,92 @@
+{
+  "schema": "veyviz.rejected-source-evidence.v1",
+  "recordedAt": "2026-10-03T12:07:23.203Z",
+  "verdict": "CHANGES_REQUIRED",
+  "meaning": "Source-only rejected candidate and exact independent review. No new build/test/runtime qualification.",
+  "entries": [
+    {
+      "sourceRef": ".local/product-immutable-runtime-evidence/review/seven-owner-source-review-freeze02-20261003-01.json",
+      "path": "independent-source-review.json",
+      "bytes": 7527,
+      "sha256": "932ed1500bc989de1b07418f676da253a2c69b18b240b08050df70085fa5d7c9"
+    },
+    {
+      "sourceRef": ".local/product-immutable-runtime-evidence/review/root-seven-owner-snapshot-01/capture.json",
+      "path": "source-review-snapshot/capture.json",
+      "bytes": 1588,
+      "sha256": "3166353b28e3b72a186c346ba76ce6ecc831812a16bd0546946d342f188d908b"
+    },
+    {
+      "sourceRef": ".local/product-immutable-runtime-evidence/review/root-seven-owner-snapshot-01/source/package.json",
+      "path": "source-review-snapshot/source/package.json",
+      "bytes": 1539,
+      "sha256": "f0738ec1b03bd4f59b1a05f88815ce6e7f4d7b6104113f6d5a21b62278c31887"
+    },
+    {
+      "sourceRef": ".local/product-immutable-runtime-evidence/review/root-seven-owner-snapshot-01/source/tests/veyviz-lifecycle.test.mjs",
+      "path": "source-review-snapshot/source/tests/veyviz-lifecycle.test.mjs",
+      "bytes": 14898,
+      "sha256": "1493fab0aa8c97afbd8224dad5262fb0c113ae16c8d5fd220e4919881d716249"
+    },
+    {
+      "sourceRef": ".local/product-immutable-runtime-evidence/review/root-seven-owner-snapshot-01/source/tests/veyviz-snapshot.test.mjs",
+      "path": "source-review-snapshot/source/tests/veyviz-snapshot.test.mjs",
+      "bytes": 23890,
+      "sha256": "61ccd45de218fd832c18d90e7ddf7ccca784b6d88e1f864fcaeae0924fba6e1d"
+    },
+    {
+      "sourceRef": ".local/product-immutable-runtime-evidence/review/root-seven-owner-snapshot-01/source/tools/veyviz-build.mjs",
+      "path": "source-review-snapshot/source/tools/veyviz-build.mjs",
+      "bytes": 14348,
+      "sha256": "f00694386527f5e73c8fab5b4ce056fe8df6c6c918bd85913b1ab3320f22c71c"
+    },
+    {
+      "sourceRef": ".local/product-immutable-runtime-evidence/review/root-seven-owner-snapshot-01/source/tools/veyviz-inventory.mjs",
+      "path": "source-review-snapshot/source/tools/veyviz-inventory.mjs",
+      "bytes": 22729,
+      "sha256": "fef17865a9dffc913bf34fad81378dcf38f56c4700e2702e515abc7f6bc26986"
+    },
+    {
+      "sourceRef": ".local/product-immutable-runtime-evidence/review/root-seven-owner-snapshot-01/source/tools/veyviz-snapshot.mjs",
+      "path": "source-review-snapshot/source/tools/veyviz-snapshot.mjs",
+      "bytes": 22874,
+      "sha256": "1b20b45a86f781e2c482fd6f80b2092dfc35d390733f6defb01c4bb806448388"
+    },
+    {
+      "sourceRef": ".local/product-immutable-runtime-evidence/review/root-seven-owner-snapshot-01/source/tools/veyviz-start.mjs",
+      "path": "source-review-snapshot/source/tools/veyviz-start.mjs",
+      "bytes": 15913,
+      "sha256": "c7f9c30c5e11458fbe0f6291abc6254650be93a70ad7f730297ca4e4e2382662"
+    },
+    {
+      "sourceRef": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-02/freeze.json",
+      "path": "active-overlay-freeze/freeze.json",
+      "bytes": 2140,
+      "sha256": "7e14945bd12b9c7985a36ca9cba9d86009a17cc8891ef1a9390c8671e940bae5"
+    },
+    {
+      "sourceRef": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-02/source-active.json",
+      "path": "active-overlay-freeze/source-active.json",
+      "bytes": 63354,
+      "sha256": "edb40e71186d742e0cdc053692bd521217aadf89a14cd4401e54c9f3e7f9fcde"
+    },
+    {
+      "sourceRef": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-02/source-overlay.json",
+      "path": "active-overlay-freeze/source-overlay.json",
+      "bytes": 63354,
+      "sha256": "edb40e71186d742e0cdc053692bd521217aadf89a14cd4401e54c9f3e7f9fcde"
+    },
+    {
+      "sourceRef": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-02/toolchain-active.json",
+      "path": "active-overlay-freeze/toolchain-active.json",
+      "bytes": 29496,
+      "sha256": "deaca89839b738805d69b0849e08b9de862146f5d091995cf7bdba8c5db7b963"
+    },
+    {
+      "sourceRef": "D:/CodexData/worktrees/veyviz-immutable-runtime-20261003/evidence/freeze-run-02/toolchain-overlay.json",
+      "path": "active-overlay-freeze/toolchain-overlay.json",
+      "bytes": 29496,
+      "sha256": "deaca89839b738805d69b0849e08b9de862146f5d091995cf7bdba8c5db7b963"
+    }
+  ]
+}

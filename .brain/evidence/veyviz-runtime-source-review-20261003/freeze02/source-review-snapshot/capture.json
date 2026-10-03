@@ -1,0 +1,45 @@
+{
+  "schema": "veyviz.seven-owner-source-review-snapshot.v1",
+  "capturedAt": "2026-10-03T12:01:40.292Z",
+  "root": "D:\\Veyviz-code\\veyviz-quadbridge-product",
+  "meaning": "Exact stable bytes before/after this read-only snapshot; permits independent source review. This does not freeze other writers or qualify any build/tests.",
+  "files": [
+    {
+      "path": "package.json",
+      "bytes": 1539,
+      "sha256": "f0738ec1b03bd4f59b1a05f88815ce6e7f4d7b6104113f6d5a21b62278c31887"
+    },
+    {
+      "path": "tests/veyviz-lifecycle.test.mjs",
+      "bytes": 14898,
+      "sha256": "1493fab0aa8c97afbd8224dad5262fb0c113ae16c8d5fd220e4919881d716249"
+    },
+    {
+      "path": "tests/veyviz-snapshot.test.mjs",
+      "bytes": 23890,
+      "sha256": "61ccd45de218fd832c18d90e7ddf7ccca784b6d88e1f864fcaeae0924fba6e1d"
+    },
+    {
+      "path": "tools/veyviz-build.mjs",
+      "bytes": 14348,
+      "sha256": "f00694386527f5e73c8fab5b4ce056fe8df6c6c918bd85913b1ab3320f22c71c"
+    },
+    {
+      "path": "tools/veyviz-inventory.mjs",
+      "bytes": 22729,
+      "sha256": "fef17865a9dffc913bf34fad81378dcf38f56c4700e2702e515abc7f6bc26986"
+    },
+    {
+      "path": "tools/veyviz-snapshot.mjs",
+      "bytes": 22874,
+      "sha256": "1b20b45a86f781e2c482fd6f80b2092dfc35d390733f6defb01c4bb806448388"
+    },
+    {
+      "path": "tools/veyviz-start.mjs",
+      "bytes": 15913,
+      "sha256": "c7f9c30c5e11458fbe0f6291abc6254650be93a70ad7f730297ca4e4e2382662"
+    }
+  ],
+  "digest": "0e8b229ba192f33ea0e27aeb024ccbbd4d217f6cd0b764a3fea8a92fc80705d3",
+  "beforeAfterOwnersUnchanged": true
+}

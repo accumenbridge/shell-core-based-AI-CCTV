@@ -1,0 +1,41 @@
+{
+  "schema": "veyviz.build-attempt.v1",
+  "id": "42252269-9e85-4614-844d-7d997cd77d6b",
+  "startedAt": "2026-10-03T13:56:46.812Z",
+  "finishedAt": "2026-10-03T13:56:48.895Z",
+  "stage": "verified",
+  "command": {
+    "exe": "C:\\Program Files\\nodejs\\node.exe",
+    "argv": [
+      "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003\\tools\\build.mjs"
+    ],
+    "cwd": "D:\\CodexData\\worktrees\\veyviz-immutable-runtime-20261003",
+    "shell": false,
+    "windowsHide": true
+  },
+  "original": {
+    "closeObserved": true,
+    "code": 0,
+    "signal": null,
+    "spawnError": null
+  },
+  "stdout": {
+    "path": ".local/veyviz-build-qualification/attempts/42252269-9e85-4614-844d-7d997cd77d6b/stdout.bin",
+    "bytes": 440,
+    "sha256": "d7f89847eb7ea19edf23783104c791df85dc960843d8b379ab62a62d63e9a0d8",
+    "receivedBytes": 440,
+    "truncatedBytes": 0,
+    "captureError": null
+  },
+  "stderr": {
+    "path": ".local/veyviz-build-qualification/attempts/42252269-9e85-4614-844d-7d997cd77d6b/stderr.bin",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receivedBytes": 0,
+    "truncatedBytes": 0,
+    "captureError": null
+  },
+  "captureError": null,
+  "qualificationError": null,
+  "retiredReceipt": ".local/veyviz-build-qualification/history/current-1791035806809-42252269-9e85-4614-844d-7d997cd77d6b.json"
+}

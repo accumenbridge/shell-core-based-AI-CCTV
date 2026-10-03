@@ -1,0 +1,10 @@
+npm notice run veyviz-quadbridge-product@0.2.0 build
+npm notice run node tools/build.mjs
+Local workspace links prepared. No third-party packages were downloaded.
+Assembled combined: 3 modules, worker=true
+Assembled knowledge: 2 modules, worker=true
+Assembled neutral: 0 modules, worker=false
+Assembled service-desk: 1 modules, worker=false
+Assembled veyviz-catalog: 1 modules, worker=false
+Assembled veyviz-review: 4 modules, worker=true
+Built visual Studio from 7 actual modules and 6 products. Offline mode makes no API calls.

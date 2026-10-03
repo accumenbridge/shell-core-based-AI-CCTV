@@ -1,0 +1,136 @@
+{
+  "status": "VALID",
+  "summary": {
+    "contractCount": 1,
+    "recipeCount": 6,
+    "recordCount": 23,
+    "eventCount": 21,
+    "revision": 21,
+    "eventId": "3ee6b15d-e1fc-40e0-979c-ed0e8c0e20d6",
+    "view": "CURRENT",
+    "uncommittedEventCount": 0
+  },
+  "errors": [],
+  "warnings": [],
+  "integrity": {
+    "status": "VALID",
+    "errors": [],
+    "warnings": [],
+    "summary": {
+      "contractCount": 1,
+      "recipeCount": 6,
+      "recordCount": 23,
+      "eventCount": 21,
+      "revision": 21,
+      "eventId": "3ee6b15d-e1fc-40e0-979c-ed0e8c0e20d6",
+      "view": "CURRENT",
+      "uncommittedEventCount": 0
+    }
+  },
+  "executionReadiness": {
+    "schema": "brain.execution-readiness.v1",
+    "status": "READY",
+    "ready": true,
+    "legacyCompatibility": false,
+    "reasons": [],
+    "advisories": [],
+    "canonicalTask": {
+      "taskId": "VEYVIZ-LOCAL-001",
+      "sourceTaskRef": ".brain/tasks/VEYVIZ-LOCAL-001.md"
+    },
+    "focus": {
+      "nodeId": "M-VEYVIZ-LOCAL-001",
+      "title": "Local recording analysis release",
+      "acceptance": [
+        "Clean independent source/dependency construction and correct owner boundaries.",
+        "Real three-sample RF-DETR CPU on exact recording/model bytes.",
+        "Original actor/tenant/site/source/command identity and denied/revoked cases.",
+        "Durable typed results, retries, restart and actual native cleanup.",
+        "Actual authenticated product browser journey.",
+        "Second exact composition and trusted contribution without host edits.",
+        "Fresh build, required npm test and installed Python regressions.",
+        "Focused accessible video review and recording library satisfy docs/veyviz/EXPERIENCE.md across desktop and narrow browser views.",
+        "Actual interface matches the approved concept composition and typography while showing only real owner-scoped behavior. See docs/veyviz/CONCEPT_IMPLEMENTATION.md."
+      ]
+    },
+    "governingSources": [
+      {
+        "id": "task",
+        "path": ".brain/tasks/VEYVIZ-LOCAL-001.md",
+        "state": "MATCHED"
+      },
+      {
+        "id": "architecture",
+        "path": "docs/veyviz/ARCHITECTURE.md",
+        "state": "MATCHED"
+      },
+      {
+        "id": "acceptance",
+        "path": "docs/veyviz/ACCEPTANCE.md",
+        "state": "MATCHED"
+      },
+      {
+        "id": "provenance",
+        "path": "docs/veyviz/PROVENANCE.md",
+        "state": "MATCHED"
+      },
+      {
+        "id": "protocol",
+        "path": "contracts/veyviz-product-ai/v1/README.md",
+        "state": "MATCHED"
+      },
+      {
+        "id": "experience",
+        "path": "docs/veyviz/EXPERIENCE.md",
+        "state": "MATCHED"
+      },
+      {
+        "id": "concept-implementation",
+        "path": "docs/veyviz/CONCEPT_IMPLEMENTATION.md",
+        "state": "MATCHED"
+      },
+      {
+        "id": "paging-order",
+        "path": ".brain/plans/veyviz-paging-work-order.json",
+        "state": "MATCHED"
+      },
+      {
+        "id": "startup-close-repair-order",
+        "path": ".brain/plans/veyviz-startup-close-work-order.json",
+        "state": "MATCHED"
+      }
+    ],
+    "projection": {
+      "taskId": "VEYVIZ-LOCAL-001",
+      "taskTitle": "Usable local scoped Veyviz video-analysis product",
+      "taskStatus": "IMPLEMENTING",
+      "focusNodeId": "M-VEYVIZ-LOCAL-001",
+      "focusTitle": "Local recording analysis release",
+      "alignment": "ALIGNED"
+    },
+    "managed": {
+      "status": "NOT_READY",
+      "ready": false,
+      "available": false,
+      "profileStatus": "MISSING",
+      "reasons": [
+        {
+          "code": "MANAGED_PROFILE_MISSING",
+          "message": "No managed control profile is configured for the canonical task."
+        }
+      ]
+    }
+  },
+  "canonicalProjection": {
+    "taskId": "VEYVIZ-LOCAL-001",
+    "taskTitle": "Usable local scoped Veyviz video-analysis product",
+    "taskStatus": "IMPLEMENTING",
+    "focusNodeId": "M-VEYVIZ-LOCAL-001",
+    "focusTitle": "Local recording analysis release",
+    "alignment": "ALIGNED"
+  },
+  "scope": "project-local record consistency; no execution or approval authentication",
+  "readyForImplementation": true,
+  "admission": "READY",
+  "admissionReasons": []
+}
