@@ -1,26 +1,38 @@
 import type { UiContribution } from '@quadbridge/contracts/ui-contributions';
-import { el, section, statistic } from '@quadbridge/web-shell/dom';
+import { el } from '@quadbridge/web-shell/dom';
 import type { Readiness } from './protocol.js';
 
 export const provenancePanel: UiContribution = { mount(ctx) {
-  const panel = section('card veyviz-provenance'), title = el('h3', '', 'Inference provenance'), status = el('p', 'small muted', 'Checking the selected local model profile…');
-  panel.append(title, status); ctx.root.append(panel);
+  const panel = el('details', 'veyviz-provenance'), summary = el('summary', 'vv-engine-summary'), dot = el('span', 'vv-engine-dot');
+  dot.setAttribute('aria-hidden', 'true');
+  const label = el('span', 'vv-engine-label', 'Analysis engine'), state = el('span', 'vv-engine-state', 'Checking availability…');
+  state.setAttribute('role', 'status'); state.setAttribute('aria-live', 'polite'); summary.append(dot, label, state);
+  const content = el('div', 'vv-engine-content'), status = el('p', 'vv-engine-message', 'Checking the local model and recording profile.');
+  content.append(status); panel.append(summary, content); ctx.root.append(panel);
   let closed = false;
+  function fact(list: HTMLDListElement, name: string, value: string, code = false) {
+    const item = el('div'), definition = el('dd'); definition.append(el(code ? 'code' : 'span', '', value || 'Unavailable'));
+    item.append(el('dt', '', name), definition); list.append(item);
+  }
   void ctx.api.get('/api/ai/readiness', ctx.signal).then(raw => {
     if (closed || ctx.signal.aborted) return;
-    const ready = raw as Readiness;
-    status.textContent = ready.status === 'READY' ? `Verified at ${new Date(ready.verifiedAt).toLocaleString()} · ${ready.message}` : ready.message;
-    const facts = el('div', 'stat-grid veyviz-provenance-facts');
-    facts.append(statistic('Profile', ready.profileId, ready.status === 'READY' ? 'Local CPU' : ready.status),
-      statistic('Recording digest', ready.sourceSha256 ? `${ready.sourceSha256.slice(0, 12)}…` : 'Unavailable', ready.fixtureId),
-      statistic('Model digest', ready.modelSha256 ? `${ready.modelSha256.slice(0, 12)}…` : 'Unavailable', ready.modelId));
-    panel.append(facts);
-    if (ready.status === 'READY') {
-      const versions = el('details'), summary = el('summary', '', `Verified package inventory · ${Object.keys(ready.versions).length} versions`), list = el('ul', 'small muted');
-      versions.append(summary);
-      for (const [name, version] of Object.entries(ready.versions).sort(([a], [b]) => a.localeCompare(b))) list.append(el('li', '', `${name} ${version}`));
-      versions.append(list, el('p', 'small muted', `Companion inventory SHA-256 ${ready.inventorySha256}`)); panel.append(versions);
+    const ready = raw as Readiness, verified = ready.status === 'READY';
+    panel.classList.add(verified ? 'is-verified' : 'is-unavailable'); state.textContent = verified ? 'Verified · Local CPU' : 'Unavailable'; status.textContent = ready.message;
+    const facts = el('dl', 'vv-engine-facts'); fact(facts, 'Model profile', ready.profileId); fact(facts, 'Sample recording', ready.fixtureId);
+    if (verified) fact(facts, 'Last integrity check', new Date(ready.verifiedAt).toLocaleString()); content.append(facts);
+    if (verified) {
+      const provenance = el('div', 'vv-engine-provenance'), hashes = el('dl', 'vv-engine-hashes');
+      fact(hashes, 'Model SHA-256', ready.modelSha256, true); fact(hashes, 'Recording SHA-256', ready.sourceSha256, true);
+      fact(hashes, 'Companion inventory SHA-256', ready.inventorySha256, true);
+      const versions = el('details', 'vv-engine-packages'), packageVersions = Object.entries(ready.versions).sort(([a], [b]) => a.localeCompare(b));
+      versions.append(el('summary', '', `Package versions (${packageVersions.length})`));
+      const list = el('dl', 'vv-engine-version-list'); for (const [name, version] of packageVersions) fact(list, name, version);
+      versions.append(list); provenance.append(hashes, versions); content.append(provenance);
     }
-  }).catch(error => { if (!closed && !ctx.signal.aborted) status.textContent = error instanceof Error ? error.message : 'Readiness could not be verified'; });
-  return () => { closed = true; };
+  }).catch(() => {
+    if (closed || ctx.signal.aborted) return;
+    panel.classList.add('is-unavailable'); state.textContent = 'Unavailable';
+    status.textContent = 'The local analysis engine could not be verified. Saved results remain separate from this availability check.';
+  });
+  return () => { closed = true; panel.remove(); };
 } };

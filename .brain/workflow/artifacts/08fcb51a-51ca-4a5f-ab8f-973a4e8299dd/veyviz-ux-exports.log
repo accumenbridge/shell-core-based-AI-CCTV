@@ -1,0 +1,18 @@
+Fresh UX exports; existing compiled build04/full-suite build output. No npm build invoked by export worker.
+COMMAND: node tools/factory.mjs assemble veyviz-review .local/independent-export-ux-20261003/review
+Assembled veyviz-review at D:\Veyviz-code\veyviz-quadbridge-product\.local\independent-export-ux-20261003\review; no existing data or credentials copied.
+COMMAND: node tools/factory.mjs assemble veyviz-catalog .local/independent-export-ux-20261003/catalog
+Assembled veyviz-catalog at D:\Veyviz-code\veyviz-quadbridge-product\.local\independent-export-ux-20261003\catalog; no existing data or credentials copied.
+COMMAND: node .local/independent-export-ux-20261003/review/tools/link-workspaces.mjs
+Local workspace links prepared. No third-party packages were downloaded.
+COMMAND: node .local/independent-export-ux-20261003/catalog/tools/link-workspaces.mjs
+Local workspace links prepared. No third-party packages were downloaded.
+COMMAND: node .local/independent-export-ux-20261003/catalog-export-harness.mjs .local/independent-export-ux-20261003/catalog .local/independent-export-ux-20261003/catalog-e2e-data .local/independent-export-ux-20261003/catalog-export-evidence.json
+PASS export composition is source-only
+PASS exported catalog serves HTTP with no analysis or inference routes
+PASS exported catalog registers and lists a tenant-owned recording
+PASS exported catalog restarts without reseeding, retains source, and still has no worker routes
+PASS exported runtime and HTTP owner closed cleanly
+Evidence: D:\Veyviz-code\veyviz-quadbridge-product\.local\independent-export-ux-20261003\catalog-export-evidence.json
+COMMAND: node tools/veyviz-inventory.mjs verify .local/ux-browser-inputs.json
+{"status":"MATCHED","digest":"8a8da11d29efd18b2c5965a1f8ba69f9e68716697ad65336a6d3e392373660de","sourceFiles":334}

@@ -244,13 +244,13 @@
     },
     {
       "path": "modules/veyviz-analysis/src/styles.css",
-      "bytes": 499,
-      "sha256": "d6d9a17dc9be8ceb8f3e94802674b260af31602950ddf6b9f0dbc44f05af8287"
+      "bytes": 19530,
+      "sha256": "b761fec6a5897f070cd8aabc5d0db5159e0c555d481bdc927fea7edcbbb95f61"
     },
     {
       "path": "modules/veyviz-analysis/src/ui.ts",
-      "bytes": 12364,
-      "sha256": "dc8fdab64c62a872121de914fa37382e916c99540e2a4182321b0f22165f5079"
+      "bytes": 42106,
+      "sha256": "4c680fcc8af10510a1c04ee6e46d4674ab44944354f5edc9dc162f37dce2062c"
     },
     {
       "path": "modules/veyviz-analysis/tsconfig.json",
@@ -259,8 +259,8 @@
     },
     {
       "path": "modules/veyviz-rfdetr/module.json",
-      "bytes": 4691,
-      "sha256": "90a6649d3886a5166e5272297a51adb77af7d6bd6725c42262a7d36fc482628f"
+      "bytes": 4686,
+      "sha256": "97807d301b26ee28dc644c588a8ee152a95e4f9434024c50c629e6de15d31612"
     },
     {
       "path": "modules/veyviz-rfdetr/package.json",
@@ -284,13 +284,13 @@
     },
     {
       "path": "modules/veyviz-rfdetr/src/styles.css",
-      "bytes": 566,
-      "sha256": "b460260060379c8fc98b0f79e8458ad07621faf7151ea7cc341312a42bc8dc28"
+      "bytes": 2818,
+      "sha256": "16be272034bc0aaaa87d9a89a22276a2cd6f59bafc791756e52c6906e6eaf7f3"
     },
     {
       "path": "modules/veyviz-rfdetr/src/ui.ts",
-      "bytes": 2010,
-      "sha256": "7281f49da80ba88870cb066f15c9fed0817ebfc9c3bd832f24bbe8b7ff86ac27"
+      "bytes": 2953,
+      "sha256": "4742d13f9fbaa1dbbbc0d1ec0eafa6a7bd8b86e85c086d7980086b99c5267311"
     },
     {
       "path": "modules/veyviz-rfdetr/tsconfig.json",
@@ -324,13 +324,13 @@
     },
     {
       "path": "modules/veyviz-sources/src/styles.css",
-      "bytes": 48,
-      "sha256": "f443e6fb43dbde989c84181001a66da88f752bd676c538e427e52da18f7adcaf"
+      "bytes": 13510,
+      "sha256": "08a6684ba5044018b269971bd7dac4b7d3d1fd9fb962106215ed26ab0466dc89"
     },
     {
       "path": "modules/veyviz-sources/src/ui.ts",
-      "bytes": 3160,
-      "sha256": "99a5ab39e07ba93f4f4212e7717630690450d6f129b81e5c7423838476918b70"
+      "bytes": 10587,
+      "sha256": "7d7e456c80fc93c3d3bdd8277804740e72b1dec74bd1edb9fdaf2a22ba7af822"
     },
     {
       "path": "modules/veyviz-sources/tsconfig.json",
@@ -639,13 +639,13 @@
     },
     {
       "path": "products/veyviz-catalog/product.json",
-      "bytes": 324,
-      "sha256": "9aedf3a31d84a914b5f678bfe04b60146a8f0f06f055c8cec949aad0794e1149"
+      "bytes": 310,
+      "sha256": "0bbf2e07ad46dc38e56241f0918f31002d38fa73d9306f4afca243ce1821fab3"
     },
     {
       "path": "products/veyviz-review/product.json",
-      "bytes": 850,
-      "sha256": "407f6eb856ae5471766f4a66f803a3dc6dc5324bbbae7faf41d93facb81e340a"
+      "bytes": 1017,
+      "sha256": "07572af4e9a0648d6b4fbce1fcd56a54ac633674b23260e33f6ad35e440ff6b2"
     },
     {
       "path": "profiles/local-developer.json",
@@ -694,8 +694,8 @@
     },
     {
       "path": "solutions/veyviz/ui.json",
-      "bytes": 194,
-      "sha256": "4997e9bd69dc33f06eaaa4ddc0dbb2633f510890b55450fe7d716f12ebd7e196"
+      "bytes": 234,
+      "sha256": "2e5d4ac5ab1180cbc6ba03fbdb12a9e3bb19e1ccab068a6b1100192292bfce2e"
     },
     {
       "path": "solutions/veyviz/wiring.mjs",
@@ -1676,11 +1676,11 @@
   "generated": [
     {
       "path": ".artifacts/veyviz-review/release.json",
-      "sha256": "57791a8be39df40bec6929bc1045d6e27fff182ad1f5af25e0e7857029abb999"
+      "sha256": "fdeec7e142202bdb6c6ff4d45d1e3bdb15e3e42d4873136573610246ccfbf5d7"
     },
     {
       "path": ".artifacts/veyviz-catalog/release.json",
-      "sha256": "ded58fe943799a6b66dca42dfb61248615f384ca1df2724e923c89b10ca12955"
+      "sha256": "fc44cac97ebc5e00298f1334d5649abd7b4dd662c1e068d8c4d6d1a027f94148"
     }
   ],
   "companion": [
@@ -1693,5 +1693,5 @@
       "sha256": "c5d559532407e36e7155063395cebc9ee4d96bd18255db25e9bc89e193d1f644"
     }
   ],
-  "digest": "f4b10dd232130ca1f83ecaed745470f1f4b69574c3f9df197798e3ea2ce7abb0"
+  "digest": "8a8da11d29efd18b2c5965a1f8ba69f9e68716697ad65336a6d3e392373660de"
 }

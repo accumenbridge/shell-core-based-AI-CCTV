@@ -1,8 +1,8 @@
 # Current workflow checkpoint
 
-Revision: 8  
-Event: 86930660-f1a9-4a46-ac2d-ba84c9af4b15  
-Recorded: 2026-10-02T23:22:38.776Z  
+Revision: 12  
+Event: b71b1b64-2060-41f5-9999-7bf61db5b7e4  
+Recorded: 2026-10-03T01:41:26.625Z  
 Reported actor: /root
 
 This generated view summarizes immutable project-local records. Reported run and review fields are not authenticated proof of execution, reviewer identity, model identity, or external acceptance.
@@ -11,11 +11,11 @@ This generated view summarizes immutable project-local records. Reported run and
 
 Task: VEYVIZ-LOCAL-001
 Status: REVIEW
-Candidate: 9a94057148bc0d3570f5fbc13fd1bf25c4624b7c4dc6336672bee80a19eac829
-Next action: Use the working local fixture product via npm run veyviz. Formal all-checks acceptance awaits the symlink test on an authorized capable host and same-candidate qualifying evidence. Next proposed product increment is owned recording uploads; live CCTV, deployment and third-party plugin distribution remain separate backlog profiles.
-Blockers: Windows denied the required file-symlink fixture (EPERM). Final suite: 378 passed, 0 failed, 1 blocked/skipped. Security controls were preserved.
-Run records: 02e921e5-7354-4e13-94da-90db6087944d, 91cd95e6-ef71-46b6-9d52-ea8eeaebefbf, 2257a43a-b188-40d7-8c62-deb92c67bcd5, 0b96ed68-0e15-4d94-a841-06d165d1541f, 9bef6779-c323-4945-b0a0-10de86151809
-Review records: 3bb56aa2-7012-461b-b8b1-3ada134b2a7f
+Candidate: 21387ecf7587cdea575a75981801f41cb0c5f48130343947584d3c85ddd2c4a1
+Next action: Use the redesigned local recorded-video review product and obtain human experience feedback. Formal all-checks qualification requires the same-candidate symlink fixture on an authorized capable host. Next proposed core product increment is owned recording admission and representative footage evaluation; live-camera, identity, deployment and native-device profiles remain separate.
+Blockers: Windows denied required file-symlink fixture with EPERM: 378 passes, 0 failures, 1 blocked/skip. Security settings preserved.
+Run records: 0cb5b98e-285d-4cfc-9ae3-8639d7cb88c6, baf42ea3-dc0a-4911-8887-0fadfdd5cff3, b4db0d2f-77e2-4c9e-9398-c7dbccfa524d, 08fcb51a-51ca-4a5f-ab8f-973a4e8299dd, 8566ffb7-9fe9-4648-9db3-87adf33aaa36
+Review records: bc082668-f691-40fd-a55c-502302d579d9
 Gates: independent-construction=PASSED, real-model=PASSED, authority=PASSED, browser=PASSED, restart-cleanup=PASSED, second-variant=PASSED, full-suite=BLOCKED, independent-review=PASSED, live-camera=DEFERRED, native-mobile=DEFERRED, production=DEFERRED
 
 ## Maintenance work

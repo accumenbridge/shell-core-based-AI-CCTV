@@ -1,0 +1,37 @@
+{
+  "schema": "veyviz.independent-export-evidence.v1",
+  "product": "veyviz-catalog",
+  "exportRoot": "D:\\Veyviz-code\\veyviz-quadbridge-product\\.local\\independent-export-ux-20261003\\catalog",
+  "planDigest": "69e51ea8c6312970e7d7914a69a26a859ed4282a46ac2b4d38a43a0bc1c4053f",
+  "releaseSha256": "fc44cac97ebc5e00298f1334d5649abd7b4dd662c1e068d8c4d6d1a027f94148",
+  "startedAt": "2026-10-03T01:28:51.895Z",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "export composition is source-only",
+      "status": "PASS",
+      "modules": [
+        "veyviz-sources"
+      ],
+      "requiresWorker": false
+    },
+    {
+      "name": "exported catalog serves HTTP with no analysis or inference routes",
+      "status": "PASS"
+    },
+    {
+      "name": "exported catalog registers and lists a tenant-owned recording",
+      "status": "PASS"
+    },
+    {
+      "name": "exported catalog restarts without reseeding, retains source, and still has no worker routes",
+      "status": "PASS"
+    },
+    {
+      "name": "exported runtime and HTTP owner closed cleanly",
+      "status": "PASS"
+    }
+  ],
+  "sourceId": "3f42495c-09dd-4a1d-b680-69c670165a26",
+  "completedAt": "2026-10-03T01:28:52.191Z"
+}

@@ -1,0 +1,124 @@
+{
+  "schema": "veyviz.independent-review.v1",
+  "reviewer": "/root/veyviz_integration_map",
+  "recordedAt": "2026-10-03T01:41:12.3301382Z",
+  "status": "FINAL",
+  "sourceAcceptance": "ACCEPTED_FOR_SELECTED_LOCAL_RECORDED_PROFILE",
+  "formalReleaseQualification": "REVIEW_BLOCKED_ENV",
+  "sourceInventoryDigest": "8a8da11d29efd18b2c5965a1f8ba69f9e68716697ad65336a6d3e392373660de",
+  "sourceFiles": 334,
+  "brainCandidateDigest": "21387ecf7587cdea575a75981801f41cb0c5f48130343947584d3c85ddd2c4a1",
+  "runtimeFingerprint": "c39038e41d1cd69a04d451d38d7ed3bb6efa7d7b8b8532b5ffdbde4608462ce1",
+  "reviewScope": "Read-only independent review of product UI interactions, owned presentation CSS, frozen source/evidence consistency, and recorded screenshots. No source edits, rebuilds, repeated broad tests, or external deployment.",
+  "sourceIntegrity": {
+    "inventory": "docs/veyviz/RELEASE_INPUTS.json",
+    "independentlyHashedEntries": 338,
+    "sourceEntries": 334,
+    "generatedReleaseEntries": 2,
+    "companionMetadataEntries": 2,
+    "mismatches": [],
+    "captureVerifyEvidence": ".local/veyviz-ux-exports.log",
+    "captureVerifyStatus": "MATCHED"
+  },
+  "resolvedFindings": [
+    "Captured source-version warning persists independently of sample rendering.",
+    "Open review count excludes reviewed and dismissed accepted results.",
+    "Keyed history controls preserve identity during polling; selected-result responses are guarded by run identity and selection epoch.",
+    "Single-flight polling avoids timer-induced request starvation; successful queue/review/cancel invalidates list reads started before the mutation.",
+    "Failed-result state retains an explicit retry; image events are guarded by sample epoch; matching result-request finalizer owns loading cleanup.",
+    "Queue, review, cancellation, registration and rename retain explicit command identity for same-intent response retries.",
+    "Pending mutation actions prevent duplicates; unchanged-name rename is disabled; review focus restoration does not steal newer focus.",
+    "Accessible frame alternatives, textual observations, unique run/rename names, native disclosures, and live sample/status text are present.",
+    "Image height constraints that could misalign overlays were removed; zero-detection message no longer occupies the detection score column.",
+    "Product layout presents media and review before history in narrow DOM flow, with reviewed desktop CSS placement."
+  ],
+  "unresolvedBlockingFindings": [],
+  "nonBlockingFindings": [
+    {
+      "id": "UX-CSS-SELECTOR-01",
+      "severity": "LOW",
+      "status": "DEFERRED",
+      "file": "modules/veyviz-analysis/src/styles.css",
+      "lines": [
+        1,
+        519,
+        531
+      ],
+      "description": "The .content:has(.workspace > .veyviz-analysis) selectors expect nesting, while the maintained shell adds the analysis class to div.workspace itself. Intended analysis-specific width/padding overrides do not match.",
+      "impact": "Shared product content rules still style the workspace, and recorded browser geometry reports no horizontal overflow or lost controls.",
+      "suggestedFollowup": "Use a selector matching the actual .workspace.veyviz-analysis element when next changing presentation CSS."
+    }
+  ],
+  "evidence": {
+    "build": {
+      "status": "PASSED",
+      "log": ".local/veyviz-ux-build-04.log",
+      "observed": "Successful assembly of all six products including both Veyviz variants."
+    },
+    "browser": {
+      "status": "PASSED_AS_REPORTED_WITH_SCREENSHOTS_INDEPENDENTLY_INSPECTED",
+      "report": ".local/veyviz-ux-browser-evidence.json",
+      "screenshots": [
+        ".local/veyviz-ux-desktop.jpg",
+        ".local/veyviz-ux-phone.jpg"
+      ],
+      "observedVisuals": [
+        "Desktop screenshot shows selected real sample, run history, observations, and review actions together.",
+        "Narrow screenshot shows media before review and history; right edge is clipped by screenshot capture, as disclosed in the browser report.",
+        "No fake playback, live-camera status, positive detections, or empty-site assurance appears in the inspected screenshots."
+      ],
+      "supportedJourney": "Register/rename; actual six- and three-frame inference; sample and keyboard navigation; review/dismiss persistence; retained source-change warning; cancellation; tenant separation; viewer read-only presentation; scoped desktop/tablet/phone geometry.",
+      "qualificationLimit": "This reviewer inspected the report and actual screenshots, not an independently repeated interactive browser run. Reported DOM geometry supports no-overflow claims; the clipped narrow screenshot alone does not prove them."
+    },
+    "python": {
+      "status": "PASSED",
+      "tests": 10,
+      "log": ".local/veyviz-ux-python-tests.log",
+      "includesRealCPUInferenceAndOwnedCancellation": true
+    },
+    "reviewExport": {
+      "status": "PASSED",
+      "checks": 8,
+      "report": ".local/independent-export-ux-20261003/review-e2e-data/e2e-result.json",
+      "log": ".local/veyviz-ux-exported-e2e.log",
+      "fingerprintMatchesBrowser": true
+    },
+    "catalogExport": {
+      "status": "PASSED",
+      "checks": 5,
+      "report": ".local/independent-export-ux-20261003/catalog-export-evidence.json",
+      "sourceOnlyCompositionAndNoWorkerRoutes": true
+    },
+    "fileVerification": {
+      "status": "PASSED",
+      "log": ".local/veyviz-ux-verify.log",
+      "reviewFiles": 61,
+      "catalogFiles": 41,
+      "limitation": "File verification alone does not establish behavior or accuracy."
+    },
+    "fullSuite": {
+      "status": "COMPLETED_WITH_BLOCKED_ENV_SKIP",
+      "log": ".local/veyviz-ux-full-suite.log",
+      "lastObservedTest": 376,
+      "finalCounts": {
+        "tests": 379,
+        "passed": 378,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 1,
+        "todo": 0,
+        "durationMs": 843287.385
+      },
+      "exitCode": 0,
+      "note": "Completed session 96431 exit 0 was reported by root; the independent reviewer read the completed TAP log and exact counts. Test 101 is explicitly SKIP/BLOCKED_ENV because Windows denied creation of the owned file-symlink fixture with EPERM. This required gate is not qualified; no host security setting was changed."
+    }
+  },
+  "readinessAssessment": "The evidence supports a substantially improved, usable local sampled-video review experience on the selected recorded fixture. It does not justify a world-class, bug-free, universally ready, detection-accurate, or production-qualified claim.",
+  "qualificationLimits": [
+    "Only the admitted local MIVIA recording and RF-DETR CPU profile are covered.",
+    "Actual fixture outputs are zero detections; positive-detection overlay rendering, detection quality, and occupancy are not qualified by these browser journeys.",
+    "No exhaustive browser/network-fault matrix, full 25-row stress test, screen-reader study, formal WCAG audit, or representative user evaluation was performed.",
+    "Uploads, live cameras, continuous video playback, native mobile, external identity and production deployment remain outside the qualified profile.",
+    "Observed logs, reports, and screenshots are recorded execution evidence, not cryptographic execution attestation."
+  ]
+}

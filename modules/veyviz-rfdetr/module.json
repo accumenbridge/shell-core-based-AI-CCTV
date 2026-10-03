@@ -127,7 +127,7 @@
       "id": "veyviz-rfdetr.provenance",
       "permission": "veyviz.ai.read",
       "export": "provenancePanel",
-      "label": "Inference provenance"
+      "label": "Analysis engine"
     }
   ],
   "schema": {

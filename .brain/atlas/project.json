@@ -2,8 +2,8 @@
   "schema": "brain.atlas.v1",
   "projectId": "veyviz-quadbridge-product",
   "title": "Veyviz local video-analysis product",
-  "planRevision": 6,
-  "updatedAt": "2026-10-02T23:21:54.3061179Z",
+  "planRevision": 9,
+  "updatedAt": "2026-10-03T01:41:26.628Z",
   "intentBasis": "User request 2026-10-03: analyze latest worker/framework/Veyviz state and build an independent new full-stack modular, plugin-capable product using Quadbridge; original repositories remain preserved. Root adopts local recorded-video scope and proposed new target.",
   "vision": {
     "destination": "A usable modular local Product/UI plus separately owned AI/media implementation, proven by actual construction, inference, browser and restart.",
@@ -48,7 +48,7 @@
       "id": "task",
       "path": ".brain/tasks/VEYVIZ-LOCAL-001.md",
       "role": "task",
-      "sha256": "9c242228def4771988de325c372415bbf723d6d3a3d2d94dc801b3772aaa465c"
+      "sha256": "ca3c0ff9b7c7b2f14458f2997aba10cfe47c3e04c2517656e769cb2bc76c07d0"
     },
     {
       "id": "architecture",
@@ -90,25 +90,25 @@
       "id": "ai-module",
       "path": "modules/veyviz-rfdetr/module.json",
       "role": "Current owned AI adapter and UI contribution contract",
-      "sha256": "90a6649d3886a5166e5272297a51adb77af7d6bd6725c42262a7d36fc482628f"
+      "sha256": "97807d301b26ee28dc644c588a8ee152a95e4f9434024c50c629e6de15d31612"
     },
     {
       "id": "recording-ui",
       "path": "modules/veyviz-sources/src/ui.ts",
       "role": "Implemented recording experience with read-only presentation",
-      "sha256": "99a5ab39e07ba93f4f4212e7717630690450d6f129b81e5c7423838476918b70"
+      "sha256": "7d7e456c80fc93c3d3bdd8277804740e72b1dec74bd1edb9fdaf2a22ba7af822"
     },
     {
       "id": "analysis-ui",
       "path": "modules/veyviz-analysis/src/ui.ts",
       "role": "Implemented analysis and human review experience",
-      "sha256": "dc8fdab64c62a872121de914fa37382e916c99540e2a4182321b0f22165f5079"
+      "sha256": "4c680fcc8af10510a1c04ee6e46d4674ab44944354f5edc9dc162f37dce2062c"
     },
     {
       "id": "release-inputs",
       "path": "docs/veyviz/RELEASE_INPUTS.json",
       "role": "Complete verified current source/profile/release inventory",
-      "sha256": "a972c42a2246ce259471c66425b294e5957ca61a8b0788e1f3db7d99d508fbf5"
+      "sha256": "bf198b8020b9330fbc79fef4c719ecab0585558f2a42db91a55074274cdc8efd"
     },
     {
       "id": "product-build",
@@ -145,6 +145,48 @@
       "path": ".brain/workflow/runs/3bb56aa2-7012-461b-b8b1-3ada134b2a7f.json",
       "role": "Immutable final actual evidence",
       "sha256": "a4989dae1503666f07dfaebc3c54143fa96753dd99d538906ec331c58598d16c"
+    },
+    {
+      "id": "experience",
+      "path": "docs/veyviz/EXPERIENCE.md",
+      "role": "Authorized review-workstation design and acceptance",
+      "sha256": "841579a7e97005ef7f105dede8028104f588219dfc90a31765bc83898366cdd0"
+    },
+    {
+      "id": "ux-product-build",
+      "path": ".brain/workflow/runs/0cb5b98e-285d-4cfc-9ae3-8639d7cb88c6.json",
+      "role": "Immutable actual UX candidate evidence",
+      "sha256": "2253943f825bdf165c17e3525b488093132e3f0ab59bcec71c25ddab9a80953a"
+    },
+    {
+      "id": "ux-product-python",
+      "path": ".brain/workflow/runs/baf42ea3-dc0a-4911-8887-0fadfdd5cff3.json",
+      "role": "Immutable actual UX candidate evidence",
+      "sha256": "f7bc16102b71b56f1e9b7327e1cb4a46c72ef7415b1794f4fe8aafd385c47099"
+    },
+    {
+      "id": "ux-product-browser",
+      "path": ".brain/workflow/runs/b4db0d2f-77e2-4c9e-9398-c7dbccfa524d.json",
+      "role": "Immutable actual UX candidate evidence",
+      "sha256": "7836847f320c3b80ca6471a3757c4c9f0b6984a4044c3c1dbca9d1c5ef89bb4a"
+    },
+    {
+      "id": "ux-product-construction",
+      "path": ".brain/workflow/runs/08fcb51a-51ca-4a5f-ab8f-973a4e8299dd.json",
+      "role": "Immutable actual UX candidate evidence",
+      "sha256": "c53c49a2401be54a8cab5c58bf85b9d47d1188d4bbdf7ed9293105fc6fd1e4ff"
+    },
+    {
+      "id": "ux-full-suite",
+      "path": ".brain/workflow/runs/8566ffb7-9fe9-4648-9db3-87adf33aaa36.json",
+      "role": "Immutable actual UX candidate evidence",
+      "sha256": "0e477cd7c8b7e971898832371ff49509d89831640c8d2c0b84110767a0d28332"
+    },
+    {
+      "id": "ux-independent-review",
+      "path": ".brain/workflow/runs/bc082668-f691-40fd-a55c-502302d579d9.json",
+      "role": "Immutable actual UX candidate evidence",
+      "sha256": "83eef01ffa093723c8e00929a09392987103d455816591e84d496a6ceb0f1bf8"
     }
   ],
   "nodes": [
@@ -173,7 +215,7 @@
       "id": "M-VEYVIZ-LOCAL-001",
       "kind": "milestone",
       "title": "Local recording analysis release",
-      "summary": "Working local recording journey; final required regression and review determine qualification. Production and live profiles remain separate.",
+      "summary": "Improve the local review experience around actual footage and human decisions; qualify the changed candidate separately.",
       "owner": "Root product coordinator and assigned owner writers",
       "intentStatus": "accepted",
       "priority": "core",
@@ -189,7 +231,8 @@
         "architecture",
         "acceptance",
         "provenance",
-        "protocol"
+        "protocol",
+        "experience"
       ],
       "acceptance": [
         "Clean independent source/dependency construction and correct owner boundaries.",
@@ -198,7 +241,8 @@
         "Durable typed results, retries, restart and actual native cleanup.",
         "Actual authenticated product browser journey.",
         "Second exact composition and trusted contribution without host edits.",
-        "Fresh build, required npm test and installed Python regressions."
+        "Fresh build, required npm test and installed Python regressions.",
+        "Focused accessible video review and recording library satisfy docs/veyviz/EXPERIENCE.md across desktop and narrow browser views."
       ]
     },
     {
@@ -271,7 +315,7 @@
       "id": "S-ANALYSIS",
       "kind": "screen",
       "title": "Video analysis and human review",
-      "summary": "Select source, queue bounded analysis, inspect actual sample frames and model observations, record review state.",
+      "summary": "Video-first single-frame review, sample filmstrip, adjacent findings, clear saved decision, request history and progressive technical details.",
       "owner": "Product owner; root coordinates implementation and evidence",
       "intentStatus": "accepted",
       "priority": "core",
@@ -465,7 +509,7 @@
       "id": "OBS-LOCAL-RUN",
       "nodeId": "J-REVIEW",
       "state": "verified",
-      "summary": "Current candidate completed actual browser and exported HTTP/model/review/restart/cancellation flow; UI is responsive and permission-aware.",
+      "summary": "Previous candidate: Completed actual browser and exported HTTP/model/review/restart/cancellation flow; prior interface was subsequently rejected by the user as mediocre.",
       "sourceRefs": [
         "product-browser",
         "product-python",
@@ -483,7 +527,7 @@
       "id": "OBS-FINAL-QUALIFICATION",
       "nodeId": "M-VEYVIZ-LOCAL-001",
       "state": "blocked",
-      "summary": "Independent source review accepted. Final suite completed with 378 passes, 0 failures and 1 skipped symlink fixture denied by Windows (EPERM). The release gate remains blocked.",
+      "summary": "Previous candidate: Independent source review accepted. Final suite completed with 378 passes, 0 failures and 1 skipped symlink fixture denied by Windows (EPERM). The release gate remains blocked.",
       "sourceRefs": [
         "full-suite",
         "independent-review"
@@ -494,6 +538,41 @@
       "limitations": [
         "No Windows security policy was weakened.",
         "Source acceptance does not establish production, live camera, uploads or native device readiness."
+      ]
+    },
+    {
+      "id": "OBS-UX-REVIEW",
+      "nodeId": "J-REVIEW",
+      "state": "verified",
+      "summary": "Redesigned workstation completed real six/three-sample reviews, keyboard navigation, saved decisions, source warning, cancellation, tenant/viewer and desktop/narrow checks. Fresh Python10 and export8+5 checks passed.",
+      "sourceRefs": [
+        "ux-product-browser",
+        "ux-product-python",
+        "ux-product-construction",
+        "experience"
+      ],
+      "candidate": "21387ecf7587cdea575a75981801f41cb0c5f48130343947584d3c85ddd2c4a1",
+      "observedAt": "2026-10-03T01:41:26.628Z",
+      "provenance": "execution-record",
+      "limitations": [
+        "Selected local fixture only. Human satisfaction, formal accessibility conformance, detector accuracy and production readiness remain unqualified."
+      ]
+    },
+    {
+      "id": "OBS-UX-QUALIFICATION",
+      "nodeId": "M-VEYVIZ-LOCAL-001",
+      "state": "blocked",
+      "summary": "Current independent source review accepted. Fresh npm test: 378 passed, 0 failed, 1 skipped. Required Windows EPERM symlink fixture remains blocked.",
+      "sourceRefs": [
+        "ux-full-suite",
+        "ux-independent-review"
+      ],
+      "candidate": "21387ecf7587cdea575a75981801f41cb0c5f48130343947584d3c85ddd2c4a1",
+      "observedAt": "2026-10-03T01:41:26.628Z",
+      "provenance": "execution-record",
+      "limitations": [
+        "Required file-symlink fixture denied by Windows with EPERM. Recorded BLOCKED_ENV, not all-checks pass. Security settings preserved.",
+        "Local selected profile only; no production or detector-accuracy qualification."
       ]
     }
   ],
@@ -508,7 +587,21 @@
       "hypothesis": "Completing cheap source-catalogue checks and browser breakpoint/role review before the broad freeze reduces repeated expensive checks.",
       "action": "Use source validation, installed smoke checks and real UI/role review before the final frozen broad regression. Keep all failed/blocked attempts.",
       "owner": "Root coordinator",
-      "measure": "Track broad reruns caused by post-freeze fixes; no statistical sigma estimate is claimed from this single build.",
+      "measure": "This UX increment froze source after actual browser review; one required broad regression ran after freeze. Retain the practice; no statistical sigma estimate is claimed.",
+      "status": "in_progress"
+    },
+    {
+      "id": "RETRO-EXPERIENCE",
+      "problem": "The prior local workflow passed functional checks but the user found its developer-demo presentation mediocre. Source review also found selection, focus, warning and accessibility defects.",
+      "evidenceRefs": [
+        "experience",
+        "analysis-ui",
+        "recording-ui"
+      ],
+      "hypothesis": "Designing and inspecting the reviewer task before qualification exposes usability defects that backend and screenshot-overflow checks miss.",
+      "action": "Applied the experience rubric and independent interaction review before broad regression. Browser-tested media/review flow, stable selection, source warning and narrow geometry. Obtain real user feedback; no satisfaction score is invented.",
+      "owner": "Root product coordinator",
+      "measure": "Observe core journey completion, stable keyboard selection, review feedback and zero overflow at the specified viewports. No user-satisfaction or world-class certification is claimed.",
       "status": "in_progress"
     }
   ],

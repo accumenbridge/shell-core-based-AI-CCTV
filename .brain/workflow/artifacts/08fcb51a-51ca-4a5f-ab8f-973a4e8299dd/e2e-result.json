@@ -1,0 +1,65 @@
+{
+  "schema": "veyviz.e2e-evidence.v1",
+  "runId": "65edd207-ea14-434a-a000-5101b958f4a4",
+  "startedAt": "2026-10-03T01:28:45.729Z",
+  "checks": [
+    {
+      "name": "actual authenticated HTTP runtime",
+      "status": "PASS"
+    },
+    {
+      "name": "durable source registration and idempotency conflict",
+      "status": "PASS"
+    },
+    {
+      "name": "tenant, viewer write and forged-scope denials",
+      "status": "PASS"
+    },
+    {
+      "name": "actual three-frame RF-DETR result adopted with original identity and native cleanup",
+      "status": "PASS",
+      "analysisId": "57ae9c08-6eff-4415-a047-d2e59e7b8620",
+      "modelSha256": "0e0817f4cafa479ccba17662a142092932b0b10c98947e7cf60f3badd0f5c219",
+      "sourceSha256": "ea6b48e57c343027b169ee1357e6e85ea3b8d179ba70058c294d1b1ec8db2805",
+      "samples": [
+        {
+          "frameIndex": 0,
+          "positionMs": 0,
+          "inferenceMs": 600.9897,
+          "detections": 0
+        },
+        {
+          "frameIndex": 10,
+          "positionMs": 333.3333333333333,
+          "inferenceMs": 609.6759,
+          "detections": 0
+        },
+        {
+          "frameIndex": 20,
+          "positionMs": 666.6666666666666,
+          "inferenceMs": 577.1258,
+          "detections": 0
+        }
+      ]
+    },
+    {
+      "name": "scoped saved-result access and human review",
+      "status": "PASS"
+    },
+    {
+      "name": "graceful restart retains exact accepted result and review without reseeding",
+      "status": "PASS"
+    },
+    {
+      "name": "running-job cancellation cannot adopt a successful result",
+      "status": "PASS"
+    },
+    {
+      "name": "owned runtime and worker observed closed",
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS",
+  "fingerprint": "c39038e41d1cd69a04d451d38d7ed3bb6efa7d7b8b8532b5ffdbde4608462ce1",
+  "completedAt": "2026-10-03T01:29:05.014Z"
+}

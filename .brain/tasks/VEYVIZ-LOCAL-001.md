@@ -18,3 +18,7 @@ Root froze contracts/veyviz-product-ai/v1/README.md: inherited anonymous pipes f
 - Governance reviewer: AGENTS.md, docs/veyviz and fresh .brain only; root becomes sole shared-state owner after handoff.
 
 No writer modifies maintained packages/apps or existing construction tools. Prefix boundaries define owner responsibility, not an executable filesystem lock. Before recording acceptance, the coordinator must enumerate exact changed/new input files or pin a complete release-input inventory and execute its verifier before and after checks. The inventory must include implementation, dependencies/configuration, contract, test and profile/asset hashes; it cannot stand in for executed evidence.
+
+## Review experience increment (2026-10-03)
+
+User: "why the product looks very mediocre? can't we make a world standard product?" Reopen the selected local product for the bounded review-workstation redesign in docs/veyviz/EXPERIENCE.md. Root owns governance and verification; assigned disjoint writers own product UI/CSS and product/solution presentation only. Backend, protocol, AI and maintained framework hosts stay unchanged. Previous candidate records remain historical and cannot qualify the redesigned source. Finish real browser layout, role, navigation and review checks before the broad regression freeze.

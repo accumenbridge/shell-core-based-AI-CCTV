@@ -1217,7 +1217,7 @@
           "id": "veyviz-rfdetr.provenance",
           "permission": "veyviz.ai.read",
           "export": "provenancePanel",
-          "label": "Inference provenance"
+          "label": "Analysis engine"
         }
       ],
       "schema": {
@@ -1636,9 +1636,9 @@
       "id": "veyviz-catalog",
       "version": "0.1.0",
       "platformAbi": "quadbridge.module.v1",
-      "title": "Veyviz Recording Catalog",
-      "description": "Tenant-owned source inventory without analysis or inference modules.",
-      "layout": "sidebar",
+      "title": "Veyviz Library",
+      "description": "Your local recording library.",
+      "layout": "top",
       "modules": [
         {
           "id": "veyviz-sources",
@@ -1651,9 +1651,9 @@
       "id": "veyviz-review",
       "version": "0.1.0",
       "platformAbi": "quadbridge.module.v1",
-      "title": "Veyviz Video Review",
-      "description": "Review scoped local recording analyses with visible inference provenance.",
-      "layout": "sidebar",
+      "title": "Veyviz Review",
+      "description": "Explore sampled footage. Review model observations. Keep a clear decision record.",
+      "layout": "top",
       "modules": [
         {
           "id": "veyviz-sources",
@@ -3417,9 +3417,9 @@
           "id": "veyviz-catalog",
           "version": "0.1.0",
           "platformAbi": "quadbridge.module.v1",
-          "title": "Veyviz Recording Catalog",
-          "description": "Tenant-owned source inventory without analysis or inference modules.",
-          "layout": "sidebar",
+          "title": "Veyviz Library",
+          "description": "Your local recording library.",
+          "layout": "top",
           "modules": [
             {
               "id": "veyviz-sources",
@@ -3687,9 +3687,9 @@
           "id": "veyviz-review",
           "version": "0.1.0",
           "platformAbi": "quadbridge.module.v1",
-          "title": "Veyviz Video Review",
-          "description": "Review scoped local recording analyses with visible inference provenance.",
-          "layout": "sidebar",
+          "title": "Veyviz Review",
+          "description": "Explore sampled footage. Review model observations. Keep a clear decision record.",
+          "layout": "top",
           "modules": [
             {
               "id": "veyviz-analysis",
@@ -4096,7 +4096,7 @@
                 "id": "veyviz-rfdetr.provenance",
                 "permission": "veyviz.ai.read",
                 "export": "provenancePanel",
-                "label": "Inference provenance"
+                "label": "Analysis engine"
               }
             ],
             "schema": {

@@ -1,0 +1,31 @@
+{
+  "schema": "brain.record-input.v1",
+  "kind": "run",
+  "taskId": "VEYVIZ-LOCAL-001",
+  "recipeId": "product-construction",
+  "status": "PASSED",
+  "exitCode": 0,
+  "environment": {
+    "os": "Windows local",
+    "node": "24.19.0",
+    "python": "3.13.7 isolated installed distributions",
+    "sourceInventory": "8a8da11d29efd18b2c5965a1f8ba69f9e68716697ad65336a6d3e392373660de",
+    "runtimeFingerprint": "c39038e41d1cd69a04d451d38d7ed3bb6efa7d7b8b8532b5ffdbde4608462ce1"
+  },
+  "artifactPaths": [
+    ".local/veyviz-ux-exports.log",
+    ".local/veyviz-ux-exported-e2e.log",
+    ".local/independent-export-ux-20261003/review-e2e-data/e2e-result.json",
+    ".local/independent-export-ux-20261003/catalog-export-evidence.json"
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "Actual root browser/build tools and separately delegated installed Python/export checks after final UI source freeze. Not an authenticated execution attestation."
+  },
+  "limitations": [
+    "Local recorded MIVIA fixture and CPU model profile only. No arbitrary uploads, live cameras, native device, external identity or production qualification.",
+    "Actual model output contains zero detections. No accuracy, occupancy or positive-detection overlay qualification.",
+    "Browser checks cover core admin/viewer/tenant/review/cancel/responsive journeys, not an exhaustive accessibility or fault matrix.",
+    "Exports use the separately verified private AI companion from this new product repo; model/media redistribution is unqualified."
+  ]
+}

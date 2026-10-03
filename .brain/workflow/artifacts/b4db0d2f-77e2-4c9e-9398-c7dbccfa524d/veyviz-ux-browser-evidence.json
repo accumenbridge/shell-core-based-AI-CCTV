@@ -1,0 +1,41 @@
+{
+  "schema": "veyviz.browser-review.v1",
+  "date": "2026-10-03",
+  "sourceInventory": "8a8da11d29efd18b2c5965a1f8ba69f9e68716697ad65336a6d3e392373660de",
+  "runtimeFingerprint": "c39038e41d1cd69a04d451d38d7ed3bb6efa7d7b8b8532b5ffdbde4608462ce1",
+  "build": ".local/veyviz-ux-build-04.log",
+  "browser": "Codex in-app browser, existing browser zoom 110%, controlled through cua_repl",
+  "url": "http://127.0.0.1:58692/#/analysis",
+  "dataRoot": ".local/browser-da5e89eb-a9af-4986-91b4-babec7627699",
+  "status": "PASSED",
+  "checks": [
+    "Admin sign-in, empty library, actual local recording registration through the UI.",
+    "Unchanged-name rename save is disabled; long name rename succeeds; narrow library form has no document horizontal overflow.",
+    "Six-frame RF-DETR CPU analysis baa77f8b completes with real JPEG samples at frames 0,10,20,30,40,50 and zero detections. Main image reports natural 640x360.",
+    "Previous/Next and ArrowRight on the focusable media figure change the actual selected frame. All six thumbnail images are loaded.",
+    "Mark reviewed persists; pending review count becomes zero; current sample stays selected; focus returns to Mark reviewed after saving.",
+    "Source rename increments version; old result retains captured version and source-change warning across sample navigation.",
+    "Engine details expand with actual provenance and package versions without document horizontal overflow at CSS width 390.",
+    "Second analysis b207b248 completes with three samples from source version 3. Dismiss result persists across actual page reload, and open review count remains zero.",
+    "Selecting the previous six-frame run restores its reviewed result; the same history button remains focused across a subsequent poll observation.",
+    "Third analysis a752e90f starts, cancel is requested through UI, worker then reports Cancelled with no accepted result.",
+    "Tenant beta shows zero analyses and no recordings; alpha results return when switching back.",
+    "Viewer sees actual saved result and decision with read-only explanation, no New analysis, review, cancel, registration or rename mutation controls.",
+    "Desktop CSS 1280x900 at scrollY 0: selected image and review actions both visible; image bounds 580.83x326.72 preserve 16:9, review card bottom 683.68.",
+    "Desktop CSS 1440x1000: client/scroll widths both 1426. Tablet CSS 768x900: both 754. Phone CSS 390x844: both 376; media precedes findings and history.",
+    "Preview shut down through owned STOP signal and reported BROWSER_CLOSED with exit 0 before fresh regression build.",
+    "After observed source-preview closure, fresh independent export with identical release hash/runtime fingerprint relaunched against the same generation. Browser reload restored the saved three-frame dismissed result and all three analyses. No reseeding was performed."
+  ],
+  "screenshots": [
+    ".local/veyviz-ux-desktop.jpg",
+    ".local/veyviz-ux-phone.jpg"
+  ],
+  "limitations": [
+    "Reported observation of actual tool actions, not cryptographically attested execution.",
+    "Local recorded-video fixture only; no uploads, live camera, full video playback, native mobile, external identity or production qualification.",
+    "Fixture detections are zero; positive-detection overlay accuracy, detection quality and occupancy are not qualified.",
+    "No exhaustive browser/network-fault matrix, 25-row stress test, screen-reader study, formal WCAG audit or user satisfaction study.",
+    "Browser screenshot capture at the existing zoom can clip the right edge of full-page narrow captures; no-overflow assertions use actual read-only DOM geometry.",
+    "One selector-driver attempt used a nonfocusable inner image div and one used body for Control+Home; these failed and were replaced by the actual focusable media figure and browser scrolling. They are not product test passes."
+  ]
+}

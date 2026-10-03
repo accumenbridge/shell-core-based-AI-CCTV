@@ -1,0 +1,22 @@
+{
+  "schema": "brain.record-input.v1",
+  "kind": "review",
+  "taskId": "VEYVIZ-LOCAL-001",
+  "reviewer": "/root/veyviz_integration_map independent read-only reviewer",
+  "implementer": "Root-assigned product TS and Python writers after frozen protocol/manifests",
+  "independence": "independent_reported",
+  "outcome": "ACCEPTED",
+  "scope": "Frozen local review experience, UI races/focus/authority presentation, source integrity, actual browser/Python/export/full-suite evidence. Source accepted; any host-blocked qualification remains blocked.",
+  "artifactPaths": [
+    ".local/independent-review-ux.json"
+  ],
+  "provenance": {
+    "kind": "reported",
+    "reference": "Separate read-only reviewer inspected current source, independently hashed complete inventory and inspected actual evidence/screenshots. Final review completed after regression output."
+  },
+  "limitations": [
+    "Source acceptance does not override a required blocked regression fixture.",
+    "Reported reviewer/execution identity is not cryptographic attestation.",
+    "No world-class user validation, bug-free guarantee, production or accuracy qualification."
+  ]
+}

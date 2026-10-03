@@ -69,7 +69,7 @@
         "tools/factory.mjs",
         "assemble",
         "veyviz-review",
-        ".local/independent-export-d9af83e63f4f4276be53eb543e67382a/review"
+        ".local/independent-export-ux-20261003/review"
       ],
       "cwd": ".",
       "description": "Actual factory export, local workspace linking and isolated execution of review and catalogue variants; additional actual commands and scope are in artifacts.",

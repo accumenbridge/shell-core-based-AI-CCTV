@@ -15,7 +15,7 @@ npm run veyviz
 
 The launcher prints the loopback URL and the path to a private generated credentials file. Read that file locally and sign in as `admin`. It does not print passwords. `viewer` has read access to tenant `alpha`; `admin` can operate in `alpha` and `beta`. These are explicit local developer identities. Existing stores are never reseeded.
 
-In Recordings, register the admitted MIVIA recording. In Video analysis, select the source, submit bounded analysis, inspect the returned samples and mark an accepted result reviewed or dismissed. The configured RF-DETR model runs on the CPU; its boxes and confidence are model observations. A zero detector count does not prove an empty site. Research footage remains uncommissioned and occupancy stays unknown.
+In Recordings, add the admitted MIVIA sample to your library. In Video analysis, open New analysis, choose the recording and start analysis. The workspace selects the new request and shows its actual processing state. When it completes, inspect the central frame and choose samples from the strip or previous/next controls. Findings and saved review decisions stay beside the frame; detailed model provenance is available in the Analysis engine disclosure below. This is sampled-frame inspection, not full video playback. The configured RF-DETR model runs on the CPU; its boxes and confidence are model observations. A zero detector count does not prove an empty site. Research footage remains uncommissioned and occupancy stays unknown.
 
 Ctrl+C requests graceful shutdown and waits for owned work to close. Restarting the same generation retains sources, jobs, results and reviews. A different product or companion fingerprint selects a separate data generation and leaves previous generations on disk. Incomplete enrollment or a missing access owner requires explicit repair; the launcher will not reconstruct grants against retained business data.
 
@@ -53,3 +53,4 @@ Run the second product with `npm run veyviz -- --product veyviz-catalog --port 4
 This is extensibility through reviewed source composition. Arbitrary downloaded plugins, hot installation, an OpenAI MCP adapter, hosted identity, live cameras, uploads and production operations are not implemented by this local profile.
 
 The [architecture](ARCHITECTURE.md), [acceptance criteria](ACCEPTANCE.md) and [provenance](PROVENANCE.md) explain the design. The generated `.brain/atlas/PROJECT_ATLAS.html` is the read-only project map; `.brain/CURRENT.md` is the canonical execution checkpoint.
+

@@ -1,0 +1,105 @@
+{
+  "platformTask": {
+    "taskId": "VEYVIZ-LOCAL-001",
+    "status": "IMPLEMENTING",
+    "candidate": null,
+    "runIds": [],
+    "reviewIds": [],
+    "blockers": [
+      "Windows denied required file-symlink fixture creation (EPERM): fullsuite04 has378passes,0failures,1blocked/skip. Security controls preserved."
+    ],
+    "nextAction": "Implement the bounded review-workstation design using disjoint product UI writers; verify browser interactions and breakpoints before final source freeze and npm test.",
+    "gates": [
+      {
+        "id": "independent-construction",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Prior candidate evidence is preserved historically and does not qualify this redesign."
+        ]
+      },
+      {
+        "id": "real-model",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Prior candidate evidence is preserved historically and does not qualify this redesign."
+        ]
+      },
+      {
+        "id": "authority",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Prior candidate evidence is preserved historically and does not qualify this redesign."
+        ]
+      },
+      {
+        "id": "browser",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Prior candidate evidence is preserved historically and does not qualify this redesign."
+        ]
+      },
+      {
+        "id": "restart-cleanup",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Prior candidate evidence is preserved historically and does not qualify this redesign."
+        ]
+      },
+      {
+        "id": "second-variant",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Prior candidate evidence is preserved historically and does not qualify this redesign."
+        ]
+      },
+      {
+        "id": "full-suite",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Prior candidate evidence is preserved historically and does not qualify this redesign."
+        ]
+      },
+      {
+        "id": "independent-review",
+        "status": "NOT_RUN",
+        "evidenceRefs": [],
+        "limitations": [
+          "Prior candidate evidence is preserved historically and does not qualify this redesign."
+        ]
+      },
+      {
+        "id": "live-camera",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "native-mobile",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      },
+      {
+        "id": "production",
+        "status": "DEFERRED",
+        "evidenceRefs": [],
+        "limitations": [
+          "Outside user-selected local recorded-video-first profile; no qualification claimed."
+        ]
+      }
+    ]
+  },
+  "schema": "brain.checkpoint-input.v1",
+  "reportedActor": "/root"
+}
