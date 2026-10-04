@@ -8,6 +8,18 @@ function sourceContext({ context, productId, config, consumerContext, sourceModu
 export async function bind({ binding, config, productId, publicService, context }) {
   if (binding.scope !== 'application' || binding.mode !== 'local')
     throw new PlatformError('INCOMPATIBLE', 'Veyviz uses fixed application-scoped local ports');
+  if (binding.contract === 'veyviz.product-authority.v1' && binding.consumer === 'veyviz-intelligence' && binding.implementation === 'veyviz-sources') {
+    publicService(binding.contract, binding.implementation);
+    const capturedContext = (scope, requestId, signal = new AbortController().signal) => {
+      if (scope.productId !== productId || scope.instanceId !== config.instanceId) throw new PlatformError('INCOMPATIBLE', 'Temporal authority scope differs from this Product instance');
+      return context({ id: scope.actorId, kind: scope.actorKind }, scope.tenantId, binding.consumer, signal, requestId);
+    };
+    return { context: capturedContext, assert(scope, kind) {
+      if (scope.productId !== productId || scope.instanceId !== config.instanceId || !['read', 'write'].includes(kind)) throw new PlatformError('INCOMPATIBLE', 'Temporal authority scope differs from this Product instance');
+      const ctx = capturedContext(scope);
+      ctx.assertAllowed(`veyviz.intelligence.${kind}`, kind);
+    } };
+  }
   if (binding.contract === 'veyviz.sources.read.v1' && binding.consumer === 'veyviz-analysis' && binding.implementation === 'veyviz-sources') {
     const source = publicService(binding.contract, binding.implementation);
     if (!source || typeof source.get !== 'function' || typeof source.list !== 'function') throw new PlatformError('INCOMPATIBLE', 'Selected source reader does not implement the declared contract');
@@ -29,6 +41,13 @@ export async function bind({ binding, config, productId, publicService, context 
           throw new PlatformError('INCOMPATIBLE', 'Source read context does not match the original analysis identity');
         return source.get(ctx, sourceId);
       }
+    };
+  }
+  if (binding.contract === 'veyviz.sources.query.v1' && binding.consumer === 'veyviz-analysis' && binding.implementation === 'veyviz-sources') {
+    const source = publicService(binding.contract, binding.implementation);
+    if (!source || typeof source.query !== 'function') throw new PlatformError('INCOMPATIBLE', 'Selected source query does not implement the declared contract');
+    return {
+      query(ctx, request) { return source.query(sourceContext({ context, productId, config, consumerContext: ctx, sourceModule: binding.implementation }), request); }
     };
   }
   if (binding.contract === 'veyviz.recorded-analysis.run.v1' && binding.consumer === 'veyviz-analysis' && binding.implementation === 'veyviz-rfdetr') {

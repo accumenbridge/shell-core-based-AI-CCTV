@@ -664,6 +664,7 @@
       "provides": [],
       "requires": [
         "veyviz.sources.read.v1",
+        "veyviz.sources.query.v1",
         "veyviz.recorded-analysis.run.v1"
       ],
       "permissions": [
@@ -946,6 +947,298 @@
             ],
             "additionalProperties": false
           }
+        },
+        {
+          "id": "veyviz-analysis.analysis.query",
+          "version": 1,
+          "title": "Search analyses",
+          "description": "Search a bounded owner page using analysis, job and source identifiers and declared state/date filters.",
+          "permission": "veyviz.analysis.read",
+          "kind": "read",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "q": {
+                "type": "string",
+                "maxLength": 200
+              },
+              "sourceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "jobState": {
+                "type": "string",
+                "enum": [
+                  "QUEUED",
+                  "RUNNING",
+                  "CANCEL_REQUESTED",
+                  "CANCELLED",
+                  "SUCCEEDED",
+                  "FAILED"
+                ]
+              },
+              "reviewState": {
+                "type": "string",
+                "enum": [
+                  "OPEN",
+                  "REVIEWED",
+                  "DISMISSED"
+                ]
+              },
+              "createdAfter": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "createdBefore": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "cursor": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              }
+            },
+            "additionalProperties": false
+          },
+          "outputSchema": {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "maxItems": 100,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "jobId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "sourceId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "sourceVersion": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "jobState": {
+                      "type": "string",
+                      "enum": [
+                        "QUEUED",
+                        "RUNNING",
+                        "CANCEL_REQUESTED",
+                        "CANCELLED",
+                        "SUCCEEDED",
+                        "FAILED"
+                      ]
+                    },
+                    "reviewState": {
+                      "type": "string",
+                      "enum": [
+                        "OPEN",
+                        "REVIEWED",
+                        "DISMISSED"
+                      ]
+                    },
+                    "created": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "sampleCount": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 6
+                    },
+                    "detectionCount": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 600
+                    },
+                    "coverage": {
+                      "type": "string",
+                      "enum": [
+                        "UNCOMMISSIONED_RECORDING",
+                        "UNKNOWN"
+                      ]
+                    },
+                    "occupancy": {
+                      "type": "string",
+                      "enum": [
+                        "UNKNOWN"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "jobId",
+                    "sourceId",
+                    "sourceVersion",
+                    "jobState",
+                    "reviewState",
+                    "created",
+                    "sampleCount",
+                    "detectionCount",
+                    "coverage",
+                    "occupancy"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "page": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  },
+                  "nextCursor": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "coverage": {
+                    "type": "string",
+                    "enum": [
+                      "filtered-owner-query"
+                    ]
+                  }
+                },
+                "required": [
+                  "limit",
+                  "coverage"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "items",
+              "page"
+            ],
+            "additionalProperties": false
+          }
+        },
+        {
+          "id": "veyviz-analysis.sources.query",
+          "version": 1,
+          "title": "Search recordings for analysis",
+          "description": "Search a bounded source-owner page for the current authorized actor.",
+          "permission": "veyviz.analysis.read",
+          "kind": "read",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "search": {
+                "type": "string",
+                "maxLength": 200
+              },
+              "renamedOnly": {
+                "type": "boolean"
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "cursor": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              }
+            },
+            "additionalProperties": false
+          },
+          "outputSchema": {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "maxItems": 100,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 160
+                    },
+                    "fixtureId": {
+                      "type": "string",
+                      "enum": [
+                        "mivia-vid0062"
+                      ]
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "created": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "fixtureId",
+                    "version",
+                    "created"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "page": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  },
+                  "nextCursor": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "coverage": {
+                    "type": "string",
+                    "enum": [
+                      "filtered-owner-query"
+                    ]
+                  }
+                },
+                "required": [
+                  "limit",
+                  "coverage"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "items",
+              "page"
+            ],
+            "additionalProperties": false
+          }
         }
       ],
       "routes": [
@@ -957,7 +1250,19 @@
         },
         {
           "method": "GET",
+          "path": "/api/analysis/sources/query",
+          "permission": "veyviz.analysis.read",
+          "kind": "read"
+        },
+        {
+          "method": "GET",
           "path": "/api/analysis/readiness",
+          "permission": "veyviz.analysis.read",
+          "kind": "read"
+        },
+        {
+          "method": "GET",
+          "path": "/api/analysis/query",
           "permission": "veyviz.analysis.read",
           "kind": "read"
         },
@@ -1100,6 +1405,266 @@
           ]
         }
       }
+    },
+    {
+      "background": true,
+      "provides": [],
+      "routes": [
+        {
+          "permission": "veyviz.intelligence.read",
+          "path": "/api/intelligence/catalog",
+          "method": "GET",
+          "kind": "read"
+        },
+        {
+          "permission": "veyviz.intelligence.read",
+          "path": "/api/intelligence/sources",
+          "method": "GET",
+          "kind": "read"
+        },
+        {
+          "permission": "veyviz.intelligence.write",
+          "path": "/api/intelligence/sources",
+          "method": "POST",
+          "kind": "write"
+        },
+        {
+          "permission": "veyviz.intelligence.write",
+          "path": "/api/intelligence/geometry",
+          "method": "POST",
+          "kind": "write"
+        },
+        {
+          "permission": "veyviz.intelligence.write",
+          "path": "/api/intelligence/runs",
+          "method": "POST",
+          "kind": "write"
+        },
+        {
+          "permission": "veyviz.intelligence.read",
+          "path": "/api/intelligence/runs",
+          "method": "GET",
+          "kind": "read"
+        },
+        {
+          "permission": "veyviz.intelligence.read",
+          "path": "/api/intelligence/run",
+          "method": "GET",
+          "kind": "read"
+        },
+        {
+          "permission": "veyviz.intelligence.write",
+          "path": "/api/intelligence/cancel",
+          "method": "POST",
+          "kind": "write"
+        },
+        {
+          "permission": "veyviz.intelligence.read",
+          "path": "/api/intelligence/events",
+          "method": "GET",
+          "kind": "read"
+        },
+        {
+          "permission": "veyviz.intelligence.read",
+          "path": "/api/intelligence/timeline",
+          "method": "GET",
+          "kind": "read"
+        },
+        {
+          "permission": "veyviz.intelligence.read",
+          "path": "/api/intelligence/visits",
+          "method": "GET",
+          "kind": "read"
+        },
+        {
+          "permission": "veyviz.intelligence.read",
+          "path": "/api/intelligence/search",
+          "method": "GET",
+          "kind": "read"
+        },
+        {
+          "permission": "veyviz.intelligence.read",
+          "path": "/api/intelligence/playback",
+          "method": "POST",
+          "kind": "read"
+        },
+        {
+          "method": "GET",
+          "path": "/api/intelligence/capabilities",
+          "kind": "read",
+          "permission": "veyviz.intelligence.read"
+        },
+        {
+          "method": "GET",
+          "path": "/api/intelligence/summary",
+          "kind": "read",
+          "permission": "veyviz.intelligence.read"
+        },
+        {
+          "method": "POST",
+          "path": "/api/intelligence/entities/link",
+          "kind": "write",
+          "permission": "veyviz.intelligence.write"
+        },
+        {
+          "method": "GET",
+          "path": "/api/intelligence/rules",
+          "kind": "read",
+          "permission": "veyviz.intelligence.read"
+        },
+        {
+          "method": "POST",
+          "path": "/api/intelligence/rules",
+          "kind": "write",
+          "permission": "veyviz.intelligence.write"
+        },
+        {
+          "method": "GET",
+          "path": "/api/intelligence/alerts",
+          "kind": "read",
+          "permission": "veyviz.intelligence.read"
+        },
+        {
+          "method": "POST",
+          "path": "/api/intelligence/alerts/acknowledge",
+          "kind": "write",
+          "permission": "veyviz.intelligence.write"
+        },
+        {
+          "method": "POST",
+          "path": "/api/intelligence/retrieval",
+          "kind": "read",
+          "permission": "veyviz.intelligence.read"
+        },
+        {
+          "method": "GET",
+          "path": "/api/intelligence/batches",
+          "kind": "read",
+          "permission": "veyviz.intelligence.read"
+        },
+        {
+          "method": "POST",
+          "path": "/api/intelligence/batches",
+          "kind": "write",
+          "permission": "veyviz.intelligence.write"
+        },
+        {
+          "method": "POST",
+          "path": "/api/intelligence/batches/cancel",
+          "kind": "write",
+          "permission": "veyviz.intelligence.write"
+        },
+        {
+          "method": "GET",
+          "path": "/api/intelligence/watches",
+          "kind": "read",
+          "permission": "veyviz.intelligence.read"
+        },
+        {
+          "method": "POST",
+          "path": "/api/intelligence/watches",
+          "kind": "write",
+          "permission": "veyviz.intelligence.write"
+        },
+        {
+          "method": "POST",
+          "path": "/api/intelligence/watches/stop",
+          "kind": "write",
+          "permission": "veyviz.intelligence.write"
+        }
+      ],
+      "schema": {
+        "readMax": 2,
+        "readMin": 1,
+        "current": 2
+      },
+      "id": "veyviz-intelligence",
+      "requires": [
+        "veyviz.product-authority.v1"
+      ],
+      "browserAssets": [
+        "styles.css"
+      ],
+      "studio": {
+        "layers": [
+          "ui",
+          "backend",
+          "worker",
+          "data"
+        ],
+        "label": "Recording intelligence",
+        "summary": "Scoped temporal appearances, drawn zones and evidence playback",
+        "ui": {
+          "routes": [
+            {
+              "label": "Recording intelligence",
+              "path": "/intelligence",
+              "nav": "Recording intelligence",
+              "workspace": "veyviz.intelligence"
+            }
+          ],
+          "extensionPoints": []
+        },
+        "deployment": {
+          "processes": []
+        },
+        "data": {
+          "schemas": [
+            {
+              "version": 1,
+              "id": "veyviz-intelligence"
+            }
+          ],
+          "stores": [
+            {
+              "id": "veyviz-intelligence",
+              "kind": "relational",
+              "ownership": "module"
+            }
+          ]
+        },
+        "ai": {
+          "pipelines": [],
+          "models": []
+        },
+        "backend": {
+          "jobs": [
+            {
+              "kind": "veyviz.intelligence.recorded.v1",
+              "permission": "veyviz.intelligence.write"
+            }
+          ],
+          "services": []
+        },
+        "category": "video"
+      },
+      "abi": "quadbridge.module.v1",
+      "operations": [],
+      "dependencies": [
+        {
+          "version": "0.1.0",
+          "id": "veyviz-sources"
+        },
+        {
+          "version": "0.1.0",
+          "id": "veyviz-rfdetr"
+        }
+      ],
+      "workspaces": [
+        {
+          "export": "workspace",
+          "id": "veyviz.intelligence",
+          "label": "Recording intelligence",
+          "permission": "veyviz.intelligence.read",
+          "path": "/intelligence"
+        }
+      ],
+      "version": "0.1.0",
+      "permissions": [
+        "veyviz.intelligence.read",
+        "veyviz.intelligence.write"
+      ],
+      "uiContributions": []
     },
     {
       "id": "veyviz-rfdetr",
@@ -1320,7 +1885,9 @@
       "abi": "quadbridge.module.v1",
       "dependencies": [],
       "provides": [
-        "veyviz.sources.read.v1"
+        "veyviz.sources.read.v1",
+        "veyviz.sources.query.v1",
+        "veyviz.product-authority.v1"
       ],
       "requires": [],
       "permissions": [
@@ -1456,12 +2023,126 @@
             ],
             "additionalProperties": false
           }
+        },
+        {
+          "id": "veyviz-sources.sources.query",
+          "version": 1,
+          "title": "Search registered recordings",
+          "description": "Search a bounded page of owner-authorized registrations by literal source name or ID.",
+          "permission": "veyviz.sources.read",
+          "kind": "read",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "search": {
+                "type": "string",
+                "maxLength": 200
+              },
+              "renamedOnly": {
+                "type": "boolean"
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "cursor": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              }
+            },
+            "additionalProperties": false
+          },
+          "outputSchema": {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "maxItems": 100,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 160
+                    },
+                    "fixtureId": {
+                      "type": "string",
+                      "enum": [
+                        "mivia-vid0062"
+                      ]
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "created": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "fixtureId",
+                    "version",
+                    "created"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "page": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  },
+                  "nextCursor": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "coverage": {
+                    "type": "string",
+                    "enum": [
+                      "filtered-owner-query"
+                    ]
+                  }
+                },
+                "required": [
+                  "limit",
+                  "coverage"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "items",
+              "page"
+            ],
+            "additionalProperties": false
+          }
         }
       ],
       "routes": [
         {
           "method": "GET",
           "path": "/api/sources",
+          "permission": "veyviz.sources.read",
+          "kind": "read"
+        },
+        {
+          "method": "GET",
+          "path": "/api/sources/query",
           "permission": "veyviz.sources.read",
           "kind": "read"
         },
@@ -1522,6 +2203,11 @@
             {
               "id": "source-reader",
               "contract": "veyviz.sources.read.v1",
+              "visibility": "product"
+            },
+            {
+              "id": "source-query",
+              "contract": "veyviz.sources.query.v1",
               "visibility": "product"
             }
           ],
@@ -1695,6 +2381,10 @@
         {
           "id": "veyviz-rfdetr",
           "version": "0.1.0"
+        },
+        {
+          "id": "veyviz-intelligence",
+          "version": "0.1.0"
         }
       ],
       "bindings": [
@@ -1707,11 +2397,27 @@
           "mode": "local"
         },
         {
+          "contract": "veyviz.sources.query.v1",
+          "instanceId": "local-veyviz-source-query",
+          "implementation": "veyviz-sources",
+          "scope": "application",
+          "consumer": "veyviz-analysis",
+          "mode": "local"
+        },
+        {
           "contract": "veyviz.recorded-analysis.run.v1",
           "instanceId": "local-veyviz-rfdetr",
           "implementation": "veyviz-rfdetr",
           "scope": "application",
           "consumer": "veyviz-analysis",
+          "mode": "local"
+        },
+        {
+          "contract": "veyviz.product-authority.v1",
+          "instanceId": "local-intelligence-authority",
+          "implementation": "veyviz-sources",
+          "scope": "application",
+          "consumer": "veyviz-intelligence",
           "mode": "local"
         }
       ],
@@ -1799,6 +2505,21 @@
               {
                 "id": "local",
                 "label": "Recordings in this product",
+                "binding": {
+                  "instanceId": "local-veyviz-sources",
+                  "implementation": "veyviz-sources",
+                  "scope": "application",
+                  "mode": "local"
+                }
+              }
+            ]
+          },
+          {
+            "contract": "veyviz.sources.query.v1",
+            "choices": [
+              {
+                "id": "local",
+                "label": "Search recordings in this product",
                 "binding": {
                   "instanceId": "local-veyviz-sources",
                   "implementation": "veyviz-sources",
@@ -3464,7 +4185,9 @@
             "abi": "quadbridge.module.v1",
             "dependencies": [],
             "provides": [
-              "veyviz.sources.read.v1"
+              "veyviz.sources.read.v1",
+              "veyviz.sources.query.v1",
+              "veyviz.product-authority.v1"
             ],
             "requires": [],
             "permissions": [
@@ -3600,12 +4323,126 @@
                   ],
                   "additionalProperties": false
                 }
+              },
+              {
+                "id": "veyviz-sources.sources.query",
+                "version": 1,
+                "title": "Search registered recordings",
+                "description": "Search a bounded page of owner-authorized registrations by literal source name or ID.",
+                "permission": "veyviz.sources.read",
+                "kind": "read",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "search": {
+                      "type": "string",
+                      "maxLength": 200
+                    },
+                    "renamedOnly": {
+                      "type": "boolean"
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100
+                    },
+                    "cursor": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "maxItems": 100,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 160
+                          },
+                          "fixtureId": {
+                            "type": "string",
+                            "enum": [
+                              "mivia-vid0062"
+                            ]
+                          },
+                          "version": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "created": {
+                            "type": "integer",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "fixtureId",
+                          "version",
+                          "created"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "page": {
+                      "type": "object",
+                      "properties": {
+                        "limit": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 100
+                        },
+                        "nextCursor": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 512
+                        },
+                        "coverage": {
+                          "type": "string",
+                          "enum": [
+                            "filtered-owner-query"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "limit",
+                        "coverage"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "page"
+                  ],
+                  "additionalProperties": false
+                }
               }
             ],
             "routes": [
               {
                 "method": "GET",
                 "path": "/api/sources",
+                "permission": "veyviz.sources.read",
+                "kind": "read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/sources/query",
                 "permission": "veyviz.sources.read",
                 "kind": "read"
               },
@@ -3667,6 +4504,11 @@
                     "id": "source-reader",
                     "contract": "veyviz.sources.read.v1",
                     "visibility": "product"
+                  },
+                  {
+                    "id": "source-query",
+                    "contract": "veyviz.sources.query.v1",
+                    "visibility": "product"
                   }
                 ],
                 "jobs": []
@@ -3725,6 +4567,10 @@
               "version": "0.1.0"
             },
             {
+              "id": "veyviz-intelligence",
+              "version": "0.1.0"
+            },
+            {
               "id": "veyviz-rfdetr",
               "version": "0.1.0"
             },
@@ -3743,11 +4589,27 @@
               "mode": "local"
             },
             {
+              "contract": "veyviz.sources.query.v1",
+              "instanceId": "local-veyviz-source-query",
+              "implementation": "veyviz-sources",
+              "scope": "application",
+              "consumer": "veyviz-analysis",
+              "mode": "local"
+            },
+            {
               "contract": "veyviz.sources.read.v1",
               "instanceId": "local-veyviz-sources",
               "implementation": "veyviz-sources",
               "scope": "application",
               "consumer": "veyviz-analysis",
+              "mode": "local"
+            },
+            {
+              "contract": "veyviz.product-authority.v1",
+              "instanceId": "local-intelligence-authority",
+              "implementation": "veyviz-sources",
+              "scope": "application",
+              "consumer": "veyviz-intelligence",
               "mode": "local"
             }
           ],
@@ -3760,7 +4622,9 @@
             "abi": "quadbridge.module.v1",
             "dependencies": [],
             "provides": [
-              "veyviz.sources.read.v1"
+              "veyviz.sources.read.v1",
+              "veyviz.sources.query.v1",
+              "veyviz.product-authority.v1"
             ],
             "requires": [],
             "permissions": [
@@ -3896,12 +4760,126 @@
                   ],
                   "additionalProperties": false
                 }
+              },
+              {
+                "id": "veyviz-sources.sources.query",
+                "version": 1,
+                "title": "Search registered recordings",
+                "description": "Search a bounded page of owner-authorized registrations by literal source name or ID.",
+                "permission": "veyviz.sources.read",
+                "kind": "read",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "search": {
+                      "type": "string",
+                      "maxLength": 200
+                    },
+                    "renamedOnly": {
+                      "type": "boolean"
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100
+                    },
+                    "cursor": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "maxItems": 100,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 160
+                          },
+                          "fixtureId": {
+                            "type": "string",
+                            "enum": [
+                              "mivia-vid0062"
+                            ]
+                          },
+                          "version": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "created": {
+                            "type": "integer",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "fixtureId",
+                          "version",
+                          "created"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "page": {
+                      "type": "object",
+                      "properties": {
+                        "limit": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 100
+                        },
+                        "nextCursor": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 512
+                        },
+                        "coverage": {
+                          "type": "string",
+                          "enum": [
+                            "filtered-owner-query"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "limit",
+                        "coverage"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "page"
+                  ],
+                  "additionalProperties": false
+                }
               }
             ],
             "routes": [
               {
                 "method": "GET",
                 "path": "/api/sources",
+                "permission": "veyviz.sources.read",
+                "kind": "read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/sources/query",
                 "permission": "veyviz.sources.read",
                 "kind": "read"
               },
@@ -3962,6 +4940,11 @@
                   {
                     "id": "source-reader",
                     "contract": "veyviz.sources.read.v1",
+                    "visibility": "product"
+                  },
+                  {
+                    "id": "source-query",
+                    "contract": "veyviz.sources.query.v1",
                     "visibility": "product"
                   }
                 ],
@@ -4222,6 +5205,7 @@
             "provides": [],
             "requires": [
               "veyviz.sources.read.v1",
+              "veyviz.sources.query.v1",
               "veyviz.recorded-analysis.run.v1"
             ],
             "permissions": [
@@ -4504,6 +5488,298 @@
                   ],
                   "additionalProperties": false
                 }
+              },
+              {
+                "id": "veyviz-analysis.analysis.query",
+                "version": 1,
+                "title": "Search analyses",
+                "description": "Search a bounded owner page using analysis, job and source identifiers and declared state/date filters.",
+                "permission": "veyviz.analysis.read",
+                "kind": "read",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "q": {
+                      "type": "string",
+                      "maxLength": 200
+                    },
+                    "sourceId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "jobState": {
+                      "type": "string",
+                      "enum": [
+                        "QUEUED",
+                        "RUNNING",
+                        "CANCEL_REQUESTED",
+                        "CANCELLED",
+                        "SUCCEEDED",
+                        "FAILED"
+                      ]
+                    },
+                    "reviewState": {
+                      "type": "string",
+                      "enum": [
+                        "OPEN",
+                        "REVIEWED",
+                        "DISMISSED"
+                      ]
+                    },
+                    "createdAfter": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "createdBefore": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100
+                    },
+                    "cursor": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "maxItems": 100,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "jobId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "sourceId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "sourceVersion": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "jobState": {
+                            "type": "string",
+                            "enum": [
+                              "QUEUED",
+                              "RUNNING",
+                              "CANCEL_REQUESTED",
+                              "CANCELLED",
+                              "SUCCEEDED",
+                              "FAILED"
+                            ]
+                          },
+                          "reviewState": {
+                            "type": "string",
+                            "enum": [
+                              "OPEN",
+                              "REVIEWED",
+                              "DISMISSED"
+                            ]
+                          },
+                          "created": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "sampleCount": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 6
+                          },
+                          "detectionCount": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 600
+                          },
+                          "coverage": {
+                            "type": "string",
+                            "enum": [
+                              "UNCOMMISSIONED_RECORDING",
+                              "UNKNOWN"
+                            ]
+                          },
+                          "occupancy": {
+                            "type": "string",
+                            "enum": [
+                              "UNKNOWN"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "jobId",
+                          "sourceId",
+                          "sourceVersion",
+                          "jobState",
+                          "reviewState",
+                          "created",
+                          "sampleCount",
+                          "detectionCount",
+                          "coverage",
+                          "occupancy"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "page": {
+                      "type": "object",
+                      "properties": {
+                        "limit": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 100
+                        },
+                        "nextCursor": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 512
+                        },
+                        "coverage": {
+                          "type": "string",
+                          "enum": [
+                            "filtered-owner-query"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "limit",
+                        "coverage"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "page"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              {
+                "id": "veyviz-analysis.sources.query",
+                "version": 1,
+                "title": "Search recordings for analysis",
+                "description": "Search a bounded source-owner page for the current authorized actor.",
+                "permission": "veyviz.analysis.read",
+                "kind": "read",
+                "inputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "search": {
+                      "type": "string",
+                      "maxLength": 200
+                    },
+                    "renamedOnly": {
+                      "type": "boolean"
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100
+                    },
+                    "cursor": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "outputSchema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "maxItems": 100,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 160
+                          },
+                          "fixtureId": {
+                            "type": "string",
+                            "enum": [
+                              "mivia-vid0062"
+                            ]
+                          },
+                          "version": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "created": {
+                            "type": "integer",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "fixtureId",
+                          "version",
+                          "created"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "page": {
+                      "type": "object",
+                      "properties": {
+                        "limit": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 100
+                        },
+                        "nextCursor": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 512
+                        },
+                        "coverage": {
+                          "type": "string",
+                          "enum": [
+                            "filtered-owner-query"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "limit",
+                        "coverage"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "page"
+                  ],
+                  "additionalProperties": false
+                }
               }
             ],
             "routes": [
@@ -4515,7 +5791,19 @@
               },
               {
                 "method": "GET",
+                "path": "/api/analysis/sources/query",
+                "permission": "veyviz.analysis.read",
+                "kind": "read"
+              },
+              {
+                "method": "GET",
                 "path": "/api/analysis/readiness",
+                "permission": "veyviz.analysis.read",
+                "kind": "read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/analysis/query",
                 "permission": "veyviz.analysis.read",
                 "kind": "read"
               },
@@ -4658,6 +5946,266 @@
                 ]
               }
             }
+          },
+          {
+            "background": true,
+            "provides": [],
+            "routes": [
+              {
+                "permission": "veyviz.intelligence.read",
+                "path": "/api/intelligence/catalog",
+                "method": "GET",
+                "kind": "read"
+              },
+              {
+                "permission": "veyviz.intelligence.read",
+                "path": "/api/intelligence/sources",
+                "method": "GET",
+                "kind": "read"
+              },
+              {
+                "permission": "veyviz.intelligence.write",
+                "path": "/api/intelligence/sources",
+                "method": "POST",
+                "kind": "write"
+              },
+              {
+                "permission": "veyviz.intelligence.write",
+                "path": "/api/intelligence/geometry",
+                "method": "POST",
+                "kind": "write"
+              },
+              {
+                "permission": "veyviz.intelligence.write",
+                "path": "/api/intelligence/runs",
+                "method": "POST",
+                "kind": "write"
+              },
+              {
+                "permission": "veyviz.intelligence.read",
+                "path": "/api/intelligence/runs",
+                "method": "GET",
+                "kind": "read"
+              },
+              {
+                "permission": "veyviz.intelligence.read",
+                "path": "/api/intelligence/run",
+                "method": "GET",
+                "kind": "read"
+              },
+              {
+                "permission": "veyviz.intelligence.write",
+                "path": "/api/intelligence/cancel",
+                "method": "POST",
+                "kind": "write"
+              },
+              {
+                "permission": "veyviz.intelligence.read",
+                "path": "/api/intelligence/events",
+                "method": "GET",
+                "kind": "read"
+              },
+              {
+                "permission": "veyviz.intelligence.read",
+                "path": "/api/intelligence/timeline",
+                "method": "GET",
+                "kind": "read"
+              },
+              {
+                "permission": "veyviz.intelligence.read",
+                "path": "/api/intelligence/visits",
+                "method": "GET",
+                "kind": "read"
+              },
+              {
+                "permission": "veyviz.intelligence.read",
+                "path": "/api/intelligence/search",
+                "method": "GET",
+                "kind": "read"
+              },
+              {
+                "permission": "veyviz.intelligence.read",
+                "path": "/api/intelligence/playback",
+                "method": "POST",
+                "kind": "read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/intelligence/capabilities",
+                "kind": "read",
+                "permission": "veyviz.intelligence.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/intelligence/summary",
+                "kind": "read",
+                "permission": "veyviz.intelligence.read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/intelligence/entities/link",
+                "kind": "write",
+                "permission": "veyviz.intelligence.write"
+              },
+              {
+                "method": "GET",
+                "path": "/api/intelligence/rules",
+                "kind": "read",
+                "permission": "veyviz.intelligence.read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/intelligence/rules",
+                "kind": "write",
+                "permission": "veyviz.intelligence.write"
+              },
+              {
+                "method": "GET",
+                "path": "/api/intelligence/alerts",
+                "kind": "read",
+                "permission": "veyviz.intelligence.read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/intelligence/alerts/acknowledge",
+                "kind": "write",
+                "permission": "veyviz.intelligence.write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/intelligence/retrieval",
+                "kind": "read",
+                "permission": "veyviz.intelligence.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/intelligence/batches",
+                "kind": "read",
+                "permission": "veyviz.intelligence.read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/intelligence/batches",
+                "kind": "write",
+                "permission": "veyviz.intelligence.write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/intelligence/batches/cancel",
+                "kind": "write",
+                "permission": "veyviz.intelligence.write"
+              },
+              {
+                "method": "GET",
+                "path": "/api/intelligence/watches",
+                "kind": "read",
+                "permission": "veyviz.intelligence.read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/intelligence/watches",
+                "kind": "write",
+                "permission": "veyviz.intelligence.write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/intelligence/watches/stop",
+                "kind": "write",
+                "permission": "veyviz.intelligence.write"
+              }
+            ],
+            "schema": {
+              "readMax": 2,
+              "readMin": 1,
+              "current": 2
+            },
+            "id": "veyviz-intelligence",
+            "requires": [
+              "veyviz.product-authority.v1"
+            ],
+            "browserAssets": [
+              "styles.css"
+            ],
+            "studio": {
+              "layers": [
+                "ui",
+                "backend",
+                "worker",
+                "data"
+              ],
+              "label": "Recording intelligence",
+              "summary": "Scoped temporal appearances, drawn zones and evidence playback",
+              "ui": {
+                "routes": [
+                  {
+                    "label": "Recording intelligence",
+                    "path": "/intelligence",
+                    "nav": "Recording intelligence",
+                    "workspace": "veyviz.intelligence"
+                  }
+                ],
+                "extensionPoints": []
+              },
+              "deployment": {
+                "processes": []
+              },
+              "data": {
+                "schemas": [
+                  {
+                    "version": 1,
+                    "id": "veyviz-intelligence"
+                  }
+                ],
+                "stores": [
+                  {
+                    "id": "veyviz-intelligence",
+                    "kind": "relational",
+                    "ownership": "module"
+                  }
+                ]
+              },
+              "ai": {
+                "pipelines": [],
+                "models": []
+              },
+              "backend": {
+                "jobs": [
+                  {
+                    "kind": "veyviz.intelligence.recorded.v1",
+                    "permission": "veyviz.intelligence.write"
+                  }
+                ],
+                "services": []
+              },
+              "category": "video"
+            },
+            "abi": "quadbridge.module.v1",
+            "operations": [],
+            "dependencies": [
+              {
+                "version": "0.1.0",
+                "id": "veyviz-sources"
+              },
+              {
+                "version": "0.1.0",
+                "id": "veyviz-rfdetr"
+              }
+            ],
+            "workspaces": [
+              {
+                "export": "workspace",
+                "id": "veyviz.intelligence",
+                "label": "Recording intelligence",
+                "permission": "veyviz.intelligence.read",
+                "path": "/intelligence"
+              }
+            ],
+            "version": "0.1.0",
+            "permissions": [
+              "veyviz.intelligence.read",
+              "veyviz.intelligence.write"
+            ],
+            "uiContributions": []
           }
         ],
         "bindings": [
@@ -4670,11 +6218,27 @@
             "mode": "local"
           },
           {
+            "contract": "veyviz.sources.query.v1",
+            "instanceId": "local-veyviz-source-query",
+            "implementation": "veyviz-sources",
+            "scope": "application",
+            "consumer": "veyviz-analysis",
+            "mode": "local"
+          },
+          {
             "contract": "veyviz.sources.read.v1",
             "instanceId": "local-veyviz-sources",
             "implementation": "veyviz-sources",
             "scope": "application",
             "consumer": "veyviz-analysis",
+            "mode": "local"
+          },
+          {
+            "contract": "veyviz.product-authority.v1",
+            "instanceId": "local-intelligence-authority",
+            "implementation": "veyviz-sources",
+            "scope": "application",
+            "consumer": "veyviz-intelligence",
             "mode": "local"
           }
         ],
@@ -4682,6 +6246,8 @@
           "veyviz.ai.read",
           "veyviz.analysis.read",
           "veyviz.analysis.write",
+          "veyviz.intelligence.read",
+          "veyviz.intelligence.write",
           "veyviz.sources.read",
           "veyviz.sources.write"
         ],

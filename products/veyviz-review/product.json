@@ -17,6 +17,10 @@
     {
       "id": "veyviz-rfdetr",
       "version": "0.1.0"
+    },
+    {
+      "id": "veyviz-intelligence",
+      "version": "0.1.0"
     }
   ],
   "bindings": [
@@ -29,11 +33,27 @@
       "mode": "local"
     },
     {
+      "contract": "veyviz.sources.query.v1",
+      "instanceId": "local-veyviz-source-query",
+      "implementation": "veyviz-sources",
+      "scope": "application",
+      "consumer": "veyviz-analysis",
+      "mode": "local"
+    },
+    {
       "contract": "veyviz.recorded-analysis.run.v1",
       "instanceId": "local-veyviz-rfdetr",
       "implementation": "veyviz-rfdetr",
       "scope": "application",
       "consumer": "veyviz-analysis",
+      "mode": "local"
+    },
+    {
+      "contract": "veyviz.product-authority.v1",
+      "instanceId": "local-intelligence-authority",
+      "implementation": "veyviz-sources",
+      "scope": "application",
+      "consumer": "veyviz-intelligence",
       "mode": "local"
     }
   ],

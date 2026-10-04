@@ -1,0 +1,8 @@
+# Separate Python 3.13 runtime; leave the existing CPU companion intact.
+onnxruntime-gpu[cuda,cudnn]==1.23.2
+nvidia-cudnn-cu12==9.10.2.21
+opencv-python-headless==5.0.0.93
+numpy==2.3.5
+tokenizers==0.22.1
+pillow==12.0.0
+paramiko==4.0.0

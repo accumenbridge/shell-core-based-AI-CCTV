@@ -56,6 +56,9 @@
       "path": "modules/veyviz-analysis"
     },
     {
+      "path": "modules/veyviz-intelligence"
+    },
+    {
       "path": "modules/veyviz-rfdetr"
     },
     {

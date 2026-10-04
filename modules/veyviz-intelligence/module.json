@@ -1,0 +1,260 @@
+{
+  "background": true,
+  "provides": [],
+  "routes": [
+    {
+      "permission": "veyviz.intelligence.read",
+      "path": "/api/intelligence/catalog",
+      "method": "GET",
+      "kind": "read"
+    },
+    {
+      "permission": "veyviz.intelligence.read",
+      "path": "/api/intelligence/sources",
+      "method": "GET",
+      "kind": "read"
+    },
+    {
+      "permission": "veyviz.intelligence.write",
+      "path": "/api/intelligence/sources",
+      "method": "POST",
+      "kind": "write"
+    },
+    {
+      "permission": "veyviz.intelligence.write",
+      "path": "/api/intelligence/geometry",
+      "method": "POST",
+      "kind": "write"
+    },
+    {
+      "permission": "veyviz.intelligence.write",
+      "path": "/api/intelligence/runs",
+      "method": "POST",
+      "kind": "write"
+    },
+    {
+      "permission": "veyviz.intelligence.read",
+      "path": "/api/intelligence/runs",
+      "method": "GET",
+      "kind": "read"
+    },
+    {
+      "permission": "veyviz.intelligence.read",
+      "path": "/api/intelligence/run",
+      "method": "GET",
+      "kind": "read"
+    },
+    {
+      "permission": "veyviz.intelligence.write",
+      "path": "/api/intelligence/cancel",
+      "method": "POST",
+      "kind": "write"
+    },
+    {
+      "permission": "veyviz.intelligence.read",
+      "path": "/api/intelligence/events",
+      "method": "GET",
+      "kind": "read"
+    },
+    {
+      "permission": "veyviz.intelligence.read",
+      "path": "/api/intelligence/timeline",
+      "method": "GET",
+      "kind": "read"
+    },
+    {
+      "permission": "veyviz.intelligence.read",
+      "path": "/api/intelligence/visits",
+      "method": "GET",
+      "kind": "read"
+    },
+    {
+      "permission": "veyviz.intelligence.read",
+      "path": "/api/intelligence/search",
+      "method": "GET",
+      "kind": "read"
+    },
+    {
+      "permission": "veyviz.intelligence.read",
+      "path": "/api/intelligence/playback",
+      "method": "POST",
+      "kind": "read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/capabilities",
+      "kind": "read",
+      "permission": "veyviz.intelligence.read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/summary",
+      "kind": "read",
+      "permission": "veyviz.intelligence.read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/entities/link",
+      "kind": "write",
+      "permission": "veyviz.intelligence.write"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/rules",
+      "kind": "read",
+      "permission": "veyviz.intelligence.read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/rules",
+      "kind": "write",
+      "permission": "veyviz.intelligence.write"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/alerts",
+      "kind": "read",
+      "permission": "veyviz.intelligence.read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/alerts/acknowledge",
+      "kind": "write",
+      "permission": "veyviz.intelligence.write"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/retrieval",
+      "kind": "read",
+      "permission": "veyviz.intelligence.read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/batches",
+      "kind": "read",
+      "permission": "veyviz.intelligence.read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/batches",
+      "kind": "write",
+      "permission": "veyviz.intelligence.write"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/batches/cancel",
+      "kind": "write",
+      "permission": "veyviz.intelligence.write"
+    },
+    {
+      "method": "GET",
+      "path": "/api/intelligence/watches",
+      "kind": "read",
+      "permission": "veyviz.intelligence.read"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/watches",
+      "kind": "write",
+      "permission": "veyviz.intelligence.write"
+    },
+    {
+      "method": "POST",
+      "path": "/api/intelligence/watches/stop",
+      "kind": "write",
+      "permission": "veyviz.intelligence.write"
+    }
+  ],
+  "schema": {
+    "readMax": 2,
+    "readMin": 1,
+    "current": 2
+  },
+  "id": "veyviz-intelligence",
+  "requires": [
+    "veyviz.product-authority.v1"
+  ],
+  "browserAssets": [
+    "styles.css"
+  ],
+  "studio": {
+    "layers": [
+      "ui",
+      "backend",
+      "worker",
+      "data"
+    ],
+    "label": "Recording intelligence",
+    "summary": "Scoped temporal appearances, drawn zones and evidence playback",
+    "ui": {
+      "routes": [
+        {
+          "label": "Recording intelligence",
+          "path": "/intelligence",
+          "nav": "Recording intelligence",
+          "workspace": "veyviz.intelligence"
+        }
+      ],
+      "extensionPoints": []
+    },
+    "deployment": {
+      "processes": []
+    },
+    "data": {
+      "schemas": [
+        {
+          "version": 1,
+          "id": "veyviz-intelligence"
+        }
+      ],
+      "stores": [
+        {
+          "id": "veyviz-intelligence",
+          "kind": "relational",
+          "ownership": "module"
+        }
+      ]
+    },
+    "ai": {
+      "pipelines": [],
+      "models": []
+    },
+    "backend": {
+      "jobs": [
+        {
+          "kind": "veyviz.intelligence.recorded.v1",
+          "permission": "veyviz.intelligence.write"
+        }
+      ],
+      "services": []
+    },
+    "category": "video"
+  },
+  "abi": "quadbridge.module.v1",
+  "operations": [],
+  "dependencies": [
+    {
+      "version": "0.1.0",
+      "id": "veyviz-sources"
+    },
+    {
+      "version": "0.1.0",
+      "id": "veyviz-rfdetr"
+    }
+  ],
+  "workspaces": [
+    {
+      "export": "workspace",
+      "id": "veyviz.intelligence",
+      "label": "Recording intelligence",
+      "permission": "veyviz.intelligence.read",
+      "path": "/intelligence"
+    }
+  ],
+  "version": "0.1.0",
+  "permissions": [
+    "veyviz.intelligence.read",
+    "veyviz.intelligence.write"
+  ],
+  "uiContributions": []
+}

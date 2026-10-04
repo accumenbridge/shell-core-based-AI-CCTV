@@ -273,7 +273,7 @@ async function stopProcessTree(child) {
 }
 
 test('START_FULL_STUDIO.cmd reaches the actual bounded loopback health response', { skip: process.platform !== 'win32' }, async t => {
-    const copied = await copyPortableFixture(t, ROOT, { prefix: 'qb-studio-health-' });
+    const copied = await copyPortableFixture(t, ROOT, { prefix: 'qb-studio-health-', physicalDependencies: true });
     const { temp, root } = copied;
     const foreign = join(temp, 'foreign');
     await mkdir(foreign);

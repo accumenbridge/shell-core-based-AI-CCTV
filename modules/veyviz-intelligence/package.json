@@ -1,0 +1,6 @@
+{
+  "name": "@quadbridge/veyviz-intelligence", "version": "0.1.0", "private": true, "type": "module",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" }, "./*": { "types": "./dist/*.d.ts", "import": "./dist/*.js" } },
+  "files": ["dist", "module.json"],
+  "dependencies": { "@quadbridge/contracts": "0.2.0", "@quadbridge/sqlite": "0.2.0", "@quadbridge/backend-host": "0.2.0", "@quadbridge/web-shell": "0.2.0", "@quadbridge/veyviz-rfdetr": "0.1.0" }
+}

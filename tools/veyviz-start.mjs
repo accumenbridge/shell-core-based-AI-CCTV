@@ -5,6 +5,14 @@ import { readFile, writeFile, mkdir, readdir, rename } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { canonical } from '@quadbridge/contracts';
+import {
+  createRuntimeExecution,
+  inspectCompanion,
+  prepareVerifiedSnapshot,
+  removeOwnedRuntimeExecution,
+  verifyPreparedSnapshot,
+  verifyRuntimeExecutionLinks
+} from './veyviz-snapshot.mjs';
 
 export const ROOT = resolve(fileURLToPath(new URL('../', import.meta.url)));
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -19,15 +27,24 @@ export async function prepareProduct({ root = ROOT, product = 'veyviz-review', d
   const plan = JSON.parse(await readFile(join(root, '.artifacts', product, 'plan.json'), 'utf8'));
   if (release.product !== product || plan.product.id !== product || hash(canonical(plan)) !== release.planDigest) throw Error('Product plan identity or release digest mismatch.');
   const needsAI = plan.modules.some(m => m.provides.includes('veyviz.recorded-analysis.run.v1'));
-  let companion = null;
-  if (needsAI) {
-    const bytes = await readFile(profilePath);
-    const profile = JSON.parse(bytes.toString('utf8'));
-    if (profile.schema !== 'veyviz.recorded-profile.v1') throw Error('Unsupported AI profile. Run the reviewed companion setup.');
-    companion = { profileSha256: hash(bytes), inventorySha256: hash(await readFile(profile.inventoryPath)) };
-  }
-  const launcher = { start: hash(await readFile(join(ROOT, 'tools/veyviz-start.mjs'))), runtime: hash(await readFile(join(ROOT, 'tools/veyviz-runtime.mjs'))) };
-  const fingerprint = hash(JSON.stringify({ release: hash(releaseBytes), companion, launcher }));
+  const selected = await prepareVerifiedSnapshot({ root, product });
+  const companion = await inspectCompanion(root, product, profilePath);
+  const launcher = {
+    schema: 'veyviz.launch-identity.v1',
+    snapshotDigest: selected.snapshotDigest,
+    snapshotIdentity: selected.identity,
+    releaseDigest: selected.release.releaseDigest,
+    factoryInputDigest: selected.identity.inputDigest,
+    qualificationDigest: selected.qualificationDigest,
+    sourceFingerprint: selected.identity.sourceFingerprint,
+    toolchainDigest: selected.identity.toolchainDigest,
+    recipeVersion: selected.identity.recipeVersion,
+    runtimeWrapperSha256: selected.runtimeDigest,
+    startSha256: selected.recipe.files['tools/veyviz-start.mjs'],
+    snapshotHelperSha256: selected.recipe.files['tools/veyviz-snapshot.mjs'],
+    companion: companion.companion
+  };
+  const fingerprint = hash(canonical(launcher));
   const productHome = join(dataRoot, product);
   const generations = join(productHome, 'generations');
   const credentialsPath = join(productHome, 'developer-credentials.json');
@@ -37,10 +54,9 @@ export async function prepareProduct({ root = ROOT, product = 'veyviz-review', d
   catch (error) {
     if (error.code !== 'ENOENT') throw error;
     if (existsSync(generations) && (await readdir(generations)).length) throw Error('Existing enrollment has lost its credentials file; repair explicitly.');
-    credentials = { admin: randomBytes(24).toString('base64url'), viewer: randomBytes(24).toString('base64url') };
-    await writeFile(credentialsPath, JSON.stringify(credentials, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+    credentials = null;
   }
-  if (typeof credentials.admin !== 'string' || credentials.admin.length < 12 || typeof credentials.viewer !== 'string' || credentials.viewer.length < 12) throw Error('Invalid local credentials file.');
+  if (credentials && (typeof credentials.admin !== 'string' || credentials.admin.length < 12 || typeof credentials.viewer !== 'string' || credentials.viewer.length < 12)) throw Error('Invalid local credentials file.');
   const generation = join(generations, fingerprint);
   const dataDirectory = join(generation, 'data');
   const enrollmentPath = join(generation, 'enrollment.json');
@@ -58,19 +74,46 @@ export async function prepareProduct({ root = ROOT, product = 'veyviz-review', d
     if (priorOwner.schema !== 'veyviz.owner.v1' || priorOwner.fingerprint !== fingerprint || priorOwner.state !== 'CLOSED')
       throw Error('The prior generation owner is active or cleanup is unconfirmed; refusing to relaunch.');
   }
-  await mkdir(dataDirectory, { recursive: true, mode: 0o700 });
-  if (!existingGeneration) await writeFile(enrollmentPath, JSON.stringify({ schema: 'veyviz.enrollment.v1', fingerprint, status: 'PENDING' }) + '\n', { flag: 'wx', mode: 0o600 });
-  const all = ['platform.shell.read', 'platform.modules.manage', ...plan.permissions];
-  const read = ['platform.shell.read', ...new Set(plan.modules.flatMap(m => m.routes.filter(r => r.kind === 'read').map(r => r.permission)))];
-  const principals = existsSync(join(dataDirectory, 'access.sqlite')) ? [] : [
-    { id: 'admin', password: credentials.admin, grants: ['alpha', 'beta'].map(tenantId => ({ tenantId, permissions: all })) },
-    { id: 'viewer', password: credentials.viewer, grants: [{ tenantId: 'alpha', permissions: read }] }
-  ];
-  const configPath = join(generation, 'runtime.json');
-  const config = { instanceId: `${product}-local`, dataDirectory, principals };
-  await writeFile(configPath, JSON.stringify(config, null, 2) + '\n', { mode: 0o600 });
-  await writeFile(join(generation, 'generation.json'), JSON.stringify({ schema: 'veyviz.local-generation.v1', product, fingerprint, releaseSha256: hash(releaseBytes), companion, launcher }, null, 2) + '\n');
-  return { root, product, profilePath: needsAI ? profilePath : null, fingerprint, generation, configPath, credentialsPath, dataDirectory, enrollmentPath, ownerPath };
+  const runtimeExecution = createRuntimeExecution({ root, snapshot: selected, product });
+  try {
+    const current = await verifyPreparedSnapshot({ root, product, snapshotDigest: selected.snapshotDigest });
+    const currentCompanion = await inspectCompanion(root, product, profilePath);
+    if (canonical(companion) !== canonical(currentCompanion))
+      throw Error('Veyviz companion profile or inventory changed while preparing the fixed runtime.');
+    if (current.snapshot.releaseDigest !== selected.release.releaseDigest)
+      throw Error('Veyviz selected release changed while preparing the fixed runtime.');
+    if (!credentials) {
+      credentials = { admin: randomBytes(24).toString('base64url'), viewer: randomBytes(24).toString('base64url') };
+      await writeFile(credentialsPath, JSON.stringify(credentials, null, 2) + '\n', { flag: 'wx', mode: 0o600 });
+    }
+    await mkdir(dataDirectory, { recursive: true, mode: 0o700 });
+    if (!existingGeneration) await writeFile(enrollmentPath, JSON.stringify({ schema: 'veyviz.enrollment.v1', fingerprint, status: 'PENDING' }) + '\n', { flag: 'wx', mode: 0o600 });
+    const all = ['platform.shell.read', 'platform.modules.manage', ...selected.plan.permissions];
+    const read = ['platform.shell.read', ...new Set(selected.plan.modules.flatMap(m => m.routes.filter(r => r.kind === 'read').map(r => r.permission)))];
+    const principals = existsSync(join(dataDirectory, 'access.sqlite')) ? [] : [
+      { id: 'admin', password: credentials.admin, grants: ['alpha', 'beta'].map(tenantId => ({ tenantId, permissions: all })) },
+      { id: 'viewer', password: credentials.viewer, grants: [{ tenantId: 'alpha', permissions: read }] }
+    ];
+    const configPath = join(generation, 'runtime.json');
+    const config = { instanceId: `${product}-local`, dataDirectory, principals };
+    await writeFile(configPath, JSON.stringify(config, null, 2) + '\n', { mode: 0o600 });
+    await writeFile(join(generation, 'generation.json'), JSON.stringify({
+      schema: 'veyviz.local-generation.v1', product, fingerprint,
+      producerRoot: root, runtimeRoot: runtimeExecution.runtimeRoot,
+      releaseSha256: selected.release.releaseDigest, snapshotDigest: selected.snapshotDigest,
+      companion: companion.companion, launcher
+    }, null, 2) + '\n');
+    return {
+      root, producerRoot: root, runtimeRoot: runtimeExecution.runtimeRoot,
+      runtimeLinks: runtimeExecution.runtimeLinks, runtimeWrapperPath: runtimeExecution.runtimeWrapperPath,
+      snapshotRoot: selected.snapshotRoot, snapshotDigest: selected.snapshotDigest,
+      product, profilePath: needsAI ? companion.profilePath : null, companion: companion.companion,
+      fingerprint, generation, configPath, credentialsPath, dataDirectory, enrollmentPath, ownerPath
+    };
+  } catch (error) {
+    error.runtimePreparation = { runtimeRoot: runtimeExecution.runtimeRoot, snapshotDigest: selected.snapshotDigest };
+    throw error;
+  }
 }
 
 /** Own a live child handle; request graceful cleanup over IPC and observe close. */
@@ -78,43 +121,85 @@ export async function startProduct(options = {}) {
   const port = options.port ?? 4480;
   if (!Number.isSafeInteger(port) || port < 0 || port > 65535) throw Error('Invalid port.');
   const prepared = await prepareProduct(options);
+  try { verifyRuntimeExecutionLinks(prepared.runtimeRoot, prepared.runtimeLinks); }
+  catch (error) {
+    error.runtimePreparation = { runtimeRoot: prepared.runtimeRoot, snapshotDigest: prepared.snapshotDigest };
+    throw error;
+  }
   const ownerToken = randomUUID();
   // Exclusive claim survives parent/child interruption. Never infer closure from age or PID.
   const claimPath = prepared.ownerPath + '.claim';
   await writeFile(claimPath, ownerToken, { flag: 'wx', mode: 0o600 });
   const ownerRecord = { schema: 'veyviz.owner.v1', fingerprint: prepared.fingerprint, token: ownerToken, state: 'ACTIVE' };
-  await writeFile(prepared.ownerPath, JSON.stringify(ownerRecord) + '\n', { mode: 0o600 });
-  const child = fork(join(ROOT, 'tools', 'veyviz-runtime.mjs'), [prepared.root, prepared.product, prepared.configPath, String(port)], {
-    cwd: prepared.root, silent: true, windowsHide: true,
-    env: { ...process.env, ...(prepared.profilePath ? { VEYVIZ_AI_PROFILE: prepared.profilePath } : {}), NODE_ENV: 'development' }
-  });
+  await writeFile(prepared.ownerPath, JSON.stringify({ ...ownerRecord, producerRoot: prepared.producerRoot, runtimeRoot: prepared.runtimeRoot, snapshotDigest: prepared.snapshotDigest }) + '\n', { mode: 0o600 });
+  let child;
+  try {
+    verifyRuntimeExecutionLinks(prepared.runtimeRoot, prepared.runtimeLinks);
+    child = fork(prepared.runtimeWrapperPath, [prepared.runtimeRoot, prepared.product, prepared.configPath, String(port)], {
+      cwd: prepared.runtimeRoot, silent: true, windowsHide: true,
+      env: { ...process.env, ...(prepared.profilePath ? { VEYVIZ_AI_PROFILE: prepared.profilePath } : {}), NODE_ENV: 'development' }
+    });
+  } catch (error) {
+    try {
+      const current = JSON.parse(await readFile(prepared.ownerPath, 'utf8'));
+      if (current.token === ownerToken) {
+        const temporary = prepared.ownerPath + '.' + ownerToken + '.unknown';
+        await writeFile(temporary, JSON.stringify({ ...current, state: 'UNKNOWN', forkError: error.code ?? error.name }) + '\n', { flag: 'wx', mode: 0o600 });
+        await rename(temporary, prepared.ownerPath);
+      }
+    } catch (recordError) { error.ownerRecordError = recordError.message; }
+    error.runtimePreparation = { runtimeRoot: prepared.runtimeRoot, snapshotDigest: prepared.snapshotDigest, claimPath };
+    throw error;
+  }
   let diagnostics = '', closed = false, cleanup = false, stopRequested = false;
-  const capture = chunk => { diagnostics = (diagnostics + chunk.toString()).slice(-8192); };
+  const appendDiagnostic = message => { diagnostics = (diagnostics + message).slice(-8192); };
+  const capture = chunk => appendDiagnostic(chunk.toString());
+  const describeError = error => error instanceof Error ? `${error.code ? `${error.code}: ` : ''}${error.message}` : String(error);
   child.stderr.on('data', capture); child.stdout.on('data', capture);
   child.on('message', message => { if (message?.type === 'stopped' && message.cleanup === true) cleanup = true; });
+  // A child/control error is diagnostic only; its original close event owns completion.
+  child.on('error', error => appendDiagnostic(`Owned child error: ${describeError(error)}\n`));
   const completion = new Promise((resolveClose, reject) => {
-    child.once('error', reject);
     child.once('close', async (code, signal) => {
       closed = true;
       try {
         const record = JSON.parse(await readFile(prepared.ownerPath, 'utf8'));
         if (record.token !== ownerToken) throw Error('Owned generation marker changed; closure cannot be published.');
         const state = cleanup && code === 0 && signal === null ? 'CLOSED' : 'UNKNOWN';
+        let runtimeCopyCleanup = 'RETAINED_UNKNOWN';
+        if (state === 'CLOSED') {
+          try {
+            removeOwnedRuntimeExecution(prepared.runtimeRoot, prepared.runtimeLinks);
+            runtimeCopyCleanup = 'REMOVED';
+          } catch (cleanupError) {
+            runtimeCopyCleanup = 'RETAINED_AFTER_CLEANUP_ERROR';
+            appendDiagnostic(`Runtime copy retained after verified process close: ${cleanupError.message}\n`);
+          }
+        }
         const temporary = prepared.ownerPath + '.' + ownerToken;
-        await writeFile(temporary, JSON.stringify({ ...record, state }) + '\n', { flag: 'wx', mode: 0o600 });
+        await writeFile(temporary, JSON.stringify({ ...record, state, runtimeCopyCleanup }) + '\n', { flag: 'wx', mode: 0o600 });
         await rename(temporary, prepared.ownerPath);
         if (state === 'CLOSED') {
           // Retain the claim as provenance under a unique name; no recursive deletion.
           await rename(claimPath, claimPath + '.' + ownerToken + '.closed');
         }
-        resolveClose({ code, signal, cleanup });
+        resolveClose({ code, signal, cleanup, runtimeCopyCleanup });
       } catch (error) { reject(error); }
     });
   });
   // Keep the rejection observed even if startup fails first.
   completion.catch(() => {});
   const stop = async () => {
-    if (!stopRequested && !closed && child.connected) { child.send({ type: 'stop' }); stopRequested = true; }
+    if (!stopRequested && !closed) {
+      stopRequested = true;
+      if (child.connected) {
+        try {
+          child.send({ type: 'stop' }, error => {
+            if (error) appendDiagnostic(`Stop IPC send failed: ${describeError(error)}\n`);
+          });
+        } catch (error) { appendDiagnostic(`Stop IPC send threw: ${describeError(error)}\n`); }
+      } else appendDiagnostic('Stop IPC not sent: child was already disconnected.\n');
+    }
     let timer;
     try {
       const result = await Promise.race([completion, new Promise((_, reject) => { timer = setTimeout(() => reject(Error('Cleanup not observed within 120 seconds; owned child retained, no PID-based recovery attempted.')), 120_000); })]);

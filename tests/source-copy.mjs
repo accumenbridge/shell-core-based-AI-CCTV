@@ -11,7 +11,7 @@ const dependencies = [
     ['undici-types', 'undici-types']
 ];
 
-export async function copyPortableFixture(t, sourceRoot, { prefix = 'qb-source-', afterSetup } = {}) {
+export async function copyPortableFixture(t, sourceRoot, { prefix = 'qb-source-', afterSetup, physicalDependencies = false } = {}) {
     const temp = await mkdtemp(join(tmpdir(), prefix));
     const root = join(temp, 'source');
     const ownedCleanups = [];
@@ -50,9 +50,10 @@ export async function copyPortableFixture(t, sourceRoot, { prefix = 'qb-source-'
         for (const [name, targetName] of dependencies) {
             const target = join(sourceRoot, 'node_modules', targetName);
             const destination = join(root, 'node_modules', name);
-            const type = process.platform === 'win32' ? 'junction' : 'dir';
             await mkdir(dirname(destination), { recursive: true });
-            await symlink(target, destination, type);
+            // Product build qualification hashes physical dependency bytes.
+            if (physicalDependencies) await cp(target, destination, { recursive: true, dereference: true });
+            else await symlink(target, destination, process.platform === 'win32' ? 'junction' : 'dir');
         }
         if (afterSetup) await afterSetup({ root, temp });
         return { root, temp, cleanup, registerCleanup(close) { ownedCleanups.push(close); } };
